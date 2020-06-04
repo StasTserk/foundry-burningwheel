@@ -10,3 +10,6 @@ dist
 
 # user config file
 foundryconfig.json
+
+# default deploy destination
+release/

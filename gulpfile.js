@@ -3,9 +3,19 @@ const tslint = require("gulp-tslint");
 const yaml = require("gulp-yaml");
 const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
-const config = require("./foundryconfig.json");
 const sass = require("gulp-sass");
 sass.compiler = require("node-sass");
+
+const fs = require("fs");
+
+if (!fs.existsSync("./foundryConfig.json")) {
+    console.log("*** No config file found, creating new copy. ***");
+    fs.writeFileSync("./foundryConfig.json", JSON.stringify({ deployDest: "./release" }));
+} else {
+    console.log("*** Found foundryConfig.json ***");
+}
+
+const config = require("./foundryConfig.json");
 
 function lintTs() {
     return gulp.src("module/*.ts")

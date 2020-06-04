@@ -1,0 +1,39 @@
+<form autocomplete="off">
+    <h2>Character Index</h2>
+    <div class="header">
+        <label>Name
+            <input type="text" name="name" value="{{actor.name}}">
+        </label>
+        <label>Stock
+            <input type="text" name="data.stock" value="{{data.stock}}">
+        </label>
+        <label>Age
+            <input type="number" name="data.age" value="{{data.age}}">
+        </label>
+        <label>Lifepaths
+            <input type="text" name="data.lifepathString" value="{{data.lifepathString}}">
+        </label>
+    </div>
+    <div class="subheader">
+        <label>Alias
+            <input type="text" name="data.alias" value="{{data.alias}}">
+        </label>
+        <label>Homeland
+            <input type="text" name="data.homeland" value="{{data.homeland}}">
+        </label>
+        <label>Features
+            <input type="text" name="data.features" value="{{data.features}}">
+        </label>
+    </div>
+    <div class="beliefs">
+        <h2>Beliefs</h2>
+        {{#each beliefs as |belief iid|}}
+            <div class="belief" data-item-id="{{belief._id}}">
+                F:<input class="belief-f" type="checkbox" value="{{belief.data.fate}}" {{ checked belief.data.fate }}>
+                P:<input class="belief-p" type="checkbox" value="{{belief.data.persona}}" {{ checked belief.data.persona }}>
+                D:<input class="belief-d" type="checkbox" value="{{belief.data.deeds}}" {{ checked belief.data.deeds }}>
+                <input class="belief-t" type="text" value="{{belief.data.text}}">
+            </div>
+        {{/each}}
+    </div>
+</form>

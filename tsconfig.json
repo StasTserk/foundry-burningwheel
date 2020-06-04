@@ -1,0 +1,17 @@
+{
+    "include": ["scripts/**/*.ts", "module/**/*.ts"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "sourceMap": true,
+        "types": [
+            "foundry-pc-types"
+        ],
+		"target": "ES2017",
+		"lib": [
+			"DOM",
+			"ES6"
+        ],
+        "outDir": "bin"
+    }
+}

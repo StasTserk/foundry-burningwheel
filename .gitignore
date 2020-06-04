@@ -1,0 +1,12 @@
+# IDE
+.idea/
+.vs/
+
+# Node Modules
+node_modules/
+
+# Build output
+dist
+
+# user config file
+foundryconfig.json

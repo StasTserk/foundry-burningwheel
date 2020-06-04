@@ -1,0 +1,10 @@
+@import "./character/character.scss";
+
+.subheader,
+.header {
+    display: flex;
+    flex-direction: row;
+    input[type="number"] {
+        max-width:  120px;
+    }
+}

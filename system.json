@@ -1,0 +1,20 @@
+{
+    "name": "burningwheel",
+    "title": "Burning Wheel",
+    "description": "Foundry implementation of The Burning Wheel",
+    "version": "0.0.1",
+    "templateVersion": 1,
+    "author": "Stas Tserkovny",
+    "esmodules": ["module/burningwheel.js"],
+    "scripts": [],
+    "styles": ["styles/burningwheel.css"],
+    "packs": [],
+    "minimumCoreVersion": "0.6.0",
+    "socket": false,
+    "initiative": "1d20",
+    "gridDistance": 10,
+    "gridUnits": "ft",
+    "url": "http://www.google.com",
+    "manifest": "http://www.google.com",
+    "download": "http://www.google.com"
+}

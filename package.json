@@ -1,0 +1,25 @@
+{
+  "name": "burningwheel",
+  "version": "0.0.1",
+  "description": "Foundry VTT Implementation for The Burning Wheel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0",
+    "gulp-tslint": "^8.1.4",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-yaml": "^2.0.4",
+    "node-sass": "^4.14.1",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "gulp-eslint": "^6.0.0"
+  }
+}

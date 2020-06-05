@@ -5,6 +5,7 @@ const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
 const sass = require("gulp-sass");
 sass.compiler = require("node-sass");
+const jsonModify = require("gulp-json-modify");
 
 const fs = require("fs");
 
@@ -51,6 +52,16 @@ function buildYml() {
         .pipe(gulp.dest("./dist"));
 }
 
+function version() {
+    const version = process.argv[4];
+    const download = `https://github.com/StasTserk/foundry-burningwheel/releases/download/${version}/release${version}.zip`
+    
+    return gulp.src("./system.json")
+        .pipe(jsonModify({ key: "version", value: version }))
+        .pipe(jsonModify({ key: "download", value: download }))
+        .pipe(gulp.dest("./"));
+}
+
 const tsTask = gulp.series(
     lintTs,
     compileTs,
@@ -91,4 +102,5 @@ exports.css = buildCss;
 exports.yml = buildYml;
 exports.deploy = deploy;
 
-exports.watch = watch
+exports.watch = watch;
+exports.uv = version;

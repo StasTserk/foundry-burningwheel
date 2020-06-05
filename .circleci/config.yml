@@ -12,7 +12,41 @@ jobs:
             - run: npm install
             - run: sudo npm install -g gulp
             - run: gulp build
+      - run: mkdir ./artifacts
+      - persist_to_workspace:
+          root: ./
+          paths: release/*
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: zip -r ./release${CIRCLE_TAG}.zip ./release
+      - store_artifacts:
+          path: ./
+      - run:
+          name: "Publish Release on Github"
+          command: |
+            VERSION=${CIRCLE_TAG}
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
 workflows:
     build-and-test:
       jobs:
         - build-and-test
+    publish-github-release:
+      jobs:
+        - build-and-test:
+            filters:
+              branches:
+                ignore: /.*/
+              tags:
+                only: /^\d+\.\d+\.\d+$/
+        - publish-github-release:
+            requires:
+              - build-and-test
+            filters:
+              branches:
+                ignore: /.*/
+              tags:
+                only: /^\d+\.\d+\.\d+$/

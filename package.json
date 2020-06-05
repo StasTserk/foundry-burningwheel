@@ -11,6 +11,7 @@
   "devDependencies": {
     "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types",
     "gulp": "^4.0.2",
+    "gulp-json-modify": "^1.0.2",
     "gulp-sass": "^4.1.0",
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",

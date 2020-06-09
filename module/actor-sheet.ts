@@ -31,20 +31,9 @@ export class BWActorSheet extends ActorSheet {
             }
         }
 
-        if (beliefs.length === 0) {
+        if (beliefs.length === 0 && instincts.length === 0) {
             console.log("adding default beliefs");
-            beliefs.push(
-                Item.createOwned({ name: "Belief 1", type: "belief", data: {}}, actorData) as Belief,
-                Item.createOwned({ name: "Belief 2", type: "belief", data: {}}, actorData) as Belief,
-                Item.createOwned({ name: "Belief 3", type: "belief", data: {}}, actorData) as Belief);
-        }
-
-        if (instincts.length === 0) {
-            console.log("adding default beliefs");
-            instincts.push(
-                Item.createOwned({ name: "Instinct 1", type: "instinct", data: {}}, actorData) as Instinct,
-                Item.createOwned({ name: "Instinct 2", type: "instinct", data: {}}, actorData) as Instinct,
-                Item.createOwned({ name: "Instinct 3", type: "instinct", data: {}}, actorData) as Instinct);
+            this.addDefaultItems();
         }
 
         data.beliefs = beliefs;
@@ -85,6 +74,15 @@ export class BWActorSheet extends ActorSheet {
         const updateParams = {};
         updateParams[itemProperty] = value;
         return item.update(updateParams, {});
+    }
+
+    async addDefaultItems() {
+        return this.actor.createOwnedItem({ name: "Instinct 1", type: "instinct", data: {}})
+            .then(() => this.actor.createOwnedItem({ name: "Instinct 2", type: "instinct", data: {}}))
+            .then(() => this.actor.createOwnedItem({ name: "Instinct 3", type: "instinct", data: {}}))
+            .then(() => this.actor.createOwnedItem({ name: "Belief 1", type: "belief", data: {}}))
+            .then(() => this.actor.createOwnedItem({ name: "Belief 2", type: "belief", data: {}}))
+            .then(() => this.actor.createOwnedItem({ name: "Belief 3", type: "belief", data: {}}))
     }
 }
 

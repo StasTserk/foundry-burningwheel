@@ -1,5 +1,3 @@
-import { Trait } from "./trait.js";
-
 export class TraitSheet extends ItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {});

@@ -12,6 +12,7 @@
 			"DOM",
 			"ES6"
         ],
-        "outDir": "bin"
+        "outDir": "bin",
+        "noUnusedLocals": true
     }
 }

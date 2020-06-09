@@ -24,6 +24,10 @@ Hooks.once("init", async () => {
         makeDefault: true
     });
     Items.unregisterSheet("core", ItemSheet);
+    Items.registerSheet("burningwheel", BeliefSheet, {
+        types: ["belief"],
+        makeDefault: true
+    });
     Items.registerSheet("burningwheel", TraitSheet, {
         types: ["trait"],
         makeDefault: true

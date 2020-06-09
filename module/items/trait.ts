@@ -9,7 +9,7 @@ export class Trait extends Item {
     data: TraitData;
 }
 
-interface TraitData extends BaseEntityData {
+export interface TraitData extends BaseEntityData {
     traittype: string;
     text: string;
 }

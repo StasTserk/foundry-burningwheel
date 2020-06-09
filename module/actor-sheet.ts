@@ -1,4 +1,3 @@
-import { BWActor } from "./actor.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
 import { Trait } from "./items/trait.js";
@@ -17,7 +16,6 @@ export class BWActorSheet extends ActorSheet {
 
     getData(): ActorSheetData {
         const data = super.getData() as CharacterSheetData;
-        const actorData = data.actor as BWActor;
         const beliefs = [];
         const instincts = [];
         const traits: Trait[] = [];
@@ -63,7 +61,26 @@ export class BWActorSheet extends ActorSheet {
         html.find("input.instinct-p").change((e) => this._updateItem(e, ".instinct", "data.persona"));
         html.find("input.instinct-d").change((e) => this._updateItem(e, ".instinct", "data.deeds"));
         html.find("input.instinct-t").change((e) => this._updateItem(e, ".instinct", "data.text"));
+
+        // add/delete buttons
+        html.find(".trait-category i").click((e) => this._manageTraits(e));
         super.activateListeners(html);
+    }
+    async _manageTraits(e:  JQuery.ClickEvent) {
+        e.preventDefault();
+        const t = event.currentTarget;
+        const action = $(t).data("action");
+        const id = $(t).data("id") as string;
+        let options = {};
+        switch (action) {
+            case "addTrait":
+                options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
+                return this.actor.createOwnedItem(options)
+            case "delTrait":
+                return this.actor.deleteOwnedItem(id);
+
+        }
+        return null;
     }
 
     _updateItem(e: JQuery.ChangeEvent, parentSelector: string, itemProperty: string): any {

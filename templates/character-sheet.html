@@ -49,28 +49,33 @@
     </div>
     <div class="traits">
         <div class="trait-category">
-            <h2>Character Traits</h2>
+            <h2>Character Traits
+                <i data-action="addTrait" data-id="character" class="fas fa-plus"></i>
+            </h2>
             {{#each traits.character as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}</h3>
-                    <textarea disabled="disabled">{{trait.data.text}}</textarea>
+                    <h3>{{ trait.name }}<i class="fas fa-minus" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
                 </div>
             {{/each}}
         </div>
         <div class="trait-category">
-            <h2>Die Traits</h2>
+            <h2>Die Traits
+                <i data-action="addTrait" data-id="die" class="fas fa-plus"></i>
+            </h2>
             {{#each traits.die as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}</h3>
+                    <h3>{{ trait.name }}<i class="fas fa-minus" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
                     <textarea disabled="disabled">{{trait.data.text}}</textarea>
                 </div>
             {{/each}}
         </div>
         <div class="trait-category">
-            <h2>Call-on Traits</h2>
+            <h2>Call-on Traits
+                <i data-action="addTrait" data-id="call-on" class="fas fa-plus"></i>
+            </h2>
             {{#each traits.callon as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}</h3>
+                    <h3>{{ trait.name }}<i class="fas fa-minus" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
                     <textarea disabled="disabled">{{ trait.data.text }}</textarea>
                 </div>
             {{/each}}

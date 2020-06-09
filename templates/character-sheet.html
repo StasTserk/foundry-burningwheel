@@ -1,4 +1,4 @@
-<form autocomplete="off">
+<form autocomplete="off" class="character">
     <h2>Character Index</h2>
     <div class="header">
         <label>Name
@@ -48,30 +48,32 @@
         {{/each}}
     </div>
     <div class="traits">
-        <h2>Character Traits</h2>
-        {{#each traits.character as |trait|}}
-            <div class="trait" data-item-id="{{trait._id}}">
-                <h3>{{ trait.name }}</h3>
-                <textarea>{{trait.data.text}}</textarea>
-            </div>
-        {{/each}}
-    </div>
-    <div class="traits">
-        <h2>Die Traits</h2>
-        {{#each traits.die as |trait|}}
-            <div class="trait" data-item-id="{{trait._id}}">
-                <h3>{{ trait.name }}</h3>
-                <textarea>{{trait.data.text}}</textarea>
-            </div>
-        {{/each}}
-    </div>
-    <div class="traits">
-        <h2>Call-on Traits</h2>
-        {{#each traits.callon as |trait|}}
-            <div class="trait" data-item-id="{{trait._id}}">
-                <h3>{{ trait.name }}</h3>
-                <textarea>{{ trait.data.text }}</textarea>
-            </div>
-        {{/each}}
+        <div class="trait-category">
+            <h2>Character Traits</h2>
+            {{#each traits.character as |trait|}}
+                <div class="trait" data-item-id="{{trait._id}}">
+                    <h3>{{ trait.name }}</h3>
+                    <textarea disabled="disabled">{{trait.data.text}}</textarea>
+                </div>
+            {{/each}}
+        </div>
+        <div class="trait-category">
+            <h2>Die Traits</h2>
+            {{#each traits.die as |trait|}}
+                <div class="trait" data-item-id="{{trait._id}}">
+                    <h3>{{ trait.name }}</h3>
+                    <textarea disabled="disabled">{{trait.data.text}}</textarea>
+                </div>
+            {{/each}}
+        </div>
+        <div class="trait-category">
+            <h2>Call-on Traits</h2>
+            {{#each traits.callon as |trait|}}
+                <div class="trait" data-item-id="{{trait._id}}">
+                    <h3>{{ trait.name }}</h3>
+                    <textarea disabled="disabled">{{ trait.data.text }}</textarea>
+                </div>
+            {{/each}}
+        </div>
     </div>
 </form>

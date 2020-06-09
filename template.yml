@@ -109,10 +109,7 @@ Item:
     text: ''
   trait:
     name: ''
-    traittype: 
-      - character
-      - die
-      - call-on
+    traittype: ''
     text: ''
   skill:
     name: ''

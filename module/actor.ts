@@ -1,5 +1,3 @@
-import { Belief } from "./items/belief.js";
-
 export class BWActor extends Actor {
     stock: string;
     age: number;
@@ -23,12 +21,14 @@ export class BWActor extends Actor {
     stride: number;
     mountedstride: number;
 
+    data: CharacterData;
+
     prepareData() {
         super.prepareData();
     }
 }
 
-interface CharacterData extends ActorData {
+export interface CharacterData extends ActorData {
     data: BWCharacterData;
     items: Item[];
 }

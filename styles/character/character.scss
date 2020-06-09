@@ -1,5 +1,6 @@
 .character {
-    span.test {
-        font-weight: bold;
+    .traits {
+        display: flex;
+        flex-direction: row;
     }
 }

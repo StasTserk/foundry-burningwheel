@@ -36,4 +36,42 @@
             </div>
         {{/each}}
     </div>
+    <div class="instincts">
+        <h2>Instincts</h2>
+        {{#each instincts as |instinct|}}
+            <div class="instinct" data-item-id="{{instinct._id}}">
+                F:<input class="instinct-f" type="checkbox" value="{{instinct.data.fate}}" {{ checked instinct.data.fate }}>
+                P:<input class="instinct-p" type="checkbox" value="{{instinct.data.persona}}" {{ checked instinct.data.persona }}>
+                D:<input class="instinct-d" type="checkbox" value="{{instinct.data.deeds}}" {{ checked instinct.data.deeds }}>
+                <input class="instinct-t" type="text" value="{{instinct.data.text}}">
+            </div>
+        {{/each}}
+    </div>
+    <div class="traits">
+        <h2>Character Traits</h2>
+        {{#each traits.character as |trait|}}
+            <div class="trait" data-item-id="{{trait._id}}">
+                <h3>{{ trait.name }}</h3>
+                <textarea>{{trait.data.text}}</textarea>
+            </div>
+        {{/each}}
+    </div>
+    <div class="traits">
+        <h2>Die Traits</h2>
+        {{#each traits.die as |trait|}}
+            <div class="trait" data-item-id="{{trait._id}}">
+                <h3>{{ trait.name }}</h3>
+                <textarea>{{trait.data.text}}</textarea>
+            </div>
+        {{/each}}
+    </div>
+    <div class="traits">
+        <h2>Call-on Traits</h2>
+        {{#each traits.callon as |trait|}}
+            <div class="trait" data-item-id="{{trait._id}}">
+                <h3>{{ trait.name }}</h3>
+                <textarea>{{ trait.data.text }}</textarea>
+            </div>
+        {{/each}}
+    </div>
 </form>

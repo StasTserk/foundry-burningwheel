@@ -1,6 +1,6 @@
 import { ArthaEarner } from "module/item.js";
 
-export class Belief extends Item implements ArthaEarner {
+export class Instinct extends Item implements ArthaEarner {
     prepareData() {
         this.fate = this.data.fate;
         this.persona = this.data.persona;
@@ -8,7 +8,7 @@ export class Belief extends Item implements ArthaEarner {
         this.text = this.data.text;
     }
 
-    data: BeliefData;
+    data: InstinctData;
 
     fate: boolean;
     persona: boolean;
@@ -16,6 +16,6 @@ export class Belief extends Item implements ArthaEarner {
     text: string;
 }
 
-interface BeliefData extends BaseEntityData, ArthaEarner {
+interface InstinctData extends BaseEntityData, ArthaEarner {
     text: string;
 }

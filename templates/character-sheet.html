@@ -28,22 +28,22 @@
     <div class="beliefs">
         <h2>Beliefs</h2>
         {{#each beliefs as |belief iid|}}
-            <div class="belief" data-item-id="{{belief._id}}">
-                F:<input class="belief-f" type="checkbox" value="{{belief.data.fate}}" {{ checked belief.data.fate }}>
-                P:<input class="belief-p" type="checkbox" value="{{belief.data.persona}}" {{ checked belief.data.persona }}>
-                D:<input class="belief-d" type="checkbox" value="{{belief.data.deeds}}" {{ checked belief.data.deeds }}>
-                <input class="belief-t" type="text" value="{{belief.data.text}}">
+            <div class="belief" >
+                F:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.fate" {{ checked belief.data.fate }}>
+                P:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.persona"  {{ checked belief.data.persona }}>
+                D:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.deeds" {{ checked belief.data.deeds }}>
+                <input type="text" data-item-id="{{belief._id}}" data-binding="data.text" value="{{belief.data.text}}">
             </div>
         {{/each}}
     </div>
     <div class="instincts">
         <h2>Instincts</h2>
         {{#each instincts as |instinct|}}
-            <div class="instinct" data-item-id="{{instinct._id}}">
-                F:<input class="instinct-f" type="checkbox" value="{{instinct.data.fate}}" {{ checked instinct.data.fate }}>
-                P:<input class="instinct-p" type="checkbox" value="{{instinct.data.persona}}" {{ checked instinct.data.persona }}>
-                D:<input class="instinct-d" type="checkbox" value="{{instinct.data.deeds}}" {{ checked instinct.data.deeds }}>
-                <input class="instinct-t" type="text" value="{{instinct.data.text}}">
+            <div class="instinct">
+                F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.fate" {{ checked instinct.data.fate }}>
+                P:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.persona" {{ checked instinct.data.persona }}>
+                D:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.deeds" {{ checked instinct.data.deeds }}>
+                <input type="text" data-item-id="{{instinct._id}}" data-binding="data.text" value="{{instinct.data.text}}">
             </div>
         {{/each}}
     </div>

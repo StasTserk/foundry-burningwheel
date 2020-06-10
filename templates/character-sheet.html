@@ -81,4 +81,13 @@
             {{/each}}
         </div>
     </div>
+    <h2>Stats</h2>
+    <div class="stats">
+        {{> "systems/burningwheel/templates/parts/stat.html" statName="Power" stat=data.will namePrefix="data.will"}}
+        {{> "systems/burningwheel/templates/parts/stat.html" statName="Power" stat=data.power namePrefix="data.power"}}
+        {{> "systems/burningwheel/templates/parts/stat.html" statName="Agility" stat=data.agility namePrefix="data.agility"}}
+        {{> "systems/burningwheel/templates/parts/stat.html" statName="Perception" stat=data.perception namePrefix="data.perception"}}
+        {{> "systems/burningwheel/templates/parts/stat.html" statName="Forte" stat=data.forte namePrefix="data.forte"}}
+        {{> "systems/burningwheel/templates/parts/stat.html" statName="Speed" stat=data.speed namePrefix="data.speed"}}
+    </div>
 </form>

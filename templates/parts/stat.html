@@ -1,0 +1,14 @@
+<div class="stat">
+    <div class="statheader">{{ statName }}</div>
+    <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
+        {{#select stat.shade}}
+        <option value="B">B</option>
+        <option value="G">G</option>
+        <option value="W">W</option>
+        {{/select}}
+    </select>
+    <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}">
+    <div class="stat-extra">
+
+    </div>
+</div>

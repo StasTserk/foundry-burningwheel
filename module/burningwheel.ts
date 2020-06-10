@@ -1,12 +1,13 @@
 import { BWActor } from "./actor.js";
-import { BWCharacterSheet } from "./character-sheet.js";
 import { BWActorSheet } from "./bwactor-sheet.js"
+import { BWCharacterSheet } from "./character-sheet.js";
 import { BWItem } from "./item.js";
 import { BeliefSheet } from "./items/belief-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js"
-import { Trait } from "./items/trait.js"
 import { TraitSheet } from "./items/trait-sheet.js";
+import { Trait } from "./items/trait.js"
+import { preloadHandlebarsTemplates } from "./templates.js";
 
 Hooks.once("init", async () => {
     (game as any).bw = {
@@ -34,4 +35,6 @@ Hooks.once("init", async () => {
         types: ["trait"],
         makeDefault: true
     });
+
+    preloadHandlebarsTemplates();
 })

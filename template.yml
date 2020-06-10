@@ -6,42 +6,36 @@ Actor:
     common:
       will:
         exp: 1
-        routine: 0
         difficult: 0
         challenging: 0
         shade: B
         open: false
       power:
         exp: 1
-        routine: 0
         difficult: 0
         challenging: 0
         shade: B
         open: false
       agility:
         exp: 1
-        routine: 0
         difficult: 0
         challenging: 0
         shade: B
         open: false
       perception:
         exp: 1
-        routine: 0
         difficult: 0
         challenging: 0
         shade: B
         open: false
       forte:
         exp: 1
-        routine: 0
         difficult: 0
         challenging: 0
         shade: B
         open: false
       speed:
         exp: 1
-        routine: 0
         difficult: 0
         challenging: 0
         shade: B
@@ -79,12 +73,12 @@ Actor:
   character:
     templates: 
       - common
-    stock: ""
+    stock: ''
     age: 18
-    lifepathString: ""
-    alias: ""
-    homeland: ""
-    features: ""
+    lifepathString: ''
+    alias: ''
+    homeland: ''
+    features: ''
   npc:
     templates:
       - common
@@ -117,38 +111,9 @@ Item:
     routine: 0
     difficult: 0
     challenging: 0
-    root1: 
-      - will
-      - power
-      - perception
-      - agility
-      - speed
-      - forte
-    root2:
-      - will
-      - power
-      - perception
-      - agility
-      - speed
-      - forte
+    root1: ''
+    root2: ''
     learning: false
-    skilltype: 
-      - academic
-      - artisan
-      - artist
-      - craftsman
-      - forester
-      - martial
-      - medicinal
-      - military
-      - musical
-      - peasant
-      - physical
-      - schoolofthought
-      - seafaring
-      - social
-      - sorcerous
-      - special
-      - wise
+    skilltype: ''
     training: false
     description: ''

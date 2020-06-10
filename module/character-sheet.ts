@@ -1,7 +1,7 @@
+import { BWActorSheet } from "./bwactor-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
 import { Trait } from "./items/trait.js";
-import { BWActorSheet } from "./bwactor-sheet.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): ActorSheetData {
@@ -43,15 +43,6 @@ export class BWCharacterSheet extends BWActorSheet {
     }
 
     activateListeners(html: JQuery) {
-        html.find("input.belief-f").change((e) => this._updateItem(e, ".belief", "data.fate"));
-        html.find("input.belief-p").change((e) => this._updateItem(e, ".belief", "data.persona"));
-        html.find("input.belief-d").change((e) => this._updateItem(e, ".belief", "data.deeds"));
-        html.find("input.belief-t").change((e) => this._updateItem(e, ".belief", "data.text"));
-        html.find("input.instinct-f").change((e) => this._updateItem(e, ".instinct", "data.fate"));
-        html.find("input.instinct-p").change((e) => this._updateItem(e, ".instinct", "data.persona"));
-        html.find("input.instinct-d").change((e) => this._updateItem(e, ".instinct", "data.deeds"));
-        html.find("input.instinct-t").change((e) => this._updateItem(e, ".instinct", "data.text"));
-
         // add/delete buttons
         html.find(".trait-category i").click((e) => this._manageTraits(e));
         super.activateListeners(html);

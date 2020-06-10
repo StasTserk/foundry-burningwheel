@@ -1,19 +1,9 @@
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
 import { Trait } from "./items/trait.js";
+import { BWActorSheet } from "./bwactor-sheet.js";
 
-export class BWActorSheet extends ActorSheet {
-    /** @override */
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {});
-    }
-
-    /** @override */
-    get template() {
-        const path = "systems/burningwheel/templates";
-        return `${path}/${this.actor.data.type}-sheet.html`;
-    }
-
+export class BWCharacterSheet extends BWActorSheet {
     getData(): ActorSheetData {
         const data = super.getData() as CharacterSheetData;
         const beliefs = [];

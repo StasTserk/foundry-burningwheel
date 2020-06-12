@@ -68,6 +68,22 @@ Actor:
         challenging: 0
         shade: B
         open: false
+      custom1:
+        name: ''
+        exp: 1
+        routine: 0
+        difficult: 0
+        challenging: 0
+        shade: B
+        open: false
+      custom2:
+        name: ''
+        exp: 1
+        routine: 0
+        difficult: 0
+        challenging: 0
+        shade: B
+        open: false
       stride: 7
       mountedstride: 0
   character:

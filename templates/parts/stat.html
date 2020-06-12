@@ -1,5 +1,5 @@
 <div class="stat">
-    <div class="statheader">{{ statName }}</div>
+    <h3 class="statheader">{{ statName }}</h3>
     <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
         {{#select stat.shade}}
         <option value="B">B</option>
@@ -8,7 +8,36 @@
         {{/select}}
     </select>
     <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}">
-    <div class="stat-extra">
-
+    <div class="collapsing-section">
+        <div class="test-tracking">
+            <div class="test-title">Difficult:</div>
+            {{#multiboxes stat.difficult}}
+            <input type="radio" id="{{statName}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked">
+            <label for="{{statName}}-difficult-0" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-difficult-1" name="{{namePrefix}}.difficult" value="1">
+            <label for="{{statName}}-difficult-1" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-difficult-2" name="{{namePrefix}}.difficult" value="2">
+            <label for="{{statName}}-difficult-2" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-difficult-3" name="{{namePrefix}}.difficult" value="3">
+            <label for="{{statName}}-difficult-3" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-difficult-4" name="{{namePrefix}}.difficult" value="4">
+            <label for="{{statName}}-difficult-4" class="progress-tick">&nbsp;</label>
+            {{/multiboxes}}
+        </div>
+        <div class="test-tracking">
+            <div class="test-title">Challenging:</div>
+            {{#multiboxes stat.challenging}}
+            <input type="radio" id="{{statName}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked">
+            <label for="{{statName}}-challenging-0" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-challenging-1" name="{{namePrefix}}.challenging" value="1">
+            <label for="{{statName}}-challenging-1" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-challenging-2" name="{{namePrefix}}.challenging" value="2">
+            <label for="{{statName}}-challenging-2" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-challenging-3" name="{{namePrefix}}.challenging" value="3">
+            <label for="{{statName}}-challenging-3" class="progress-tick">&nbsp;</label>
+            <input type="radio" id="{{statName}}-challenging-4" name="{{namePrefix}}.challenging" value="4">
+            <label for="{{statName}}-challenging-4" class="progress-tick">&nbsp;</label>
+            {{/multiboxes}}
+        </div>
     </div>
 </div>

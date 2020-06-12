@@ -37,4 +37,22 @@ Hooks.once("init", async () => {
     });
 
     preloadHandlebarsTemplates();
-})
+    registerHelpers();
+});
+
+function registerHelpers() {
+    Handlebars.registerHelper('multiboxes', function(selected, options) {
+        let html = options.fn(this);
+        if (!selected || !(selected instanceof Array)) {
+            selected = [ 0 ];
+        }
+        selected.forEach((selectedValue: string) => {
+            if (selectedValue) {
+                const escapedValue = Handlebars.escapeExpression(selectedValue);
+                const rgx = new RegExp(' value=\"' + escapedValue + '\"');
+                html = html.replace(rgx, "$& checked=\"checked\"");
+            }
+        });
+        return html;
+    });
+}

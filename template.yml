@@ -6,38 +6,38 @@ Actor:
     common:
       will:
         exp: 1
-        difficult: 0
-        challenging: 0
+        difficult: [0]
+        challenging: [0]
         shade: B
         open: false
       power:
         exp: 1
-        difficult: 0
-        challenging: 0
+        difficult: [0]
+        challenging: [0]
         shade: B
         open: false
       agility:
         exp: 1
-        difficult: 0
-        challenging: 0
+        difficult: [0]
+        challenging: [0]
         shade: B
         open: false
       perception:
         exp: 1
-        difficult: 0
-        challenging: 0
+        difficult: [0]
+        challenging: [0]
         shade: B
         open: false
       forte:
         exp: 1
-        difficult: 0
-        challenging: 0
+        difficult: [0]
+        challenging: [0]
         shade: B
         open: false
       speed:
         exp: 1
-        difficult: 0
-        challenging: 0
+        difficult: [0]
+        challenging: [0]
         shade: B
         open: false
       health:

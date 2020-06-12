@@ -24,5 +24,34 @@
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 5px;
         row-gap: 5px;
+
+        .test-tracking {
+            display: flex;
+        }
+
+        .test-tracking > .test-title {
+            width: 33%;
+        }
+
+        input[type=radio] {
+            visibility: hidden;
+            display: none;
+        }
+
+        label.progress-tick {
+            display: block;
+            background-color: #333333;
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 20px;
+        }
+
+        input[type=radio]:checked ~ label {
+            background-color: white;
+        }
+
+        input[type=radio]:checked + label {
+            background-color: #333333;
+        }
     }
 }

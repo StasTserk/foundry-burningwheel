@@ -54,7 +54,7 @@
             </h2>
             {{#each traits.character as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}<i class="fas fa-minus" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
+                    <h3>{{ trait.name }}<i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
                 </div>
             {{/each}}
         </div>
@@ -64,7 +64,7 @@
             </h2>
             {{#each traits.die as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}<i class="fas fa-minus" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
+                    <h3>{{ trait.name }}<i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
                     <textarea disabled="disabled">{{trait.data.text}}</textarea>
                 </div>
             {{/each}}
@@ -75,7 +75,7 @@
             </h2>
             {{#each traits.callon as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}<i class="fas fa-minus" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
+                    <h3>{{ trait.name }}<i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
                     <textarea disabled="disabled">{{ trait.data.text }}</textarea>
                 </div>
             {{/each}}
@@ -83,11 +83,20 @@
     </div>
     <h2>Stats</h2>
     <div class="stats">
-        {{> "systems/burningwheel/templates/parts/stat.html" statName="Will" stat=data.will namePrefix="data.will"}}
-        {{> "systems/burningwheel/templates/parts/stat.html" statName="Power" stat=data.power namePrefix="data.power"}}
-        {{> "systems/burningwheel/templates/parts/stat.html" statName="Agility" stat=data.agility namePrefix="data.agility"}}
-        {{> "systems/burningwheel/templates/parts/stat.html" statName="Perception" stat=data.perception namePrefix="data.perception"}}
-        {{> "systems/burningwheel/templates/parts/stat.html" statName="Forte" stat=data.forte namePrefix="data.forte"}}
-        {{> "systems/burningwheel/templates/parts/stat.html" statName="Speed" stat=data.speed namePrefix="data.speed"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Will" stat=data.will namePrefix="data.will"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Power" stat=data.power namePrefix="data.power"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Agility" stat=data.agility namePrefix="data.agility"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Perception" stat=data.perception namePrefix="data.perception"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Forte" stat=data.forte namePrefix="data.forte"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Speed" stat=data.speed namePrefix="data.speed"}}
+    </div>
+    <h2>Attributes</h2>
+    <div class="attributes">
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Health" stat=data.health namePrefix="data.health" routine=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Steel" stat=data.steel namePrefix="data.steel" routine=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Circles" stat=data.circles namePrefix="data.circles" routine=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Resources" stat=data.resources namePrefix="data.resources" routine=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom1" stat=data.custom1 namePrefix="data.custom1" routine=true customName=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom2" stat=data.custom2 namePrefix="data.custom2" routine=true customName=true}}
     </div>
 </form>

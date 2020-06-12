@@ -9,8 +9,9 @@
 
             i {
                 float: right;
-                font-size: 16px;
+                font-size: 12px;
                 margin-top: 6px;
+                color: transparentize($color: black, $amount: 0.25)
             }
 
             i:hover {
@@ -19,7 +20,7 @@
         }
     }
 
-    .stats {
+    .stats, .attributes {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 5px;
@@ -27,10 +28,21 @@
 
         .test-tracking {
             display: flex;
-        }
 
-        .test-tracking > .test-title {
-            width: 33%;
+            label.test-tracking-clear {
+                display: block;
+                color: transparent;
+                width: 15px;
+                text-align: center;
+            }
+
+            label.test-tracking-clear:hover {
+                color: red;
+            }
+
+            .test-title {
+                width: 33%;
+            }
         }
 
         input[type=radio] {
@@ -42,15 +54,22 @@
             display: block;
             background-color: #333333;
             border: 1px solid black;
-            border-radius: 10px;
-            width: 20px;
+            border-radius: 7px;
+            width: 15px;
+            height: 15px;
+            margin-left: 3px;
+            margin-top: 1px;
         }
 
-        input[type=radio]:checked ~ label {
+        input[type=radio]:checked ~ label.progress-tick {
             background-color: white;
         }
 
-        input[type=radio]:checked + label {
+        input[type=radio]:checked ~ label.progress-tick:hover {
+            background-color: lightgray;
+        }
+
+        input[type=radio]:checked + label.progress-tick {
             background-color: #333333;
         }
     }

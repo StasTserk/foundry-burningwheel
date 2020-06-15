@@ -1,8 +1,17 @@
 .character {
-    .traits {
+    input.exponent {
+        width: 2.5em;
+        max-height: 28px;
+    }
+
+
+    .flex-row {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
+    }
 
+    .traits {
         .trait-category {
             width: calc(33% - 10px);
             margin: 5px;
@@ -25,6 +34,41 @@
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 5px;
         row-gap: 5px;
+
+        .stat:hover {
+            background-color: lightgray;
+        }
+
+        .stat-name { 
+            width: 40%;
+            margin-right: 1em;
+        }
+
+        .collapse-checkbox {
+            display: none;
+        }
+
+        .collapse-checkbox:checked ~ .collapsing-section {
+            height: 0;
+            display: none;
+        }
+
+        .collapse-label {
+            transition: transform 1s;
+            margin-right: 5px;
+        }
+
+        .collapse-checkbox:checked + .collapse-label > i {
+            transform: rotate(-90deg);
+        }
+
+        .collapsing-section {
+            width: 100%;
+            transition-property: width, display;
+            transition-delay: 0, 1s;
+            transition-duration: 1s, 0;
+            transition-timing-function: linear, linear;
+        }
 
         .test-tracking {
             display: flex;

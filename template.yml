@@ -10,36 +10,42 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       power:
         exp: 1
         difficult: 0
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       agility:
         exp: 1
         difficult: 0
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       perception:
         exp: 1
         difficult: 0
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       forte:
         exp: 1
         difficult: 0
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       speed:
         exp: 1
         difficult: 0
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       health:
         exp: 1
         routine: 0
@@ -47,6 +53,7 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       steel:
         exp: 1
         routine: 0
@@ -54,6 +61,7 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       circles:
         exp: 1
         routine: 0
@@ -61,6 +69,7 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       resources:
         exp: 1
         routine: 0
@@ -68,6 +77,7 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       custom1:
         name: ''
         exp: 1
@@ -76,6 +86,7 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       custom2:
         name: ''
         exp: 1
@@ -84,6 +95,7 @@ Actor:
         challenging: 0
         shade: B
         open: false
+        collapsed: true
       stride: 7
       mountedstride: 0
   character:

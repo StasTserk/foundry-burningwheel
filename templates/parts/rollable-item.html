@@ -1,5 +1,5 @@
 <div class="stat flex-row">
-    <input id="{{statName}}Toggle" class="collapse-checkbox" type="checkbox" checked>
+    <input id="{{statName}}Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
     <label for="{{statName}}Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     {{#if customName }}
     <input type="text" name="{{namePrefix}}.name" value={{stat.name}} class="stat-name">
@@ -23,13 +23,13 @@
             <input type="radio" id="{{statName}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked">
             <label for="{{statName}}-routine-0" class="test-tracking-clear"><i class="fas fa-times-circle"></i></label>
             <input type="radio" id="{{statName}}-routine-1" name="{{namePrefix}}.routine" value="1">
-            <label for="{{statName}}-routine-1" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
             <input type="radio" id="{{statName}}-routine-2" name="{{namePrefix}}.routine" value="2">
-            <label for="{{statName}}-routine-2" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-routine-2" class="progress-tick progress-tick-2">&nbsp;</label>
             <input type="radio" id="{{statName}}-routine-3" name="{{namePrefix}}.routine" value="3">
-            <label for="{{statName}}-routine-3" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-routine-3" class="progress-tick progress-tick-3">&nbsp;</label>
             <input type="radio" id="{{statName}}-routine-4" name="{{namePrefix}}.routine" value="4">
-            <label for="{{statName}}-routine-4" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         {{/if}}
@@ -40,13 +40,13 @@
             <input type="radio" id="{{statName}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked">
             <label for="{{statName}}-difficult-0" class="test-tracking-clear"><i class="fas fa-times-circle"></i></label>
             <input type="radio" id="{{statName}}-difficult-1" name="{{namePrefix}}.difficult" value="1">
-            <label for="{{statName}}-difficult-1" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
             <input type="radio" id="{{statName}}-difficult-2" name="{{namePrefix}}.difficult" value="2">
-            <label for="{{statName}}-difficult-2" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-difficult-2" class="progress-tick progress-tick-2">&nbsp;</label>
             <input type="radio" id="{{statName}}-difficult-3" name="{{namePrefix}}.difficult" value="3">
-            <label for="{{statName}}-difficult-3" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
             <input type="radio" id="{{statName}}-difficult-4" name="{{namePrefix}}.difficult" value="4">
-            <label for="{{statName}}-difficult-4" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         <div class="test-tracking">
@@ -56,11 +56,11 @@
             <input type="radio" id="{{statName}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked">
             <label for="{{statName}}-challenging-0" class="test-tracking-clear"><i class="fas fa-times-circle"></i></label>
             <input type="radio" id="{{statName}}-challenging-1" name="{{namePrefix}}.challenging" value="1">
-            <label for="{{statName}}-challenging-1" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
             <input type="radio" id="{{statName}}-challenging-2" name="{{namePrefix}}.challenging" value="2">
-            <label for="{{statName}}-challenging-2" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-challenging-2" class="progress-tick progress-tick-2">&nbsp;</label>
             <input type="radio" id="{{statName}}-challenging-3" name="{{namePrefix}}.challenging" value="3">
-            <label for="{{statName}}-challenging-3" class="progress-tick">&nbsp;</label>
+            <label for="{{statName}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
     </div>

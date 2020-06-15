@@ -120,5 +120,19 @@
         input[type=radio]:checked + label.progress-tick {
             background-color: #333333;
         }
+
+        .tests-needed[value="0"] ~ .progress-tick-1,
+        .tests-needed[value="0"] ~ .progress-tick-2,
+        .tests-needed[value="0"] ~ .progress-tick-3,
+        .tests-needed[value="0"] ~ .progress-tick-4,
+        .tests-needed[value="1"] ~ .progress-tick-2,
+        .tests-needed[value="1"] ~ .progress-tick-3,
+        .tests-needed[value="1"] ~ .progress-tick-4,
+        .tests-needed[value="2"] ~ .progress-tick-3,
+        .tests-needed[value="2"] ~ .progress-tick-4,
+        .tests-needed[value="3"] ~ .progress-tick-4 {
+            pointer-events: none;
+            opacity: 25%;
+        }
     }
 }

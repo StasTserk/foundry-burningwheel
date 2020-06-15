@@ -1,8 +1,10 @@
-<div class="stat">
+<div class="stat flex-row">
+    <input id="{{statName}}Toggle" class="collapse-checkbox" type="checkbox" checked>
+    <label for="{{statName}}Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     {{#if customName }}
-    <input type="text" name="{{namePrefix}}.name" value={{stat.name}}>
+    <input type="text" name="{{namePrefix}}.name" value={{stat.name}} class="stat-name">
     {{else}}
-    <h3 class="statheader">{{ statName }}</h3>
+    <h3 class="stat-name">{{ statName }}</h3>
     {{/if}}
     <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
         {{#select stat.shade}}

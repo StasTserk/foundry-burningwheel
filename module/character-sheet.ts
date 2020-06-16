@@ -44,10 +44,31 @@ export class BWCharacterSheet extends BWActorSheet {
 
     activateListeners(html: JQuery) {
         // add/delete buttons
-        html.find(".trait-category i").click((e) => this._manageTraits(e));
+        html.find(".trait-category i").click(e => this._manageTraits(e));
+        // roll macros
+        html.find("button.rollable").click(e => this._handleRollable(e));
         super.activateListeners(html);
     }
-    async _manageTraits(e:  JQuery.ClickEvent) {
+
+    private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
+        const template = "systems/burningwheel/templates/chat/roll.html";
+        const html = await renderTemplate(template, {});
+        const speaker = ChatMessage.getSpeaker({actor: this.actor})
+        return new Promise(resolve =>
+            new Dialog({
+                title: "Roll Test",
+                content: html,
+                buttons: {
+                    roll: {
+                        label: "Roll",
+                        callback: _html => ChatMessage.create({ content: "wow, nice roll", speaker })
+                    }
+                }
+            }).render(true)
+        );
+    }
+
+    private async _manageTraits(e:  JQuery.ClickEvent) {
         e.preventDefault();
         const t = event.currentTarget;
         const action = $(t).data("action");
@@ -62,16 +83,6 @@ export class BWCharacterSheet extends BWActorSheet {
 
         }
         return null;
-    }
-
-    _updateItem(e: JQuery.ChangeEvent, parentSelector: string, itemProperty: string): any {
-        e.preventDefault();
-        const itemId = $(e.currentTarget).closest(parentSelector).data("itemId");
-        const item = this.actor.getOwnedItem(itemId);
-        const value = $(e.target).val();
-        const updateParams = {};
-        updateParams[itemProperty] = value;
-        return item.update(updateParams, {});
     }
 
     async addDefaultItems() {

@@ -1,16 +1,4 @@
 .character {
-    input.exponent {
-        width: 2.5em;
-        max-height: 28px;
-    }
-
-
-    .flex-row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
     .traits {
         .trait-category {
             width: calc(33% - 10px);

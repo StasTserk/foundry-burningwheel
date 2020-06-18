@@ -53,7 +53,7 @@ export class BWCharacterSheet extends BWActorSheet {
     private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
         const target = e.currentTarget as HTMLButtonElement;
         const skill = getProperty(this.actor.data, target.dataset.accessor);
-        const template = "systems/burningwheel/templates/chat/roll.html";
+        const template = "systems/burningwheel/templates/chat/roll-dialog.html";
         const templateData = {
             name: target.dataset.rollableName,
             difficulty: 3,
@@ -70,13 +70,23 @@ export class BWCharacterSheet extends BWActorSheet {
                 buttons: {
                     roll: {
                         label: "Roll",
-                        callback: (dialogHtml: JQuery<HTMLElement>) => {
+                        callback: async (dialogHtml: JQuery<HTMLElement>) => {
                             const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
                             const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
                             const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
                             const exp = parseInt(skill.exp, 10);
+                            const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
+                            const roll = new Roll(`${exp+bDice+aDice}d6cs>3`).roll();
+                            const data = {
+                                successes: roll.result,
+                                difficulty: diff,
+                                success: parseInt(roll.result, 10) >= diff,
+                                rolls: roll.dice[0].rolls
+                            }
+
+                            const messageHtml = await renderTemplate(mTemplate, data)
                             ChatMessage.create({
-                                content: `Rolling ${templateData.name}. ${exp + bDice + aDice} dice vs DC ${diff}`,
+                                content: messageHtml,
                                 speaker
                             });
                         }

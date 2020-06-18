@@ -1,0 +1,26 @@
+<div class="chat-message flex-row">
+    <div class="roll-half-width">
+        <label>Successes</label>
+        <div>{{ successes }}</div>
+        <div class="roll-dice flex-row">
+            {{#each rolls as |r|}}
+            <div class="roll-die" data-success="{{r.success}}">
+                {{r.roll}}
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="roll-half-width">
+        <label>Difficulty</label>
+        <div>{{ difficulty }}</div>
+    </div>
+    {{#if success}}
+    <div class="roll-result">
+        Success!
+    </div>
+    {{else}}
+    <div class="roll-result">
+        Failure!
+    </div>
+    {{/if}}
+</div>

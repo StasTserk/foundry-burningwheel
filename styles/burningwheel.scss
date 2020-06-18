@@ -1,4 +1,5 @@
 @import "./character/character.scss";
+@import "./roll.scss";
 
 .subheader,
 .header {
@@ -12,4 +13,15 @@
 button.rollable {
     width: 2.5em;
     height: 2.2em;
+}
+
+input.exponent {
+    width: 2.5em;
+    max-height: 28px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

@@ -51,8 +51,17 @@ export class BWCharacterSheet extends BWActorSheet {
     }
 
     private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
+        const target = e.currentTarget as HTMLButtonElement;
+        const skill = getProperty(this.actor.data, target.dataset.accessor);
         const template = "systems/burningwheel/templates/chat/roll.html";
-        const html = await renderTemplate(template, {});
+        const templateData = {
+            name: target.dataset.rollableName,
+            difficulty: 3,
+            bonusDice: 0,
+            arthaDice: 0,
+            skill
+        };
+        const html = await renderTemplate(template, templateData);
         const speaker = ChatMessage.getSpeaker({actor: this.actor})
         return new Promise(resolve =>
             new Dialog({
@@ -61,7 +70,16 @@ export class BWCharacterSheet extends BWActorSheet {
                 buttons: {
                     roll: {
                         label: "Roll",
-                        callback: _html => ChatMessage.create({ content: "wow, nice roll", speaker })
+                        callback: (dialogHtml: JQuery<HTMLElement>) => {
+                            const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
+                            const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
+                            const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
+                            const exp = parseInt(skill.exp, 10);
+                            ChatMessage.create({
+                                content: `Rolling ${templateData.name}. ${exp + bDice + aDice} dice vs DC ${diff}`,
+                                speaker
+                            });
+                        }
                     }
                 }
             }).render(true)

@@ -1,4 +1,8 @@
 .character {
+    h2 {
+        text-align: center;
+    }
+
     .traits {
         .trait-category {
             width: calc(33% - 10px);
@@ -42,7 +46,6 @@
         }
 
         .collapse-label {
-            transition: transform 1s;
             margin-right: 5px;
         }
 
@@ -52,10 +55,6 @@
 
         .collapsing-section {
             width: 100%;
-            transition-property: width, display;
-            transition-delay: 0, 1s;
-            transition-duration: 1s, 0;
-            transition-timing-function: linear, linear;
         }
 
         .test-tracking {

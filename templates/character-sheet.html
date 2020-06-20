@@ -25,8 +25,12 @@
             <input type="text" name="data.features" value="{{data.features}}">
         </label>
     </div>
+    <input type="checkbox" id="collapseBeliefs" name="data.collapseBeliefs" class="section-collapse beliefs-collapse" {{ checked data.collapseBeliefs }}>
+    <h2>
+        <label for="collapseBeliefs" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Beliefs
+    </h2>
     <div class="beliefs">
-        <h2>Beliefs</h2>
         {{#each beliefs as |belief iid|}}
             <div class="belief" >
                 F:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.fate" {{ checked belief.data.fate }}>
@@ -36,8 +40,12 @@
             </div>
         {{/each}}
     </div>
+    <input type="checkbox" id="collapseInstincts" name="data.collapseInstincts" class="section-collapse instincts-collapse" {{ checked data.collapseInstincts }}>
+    <h2>
+        <label for="collapseInstincts" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Instincts
+    </h2>
     <div class="instincts">
-        <h2>Instincts</h2>
         {{#each instincts as |instinct|}}
             <div class="instinct">
                 F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.fate" {{ checked instinct.data.fate }}>
@@ -47,6 +55,11 @@
             </div>
         {{/each}}
     </div>
+    <input type="checkbox" id="collapseTraits" name="data.collapseTraits" class="section-collapse traits-collapse" {{ checked data.collapseTraits }}>
+    <h2>
+        <label for="collapseTraits" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Traits
+    </h2>
     <div class="traits flex-row">
         <div class="trait-category">
             <h2>Character Traits
@@ -81,7 +94,11 @@
             {{/each}}
         </div>
     </div>
-    <h2>Stats</h2>
+    <input type="checkbox" id="collapseStats" name="data.collapseStats" class="section-collapse stats-collapse" {{ checked data.collapseStats }}>
+    <h2>
+        <label for="collapseStats" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Stats
+    </h2>
     <div class="stats">
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Will" stat=data.will namePrefix="data.will"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Power" stat=data.power namePrefix="data.power"}}
@@ -90,7 +107,11 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Forte" stat=data.forte namePrefix="data.forte"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Speed" stat=data.speed namePrefix="data.speed"}}
     </div>
-    <h2>Attributes</h2>
+    <input type="checkbox" id="collapseAttributes" name="data.collapseAttributes" class="section-collapse attributes-collapse" {{ checked data.collapseAttributes }}>
+    <h2>
+        <label for="collapseAttributes" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Attributes
+    </h2>
     <div class="attributes">
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Health" stat=data.health namePrefix="data.health" routine=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Steel" stat=data.steel namePrefix="data.steel" routine=true}}

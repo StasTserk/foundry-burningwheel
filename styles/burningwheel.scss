@@ -25,3 +25,24 @@ input.exponent {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+input.section-collapse {
+    display: none;
+}
+
+input.section-collapse:checked + h2 > label.section-collapse-label > i {
+    transform: rotate(-90deg);
+}
+
+label.section-collapse-label {
+    float: left;
+    margin-left: 10px;
+}
+
+input.attributes-collapse:checked ~ .attributes,
+input.beliefs-collapse:checked ~ .beliefs,
+input.instincts-collapse:checked ~ .instincts,
+input.traits-collapse:checked ~ .traits,
+input.stats-collapse:checked ~ .stats {
+    display: none;
+}

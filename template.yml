@@ -3,6 +3,14 @@ Actor:
     - character
     - npc
   templates:
+    displayProps:
+      collapseBeliefs: false
+      collapseInstincts: false
+      collapseTraits: false
+      collapseStats: false
+      collapseAttributes: false
+      collapseSkills: false
+      collapsePtgs: false
     common:
       will:
         exp: 1
@@ -99,8 +107,9 @@ Actor:
       stride: 7
       mountedstride: 0
   character:
-    templates: 
+    templates:
       - common
+      - displayProps
     stock: ''
     age: 18
     lifepathString: ''
@@ -110,6 +119,7 @@ Actor:
   npc:
     templates:
       - common
+      - displayProps
 Item:
   types:
     - belief

@@ -59,7 +59,7 @@ export interface CharacterData extends ActorData {
     items: Item[];
 }
 
-interface BWCharacterData extends Common {
+interface BWCharacterData extends Common, DisplayProps {
     stock: string;
     age: number;
     lifepathString: string;
@@ -99,6 +99,16 @@ export interface Ability {
     challengingNeeded?: number;
     shade: string;
     open: boolean;
+}
+
+export interface DisplayProps {
+    collapseBeliefs: boolean;
+    collapseInstincts: boolean;
+    collapseTraits: boolean;
+    collapseStats: boolean;
+    collapseAttributes: boolean;
+    collapseSkills: boolean;
+    collapsePtgs: boolean;
 }
 
 const AbilityLookup = {

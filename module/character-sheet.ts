@@ -81,7 +81,8 @@ export class BWCharacterSheet extends BWActorSheet {
                                 successes: roll.result,
                                 difficulty: diff,
                                 success: parseInt(roll.result, 10) >= diff,
-                                rolls: roll.dice[0].rolls
+                                rolls: roll.dice[0].rolls,
+                                difficultyGroup: difficultyGroup(exp + bDice, diff)
                             }
 
                             const messageHtml = await renderTemplate(mTemplate, data)
@@ -121,6 +122,27 @@ export class BWCharacterSheet extends BWActorSheet {
             .then(() => this.actor.createOwnedItem({ name: "Belief 2", type: "belief", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief 3", type: "belief", data: {}}))
     }
+}
+
+function difficultyGroup(dice: number, difficulty: number): string {
+    if (difficulty > dice) {
+        return "Challenging";
+    }
+    if (dice === 1) {
+        return "Routine/Difficult";
+    }
+    if (dice === 2) {
+        return difficulty === 2 ? "Difficult" : "Routine";
+    }
+
+    let spread = 1;
+    if (dice > 6) {
+        spread = 3;
+    } else if (dice > 3) {
+        spread = 2;
+    }
+
+     return (dice - spread >= difficulty) ? "Routine" : "Difficult";
 }
 
 interface CharacterSheetData extends ActorSheetData {

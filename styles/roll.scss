@@ -1,8 +1,18 @@
 .chat-message {
     display: flex;
 
+    div {
+        text-align: center;
+    }
+
     .roll-half-width {
         width: 50%;
+        padding: 5px;
+        border: 1px black solid;
+    }
+
+    .roll-full-width {
+        width: 100%;
         padding: 5px;
         border: 1px black solid;
     }

@@ -120,4 +120,14 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom1" stat=data.custom1 namePrefix="data.custom1" routine=true customName=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom2" stat=data.custom2 namePrefix="data.custom2" routine=true customName=true}}
     </div>
+    <input type="checkbox" id="collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
+    <h2>
+        <label for="collapseSkills" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Skills
+    </h2>
+    <div class="skills">
+        {{#each skills as |skill|}}
+            {{> "systems/burningwheel/templates/parts/rollable-skill.html" skill=skill }}
+        {{/each}}
+    </div>
 </form>

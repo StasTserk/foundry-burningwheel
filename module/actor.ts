@@ -1,3 +1,6 @@
+import { updateTestsNeeded } from "./helpers.js";
+import { Skill } from "./items/skill.js";
+
 export class BWActor extends Actor {
     stock: string;
     age: number;
@@ -32,25 +35,18 @@ export class BWActor extends Actor {
 
 
     private _prepareCharacterData() {
-        this._updateTestsNeeded(this.data.data.will);
-        this._updateTestsNeeded(this.data.data.power);
-        this._updateTestsNeeded(this.data.data.perception);
-        this._updateTestsNeeded(this.data.data.agility);
-        this._updateTestsNeeded(this.data.data.forte);
-        this._updateTestsNeeded(this.data.data.speed);
-        this._updateTestsNeeded(this.data.data.health);
-        this._updateTestsNeeded(this.data.data.steel);
-        this._updateTestsNeeded(this.data.data.circles);
-        this._updateTestsNeeded(this.data.data.resources);
-        this._updateTestsNeeded(this.data.data.custom1);
-        this._updateTestsNeeded(this.data.data.custom2);
-    }
-
-    private _updateTestsNeeded(ability: Ability) {
-        const values = AbilityLookup[ability.exp];
-        ability.routineNeeded = values.r;
-        ability.challengingNeeded = values.c;
-        ability.difficultNeeded = values.d;
+        updateTestsNeeded(this.data.data.will);
+        updateTestsNeeded(this.data.data.power);
+        updateTestsNeeded(this.data.data.perception);
+        updateTestsNeeded(this.data.data.agility);
+        updateTestsNeeded(this.data.data.forte);
+        updateTestsNeeded(this.data.data.speed);
+        updateTestsNeeded(this.data.data.health);
+        updateTestsNeeded(this.data.data.steel);
+        updateTestsNeeded(this.data.data.circles);
+        updateTestsNeeded(this.data.data.resources);
+        updateTestsNeeded(this.data.data.custom1);
+        updateTestsNeeded(this.data.data.custom2);
     }
 }
 
@@ -70,6 +66,7 @@ interface BWCharacterData extends Common, DisplayProps {
     beliefs: Item[];
     instincts: Item[];
     traits: Item[];
+    skills: Skill[];
 }
 
 interface Common {
@@ -89,7 +86,12 @@ interface Common {
     mountedstride: number;
 }
 
-export interface Ability {
+export interface Ability extends TracksTests {
+    shade: string;
+    open: boolean;
+}
+
+export interface TracksTests {
     exp: number;
     routine: number;
     routineNeeded?: number;
@@ -97,8 +99,6 @@ export interface Ability {
     difficultNeeded?: number;
     challenging: number;
     challengingNeeded?: number;
-    shade: string;
-    open: boolean;
 }
 
 export interface DisplayProps {
@@ -111,14 +111,3 @@ export interface DisplayProps {
     collapsePtgs: boolean;
 }
 
-const AbilityLookup = {
-    "1": { r: 1, d: 1, c: 1},
-    "2": { r: 2, d: 1, c: 1},
-    "3": { r: 3, d: 2, c: 1},
-    "4": { r: 4, d: 2, c: 1},
-    "5": { r: 0, d: 3, c: 1},
-    "6": { r: 0, d: 3, c: 2},
-    "7": { r: 0, d: 4, c: 2},
-    "8": { r: 0, d: 4, c: 3},
-    "9": { r: 0, d: 5, c: 3},
-}

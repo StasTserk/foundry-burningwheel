@@ -1,3 +1,4 @@
+import { Skill } from "./items/skill.js";
 import { Trait } from "./items/trait.js";
 
 export class BWItem extends Item {
@@ -5,6 +6,9 @@ export class BWItem extends Item {
         super.prepareData();
         if (this.type === "trait") {
             Trait.prototype.prepareData.bind(this)();
+        }
+        if (this.type === "skill") {
+            Skill.prototype.prepareData.bind(this)();
         }
     }
 }

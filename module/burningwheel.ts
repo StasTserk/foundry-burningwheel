@@ -5,6 +5,7 @@ import { BWItem } from "./item.js";
 import { BeliefSheet } from "./items/belief-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js"
+import { SkillSheet } from "./items/skill-sheet.js";
 import { TraitSheet } from "./items/trait-sheet.js";
 import { Trait } from "./items/trait.js"
 import { preloadHandlebarsTemplates } from "./templates.js";
@@ -36,6 +37,11 @@ Hooks.once("init", async () => {
         makeDefault: true
     });
 
+    Items.registerSheet("burningwheel", SkillSheet, {
+        types: ["skill"],
+        makeDefault: true
+    });
+
     preloadHandlebarsTemplates();
     registerHelpers();
 });
@@ -43,8 +49,10 @@ Hooks.once("init", async () => {
 function registerHelpers() {
     Handlebars.registerHelper('multiboxes', function(selected, options) {
         let html = options.fn(this);
-        if (!selected || !(selected instanceof Array)) {
+        if (!selected) {
             selected = [ 0 ];
+        } else if (!(selected instanceof Array)) {
+            selected = [ selected ];
         }
         selected.forEach((selectedValue: string) => {
             if (selectedValue) {

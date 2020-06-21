@@ -43,6 +43,7 @@ input.attributes-collapse:checked ~ .attributes,
 input.beliefs-collapse:checked ~ .beliefs,
 input.instincts-collapse:checked ~ .instincts,
 input.traits-collapse:checked ~ .traits,
-input.stats-collapse:checked ~ .stats {
+input.stats-collapse:checked ~ .stats,
+input.skills-collapse:checked ~ .skills {
     display: none;
 }

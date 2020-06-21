@@ -21,17 +21,17 @@
         }
     }
 
-    .stats, .attributes {
+    .stats, .attributes, .skills {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 5px;
         row-gap: 5px;
 
-        .stat:hover {
+        .rollable:hover {
             background-color: lightgray;
         }
 
-        .stat-name { 
+        .rollable-name { 
             width: 33%;
             margin-right: 1em;
         }

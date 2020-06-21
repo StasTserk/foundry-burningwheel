@@ -1,10 +1,10 @@
-<div class="stat flex-row">
+<div class="rollable flex-row">
     <input id="{{statName}}Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
     <label for="{{statName}}Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     {{#if customName }}
-    <input type="text" name="{{namePrefix}}.name" value={{stat.name}} class="stat-name">
+    <input type="text" name="{{namePrefix}}.name" value={{stat.name}} class="rollable-name">
     {{else}}
-    <h3 class="stat-name">{{ statName }}</h3>
+    <h3 class="rollable-name">{{ statName }}</h3>
     {{/if}}
     <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
         {{#select stat.shade}}

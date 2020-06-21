@@ -145,6 +145,7 @@ Item:
     text: ''
   skill:
     name: ''
+    shade: B
     exp: 1
     routine: 0
     difficult: 0
@@ -155,3 +156,4 @@ Item:
     skilltype: ''
     training: false
     description: ''
+    collapsed: false

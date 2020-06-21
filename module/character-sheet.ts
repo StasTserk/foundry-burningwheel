@@ -1,6 +1,7 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
+import { Skill } from "./items/skill.js";
 import { Trait } from "./items/trait.js";
 
 export class BWCharacterSheet extends BWActorSheet {
@@ -10,12 +11,14 @@ export class BWCharacterSheet extends BWActorSheet {
         const instincts = [];
         const traits: Trait[] = [];
         const items = data.items;
+        const skills = [];
 
         for (const i of items) {
             switch(i.type) {
                 case "belief": beliefs.push(i as Belief); break;
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
+                case "skill": skills.push(i); break;
             }
         }
 
@@ -26,6 +29,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
         data.beliefs = beliefs;
         data.instincts = instincts;
+        data.skills = skills;
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
 
@@ -148,6 +152,7 @@ function difficultyGroup(dice: number, difficulty: number): string {
 interface CharacterSheetData extends ActorSheetData {
     beliefs: Belief[];
     instincts: Instinct[];
+    skills: Skill[];
     traits: CharacterSheetTraits;
 }
 

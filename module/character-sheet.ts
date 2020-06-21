@@ -1,3 +1,4 @@
+import { Ability } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
@@ -56,7 +57,12 @@ export class BWCharacterSheet extends BWActorSheet {
 
     private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
         const target = e.currentTarget as HTMLButtonElement;
-        const skill = getProperty(this.actor.data, target.dataset.accessor);
+        let skill: Ability;
+        if (target.dataset.accessor) {
+            skill = getProperty(this.actor.data, target.dataset.accessor);
+        } else {
+            skill = (this.actor.getOwnedItem(target.dataset.skillId) as Skill).data.data;
+        }
         const template = "systems/burningwheel/templates/chat/roll-dialog.html";
         const templateData = {
             name: target.dataset.rollableName,
@@ -78,7 +84,7 @@ export class BWCharacterSheet extends BWActorSheet {
                             const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
                             const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
                             const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
-                            const exp = parseInt(skill.exp, 10);
+                            const exp = parseInt("" + skill.exp, 10);
                             const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
                             const roll = new Roll(`${exp+bDice+aDice}d6cs>3`).roll();
                             const data = {

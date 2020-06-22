@@ -1,4 +1,5 @@
 @import "./character/character.scss";
+@import "./character/ptgs.scss";
 @import "./roll.scss";
 @import "./dialog.scss";
 
@@ -51,6 +52,7 @@ input.beliefs-collapse:checked ~ .beliefs,
 input.instincts-collapse:checked ~ .instincts,
 input.traits-collapse:checked ~ .traits,
 input.stats-collapse:checked ~ .stats,
-input.skills-collapse:checked ~ .skills {
+input.skills-collapse:checked ~ .skills,
+input.ptgs-collapse:checked ~ .ptgs {
     display: none;
 }

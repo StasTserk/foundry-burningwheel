@@ -67,7 +67,11 @@
             </h2>
             {{#each traits.character as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}<i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
+                    <h3>
+                        {{ trait.name }}
+                        <i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-edit" data-action="editTrait" data-id="{{trait._id}}"></i>
+                    </h3>
                 </div>
             {{/each}}
         </div>
@@ -77,7 +81,11 @@
             </h2>
             {{#each traits.die as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}<i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
+                    <h3>
+                        {{ trait.name }}
+                        <i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-edit" data-action="editTrait" data-id="{{trait._id}}"></i>
+                    </h3>
                     <textarea disabled="disabled">{{trait.data.text}}</textarea>
                 </div>
             {{/each}}
@@ -88,7 +96,11 @@
             </h2>
             {{#each traits.callon as |trait|}}
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>{{ trait.name }}<i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i></h3>
+                    <h3>
+                        {{ trait.name }}
+                        <i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-edit" data-action="editTrait" data-id="{{trait._id}}"></i>
+                    </h3>
                     <textarea disabled="disabled">{{ trait.data.text }}</textarea>
                 </div>
             {{/each}}

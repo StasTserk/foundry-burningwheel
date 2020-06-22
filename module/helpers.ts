@@ -7,6 +7,10 @@ export function updateTestsNeeded(ability: TracksTests) {
     ability.difficultNeeded = values.d;
 }
 
+export function slugify(name: string): string {
+    return name.trim().replace(" ", "-");
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

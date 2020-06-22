@@ -1,4 +1,4 @@
-import { Ability } from "./actor.js";
+import { Ability, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
@@ -49,7 +49,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
     activateListeners(html: JQuery) {
         // add/delete buttons
-        html.find(".trait-category i").click(e => this._manageTraits(e));
+        html.find(".trait-category i, .rollable > .collapsing-section > i").click(e => this._manageTraits(e));
         // roll macros
         html.find("button.rollable").click(e => this._handleRollable(e));
         super.activateListeners(html);
@@ -80,35 +80,15 @@ export class BWCharacterSheet extends BWActorSheet {
                 buttons: {
                     roll: {
                         label: "Roll",
-                        callback: async (dialogHtml: JQuery<HTMLElement>) => {
-                            const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
-                            const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
-                            const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
-                            const exp = parseInt("" + skill.exp, 10);
-                            const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
-                            const roll = new Roll(`${exp+bDice+aDice}d6cs>3`).roll();
-                            const data = {
-                                name: target.dataset.rollableName,
-                                successes: roll.result,
-                                difficulty: diff,
-                                success: parseInt(roll.result, 10) >= diff,
-                                rolls: roll.dice[0].rolls,
-                                difficultyGroup: difficultyGroup(exp + bDice, diff)
-                            }
-
-                            const messageHtml = await renderTemplate(mTemplate, data)
-                            ChatMessage.create({
-                                content: messageHtml,
-                                speaker
-                            });
-                        }
+                        callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                            rollCallback(dialogHtml, skill, target.dataset.rollableName, speaker)
                     }
                 }
             }).render(true)
         );
     }
 
-    private async _manageTraits(e:  JQuery.ClickEvent) {
+    private async _manageTraits(e: JQuery.ClickEvent) {
         e.preventDefault();
         const t = event.currentTarget;
         const action = $(t).data("action");
@@ -118,8 +98,10 @@ export class BWCharacterSheet extends BWActorSheet {
             case "addTrait":
                 options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
                 return this.actor.createOwnedItem(options)
-            case "delTrait":
+            case "delTrait": case "delSkill":
                 return this.actor.deleteOwnedItem(id);
+            case "editTrait": case "editSkill":
+                return this.actor.getOwnedItem(id).sheet.render(true);
 
         }
         return null;
@@ -154,6 +136,34 @@ function difficultyGroup(dice: number, difficulty: number): string {
     }
 
      return (dice - spread >= difficulty) ? "Routine" : "Difficult";
+}
+
+async function rollCallback(
+    dialogHtml: JQuery<HTMLElement>,
+    rollableData: TracksTests,
+    rollName: string,
+    speaker: unknown) {
+
+    const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
+    const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
+    const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
+    const exp = parseInt("" + rollableData.exp, 10);
+    const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
+    const roll = new Roll(`${exp+bDice+aDice}d6cs>3`).roll();
+    const data = {
+        name: rollName,
+        successes: roll.result,
+        difficulty: diff,
+        success: parseInt(roll.result, 10) >= diff,
+        rolls: roll.dice[0].rolls,
+        difficultyGroup: difficultyGroup(exp + bDice, diff)
+    }
+
+    const messageHtml = await renderTemplate(mTemplate, data)
+    return ChatMessage.create({
+        content: messageHtml,
+        speaker
+    });
 }
 
 interface CharacterSheetData extends ActorSheetData {

@@ -1,9 +1,13 @@
 .dialog {
-    label {
-        width: 40%;
-    }
-
     .dialog-row:hover {
         background-color: lightgrey;
+    }
+
+    .dialog-row {
+        width: 50%;
+
+        label {
+            width: 75%;
+        }
     }
 }

@@ -3,6 +3,26 @@ Actor:
     - character
     - npc
   templates:
+    ptgs:
+      ptgs:
+        wound1: &wound
+          amount: 0
+          threshold: bruise
+        wound2: *wound
+        wound3: *wound
+        wound4: *wound
+        wound5: *wound
+        wound6: *wound
+        wound7: *wound
+        wound8: *wound
+        wound9: *wound
+        wound10: *wound
+        wound11: *wound
+        wound12: *wound
+        wound13: *wound
+        wound14: *wound
+        wound15: *wound
+        wound16: *wound
     displayProps:
       collapseBeliefs: false
       collapseInstincts: false
@@ -12,49 +32,19 @@ Actor:
       collapseSkills: false
       collapsePtgs: false
     common:
-      will:
+      will: &stat
         exp: 1
         difficult: 0
         challenging: 0
         shade: B
         open: false
         collapsed: true
-      power:
-        exp: 1
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      agility:
-        exp: 1
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      perception:
-        exp: 1
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      forte:
-        exp: 1
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      speed:
-        exp: 1
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      health:
+      power: *stat
+      agility: *stat
+      perception: *stat
+      forte: *stat
+      speed: *stat
+      health: &ability
         exp: 1
         routine: 0
         difficult: 0
@@ -62,54 +52,22 @@ Actor:
         shade: B
         open: false
         collapsed: true
-      steel:
-        exp: 1
-        routine: 0
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      circles:
-        exp: 1
-        routine: 0
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      resources:
-        exp: 1
-        routine: 0
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
-      custom1:
+      steel: *ability
+      circles: *ability
+      resources: *ability
+      custom1: 
+        <<: *ability
         name: ''
-        exp: 1
-        routine: 0
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
       custom2:
+        <<: *ability
         name: ''
-        exp: 1
-        routine: 0
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
       stride: 7
       mountedstride: 0
   character:
     templates:
       - common
       - displayProps
+      - ptgs
     stock: ''
     age: 18
     lifepathString: ''
@@ -120,6 +78,7 @@ Actor:
     templates:
       - common
       - displayProps
+      - ptgs
 Item:
   types:
     - belief

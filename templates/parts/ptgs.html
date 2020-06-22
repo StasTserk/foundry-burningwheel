@@ -1,0 +1,57 @@
+<div>
+    <div class="ptgs-top">Tolerance</div>
+    <div class="ptgs-mid">Coordinate</div>
+    <div class="ptgs-scale">Injury</div>
+</div>
+{{#each ptgs as |wound|}}
+<div class="ptgs-wound-column">
+    <div class="ptgs-top">
+        <select class="ptgs-tolerance" name="data.ptgs.{{@key}}.threshold" value="{{wound.threshold}}">
+            {{#select wound.threshold}}
+            <option value="bruise">Br</option>
+            <option value="superficial">Su</option>
+            <option value="light">Li</option>
+            <option value="midi">Mi</option>
+            <option value="severe">Se</option>
+            <option value="traumatic">Tr</option>
+            <option value="mortal">M</option>
+            {{/select}}
+        </select>
+    </div>
+    <div class="ptgs-mid">
+        B{{@index}}
+    </div>
+    <div class="ptgs-scale flex-column">
+        {{#multiboxes wound.amount}}
+        <input type="radio" id="{{@key}}-0" name="{{@key}}.amount" value="0" checked="checked">
+        <label for="{{@key}}-0" class="wound-clear"><i class="fas fa-times-circle"></i></label>
+        <input type="radio" id="{{@key}}-1" name="{{@key}}.amount" value="1">
+        <label for="{{@key}}-1" class="wound-tick wound-tick-1">&nbsp;</label>
+        <input type="radio" id="{{@key}}-2" name="{{@key}}.amount" value="2">
+        <label for="{{@key}}-2" class="wound-tick wound-tick-2">&nbsp;</label>
+        <input type="radio" id="{{@key}}-3" name="{{@key}}.amount" value="3">
+        <label for="{{@key}}-3" class="wound-tick wound-tick-3">&nbsp;</label>
+        {{/multiboxes}}
+    </div>
+</div>
+{{/each}}
+<div class="ptgs-obpenalty">
+    <h3>Ob Penalty</h3>
+    {{ obPenalty }}
+</div>
+<div class="ptgs-wounddice">
+    <h3>Wound Dice</h3>
+    {{ woundDice }}
+</div>
+<div class="ptgs-woundnotes1 flex-row">
+    <h3>Injury Recovery</h3>
+    <textarea>Wound notes go here</textarea>
+</div>
+<div class="ptgs-woundnotes2 flex-row">
+    <h3>Injury Recovery</h3>
+    <textarea>Wound notes go here</textarea>
+</div>
+<div class="ptgs-woundnotes3 flex-row">
+    <h3>Injury Recovery</h3>
+    <textarea>Wound notes go here</textarea>
+</div>

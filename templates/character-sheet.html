@@ -142,4 +142,12 @@
             {{> "systems/burningwheel/templates/parts/rollable-skill.html" skill=skill }}
         {{/each}}
     </div>
+    <input type="checkbox" id="collapsePtgs" name="data.collapsePtgs" class="section-collapse ptgs-collapse" {{ checked data.collapsePtgs }}>
+    <h2>
+        <label for="collapsePtgs" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Injury And Recovery
+    </h2>
+    <div class="ptgs">
+        {{> "systems/burningwheel/templates/parts/ptgs.html" ptgs=data.ptgs }}
+    </div>
 </form>

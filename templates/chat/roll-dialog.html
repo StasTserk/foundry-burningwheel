@@ -1,7 +1,19 @@
-<form>
+<form class="dialog flex-column">
     <h2>{{name}} Test</h2>
-    <label><input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">Exponent</label>
-    <label><input type="number" class="exponent" name="difficulty" value="{{difficulty}}">Difficulty</label>
-    <label><input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">Bonus Dice</label>
-    <label><input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">Artha Dice</label>
+    <div class="flex-row dialog-row">
+        <label>Exponent</label>
+        <input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">
+    </div>
+    <div class="flex-row dialog-row">
+        <label>Difficulty</label>
+        <input type="number" class="exponent" name="difficulty" value="{{difficulty}}">
+    </div>
+    <div class="flex-row dialog-row">
+        <label>Bonus Dice</label>
+        <input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">
+    </div>
+    <div class="flex-row dialog-row">
+        <label>Artha Dice</label>
+        <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
+    </div>
 </form>

@@ -1,5 +1,6 @@
 @import "./character/character.scss";
 @import "./roll.scss";
+@import "./dialog.scss";
 
 .subheader,
 .header {
@@ -24,6 +25,12 @@ input.exponent {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
 }
 
 input.section-collapse {

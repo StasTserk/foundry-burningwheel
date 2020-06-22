@@ -88,6 +88,7 @@ export class BWCharacterSheet extends BWActorSheet {
                             const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
                             const roll = new Roll(`${exp+bDice+aDice}d6cs>3`).roll();
                             const data = {
+                                name: target.dataset.rollableName,
                                 successes: roll.result,
                                 difficulty: diff,
                                 success: parseInt(roll.result, 10) >= diff,

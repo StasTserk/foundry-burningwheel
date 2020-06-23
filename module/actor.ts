@@ -47,6 +47,33 @@ export class BWActor extends Actor {
         updateTestsNeeded(this.data.data.resources);
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
+        this._calculatePtgs();
+    }
+
+    private _calculatePtgs() {
+        let suCount = 0;
+        let woundDice = 0;
+        this.data.data.ptgs.obPenalty = 0;
+        Object.entries(this.data.data.ptgs).forEach(([key, value]) => {
+            const w = value as Wound;
+            const a = w.amount && parseInt(w.amount[0], 10);
+            if ((w && a)) {
+                switch (w.threshold) {
+                    case "superficial": suCount += a; break;
+                    case "light": woundDice += a; break;
+                    case "midi": woundDice += a*2; break;
+                    case "severe": woundDice += a*3; break;
+                    case "traumatic": woundDice += a*4; break;
+                }
+            }
+        });
+
+        if (suCount >= 3) {
+            woundDice ++;
+        } else if (suCount >= 1) {
+            this.data.data.ptgs.obPenalty = 1;
+        }
+        this.data.data.ptgs.woundDice = woundDice;
     }
 }
 
@@ -55,7 +82,7 @@ export interface CharacterData extends ActorData {
     items: Item[];
 }
 
-interface BWCharacterData extends Common, DisplayProps {
+interface BWCharacterData extends Common, DisplayProps, Ptgs {
     stock: string;
     age: number;
     lifepathString: string;
@@ -111,3 +138,23 @@ export interface DisplayProps {
     collapsePtgs: boolean;
 }
 
+interface Ptgs {
+    ptgs: {
+        wound1: Wound, wound2: Wound, wound3: Wound, wound4: Wound,
+        wound5: Wound, wound6: Wound, wound7: Wound, wound8: Wound,
+        wound9: Wound, wound10: Wound, wound11: Wound, wound12: Wound,
+        wound13: Wound, wound14: Wound, wound15: Wound, wound16: Wound,
+        woundNotes1: string,
+        woundNotes2: string,
+        woundNotes3: string,
+
+        // not persisted
+        obPenalty?: number,
+        woundDice?: number
+    }
+}
+
+interface Wound {
+    amount: string[]; // quirk relating to how radio button data is stored
+    threshold: string;
+}

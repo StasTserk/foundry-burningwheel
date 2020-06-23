@@ -69,6 +69,8 @@ export class BWCharacterSheet extends BWActorSheet {
             difficulty: 3,
             bonusDice: 0,
             arthaDice: 0,
+            woundDice: this.actor.data.data.ptgs.woundDice,
+            obPenalty: this.actor.data.data.ptgs.obPenalty,
             skill
         };
         const html = await renderTemplate(template, templateData);
@@ -81,7 +83,13 @@ export class BWCharacterSheet extends BWActorSheet {
                     roll: {
                         label: "Roll",
                         callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                            rollCallback(dialogHtml, skill, target.dataset.rollableName, speaker)
+                            rollCallback(
+                                dialogHtml,
+                                skill,
+                                templateData.name,
+                                templateData.woundDice,
+                                templateData.obPenalty,
+                                speaker)
                     }
                 }
             }).render(true)
@@ -142,6 +150,8 @@ async function rollCallback(
     dialogHtml: JQuery<HTMLElement>,
     rollableData: TracksTests,
     rollName: string,
+    woundDice: number,
+    obPenalty: number,
     speaker: unknown) {
 
     const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
@@ -149,14 +159,15 @@ async function rollCallback(
     const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
     const exp = parseInt("" + rollableData.exp, 10);
     const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
-    const roll = new Roll(`${exp+bDice+aDice}d6cs>3`).roll();
+    const roll = new Roll(`${exp+bDice+aDice-woundDice}d6cs>3`).roll();
     const data = {
         name: rollName,
         successes: roll.result,
         difficulty: diff,
-        success: parseInt(roll.result, 10) >= diff,
+        obPenalty,
+        success: parseInt(roll.result, 10) >= (diff + obPenalty),
         rolls: roll.dice[0].rolls,
-        difficultyGroup: difficultyGroup(exp + bDice, diff)
+        difficultyGroup: difficultyGroup(exp + bDice - woundDice, diff)
     }
 
     const messageHtml = await renderTemplate(mTemplate, data)

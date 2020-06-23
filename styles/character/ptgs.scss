@@ -58,6 +58,17 @@
             height: 15px;
             margin: 1px auto 1px auto;
         }
+
+        input[type=radio]:checked ~ label.wound-tick:hover {
+            background-color: lightgray;
+        }
+
+        input[type="radio"]:checked ~ .wound-tick {
+            background-color: white;
+        }
+        input[type="radio"]:checked + .wound-tick {
+            background-color: #333333;
+        }
     }
 
     .ptgs-obpenalty {

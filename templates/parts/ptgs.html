@@ -4,6 +4,7 @@
     <div class="ptgs-scale">Injury</div>
 </div>
 {{#each ptgs as |wound|}}
+{{#if wound.threshold}}
 <div class="ptgs-wound-column">
     <div class="ptgs-top">
         <select class="ptgs-tolerance" name="data.ptgs.{{@key}}.threshold" value="{{wound.threshold}}">
@@ -34,14 +35,15 @@
         {{/multiboxes}}
     </div>
 </div>
+{{/if}}
 {{/each}}
 <div class="ptgs-obpenalty">
     <h3>Ob Penalty</h3>
-    {{ obPenalty }}
+    <div>{{ ptgs.obPenalty }}</div>
 </div>
 <div class="ptgs-wounddice">
     <h3>Wound Dice</h3>
-    {{ woundDice }}
+    <div>{{ ptgs.woundDice }}</div>
 </div>
 <div class="ptgs-woundnotes1 flex-row">
     <h3>Injury Recovery</h3>

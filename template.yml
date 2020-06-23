@@ -23,6 +23,9 @@ Actor:
         wound14: *wound
         wound15: *wound
         wound16: *wound
+        woundNotes1: ''
+        woundNotes2: ''
+        woundNotes3: ''
     displayProps:
       collapseBeliefs: false
       collapseInstincts: false

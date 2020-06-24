@@ -1,0 +1,47 @@
+@mixin progress-ticks {
+    display: flex;
+
+    label.progress-clear {
+        display: block;
+        color: transparent;
+        width: 15px;
+        text-align: center;
+    }
+
+    label.progress-clear:hover {
+        color: red;
+    }
+
+    input[type=radio] {
+        visibility: hidden;
+        display: none;
+    }
+
+    label.progress-tick {
+        display: block;
+        background-color: #333333;
+        border: 1px solid black;
+        border-radius: 7px;
+        width: 15px;
+        height: 15px;
+        margin-left: 3px;
+        margin-top: 1px;
+    }
+
+    input[type=radio]:checked ~ label.progress-tick {
+        background-color: white;
+    }
+
+    input[type=radio]:checked ~ label.progress-tick:hover {
+        background-color: lightgray;
+    }
+
+    input[type=radio]:checked + label.progress-tick {
+        background-color: #333333;
+    }
+}
+
+@mixin progress-disable {
+    pointer-events: none;
+    opacity: 25%;
+}

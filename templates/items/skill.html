@@ -1,29 +1,45 @@
-<form autocomplete="off">
+<form autocomplete="off" class="skill-form flex-row">
     <input name="name" type="text" value="{{item.name}}">
-    <label>Skill Type</label>
-    <select name="data.skillType" value={{data.skillType}} >
-        {{#select data.skillType}}
-        {{#each skillTypes as |type t|}}
-        <option value="{{t}}">{{type}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
-    <label>Root 1</label>
-    <select name="data.root1" value={{data.root1}} >
-        {{#select data.root1}}
-        {{#each skillRoots as |root r|}}
-        <option value="{{r}}">{{root}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
-    <label>Root 2 (Optional)</label>
-    <select name="data.root2" value={{data.root2}} >
-        {{#select data.root2}}
-        <option value="">None</option>
-        {{#each skillRoots as |root r|}}
-        <option value="{{r}}">{{root}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
+    <div class="skill-form-group">
+        <label>
+            Skill Type
+        </label>
+        <select name="data.skillType" value={{data.skillType}} >
+            {{#select data.skillType}}
+            {{#each skillTypes as |type t|}}
+            <option value="{{t}}">{{type}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="skill-form-group half-width">
+        <label>
+            Root 1
+        </label>
+        <select name="data.root1" value={{data.root1}} >
+            {{#select data.root1}}
+            {{#each skillRoots as |root r|}}
+            <option value="{{r}}">{{root}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        <label>
+            Root 2 (Optional)
+        </label>
+        <select name="data.root2" value={{data.root2}} >
+            {{#select data.root2}}
+            <option value="">None</option>
+            {{#each skillRoots as |root r|}}
+            <option value="{{r}}">{{root}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="skill-form-group half-width">
+        <label>Aptitude</label>
+        <input type="number" name="data.aptitude" class="exponent" disabled value={{data.aptitude}}>
+        <label>Learning</label>
+        <input type="checkbox" name="data.learning" {{ checked data.learning }}>
+    </div>
     <textarea name="data.description">{{data.description}}</textarea>
 </form>

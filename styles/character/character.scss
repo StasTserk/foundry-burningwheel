@@ -1,3 +1,5 @@
+@import "../mixins.scss";
+
 .character {
     h2 {
         text-align: center;
@@ -72,18 +74,7 @@
         }
 
         .test-tracking {
-            display: flex;
-
-            label.test-tracking-clear {
-                display: block;
-                color: transparent;
-                width: 15px;
-                text-align: center;
-            }
-
-            label.test-tracking-clear:hover {
-                color: red;
-            }
+            @include progress-ticks;
 
             .test-title {
                 width: 33%;
@@ -99,29 +90,6 @@
             display: none;
         }
 
-        label.progress-tick {
-            display: block;
-            background-color: #333333;
-            border: 1px solid black;
-            border-radius: 7px;
-            width: 15px;
-            height: 15px;
-            margin-left: 3px;
-            margin-top: 1px;
-        }
-
-        input[type=radio]:checked ~ label.progress-tick {
-            background-color: white;
-        }
-
-        input[type=radio]:checked ~ label.progress-tick:hover {
-            background-color: lightgray;
-        }
-
-        input[type=radio]:checked + label.progress-tick {
-            background-color: #333333;
-        }
-
         .tests-needed[value="0"] ~ .progress-tick-1,
         .tests-needed[value="0"] ~ .progress-tick-2,
         .tests-needed[value="0"] ~ .progress-tick-3,
@@ -132,8 +100,7 @@
         .tests-needed[value="2"] ~ .progress-tick-3,
         .tests-needed[value="2"] ~ .progress-tick-4,
         .tests-needed[value="3"] ~ .progress-tick-4 {
-            pointer-events: none;
-            opacity: 25%;
+            @include progress-disable;
         }
     }
 }

@@ -119,12 +119,14 @@ export interface Ability extends TracksTests {
 }
 
 export interface TracksTests {
-    exp: number;
-    routine: number;
+    exp: string;
+    routine: string;
+    difficult: string;
+    challenging: string;
+
+    // derived values
     routineNeeded?: number;
-    difficult: number;
     difficultNeeded?: number;
-    challenging: number;
     challengingNeeded?: number;
 }
 

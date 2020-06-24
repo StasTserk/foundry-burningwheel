@@ -1,4 +1,4 @@
-import { Ability, TracksTests } from "./actor.js";
+import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
@@ -12,14 +12,14 @@ export class BWCharacterSheet extends BWActorSheet {
         const instincts = [];
         const traits: Trait[] = [];
         const items = data.items;
-        const skills = [];
-
+        const skills: Skill[] = [];
+        const training: Skill[] = [];
         for (const i of items) {
             switch(i.type) {
                 case "belief": beliefs.push(i as Belief); break;
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
-                case "skill": skills.push(i); break;
+                case "skill": (i as any).data.learning ? training.push(i) : skills.push(i); break;
             }
         }
 
@@ -31,6 +31,7 @@ export class BWCharacterSheet extends BWActorSheet {
         data.beliefs = beliefs;
         data.instincts = instincts;
         data.skills = skills;
+        data.training = training;
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
 
@@ -49,7 +50,8 @@ export class BWCharacterSheet extends BWActorSheet {
 
     activateListeners(html: JQuery) {
         // add/delete buttons
-        html.find(".trait-category i, .rollable > .collapsing-section > i").click(e => this._manageTraits(e));
+        html.find(".trait-category i, .rollable > .collapsing-section > i, .learning-practice > .learning > i")
+            .click(e => this._manageTraits(e));
         // roll macros
         html.find("button.rollable").click(e => this._handleRollable(e));
         super.activateListeners(html);
@@ -57,7 +59,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
     private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
         const target = e.currentTarget as HTMLButtonElement;
-        let skill: Ability;
+        let skill: TracksTests;
         if (target.dataset.accessor) {
             skill = getProperty(this.actor.data, target.dataset.accessor);
         } else {
@@ -157,7 +159,7 @@ async function rollCallback(
     const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
     const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
     const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
-    const exp = parseInt("" + rollableData.exp, 10);
+    const exp = parseInt(rollableData.exp, 10);
     const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
     const roll = new Roll(`${exp+bDice+aDice-woundDice}d6cs>3`).roll();
     const data = {
@@ -181,6 +183,7 @@ interface CharacterSheetData extends ActorSheetData {
     beliefs: Belief[];
     instincts: Instinct[];
     skills: Skill[];
+    training: Skill[];
     traits: CharacterSheetTraits;
 }
 

@@ -33,6 +33,7 @@ Actor:
       collapseStats: false
       collapseAttributes: false
       collapseSkills: false
+      collapseLearning: false
       collapsePtgs: false
     common:
       will: &stat
@@ -48,13 +49,8 @@ Actor:
       forte: *stat
       speed: *stat
       health: &ability
-        exp: 1
+        <<: *stat
         routine: 0
-        difficult: 0
-        challenging: 0
-        shade: B
-        open: false
-        collapsed: true
       steel: *ability
       circles: *ability
       resources: *ability
@@ -115,6 +111,7 @@ Item:
     root1: ''
     root2: ''
     learning: false
+    learningProgress: 0
     skilltype: ''
     training: false
     description: ''

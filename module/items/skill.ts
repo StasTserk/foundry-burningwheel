@@ -1,30 +1,44 @@
-import { TracksTests } from "../actor.js";
+import { Ability, TracksTests } from "../actor.js";
 import { slugify, updateTestsNeeded } from "../helpers.js";
 
 export class Skill extends Item {
     prepareData() {
         updateTestsNeeded(this.data.data);
+        Skill.calculateAptitude.bind(this)();
         this.data.data.safeId = slugify(this.name);
     }
 
-    data: { data: SkillData } & BaseEntityData;
+    static calculateAptitude(this: Skill) {
+        if (!this.actor) { return; }
+        const player = this.actor;
+        const root1exp = (player.data.data[this.data.data.root1] as Ability).exp;
+        const root2exp = this.data.data.root2 ? (player.data.data[this.data.data.root2] as Ability).exp : root1exp;
+        const rootAvg = Math.floor((parseInt(root1exp, 10) + parseInt(root2exp, 10)) / 2);
+        this.data.data.aptitude = 10 - rootAvg;
+    }
+    data: SkillDataRoot;
 }
 
-export interface SkillData extends TracksTests, BaseEntityData {
+interface SkillDataRoot extends BaseEntityData {
+    data: SkillData;
+}
+
+export interface SkillData extends TracksTests {
     name: string;
-    exp: number;
     shade: string;
-    routine: number;
-    routineNeeded?: number;
-    difficult: number;
-    difficultNeeded?: number;
-    challenging: number;
-    challengingNeeded?: number;
+
     root1: string;
     root2: string;
-    learning: boolean;
     skilltype: string;
-    training: boolean;
     description: string;
-    safeId: string;
+    training: boolean;
+
+    learning: boolean;
+    learningProgress: 0
+
+    routineNeeded?: number;
+    difficultNeeded?: number;
+    challengingNeeded?: number;
+    aptitude?: number;
+    safeId?: string;
 }

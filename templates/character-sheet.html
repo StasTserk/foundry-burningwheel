@@ -142,6 +142,16 @@
             {{> "systems/burningwheel/templates/parts/rollable-skill.html" skill=skill }}
         {{/each}}
     </div>
+    <input type="checkbox" id="collapseLearning" name="data.collapseLearning" class="section-collapse learning-collapse" {{ checked data.collapseLearning }}>
+    <h2>
+        <label for="collapseLearning" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Learning and Practice
+    </h2>
+    <div class="learning-practice flex-row">
+        {{#each training as |skill|}}
+            {{> "systems/burningwheel/templates/parts/learning.html" skill=skill }}
+        {{/each}}
+    </div>
     <input type="checkbox" id="collapsePtgs" name="data.collapsePtgs" class="section-collapse ptgs-collapse" {{ checked data.collapsePtgs }}>
     <h2>
         <label for="collapsePtgs" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>

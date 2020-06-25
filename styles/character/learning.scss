@@ -1,13 +1,29 @@
 @import "../mixins.scss";
 
-.learning-practice {
-    .learning {
-        width: 50%;
+.practice-log { 
+    width: 33%;
 
+    textarea {
+        resize: vertical;
+        height: 100%;
+    }
+}
+
+.learning-section {
+    width: 66%;
+
+    .learning {
+        width: calc(50% - 10px);
+        margin: 5px;
         &:hover {
             background-color: lightgrey;
         }
 
+        h3 {
+            width: calc(100% - 80px);
+            margin-left: 10px;
+            font-weight: bold;
+        }
         .learning-xp {
             @include progress-ticks;
         }

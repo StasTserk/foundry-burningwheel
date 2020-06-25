@@ -148,9 +148,15 @@
         Learning and Practice
     </h2>
     <div class="learning-practice flex-row">
-        {{#each training as |skill|}}
-            {{> "systems/burningwheel/templates/parts/learning.html" skill=skill }}
-        {{/each}}
+        <div class="flex-row learning-section">
+            {{#each training as |skill|}}
+                {{> "systems/burningwheel/templates/parts/learning.html" skill=skill }}
+            {{/each}}
+        </div>
+        <div class="practice-log">
+            <div>Practice Log</div>
+            <textarea>{{data.practiceLog}}</textarea>
+        </div>
     </div>
     <input type="checkbox" id="collapsePtgs" name="data.collapsePtgs" class="section-collapse ptgs-collapse" {{ checked data.collapsePtgs }}>
     <h2>

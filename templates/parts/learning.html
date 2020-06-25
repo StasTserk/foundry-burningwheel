@@ -1,8 +1,9 @@
-<div class="learning">
+<div class="learning flex-row">
     <h3>{{skill.name}}</h3>
-    <div>Aptitude</div>
-    <input type="number" class="aptitude" disabled value="{{skill.data.aptitude}}">
     <button class="rollable" data-rollable-name="{{skill.name}}" data-skill-id="{{skill._id}}"><i class="fas fa-dice"></i></button>
+    <i class="fas fa-trash item-action-icon" data-action="delSkill" data-id="{{skill._id}}"></i>
+    <i class="fas fa-edit item-action-icon" data-action="editSkill" data-id="{{skill._id}}"></i>
+    <input type="hidden" class="aptitude" disabled value="{{skill.data.aptitude}}">
     <div class="learning-xp">
         {{#multiboxes skill.data.learningProgress}}
         <input type="radio"
@@ -122,6 +123,4 @@
         </label>
         {{/multiboxes}}
     </div>
-    <i class="fas fa-trash item-action-icon" data-action="delSkill" data-id="{{skill._id}}"></i>
-    <i class="fas fa-edit item-action-icon" data-action="editSkill" data-id="{{skill._id}}"></i>
 </div>

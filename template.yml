@@ -73,6 +73,7 @@ Actor:
     alias: ''
     homeland: ''
     features: ''
+    practiceLog: ''
   npc:
     templates:
       - common

@@ -50,7 +50,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
     activateListeners(html: JQuery) {
         // add/delete buttons
-        html.find(".trait-category i, .rollable > .collapsing-section > i, .learning-practice > .learning > i")
+        html.find(".trait-category i, .rollable > .collapsing-section > i, .learning > i")
             .click(e => this._manageTraits(e));
         // roll macros
         html.find("button.rollable").click(e => this._handleRollable(e));

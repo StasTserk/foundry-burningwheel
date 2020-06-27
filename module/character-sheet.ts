@@ -2,6 +2,7 @@ import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
+import { Relationship } from "./items/relationship.js";
 import { Skill } from "./items/skill.js";
 import { Trait } from "./items/trait.js";
 
@@ -14,12 +15,14 @@ export class BWCharacterSheet extends BWActorSheet {
         const items = data.items;
         const skills: Skill[] = [];
         const training: Skill[] = [];
+        const relationships: Relationship[] = [];
         for (const i of items) {
             switch(i.type) {
                 case "belief": beliefs.push(i as Belief); break;
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
                 case "skill": (i as any).data.learning ? training.push(i) : skills.push(i); break;
+                case "relationship": relationships.push(i as Relationship);
             }
         }
 
@@ -32,6 +35,7 @@ export class BWCharacterSheet extends BWActorSheet {
         data.instincts = instincts;
         data.skills = skills;
         data.training = training;
+        data.relationships = relationships;
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
 
@@ -50,8 +54,16 @@ export class BWCharacterSheet extends BWActorSheet {
 
     activateListeners(html: JQuery) {
         // add/delete buttons
-        html.find(".trait-category i, .rollable > .collapsing-section > i, .learning > i")
-            .click(e => this._manageTraits(e));
+
+        const selectors = [
+            ".trait-category i",
+            ".rollable > .collapsing-section > i",
+            ".learning > i",
+            ".relationships > h2 > i",
+            ".relationship > i"
+        ];
+        html.find(selectors.join(", ")).click(e => this._manageItems(e));
+
         // roll macros
         html.find("button.rollable").click(e => this._handleRollable(e));
         super.activateListeners(html);
@@ -98,21 +110,23 @@ export class BWCharacterSheet extends BWActorSheet {
         );
     }
 
-    private async _manageTraits(e: JQuery.ClickEvent) {
+    private async _manageItems(e: JQuery.ClickEvent) {
         e.preventDefault();
         const t = event.currentTarget;
         const action = $(t).data("action");
         const id = $(t).data("id") as string;
         let options = {};
         switch (action) {
+            case "addRelationship":
+                options = { name: "New Relationship", type: "relationship", data: { building: true }};
+                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
             case "addTrait":
                 options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
-                return this.actor.createOwnedItem(options)
-            case "delTrait": case "delSkill":
+                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+            case "delItem":
                 return this.actor.deleteOwnedItem(id);
-            case "editTrait": case "editSkill":
+            case "editItem":
                 return this.actor.getOwnedItem(id).sheet.render(true);
-
         }
         return null;
     }
@@ -180,6 +194,7 @@ async function rollCallback(
 }
 
 interface CharacterSheetData extends ActorSheetData {
+    relationships: Relationship[];
     beliefs: Belief[];
     instincts: Instinct[];
     skills: Skill[];

@@ -2,7 +2,7 @@
     <input id="{{statName}}Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
     <label for="{{statName}}Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     {{#if customName }}
-    <input type="text" name="{{namePrefix}}.name" value={{stat.name}} class="rollable-name">
+    <input type="text" name="{{namePrefix}}.name" value="{{stat.name}}" class="rollable-name">
     {{else}}
     <h3 class="rollable-name">{{ statName }}</h3>
     {{/if}}

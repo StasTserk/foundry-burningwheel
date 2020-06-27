@@ -6,6 +6,7 @@ export async function preloadHandlebarsTemplates() {
       // Actor Sheet Partials
       "systems/burningwheel/templates/parts/learning.html",
       "systems/burningwheel/templates/parts/ptgs.html",
+      "systems/burningwheel/templates/parts/relationships.html",
       "systems/burningwheel/templates/parts/rollable-item.html",
       "systems/burningwheel/templates/parts/rollable-skill.html"
     ];

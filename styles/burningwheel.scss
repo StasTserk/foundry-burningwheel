@@ -1,6 +1,7 @@
 @import "./character/character.scss";
 @import "./character/learning.scss";
 @import "./character/ptgs.scss";
+@import "./items/relationship.scss";
 @import "./items/skill.scss";
 @import "./roll.scss";
 @import "./dialog.scss";
@@ -54,6 +55,7 @@ input.beliefs-collapse:checked ~ .beliefs,
 input.instincts-collapse:checked ~ .instincts,
 input.traits-collapse:checked ~ .traits,
 input.stats-collapse:checked ~ .stats,
+input.relationships-collapse:checked ~ .relationship-section,
 input.skills-collapse:checked ~ .skills,
 input.learning-collapse:checked ~ .learning-practice,
 input.ptgs-collapse:checked ~ .ptgs {

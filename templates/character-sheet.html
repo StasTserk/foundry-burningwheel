@@ -69,8 +69,8 @@
                 <div class="trait" data-item-id="{{trait._id}}">
                     <h3>
                         {{ trait.name }}
-                        <i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i>
-                        <i class="fas fa-edit" data-action="editTrait" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
                     </h3>
                 </div>
             {{/each}}
@@ -83,8 +83,8 @@
                 <div class="trait" data-item-id="{{trait._id}}">
                     <h3>
                         {{ trait.name }}
-                        <i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i>
-                        <i class="fas fa-edit" data-action="editTrait" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
                     </h3>
                     <textarea disabled="disabled">{{trait.data.text}}</textarea>
                 </div>
@@ -98,8 +98,8 @@
                 <div class="trait" data-item-id="{{trait._id}}">
                     <h3>
                         {{ trait.name }}
-                        <i class="fas fa-trash" data-action="delTrait" data-id="{{trait._id}}"></i>
-                        <i class="fas fa-edit" data-action="editTrait" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+                        <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
                     </h3>
                     <textarea disabled="disabled">{{ trait.data.text }}</textarea>
                 </div>
@@ -131,6 +131,26 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Resources" stat=data.resources namePrefix="data.resources" routine=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom1" stat=data.custom1 namePrefix="data.custom1" routine=true customName=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom2" stat=data.custom2 namePrefix="data.custom2" routine=true customName=true}}
+    </div>
+    <input type="checkbox" id="collapseRelationships" name="data.collapseRelationships" class="section-collapse relationships-collapse" {{ checked data.collapseRelationships }}>
+    <h2>
+        <label for="collapseRelationships" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Relationships & Reputations
+    </h2>
+    <div class="relationship-section flex-row">
+        <div class="relationships">
+            <h2>Relationships  <i data-action="addRelationship" class="fas fa-plus"></i></h2></i>
+            {{#each relationships as |r|}}
+                {{> "systems/burningwheel/templates/parts/relationships.html" relationship=r}}
+            {{/each}}
+        </div>
+        <div class="reputations">
+            <h2>Reputations</h2>
+        </div>
+        <div class="affiliations">
+            <h2>Affiliations</h2>
+        </div>
+        <hr>
     </div>
     <input type="checkbox" id="collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
     <h2>

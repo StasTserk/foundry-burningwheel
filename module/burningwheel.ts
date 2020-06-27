@@ -5,6 +5,7 @@ import { BWItem } from "./item.js";
 import { BeliefSheet } from "./items/belief-sheet.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js"
+import { RelationshipSheet } from "./items/relationship-sheet.js";
 import { SkillSheet } from "./items/skill-sheet.js";
 import { TraitSheet } from "./items/trait-sheet.js";
 import { Trait } from "./items/trait.js"
@@ -39,6 +40,11 @@ Hooks.once("init", async () => {
 
     Items.registerSheet("burningwheel", SkillSheet, {
         types: ["skill"],
+        makeDefault: true
+    });
+
+    Items.registerSheet("burningwheel", RelationshipSheet, {
+        types: ["relationship"],
         makeDefault: true
     });
 

@@ -32,6 +32,7 @@ Actor:
       collapseTraits: false
       collapseStats: false
       collapseAttributes: false
+      collapseRelationships: false
       collapseSkills: false
       collapseLearning: false
       collapsePtgs: false
@@ -85,6 +86,9 @@ Item:
     - instinct
     - trait
     - skill
+    - relationship
+    - reputation
+    - affiliation
   templates:
     arthaEarner:
       fate: false
@@ -117,3 +121,13 @@ Item:
     training: false
     description: ''
     collapsed: false
+  relationship:
+    description: ''
+    forbidden: false
+    immediateFamily: false
+    otherFamily: false
+    romantic: false
+    hateful: false
+    influence: ''
+    building: ''
+    buildingProgress: 0

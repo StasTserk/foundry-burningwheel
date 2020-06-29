@@ -13,4 +13,13 @@
         <input id="checkbox-hateful" type="checkbox" name="data.hateful" {{checked data.hateful}}>
         <label for="checkbox-hateful">Hateful/Rival</label>
     </div>
+    <hr/>
+    <div class="checkbox-grid">
+        <input id="checkbox-building" type="checkbox" name="data.building" {{checked data.building}}>
+        <label for="checkbox-building" title="Relationship being built through multiple circles tests.">Building</label>
+        <input id="checkbox-enmity" type="checkbox" name="data.enmity" {{checked data.enmity}}>
+        <label for="checkbox-enmity">Enmity Clause</label>
+    </div>
+    <hr/>
+    <textarea name="data.description">{{data.description}}</textarea>
 </form>

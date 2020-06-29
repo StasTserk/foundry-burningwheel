@@ -129,5 +129,6 @@ Item:
     romantic: false
     hateful: false
     influence: ''
-    building: ''
-    buildingProgress: 0
+    enmity: false
+    building: true
+    buildingProgress: [0]

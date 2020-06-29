@@ -141,7 +141,7 @@
         <div class="relationships">
             <h2>Relationships  <i data-action="addRelationship" class="fas fa-plus"></i></h2></i>
             {{#each relationships as |r|}}
-                {{> "systems/burningwheel/templates/parts/relationships.html" relationship=r}}
+                {{> "systems/burningwheel/templates/parts/relationships.html" relationship=r exp=../data.circles.exp}}
             {{/each}}
         </div>
         <div class="reputations">

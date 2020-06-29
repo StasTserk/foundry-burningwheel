@@ -1,8 +1,7 @@
 import { BWActor } from "../actor.js";
 import { slugify } from "../helpers.js";
-import { BWItem } from "../item.js";
 
-export class Relationship extends BWItem {
+export class Relationship extends Item {
     prepareData() {
         this.data.data.safeId = slugify(this.name);
         this.data.data.aptitude = parseInt(this.actor.data.data.circles.exp, 10) || 0;

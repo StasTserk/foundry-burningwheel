@@ -89,19 +89,6 @@
             visibility: hidden;
             display: none;
         }
-
-        .tests-needed[value="0"] ~ .progress-tick-1,
-        .tests-needed[value="0"] ~ .progress-tick-2,
-        .tests-needed[value="0"] ~ .progress-tick-3,
-        .tests-needed[value="0"] ~ .progress-tick-4,
-        .tests-needed[value="1"] ~ .progress-tick-2,
-        .tests-needed[value="1"] ~ .progress-tick-3,
-        .tests-needed[value="1"] ~ .progress-tick-4,
-        .tests-needed[value="2"] ~ .progress-tick-3,
-        .tests-needed[value="2"] ~ .progress-tick-4,
-        .tests-needed[value="3"] ~ .progress-tick-4 {
-            @include progress-disable;
-        }
     }
 
     .relationship-section {
@@ -122,6 +109,10 @@
         }
         .reputations, .affiliations {
             width: 30%;
+        }
+
+        .relationship-progress {
+            @include progress-ticks;
         }
     }
 }

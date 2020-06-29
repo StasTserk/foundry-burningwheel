@@ -15,7 +15,7 @@
         <div class="test-tracking">
             <div class="test-title">Routine: </div>
             <input class="tests-needed" value="{{skill.data.routineNeeded}}" disabled>
-            {{#multiboxes skill.data.routine}}
+            {{#multiboxes skill.data.routine needed=skill.data.routineNeeded}}
             <input type="radio" id="{{skill.data.safeId}}-routine-0" value="0" name="{{skill.data.safeId}}-routine" data-item-id="{{skill._id}}" data-binding="data.routine" checked="checked">
             <label for="{{skill.data.safeId}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             <input type="radio" id="{{skill.data.safeId}}-routine-1" value="1" name="{{skill.data.safeId}}-routine" data-item-id="{{skill._id}}" data-binding="data.routine">
@@ -31,7 +31,7 @@
         <div class="test-tracking">
             <div class="test-title">Difficult:</div>
             <input class="tests-needed" value="{{skill.data.difficultNeeded}}" disabled>
-            {{#multiboxes skill.data.difficult}}
+            {{#multiboxes skill.data.difficult needed=skill.data.difficultNeeded}}
             <input type="radio" id="{{skill.data.safeId}}-difficult-0" value="0" name="{{skill.data.safeId}}-difficult" data-item-id="{{skill._id}}" data-binding="data.difficult" checked="checked">
             <label for="{{skill.data.safeId}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             <input type="radio" id="{{skill.data.safeId}}-difficult-1" value="1" name="{{skill.data.safeId}}-difficult" data-item-id="{{skill._id}}" data-binding="data.difficult">
@@ -47,7 +47,7 @@
         <div class="test-tracking">
             <div class="test-title">Challenging:</div>
             <input class="tests-needed" value="{{skill.data.challengingNeeded}}" disabled>
-            {{#multiboxes skill.data.challenging}}
+            {{#multiboxes skill.data.challenging needed=skill.data.challengingNeeded}}
             <input type="radio" id="{{skill.data.safeId}}-challenging-0" value="0" name="{{skill.data.safeId}}-challenging" data-item-id="{{skill._id}}" data-binding="data.challenging" checked="checked">
             <label for="{{skill.data.safeId}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             <input type="radio" id="{{skill.data.safeId}}-challenging-1" value="1" name="{{skill.data.safeId}}-challenging" data-item-id="{{skill._id}}" data-binding="data.challenging">

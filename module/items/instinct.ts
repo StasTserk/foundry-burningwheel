@@ -1,4 +1,4 @@
-import { ArthaEarner } from "module/item.js";
+import { ArthaEarner } from "./item.js";
 
 export class Instinct extends Item implements ArthaEarner {
     prepareData() {

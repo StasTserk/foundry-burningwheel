@@ -3,7 +3,7 @@
     "title": "Burning Wheel",
     "description": "Foundry implementation of The Burning Wheel",
     "version": "0.0.3",
-    "templateVersion": 3,
+    "templateVersion": 4,
     "author": "Stas Tserkovny",
     "esmodules": [
         "module/burningwheel.js"
@@ -14,7 +14,7 @@
     ],
     "packs": [],
     "minimumCoreVersion": "0.6.0",
-    "compatibleCoreVersion": "0.6.1",
+    "compatibleCoreVersion": "0.6.4",
     "socket": false,
     "initiative": "1d20",
     "gridDistance": 10,

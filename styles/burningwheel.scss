@@ -61,3 +61,13 @@ input.learning-collapse:checked ~ .learning-practice,
 input.ptgs-collapse:checked ~ .ptgs {
     display: none;
 }
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 24px 120px);
+
+    input[type=checkbox] {
+        height: 12px;
+        width: 12px;
+    }
+}

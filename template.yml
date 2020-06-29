@@ -89,6 +89,12 @@ Item:
     - relationship
     - reputation
     - affiliation
+    - weapon
+    - posession
+    - property
+    - melee weapon
+    - ranged weapon
+    - armor
   templates:
     arthaEarner:
       fate: false
@@ -132,3 +138,42 @@ Item:
     enmity: false
     building: true
     buildingProgress: [0]
+  posession:
+    isToolkit: false
+    isExpended: false
+    description: ''
+  property:
+    isWorkshop: false
+    description: ''
+  melee weapon:
+    quality: run-of-the-mill
+    baseOb: 1
+    power: 1
+    add: 2
+    vsArmor: 0
+    weaponSpeed: X
+    weaponLength: shortest
+    handedness: one
+    description: ''
+  ranged weapon:
+    quality: run-of-the-mill
+    hasGunpowder: false
+    usePower: false
+    powerBonus: 1
+    incidental: ''
+    incidentalRoll: 2
+    mark: ''
+    markRoll: 4
+    superb: ''
+    vsArmor: ''
+    optimalRange: 1
+    extremeRange: 3
+    maxRange: 125 paces
+    hadnedness: two
+    description: ''
+  armor:
+    quality: run-of-the-mill
+    location: ''
+    dice: 1
+    damage: 0
+    description: ''

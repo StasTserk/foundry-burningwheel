@@ -1,3 +1,4 @@
+import { Relationship } from "./items/relationship.js";
 import { Skill } from "./items/skill.js";
 import { Trait } from "./items/trait.js";
 
@@ -9,6 +10,9 @@ export class BWItem extends Item {
         }
         if (this.type === "skill") {
             Skill.prototype.prepareData.bind(this)();
+        }
+        if (this.type === "relationship") {
+            Relationship.prototype.prepareData.bind(this)();
         }
     }
 }

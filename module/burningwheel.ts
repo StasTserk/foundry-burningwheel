@@ -55,6 +55,18 @@ Hooks.once("init", async () => {
 function registerHelpers() {
     Handlebars.registerHelper('multiboxes', function(selected, options) {
         let html = options.fn(this);
+        let testsAllowed = -1;
+        if (options.hash.exp) {
+            testsAllowed = 11 - parseInt(options.hash.exp, 10);
+        }
+        else if (options.hash.needed) {
+            testsAllowed = parseInt(options.hash.needed, 10) + 1;
+        }
+
+        if (testsAllowed !== -1) {
+            const rgx = new RegExp(' value=\"' + testsAllowed + '\"');
+            html = html.replace(rgx, "$& disabled=\"disabled\"");
+        }
         if (!selected) {
             selected = [ 0 ];
         } else if (!(selected instanceof Array)) {

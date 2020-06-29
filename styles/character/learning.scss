@@ -27,45 +27,6 @@
         .learning-xp {
             @include progress-ticks;
         }
-
-        input.aptitude[value="8"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="7"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="7"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="6"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="6"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="6"] ~ div.learning-xp > label.progress-tick-7,
-        input.aptitude[value="5"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="5"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="5"] ~ div.learning-xp > label.progress-tick-7,
-        input.aptitude[value="5"] ~ div.learning-xp > label.progress-tick-6,
-        input.aptitude[value="4"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="4"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="4"] ~ div.learning-xp > label.progress-tick-7,
-        input.aptitude[value="4"] ~ div.learning-xp > label.progress-tick-6,
-        input.aptitude[value="4"] ~ div.learning-xp > label.progress-tick-5,
-        input.aptitude[value="3"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="3"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="3"] ~ div.learning-xp > label.progress-tick-7,
-        input.aptitude[value="3"] ~ div.learning-xp > label.progress-tick-6,
-        input.aptitude[value="3"] ~ div.learning-xp > label.progress-tick-5,
-        input.aptitude[value="3"] ~ div.learning-xp > label.progress-tick-4,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-7,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-6,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-5,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-4,
-        input.aptitude[value="2"] ~ div.learning-xp > label.progress-tick-3,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-9,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-8,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-7,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-6,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-5,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-4,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-3,
-        input.aptitude[value="1"] ~ div.learning-xp > label.progress-tick-2 {
-            @include progress-disable;
-        }
     }
 
     .item-action-icon {

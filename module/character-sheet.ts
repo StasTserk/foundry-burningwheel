@@ -1,10 +1,6 @@
 import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
-import { Belief } from "./items/belief.js";
-import { Instinct } from "./items/instinct.js";
-import { Relationship } from "./items/relationship.js";
-import { Skill } from "./items/skill.js";
-import { Trait } from "./items/trait.js";
+import { Belief, Instinct, MeleeWeapon, RangedWeapon, Relationship, Skill, Trait } from "./items/index.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): ActorSheetData {
@@ -16,13 +12,31 @@ export class BWCharacterSheet extends BWActorSheet {
         const skills: Skill[] = [];
         const training: Skill[] = [];
         const relationships: Relationship[] = [];
+        const equipment: Item[] = [];
+        const melee: MeleeWeapon[] = [];
+        const ranged: RangedWeapon[] = [];
+        const armor: Item[] = [];
         for (const i of items) {
             switch(i.type) {
                 case "belief": beliefs.push(i as Belief); break;
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
                 case "skill": (i as any).data.learning ? training.push(i) : skills.push(i); break;
-                case "relationship": relationships.push(i as Relationship);
+                case "relationship": relationships.push(i as Relationship); break;
+                case "melee weapon":
+                    equipment.push(i);
+                    melee.push(i);
+                    break;
+                case "ranged weapon":
+                    equipment.push(i)
+                    ranged.push(i);
+                    break;
+                case "armor":
+                    equipment.push(i);
+                    armor.push(i);
+                    break;
+                default:
+                    equipment.push(i);
             }
         }
 
@@ -36,6 +50,10 @@ export class BWCharacterSheet extends BWActorSheet {
         data.skills = skills;
         data.training = training;
         data.relationships = relationships;
+        data.equipment = equipment;
+        data.melee = melee;
+        data.armor = armor;
+        data.ranged = ranged;
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
 
@@ -60,7 +78,8 @@ export class BWCharacterSheet extends BWActorSheet {
             ".rollable > .collapsing-section > i",
             ".learning > i",
             ".relationships > h2 > i",
-            ".relationship > i"
+            ".relationship > i",
+            ".gear > div > i"
         ];
         html.find(selectors.join(", ")).click(e => this._manageItems(e));
 
@@ -194,6 +213,10 @@ async function rollCallback(
 }
 
 interface CharacterSheetData extends ActorSheetData {
+    equipment: Item[];
+    melee: MeleeWeapon[];
+    armor: Item[];
+    ranged: RangedWeapon[];
     relationships: Relationship[];
     beliefs: Belief[];
     instincts: Instinct[];

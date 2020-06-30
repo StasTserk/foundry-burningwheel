@@ -1,11 +1,35 @@
 <form autocomplete="off">
     <input name="name" type="text" value="{{item.name}}">
     <hr/>
-    <div class="checkbox-grid">
-        <input id="checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
-        <label for="checkbox-toolkit">Toolkit</label>
-        <input id="checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
-        <label for="checkbox-expended">Expended</label>
+    <div class="input-grid">
+        <div>
+            <input id="number-dice" type="number" name="data.dice" value="{{data.dice}}">
+            <label for="number-dice">Armor Dice</label>
+        </div>
+        <div>
+            <input id="number-damage" type="number" name="data.damage" value="{{data.damage}}">
+            <label for="number-damage">Damage</label>
+        </div>
+        <div>
+            <select id="select-quality" name="data.quality" value="{{data.quality}}">
+                {{#select data.quality}}
+                {{#each armorQuality as |title value|}}
+                <option value="{{value}}">{{title}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+            <label for="select-quality">Armor Quality</label>
+        </div>
+        <div>
+            <select id="select-location" name="data.location" value="{{data.location}}">
+                {{#select data.location}}
+                {{#each armorLocations as |title value|}}
+                <option value="{{value}}">{{title}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+            <label for="select-location">Armor Location</label>
+        </div>
     </div>
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>

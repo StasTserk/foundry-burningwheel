@@ -152,6 +152,20 @@
         </div>
         <hr>
     </div>
+    <input type="checkbox" id="collapseGear" name="data.collapseGear" class="section-collapse gear-collapse" {{ checked data.collapseGear }}>
+    <h2>
+        <label for="collapseGear" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Gear, Posessions, and Property
+    </h2>
+    <div class="gear item-grid col-3">
+        {{#each equipment as |e|}}
+        <div>
+            {{e.name}}
+            <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e._id}}"></i>
+            <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{e._id}}"></i>
+        </div>
+        {{/each}}
+    </div>
     <input type="checkbox" id="collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
     <h2>
         <label for="collapseSkills" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>

@@ -1,3 +1,5 @@
+import { skillRootSelect, skillTypeSelect } from "../../constants.js";
+
 export class SkillSheet extends ItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {});
@@ -9,34 +11,8 @@ export class SkillSheet extends ItemSheet {
 
     getData() {
         const data = super.getData() as SkillSheetData;
-        data.skillTypes = {
-            academic: "Academic",
-            artisan: "Artisan",
-            artist: "Artist",
-            craftsman: "Craftsman",
-            forester: "Forester",
-            martial: "Martial",
-            medicinal: "Medicinal",
-            military: "Military",
-            musical: "Musical",
-            peasant: "Peasant",
-            physical: "Physical",
-            schoolofthought: "School of Thought",
-            seafaring: "Seafaring",
-            special: "Special",
-            social: "Social",
-            sorcerous: "Sorcerous",
-            training: "Training"
-        }
-
-        data.skillRoots = {
-            power: "Power",
-            agility: "Agility",
-            will: "Will",
-            perception: "Perception",
-            forte: "Forte",
-            speed: "Speed",
-        }
+        data.skillTypes = skillTypeSelect;
+        data.skillRoots = skillRootSelect;
         return data;
     }
 }

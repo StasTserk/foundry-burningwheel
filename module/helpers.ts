@@ -11,6 +11,12 @@ export function slugify(name: string): string {
     return name.trim().replace(" ", "-");
 }
 
+export function toDictionary(list: string[]): { [key:string]:string } {
+    const o: { [key:string]:string } = {};
+    list.forEach(s => o[s] = s.titleCase());
+    return o;
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

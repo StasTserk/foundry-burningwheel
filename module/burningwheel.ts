@@ -53,4 +53,11 @@ function registerHelpers() {
         });
         return html;
     });
+
+    Handlebars.registerHelper("disabled", (value) => {
+        if (value) {
+            return " disabled ";
+        }
+        return "";
+    });
 }

@@ -1,11 +1,62 @@
 <form autocomplete="off">
-    <input type="text" name="item.name" value="{{item.name}}">
+    <input name="name" type="text" value="{{item.name}}">
     <hr/>
+    <h2>Stats</h2>
     <div class="checkbox-grid">
-        <input id="checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
-        <label for="checkbox-toolkit">Toolkit</label>
-        <input id="checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
-        <label for="checkbox-expended">Expended</label>
+        <input id="checkbox-usePower" type="checkbox" name="data.usePower" {{checked data.usePower}}>
+        <label for="checkbox-usePower">Use Power</label>
+        <input id="checkbox-hasGonpowder" type="checkbox" name="data.hasGonpowder" {{checked data.hasGonpowder}}>
+        <label for="checkbox-hasGonpowder">Gunpowder Weapon</label>
+    </div>
+    <hr />
+    {{#if data.usePower}}
+    <div class="input-grid">
+        <div>
+            <input id="number-power" type="number" name="data.powerBonus" value="{{data.powerBonus}}">
+            <label for="number-power">Power Bonus</label>
+        </div>
+    </div>
+    <hr />
+    {{/if}}
+    <div class="input-grid">
+        <div>
+            <input id="number-incidental" type="number" name="data.incidental" value="{{data.incidental}}" {{ disabled data.usePower }} >
+            <label for="number-incidental">Incidental: {{ incidentalLabel }}</label>
+        </div>
+        <div>
+            <input id="number-mark" type="number" name="data.mark" value="{{data.mark}}" {{ disabled data.usePower }} >
+            <label for="number-mark">Mark: {{ markLabel }}</label>
+        </div>
+        <div>
+            <input id="number-superb" type="number" name="data.superb" value="{{data.superb}}" {{ disabled data.usePower }} >
+            <label for="number-superb">Superb: {{ superbLabel }}</label>
+        </div>
+        <div>
+            <input id="number-incidentalMax" type="number" name="data.incidentalRoll" value="{{data.incidentalRoll}}" >
+            <label for="number-incidentalMax" title="Maximum DoF number that results in an incidental hit">Incidental Threshold</label>
+        </div>
+        <div>
+            <input id="number-markMax" type="number" name="data.markRoll" value="{{data.markRoll}}" >
+            <label for="number-markMax" title="Maximum DoF number that results in an mark hit">Mark Threshold</label>
+        </div>
+        <div>
+            <input id="number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
+            <label for="number-va">Vs. Armor</label>
+        </div>
+        <div>
+            <select id="select-quality" name="data.quality" value="{{data.quality}}">
+                {{#select data.quality}}
+                {{#each weaponQualities as |title value|}}
+                <option value="{{value}}">{{title}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+            <label for="select-quality">Weapon Quality</label>
+        </div>
+        <div>
+            <input id="number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
+            <label for="number-rang">Max Range</label>
+        </div>
     </div>
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>

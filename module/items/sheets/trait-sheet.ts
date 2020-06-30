@@ -1,3 +1,5 @@
+import { traitTypeSelect } from "../../constants.js";
+
 export class TraitSheet extends ItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {});
@@ -9,11 +11,7 @@ export class TraitSheet extends ItemSheet {
 
     getData() {
         const data = super.getData() as TraitSheetData;
-        data.traitTypes = {
-            character: "Character",
-            "call-on": "Call-on",
-            die: "Die"
-        }
+        data.traitTypes = traitTypeSelect;
         return data;
     }
 }

@@ -24,18 +24,6 @@
         }
     }
 
-    .rollable > .collapsing-section {
-        & i.item-action-icon {
-            float: right;
-            font-size: 12px;
-            margin-top: 6px;
-            margin-left: 5px;
-            color: transparentize($color: black, $amount: 0.25)
-        }
-        & i.item-action-icon:hover {
-            color: #FF0000;
-        }
-    }
     
     .stats, .attributes, .skills {
         display: grid;

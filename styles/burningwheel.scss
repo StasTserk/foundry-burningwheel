@@ -37,6 +37,28 @@ input.exponent {
     flex-direction: column;
 }
 
+.item-grid {
+    display: grid;
+    column-gap: 5px;
+    row-gap: 5px;
+
+    div {
+        &:hover {
+            background-color: lightgrey;
+        }
+    }
+    &.col-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    &.col-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    &.col-4 {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
 input.section-collapse {
     display: none;
 }
@@ -56,6 +78,7 @@ input.instincts-collapse:checked ~ .instincts,
 input.traits-collapse:checked ~ .traits,
 input.stats-collapse:checked ~ .stats,
 input.relationships-collapse:checked ~ .relationship-section,
+input.gear-collapse:checked ~ .gear,
 input.skills-collapse:checked ~ .skills,
 input.learning-collapse:checked ~ .learning-practice,
 input.ptgs-collapse:checked ~ .ptgs {
@@ -88,5 +111,17 @@ input.ptgs-collapse:checked ~ .ptgs {
     label {
         display: block;
         font-size: 12px;
+    }
+}
+
+i.item-action-icon {
+    float: right;
+    font-size: 12px;
+    margin-top: 6px;
+    margin-left: 5px;
+    color: transparentize($color: black, $amount: 0.25);
+
+    &:hover {
+        color: #FF0000;
     }
 }

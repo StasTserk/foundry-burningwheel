@@ -53,3 +53,15 @@ export const gearQuality = [
     "superior"
 ];
 export const gearQualitySelect = toDictionary(gearQuality);
+
+export const armorLocations = [
+    "all",
+    "head",
+    "torso",
+    "right arm",
+    "left arm",
+    "right leg",
+    "left leg",
+    "shield"
+];
+export const armorLocationSelect = toDictionary(armorLocations);

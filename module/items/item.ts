@@ -1,4 +1,5 @@
 import { Belief } from "./belief.js";
+import { MeleeWeapon, RangedWeapon } from "./index.js";
 import { Instinct } from "./instinct.js";
 import { Relationship } from "./relationship.js";
 import { ArmorSheet } from "./sheets/armor-sheet.js";
@@ -34,14 +35,21 @@ export {
 export class BWItem extends Item {
     prepareData() {
         super.prepareData();
-        if (this.type === "trait") {
-            Trait.prototype.prepareData.bind(this)();
-        }
-        if (this.type === "skill") {
-            Skill.prototype.prepareData.bind(this)();
-        }
-        if (this.type === "relationship") {
-            Relationship.prototype.prepareData.bind(this)();
+        switch (this.type) {
+            case "trait":
+                Trait.prototype.prepareData.bind(this)();
+                break;
+            case "skill":
+                Skill.prototype.prepareData.bind(this)();
+                break;
+            case "relationship":
+                Relationship.prototype.prepareData.bind(this)();
+                break;
+            case "melee weapon":
+                MeleeWeapon.prototype.prepareData.bind(this)();
+                break;
+            case "ranged weapon":
+                RangedWeapon.prototype.prepareData.bind(this)();
         }
     }
 }

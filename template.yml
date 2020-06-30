@@ -33,6 +33,7 @@ Actor:
       collapseStats: false
       collapseAttributes: false
       collapseRelationships: false
+      collapseGear: false
       collapseSkills: false
       collapseLearning: false
       collapsePtgs: false

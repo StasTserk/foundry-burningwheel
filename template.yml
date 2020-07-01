@@ -38,6 +38,7 @@ Actor:
       collapseLearning: false
       collapsePtgs: false
       collapseCombat: false
+      collapseMisc: false
     common:
       will: &stat
         exp: 1
@@ -77,6 +78,9 @@ Actor:
     homeland: ''
     features: ''
     practiceLog: ''
+    miscNotes1: ''
+    miscNotes2: ''
+    miscNotes3: ''
   npc:
     templates:
       - common

@@ -166,6 +166,16 @@
         </div>
         {{/each}}
     </div>
+    <input type="checkbox" id="collapseMisc" name="data.collapseMisc" class="section-collapse misc-collapse" {{ checked data.collapseMisc }}>
+    <h2>
+        <label for="collapseMisc" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Notes, Spells and Other Miscellanea
+    </h2>
+    <div class="misc-section item-grid col-3">
+        <textarea name="data.miscNotes1" class="note-box" rows="4">{{data.miscNotes1}}</textarea>
+        <textarea name="data.miscNotes2" class="note-box" rows="4">{{data.miscNotes2}}</textarea>
+        <textarea name="data.miscNotes3" class="note-box" rows="4">{{data.miscNotes3}}</textarea>
+    </div>
     <input type="checkbox" id="collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
     <h2>
         <label for="collapseSkills" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>

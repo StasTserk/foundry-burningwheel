@@ -1,0 +1,30 @@
+.combat-section {
+    .weapon-grid {
+        grid-template-columns: 5fr repeat(7, 1fr) 2fr;
+    }
+
+    .ranged-grid {
+        grid-template-columns: 5fr repeat(5, 1fr) 2fr;
+        .weapon-ims {
+            margin-bottom: -10px;
+        }
+        .weapon-dof {
+            text-align: center;
+            font-size: 10px;
+        }
+    }
+
+    .weapon-grid, .ranged-grid {
+        .weapon-row {
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+
+    .weapon-header {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border-bottom: 1px solid black;
+    }
+}

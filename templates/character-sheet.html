@@ -200,4 +200,14 @@
     <div class="ptgs">
         {{> "systems/burningwheel/templates/parts/ptgs.html" ptgs=data.ptgs }}
     </div>
+    <input type="checkbox" id="collapseCombat" name="data.collapseCombat" class="section-collapse combat-collapse" {{ checked data.collapseCombat }}>
+    <h2>
+        <label for="collapseCombat" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
+        Weapons and Armor
+    </h2>
+    <div class="combat-section">
+        <div class="weapons">
+            {{> "systems/burningwheel/templates/parts/weapons.html" melee=melee ranged=ranged }}
+        </div>
+    </div>
 </form>

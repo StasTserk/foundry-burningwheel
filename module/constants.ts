@@ -1,12 +1,28 @@
 import { toDictionary } from "./helpers.js"
+import { MeleeWeaponData } from "./items/meleeWeapon.js";
 
 export const weaponSpeeds = [
     "shortest",
     "short",
     "long",
+    "longer",
     "longest"
 ];
 export const weaponSpeedSelect = toDictionary(weaponSpeeds);
+
+export const bareFistData = {
+    name: "Bare Fist",
+    type: "melee weapon",
+    data: {
+        weaponLength: "shortest",
+        power: "0",
+        quality: "basic",
+        add: "2",
+        vsArmor: "0",
+        handedness: "one",
+        description: "Your bare fist"
+    } as MeleeWeaponData
+}
 
 export const traitTypes = [
     "character",

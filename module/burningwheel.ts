@@ -54,9 +54,16 @@ function registerHelpers() {
         return html;
     });
 
-    Handlebars.registerHelper("disabled", (value) => {
+    Handlebars.registerHelper("disabled", (value: boolean) => {
         if (value) {
             return " disabled ";
+        }
+        return "";
+    });
+
+    Handlebars.registerHelper("titlecase", (value: string) => {
+        if (value) {
+            return value.titleCase();
         }
         return "";
     });

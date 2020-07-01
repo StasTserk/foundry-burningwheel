@@ -1,0 +1,41 @@
+<div class="item-grid weapon-grid">
+    <div class="weapon-header">Melee</div>
+    <div class="weapon-header">I</div>
+    <div class="weapon-header">M</div>
+    <div class="weapon-header">S</div>
+    <div class="weapon-header">Pow</div>
+    <div class="weapon-header">Add</div>
+    <div class="weapon-header">Va</div>
+    <div class="weapon-header">Ws</div>
+    <div class="weapon-header">Length</div>
+    {{#each melee as |m|}}
+    <div class="weapon-row">{{m.name}}</div>
+    <div class="weapon-row">{{m.data.incidental}}</div>
+    <div class="weapon-row">{{m.data.mark}}</div>
+    <div class="weapon-row">{{m.data.superb}}</div>
+    <div class="weapon-row">{{m.data.power}}</div>
+    <div class="weapon-row">{{m.data.add}}</div>
+    <div class="weapon-row">{{m.data.vsArmor}}</div>
+    <div class="weapon-row">{{m.data.weaponSpeed}}</div>
+    <div class="weapon-row">{{titlecase m.data.weaponLength}}</div>
+    {{/each}}
+</div>
+<hr>
+<div class="item-grid ranged-grid">
+    <div class="weapon-header">Missile</div>
+    <div class="weapon-header">I</div>
+    <div class="weapon-header">M</div>
+    <div class="weapon-header">S</div>
+    <div class="weapon-header">Opt</div>
+    <div class="weapon-header">Extr</div>
+    <div class="weapon-header">Max Range</div>
+    {{#each ranged as |r|}}
+    <div class="weapon-row">{{r.name}}</div>
+    <div class="weapon-row"><div class="weapon-ims">{{r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div>
+    <div class="weapon-row"><div class="weapon-ims">{{r.data.mark}}</div><label class="weapon-dof">{{r.data.markLabel}}</label></div>
+    <div class="weapon-row"><div class="weapon-ims">{{r.data.superb}}</div><label class="weapon-dof">{{r.data.superbLabel}}</label></div>
+    <div class="weapon-row">{{r.data.optimalRange}}D</div>
+    <div class="weapon-row">{{r.data.extremeRange}}D</div>
+    <div class="weapon-row">{{titlecase r.data.maxRange}}</div>
+    {{/each}}
+</div>

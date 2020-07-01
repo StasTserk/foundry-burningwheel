@@ -80,6 +80,7 @@ input.traits-collapse:checked ~ .traits,
 input.stats-collapse:checked ~ .stats,
 input.relationships-collapse:checked ~ .relationship-section,
 input.gear-collapse:checked ~ .gear,
+input.misc-collapse:checked ~ .misc-section,
 input.skills-collapse:checked ~ .skills,
 input.learning-collapse:checked ~ .learning-practice,
 input.ptgs-collapse:checked ~ .ptgs,
@@ -126,4 +127,9 @@ i.item-action-icon {
     &:hover {
         color: #FF0000;
     }
+}
+
+textarea.note-box {
+    border: 0;
+    resize: vertical;
 }

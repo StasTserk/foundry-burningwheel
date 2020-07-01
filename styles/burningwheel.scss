@@ -1,6 +1,7 @@
 @import "./character/character.scss";
 @import "./character/learning.scss";
 @import "./character/ptgs.scss";
+@import "./character/weapons.scss";
 @import "./items/relationship.scss";
 @import "./items/skill.scss";
 @import "./roll.scss";
@@ -81,7 +82,8 @@ input.relationships-collapse:checked ~ .relationship-section,
 input.gear-collapse:checked ~ .gear,
 input.skills-collapse:checked ~ .skills,
 input.learning-collapse:checked ~ .learning-practice,
-input.ptgs-collapse:checked ~ .ptgs {
+input.ptgs-collapse:checked ~ .ptgs,
+input.combat-collapse:checked ~ .combat-section {
     display: none;
 }
 

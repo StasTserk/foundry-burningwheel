@@ -9,6 +9,12 @@ export class RangedWeapon extends Item {
             this.data.data.mark = baseDmg.toString();
             this.data.data.superb = Math.floor(baseDmg * 1.5).toString();
         }
+
+        const incidentalRange = parseInt(this.data.data.incidentalRoll, 10);
+        const markRange = parseInt(this.data.data.markRoll, 10);
+        this.data.data.incidentalLabel = `1-${incidentalRange}`;
+        this.data.data.markLabel = (markRange - 1 === incidentalRange) ? `${markRange}` : `${incidentalRange + 1}-${markRange}`;
+        this.data.data.superbLabel = (markRange === 5 ) ? `6` : `${markRange + 1}-6`;
     }
 
     data: RangedWeaponRootData;
@@ -34,4 +40,9 @@ export interface RangedWeaponData {
     maxRange: string;
     hadnedness: string;
     description: string;
+
+    // derived data
+    incidentalLabel?: string;
+    markLabel?: string;
+    superbLabel?: string;
 }

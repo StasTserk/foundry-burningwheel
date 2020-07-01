@@ -37,6 +37,7 @@ Actor:
       collapseSkills: false
       collapseLearning: false
       collapsePtgs: false
+      collapseCombat: false
     common:
       will: &stat
         exp: 1

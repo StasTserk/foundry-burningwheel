@@ -1,6 +1,8 @@
 import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
+import { bareFistData } from "./constants.js";
 import { Belief, Instinct, MeleeWeapon, RangedWeapon, Relationship, Skill, Trait } from "./items/index.js";
+import { MeleeWeaponData } from "./items/meleeWeapon.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): ActorSheetData {
@@ -16,6 +18,7 @@ export class BWCharacterSheet extends BWActorSheet {
         const melee: MeleeWeapon[] = [];
         const ranged: RangedWeapon[] = [];
         const armor: Item[] = [];
+        let addFist = true; // do we need to add a fist weapon?
         for (const i of items) {
             switch(i.type) {
                 case "belief": beliefs.push(i as Belief); break;
@@ -24,7 +27,11 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "skill": (i as any).data.learning ? training.push(i) : skills.push(i); break;
                 case "relationship": relationships.push(i as Relationship); break;
                 case "melee weapon":
-                    equipment.push(i);
+                    if (addFist && i.name === "Bare Fist") {
+                        addFist = false; // only count don't count fists as equipment
+                    } else {
+                        equipment.push(i);
+                    }
                     melee.push(i);
                     break;
                 case "ranged weapon":
@@ -43,6 +50,11 @@ export class BWCharacterSheet extends BWActorSheet {
         if (beliefs.length === 0 && instincts.length === 0) {
             console.log("adding default beliefs");
             this.addDefaultItems();
+        }
+
+        if (addFist) {
+            // we need to add the default fist weapon to weapons list
+            this.actor.createOwnedItem(bareFistData).then(i => data.melee.push(i));
         }
 
         data.beliefs = beliefs;
@@ -215,6 +227,7 @@ async function rollCallback(
 interface CharacterSheetData extends ActorSheetData {
     equipment: Item[];
     melee: MeleeWeapon[];
+    fistStats: MeleeWeaponData;
     armor: Item[];
     ranged: RangedWeapon[];
     relationships: Relationship[];

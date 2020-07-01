@@ -157,7 +157,7 @@
         <label for="collapseGear" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
         Gear, Posessions, and Property
     </h2>
-    <div class="gear item-grid col-3">
+    <div class="gear item-grid col-4">
         {{#each equipment as |e|}}
         <div>
             {{e.name}}
@@ -189,7 +189,7 @@
         </div>
         <div class="practice-log">
             <div>Practice Log</div>
-            <textarea>{{data.practiceLog}}</textarea>
+            <textarea name="data.practiceLog">{{data.practiceLog}}</textarea>
         </div>
     </div>
     <input type="checkbox" id="collapsePtgs" name="data.collapsePtgs" class="section-collapse ptgs-collapse" {{ checked data.collapsePtgs }}>
@@ -205,9 +205,12 @@
         <label for="collapseCombat" class="section-collapse-label"><i class="fas fa-chevron-down"></i></label>
         Weapons and Armor
     </h2>
-    <div class="combat-section">
+    <div class="combat-section flex-row">
         <div class="weapons">
             {{> "systems/burningwheel/templates/parts/weapons.html" melee=melee ranged=ranged }}
+        </div>
+        <div class="armor">
+            {{> "systems/burningwheel/templates/parts/armor.html" armor=armor }}
         </div>
     </div>
 </form>

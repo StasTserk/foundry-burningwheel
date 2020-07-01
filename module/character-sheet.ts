@@ -1,7 +1,8 @@
 import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
-import { bareFistData } from "./constants.js";
-import { Belief, Instinct, MeleeWeapon, RangedWeapon, Relationship, Skill, Trait } from "./items/index.js";
+import * as constants from "./constants.js";
+import { ArmorRootData } from "./items/armor.js";
+import { Armor, Belief, Instinct, MeleeWeapon, RangedWeapon, Relationship, Skill, Trait } from "./items/item.js";
 import { MeleeWeaponData } from "./items/meleeWeapon.js";
 
 export class BWCharacterSheet extends BWActorSheet {
@@ -17,7 +18,7 @@ export class BWCharacterSheet extends BWActorSheet {
         const equipment: Item[] = [];
         const melee: MeleeWeapon[] = [];
         const ranged: RangedWeapon[] = [];
-        const armor: Item[] = [];
+        const armor: Armor[] = [];
         let addFist = true; // do we need to add a fist weapon?
         for (const i of items) {
             switch(i.type) {
@@ -54,7 +55,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
         if (addFist) {
             // we need to add the default fist weapon to weapons list
-            this.actor.createOwnedItem(bareFistData).then(i => data.melee.push(i));
+            this.actor.createOwnedItem(constants.bareFistData).then(i => data.melee.push(i));
         }
 
         data.beliefs = beliefs;
@@ -64,7 +65,7 @@ export class BWCharacterSheet extends BWActorSheet {
         data.relationships = relationships;
         data.equipment = equipment;
         data.melee = melee;
-        data.armor = armor;
+        data.armor = this.getArmorDictionary(armor);
         data.ranged = ranged;
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
@@ -80,6 +81,13 @@ export class BWCharacterSheet extends BWActorSheet {
         }
         data.traits = traitLists;
         return data;
+    }
+
+    getArmorDictionary(armorItems: Item[]): { [key: string]: Item; } {
+        const armorLocs: { [key: string]: Armor; } = {};
+        constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
+        armorItems.forEach(i => armorLocs[(i as any as ArmorRootData).data.location] = i);
+        return armorLocs;
     }
 
     activateListeners(html: JQuery) {
@@ -228,7 +236,7 @@ interface CharacterSheetData extends ActorSheetData {
     equipment: Item[];
     melee: MeleeWeapon[];
     fistStats: MeleeWeaponData;
-    armor: Item[];
+    armor: { [key: string]: Item }; // armor/location dictionary
     ranged: RangedWeapon[];
     relationships: Relationship[];
     beliefs: Belief[];

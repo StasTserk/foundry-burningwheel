@@ -1,6 +1,8 @@
+import { Armor } from "./armor.js";
 import { Belief } from "./belief.js";
-import { MeleeWeapon, RangedWeapon } from "./index.js";
 import { Instinct } from "./instinct.js";
+import { MeleeWeapon } from "./meleeWeapon.js";
+import { RangedWeapon } from "./rangedWeapon.js";
 import { Relationship } from "./relationship.js";
 import { ArmorSheet } from "./sheets/armor-sheet.js";
 import { BeliefSheet } from "./sheets/belief-sheet.js";
@@ -29,7 +31,10 @@ export {
     Instinct,
     Relationship,
     Skill,
-    Trait
+    Trait,
+    MeleeWeapon,
+    RangedWeapon,
+    Armor
 }
 
 export class BWItem extends Item {

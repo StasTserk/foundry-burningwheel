@@ -1,0 +1,12 @@
+<div class="item-grid armor-grid">
+    <div class="armor-header">Dice</div>
+    <div class="armor-header">Dmg</div>
+    <div class="armor-header">Location</div>
+    <div class="armor-header">Type</div>
+    {{#each armor as |a key|}}
+        <div class="armor-row">{{a.data.dice}}</div>
+        <div class="armor-row">{{a.data.damage}}</div>
+        <div class="armor-row">{{titlecase key}}</div>
+        <div class="armor-row">{{a.name}}</div>
+    {{/each}}
+</div>

@@ -71,7 +71,6 @@ export const gearQuality = [
 export const gearQualitySelect = toDictionary(gearQuality);
 
 export const armorLocations = [
-    "all",
     "head",
     "torso",
     "right arm",

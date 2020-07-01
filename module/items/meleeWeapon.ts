@@ -1,4 +1,4 @@
-import { CharacterData } from "module/actor";
+import { CharacterData } from "../actor.js";
 
 export class MeleeWeapon extends Item {
     prepareData() {
@@ -14,7 +14,7 @@ export class MeleeWeapon extends Item {
     data: MeleeWeaponRootData;
 }
 
-export interface MeleeWeaponRootData extends BaseEntityData{
+export interface MeleeWeaponRootData extends BaseEntityData {
     data: MeleeWeaponData
 }
 

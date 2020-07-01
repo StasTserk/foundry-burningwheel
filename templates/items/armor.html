@@ -23,6 +23,7 @@
         <div>
             <select id="select-location" name="data.location" value="{{data.location}}">
                 {{#select data.location}}
+                <option value="all">All</option>
                 {{#each armorLocations as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}

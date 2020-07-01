@@ -1,6 +1,10 @@
 @import "../mixins.scss";
 
 .character {
+    textarea {
+        font-family: unset;
+    }
+
     h2 {
         text-align: center;
     }

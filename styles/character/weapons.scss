@@ -1,4 +1,12 @@
 .combat-section {
+    .weapons {
+        width: calc(60% - 5px);
+    }
+    .armor {
+        width: 40%;
+        margin-left: 5px;
+    }
+
     .weapon-grid {
         grid-template-columns: 5fr repeat(7, 1fr) 2fr;
     }
@@ -21,10 +29,20 @@
         }
     }
 
-    .weapon-header {
+    .weapon-header, .armor-header {
         font-size: 16px;
         font-weight: bold;
         text-align: center;
         border-bottom: 1px solid black;
+    }
+
+    .armor-grid {
+        grid-template-columns: 1fr 1fr 75px 4fr;
+
+        .armor-row {
+            font-size: 16px;
+            text-align: center;
+            border-bottom: 1px solid black;
+        }
     }
 }

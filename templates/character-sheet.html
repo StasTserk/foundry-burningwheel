@@ -43,11 +43,14 @@
     </label>      
     <div class="beliefs">
         {{#each beliefs as |belief iid|}}
-            <div class="belief" >
-                F:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.fate" {{ checked belief.data.fate }}>
-                P:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.persona"  {{ checked belief.data.persona }}>
-                D:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.deeds" {{ checked belief.data.deeds }}>
-                <input type="text" data-item-id="{{belief._id}}" data-binding="data.text" value="{{belief.data.text}}">
+            <div class="bits-item flex-row">
+                <div>
+                    <div class="bits-item-name">{{belief.name}}</div>
+                    F:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.fate" {{ checked belief.data.fate }}>
+                    P:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.persona"  {{ checked belief.data.persona }}>
+                    D:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.deeds" {{ checked belief.data.deeds }}>
+                </div>
+                <textarea data-item-id="{{belief._id}}" data-binding="data.text" rows="1">{{belief.data.text}}</textarea>
             </div>
         {{/each}}
     </div>
@@ -58,11 +61,14 @@
     </label>
     <div class="instincts">
         {{#each instincts as |instinct|}}
-            <div class="instinct">
-                F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.fate" {{ checked instinct.data.fate }}>
-                P:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.persona" {{ checked instinct.data.persona }}>
-                D:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.deeds" {{ checked instinct.data.deeds }}>
-                <input type="text" data-item-id="{{instinct._id}}" data-binding="data.text" value="{{instinct.data.text}}">
+            <div class="bits-item flex-row">
+                <div>
+                <div class="bits-item-name">{{instinct.name}}</div>
+                    F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="instinct.fate" {{ checked instinct.data.fate }}>
+                    P:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="instinct.persona"  {{ checked instinct.data.persona }}>
+                    D:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="instinct.deeds" {{ checked instinct.data.deeds }}>
+                </div>
+                <textarea data-item-id="{{instinct._id}}" data-binding="data.text" rows="1">{{instinct.data.text}}</textarea>
             </div>
         {{/each}}
     </div>

@@ -11,6 +11,7 @@ export class BWActorSheet extends ActorSheet {
     activateListeners(html: JQuery) {
         super.activateListeners(html);
         html.find("input[data-item-id], select[data-item-id]").change((e) => this._updateItemField(e));
+        html.find("textarea[data-item-id], select[data-item-id]").change((e) => this._updateItemField(e));
     }
 
     private _updateItemField(e: JQuery.ChangeEvent): void {

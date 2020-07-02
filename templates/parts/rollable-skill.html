@@ -58,9 +58,9 @@
             <label for="{{skill.data.safeId}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
-        <input type="number" class="exponent" placeholder="F" title="Fate points spent on skill">
-        <input type="number" class="exponent" placeholder="P" title="Persona points spent on skill">
-        <input type="number" class="exponent" placeholder="D" title="Deeds points spent on skill">
+        <input type="number" class="circle-input" placeholder="F" title="Fate points spent on skill" data-item-id="{{skill._id}}" data-binding="data.fate" value="{{skill.data.fate}}">
+        <input type="number" class="circle-input" placeholder="P" title="Persona points spent on skill" data-item-id="{{skill._id}}" data-binding="data.persona" value="{{skill.data.persona}}">
+        <input type="number" class="circle-input" placeholder="D" title="Deeds points spent on skill" data-item-id="{{skill._id}}" data-binding="data.deeds" value="{{skill.data.deeds}}">
         <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{skill._id}}"></i>
         <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{skill._id}}"></i>
     </div>

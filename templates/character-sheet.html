@@ -1,30 +1,41 @@
 <form autocomplete="off" class="character">
-    <h2 class="section-header">Character Index</h2>
-    <div class="header">
-        <label>Name
-            <input type="text" name="name" value="{{actor.name}}">
-        </label>
-        <label>Stock
-            <input type="text" name="data.stock" value="{{data.stock}}">
-        </label>
-        <label>Age
-            <input type="number" name="data.age" value="{{data.age}}">
-        </label>
-        <label>Lifepaths
-            <input type="text" name="data.lifepathString" value="{{data.lifepathString}}">
-        </label>
+    <div class="character-header flex-row">
+        <div class="portrait">
+            <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+        </div>
+        <div class="section-index item-grid col-2">
+            <h2 class="section-header">Character Index</h2>
+            <div>
+                <label for="character-name">Name</label>
+                <input id="character-name" type="text" name="name" value="{{actor.name}}">
+            </div>
+            <div>
+                <label for="character-stock">Stock</label>
+                <input id="character-stock" type="text" name="data.stock" value="{{data.stock}}">
+            </div>
+            <div>
+                <label for="character-age">Age</label>
+                <input id="character-age" type="number" name="data.age" value="{{data.age}}">
+            </div>
+            <div>
+                <label for="character-lifepaths">Lifepaths</label>
+                <input id="character-lifepaths" type="text" name="data.lifepathString" value="{{data.lifepathString}}">
+            </div>
+            <div>
+                <label for="character-alias">Alias</label>
+                <input id="character-alias" type="text" name="data.alias" value="{{data.alias}}">
+            </div>
+            <div>
+                <label for="character-homeland">Homeland</label>
+                <input id="character-homeland" type="text" name="data.homeland" value="{{data.homeland}}">
+            </div>
+            <div>
+                <label for="character-features">Features</label>
+                <input id="character-features" type="text" name="data.features" value="{{data.features}}">
+            </div>
+        </div>
     </div>
-    <div class="subheader">
-        <label>Alias
-            <input type="text" name="data.alias" value="{{data.alias}}">
-        </label>
-        <label>Homeland
-            <input type="text" name="data.homeland" value="{{data.homeland}}">
-        </label>
-        <label>Features
-            <input type="text" name="data.features" value="{{data.features}}">
-        </label>
-    </div>
+
 
     <input type="checkbox" id="collapseBeliefs" name="data.collapseBeliefs" class="section-collapse beliefs-collapse" {{ checked data.collapseBeliefs }}>
     <label for="collapseBeliefs" class="section-collapse-label">

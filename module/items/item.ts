@@ -1,6 +1,3 @@
-import { Armor } from "./armor.js";
-import { Belief } from "./belief.js";
-import { Instinct } from "./instinct.js";
 import { MeleeWeapon } from "./meleeWeapon.js";
 import { RangedWeapon } from "./rangedWeapon.js";
 import { Relationship } from "./relationship.js";
@@ -16,26 +13,23 @@ import { TraitSheet } from "./sheets/trait-sheet.js";
 import { Skill } from "./skill.js";
 import { Trait } from "./trait.js";
 
-export {
-    ArmorSheet,
-    PosessionSheet,
-    RelationshipSheet,
-    BeliefSheet,
-    MeleeWeaponSheet,
-    PropertySheet,
-    RangedWeaponSheet,
-    SkillSheet,
-    TraitSheet,
-
-    Belief,
-    Instinct,
-    Relationship,
-    Skill,
-    Trait,
-    MeleeWeapon,
-    RangedWeapon,
-    Armor
-}
+export * from "./armor.js";
+export * from "./belief.js";
+export * from "./instinct.js";
+export * from "./meleeWeapon.js";
+export * from "./rangedWeapon.js";
+export * from "./relationship.js";
+export * from "./sheets/armor-sheet.js";
+export * from "./sheets/belief-sheet.js";
+export * from "./sheets/melee-sheet.js";
+export * from "./sheets/posession-sheet.js";
+export * from "./sheets/property-sheet.js";
+export * from "./sheets/ranged-sheet.js";
+export * from "./sheets/relationship-sheet.js";
+export * from "./sheets/skill-sheet.js";
+export * from "./sheets/trait-sheet.js";
+export * from "./skill.js";
+export * from "./trait.js";
 
 export class BWItem extends Item {
     prepareData() {

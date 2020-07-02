@@ -81,6 +81,51 @@
             visibility: hidden;
             display: none;
         }
+
+        .attribute-subrow {
+            label {
+                font-size: 1.125em;
+                display: block;
+                width: 50%;
+                text-align: center;
+            }
+        }
+    }
+
+    .attributes {
+        .attributes-derived {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            display: grid;
+            grid-auto-flow: column;
+            grid-template-rows: repeat(3, 1fr);
+
+            .attribute-label, .debt-label {
+                font-size: 1.125em;
+                display: block;
+                width: 50%;
+            }
+            .debt-label {
+                width: 30%;
+            }
+
+            .attribute-value, .attribute-text {
+                font-size: 1.125;
+                border: 0;
+                border-bottom: 1px solid black;
+                background-color: transparent;
+                text-align: center;               
+            }
+
+            .attribute-value {
+                font-weight: bold;
+                width: 4em;
+            }
+            .attribute-text {
+                width: 65%;
+                border-radius: 0;
+            }
+        }
     }
 
     .relationship-section {

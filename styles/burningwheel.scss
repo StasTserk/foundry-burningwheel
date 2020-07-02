@@ -133,3 +133,16 @@ textarea.note-box {
     border: 0;
     resize: vertical;
 }
+
+input.circle-input {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    -moz-appearance: textfield;
+    text-align: center;
+
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}

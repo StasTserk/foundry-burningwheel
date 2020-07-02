@@ -1,9 +1,18 @@
 import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
-import { ArmorRootData } from "./items/armor.js";
-import { Armor, Belief, Instinct, MeleeWeapon, RangedWeapon, Relationship, Skill, Trait } from "./items/item.js";
-import { MeleeWeaponData } from "./items/meleeWeapon.js";
+import {
+    Armor,
+    ArmorRootData,
+    Belief,
+    Instinct,
+    MeleeWeapon,
+    MeleeWeaponData,
+    RangedWeapon,
+    Relationship,
+    Skill,
+    Trait
+} from "./items/item.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): ActorSheetData {
@@ -29,9 +38,9 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "relationship": relationships.push(i as Relationship); break;
                 case "melee weapon":
                     if (addFist && i.name === "Bare Fist") {
-                        addFist = false; // only count don't count fists as equipment
+                        addFist = false; // only add one fist weapon if none present
                     } else {
-                        equipment.push(i);
+                        equipment.push(i); // don't count fists as equipment
                     }
                     melee.push(i);
                     break;
@@ -128,7 +137,7 @@ export class BWCharacterSheet extends BWActorSheet {
         };
         const html = await renderTemplate(template, templateData);
         const speaker = ChatMessage.getSpeaker({actor: this.actor})
-        return new Promise(resolve =>
+        return new Promise(_resolve =>
             new Dialog({
                 title: "Roll Test",
                 content: html,

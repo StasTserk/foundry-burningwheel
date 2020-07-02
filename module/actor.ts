@@ -48,6 +48,14 @@ export class BWActor extends Actor {
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
         this._calculatePtgs();
+
+        this.data.data.reflexesExp = Math.floor((parseInt(this.data.data.perception.exp, 10) +
+            parseInt(this.data.data.agility.exp, 10) +
+            parseInt(this.data.data.speed.exp, 10)) / 3);
+
+        this.data.data.mortalWound = Math.floor((parseInt(this.data.data.power.exp, 10) +
+            parseInt(this.data.data.forte.exp, 10)) / 2 + 6);
+        this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
     }
 
     private _calculatePtgs() {
@@ -94,6 +102,11 @@ interface BWCharacterData extends Common, DisplayProps, Ptgs {
     instincts: Item[];
     traits: Item[];
     skills: Skill[];
+
+    hesitation?: number;
+    mortalWound?: number;
+    reflexesExp?: number;
+    reflexesShade?: string;
 }
 
 interface Common {

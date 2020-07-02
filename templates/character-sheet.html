@@ -115,6 +115,11 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Will" stat=data.will namePrefix="data.will"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Power" stat=data.power namePrefix="data.power"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Agility" stat=data.agility namePrefix="data.agility"}}
+        <div class="attribute-subrow flex-row">
+            <label class="attribute-label">Tax</label>
+            <input type="number" class="circle-input" name="data.willTax" value="{{data.willTax}}">
+        </div>
+        <div></div><div></div>
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Perception" stat=data.perception namePrefix="data.perception"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Forte" stat=data.forte namePrefix="data.forte"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Speed" stat=data.speed namePrefix="data.speed"}}
@@ -129,8 +134,44 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Steel" stat=data.steel namePrefix="data.steel" routine=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Circles" stat=data.circles namePrefix="data.circles" routine=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Resources" stat=data.resources namePrefix="data.resources" routine=true}}
-        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom1" stat=data.custom1 namePrefix="data.custom1" routine=true customName=true}}
-        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Custom2" stat=data.custom2 namePrefix="data.custom2" routine=true customName=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName=data.custom1.name stat=data.custom1 namePrefix="data.custom1" routine=true customName=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName=data.custom2.name stat=data.custom2 namePrefix="data.custom2" routine=true customName=true}}
+        <div class="attribute-subrow flex-row">
+            <label class="attribute-label">Tax</label>
+            <input type="number" class="circle-input" name="data.resourcesTax" value="{{data.resourcesTax}}">
+        </div>
+        <div class="attributes-derived">
+            <div class="attributes-item flex-row">
+                <label class="attribute-label">Reflexes</label>
+                <div class="attribute-value">B{{data.reflexesExp}}</div>
+            </div>
+            <div class="attributes-item flex-row">
+                <label class="attribute-label">Mortal Wound</label>
+                <div class="attribute-value">B{{data.mortalWound}}</div>
+            </div>
+            <br/>
+            <div class="attributes-item flex-row">
+                <label class="debt-label">Cash</label>
+                <input type="text" class="attribute-text" name="data.cash" value="{{data.cash}}">
+            </div>
+            <div class="attributes-item flex-row">
+                <label class="debt-label">Funds</label>
+                <input type="text" class="attribute-text" name="data.funds" value="{{data.funds}}">
+            </div>
+            <div class="attributes-item flex-row">
+                <label class="debt-label">Property</label>
+                <input type="text" class="attribute-text" name="data.property" value="{{data.property}}">
+            </div>
+            <div class="attributes-item flex-row">
+                <label class="debt-label">loans</label>
+                <input type="text" class="attribute-text" name="data.loans" value="{{data.loans}}">
+            </div>
+            <div class="attributes-item flex-row">
+                <label class="debt-label">Debt</label>
+                <input type="text" class="attribute-text" name="data.debt" value="{{data.debt}}">
+            </div>
+        </div>
+        <div class="attributes-debts"></div>
     </div>
     <input type="checkbox" id="collapseRelationships" name="data.collapseRelationships" class="section-collapse relationships-collapse" {{ checked data.collapseRelationships }}>
     <h2>

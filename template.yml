@@ -66,6 +66,13 @@ Actor:
         name: ''
       stride: 7
       mountedstride: 0
+      cash: ''
+      funds: ''
+      property: ''
+      loans: ''
+      debt: ''
+      resourcesTax: 0
+      willTax: 0
   character:
     templates:
       - common

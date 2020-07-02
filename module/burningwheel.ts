@@ -67,4 +67,8 @@ function registerHelpers() {
         }
         return "";
     });
+
+    Handlebars.registerHelper("plusone", (value: number) => {
+        return value + 1;
+    });
 }

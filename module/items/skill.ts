@@ -1,11 +1,11 @@
 import { Ability, TracksTests } from "../actor.js";
-import { slugify, updateTestsNeeded } from "../helpers.js";
+import { updateTestsNeeded } from "../helpers.js";
 
 export class Skill extends Item {
     prepareData() {
         updateTestsNeeded(this.data.data);
         Skill.calculateAptitude.bind(this)();
-        this.data.data.safeId = slugify(this.name);
+        this.data.data.safeId = this._id;
     }
 
     static calculateAptitude(this: Skill) {

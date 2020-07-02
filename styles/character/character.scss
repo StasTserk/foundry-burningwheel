@@ -54,6 +54,33 @@
         }
     }
 
+    .beliefs, .instincts {
+        .bits-item {
+            & > div {
+                width: 13%;
+                border-right: 1px solid black;
+                margin-bottom: 2px;
+
+                .bits-item-name {
+                    width: 100%;
+                }
+
+                input[type="checkbox"] {
+                    width: 1em;
+                    height: 1em;
+                    margin: 0;
+                }
+            }
+            & > textarea {
+                width: 87%;
+                resize: vertical;
+                border: 0;
+                min-height: 3em;
+                height: 3em;
+            }
+        }
+    }
+
     .traits {
         .trait-category {
             width: calc(33% - 10px);

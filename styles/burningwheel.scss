@@ -45,7 +45,7 @@ input.exponent {
 
     div {
         &:hover {
-            background-color: lightgrey;
+            background-color: $hover-color;
         }
     }
     &.col-2 {
@@ -64,13 +64,13 @@ input.section-collapse {
     display: none;
 }
 
-input.section-collapse:checked + h2 > label.section-collapse-label > i {
+input.section-collapse:checked + label.section-collapse-label > h2 > i {
     transform: rotate(-90deg);
 }
 
-label.section-collapse-label {
-    float: left;
+label.section-collapse-label > h2 > i {
     margin-left: 10px;
+    float: left;
 }
 
 input.attributes-collapse:checked ~ .attributes,
@@ -138,11 +138,7 @@ input.circle-input {
     width: 24px;
     height: 24px;
     border-radius: 12px;
-    -moz-appearance: textfield;
     text-align: center;
 
-    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+    @include no-number-arrows;
 }

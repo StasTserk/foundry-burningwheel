@@ -64,5 +64,8 @@
             <label for="{{statName}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
+        <input type="number" class="circle-input" placeholder="F" title="Fate points spent on {{statName}}" name="{{namePrefix}}.fate" value="{{stat.fate}}">
+        <input type="number" class="circle-input" placeholder="P" title="Persona points spent on {{statName}}" name="{{namePrefix}}.persona" value="{{stat.persona}}">
+        <input type="number" class="circle-input" placeholder="D" title="Deeds points spent on {{statName}}" name="{{namePrefix}}.deeds" value="{{stat.deeds}}">
     </div>
 </div>

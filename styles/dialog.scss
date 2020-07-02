@@ -1,6 +1,8 @@
+@import "mixins.scss";
+
 .dialog {
     .dialog-row:hover {
-        background-color: lightgrey;
+        background-color: $hover-color;
     }
 
     .dialog-row {

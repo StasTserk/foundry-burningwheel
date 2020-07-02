@@ -1,3 +1,5 @@
+$hover-color: rgba(0,0,0,0.1);
+
 @mixin progress-ticks {
     display: flex;
 
@@ -19,7 +21,7 @@
         &:checked ~ label.progress-tick {
             background-color: white;
             &:hover {
-                background-color: lightgray;
+                background-color: $hover-color;
             }
         }
         
@@ -47,4 +49,14 @@
 @mixin progress-disable {
     pointer-events: none;
     opacity: 25%;
+}
+
+@mixin no-number-arrows {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 }

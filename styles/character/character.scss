@@ -6,6 +6,16 @@
     }
 
     h2 {
+        &.section-header {
+            &:hover {
+                background-color: rgba(0,0,0,0.15);
+            }
+
+            margin-top: .75em;
+            margin-bottom: 0px;
+            background-color: rgba(0,0,0,0.05);
+        }
+
         text-align: center;
     }
 
@@ -36,7 +46,7 @@
         row-gap: 5px;
 
         .rollable:hover {
-            background-color: lightgray;
+            background-color: $hover-color;
         }
 
         .rollable-name { 

@@ -80,3 +80,11 @@ export const armorLocations = [
     "shield"
 ];
 export const armorLocationSelect = toDictionary(armorLocations);
+
+export const equipmentSheetOrder = {
+    "melee weapon": 1,
+    "ranged weapon": 1,
+    "armor": 2,
+    "posession": 3,
+    "property": 4
+}

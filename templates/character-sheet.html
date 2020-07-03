@@ -220,7 +220,7 @@
     </label>
     <div class="gear item-grid col-4">
         {{#each equipment as |e|}}
-        <div>
+        <div class="{{e.data.cssClass}}">
             {{e.name}}
             <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e._id}}"></i>
             <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{e._id}}"></i>

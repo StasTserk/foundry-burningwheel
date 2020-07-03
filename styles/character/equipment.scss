@@ -1,0 +1,27 @@
+@import "../mixins.scss";
+
+.character {
+    .gear {
+        column-gap: 1px;
+        row-gap: 1px;
+        & > div {
+            padding: 1px 3px;
+
+            & i {
+                margin-bottom: 3px;
+            }
+        }
+        .equipment-armor {
+            @include colored-item(blue);
+        }
+        .equipment-weapon {
+            @include colored-item(red);
+        }
+        .equipment-possession {
+            @include colored-item(orange);
+        }
+        .equipment-property {
+            @include colored-item(green);
+        }
+    }
+}

@@ -1,3 +1,5 @@
+@import "../mixins.scss";
+
 .beliefs, .instincts {
     .bits-item {
         & > div {
@@ -30,6 +32,13 @@
         width: calc(33% - 10px);
         margin: 5px;
 
+        .trait {
+            @include colored-item(black);
+            textarea {
+                background-color: transparent;
+            }
+        }
+
         i {
             float: right;
             font-size: 12px;
@@ -41,5 +50,9 @@
         i:hover {
             color: #FF0000;
         }
+    }
+
+    .trait-checkbox:checked + div > textarea {
+        display: none;
     }
 }

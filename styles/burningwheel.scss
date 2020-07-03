@@ -29,6 +29,10 @@ input.exponent {
     max-height: 28px;
 }
 
+input.hidden {
+    display: none;
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;

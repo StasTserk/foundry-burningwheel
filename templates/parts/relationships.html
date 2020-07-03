@@ -1,6 +1,6 @@
-<div class="relationship flex-row">
+<div class="relationship flex-row {{relationship.data.cssClass}}">
     <div class="item-title">
-        {{ relationship.name }} = {{ stat }} {{ exp }}
+        {{ relationship.name }}
     </div>
     <i class="fas fa-edit" data-action="editItem" data-id="{{relationship._id}}"></i>
     <i class="fas fa-trash" data-action="delItem" data-id="{{relationship._id}}"></i>

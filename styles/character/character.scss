@@ -1,6 +1,11 @@
 @import "../mixins.scss";
 
+
+.sheet {
+    min-width: 800px;
+}
 .character {
+    min-width: 800px;
     textarea {
         font-family: unset;
     }
@@ -60,13 +65,26 @@
         column-gap: 5px;
         row-gap: 5px;
 
-        .rollable:hover {
-            background-color: $hover-color;
+        .rollable {
+            @include colored-item(black);
+            height: min-content;
+
+            select.shade, input.exponent, button {
+                width: 3em;
+                height: 2em;
+            }
         }
 
-        .rollable-name { 
-            width: 33%;
+        input.rollable-name {
+            border: 0;
+            border-bottom: 1px solid black;
+            border-radius: 0;
+            padding: 1px 0px;
+        }
+        .rollable-name {
+            width: calc(100% - 10.5em);
             margin-right: 1em;
+            font-size: 1.125em;
         }
 
         .collapse-checkbox {
@@ -108,11 +126,13 @@
         }
 
         .attribute-subrow {
+            display: inline-block;
+
             label {
                 font-size: 1.125em;
-                display: block;
-                width: 50%;
+                display: inline-block;
                 text-align: center;
+                margin-left: 20px;
             }
         }
     }

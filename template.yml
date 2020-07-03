@@ -125,6 +125,7 @@ Item:
     name: ''
     traittype: ''
     text: ''
+    collapsed: true
   skill:
     name: ''
     shade: B

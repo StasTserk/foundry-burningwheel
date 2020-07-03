@@ -97,12 +97,15 @@
                 <i data-action="addTrait" data-id="die" class="fas fa-plus"></i>
             </h2>
             {{#each traits.die as |trait|}}
+                <input type="checkbox" id={{trait._id}}-toggle class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>
-                        {{ trait.name }}
-                        <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
-                        <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
-                    </h3>
+                    <label for="{{trait._id}}-toggle">
+                        <h3>
+                            {{ trait.name }}
+                            <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+                            <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
+                        </h3>
+                    </label>
                     <textarea disabled="disabled">{{trait.data.text}}</textarea>
                 </div>
             {{/each}}
@@ -112,12 +115,15 @@
                 <i data-action="addTrait" data-id="call-on" class="fas fa-plus"></i>
             </h2>
             {{#each traits.callon as |trait|}}
+            <input type="checkbox" id={{trait._id}}-toggle class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
                 <div class="trait" data-item-id="{{trait._id}}">
-                    <h3>
-                        {{ trait.name }}
-                        <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
-                        <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
-                    </h3>
+                    <label for="{{trait._id}}-toggle">
+                        <h3>
+                            {{ trait.name }}
+                            <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+                            <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
+                        </h3>
+                    </label>
                     <textarea disabled="disabled">{{ trait.data.text }}</textarea>
                 </div>
             {{/each}}
@@ -129,14 +135,9 @@
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Stats</h2>
     </label>
     <div class="stats">
-        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Will" stat=data.will namePrefix="data.will"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Will" stat=data.will namePrefix="data.will" taxName="data.willTax" taxValue=data.willTax }}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Power" stat=data.power namePrefix="data.power"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Agility" stat=data.agility namePrefix="data.agility"}}
-        <div class="attribute-subrow flex-row">
-            <label class="attribute-label">Tax</label>
-            <input type="number" class="circle-input" name="data.willTax" value="{{data.willTax}}">
-        </div>
-        <div></div><div></div>
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Perception" stat=data.perception namePrefix="data.perception"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Forte" stat=data.forte namePrefix="data.forte"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Speed" stat=data.speed namePrefix="data.speed"}}
@@ -150,13 +151,9 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Health" stat=data.health namePrefix="data.health" routine=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Steel" stat=data.steel namePrefix="data.steel" routine=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Circles" stat=data.circles namePrefix="data.circles" routine=true}}
-        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Resources" stat=data.resources namePrefix="data.resources" routine=true}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Resources" stat=data.resources namePrefix="data.resources" routine=true  taxName="data.resourcesTax" taxValue=data.resourcesTax }}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName=data.custom1.name stat=data.custom1 namePrefix="data.custom1" routine=true customName=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName=data.custom2.name stat=data.custom2 namePrefix="data.custom2" routine=true customName=true}}
-        <div class="attribute-subrow flex-row">
-            <label class="attribute-label">Tax</label>
-            <input type="number" class="circle-input" name="data.resourcesTax" value="{{data.resourcesTax}}">
-        </div>
         <div class="attributes-derived">
             <div class="attributes-item flex-row">
                 <label class="attribute-label">Reflexes</label>

@@ -1,4 +1,7 @@
+import { Armor } from "./armor.js";
 import { MeleeWeapon } from "./meleeWeapon.js";
+import { Possession } from "./posession.js";
+import { Property } from "./property.js";
 import { RangedWeapon } from "./rangedWeapon.js";
 import { Relationship } from "./relationship.js";
 import { ArmorSheet } from "./sheets/armor-sheet.js";
@@ -17,6 +20,8 @@ export * from "./armor.js";
 export * from "./belief.js";
 export * from "./instinct.js";
 export * from "./meleeWeapon.js";
+export * from "./posession.js";
+export * from "./property.js";
 export * from "./rangedWeapon.js";
 export * from "./relationship.js";
 export * from "./sheets/armor-sheet.js";
@@ -34,21 +39,8 @@ export * from "./trait.js";
 export class BWItem extends Item {
     prepareData() {
         super.prepareData();
-        switch (this.type) {
-            case "trait":
-                Trait.prototype.prepareData.bind(this)();
-                break;
-            case "skill":
-                Skill.prototype.prepareData.bind(this)();
-                break;
-            case "relationship":
-                Relationship.prototype.prepareData.bind(this)();
-                break;
-            case "melee weapon":
-                MeleeWeapon.prototype.prepareData.bind(this)();
-                break;
-            case "ranged weapon":
-                RangedWeapon.prototype.prepareData.bind(this)();
+        if (prototypeList[this.type]) {
+            prototypeList[this.type].prototype.prepareData.bind(this)();
         }
     }
 }
@@ -57,6 +49,10 @@ export interface ArthaEarner {
     fate: boolean;
     persona: boolean;
     deeds: boolean;
+}
+
+export interface DisplayClass {
+    cssClass?: string;
 }
 
 export function RegisterItemSheets() {
@@ -104,4 +100,15 @@ export function RegisterItemSheets() {
         types: ["armor"],
         makeDefault: true
     });
+}
+
+const prototypeList: { [i: string]: typeof Item} = {
+    "trait": Trait,
+    "skill": Skill,
+    "relationship": Relationship,
+    "melee weapon": MeleeWeapon,
+    "ranged weapon": RangedWeapon,
+    "armor": Armor,
+    "posession": Possession,
+    "property": Property
 }

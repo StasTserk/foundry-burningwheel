@@ -1,4 +1,5 @@
 import { CharacterData } from "../actor.js";
+import { DisplayClass } from "./item.js";
 
 export class MeleeWeapon extends Item {
     prepareData() {
@@ -9,6 +10,7 @@ export class MeleeWeapon extends Item {
             this.data.data.mark = baseDmg;
             this.data.data.superb = Math.floor(baseDmg * 1.5);
         }
+        this.data.data.cssClass = "equipment-weapon";
     }
 
     data: MeleeWeaponRootData;
@@ -18,7 +20,7 @@ export interface MeleeWeaponRootData extends BaseEntityData {
     data: MeleeWeaponData
 }
 
-export interface MeleeWeaponData {
+export interface MeleeWeaponData extends DisplayClass {
     quality: string;
     baseOb: string; // as number
     power: string; // as number

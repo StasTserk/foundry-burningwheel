@@ -69,13 +69,13 @@ export class BWCharacterSheet extends BWActorSheet {
 
         data.beliefs = beliefs;
         data.instincts = instincts;
-        data.skills = skills;
-        data.training = training;
-        data.relationships = relationships;
-        data.equipment = equipment;
-        data.melee = melee;
+        data.skills = skills.sort(byName);
+        data.training = training.sort(byName);
+        data.relationships = relationships.sort(byName);
+        data.equipment = equipment.sort(equipmentCompare);
+        data.melee = melee.sort(weaponCompare);
         data.armor = this.getArmorDictionary(armor);
-        data.ranged = ranged;
+        data.ranged = ranged.sort(weaponCompare);
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
 
@@ -242,6 +242,25 @@ async function rollCallback(
         speaker
     });
 }
+
+function equipmentCompare(a: Item, b: Item): number {
+    if (constants.equipmentSheetOrder[a.type] !== constants.equipmentSheetOrder[b.type]) {
+        return constants.equipmentSheetOrder[a.type] > constants.equipmentSheetOrder[b.type] ? 1 : -1;
+    }
+    return a.name.localeCompare(b.name);
+}
+
+function weaponCompare(a: Item, b: Item): number {
+    if (a.name === "Bare Fist") {
+        return -1;
+    }
+    if (b.name === "Bare Fist") {
+        return 1;
+    }
+    return a.name.localeCompare(b.name);
+}
+
+const byName = (a: Item, b: Item) => a.name.localeCompare(b.name);
 
 interface CharacterSheetData extends ActorSheetData {
     equipment: Item[];

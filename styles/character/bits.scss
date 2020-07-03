@@ -1,0 +1,45 @@
+.beliefs, .instincts {
+    .bits-item {
+        & > div {
+            width: 13%;
+            border-right: 1px solid black;
+            margin-bottom: 2px;
+
+            .bits-item-name {
+                width: 100%;
+            }
+
+            input[type="checkbox"] {
+                width: 1em;
+                height: 1em;
+                margin: 0;
+            }
+        }
+        & > textarea {
+            width: 87%;
+            resize: vertical;
+            border: 0;
+            min-height: 3em;
+            height: 3em;
+        }
+    }
+}
+
+.traits {
+    .trait-category {
+        width: calc(33% - 10px);
+        margin: 5px;
+
+        i {
+            float: right;
+            font-size: 12px;
+            margin-top: 6px;
+            margin-left: 5px;
+            color: transparentize($color: black, $amount: 0.25)
+        }
+
+        i:hover {
+            color: #FF0000;
+        }
+    }
+}

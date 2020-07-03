@@ -1,0 +1,26 @@
+@import "../mixins.scss";
+
+.relationship-section {
+    .relationships {
+        width: 40%;
+
+        .item-title {
+            width: calc(95% - 36px);
+        }
+
+        .relationship > i {
+            width: 18px;
+
+            &:hover {
+                color: red;
+            }
+        }
+    }
+    .reputations, .affiliations {
+        width: 30%;
+    }
+
+    .relationship-progress {
+        @include progress-ticks;
+    }
+}

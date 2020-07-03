@@ -1,4 +1,5 @@
-import { CharacterData } from "module/actor";
+import { CharacterData } from "../actor.js";
+import { DisplayClass } from "./item.js";
 
 export class RangedWeapon extends Item {
     prepareData() {
@@ -15,6 +16,8 @@ export class RangedWeapon extends Item {
         this.data.data.incidentalLabel = `1-${incidentalRange}`;
         this.data.data.markLabel = (markRange - 1 === incidentalRange) ? `${markRange}` : `${incidentalRange + 1}-${markRange}`;
         this.data.data.superbLabel = (markRange === 5 ) ? `6` : `${markRange + 1}-6`;
+
+        this.data.data.cssClass = "equipment-weapon";
     }
 
     data: RangedWeaponRootData;
@@ -24,7 +27,7 @@ export interface RangedWeaponRootData extends BaseEntityData{
     data: RangedWeaponData
 }
 
-export interface RangedWeaponData {
+export interface RangedWeaponData extends DisplayClass {
     quality: string;
     hasGunpowder: boolean;
     usePower: boolean;

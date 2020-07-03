@@ -8,11 +8,28 @@
     }
 
     .weapon-grid {
-        grid-template-columns: 5fr repeat(7, 1fr) 2fr;
+        column-gap: 0px;
+        row-gap: 0px;
+        grid-template-columns: 5fr repeat(7, 1fr) 2fr 0;
+        .weapon-header {
+            background-color: rgba(black, .15);
+        }
+
+        .weapon-row:nth-child(2n) {
+            background-color: rgba(black, .05);
+        }
     }
 
     .ranged-grid {
-        grid-template-columns: 5fr repeat(5, 1fr) 2fr;
+        column-gap: 0px;
+        row-gap: 0px;
+        grid-template-columns: 5fr repeat(5, 1fr) 2fr 0;
+        .weapon-header {
+            background-color: rgba(black, .15);
+        }
+        .weapon-row:nth-child(2n) {
+            background-color: rgba(black, .05);
+        }
         .weapon-ims {
             margin-bottom: -10px;
         }
@@ -37,12 +54,18 @@
     }
 
     .armor-grid {
-        grid-template-columns: 1fr 1fr 75px 4fr;
+        grid-template-columns: 2.75em 2.75em 6em 1fr;
+        row-gap: 0;
+        column-gap: 0;
 
+        .armor-header {
+            background-color: rgba(black, .15);
+        }
         .armor-row {
             font-size: 16px;
             text-align: center;
             border-bottom: 1px solid black;
+            margin: 0 2px;
         }
     }
 }

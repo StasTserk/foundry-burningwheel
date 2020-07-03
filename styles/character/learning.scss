@@ -15,17 +15,24 @@
 
     .learning {
         width: calc(50% - 10px);
-        margin: 5px;
-        &:hover {
-            background-color: $hover-color;
+        height: min-content;
+        margin: 1px;
+        @include colored-item(black);
+
+        button {
+            width: 3em;
+            height: 2em;
         }
 
         h3 {
-            width: calc(100% - 80px);
-            margin-left: 10px;
+            width: calc(100% - 5em);
+            margin-top: 3px;
             font-weight: bold;
+            text-align: center;
         }
         .learning-xp {
+            margin-left: 1.5em;
+            margin-bottom: 3px;
             @include progress-ticks;
         }
     }

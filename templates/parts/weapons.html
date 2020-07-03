@@ -8,6 +8,7 @@
     <div class="weapon-header">Va</div>
     <div class="weapon-header">Ws</div>
     <div class="weapon-header">Length</div>
+    <br/>
     {{#each melee as |m|}}
     <div class="weapon-row">{{m.name}}</div>
     <div class="weapon-row">{{m.data.incidental}}</div>
@@ -18,6 +19,7 @@
     <div class="weapon-row">{{m.data.vsArmor}}</div>
     <div class="weapon-row">{{m.data.weaponSpeed}}</div>
     <div class="weapon-row">{{titlecase m.data.weaponLength}}</div>
+    <br/>
     {{/each}}
 </div>
 <hr>
@@ -29,6 +31,7 @@
     <div class="weapon-header">Opt</div>
     <div class="weapon-header">Extr</div>
     <div class="weapon-header">Max</div>
+    <br/>
     {{#each ranged as |r|}}
     <div class="weapon-row">{{r.name}}</div>
     <div class="weapon-row"><div class="weapon-ims">{{r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div>
@@ -37,5 +40,6 @@
     <div class="weapon-row">{{r.data.optimalRange}}D</div>
     <div class="weapon-row">{{r.data.extremeRange}}D</div>
     <div class="weapon-row">{{titlecase r.data.maxRange}}</div>
+    <br/>
     {{/each}}
 </div>

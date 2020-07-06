@@ -1,11 +1,6 @@
 @import "../mixins.scss";
 
-
-.sheet {
-    min-width: 800px;
-}
 .character {
-    min-width: 800px;
     textarea {
         font-family: unset;
     }

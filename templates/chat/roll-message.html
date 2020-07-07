@@ -1,13 +1,33 @@
 <div class="chat-message flex-row">
     <div class="roll-full-width">
-        {{name}} Test
+        {{name}}
+    </div>
+    <div class="roll-full-width">
+        {{difficultyGroup}}
+    </div>
+    <div class="roll-half-width">
+        {{#each dieSources as |source|}}
+        <div>
+            {{@key}} {{source}}
+        </div>
+        {{/each}}
+    </div>
+    <div class="roll-half-width">
+        <div>
+            + {{difficulty}} Base Ob
+        </div>
+        {{#if obPenalty}}
+        <div>
+            + {{obPenalty}} Wound Penalty
+        </div>    
+        {{/if}}
     </div>
     <div class="roll-half-width">
         <label>Successes</label>
         <div>{{ successes }}</div>
     </div>
     <div class="roll-half-width">
-        <label>Difficulty</label>
+        <label>Obstacle</label>
         <div>{{ difficulty }}{{#if obPenalty}} + {{obPenalty}}{{/if}}</div>
     </div>
     <div class="roll-dice roll-full-width flex-row">
@@ -16,9 +36,6 @@
             {{r.roll}}
         </div>
         {{/each}}
-    </div>
-    <div class="roll-full-width">
-        {{difficultyGroup}}
     </div>
     {{#if success}}
     <div class="roll-result roll-full-width">

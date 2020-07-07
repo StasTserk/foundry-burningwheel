@@ -55,6 +55,13 @@ async function skillRollCallback(
     const bDice = extractNumber(dialogHtml, "bonusDice");
     const exp = parseInt(skillData.data.exp, 10);
     const roll = new Roll(`${exp + bDice + aDice + forks - woundDice}d6cs>3`).roll();
+    const dieSources = {
+        "Exponent": `+${exp}`,
+    } as { [i: string]: string };
+    if (aDice) { dieSources.Artha = `+${aDice}`; }
+    if (bDice) { dieSources.Bonus = `+${bDice}`; }
+    if (forks) { dieSources.FoRKs = `+${forks}`; }
+    if (woundDice) { dieSources["Wound Penalty"] = `-${woundDice}`; }
 
     const data = {
         name: `${skillData.name} Test`,
@@ -64,8 +71,8 @@ async function skillRollCallback(
         success: parseInt(roll.result, 10) >= (diff + obPenalty),
         rolls: roll.dice[0].rolls,
         difficultyGroup: difficultyGroup(exp + bDice + forks - woundDice, diff),
-        forks
-    }
+        dieSources
+    } as RollChatMessageData;
     const messageHtml = await renderTemplate(templates.skillMessage, data)
     return ChatMessage.create({
         content: messageHtml,
@@ -76,17 +83,6 @@ async function skillRollCallback(
 const templates = {
     skillDialog: "systems/burningwheel/templates/chat/skill-dialog.html",
     skillMessage: "systems/burningwheel/templates/chat/roll-message.html"
-}
-
-export interface SkillDialogData {
-    name: string;
-    difficulty: number;
-    arthaDice: number;
-    bonusDice: number;
-    woundDice: number;
-    obPenalty: number;
-    skill: TracksTests
-    forkOptions: Item[];
 }
 
 function extractString(html: JQuery<HTMLElement>, name: string): string {
@@ -124,4 +120,27 @@ function difficultyGroup(dice: number, difficulty: number): string {
     }
 
      return (dice - spread >= difficulty) ? "Routine" : "Difficult";
+}
+
+export interface SkillDialogData {
+    name: string;
+    difficulty: number;
+    arthaDice: number;
+    bonusDice: number;
+    woundDice: number;
+    obPenalty: number;
+    skill: TracksTests
+    forkOptions: Item[];
+}
+
+export interface RollChatMessageData {
+    name: string;
+    successes: string,
+    difficulty: number,
+    obPenalty: number,
+    success: boolean,
+    rolls: {success: boolean, roll: number}[],
+    difficultyGroup: string,
+
+    dieSources?: { [i: string]: string }
 }

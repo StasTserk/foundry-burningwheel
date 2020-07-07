@@ -14,7 +14,7 @@
         {{/select}}
     </select>
     <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}">
-    <button class="rollable" data-rollable-name="{{statName}}" data-accessor="{{namePrefix}}"><i class="fas fa-dice"></i></button>
+    <button class="rollable" data-rollable-name="{{statName}}" data-accessor="{{namePrefix}}" data-roll-type={{type}}><i class="fas fa-dice"></i></button>
     <div class="collapsing-section">
         {{#if routine}}
         <div class="test-tracking">

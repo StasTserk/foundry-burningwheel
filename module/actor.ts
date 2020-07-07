@@ -115,6 +115,13 @@ interface Common {
     custom2: Ability & { name: string };
     stride: number;
     mountedstride: number;
+    cash: string;
+    funds: string;
+    property: string;
+    loans: string;
+    debt: string;
+    willTax: string;
+    resourcesTax: string;
 }
 
 export interface Ability extends TracksTests {

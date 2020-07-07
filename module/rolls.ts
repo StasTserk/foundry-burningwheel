@@ -86,7 +86,7 @@ async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet
         arthaDice: 0,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
-        skill: { exp: skillData.data.aptitude } as any
+        skill: { exp: 10 - skillData.data.aptitude } as any
     } as LearningDialogData;
 
     const html = await renderTemplate(templates.learnDialog, data);
@@ -109,7 +109,7 @@ async function learningRollCallback(
     dialogHtml: JQuery<HTMLElement>, skillData: SkillDataRoot, sheet: BWActorSheet): Promise<unknown> {
 
     const baseData = extractBaseData(dialogHtml, sheet);
-    const exp = skillData.data.aptitude
+    const exp = 10 - skillData.data.aptitude
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
     const data = {

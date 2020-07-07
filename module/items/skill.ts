@@ -19,7 +19,7 @@ export class Skill extends Item {
     data: SkillDataRoot;
 }
 
-interface SkillDataRoot extends BaseEntityData {
+export interface SkillDataRoot extends BaseEntityData {
     data: SkillData;
 }
 

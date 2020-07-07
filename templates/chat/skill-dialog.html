@@ -1,0 +1,43 @@
+<form class="dialog">
+    <h2>{{name}}</h2>
+    <div class="flex-row">
+        <div class="flex-row dialog-row">
+            <label>Exponent</label>
+            <input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">
+        </div>
+        {{#if woundDice}}
+        <div class="flex-row dialog-row">
+            <label>Wound Penalty</label>
+            <input type="number" class="exponent" disabled name="woundDice" value="{{woundDice}}">
+        </div>
+        {{/if}}
+        {{#if obPenalty}}
+        <div class="flex-row dialog-row">
+            <label>Ob Penalty</label>
+            <input type="number" class="exponent" disabled name="obPenalty" value="{{obPenalty}}">
+        </div>
+        {{/if}}
+        <div class="flex-row dialog-row">
+            <label>Difficulty</label>
+            <input type="number" class="exponent" name="difficulty" value="{{difficulty}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Bonus Dice</label>
+            <input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Artha Dice</label>
+            <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
+        </div>
+    </div>
+    {{#if forkOptions}}
+    <hr>
+    <h2>FoRKs</h2>
+    <div class="checkbox-grid">
+        {{#each forkOptions as |skill|}}
+            <input id="checkbox-{{skill._id}}" type="checkbox" name="forkOptions" value="1">
+            <label for="checkbox-{{skill._id}}">{{skill.name}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+</form>

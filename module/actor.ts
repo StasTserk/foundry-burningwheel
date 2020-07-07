@@ -1,29 +1,7 @@
 import { updateTestsNeeded } from "./helpers.js";
-import { Skill } from "./items/skill.js";
+import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
-    stock: string;
-    age: number;
-    lifepathString: string;
-    alias: string;
-    homeland: string;
-    features: string;
-
-    type: string;
-    flags: any;
-    will: Ability;
-    power: Ability;
-    agility: Ability;
-    perception: Ability;
-    forte: Ability;
-    speed: Ability;
-    health: Ability;
-    steel: Ability;
-    circles: Ability;
-    resources: Ability;
-    stride: number;
-    mountedstride: number;
-
     data: CharacterData;
 
     prepareData() {
@@ -33,6 +11,9 @@ export class BWActor extends Actor {
         }
     }
 
+    getForkOptions(skillName: string): Skill[] {
+        return this.data.forks.filter(s => s.name !== skillName);
+    }
 
     private _prepareCharacterData() {
         updateTestsNeeded(this.data.data.will);
@@ -56,6 +37,15 @@ export class BWActor extends Actor {
         this.data.data.mortalWound = Math.floor((parseInt(this.data.data.power.exp, 10) +
             parseInt(this.data.data.forte.exp, 10)) / 2 + 6);
         this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
+
+        this.data.forks = [];
+        if (this.data.items) {
+            this.data.items.forEach(i => {
+                if (i.type === "skill" && !(i as unknown as SkillDataRoot).data.learning) {
+                    this.data.forks.push(i);
+                }
+            })
+        }
     }
 
     private _calculatePtgs() {
@@ -88,6 +78,7 @@ export class BWActor extends Actor {
 export interface CharacterData extends ActorData {
     data: BWCharacterData;
     items: Item[];
+    forks: Skill[];
 }
 
 interface BWCharacterData extends Common, DisplayProps, Ptgs {

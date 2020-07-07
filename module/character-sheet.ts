@@ -13,9 +13,10 @@ import {
     Skill,
     Trait
 } from "./items/item.js";
+import { handleRollable } from "./rolls.js";
 
 export class BWCharacterSheet extends BWActorSheet {
-    getData(): ActorSheetData {
+    getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
         const beliefs = [];
         const instincts = [];
@@ -119,6 +120,10 @@ export class BWCharacterSheet extends BWActorSheet {
 
     private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
         const target = e.currentTarget as HTMLButtonElement;
+
+        if (target.dataset.rollType === "skill") {
+            return handleRollable(e, this);
+        }
         let skill: TracksTests;
         if (target.dataset.accessor) {
             skill = getProperty(this.actor.data, target.dataset.accessor);

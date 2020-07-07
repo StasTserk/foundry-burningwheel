@@ -1,4 +1,3 @@
-import { TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
 import {
@@ -114,53 +113,8 @@ export class BWCharacterSheet extends BWActorSheet {
         html.find(selectors.join(", ")).click(e => this._manageItems(e));
 
         // roll macros
-        html.find("button.rollable").click(e => this._handleRollable(e));
+        html.find("button.rollable").click(e => handleRollable(e, this));
         super.activateListeners(html);
-    }
-
-    private async _handleRollable(e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>): Promise<unknown> {
-        const target = e.currentTarget as HTMLButtonElement;
-
-        if (target.dataset.rollType === "skill") {
-            return handleRollable(e, this);
-        }
-        let skill: TracksTests;
-        if (target.dataset.accessor) {
-            skill = getProperty(this.actor.data, target.dataset.accessor);
-        } else {
-            skill = (this.actor.getOwnedItem(target.dataset.skillId) as Skill).data.data;
-        }
-        const template = "systems/burningwheel/templates/chat/roll-dialog.html";
-        const templateData = {
-            name: target.dataset.rollableName,
-            difficulty: 3,
-            bonusDice: 0,
-            arthaDice: 0,
-            woundDice: this.actor.data.data.ptgs.woundDice,
-            obPenalty: this.actor.data.data.ptgs.obPenalty,
-            skill
-        };
-        const html = await renderTemplate(template, templateData);
-        const speaker = ChatMessage.getSpeaker({actor: this.actor})
-        return new Promise(_resolve =>
-            new Dialog({
-                title: "Roll Test",
-                content: html,
-                buttons: {
-                    roll: {
-                        label: "Roll",
-                        callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                            rollCallback(
-                                dialogHtml,
-                                skill,
-                                templateData.name,
-                                templateData.woundDice,
-                                templateData.obPenalty,
-                                speaker)
-                    }
-                }
-            }).render(true)
-        );
     }
 
     private async _manageItems(e: JQuery.ClickEvent) {
@@ -194,58 +148,6 @@ export class BWCharacterSheet extends BWActorSheet {
             .then(() => this.actor.createOwnedItem({ name: "Belief 3", type: "belief", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief Special", type: "belief", data: {}}))
     }
-}
-
-function difficultyGroup(dice: number, difficulty: number): string {
-    if (difficulty > dice) {
-        return "Challenging";
-    }
-    if (dice === 1) {
-        return "Routine/Difficult";
-    }
-    if (dice === 2) {
-        return difficulty === 2 ? "Difficult" : "Routine";
-    }
-
-    let spread = 1;
-    if (dice > 6) {
-        spread = 3;
-    } else if (dice > 3) {
-        spread = 2;
-    }
-
-     return (dice - spread >= difficulty) ? "Routine" : "Difficult";
-}
-
-async function rollCallback(
-    dialogHtml: JQuery<HTMLElement>,
-    rollableData: TracksTests,
-    rollName: string,
-    woundDice: number,
-    obPenalty: number,
-    speaker: unknown) {
-
-    const diff = parseInt(dialogHtml.find("input[name=\"difficulty\"]").val() as string, 10);
-    const bDice = parseInt(dialogHtml.find("input[name=\"bonusDice\"]").val() as string, 10);
-    const aDice = parseInt(dialogHtml.find("input[name=\"arthaDice\"]").val() as string, 10);
-    const exp = parseInt(rollableData.exp, 10);
-    const mTemplate = "systems/burningwheel/templates/chat/roll-message.html";
-    const roll = new Roll(`${exp+bDice+aDice-woundDice}d6cs>3`).roll();
-    const data = {
-        name: rollName,
-        successes: roll.result,
-        difficulty: diff,
-        obPenalty,
-        success: parseInt(roll.result, 10) >= (diff + obPenalty),
-        rolls: roll.dice[0].rolls,
-        difficultyGroup: difficultyGroup(exp + bDice - woundDice, diff)
-    }
-
-    const messageHtml = await renderTemplate(mTemplate, data)
-    return ChatMessage.create({
-        content: messageHtml,
-        speaker
-    });
 }
 
 function equipmentCompare(a: Item, b: Item): number {

@@ -28,9 +28,13 @@ export class BWCharacterSheet extends BWActorSheet {
         const melee: MeleeWeapon[] = [];
         const ranged: RangedWeapon[] = [];
         const armor: Armor[] = [];
+        const reps: Item[] = [];
+        const affs: Item[] = [];
         let addFist = true; // do we need to add a fist weapon?
         for (const i of items) {
             switch(i.type) {
+                case "reputation": reps.push(i); break;
+                case "affiliation": affs.push(i); break;
                 case "belief": beliefs.push(i as Belief); break;
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
@@ -76,6 +80,8 @@ export class BWCharacterSheet extends BWActorSheet {
         data.melee = melee.sort(weaponCompare);
         data.armor = this.getArmorDictionary(armor);
         data.ranged = ranged.sort(weaponCompare);
+        data.reputations = reps;
+        data.affiliations = affs;
 
         const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
 
@@ -106,8 +112,10 @@ export class BWCharacterSheet extends BWActorSheet {
             ".trait-category i",
             ".rollable > .collapsing-section > i",
             ".learning > i",
-            ".relationships > h2 > i",
+            ".relationship-section h2 > i",
             ".relationship > i",
+            ".reputation > i",
+            ".affiliation > i",
             ".gear > div > i"
         ];
         html.find(selectors.join(", ")).click(e => this._manageItems(e));
@@ -126,6 +134,12 @@ export class BWCharacterSheet extends BWActorSheet {
         switch (action) {
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }};
+                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+            case "addReputation":
+                options = { name: "New Reputation", type: "reputation", data: {}};
+                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+            case "addAffiliation":
+                options = { name: "New Affiliation", type: "affiliation", data: {}};
                 return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
             case "addTrait":
                 options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
@@ -170,6 +184,8 @@ function weaponCompare(a: Item, b: Item): number {
 const byName = (a: Item, b: Item) => a.name.localeCompare(b.name);
 
 interface CharacterSheetData extends ActorSheetData {
+    reputations: Item[];
+    affiliations: Item[];
     equipment: Item[];
     melee: MeleeWeapon[];
     fistStats: MeleeWeaponData;

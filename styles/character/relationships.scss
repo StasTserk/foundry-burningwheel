@@ -1,22 +1,29 @@
 @import "../mixins.scss";
 
 .relationship-section {
-    .relationships {
-        width: 40%;
-
-        .item-title {
-            width: calc(95% - 36px);
+    h2 > i {
+        font-size: .75em;
+        &:hover {
+            color: red;
         }
+    }
 
-        .relationship {
-            & > i {
-                width: 18px;
+    .item-title {
+        width: calc(100% - 36px);
+    }
 
-                &:hover {
-                    color: red;
-                }
+    .relationship, .reputation, .affiliation {
+        & > i {
+            width: 18px;
+
+            &:hover {
+                color: red;
             }
         }
+    }
+
+    .relationships {
+        width: 40%;
 
         .relationship-hostile {
             @include colored-item(red);
@@ -30,6 +37,18 @@
     }
     .reputations, .affiliations {
         width: 30%;
+
+        .reputation {
+            &.reputation-infamous {
+                @include colored-item(red);
+            }
+            &.reputation-famous {
+                @include colored-item(green);
+            }
+        }
+        .affiliation {
+            @include colored-item(orange);
+        }
     }
 
     .relationship-progress {

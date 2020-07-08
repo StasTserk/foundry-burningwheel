@@ -191,3 +191,10 @@ Item:
     dice: 1
     damage: 0
     description: ''
+  reputation: &rep
+    description: ''
+    dice: 0
+    infamous: false
+  affiliation:
+    description: ''
+    dice: 0

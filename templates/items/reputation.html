@@ -1,0 +1,18 @@
+<form autocomplete="off">
+    <input name="name" type="text" value="{{item.name}}">
+    <div class="item-grid">
+        <select name="data.dice" value={{data.dice}} >
+            {{#select data.dice}}
+            <option value="0">None</option>
+            <option value="1">1D</option>
+            <option value="2">2D</option>
+            <option value="3">3D</option>
+            {{/select}}
+        </select>
+        <div>
+            <input id="checkbox-infamous" type="checkbox" name="data.infamous" {{checked data.infamous}}>
+            <label for="checkbox-infamous">Infamous</label>
+        </div>
+    </div>
+    <textarea name="data.description">{{data.description}}</textarea>
+</form>

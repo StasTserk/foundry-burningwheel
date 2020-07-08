@@ -4,6 +4,8 @@ import { Possession } from "./posession.js";
 import { Property } from "./property.js";
 import { RangedWeapon } from "./rangedWeapon.js";
 import { Relationship } from "./relationship.js";
+import { Reputation } from "./reputation.js";
+import { AffiliationSheet } from "./sheets/affiliation-sheet.js";
 import { ArmorSheet } from "./sheets/armor-sheet.js";
 import { BeliefSheet } from "./sheets/belief-sheet.js";
 import { MeleeWeaponSheet } from "./sheets/melee-sheet.js";
@@ -11,6 +13,7 @@ import { PosessionSheet } from "./sheets/posession-sheet.js";
 import { PropertySheet } from "./sheets/property-sheet.js";
 import { RangedWeaponSheet } from "./sheets/ranged-sheet.js";
 import { RelationshipSheet } from "./sheets/relationship-sheet.js";
+import { ReputationSheet } from "./sheets/repuatation-sheet.js";
 import { SkillSheet } from "./sheets/skill-sheet.js";
 import { TraitSheet } from "./sheets/trait-sheet.js";
 import { Skill } from "./skill.js";
@@ -24,6 +27,8 @@ export * from "./posession.js";
 export * from "./property.js";
 export * from "./rangedWeapon.js";
 export * from "./relationship.js";
+export * from "./reputation.js";
+export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
 export * from "./sheets/belief-sheet.js";
 export * from "./sheets/melee-sheet.js";
@@ -31,6 +36,7 @@ export * from "./sheets/posession-sheet.js";
 export * from "./sheets/property-sheet.js";
 export * from "./sheets/ranged-sheet.js";
 export * from "./sheets/relationship-sheet.js";
+export * from "./sheets/repuatation-sheet.js";
 export * from "./sheets/skill-sheet.js";
 export * from "./sheets/trait-sheet.js";
 export * from "./skill.js";
@@ -100,6 +106,16 @@ export function RegisterItemSheets() {
         types: ["armor"],
         makeDefault: true
     });
+
+    Items.registerSheet("burningwheel", ReputationSheet, {
+        types: ["reputation"],
+        makeDefault: true
+    });
+
+    Items.registerSheet("burningwheel", AffiliationSheet, {
+        types: ["affiliation"],
+        makeDefault: true
+    });
 }
 
 const prototypeList: { [i: string]: typeof Item} = {
@@ -110,5 +126,6 @@ const prototypeList: { [i: string]: typeof Item} = {
     "ranged weapon": RangedWeapon,
     "armor": Armor,
     "posession": Possession,
-    "property": Property
+    "property": Property,
+    "reputation": Reputation
 }

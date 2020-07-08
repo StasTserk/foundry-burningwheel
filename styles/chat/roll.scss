@@ -1,8 +1,21 @@
 .chat-message {
     display: flex;
 
+    .message-title {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
     div {
         text-align: center;
+
+        &.left-align {
+            text-align: left;
+        }
+
+        &.right-align {
+            text-align: right;
+        }
     }
 
     .roll-half-width {
@@ -17,6 +30,9 @@
         border: 1px black solid;
     }
 
+    .roll-dice {
+        justify-content: center;
+    }
     .roll-die {
         &[data-success="true"]{
             color: green;
@@ -36,5 +52,14 @@
         font-weight: bold;
         text-align: center;
         margin-left: 5px;
+    }
+
+    .roll-Difficult {
+        background-color: rgba(black, 0.35);
+    }
+
+    .roll-Challenging {
+        background-color: rgba(black, 0.75);
+        color: white;
     }
 }

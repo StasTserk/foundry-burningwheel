@@ -1,24 +1,24 @@
 <div class="chat-message flex-row">
-    <div class="roll-full-width">
+    <div class="roll-full-width message-title">
         {{name}}
     </div>
-    <div class="roll-full-width">
+    <div class="roll-full-width roll-{{difficultyGroup}}">
         {{difficultyGroup}}
     </div>
     <div class="roll-half-width">
         {{#each dieSources as |source|}}
-        <div>
+        <div class="right-align">
             {{@key}} {{source}}
         </div>
         {{/each}}
     </div>
     <div class="roll-half-width">
-        <div>
-            + {{difficulty}} Base Ob
+        <div class="left-align">
+            +{{difficulty}} Base Ob
         </div>
         {{#if obPenalty}}
-        <div>
-            + {{obPenalty}} Wound Penalty
+        <div class="left-align">
+            +{{obPenalty}} Wound Penalty
         </div>    
         {{/if}}
     </div>

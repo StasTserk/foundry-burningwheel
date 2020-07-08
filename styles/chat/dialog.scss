@@ -1,5 +1,19 @@
+@import "../mixins.scss";
+
 .dialog {
     .checkbox-grid { 
         grid-template-columns: repeat(auto-fit, 24px 104px);
+    }
+
+    .dialog-row:hover {
+        background-color: $hover-color;
+    }
+
+    .dialog-row {
+        width: 50%;
+
+        label {
+            width: 75%;
+        }
     }
 }

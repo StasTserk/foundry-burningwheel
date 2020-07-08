@@ -76,12 +76,10 @@
 
     .ptgs-obpenalty {
         height: 12em;
-        grid-column-start: 1;
-        grid-column-end: 3;
+        grid-column: 1 / 3;
     }
     .ptgs-wounddice {
-        grid-column-start: 3;
-        grid-column-end: 6;
+        grid-column: 3 / 6;
     }
 
     .ptgs-obpenalty > div, .ptgs-wounddice > div {
@@ -104,16 +102,13 @@
     }
 
     .ptgs-woundnotes1 {
-        grid-column-start: 6;
-        grid-column-end: 10;
+        grid-column: 6 / 10;
     }
     .ptgs-woundnotes2 {
-        grid-column-start: 10;
-        grid-column-end: 14;
+        grid-column: 10 / 14;
     }
     .ptgs-woundnotes3 {
-        grid-column-start: 14;
-        grid-column-end: 19;
+        grid-column: 14 / 19
     }
 
     h3 {

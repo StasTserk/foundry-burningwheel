@@ -21,6 +21,13 @@
             +{{obPenalty}} Wound Penalty
         </div>    
         {{/if}}
+        {{#if penaltySources}}
+        {{#each penaltySources as |s|}}
+        <div class="left-align">
+            {{s}} {{@key}}
+        </div>
+        {{/each}}
+        {{/if}}
     </div>
     <div class="roll-half-width">
         <label>Successes</label>
@@ -28,7 +35,7 @@
     </div>
     <div class="roll-half-width">
         <label>Obstacle</label>
-        <div>{{ difficulty }}{{#if obPenalty}} + {{obPenalty}}{{/if}}</div>
+        <div>{{ obstacleTotal }}</div>
     </div>
     <div class="roll-dice roll-full-width flex-row">
         {{#each rolls as |r|}}

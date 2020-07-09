@@ -1,4 +1,5 @@
 import { updateTestsNeeded } from "./helpers.js";
+import { ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -39,12 +40,23 @@ export class BWActor extends Actor {
         this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
 
         this.data.forks = [];
+        this.data.circlesBonus = [];
+        this.data.circlesMalus = [];
         if (this.data.items) {
             this.data.items.forEach(i => {
                 if (i.type === "skill" && !(i as unknown as SkillDataRoot).data.learning) {
                     this.data.forks.push(i);
+                } else if (i.type === "reputation") {
+                    const rep = i as unknown as ReputationRootData
+                    if (rep.data.infamous) {
+                        this.data.circlesMalus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
+                    } else {
+                        this.data.circlesBonus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
+                    }
+                } else if (i.type === "affiliation") {
+                    this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) })
                 }
-            })
+            });
         }
     }
 
@@ -76,6 +88,8 @@ export class BWActor extends Actor {
 }
 
 export interface CharacterData extends ActorData {
+    circlesMalus: { name: string, amount: number }[];
+    circlesBonus: { name: string, amount: number }[];
     data: BWCharacterData;
     items: Item[];
     forks: Skill[];

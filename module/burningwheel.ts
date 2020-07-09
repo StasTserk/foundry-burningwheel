@@ -5,6 +5,7 @@ import {
     RegisterItemSheets
 } from "./items/item.js";
 
+import { slugify } from "./helpers.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 
 Hooks.once("init", async () => {
@@ -70,5 +71,9 @@ function registerHelpers() {
 
     Handlebars.registerHelper("plusone", (value: number) => {
         return value + 1;
+    });
+
+    Handlebars.registerHelper("slugify", (value: string) => {
+        return slugify(value.toLowerCase());
     });
 }

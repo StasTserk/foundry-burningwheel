@@ -9,7 +9,20 @@
     }
 
     .item-title {
-        width: calc(100% - 36px);
+        width: calc(100% - 2em - 41px);
+
+        & ~ button.rollable {
+            width: 2em;
+            height: 2em;
+            padding: 0;
+            margin: 0;
+            margin-right: 5px;
+            border-radius: 1em;
+        }
+
+        & ~ i {
+            align-self: center;
+        }
     }
 
     .relationship, .reputation, .affiliation {

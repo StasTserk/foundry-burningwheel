@@ -15,4 +15,4 @@ export async function preloadHandlebarsTemplates() {
 
     // Load the template parts
     return loadTemplates(templatePaths);
-};
+}

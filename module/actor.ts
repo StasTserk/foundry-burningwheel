@@ -47,14 +47,14 @@ export class BWActor extends Actor {
                 if (i.type === "skill" && !(i as unknown as SkillDataRoot).data.learning) {
                     this.data.forks.push(i);
                 } else if (i.type === "reputation") {
-                    const rep = i as unknown as ReputationRootData
+                    const rep = i as unknown as ReputationRootData;
                     if (rep.data.infamous) {
                         this.data.circlesMalus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
                     } else {
                         this.data.circlesBonus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
                     }
                 } else if (i.type === "affiliation") {
-                    this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) })
+                    this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) });
                 }
             });
         }
@@ -178,7 +178,7 @@ interface Ptgs {
         // not persisted
         obPenalty?: number,
         woundDice?: number
-    }
+    };
 }
 
 interface Wound {

@@ -49,7 +49,7 @@ export class BWCharacterSheet extends BWActorSheet {
                     melee.push(i);
                     break;
                 case "ranged weapon":
-                    equipment.push(i)
+                    equipment.push(i);
                     ranged.push(i);
                     break;
                 case "armor":
@@ -83,7 +83,7 @@ export class BWCharacterSheet extends BWActorSheet {
         data.reputations = reps;
         data.affiliations = affs;
 
-        const traitLists = { character: [], die: [], callon: [] } as CharacterSheetTraits;
+        const traitLists: CharacterSheetTraits = { character: [], die: [], callon: [] };
 
         if (traits.length !== 0) {
             traits.forEach((trait) => {
@@ -160,7 +160,7 @@ export class BWCharacterSheet extends BWActorSheet {
             .then(() => this.actor.createOwnedItem({ name: "Belief 1", type: "belief", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief 2", type: "belief", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief 3", type: "belief", data: {}}))
-            .then(() => this.actor.createOwnedItem({ name: "Belief Special", type: "belief", data: {}}))
+            .then(() => this.actor.createOwnedItem({ name: "Belief Special", type: "belief", data: {}}));
     }
 }
 

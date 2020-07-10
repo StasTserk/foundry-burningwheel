@@ -1,4 +1,4 @@
-import { toDictionary } from "./helpers.js"
+import { toDictionary } from "./helpers.js";
 import { MeleeWeaponData } from "./items/meleeWeapon.js";
 
 export const weaponSpeeds = [
@@ -10,19 +10,22 @@ export const weaponSpeeds = [
 ];
 export const weaponSpeedSelect = toDictionary(weaponSpeeds);
 
+const fistData: MeleeWeaponData = {
+    weaponLength: "shortest",
+    power: "0",
+    quality: "basic",
+    add: "2",
+    vsArmor: "0",
+    handedness: "one",
+    description: "Your bare fist",
+    baseOb: "1",
+    weaponSpeed: "X"
+};
 export const bareFistData = {
     name: "Bare Fist",
     type: "melee weapon",
-    data: {
-        weaponLength: "shortest",
-        power: "0",
-        quality: "basic",
-        add: "2",
-        vsArmor: "0",
-        handedness: "one",
-        description: "Your bare fist"
-    } as MeleeWeaponData
-}
+    data: fistData
+};
 
 export const traitTypes = [
     "character",
@@ -87,4 +90,4 @@ export const equipmentSheetOrder = {
     "armor": 2,
     "posession": 3,
     "property": 4
-}
+};

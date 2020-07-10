@@ -10,6 +10,8 @@
         "no-conditional-assignment": true,
         "no-consecutive-blank-lines": false,
         "no-console": false,
-        "ordered-imports": true
+        "ordered-imports": true,
+        "semicolon": [true, "always"],
+        "no-object-literal-type-assertion": true
     }
 }

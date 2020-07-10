@@ -24,7 +24,7 @@ export async function handleRollable(
 async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor) as TracksTests;
     const actor = sheet.actor as BWActor;
-    const data = {
+    const data: AttributeDialogData = {
         name: target.dataset.rollableName,
         difficulty: 3,
         bonusDice: 0,
@@ -32,7 +32,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat
-    } as AttributeDialogData;
+    };
 
     const html = await renderTemplate(templates.attrDialog, data);
     return new Promise(_resolve =>
@@ -61,17 +61,18 @@ async function attrRollCallback(
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
 
-    const data = {
+    const data: RollChatMessageData = {
         name: `${name} Test`,
         successes: roll.result,
         difficulty: baseData.diff,
+        obstacleTotal: baseData.obstacleTotal,
         success: parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty),
         rolls: roll.dice[0].rolls,
         difficultyGroup: difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff),
         penaltySources: baseData.penaltySources,
         dieSources
-    } as RollChatMessageData;
-    const messageHtml = await renderTemplate(templates.attrMessage, data)
+    };
+    const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
@@ -81,7 +82,7 @@ async function attrRollCallback(
 async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as TracksTests;
     const actor = sheet.actor as BWActor;
-    const data = {
+    const data: CirclesDialogData = {
         name: target.dataset.rollableName,
         difficulty: 3,
         bonusDice: 0,
@@ -91,7 +92,7 @@ async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet)
         stat,
         circlesBonus: actor.data.circlesBonus,
         circlesMalus: actor.data.circlesMalus
-    } as CirclesDialogData;
+    };
 
     const html = await renderTemplate(templates.circlesDialog, data);
     return new Promise(_resolve =>
@@ -124,7 +125,7 @@ async function circlesRollCallback(
         ...bonusData.bonuses
     };
     baseData.obstacleTotal += penaltyData.sum;
-    const data = {
+    const data: RollChatMessageData = {
         name: `Circles Test`,
         successes: roll.result,
         difficulty: baseData.diff,
@@ -136,7 +137,7 @@ async function circlesRollCallback(
             baseData.diff + baseData.obPenalty + penaltyData.sum),
         dieSources,
         penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses }
-    } as RollChatMessageData;
+    };
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
     return ChatMessage.create({
         content: messageHtml,
@@ -145,10 +146,10 @@ async function circlesRollCallback(
 }
 
 async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const skillId = target.dataset.skillId
+    const skillId = target.dataset.skillId;
     const skillData = (sheet.actor.getOwnedItem(skillId) as Skill).data;
     const actor = sheet.actor as BWActor;
-    const data = {
+    const data: LearningDialogData = {
         name: `Beginner's Luck ${target.dataset.rollableName} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -156,7 +157,7 @@ async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         skill: { exp: 10 - skillData.data.aptitude } as any
-    } as LearningDialogData;
+    };
 
     const html = await renderTemplate(templates.learnDialog, data);
     return new Promise(_resolve =>
@@ -179,10 +180,10 @@ async function learningRollCallback(
 
     const baseData = extractBaseData(dialogHtml, sheet);
     baseData.obstacleTotal += baseData.diff;
-    const exp = 10 - skillData.data.aptitude
+    const exp = 10 - skillData.data.aptitude;
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
-    const data = {
+    const data: RollChatMessageData = {
         name: `Beginner's Luck ${skillData.name} Test`,
         successes: roll.result,
         difficulty: baseData.diff * 2,
@@ -192,12 +193,12 @@ async function learningRollCallback(
         difficultyGroup: difficultyGroup(exp + baseData.bDice- baseData.woundDice, baseData.diff),
         penaltySources: baseData.penaltySources,
         dieSources,
-    } as RollChatMessageData;
-    const messageHtml = await renderTemplate(templates.learnMessage, data)
+    };
+    const messageHtml = await renderTemplate(templates.learnMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
-    })
+    });
 }
 
 async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
@@ -207,7 +208,7 @@ async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
     if (target.dataset.rollableName.toLowerCase() === "will") {
         tax = parseInt(actor.data.data.willTax, 10);
     }
-    const data = {
+    const data: StatDialogData = {
         name: target.dataset.rollableName,
         difficulty: 3,
         bonusDice: 0,
@@ -216,7 +217,7 @@ async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat,
         tax
-    } as StatDialogData;
+    };
 
     const html = await renderTemplate(templates.statDialog, data);
     return new Promise(_resolve =>
@@ -245,7 +246,7 @@ async function statRollCallback(
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
 
-    const data = {
+    const data: RollChatMessageData = {
         name: `${name} Test`,
         successes: roll.result,
         difficulty: baseData.diff + baseData.obPenalty,
@@ -255,8 +256,8 @@ async function statRollCallback(
         difficultyGroup: difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff),
         penaltySources: baseData.penaltySources,
         dieSources,
-    } as RollChatMessageData;
-    const messageHtml = await renderTemplate(templates.skillMessage, data)
+    };
+    const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
@@ -264,10 +265,10 @@ async function statRollCallback(
 }
 
 async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const skillId = target.dataset.skillId
+    const skillId = target.dataset.skillId;
     const skillData = (sheet.actor.getOwnedItem(skillId) as Skill).data;
     const actor = sheet.actor as BWActor;
-    const templateData = {
+    const templateData: SkillDialogData = {
         name: skillData.name,
         difficulty: 3,
         bonusDice: 0,
@@ -276,7 +277,7 @@ async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): 
         obPenalty: actor.data.data.ptgs.obPenalty,
         skill: skillData.data,
         forkOptions: actor.getForkOptions(skillData.name)
-    } as SkillDialogData;
+    };
     const html = await renderTemplate(templates.skillDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
@@ -301,7 +302,7 @@ async function skillRollCallback(
     const exp = parseInt(skillData.data.exp, 10);
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
-    const data = {
+    const data: RollChatMessageData = {
         name: `${skillData.name} Test`,
         successes: roll.result,
         difficulty: baseData.diff,
@@ -311,12 +312,12 @@ async function skillRollCallback(
         difficultyGroup: difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice, baseData.diff),
         penaltySources: baseData.penaltySources,
         dieSources,
-    } as RollChatMessageData;
-    const messageHtml = await renderTemplate(templates.skillMessage, data)
+    };
+    const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
-    })
+    });
 }
 
 function buildDiceSourceObject(
@@ -326,14 +327,14 @@ function buildDiceSourceObject(
         forks: number,
         woundDice: number,
         tax: number) {
-    const dieSources = {
+    const dieSources: { [i: string]: string } = {
         "Exponent": `+${exp}`,
-    } as { [i: string]: string };
+    };
     if (aDice) { dieSources.Artha = `+${aDice}`; }
     if (bDice) { dieSources.Bonus = `+${bDice}`; }
     if (forks) { dieSources.FoRKs = `+${forks}`; }
     if (woundDice) { dieSources["Wound Penalty"] = `-${woundDice}`; }
-    if (tax) { dieSources.Tax = `-${tax}`}
+    if (tax) { dieSources.Tax = `-${tax}`; }
     return dieSources;
 }
 
@@ -342,7 +343,7 @@ function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet ) {
     const actorData = sheet.actor.data as CharacterData;
     const woundDice = actorData.data.ptgs.woundDice || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
-    const penaltySources = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { } as { [i:string]: string};
+    const penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
     const diff = extractNumber(html, "difficulty");
     const aDice = extractNumber(html, "arthaDice");
     const bDice = extractNumber(html, "bonusDice");
@@ -417,7 +418,7 @@ const templates = {
     skillMessage: "systems/burningwheel/templates/chat/roll-message.html",
     statDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
     statMessage: "systems/burningwheel/templates/chat/roll-message.html"
-}
+};
 
 
 /* =============== Types ================= */
@@ -456,13 +457,14 @@ interface RollDialogData {
 
 export interface RollChatMessageData {
     name: string;
-    successes: string,
-    difficulty: number,
-    specialPenalty?: { name: string, amount: number }
-    success: boolean,
-    rolls: {success: boolean, roll: number}[],
-    difficultyGroup: string,
+    successes: string;
+    difficulty: number;
+    specialPenalty?: { name: string, amount: number };
+    success: boolean;
+    rolls: {success: boolean, roll: number}[];
+    difficultyGroup: string;
+    obstacleTotal: number;
 
-    dieSources?: { [i: string]: string }
-    penaltySources?: { [i: string]: string }
+    dieSources?: { [i: string]: string };
+    penaltySources?: { [i: string]: string };
 }

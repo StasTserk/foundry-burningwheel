@@ -1,6 +1,6 @@
 import { BWActor, CharacterData, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
-import { Skill, SkillDataRoot } from "./items/item.js";
+import { Relationship, Skill, SkillDataRoot } from "./items/item.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>, sheet: BWActorSheet): Promise<unknown> {
@@ -81,6 +81,10 @@ async function attrRollCallback(
 
 async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as TracksTests;
+    let circlesContact: Relationship;
+    if (target.dataset.relationshipId) {
+        circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
+    }
     const actor = sheet.actor as BWActor;
     const data: CirclesDialogData = {
         name: target.dataset.rollableName,
@@ -91,7 +95,8 @@ async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet)
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat,
         circlesBonus: actor.data.circlesBonus,
-        circlesMalus: actor.data.circlesMalus
+        circlesMalus: actor.data.circlesMalus,
+        circlesContact
     };
 
     const html = await renderTemplate(templates.circlesDialog, data);
@@ -103,7 +108,7 @@ async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet)
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        circlesRollCallback(dialogHtml, stat, sheet)
+                        circlesRollCallback(dialogHtml, stat, sheet, circlesContact)
                 }
             }
         }).render(true)
@@ -113,17 +118,22 @@ async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet)
 async function circlesRollCallback(
         dialogHtml: JQuery<HTMLElement>,
         stat: TracksTests,
-        sheet: BWActorSheet) {
+        sheet: BWActorSheet,
+        contact?: Relationship) {
     const baseData = extractBaseData(dialogHtml, sheet);
     const bonusData = extractCirclesBonuses(dialogHtml, "circlesBonus");
     const penaltyData = extractCirclesPenalty(dialogHtml, "circlesMalus");
     const exp = parseInt(stat.exp, 10);
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + bonusData.sum - baseData.woundDice}d6cs>3`)
-        .roll();
     const dieSources = {
         ...buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0),
         ...bonusData.bonuses
     };
+    if (contact) {
+        dieSources["Named Contact"] = "+1";
+        baseData.bDice ++;
+    }
+    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + bonusData.sum - baseData.woundDice}d6cs>3`)
+        .roll();
     baseData.obstacleTotal += penaltyData.sum;
     const data: RollChatMessageData = {
         name: `Circles Test`,
@@ -139,6 +149,12 @@ async function circlesRollCallback(
         penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses }
     };
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
+
+    // incremet relationship tracking values...
+    if (contact.data.data.building) {
+        contact.update({"data.buildingProgress": parseInt(contact.data.data.buildingProgress, 10) + 1 }, null);
+    }
+
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
@@ -429,6 +445,7 @@ export interface LearningDialogData extends RollDialogData {
 export interface CirclesDialogData extends AttributeDialogData {
     circlesBonus?: {name: string, amount: number}[];
     circlesMalus?: {name: string, amount: number}[];
+    circlesContact?: Item;
 }
 
 export interface AttributeDialogData extends RollDialogData {

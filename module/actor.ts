@@ -1,5 +1,5 @@
 import { updateTestsNeeded } from "./helpers.js";
-import { ReputationRootData } from "./items/item.js";
+import { DisplayClass, ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -138,7 +138,7 @@ interface Common {
     resourcesTax: string;
 }
 
-export interface Ability extends TracksTests {
+export interface Ability extends TracksTests, DisplayClass {
     shade: string;
     open: boolean;
 }

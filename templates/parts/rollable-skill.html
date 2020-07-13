@@ -1,4 +1,4 @@
-<div class="rollable flex-row">
+<div class="rollable flex-row {{skill.data.cssClass}}">
     <input type="checkbox" id={{skill.data.safeId}}-toggle class="collapse-checkbox" data-item-id="{{skill._id}}" data-binding="data.collapsed" {{ checked data.collapsed }}>
     <label for="{{skill.data.safeId}}-toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     <h3 class="rollable-name">{{ skill.name }}</h3>

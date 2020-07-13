@@ -1,12 +1,12 @@
 import { TracksTests } from "./actor.js";
 import { DisplayClass } from "./items/item.js";
 
-export function updateTestsNeeded(ability: TracksTests & DisplayClass) {
+export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true) {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
     ability.routineNeeded = values.r;
     ability.challengingNeeded = values.c;
     ability.difficultNeeded = values.d;
-    ability.cssClass = canAdvance(ability) ? "can-advance" : "";
+    ability.cssClass = canAdvance(ability, needRoutines) ? "can-advance" : "";
 }
 
 export function slugify(name: string): string {
@@ -19,12 +19,12 @@ export function toDictionary(list: string[]): { [key:string]:string } {
     return o;
 }
 
-export function canAdvance(skill: TracksTests): boolean {
-    const enoughRoutine = parseInt(skill.routine, 10) >= skill.routineNeeded;
-    const enoughDifficult = parseInt(skill.difficult, 10) >= skill.difficultNeeded;
-    const enoughChallenging = parseInt(skill.challenging, 10) >= skill.challengingNeeded;
+export function canAdvance(skill: TracksTests, needRoutines: boolean): boolean {
+    const enoughRoutine = (parseInt(skill.routine, 10) >= (skill.routineNeeded || 0 ));
+    const enoughDifficult = parseInt(skill.difficult, 10) >= (skill.difficultNeeded || 0);
+    const enoughChallenging = parseInt(skill.challenging, 10) >= (skill.challengingNeeded || 0);
 
-    if (parseInt(skill.exp, 10) < 5) {
+    if (parseInt(skill.exp, 10) < 5 && needRoutines) {
         // need only enough difficult or routine, not both
         return enoughRoutine && (enoughDifficult || enoughChallenging);
     }

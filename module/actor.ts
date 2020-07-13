@@ -3,7 +3,7 @@ import { DisplayClass, ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
-    data: CharacterData;
+    data!: CharacterData;
 
     prepareData() {
         super.prepareData();
@@ -17,12 +17,12 @@ export class BWActor extends Actor {
     }
 
     private _prepareCharacterData() {
-        updateTestsNeeded(this.data.data.will);
-        updateTestsNeeded(this.data.data.power);
-        updateTestsNeeded(this.data.data.perception);
-        updateTestsNeeded(this.data.data.agility);
-        updateTestsNeeded(this.data.data.forte);
-        updateTestsNeeded(this.data.data.speed);
+        updateTestsNeeded(this.data.data.will, false);
+        updateTestsNeeded(this.data.data.power, false);
+        updateTestsNeeded(this.data.data.perception, false);
+        updateTestsNeeded(this.data.data.agility, false);
+        updateTestsNeeded(this.data.data.forte, false);
+        updateTestsNeeded(this.data.data.speed, false);
         updateTestsNeeded(this.data.data.health);
         updateTestsNeeded(this.data.data.steel);
         updateTestsNeeded(this.data.data.circles);

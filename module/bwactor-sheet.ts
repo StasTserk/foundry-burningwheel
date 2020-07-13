@@ -16,7 +16,7 @@ export class BWActorSheet extends ActorSheet {
 
     private _updateItemField(e: JQuery.ChangeEvent): void {
         e.preventDefault();
-        const t = event.currentTarget;
+        const t = event!.currentTarget as EventTarget;
         let value: any;
 
         if ($(t).prop("type") === "checkbox") {
@@ -31,7 +31,7 @@ export class BWActorSheet extends ActorSheet {
         const item = this.actor.getOwnedItem(id);
         const updateParams = {};
         updateParams[binding] = value;
-        item.update(updateParams, {});
+        item!.update(updateParams, {});
     }
 
     _getFormData(form: HTMLFormElement) {

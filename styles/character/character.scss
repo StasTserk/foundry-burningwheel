@@ -38,7 +38,7 @@
         .section-index {
             width: calc(100% - 255px);
             margin-left: 5px;
-            grid-template-rows: repeat(auto-fill, 40px);
+            grid-template-rows: repeat(auto-fill, minmax(min-content, 1fr));
 
             input {
                 @include underlined-input;
@@ -48,6 +48,37 @@
                     padding: 3px 1px 3px 1px;
                     height: 24px;
                     @include no-number-arrows;
+                }
+            }
+
+            .artha-points {
+                place-content: space-evenly;
+                div {
+                    background-color: transparent;
+                }
+                &:hover {
+                    background-color: transparent;
+                }
+                .artha-label {
+                    font-size: .75em;
+                    display: block;
+                    width: 3em;
+                    text-align: center;
+                }
+
+                .artha-input {
+                    border: 2px inset black;
+                    border-bottom-color: grey;
+                    border-right-color: grey;
+                    border-radius: .75em;
+                    height: 1.5em;
+                    width: 1.5em;
+                    font-size: 1.5em;
+                    text-align: center;
+
+                    &:hover {
+                        background-color: rgba(black, .15);
+                    }
                 }
             }
         }

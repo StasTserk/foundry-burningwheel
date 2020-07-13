@@ -22,10 +22,10 @@ export async function handleRollable(
 }
 
 async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, target.dataset.accessor) as TracksTests;
+    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
     const actor = sheet.actor as BWActor;
     const data: AttributeDialogData = {
-        name: target.dataset.rollableName,
+        name: target.dataset.rollableName || "Unknown Attribute",
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -43,7 +43,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        attrRollCallback(dialogHtml, stat, sheet, 0, target.dataset.rollableName)
+                        attrRollCallback(dialogHtml, stat, sheet, 0, target.dataset.rollableName || "Unknown Attribute")
                 }
             }
         }).render(true)
@@ -81,13 +81,13 @@ async function attrRollCallback(
 
 async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as TracksTests;
-    let circlesContact: Relationship;
+    let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {
         circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
     }
     const actor = sheet.actor as BWActor;
     const data: CirclesDialogData = {
-        name: target.dataset.rollableName,
+        name: target.dataset.rollableName || "Circles Test",
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -151,7 +151,7 @@ async function circlesRollCallback(
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
 
     // incremet relationship tracking values...
-    if (contact.data.data.building) {
+    if (contact && contact.data.data.building) {
         contact.update({"data.buildingProgress": parseInt(contact.data.data.buildingProgress, 10) + 1 }, null);
     }
 
@@ -162,7 +162,7 @@ async function circlesRollCallback(
 }
 
 async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const skillId = target.dataset.skillId;
+    const skillId = target.dataset.skillId || "";
     const skillData = (sheet.actor.getOwnedItem(skillId) as Skill).data;
     const actor = sheet.actor as BWActor;
     const data: LearningDialogData = {
@@ -172,7 +172,7 @@ async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet
         arthaDice: 0,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
-        skill: { exp: 10 - skillData.data.aptitude } as any
+        skill: { exp: 10 - (skillData.data.aptitude || 1) } as any
     };
 
     const html = await renderTemplate(templates.learnDialog, data);
@@ -196,7 +196,7 @@ async function learningRollCallback(
 
     const baseData = extractBaseData(dialogHtml, sheet);
     baseData.obstacleTotal += baseData.diff;
-    const exp = 10 - skillData.data.aptitude;
+    const exp = 10 - (skillData.data.aptitude || 1);
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
     const data: RollChatMessageData = {
@@ -218,14 +218,14 @@ async function learningRollCallback(
 }
 
 async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, target.dataset.accessor) as TracksTests;
+    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
     const actor = sheet.actor as BWActor;
     let tax = 0;
-    if (target.dataset.rollableName.toLowerCase() === "will") {
+    if (target.dataset.rollableName!.toLowerCase() === "will") {
         tax = parseInt(actor.data.data.willTax, 10);
     }
     const data: StatDialogData = {
-        name: target.dataset.rollableName,
+        name: target.dataset.rollableName || "Unknown Stat",
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -244,7 +244,7 @@ async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        statRollCallback(dialogHtml, stat, sheet, tax, target.dataset.rollableName)
+                        statRollCallback(dialogHtml, stat, sheet, tax, target.dataset.rollableName || "Unknown Stat")
                 }
             }
         }).render(true)
@@ -281,7 +281,7 @@ async function statRollCallback(
 }
 
 async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const skillId = target.dataset.skillId;
+    const skillId = target.dataset.skillId || "";
     const skillData = (sheet.actor.getOwnedItem(skillId) as Skill).data;
     const actor = sheet.actor as BWActor;
     const templateData: SkillDialogData = {
@@ -379,7 +379,7 @@ function extractNumber(html: JQuery<HTMLElement>, name: string): number {
 function extractForksValue(html: JQuery<HTMLElement>, name: string): number {
     let sum: number = 0;
     html.find(`input[name=\"${name}\"]:checked`).each((_i, v) => {
-        sum += parseInt(v.getAttribute("value"), 10);
+        sum += parseInt(v.getAttribute("value") || "", 10);
     });
     return sum;
 }
@@ -389,8 +389,8 @@ function extractCirclesBonuses(html: JQuery<HTMLElement>, name: string):
     const bonuses:{[name: string]: string } = {};
     let sum = 0;
     html.find(`input[name=\"${name}\"]:checked`).each((_i, v) => {
-        sum += parseInt(v.getAttribute("value"), 10);
-        bonuses[v.dataset.name] = "+" + v.getAttribute("value");
+        sum += parseInt(v.getAttribute("value") || "", 10);
+        bonuses[v.dataset.name || ""] = "+" + v.getAttribute("value");
     });
     return { bonuses, sum };
 }
@@ -468,8 +468,8 @@ interface RollDialogData {
     difficulty: number;
     arthaDice: number;
     bonusDice: number;
-    woundDice: number;
-    obPenalty: number;
+    woundDice?: number;
+    obPenalty?: number;
 }
 
 export interface RollChatMessageData {

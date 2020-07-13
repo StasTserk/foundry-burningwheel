@@ -73,6 +73,9 @@ Actor:
       debt: ''
       resourcesTax: 0
       willTax: 0
+      fate: 0
+      persona: 0
+      deeds: 0
   character:
     templates:
       - common

@@ -17,8 +17,8 @@ import { handleRollable } from "./rolls.js";
 export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
-        const beliefs = [];
-        const instincts = [];
+        const beliefs: Belief[] = [];
+        const instincts: Instinct[] = [];
         const traits: Trait[] = [];
         const items = data.items;
         const skills: Skill[] = [];
@@ -98,8 +98,8 @@ export class BWCharacterSheet extends BWActorSheet {
         return data;
     }
 
-    getArmorDictionary(armorItems: Item[]): { [key: string]: Item; } {
-        const armorLocs: { [key: string]: Armor; } = {};
+    getArmorDictionary(armorItems: Item[]): { [key: string]: Item | null; } {
+        const armorLocs: { [key: string]: Armor | null; } = {};
         constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
         armorItems.forEach(i => armorLocs[(i as any as ArmorRootData).data.location] = i);
         return armorLocs;
@@ -127,27 +127,31 @@ export class BWCharacterSheet extends BWActorSheet {
 
     private async _manageItems(e: JQuery.ClickEvent) {
         e.preventDefault();
-        const t = event.currentTarget;
+        const t = event!.currentTarget as EventTarget;
         const action = $(t).data("action");
         const id = $(t).data("id") as string;
         let options = {};
         switch (action) {
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }};
-                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+                return this.actor.createOwnedItem(options).then(i =>
+                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
             case "addReputation":
                 options = { name: "New Reputation", type: "reputation", data: {}};
-                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+                return this.actor.createOwnedItem(options).then(i =>
+                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
             case "addAffiliation":
                 options = { name: "New Affiliation", type: "affiliation", data: {}};
-                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+                return this.actor.createOwnedItem(options).then(i =>
+                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
             case "addTrait":
                 options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
-                return this.actor.createOwnedItem(options).then(i => this.actor.getOwnedItem(i._id).sheet.render(true));
+                return this.actor.createOwnedItem(options).then(i =>
+                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
             case "delItem":
                 return this.actor.deleteOwnedItem(id);
             case "editItem":
-                return this.actor.getOwnedItem(id).sheet.render(true);
+                return this.actor.getOwnedItem(id)!.sheet.render(true);
         }
         return null;
     }
@@ -189,7 +193,7 @@ interface CharacterSheetData extends ActorSheetData {
     equipment: Item[];
     melee: MeleeWeapon[];
     fistStats: MeleeWeaponData;
-    armor: { [key: string]: Item }; // armor/location dictionary
+    armor: { [key: string]: Item | null}; // armor/location dictionary
     ranged: RangedWeapon[];
     relationships: Relationship[];
     beliefs: Belief[];

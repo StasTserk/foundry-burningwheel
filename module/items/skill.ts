@@ -1,5 +1,6 @@
 import { Ability, TracksTests } from "../actor.js";
 import { updateTestsNeeded } from "../helpers.js";
+import { DisplayClass } from "./item.js";
 
 export class Skill extends Item {
     prepareData() {
@@ -23,7 +24,7 @@ export interface SkillDataRoot extends BaseEntityData {
     data: SkillData;
 }
 
-export interface SkillData extends TracksTests {
+export interface SkillData extends TracksTests, DisplayClass {
     name: string;
     shade: string;
 
@@ -34,7 +35,7 @@ export interface SkillData extends TracksTests {
     training: boolean;
 
     learning: boolean;
-    learningProgress: 0
+    learningProgress: 0;
 
     routineNeeded?: number;
     difficultNeeded?: number;

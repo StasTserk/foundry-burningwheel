@@ -1,10 +1,12 @@
 import { TracksTests } from "./actor.js";
+import { DisplayClass } from "./items/item.js";
 
-export function updateTestsNeeded(ability: TracksTests) {
+export function updateTestsNeeded(ability: TracksTests & DisplayClass) {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
     ability.routineNeeded = values.r;
     ability.challengingNeeded = values.c;
     ability.difficultNeeded = values.d;
+    ability.cssClass = canAdvance(ability) ? "can-advance" : "";
 }
 
 export function slugify(name: string): string {
@@ -15,6 +17,19 @@ export function toDictionary(list: string[]): { [key:string]:string } {
     const o: { [key:string]:string } = {};
     list.forEach(s => o[s] = s.titleCase());
     return o;
+}
+
+export function canAdvance(skill: TracksTests): boolean {
+    const enoughRoutine = parseInt(skill.routine, 10) >= skill.routineNeeded;
+    const enoughDifficult = parseInt(skill.difficult, 10) >= skill.difficultNeeded;
+    const enoughChallenging = parseInt(skill.challenging, 10) >= skill.challengingNeeded;
+
+    if (parseInt(skill.exp, 10) < 5) {
+        // need only enough difficult or routine, not both
+        return enoughRoutine && (enoughDifficult || enoughChallenging);
+    }
+    // otherwise, need both routine and difficult tests to advance, don't need routine anymore
+    return enoughDifficult && enoughChallenging;
 }
 
 const AbilityLookup = {

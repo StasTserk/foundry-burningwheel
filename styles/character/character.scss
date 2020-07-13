@@ -63,6 +63,10 @@
             @include colored-item(black);
             height: min-content;
 
+            &.can-advance {
+                background-color: rgba(orange, 0.25);
+            }
+
             select.shade, input.exponent, button {
                 width: 3em;
                 height: 2em;

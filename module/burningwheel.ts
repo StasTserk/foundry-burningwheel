@@ -32,7 +32,7 @@ function registerHelpers() {
         if (options.hash.exp) {
             testsAllowed = 11 - parseInt(options.hash.exp, 10);
         }
-        else if (options.hash.needed) {
+        else if (options.hash.hasOwnProperty("needed")) {
             testsAllowed = parseInt(options.hash.needed, 10) + 1;
         }
 

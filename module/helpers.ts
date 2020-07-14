@@ -38,7 +38,7 @@ export function canAdvance(skill: TracksTests, needRoutines: boolean = true): bo
 
 export function addTestToSkill(
         skill: Skill,
-        difficulty: "Routine" | "Difficult" | "Challenging" | "Routine/Difficult") {
+        difficulty: TestString) {
     switch (difficulty) {
         case "Routine":
             if (parseInt(skill.data.data.routine, 10) < (skill.data.data.routineNeeded || 0)) {
@@ -81,3 +81,5 @@ const AbilityLookup = {
     "8": { r: 0, d: 4, c: 3},
     "9": { r: 0, d: 5, c: 3},
 };
+
+export type TestString = "Routine" | "Difficult" | "Challenging" | "Routine/Difficult";

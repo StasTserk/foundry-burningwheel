@@ -1,8 +1,8 @@
 {
     "name": "burningwheel",
-    "title": "Burning Wheel",
+    "title": "The Burning Wheel",
     "description": "Foundry implementation of The Burning Wheel",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "templateVersion": 5,
     "author": "Stas Tserkovny",
     "esmodules": [
@@ -14,12 +14,12 @@
     ],
     "packs": [],
     "minimumCoreVersion": "0.6.0",
-    "compatibleCoreVersion": "0.6.4",
+    "compatibleCoreVersion": "0.6.5",
     "socket": false,
     "initiative": "1d20",
     "gridDistance": 10,
     "gridUnits": "ft",
     "url": "https://github.com/StasTserk/foundry-burningwheel",
     "manifest": "https://raw.githubusercontent.com/StasTserk/foundry-burningwheel/master/system.json",
-    "download": "https://github.com/StasTserk/foundry-burningwheel/releases/download/0.1.0/release0.1.0.zip"
+    "download": "https://github.com/StasTserk/foundry-burningwheel/releases/download/0.1.1/release0.1.1.zip"
 }

@@ -1,6 +1,6 @@
 import { BWActor, CharacterData, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
-import { addTestToSkill, advanceSkill, canAdvance } from "./helpers.js";
+import * as helpers from "./helpers.js";
 import { Relationship, Skill, SkillDataRoot } from "./items/item.js";
 
 export async function handleRollable(
@@ -221,12 +221,13 @@ async function learningRollCallback(
 async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
     const actor = sheet.actor as BWActor;
+    const statName = target.dataset.rollableName || "Unknown Stat";
     let tax = 0;
     if (target.dataset.rollableName!.toLowerCase() === "will") {
         tax = parseInt(actor.data.data.willTax, 10);
     }
     const data: StatDialogData = {
-        name: target.dataset.rollableName || "Unknown Stat",
+        name: `${statName} Test`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -239,13 +240,13 @@ async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
     const html = await renderTemplate(templates.statDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${target.dataset.rollableName} Test`,
+            title: `${statName} Test`,
             content: html,
             buttons: {
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        statRollCallback(dialogHtml, stat, sheet, tax, target.dataset.rollableName || "Unknown Stat")
+                        statRollCallback(dialogHtml, stat, sheet, tax, statName, target.dataset.accessor || "")
                 }
             }
         }).render(true)
@@ -257,23 +258,29 @@ async function statRollCallback(
         stat: TracksTests,
         sheet: BWActorSheet,
         tax: number,
-        name: string) {
+        name: string,
+        accessor: string) {
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
+    const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+    const dg = difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
 
     const data: RollChatMessageData = {
         name: `${name} Test`,
         successes: roll.result,
         difficulty: baseData.diff + baseData.obPenalty,
         obstacleTotal: baseData.obstacleTotal,
-        success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
+        success: isSuccessful,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff),
+        difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources,
     };
+
+    sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful, false);
+
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
@@ -332,13 +339,13 @@ async function skillRollCallback(
         dieSources,
     };
 
-    await addTestToSkill(skill, dg);
+    await helpers.addTestToSkill(skill, dg);
     skill = sheet.actor.getOwnedItem(skill._id) as Skill; // update skill with new data
-    if (canAdvance(skill.data.data)) {
+    if (helpers.canAdvance(skill.data.data)) {
         Dialog.confirm({
             title: `Advance ${skill.name}?`,
             content: `<p>${skill.name} is ready to advance. Go ahead?</p>`,
-            yes: () => advanceSkill(skill),
+            yes: () => helpers.advanceSkill(skill),
             // tslint:disable-next-line: no-empty
             no: () => {},
             defaultYes: true
@@ -416,7 +423,7 @@ function extractCirclesPenalty(html: JQuery<HTMLElement>, name: string):
     return extractCirclesBonuses(html, name);
 }
 
-function difficultyGroup(dice: number, difficulty: number): "Challenging" | "Routine/Difficult" | "Difficult" | "Routine" {
+function difficultyGroup(dice: number, difficulty: number): helpers.TestString {
     if (difficulty > dice) {
         return "Challenging";
     }

@@ -1,4 +1,8 @@
+import { BWActor } from "./actor";
+
 export class BWActorSheet extends ActorSheet {
+    actor: BWActor;
+
     get template() {
         const path = "systems/burningwheel/templates";
         return `${path}/${this.actor.data.type}-sheet.html`;

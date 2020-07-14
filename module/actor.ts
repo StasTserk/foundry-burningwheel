@@ -1,4 +1,4 @@
-import { updateTestsNeeded } from "./helpers.js";
+import { canAdvance, TestString, updateTestsNeeded } from "./helpers.js";
 import { DisplayClass, ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
@@ -14,6 +14,85 @@ export class BWActor extends Actor {
 
     getForkOptions(skillName: string): Skill[] {
         return this.data.forks.filter(s => s.name !== skillName);
+    }
+
+    async addStatTest(
+            stat: TracksTests,
+            name: string,
+            accessor: string,
+            difficultyGroup: TestString,
+            isSuccessful: boolean,
+            routinesNeeded: boolean = true) {
+        const onlySuccessCounts = name === "Resources" || name === "Faith" || name === "Perception";
+
+        if ((onlySuccessCounts && isSuccessful) || !onlySuccessCounts) {
+            this._addTestToStat(stat, accessor, difficultyGroup);
+        }
+
+        if (canAdvance(stat, routinesNeeded)) {
+            Dialog.confirm({
+                title: `Advance ${name}?`,
+                content: `<p>${name} is ready to advance. Go ahead?</p>`,
+                yes: () => this._advanceStat(accessor, parseInt(stat.exp, 10) + 1),
+                // tslint:disable-next-line: no-empty
+                no: () => {},
+                defaultYes: true
+            });
+        }
+    }
+
+    private async _addTestToStat(stat: TracksTests, accessor: string, difficultyGroup: TestString) {
+        let testNumber = 0;
+        const updateData = {};
+        switch (difficultyGroup) {
+            case "Challenging":
+                testNumber = parseInt(stat.challenging, 10);
+                if (testNumber < (stat.challengingNeeded || 0)) {
+                    updateData[`${accessor}.challenging`] = testNumber +1;
+                    stat.challenging = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                }
+                break;
+            case "Difficult":
+                testNumber = parseInt(stat.difficult, 10);
+                if (testNumber < (stat.difficultNeeded || 0)) {
+                    updateData[`${accessor}.difficult`] = testNumber +1;
+                    stat.difficult = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                }
+                break;
+            case "Routine":
+                testNumber = parseInt(stat.routine, 10);
+                if (testNumber < (stat.routineNeeded || 0)) {
+                    updateData[`${accessor}.routine`] = testNumber +1;
+                    stat.routine = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                }
+                break;
+            case "Routine/Difficult":
+                testNumber = parseInt(stat.difficult, 10);
+                if (testNumber < (stat.difficultNeeded || 0)) {
+                    updateData[`${accessor}.difficult`] = testNumber +1;
+                    stat.difficult = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                } else {
+                    testNumber = parseInt(stat.routine, 10);
+                    if (testNumber < (stat.routineNeeded || 0)) {
+                        updateData[`${accessor}.routine`] = testNumber +1;
+                        stat.routine = `${testNumber+1}`;
+                        return this.update(updateData, {});
+                    }
+                }
+                break;
+        }
+    }
+    private async _advanceStat(accessor: string, newExp: number) {
+        const updateData = {};
+        updateData[`${accessor}.routine`] = 0;
+        updateData[`${accessor}.difficult`] = 0;
+        updateData[`${accessor}.challenging`] = 0;
+        updateData[`${accessor}.exp`] = newExp;
+        return this.update(updateData, {});
     }
 
     private _prepareCharacterData() {

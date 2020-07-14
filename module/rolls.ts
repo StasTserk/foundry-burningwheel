@@ -25,8 +25,9 @@ export async function handleRollable(
 async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
     const actor = sheet.actor as BWActor;
+    const attrName = target.dataset.rollableName || "Unknown Attribute";
     const data: AttributeDialogData = {
-        name: target.dataset.rollableName || "Unknown Attribute",
+        name: `${attrName}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -44,7 +45,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        attrRollCallback(dialogHtml, stat, sheet, 0, target.dataset.rollableName || "Unknown Attribute")
+                        attrRollCallback(dialogHtml, stat, sheet, 0, attrName, target.dataset.accessor || "")
                 }
             }
         }).render(true)
@@ -56,23 +57,28 @@ async function attrRollCallback(
         stat: TracksTests,
         sheet: BWActorSheet,
         tax: number,
-        name: string) { // todo add relationship forks here
+        name: string,
+        accessor: string) { // todo add relationship forks here
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
+    const dg = difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
+    const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty);
 
     const data: RollChatMessageData = {
         name: `${name} Test`,
         successes: roll.result,
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
-        success: parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty),
+        success: isSuccessful,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff),
+        difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources
     };
+
+    sheet.actor.addAttributeTest(stat, name, accessor, dg, isSuccessful);
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({
         content: messageHtml,
@@ -129,6 +135,10 @@ async function circlesRollCallback(
         ...buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0),
         ...bonusData.bonuses
     };
+    const dg = difficultyGroup(
+        exp + baseData.bDice - baseData.woundDice,
+        baseData.diff + baseData.obPenalty + penaltyData.sum);
+
     if (contact) {
         dieSources["Named Contact"] = "+1";
         baseData.bDice ++;
@@ -143,9 +153,7 @@ async function circlesRollCallback(
         obstacleTotal: baseData.obstacleTotal,
         success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: difficultyGroup(
-            exp + baseData.bDice - baseData.woundDice,
-            baseData.diff + baseData.obPenalty + penaltyData.sum),
+        difficultyGroup: dg,
         dieSources,
         penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses }
     };
@@ -155,6 +163,8 @@ async function circlesRollCallback(
     if (contact && contact.data.data.building) {
         contact.update({"data.buildingProgress": parseInt(contact.data.data.buildingProgress, 10) + 1 }, null);
     }
+
+    sheet.actor.addAttributeTest(stat, "Circles", "data.circles", dg, true);
 
     return ChatMessage.create({
         content: messageHtml,
@@ -279,7 +289,7 @@ async function statRollCallback(
         dieSources,
     };
 
-    sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful, false);
+    sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful);
 
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({

@@ -16,13 +16,21 @@ export class BWActor extends Actor {
         return this.data.forks.filter(s => s.name !== skillName);
     }
 
+    async addAttributeTest(
+            stat: TracksTests,
+            name: string,
+            accessor: string,
+            difficultyGroup: TestString,
+            isSuccessful: boolean) {
+        return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
+    }
     async addStatTest(
             stat: TracksTests,
             name: string,
             accessor: string,
             difficultyGroup: TestString,
             isSuccessful: boolean,
-            routinesNeeded: boolean = true) {
+            routinesNeeded: boolean = false) {
         const onlySuccessCounts = name === "Resources" || name === "Faith" || name === "Perception";
 
         if ((onlySuccessCounts && isSuccessful) || !onlySuccessCounts) {

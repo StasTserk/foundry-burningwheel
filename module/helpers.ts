@@ -70,6 +70,27 @@ export function advanceSkill(skill: Skill) {
     return skill.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
 }
 
+export function difficultyGroup(dice: number, difficulty: number): TestString {
+    if (difficulty > dice) {
+        return "Challenging";
+    }
+    if (dice === 1) {
+        return "Routine/Difficult";
+    }
+    if (dice === 2) {
+        return difficulty === 2 ? "Difficult" : "Routine";
+    }
+
+    let spread = 1;
+    if (dice > 6) {
+        spread = 3;
+    } else if (dice > 3) {
+        spread = 2;
+    }
+
+     return (dice - spread >= difficulty) ? "Routine" : "Difficult";
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

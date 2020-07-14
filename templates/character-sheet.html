@@ -77,9 +77,9 @@
             <div class="bits-item flex-row">
                 <div>
                 <div class="bits-item-name">{{instinct.name}}</div>
-                    F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="instinct.fate" {{ checked instinct.data.fate }}>
-                    P:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="instinct.persona"  {{ checked instinct.data.persona }}>
-                    D:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="instinct.deeds" {{ checked instinct.data.deeds }}>
+                    F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.fate" {{ checked instinct.data.fate }}>
+                    P:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.persona"  {{ checked instinct.data.persona }}>
+                    D:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.deeds" {{ checked instinct.data.deeds }}>
                 </div>
                 <textarea data-item-id="{{instinct._id}}" data-binding="data.text" rows="1">{{instinct.data.text}}</textarea>
             </div>

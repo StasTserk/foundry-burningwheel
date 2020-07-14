@@ -1,5 +1,5 @@
 import { TracksTests } from "./actor.js";
-import { DisplayClass } from "./items/item.js";
+import { DisplayClass, Skill } from "./items/item.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true) {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
@@ -19,10 +19,14 @@ export function toDictionary(list: string[]): { [key:string]:string } {
     return o;
 }
 
-export function canAdvance(skill: TracksTests, needRoutines: boolean): boolean {
+export function canAdvance(skill: TracksTests, needRoutines: boolean = true): boolean {
     const enoughRoutine = (parseInt(skill.routine, 10) >= (skill.routineNeeded || 0 ));
     const enoughDifficult = parseInt(skill.difficult, 10) >= (skill.difficultNeeded || 0);
     const enoughChallenging = parseInt(skill.challenging, 10) >= (skill.challengingNeeded || 0);
+
+    if (parseInt(skill.exp, 10) === 0) {
+        return enoughRoutine || enoughDifficult || enoughChallenging;
+    }
 
     if (parseInt(skill.exp, 10) < 5 && needRoutines) {
         // need only enough difficult or routine, not both
@@ -30,6 +34,40 @@ export function canAdvance(skill: TracksTests, needRoutines: boolean): boolean {
     }
     // otherwise, need both routine and difficult tests to advance, don't need routine anymore
     return enoughDifficult && enoughChallenging;
+}
+
+export function addTestToSkill(
+        skill: Skill,
+        difficulty: "Routine" | "Difficult" | "Challenging" | "Routine/Difficult") {
+    switch (difficulty) {
+        case "Routine":
+            if (parseInt(skill.data.data.routine, 10) < (skill.data.data.routineNeeded || 0)) {
+                return skill.update({ "data.routine": parseInt(skill.data.data.routine, 10) + 1 }, {});
+            }
+            break;
+        case "Difficult":
+            if (parseInt(skill.data.data.difficult, 10) < (skill.data.data.difficultNeeded || 0)) {
+                return skill.update({ "data.difficult": parseInt(skill.data.data.difficult, 10) + 1 }, {});
+            }
+            break;
+        case "Challenging":
+            if (parseInt(skill.data.data.challenging, 10) < (skill.data.data.challengingNeeded || 0)) {
+                return skill.update({ "data.challenging": parseInt(skill.data.data.challenging, 10) + 1 }, {});
+            }
+            break;
+        case "Routine/Difficult":
+            if (parseInt(skill.data.data.routine, 10) < (skill.data.data.routineNeeded || 0)) {
+                return skill.update({ "data.routine": parseInt(skill.data.data.routine, 10) + 1 }, {});
+            } else if (parseInt(skill.data.data.difficult, 10) < (skill.data.data.difficultNeeded || 0)) {
+                return skill.update({ "data.difficult": parseInt(skill.data.data.difficult, 10) + 1 }, {});
+            }
+            break;
+    }
+}
+
+export function advanceSkill(skill: Skill) {
+    const exp = parseInt(skill.data.data.exp, 10);
+    return skill.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
 }
 
 const AbilityLookup = {

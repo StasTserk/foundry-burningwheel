@@ -1,5 +1,6 @@
 import { BWActor, CharacterData, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
+import { addTestToSkill, advanceSkill, canAdvance } from "./helpers.js";
 import { Relationship, Skill, SkillDataRoot } from "./items/item.js";
 
 export async function handleRollable(
@@ -282,28 +283,28 @@ async function statRollCallback(
 
 async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
-    const skillData = (sheet.actor.getOwnedItem(skillId) as Skill).data;
+    const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     const actor = sheet.actor as BWActor;
     const templateData: SkillDialogData = {
-        name: skillData.name,
+        name: skill.data.name,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
-        skill: skillData.data,
-        forkOptions: actor.getForkOptions(skillData.name)
+        skill: skill.data.data,
+        forkOptions: actor.getForkOptions(skill.data.name)
     };
     const html = await renderTemplate(templates.skillDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${skillData.name} Test`,
+            title: `${skill.data.name} Test`,
             content: html,
             buttons: {
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        skillRollCallback(dialogHtml, skillData, sheet)
+                        skillRollCallback(dialogHtml, skill, sheet)
                 }
             }
         }).render(true)
@@ -311,24 +312,39 @@ async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): 
 }
 
 async function skillRollCallback(
-    dialogHtml: JQuery<HTMLElement>, skillData: SkillDataRoot, sheet: BWActorSheet): Promise<unknown> {
+    dialogHtml: JQuery<HTMLElement>, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
     const forks = extractForksValue(dialogHtml, "forkOptions");
     const baseData = extractBaseData(dialogHtml, sheet);
-    const exp = parseInt(skillData.data.exp, 10);
+    const exp = parseInt(skill.data.data.exp, 10);
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
+    const dg = difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice, baseData.diff);
     const data: RollChatMessageData = {
-        name: `${skillData.name} Test`,
+        name: `${skill.name} Test`,
         successes: roll.result,
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
         success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice, baseData.diff),
+        difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources,
     };
+
+    await addTestToSkill(skill, dg);
+    skill = sheet.actor.getOwnedItem(skill._id) as Skill; // update skill with new data
+    if (canAdvance(skill.data.data)) {
+        Dialog.confirm({
+            title: `Advance ${skill.name}?`,
+            content: `<p>${skill.name} is ready to advance. Go ahead?</p>`,
+            yes: () => advanceSkill(skill),
+            // tslint:disable-next-line: no-empty
+            no: () => {},
+            defaultYes: true
+        });
+    }
+
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
@@ -400,7 +416,7 @@ function extractCirclesPenalty(html: JQuery<HTMLElement>, name: string):
     return extractCirclesBonuses(html, name);
 }
 
-function difficultyGroup(dice: number, difficulty: number): string {
+function difficultyGroup(dice: number, difficulty: number): "Challenging" | "Routine/Difficult" | "Difficult" | "Routine" {
     if (difficulty > dice) {
         return "Challenging";
     }

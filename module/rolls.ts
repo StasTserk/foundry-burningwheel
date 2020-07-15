@@ -31,7 +31,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: actor.data.data.ptgs.woundDice,
+        woundDice: attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined,
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat
     };
@@ -98,7 +98,6 @@ async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet)
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat,
         circlesBonus: actor.data.circlesBonus,
@@ -132,18 +131,18 @@ async function circlesRollCallback(
     const penaltyData = extractCirclesPenalty(dialogHtml, "circlesMalus");
     const exp = parseInt(stat.exp, 10);
     const dieSources = {
-        ...buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0),
+        ...buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0),
         ...bonusData.bonuses
     };
     const dg = helpers.difficultyGroup(
-        exp + baseData.bDice - baseData.woundDice,
+        exp + baseData.bDice,
         baseData.diff + baseData.obPenalty + penaltyData.sum);
 
     if (contact) {
         dieSources["Named Contact"] = "+1";
         baseData.bDice ++;
     }
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + bonusData.sum - baseData.woundDice}d6cs>3`)
+    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + bonusData.sum}d6cs>3`)
         .roll();
     baseData.obstacleTotal += penaltyData.sum;
     const data: RollChatMessageData = {
@@ -395,7 +394,7 @@ function buildDiceSourceObject(
 /* ======== Helper functions ======================= */
 function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet ) {
     const actorData = sheet.actor.data as CharacterData;
-    const woundDice = actorData.data.ptgs.woundDice || 0;
+    const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
     const penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
     const diff = extractNumber(html, "difficulty");

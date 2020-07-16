@@ -687,7 +687,7 @@ export interface StatDialogData extends RollDialogData {
 
 export interface SkillDialogData extends RollDialogData {
     skill: TracksTests;
-    forkOptions: Item[];
+    forkOptions: { name: string, amount: number }[];
 }
 
 interface RollDialogData {

@@ -12,8 +12,15 @@ export class BWActor extends Actor {
         }
     }
 
-    getForkOptions(skillName: string): Skill[] {
-        return this.data.forks.filter(s => s.name !== skillName);
+    getForkOptions(skillName: string): { name: string, amount: number }[] {
+        return this.data.forks.filter(s =>
+            s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
+            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > (this.data.data.ptgs.woundDice || 0))
+            .map( s => {
+                const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
+                // skills at 7+ exp provide 2 dice in forks.
+                return { name: s.name, amount: exp >= 7 ? 2 : 1 };
+            });
     }
 
     async addAttributeTest(

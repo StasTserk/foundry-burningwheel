@@ -100,7 +100,7 @@ export class BWActor extends Actor {
         updateData[`${accessor}.difficult`] = 0;
         updateData[`${accessor}.challenging`] = 0;
         updateData[`${accessor}.exp`] = newExp;
-        return this.update(updateData, {});
+        return this.update(updateData);
     }
 
     private _prepareCharacterData() {
@@ -167,9 +167,13 @@ export class BWActor extends Actor {
 
         if (suCount >= 3) {
             woundDice ++;
-        } else if (suCount >= 1) {
+        } else if (!this.data.data.ptgs.shrugging && suCount >= 1) {
             this.data.data.ptgs.obPenalty = 1;
         }
+        if (this.data.data.ptgs.gritting && woundDice) {
+            woundDice --;
+        }
+
         this.data.data.ptgs.woundDice = woundDice;
     }
 }
@@ -223,6 +227,9 @@ interface Common {
     debt: string;
     willTax: string;
     resourcesTax: string;
+    fate: string;
+    persona: string;
+    deeds: string;
 }
 
 export interface Ability extends TracksTests, DisplayClass {
@@ -235,6 +242,9 @@ export interface TracksTests {
     routine: string;
     difficult: string;
     challenging: string;
+    persona: string;
+    fate: string;
+    deeds: string;
 
     // derived values
     routineNeeded?: number;
@@ -261,6 +271,8 @@ interface Ptgs {
         woundNotes1: string,
         woundNotes2: string,
         woundNotes3: string,
+        shrugging: boolean, // shrug it off is active
+        gritting: boolean, // grit your teeth is active
 
         // not persisted
         obPenalty?: number,

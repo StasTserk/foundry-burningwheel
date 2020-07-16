@@ -19,8 +19,122 @@ export async function handleRollable(
             return handleAttrRoll(target, sheet);
         case "learning":
             return handleLearningRoll(target, sheet);
+        case "shrug":
+            if (sheet.actor.data.data.ptgs.shrugging) {
+                return sheet.actor.update({ "data.ptgs.shrugging": false });
+            }
+            return handleShrugRoll(target, sheet);
+        case "grit":
+            if (sheet.actor.data.data.ptgs.gritting) {
+                return sheet.actor.update({ "data.ptgs.gritting": false });
+            }
+            return handleGritRoll(target, sheet);
     }
 }
+
+async function handleShrugRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+    return handlePtgsRoll(target, sheet, true);
+}
+async function handleGritRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+    return handlePtgsRoll(target, sheet, false);
+}
+
+async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, shrugging: boolean): Promise<unknown> {
+    const actor = sheet.actor as BWActor;
+    const stat = getProperty(actor.data, "data.health" || "") as TracksTests;
+    const data: AttributeDialogData = {
+        name: shrugging ? "Shrug It Off" : "Grit Your Teeth",
+        difficulty: shrugging ? 2 : 4,
+        bonusDice: 0,
+        arthaDice: 0,
+        stat
+    };
+
+    const buttons: Record<string, DialogButton> = {};
+    buttons.roll = {
+        label: "Roll",
+        callback: async (dialogHtml: JQuery<HTMLElement>) =>
+            ptgsRollCallback(dialogHtml, stat, sheet, shrugging)
+    };
+    const updateData = {};
+    const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
+    updateData[accessor] = true;
+    buttons.doIt = {
+        label: "Just do It",
+        callback: async (_: JQuery<HTMLElement>) => actor.update(updateData)
+    };
+
+    if (!shrugging && parseInt(actor.data.data.persona, 10)) {
+        // we're gritting our teeth and have persona points. give option
+        // to spend persona.
+        buttons.withPersona = {
+            label: "Spend Persona",
+            callback: async (_: JQuery<HTMLElement>) => {
+                updateData["data.persona"] = parseInt(actor.data.data.persona, 10) - 1;
+                updateData["data.health.persona"] = (parseInt(actor.data.data.health.persona, 10) || 0) + 1;
+                return actor.update(updateData);
+            }
+        };
+    }
+    if (shrugging && parseInt(actor.data.data.fate, 10)) {
+        // we're shrugging it off and have fate points. give option
+        // to spend fate.
+        buttons.withFate = {
+            label: "Spend Fate",
+            callback: async (_: JQuery<HTMLElement>) => {
+                updateData["data.fate"] = parseInt(actor.data.data.fate, 10) - 1;
+                updateData["data.health.fate"] = (parseInt(actor.data.data.health.fate, 10) || 0) + 1;
+                return actor.update(updateData);
+            }
+        };
+    }
+
+    const html = await renderTemplate(templates.attrDialog, data);
+    return new Promise(_resolve =>
+        new Dialog({
+            title: `${target.dataset.rollableName} Test`,
+            content: html,
+            buttons
+        }).render(true)
+    );
+}
+
+async function ptgsRollCallback(
+    dialogHtml: JQuery<HTMLElement>,
+    stat: TracksTests,
+    sheet: BWActorSheet,
+    shrugging: boolean) {
+        const baseData = extractBaseData(dialogHtml, sheet);
+        const exp = parseInt(stat.exp, 10);
+        const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice}d6cs>3`).roll();
+        const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0);
+        const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
+        const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
+
+        const data: RollChatMessageData = {
+            name: shrugging ? "Shrug It Off Health Test" : "Grit Your Teeth Health Test",
+            successes: roll.result,
+            difficulty: baseData.diff,
+            obstacleTotal: baseData.obstacleTotal -= baseData.obPenalty,
+            success: isSuccessful,
+            rolls: roll.dice[0].rolls,
+            difficultyGroup: dg,
+            dieSources
+        };
+        if (isSuccessful) {
+            const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
+            const updateData = {};
+            updateData[accessor] = true;
+            sheet.actor.update(updateData);
+        }
+        sheet.actor.addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
+        const messageHtml = await renderTemplate(templates.attrMessage, data);
+        return ChatMessage.create({
+            content: messageHtml,
+            speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        });
+    }
+
 
 async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
@@ -58,7 +172,7 @@ async function attrRollCallback(
         sheet: BWActorSheet,
         tax: number,
         name: string,
-        accessor: string) { // todo add relationship forks here
+        accessor: string) {
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
     const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();

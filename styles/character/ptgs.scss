@@ -74,18 +74,34 @@
         }
     }
 
+    .ptgs-obpenalty , .ptgs-wounddice {
+        justify-content: space-between;
+        & > button {
+            width: calc(100% - 6px);
+            margin: 1px 3px;
+            height: min-content;
+        }
+        & > .ptgs-big-number {
+            font-size: 32px;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        & input:checked + button {
+            background: linear-gradient(rgba(green, .05), rgba(green, 0.25));
+        }
+
+        & > input {
+            display: none;
+        }
+    }
+
     .ptgs-obpenalty {
         height: 12em;
         grid-column: 1 / 3;
     }
     .ptgs-wounddice {
         grid-column: 3 / 6;
-    }
-
-    .ptgs-obpenalty > div, .ptgs-wounddice > div {
-        font-size: 32px;
-        font-weight: bolder;
-        text-align: center;
     }
 
     .ptgs-woundnotes1, .ptgs-woundnotes2, .ptgs-woundnotes3 {

@@ -26,6 +26,8 @@ Actor:
         woundNotes1: ''
         woundNotes2: ''
         woundNotes3: ''
+        shrugging: false
+        gritting: false
     displayProps:
       collapseBeliefs: false
       collapseInstincts: false
@@ -47,6 +49,9 @@ Actor:
         shade: B
         open: false
         collapsed: true
+        persona: 0
+        fate: 0
+        deeds: 0
       power: *stat
       agility: *stat
       perception: *stat
@@ -144,6 +149,9 @@ Item:
     training: false
     description: ''
     collapsed: false
+    persona: 0
+    fate: 0
+    deeds: 0
   relationship:
     description: ''
     forbidden: false

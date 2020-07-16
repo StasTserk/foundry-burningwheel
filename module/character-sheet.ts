@@ -122,6 +122,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
         // roll macros
         html.find("button.rollable").click(e => handleRollable(e, this));
+        html.find("i[data-action=\"refresh-ptgs\"]").click(e => this.actor.updatePtgs());
         super.activateListeners(html);
     }
 

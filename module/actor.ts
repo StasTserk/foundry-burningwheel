@@ -56,6 +56,47 @@ export class BWActor extends Actor {
         }
     }
 
+    async updatePtgs() {
+        const accessorBase = "data.ptgs.wound";
+        const forte = parseInt(this.data.data.forte.exp, 10) || 1;
+        const mw = this.data.data.mortalWound || 15;
+        const su = Math.floor(forte / 2) + 1;
+
+        const wounds = this._calculateThresholds(mw, su, forte);
+        const updateData = {};
+        let woundType = "bruise";
+        for (let i = 1; i <= 16; i ++ ) {
+            if (i < wounds.su) {
+                woundType = "bruise";
+            } else if (i < wounds.li) {
+                woundType = "superficial";
+            } else if (i < wounds.mi) {
+                woundType = "light";
+            } else if (i < wounds.se) {
+                woundType = "midi";
+            } else if (i < wounds.tr) {
+                woundType = "severe";
+            } else if (i < wounds.mo) {
+                woundType = "traumatic";
+            } else {
+                woundType = "mortal";
+            }
+            updateData[`${accessorBase}${i}.threshold`] = woundType;
+        }
+        return this.update(updateData);
+    }
+
+    private _calculateThresholds(mo: number, su: number, forte: number):
+        { su: number, li: number, mi: number, se: number, tr: number, mo: number } {
+        const maxGap = Math.ceil(forte / 2.0);
+        const tr = Math.min(mo - 1, su + (maxGap * 4));
+        const se = Math.min(tr - 1, su + (maxGap * 3));
+        const mi = Math.min(se - 1, su + (maxGap * 2));
+        const li = Math.min(mi - 1, su + (maxGap * 1));
+
+        return { su, li, mi, se, tr, mo };
+    }
+
     private async _addTestToStat(stat: TracksTests, accessor: string, difficultyGroup: TestString) {
         let testNumber = 0;
         const updateData = {};

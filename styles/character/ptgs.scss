@@ -23,6 +23,10 @@
     .ptgs-top {
         height: 2em;
         text-align: center;
+        
+        i.fas:hover {
+            color: red;
+        }
     }
 
     .ptgs-mid {

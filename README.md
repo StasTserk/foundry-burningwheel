@@ -1,7 +1,10 @@
 # foundry-burningwheel
-Foundry VTT module for The Burning Wheel RPG
+Unofficial community Foundry VTT system for The Burning Wheel RPG.
 
-In progress implementation, currently supporting most of the information needed to support playing a game of The Burning Wheel.
+In progress implementation, providing character sheet support, dice rolling, and a number of automation features for The Burning Wheel.
+Based on the Burning Wheel Gold Revised rules available in [the burning wheel store.](https://www.burningwheel.com/burning-wheel-gold-revised/)
+
+If you like this system, please support the developers at [burningwheel.com](https://www.burningwheel.com/)
 
 ## Current features
 - Actor sheet support for Player Characters
@@ -18,7 +21,6 @@ In progress implementation, currently supporting most of the information needed 
 - More automation
 
 ## Distant plans
-- Partial compendium support
 - Character burner
 
 ## Installation

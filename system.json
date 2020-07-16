@@ -1,7 +1,7 @@
 {
     "name": "burningwheel",
     "title": "The Burning Wheel",
-    "description": "Foundry implementation of The Burning Wheel",
+    "description": "Community Foundry implementation of The Burning Wheel",
     "version": "0.1.1",
     "templateVersion": 5,
     "author": "Stas Tserkovny",

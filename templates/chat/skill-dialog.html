@@ -35,8 +35,8 @@
     <h2>FoRKs</h2>
     <div class="checkbox-grid">
         {{#each forkOptions as |skill|}}
-            <input id="checkbox-{{skill._id}}" type="checkbox" name="forkOptions" value="1">
-            <label for="checkbox-{{skill._id}}">{{skill.name}}</label>
+            <input id="checkbox-fork-{{@key}}" type="checkbox" name="forkOptions" value="{{skill.amount}}">
+            <label for="checkbox-fork-{{@key}}">{{skill.name}}</label>
         {{/each}}
     </div>
     {{/if}}

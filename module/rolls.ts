@@ -1,4 +1,4 @@
-import { BWActor, CharacterData, TracksTests } from "./actor.js";
+import { BWActor, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as helpers from "./helpers.js";
 import { Relationship, Skill, SkillDataRoot } from "./items/item.js";
@@ -507,7 +507,7 @@ function buildDiceSourceObject(
 
 /* ======== Helper functions ======================= */
 function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet ) {
-    const actorData = sheet.actor.data as CharacterData;
+    const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
     const penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };

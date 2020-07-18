@@ -1,10 +1,10 @@
-import { CharacterData } from "../actor.js";
+import { BWActor } from "../actor.js";
 import { DisplayClass } from "./item.js";
 
 export class RangedWeapon extends Item {
     prepareData() {
         if (this.actor && this.data.data.usePower) {
-            const baseDmg = parseInt((this.actor.data as CharacterData).data.power.exp, 10)
+            const baseDmg = parseInt(this.actor.data.data.power.exp, 10)
                 + parseInt(this.data.data.powerBonus, 10);
             this.data.data.incidental = Math.ceil(baseDmg / 2).toString();
             this.data.data.mark = baseDmg.toString();
@@ -21,10 +21,11 @@ export class RangedWeapon extends Item {
     }
 
     data: RangedWeaponRootData;
+    actor: BWActor | null;
 }
 
 export interface RangedWeaponRootData extends BaseEntityData{
-    data: RangedWeaponData
+    data: RangedWeaponData;
 }
 
 export interface RangedWeaponData extends DisplayClass {

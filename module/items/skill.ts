@@ -17,6 +17,12 @@ export class Skill extends Item {
         const rootAvg = Math.floor((parseInt(root1exp, 10) + parseInt(root2exp, 10)) / 2);
         this.data.data.aptitude = 10 - rootAvg;
     }
+
+    static disableIfWounded(this: SkillDataRoot, woundDice: number) {
+        if (!this.data.learning && parseInt(this.data.exp, 10) <= woundDice) {
+            this.data.cssClass += " wound-disabled";
+        }
+    }
     data: SkillDataRoot;
 }
 

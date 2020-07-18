@@ -1,10 +1,10 @@
-import { CharacterData } from "../actor.js";
+import { BWActor } from "../actor.js";
 import { DisplayClass } from "./item.js";
 
 export class MeleeWeapon extends Item {
     prepareData() {
         if (this.actor) {
-            const baseDmg = parseInt((this.actor.data as CharacterData).data.power.exp, 10)
+            const baseDmg = parseInt(this.actor.data.data.power.exp, 10)
                 + parseInt(this.data.data.power, 10);
             this.data.data.incidental = Math.ceil(baseDmg / 2);
             this.data.data.mark = baseDmg;
@@ -12,12 +12,13 @@ export class MeleeWeapon extends Item {
         }
         this.data.data.cssClass = "equipment-weapon";
     }
+    actor: BWActor | null;
 
     data: MeleeWeaponRootData;
 }
 
 export interface MeleeWeaponRootData extends BaseEntityData {
-    data: MeleeWeaponData
+    data: MeleeWeaponData;
 }
 
 export interface MeleeWeaponData extends DisplayClass {

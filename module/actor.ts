@@ -3,7 +3,7 @@ import { DisplayClass, ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
-    data!: CharacterData;
+    data!: CharacterDataRoot;
 
     prepareData() {
         super.prepareData();
@@ -152,19 +152,20 @@ export class BWActor extends Actor {
     }
 
     private _prepareCharacterData() {
-        updateTestsNeeded(this.data.data.will, false);
-        updateTestsNeeded(this.data.data.power, false);
-        updateTestsNeeded(this.data.data.perception, false);
-        updateTestsNeeded(this.data.data.agility, false);
-        updateTestsNeeded(this.data.data.forte, false);
-        updateTestsNeeded(this.data.data.speed, false);
+        this._calculatePtgs();
+        const woundDice = this.data.data.ptgs.woundDice || 0;
+        updateTestsNeeded(this.data.data.will, false, woundDice);
+        updateTestsNeeded(this.data.data.power, false, woundDice);
+        updateTestsNeeded(this.data.data.perception, false, woundDice);
+        updateTestsNeeded(this.data.data.agility, false, woundDice);
+        updateTestsNeeded(this.data.data.forte, false, woundDice);
+        updateTestsNeeded(this.data.data.speed, false, woundDice);
         updateTestsNeeded(this.data.data.health);
-        updateTestsNeeded(this.data.data.steel);
+        updateTestsNeeded(this.data.data.steel, true, woundDice);
         updateTestsNeeded(this.data.data.circles);
         updateTestsNeeded(this.data.data.resources);
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
-        this._calculatePtgs();
 
         this.data.data.reflexesExp = Math.floor((parseInt(this.data.data.perception.exp, 10) +
             parseInt(this.data.data.agility.exp, 10) +
@@ -226,7 +227,7 @@ export class BWActor extends Actor {
     }
 }
 
-export interface CharacterData extends ActorData {
+export interface CharacterDataRoot extends ActorData {
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
     data: BWCharacterData;

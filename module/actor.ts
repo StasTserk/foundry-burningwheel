@@ -163,7 +163,7 @@ export class BWActor extends Actor {
         updateTestsNeeded(this.data.data.health);
         updateTestsNeeded(this.data.data.steel, true, woundDice);
         updateTestsNeeded(this.data.data.circles);
-        updateTestsNeeded(this.data.data.resources);
+        updateTestsNeeded(this.data.data.resources, true, -1);
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
 

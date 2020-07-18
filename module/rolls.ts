@@ -106,9 +106,13 @@ async function ptgsRollCallback(
     shrugging: boolean) {
         const baseData = extractBaseData(dialogHtml, sheet);
         const exp = parseInt(stat.exp, 10);
-        const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice}d6cs>3`).roll();
         const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0);
         const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
+        const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
+
+        const roll = rollDice(numDice);
+        if (!roll) { return; }
+
         const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
 
         const data: RollChatMessageData = {
@@ -140,6 +144,10 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
+    let tax = 0;
+    if (attrName === "Resources") {
+        tax = parseInt(actor.data.data.resourcesTax, 10);
+    }
     const data: AttributeDialogData = {
         name: `${attrName}`,
         difficulty: 3,
@@ -147,6 +155,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
         arthaDice: 0,
         woundDice: attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined,
         obPenalty: actor.data.data.ptgs.obPenalty,
+        tax,
         stat
     };
 
@@ -159,7 +168,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        attrRollCallback(dialogHtml, stat, sheet, 0, attrName, target.dataset.accessor || "")
+                        attrRollCallback(dialogHtml, stat, sheet, tax, attrName, target.dataset.accessor || "")
                 }
             }
         }).render(true)
@@ -175,9 +184,13 @@ async function attrRollCallback(
         accessor: string) {
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
     const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
+
+    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax;
+    const roll = rollDice(numDice);
+    if (!roll) { return; }
+
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty);
 
     const data: RollChatMessageData = {
@@ -256,8 +269,10 @@ async function circlesRollCallback(
         dieSources["Named Contact"] = "+1";
         baseData.bDice ++;
     }
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + bonusData.sum}d6cs>3`)
-        .roll();
+
+    const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum);
+    if (!roll) { return; }
+
     baseData.obstacleTotal += penaltyData.sum;
     const data: RollChatMessageData = {
         name: `Circles Test`,
@@ -322,10 +337,13 @@ async function learningRollCallback(
     baseData.obstacleTotal += baseData.diff;
     baseData.penaltySources["Beginner's Luck"] = `+${baseData.diff}`;
     const exp = 10 - (skill.data.data.aptitude || 1);
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
     const dg = helpers.difficultyGroup(exp + baseData.bDice- baseData.woundDice, baseData.diff);
+
+    const roll = rollDice(exp + baseData.bDice + baseData.aDice - baseData.woundDice);
+    if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+
     const data: RollChatMessageData = {
         name: `Beginner's Luck ${skill.data.name} Test`,
         successes: roll.result,
@@ -390,10 +408,13 @@ async function statRollCallback(
         accessor: string) {
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax}d6cs>3`).roll();
+
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
-    const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
     const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
+
+    const roll = rollDice(exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax);
+    if (!roll) { return; }
+    const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
 
     const data: RollChatMessageData = {
         name: `${name} Test`,
@@ -452,9 +473,12 @@ async function skillRollCallback(
     const forks = extractForksValue(dialogHtml, "forkOptions");
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(skill.data.data.exp, 10);
-    const roll = new Roll(`${exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice}d6cs>3`).roll();
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
     const dg = helpers.difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice, baseData.diff);
+
+    const roll = rollDice(exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice);
+    if (!roll) { return; }
+
     const data: RollChatMessageData = {
         name: `${skill.name} Test`,
         successes: roll.result,
@@ -647,6 +671,27 @@ async function advanceLearningProgress(skill: Skill) {
             defaultYes: true
         });
     }
+}
+
+function rollDice(numDice: number): Roll | null {
+    if (numDice <= 0) {
+        getNoDiceErrorDialog(numDice);
+        return null;
+    } else {
+        return new Roll(`${numDice}d6cs>3`).roll();
+    }
+}
+
+async function getNoDiceErrorDialog(numDice: number) {
+    return new Dialog({
+        title: "Too Few Dice",
+        content: `<p>Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}</p>`,
+        buttons: {
+            ok: {
+                label: "OK"
+            }
+        }
+    }).render(true);
 }
 
 /* ============ Constants =============== */

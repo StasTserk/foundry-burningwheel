@@ -17,6 +17,7 @@ import { handleRollable } from "./rolls.js";
 export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
+        const woundDice = this.actor.data.data.ptgs.woundDice;
         const beliefs: Belief[] = [];
         const instincts: Instinct[] = [];
         const traits: Trait[] = [];
@@ -38,7 +39,10 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "belief": beliefs.push(i as Belief); break;
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
-                case "skill": (i as any).data.learning ? training.push(i) : skills.push(i); break;
+                case "skill":
+                    (i as any).data.learning ? training.push(i) : skills.push(i);
+                    Skill.disableIfWounded.bind(i)(woundDice);
+                    break;
                 case "relationship": relationships.push(i as Relationship); break;
                 case "melee weapon":
                     if (addFist && i.name === "Bare Fist") {
@@ -46,11 +50,11 @@ export class BWCharacterSheet extends BWActorSheet {
                     } else {
                         equipment.push(i); // don't count fists as equipment
                     }
-                    melee.push(i);
+                    melee.push(i as MeleeWeapon);
                     break;
                 case "ranged weapon":
                     equipment.push(i);
-                    ranged.push(i);
+                    ranged.push(i as RangedWeapon);
                     break;
                 case "armor":
                     equipment.push(i);
@@ -68,7 +72,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
         if (addFist) {
             // we need to add the default fist weapon to weapons list
-            this.actor.createOwnedItem(constants.bareFistData).then(i => data.melee.push(i));
+            this.actor.createOwnedItem(constants.bareFistData).then(i => data.melee.push(i as MeleeWeapon));
         }
 
         data.beliefs = beliefs;

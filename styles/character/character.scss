@@ -91,6 +91,17 @@
         row-gap: 5px;
 
         .rollable {
+            &.wound-disabled {
+                background-color: rgba(red, 0.15);
+                &:hover {
+                    background-color: rgba(red, .25);
+                }
+
+                button.rollable {
+                    pointer-events: none;
+                }
+            }
+
             @include colored-item(black);
             height: min-content;
 

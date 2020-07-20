@@ -4,6 +4,24 @@
     .message-title {
         font-size: 1.5em;
         font-weight: bold;
+
+        &.open-roll {
+            color: gold;
+        }
+
+        &.shade-grey {
+            background-color: rgba(black, 0.35);
+        }
+
+        &.shade-black {
+            background-color: rgba(black, 0.75);
+            color: white;
+        }
+
+        &.shade-white {
+            background-color:  rgba(white, .75);
+            color: black;
+        }
     }
 
     div {
@@ -54,6 +72,10 @@
         margin-left: 5px;
     }
 
+    .roll-Routine {
+        background-color: rgba(white, .75);
+    }
+
     .roll-Difficult {
         background-color: rgba(black, 0.35);
     }
@@ -61,5 +83,12 @@
     .roll-Challenging {
         background-color: rgba(black, 0.75);
         color: white;
+    }
+
+    .roll-success {
+        background-color: rgba(green, .5);
+    }
+    .roll-failure {
+        background-color: rgba(red, .5);
     }
 }

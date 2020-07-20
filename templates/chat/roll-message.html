@@ -1,5 +1,5 @@
 <div class="chat-message flex-row">
-    <div class="roll-full-width message-title">
+    <div class="roll-full-width message-title {{nameClass}}">
         {{name}}
     </div>
     <div class="roll-full-width roll-{{difficultyGroup}}">
@@ -45,11 +45,11 @@
         {{/each}}
     </div>
     {{#if success}}
-    <div class="roll-result roll-full-width">
+    <div class="roll-result roll-full-width roll-success">
         Success!
     </div>
     {{else}}
-    <div class="roll-result roll-full-width">
+    <div class="roll-result roll-full-width roll-failure">
         Failure!
     </div>
     {{/if}}

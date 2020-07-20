@@ -1,4 +1,4 @@
-import { canAdvance, TestString, updateTestsNeeded } from "./helpers.js";
+import { canAdvance, ShadeString, TestString, updateTestsNeeded } from "./helpers.js";
 import { DisplayClass, ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
@@ -282,7 +282,7 @@ interface Common {
 }
 
 export interface Ability extends TracksTests, DisplayClass {
-    shade: string;
+    shade: ShadeString;
     open: boolean;
 }
 

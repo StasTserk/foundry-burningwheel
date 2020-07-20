@@ -1,5 +1,5 @@
 import { Ability, TracksTests } from "../actor.js";
-import { updateTestsNeeded } from "../helpers.js";
+import { ShadeString, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass } from "./item.js";
 
 export class Skill extends Item {
@@ -32,7 +32,7 @@ export interface SkillDataRoot extends BaseEntityData {
 
 export interface SkillData extends TracksTests, DisplayClass {
     name: string;
-    shade: string;
+    shade: ShadeString;
 
     root1: string;
     root2: string;

@@ -5,6 +5,7 @@ import {
     RegisterItemSheets
 } from "./items/item.js";
 
+import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
 import { slugify } from "./helpers.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 
@@ -77,3 +78,7 @@ function registerHelpers() {
         return slugify(value.toLowerCase());
     });
 }
+
+
+Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
+Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));

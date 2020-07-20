@@ -1,13 +1,13 @@
 .chat-message {
     display: flex;
 
+    hr {
+        width: 100%;
+    }
+
     .message-title {
         font-size: 1.5em;
         font-weight: bold;
-
-        &.open-roll {
-            color: gold;
-        }
 
         &.shade-grey {
             background-color: rgba(black, 0.35);
@@ -21,6 +21,10 @@
         &.shade-white {
             background-color:  rgba(white, .75);
             color: black;
+        }
+
+        &.open-roll {
+            color: gold;
         }
     }
 

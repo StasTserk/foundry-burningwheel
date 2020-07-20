@@ -53,4 +53,18 @@
         Failure!
     </div>
     {{/if}}
+    {{#if fateReroll}}
+    <div class="chat-fate-reroll roll-full-width">
+        <hr/>
+        <button class="chat-fate-button"
+            data-actor-id="{{fateReroll.actorId}}"
+            data-reroll-type="{{fateReroll.type}}"
+            data-dice="{{fateReroll.dice}}"
+            {{#if fateReroll.itemId}} data-item-id="{{fateReroll.itemId}}" {{/if}}
+            {{#if fateReroll.accessor}} data-accessor="{{fateReroll.accessor}}" {{/if}}
+            data-difficulty="{{obstacleTotal}}"
+            data-successes="{{successes}}"
+            data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>
+    </div>
+    {{/if}}
 </div>

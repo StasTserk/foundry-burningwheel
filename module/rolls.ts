@@ -32,6 +32,14 @@ export async function handleRollable(
     }
 }
 
+export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
+    return null;
+}
+
+
+/* ================================================= */
+/*               Private Roll Handlers               */
+/* ================================================= */
 async function handleShrugRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     return handlePtgsRoll(target, sheet, true);
 }
@@ -157,7 +165,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
         woundDice: attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined,
         obPenalty: actor.data.data.ptgs.obPenalty,
         tax,
-        stat
+        stat,
     };
 
     const html = await renderTemplate(templates.attrDialog, data);
@@ -194,6 +202,7 @@ async function attrRollCallback(
 
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty);
 
+    const fateReroll = buildFateRerollData(sheet.actor, roll, accessor);
     const data: RollChatMessageData = {
         name: `${name} Test`,
         successes: roll.result,
@@ -204,7 +213,8 @@ async function attrRollCallback(
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
-        dieSources
+        dieSources,
+        fateReroll
     };
 
     sheet.actor.addAttributeTest(stat, name, accessor, dg, isSuccessful);
@@ -275,6 +285,8 @@ async function circlesRollCallback(
     const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum, stat.open, stat.shade);
     if (!roll) { return; }
 
+    const fateReroll = buildFateRerollData(sheet.actor, roll, "data.circles");
+
     baseData.obstacleTotal += penaltyData.sum;
     const data: RollChatMessageData = {
         name: `Circles Test`,
@@ -286,7 +298,8 @@ async function circlesRollCallback(
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         dieSources,
-        penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses }
+        penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses },
+        fateReroll
     };
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
 
@@ -351,6 +364,7 @@ async function learningRollCallback(
     );
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+    const fateReroll = buildFateRerollData(sheet.actor, roll, undefined, skill._id);
 
     const data: RollChatMessageData = {
         name: `Beginner's Luck ${skill.data.name} Test`,
@@ -363,6 +377,7 @@ async function learningRollCallback(
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources,
+        fateReroll
     };
     const messageHtml = await renderTemplate(templates.learnMessage, data);
     advanceLearning(skill, sheet.actor, dg, isSuccessful);
@@ -428,6 +443,8 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
 
+    const fateReroll = buildFateRerollData(sheet.actor, roll, accessor);
+
     const data: RollChatMessageData = {
         name: `${name} Test`,
         successes: roll.result,
@@ -439,6 +456,7 @@ async function statRollCallback(
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources,
+        fateReroll
     };
 
     sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful);
@@ -494,6 +512,7 @@ async function skillRollCallback(
         skill.data.data.open,
         skill.data.data.shade);
     if (!roll) { return; }
+    const fateReroll = buildFateRerollData(sheet.actor, roll, undefined, skill._id);
 
     const data: RollChatMessageData = {
         name: `${skill.name} Test`,
@@ -506,6 +525,7 @@ async function skillRollCallback(
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources,
+        fateReroll
     };
 
     await helpers.addTestToSkill(skill, dg);
@@ -528,6 +548,10 @@ async function skillRollCallback(
     });
 }
 
+
+/* ================================================= */
+/*               Helper functions                    */
+/* ================================================= */
 function buildDiceSourceObject(
         exp: number,
         aDice: number,
@@ -546,7 +570,29 @@ function buildDiceSourceObject(
     return dieSources;
 }
 
-/* ======== Helper functions ======================= */
+function buildFateRerollData(actor: BWActor, roll: Roll, accessor?: string, itemId?: string):
+        FateRerollData | undefined {
+    if (!parseInt(actor.data.data.fate, 10)) {
+        return;
+    }
+    const coreData: FateRerollData = {
+        dice: roll.dice[0].rolls.map(r => r.roll).join(","),
+        type: "stat",
+        actorId: actor._id,
+    };
+    if (accessor) {
+        return {
+            accessor,
+            ...coreData
+        };
+    } else {
+        return {
+            itemId,
+            ...coreData
+        };
+    }
+}
+
 function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet ) {
     const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
@@ -808,4 +854,13 @@ export interface RollChatMessageData {
 
     dieSources?: { [i: string]: string };
     penaltySources?: { [i: string]: string };
+    fateReroll?: FateRerollData;
+}
+
+export interface FateRerollData {
+    dice: string;
+    actorId: string;
+    type: "stat" | "skill";
+    itemId?: string;
+    accessor?: string;
 }

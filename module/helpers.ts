@@ -107,3 +107,4 @@ const AbilityLookup = {
 };
 
 export type TestString = "Routine" | "Difficult" | "Challenging" | "Routine/Difficult";
+export type ShadeString = "B" | "G" | "W";

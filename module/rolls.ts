@@ -119,6 +119,7 @@ async function ptgsRollCallback(
             name: shrugging ? "Shrug It Off Health Test" : "Grit Your Teeth Health Test",
             successes: roll.result,
             difficulty: baseData.diff,
+            nameClass: getRollNameClass(stat.open, stat.shade),
             obstacleTotal: baseData.obstacleTotal -= baseData.obPenalty,
             success: isSuccessful,
             rolls: roll.dice[0].rolls,
@@ -198,6 +199,7 @@ async function attrRollCallback(
         successes: roll.result,
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
+        nameClass: getRollNameClass(stat.open, stat.shade),
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
@@ -279,6 +281,7 @@ async function circlesRollCallback(
         successes: roll.result,
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
+        nameClass: getRollNameClass(stat.open, stat.shade),
         success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
@@ -354,6 +357,7 @@ async function learningRollCallback(
         successes: roll.result,
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
+        nameClass: getRollNameClass(rollSettings.open, rollSettings.shade),
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
@@ -429,6 +433,7 @@ async function statRollCallback(
         successes: roll.result,
         difficulty: baseData.diff + baseData.obPenalty,
         obstacleTotal: baseData.obstacleTotal,
+        nameClass: getRollNameClass(stat.open, stat.shade),
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
@@ -495,6 +500,7 @@ async function skillRollCallback(
         successes: roll.result,
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
+        nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
@@ -684,7 +690,7 @@ async function advanceLearningProgress(skill: Skill) {
     }
 }
 
-function rollDice(numDice: number, open: boolean = false, shade: string = 'B'): Roll | null {
+function rollDice(numDice: number, open: boolean = false, shade: helpers.ShadeString = 'B'): Roll | null {
     if (numDice <= 0) {
         getNoDiceErrorDialog(numDice);
         return null;
@@ -694,12 +700,12 @@ function rollDice(numDice: number, open: boolean = false, shade: string = 'B'): 
     }
 }
 
-function getRootStatInfo(skill: Skill, actor: BWActor): { open: boolean, shade: string } {
+function getRootStatInfo(skill: Skill, actor: BWActor): { open: boolean, shade: helpers.ShadeString } {
     const root1 = getProperty(actor, `data.data.${skill.data.data.root1}`) as Ability;
     const root2 = skill.data.data.root2 ?
         getProperty(actor, `data.data.${skill.data.data.root2}`) as Ability : root1;
 
-    let shade: string;
+    let shade: helpers.ShadeString;
     if (root1.shade === root2.shade) {
         shade = root1.shade;
     } else if (root1.shade === "B" || root2.shade === "B") {
@@ -711,6 +717,20 @@ function getRootStatInfo(skill: Skill, actor: BWActor): { open: boolean, shade: 
         open: root1.open && root2.open,
         shade
     };
+}
+
+function getRollNameClass(open: boolean, shade: helpers.ShadeString): string {
+    let css = "shade-black";
+    if (shade === "G") {
+        css = "shade-grey";
+    } else if (shade === "W") {
+        css = "shade-white";
+    }
+
+    if (open) {
+        css += " open-roll";
+    }
+    return css;
 }
 
 async function getNoDiceErrorDialog(numDice: number) {
@@ -783,6 +803,7 @@ export interface RollChatMessageData {
     success: boolean;
     rolls: {success: boolean, roll: number}[];
     difficultyGroup: string;
+    nameClass: string;
     obstacleTotal: number;
 
     dieSources?: { [i: string]: string };

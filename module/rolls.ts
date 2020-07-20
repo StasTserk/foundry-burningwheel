@@ -1,4 +1,4 @@
-import { BWActor, TracksTests } from "./actor.js";
+import { Ability, BWActor, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as helpers from "./helpers.js";
 import { Relationship, Skill, SkillDataRoot } from "./items/item.js";
@@ -41,7 +41,7 @@ async function handleGritRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
 
 async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, shrugging: boolean): Promise<unknown> {
     const actor = sheet.actor as BWActor;
-    const stat = getProperty(actor.data, "data.health" || "") as TracksTests;
+    const stat = getProperty(actor.data, "data.health" || "") as Ability;
     const data: AttributeDialogData = {
         name: shrugging ? "Shrug It Off" : "Grit Your Teeth",
         difficulty: shrugging ? 2 : 4,
@@ -101,7 +101,7 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
 
 async function ptgsRollCallback(
     dialogHtml: JQuery<HTMLElement>,
-    stat: TracksTests,
+    stat: Ability,
     sheet: BWActorSheet,
     shrugging: boolean) {
         const baseData = extractBaseData(dialogHtml, sheet);
@@ -110,7 +110,7 @@ async function ptgsRollCallback(
         const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
         const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
 
-        const roll = rollDice(numDice);
+        const roll = rollDice(numDice, stat.open, stat.shade);
         if (!roll) { return; }
 
         const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
@@ -141,7 +141,7 @@ async function ptgsRollCallback(
 
 
 async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
+    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
     let tax = 0;
@@ -177,7 +177,7 @@ async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
 
 async function attrRollCallback(
         dialogHtml: JQuery<HTMLElement>,
-        stat: TracksTests,
+        stat: Ability,
         sheet: BWActorSheet,
         tax: number,
         name: string,
@@ -188,7 +188,7 @@ async function attrRollCallback(
     const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
 
     const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax;
-    const roll = rollDice(numDice);
+    const roll = rollDice(numDice, stat.open, stat.shade);
     if (!roll) { return; }
 
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty);
@@ -214,7 +214,7 @@ async function attrRollCallback(
 }
 
 async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, "data.circles") as TracksTests;
+    const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {
         circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
@@ -250,7 +250,7 @@ async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet)
 
 async function circlesRollCallback(
         dialogHtml: JQuery<HTMLElement>,
-        stat: TracksTests,
+        stat: Ability,
         sheet: BWActorSheet,
         contact?: Relationship) {
     const baseData = extractBaseData(dialogHtml, sheet);
@@ -270,7 +270,7 @@ async function circlesRollCallback(
         baseData.bDice ++;
     }
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum);
+    const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum, stat.open, stat.shade);
     if (!roll) { return; }
 
     baseData.obstacleTotal += penaltyData.sum;
@@ -339,8 +339,13 @@ async function learningRollCallback(
     const exp = 10 - (skill.data.data.aptitude || 1);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
     const dg = helpers.difficultyGroup(exp + baseData.bDice- baseData.woundDice, baseData.diff);
+    const rollSettings = getRootStatInfo(skill, sheet.actor);
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice - baseData.woundDice);
+    const roll = rollDice(
+        exp + baseData.bDice + baseData.aDice - baseData.woundDice,
+        rollSettings.open,
+        rollSettings.shade
+    );
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
 
@@ -365,7 +370,7 @@ async function learningRollCallback(
 
 
 async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as TracksTests;
+    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const statName = target.dataset.rollableName || "Unknown Stat";
     let tax = 0;
@@ -401,7 +406,7 @@ async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): P
 
 async function statRollCallback(
         dialogHtml: JQuery<HTMLElement>,
-        stat: TracksTests,
+        stat: Ability,
         sheet: BWActorSheet,
         tax: number,
         name: string,
@@ -412,7 +417,10 @@ async function statRollCallback(
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
     const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax);
+    const roll = rollDice(
+        exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax,
+        stat.open,
+        stat.shade);
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
 
@@ -476,7 +484,10 @@ async function skillRollCallback(
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
     const dg = helpers.difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice, baseData.diff);
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice);
+    const roll = rollDice(
+        exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice,
+        skill.data.data.open,
+        skill.data.data.shade);
     if (!roll) { return; }
 
     const data: RollChatMessageData = {
@@ -673,13 +684,33 @@ async function advanceLearningProgress(skill: Skill) {
     }
 }
 
-function rollDice(numDice: number): Roll | null {
+function rollDice(numDice: number, open: boolean = false, shade: string = 'B'): Roll | null {
     if (numDice <= 0) {
         getNoDiceErrorDialog(numDice);
         return null;
     } else {
-        return new Roll(`${numDice}d6cs>3`).roll();
+        const tgt = shade === 'B' ? '3' : (shade === 'G' ? '2' : '1');
+        return new Roll(`${numDice}d6${open?'x':''}cs>${tgt}`).roll();
     }
+}
+
+function getRootStatInfo(skill: Skill, actor: BWActor): { open: boolean, shade: string } {
+    const root1 = getProperty(actor, `data.data.${skill.data.data.root1}`) as Ability;
+    const root2 = skill.data.data.root2 ?
+        getProperty(actor, `data.data.${skill.data.data.root2}`) as Ability : root1;
+
+    let shade: string;
+    if (root1.shade === root2.shade) {
+        shade = root1.shade;
+    } else if (root1.shade === "B" || root2.shade === "B") {
+        shade = "B";
+    } else {
+        shade = "G";
+    }
+    return {
+        open: root1.open && root2.open,
+        shade
+    };
 }
 
 async function getNoDiceErrorDialog(numDice: number) {

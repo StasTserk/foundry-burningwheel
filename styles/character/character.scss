@@ -127,6 +127,28 @@
             font-size: 1.125em;
         }
 
+        .rollable-open-checkbox:checked + .rollable-open-toggle > label{
+            color: darkgreen;
+            background-color: rgba(green, .15);
+            border-color: darkgreen;
+        }
+        .rollable-open-toggle {
+            width: min-content;
+            display: inline-block;
+            
+            & > label {
+                display: block;
+                font-weight: bold;
+                height: 1.75em;
+                line-height: 1.5em;
+                width: 3.5em;
+                border: 2px solid grey;
+                color: grey;
+                border-radius: 1em;
+                text-align: center;
+            }
+        }
+
         .collapse-checkbox {
             display: none;
         }

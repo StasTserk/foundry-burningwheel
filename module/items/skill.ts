@@ -39,6 +39,7 @@ export interface SkillData extends TracksTests, DisplayClass {
     skilltype: string;
     description: string;
     training: boolean;
+    open: boolean;
 
     learning: boolean;
     learningProgress: string;

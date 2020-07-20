@@ -60,7 +60,9 @@ Actor:
       health: &ability
         <<: *stat
         routine: 0
-      steel: *ability
+      steel:
+        <<: *ability
+        open: true
       circles: *ability
       resources: *ability
       custom1: 
@@ -152,6 +154,7 @@ Item:
     persona: 0
     fate: 0
     deeds: 0
+    open: false
   relationship:
     description: ''
     forbidden: false

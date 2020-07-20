@@ -73,5 +73,9 @@
             <input type="number" class="circle-input" name="{{taxName}}" value="{{taxValue}}">
         </div>
         {{/if}}
+        <input type="checkbox" class="hidden rollable-open-checkbox" id="{{actor._id}}-{{statName}}-open" name="{{namePrefix}}.open" {{checked stat.open}}>
+        <div class="rollable-open-toggle">
+            <label for="{{actor._id}}-{{statName}}-open">Open</label>
+        </div>
     </div>
 </div>

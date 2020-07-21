@@ -18,7 +18,7 @@
     "gulp-yaml": "^2.0.4",
     "node-sass": "^4.14.1",
     "tslint": "^6.1.2",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "gulp-eslint": "^6.0.0"

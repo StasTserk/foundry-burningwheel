@@ -1,7 +1,7 @@
 import { Ability, BWActor, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as helpers from "./helpers.js";
-import { Relationship, Skill, SkillDataRoot } from "./items/item.js";
+import { Relationship, Skill, SkillData, SkillDataRoot } from "./items/item.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>, sheet: BWActorSheet): Promise<unknown> {
@@ -33,7 +33,63 @@ export async function handleRollable(
 }
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
-    return null;
+    const actor = game.actors.get(target.dataset.actorId || "") as BWActor;
+    const accessor = target.dataset.accessor || '';
+    const itemId = target.dataset.itemId || "";
+    let rollStat: Ability | SkillData;
+    if (target.dataset.rerollType === "stat") {
+        rollStat = getProperty(actor, `data.${accessor}`);
+    } else {
+        rollStat = (actor.getOwnedItem(itemId) as Skill).data.data;
+    }
+
+    const rollArray = target.dataset.dice?.split(',').map(s => parseInt(s, 10)) || [];
+    const successTarget = rollStat.shade === "B" ? 3 : (rollStat.shade === "G" ? 2 : 1);
+    let reroll: Roll | null;
+    if (rollStat.open) {
+        // only reroll dice if there were any traitors
+        const numDice = rollArray.filter(r => r <= successTarget).length ? 1 : 0;
+        reroll = rollDice(numDice, false, rollStat.shade);
+    } else {
+        const numDice = rollArray.filter(s => s === 6).length;
+        reroll = rollDice(numDice, true, rollStat.shade);
+    }
+
+    if (!reroll) { return; }
+
+    if (actor.data.data.fate !== "0") {
+        if (target.dataset.rerollType === "stat") {
+            const fateSpent = parseInt(getProperty(actor, `data.${accessor}.fate`) || "0", 10);
+            const updateData = {};
+            updateData[`${accessor}.fate`] = fateSpent + 1;
+            actor.update(updateData);
+        } else if (target.dataset.rerollType === "skill") {
+            const skill = actor.getOwnedItem(itemId) as Skill;
+            const fateSpent = parseInt(skill.data.data.fate, 10) || 0;
+            skill.update({ 'data.fate': fateSpent + 1 }, {});
+        }
+
+        const actorFateCount = parseInt(actor.data.data.fate, 10);
+        actor.update({ 'data.fate': actorFateCount -1 });
+    }
+
+    const successes = parseInt(target.dataset.successes || "0", 10);
+    const obstacleTotal = parseInt(target.dataset.difficulty || "0", 10);
+    const newSuccesses = parseInt(reroll.result, 10);
+    const success = (newSuccesses + successes) >= obstacleTotal;
+    const data: FateRerollMessageData = {
+        rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
+        rerolls: reroll.dice[0].rolls,
+        successes,
+        obstacleTotal,
+        newSuccesses,
+        success
+    };
+    const html = await renderTemplate(templates.rerollChatMessage, data);
+    return ChatMessage.create({
+        content: html,
+        speaker: ChatMessage.getSpeaker({actor})
+    });
 }
 
 
@@ -108,45 +164,45 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
 }
 
 async function ptgsRollCallback(
-    dialogHtml: JQuery<HTMLElement>,
-    stat: Ability,
-    sheet: BWActorSheet,
-    shrugging: boolean) {
-        const baseData = extractBaseData(dialogHtml, sheet);
-        const exp = parseInt(stat.exp, 10);
-        const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0);
-        const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
-        const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
+        dialogHtml: JQuery<HTMLElement>,
+        stat: Ability,
+        sheet: BWActorSheet,
+        shrugging: boolean) {
+    const baseData = extractBaseData(dialogHtml, sheet);
+    const exp = parseInt(stat.exp, 10);
+    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
+    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
 
-        const roll = rollDice(numDice, stat.open, stat.shade);
-        if (!roll) { return; }
+    const roll = rollDice(numDice, stat.open, stat.shade);
+    if (!roll) { return; }
 
-        const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
+    const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
 
-        const data: RollChatMessageData = {
-            name: shrugging ? "Shrug It Off Health Test" : "Grit Your Teeth Health Test",
-            successes: roll.result,
-            difficulty: baseData.diff,
-            nameClass: getRollNameClass(stat.open, stat.shade),
-            obstacleTotal: baseData.obstacleTotal -= baseData.obPenalty,
-            success: isSuccessful,
-            rolls: roll.dice[0].rolls,
-            difficultyGroup: dg,
-            dieSources
-        };
-        if (isSuccessful) {
-            const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
-            const updateData = {};
-            updateData[accessor] = true;
-            sheet.actor.update(updateData);
-        }
-        sheet.actor.addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
-        const messageHtml = await renderTemplate(templates.attrMessage, data);
-        return ChatMessage.create({
-            content: messageHtml,
-            speaker: ChatMessage.getSpeaker({actor: sheet.actor})
-        });
+    const data: RollChatMessageData = {
+        name: shrugging ? "Shrug It Off Health Test" : "Grit Your Teeth Health Test",
+        successes: roll.result,
+        difficulty: baseData.diff,
+        nameClass: getRollNameClass(stat.open, stat.shade),
+        obstacleTotal: baseData.obstacleTotal -= baseData.obPenalty,
+        success: isSuccessful,
+        rolls: roll.dice[0].rolls,
+        difficultyGroup: dg,
+        dieSources
+    };
+    if (isSuccessful) {
+        const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
+        const updateData = {};
+        updateData[accessor] = true;
+        sheet.actor.update(updateData);
     }
+    sheet.actor.addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
+    const messageHtml = await renderTemplate(templates.attrMessage, data);
+    return ChatMessage.create({
+        content: messageHtml,
+        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+    });
+}
 
 
 async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
@@ -365,6 +421,7 @@ async function learningRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
     const fateReroll = buildFateRerollData(sheet.actor, roll, undefined, skill._id);
+    if (fateReroll) { fateReroll!.type = "learning"; }
 
     const data: RollChatMessageData = {
         name: `Beginner's Luck ${skill.data.name} Test`,
@@ -577,17 +634,18 @@ function buildFateRerollData(actor: BWActor, roll: Roll, accessor?: string, item
     }
     const coreData: FateRerollData = {
         dice: roll.dice[0].rolls.map(r => r.roll).join(","),
-        type: "stat",
         actorId: actor._id,
     };
     if (accessor) {
         return {
             accessor,
+            type: "stat",
             ...coreData
         };
     } else {
         return {
             itemId,
+            type: "skill",
             ...coreData
         };
     }
@@ -802,7 +860,8 @@ const templates = {
     skillDialog: "systems/burningwheel/templates/chat/skill-dialog.html",
     skillMessage: "systems/burningwheel/templates/chat/roll-message.html",
     statDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
-    statMessage: "systems/burningwheel/templates/chat/roll-message.html"
+    statMessage: "systems/burningwheel/templates/chat/roll-message.html",
+    rerollChatMessage: "systems/burningwheel/templates/chat/fate-reroll-message.html"
 };
 
 
@@ -857,10 +916,19 @@ export interface RollChatMessageData {
     fateReroll?: FateRerollData;
 }
 
+export interface FateRerollMessageData {
+    rolls: { roll: number, success: boolean }[];
+    rerolls: { roll: number, success: boolean }[];
+    success: boolean;
+    successes: number;
+    newSuccesses: number;
+    obstacleTotal: number;
+}
+
 export interface FateRerollData {
     dice: string;
     actorId: string;
-    type: "stat" | "skill";
+    type?: "stat" | "skill" | "learning";
     itemId?: string;
     accessor?: string;
 }

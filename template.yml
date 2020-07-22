@@ -205,6 +205,17 @@ Item:
     dice: 1
     damage: 0
     description: ''
+    equipped: false
+    untrainedPenalty: 'none'
+    agilityPenalty: 0
+    speedObPenalty: 0
+    speedDiePenalty: 0
+    climbingPenalty: 0
+    healthFortePenalty: 0
+    throwingShootingPenalty: 0
+    stealthyPenalty: 0
+    swimmingPenalty: 0
+    perceptionObservationPenalty: 0
   reputation: &rep
     description: ''
     dice: 0

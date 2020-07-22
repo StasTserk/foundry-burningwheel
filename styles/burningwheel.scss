@@ -7,6 +7,7 @@
 @import "./character/weapons.scss";
 @import "./chat/dialog.scss";
 @import "./chat/roll.scss";
+@import "./items/armor.scss";
 @import "./items/relationship.scss";
 @import "./items/skill.scss";
 
@@ -148,4 +149,12 @@ input.circle-input {
     text-align: center;
 
     @include no-number-arrows;
+}
+
+.footer {
+    font-size: .75em;
+    color: #333;
+    .footer-right {
+        float: right;
+    }
 }

@@ -1,4 +1,4 @@
-<form autocomplete="off">
+<form autocomplete="off" class="armor-sheet">
     <input name="name" type="text" value="{{item.name}}">
     <hr/>
     <div class="input-grid">
@@ -9,6 +9,10 @@
         <div>
             <input id="number-damage" type="number" name="data.damage" value="{{data.damage}}">
             <label for="number-damage">Damage</label>
+        </div>
+        <div>
+            <input id="checkbox-equipped" type="checkbox" name="data.equipped" {{ checked data.equipped}}>
+            <label for="checkbox-equipped">Equipped</label>
         </div>
         <div>
             <select id="select-quality" name="data.quality" value="{{data.quality}}">
@@ -30,6 +34,46 @@
                 {{/select}}
             </select>
             <label for="select-location">Armor Location</label>
+        </div>
+    </div>
+    <hr/>
+    <h3>Clumsy Weight</h3>
+    <div class="input-grid {{data.cssClass}}">
+        <div class="clumsy-entry armor-arm">
+            <input id="agilityPenalty" type="number" name="data.agilityPenalty" value="{{data.agilityPenalty}}" placeholder="0">
+            <label for="agilityPenalty">Agility Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-leg">
+            <input id="speedObPenalty" type="number" name="data.speedObPenalty" value="{{data.speedObPenalty}}" placeholder="0">
+            <label for="speedObPenalty">Speed Obstacle Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-leg">
+            <input id="speedDiePenalty" type="number" name="data.speedDiePenalty" value="{{data.speedDiePenalty}}" placeholder="0">
+            <label for="speedDiePenalty">Speed Die Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-leg">
+            <input id="climbingPnalty" type="number" name="data.climbingPnalty" value="{{data.climbingPnalty}}" placeholder="0">
+            <label for="climbingPnalty">Climbing Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-torso">
+            <input id="healthFortePenalty" type="number" name="data.healthFortePenalty" value="{{data.healthFortePenalty}}" placeholder="0">
+            <label for="healthFortePenalty">Health/Forte Fatigue Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-arm">
+            <input id="throwingShootingPenalty" type="number" name="data.throwingShootingPenalty" value="{{data.throwingShootingPenalty}}" placeholder="0">
+            <label for="throwingShootingPenalty">Throwing/Shooting Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-torso">
+            <input id="stealthyPenalty" type="number" name="data.stealthyPenalty" value="{{data.stealthyPenalty}}" placeholder="0">
+            <label for="stealthyPenalty">Stealthy Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-leg">
+            <input id="swimmingPenalty" type="number" name="data.swimmingPenalty" value="{{data.swimmingPenalty}}" placeholder="0">
+            <label for="swimmingPenalty">Swimming Penalty</label>
+        </div>
+        <div class="clumsy-entry armor-head">
+            <input id="perceptionObservationPenalty" type="number" name="data.perceptionObservationPenalty" value="{{data.perceptionObservationPenalty}}" placeholder="0">
+            <label for="perceptionObservationPenalty">Perception/Observation Penalty</label>
         </div>
     </div>
     <hr/>

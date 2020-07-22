@@ -1,5 +1,5 @@
 import { canAdvance, ShadeString, TestString, updateTestsNeeded } from "./helpers.js";
-import { DisplayClass, ReputationRootData } from "./items/item.js";
+import { ArmorRootData, DisplayClass, ReputationRootData } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -194,6 +194,7 @@ export class BWActor extends Actor {
 
     private _prepareCharacterData() {
         this._calculatePtgs();
+        this._calculateClumsyWeight();
         const woundDice = this.data.data.ptgs.woundDice || 0;
         updateTestsNeeded(this.data.data.will, false, woundDice);
         updateTestsNeeded(this.data.data.power, false, woundDice);
@@ -210,7 +211,8 @@ export class BWActor extends Actor {
 
         this.data.data.reflexesExp = Math.floor((parseInt(this.data.data.perception.exp, 10) +
             parseInt(this.data.data.agility.exp, 10) +
-            parseInt(this.data.data.speed.exp, 10)) / 3);
+            parseInt(this.data.data.speed.exp, 10)) / 3) -
+            (this.data.data.ptgs.woundDice || 0);
 
         this.data.data.mortalWound = Math.floor((parseInt(this.data.data.power.exp, 10) +
             parseInt(this.data.data.forte.exp, 10)) / 2 + 6);
@@ -266,6 +268,70 @@ export class BWActor extends Actor {
 
         this.data.data.ptgs.woundDice = woundDice;
     }
+
+    private _calculateClumsyWeight() {
+        const clumsyWeight: ClumsyWeightData = {
+            agilityPenalty: 0,
+            speedObPenalty: 0,
+            speedDiePenalty: 0,
+            climbingPenalty: 0,
+            healthFortePenalty: 0,
+            throwingShootingPenalty: 0,
+            stealthyPenalty: 0,
+            swimmingPenalty: 0,
+            helmetObPenalty: 0
+        };
+
+        this.data.items.filter(i => i.type === "armor" && (i as unknown as ArmorRootData).data.equipped)
+            .forEach(i => {
+            const a = i as unknown as ArmorRootData;
+            switch (a.data.location) {
+                case "helmet":
+                    clumsyWeight.helmetObPenalty = parseInt(a.data.perceptionObservationPenalty, 10);
+                    break;
+                case "torso":
+                    clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
+                        parseInt(a.data.healthFortePenalty, 10));
+                    clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
+                        parseInt(a.data.stealthyPenalty, 10));
+                    break;
+                case "left arm": case "right arm":
+                    clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
+                        parseInt(a.data.agilityPenalty, 10) || 0);
+                    clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
+                        parseInt(a.data.throwingShootingPenalty, 10) || 0);
+                    break;
+                case "left leg": case "right leg":
+                    clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
+                        parseInt(a.data.speedDiePenalty, 10) || 0);
+                    clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
+                        parseInt(a.data.speedObPenalty, 10) || 0);
+                    clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
+                        parseInt(a.data.climbingPenalty, 10) || 0);
+                case "all":
+                    clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
+                        parseInt(a.data.speedDiePenalty, 10) || 0);
+                    clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
+                        parseInt(a.data.speedObPenalty, 10) || 0);
+                    clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
+                        parseInt(a.data.climbingPenalty, 10) || 0);
+                    clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
+                        parseInt(a.data.agilityPenalty, 10) || 0);
+                    clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
+                        parseInt(a.data.throwingShootingPenalty, 10) || 0);
+                    clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
+                        parseInt(a.data.healthFortePenalty, 10) || 0);
+                    clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
+                        parseInt(a.data.stealthyPenalty, 10) || 0);
+                    if (!clumsyWeight.helmetObPenalty) {
+                        clumsyWeight.helmetObPenalty = parseInt(a.data.perceptionObservationPenalty, 10);
+                    }
+                    break;
+            }
+        });
+
+        this.data.data.clumsyWeight = clumsyWeight;
+    }
 }
 
 export interface CharacterDataRoot extends ActorData {
@@ -293,6 +359,8 @@ interface BWCharacterData extends Common, DisplayProps, Ptgs {
     mortalWound?: number;
     reflexesExp?: number;
     reflexesShade?: string;
+
+    clumsyWeight?: ClumsyWeightData;
 }
 
 interface Common {
@@ -373,4 +441,16 @@ interface Ptgs {
 interface Wound {
     amount: string[]; // quirk relating to how radio button data is stored
     threshold: string;
+}
+
+interface ClumsyWeightData {
+    agilityPenalty: number;
+    speedObPenalty: number;
+    speedDiePenalty: number;
+    climbingPenalty: number;
+    healthFortePenalty: number;
+    throwingShootingPenalty: number;
+    stealthyPenalty: number;
+    swimmingPenalty: number;
+    helmetObPenalty: number;
 }

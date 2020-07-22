@@ -86,6 +86,47 @@ export class BWActor extends Actor {
         return this.update(updateData);
     }
 
+    taxResources(amount: number, maxFundLoss: number): void {
+        const updateData = {};
+        let resourcesTax = parseInt(this.data.data.resourcesTax, 10) || 0;
+        const resourceExp = parseInt(this.data.data.resources.exp, 10) || 0;
+        const fundDice = parseInt(this.data.data.funds, 10) || 0;
+        if (amount <= maxFundLoss) {
+            updateData["data.funds"] = fundDice - amount;
+        } else {
+            updateData["data.funds"] = 0;
+            amount -= maxFundLoss;
+            resourcesTax = Math.min(resourceExp, amount+resourcesTax);
+            updateData["data.resourcesTax"] = resourcesTax;
+            if (resourcesTax === resourceExp) {
+                // you taxed all your resources away, they degrade
+                new Dialog({
+                    title: "Overtaxed Resources!",
+                    content: "<p>Tax has reduced your resources exponent to 0.</p><hr>",
+                    buttons: {
+                        reduce: {
+                            label: "Reduce exponent by 1",
+                            callback: () => {
+                                resourcesTax --;
+                                this.update({
+                                    "data.resourcesTax": resourcesTax,
+                                    "data.resources.exp": resourcesTax,
+                                    "data.resources.routine": 0,
+                                    "data.resources.difficult": 0,
+                                    "data.resources.challening": 0
+                                });
+                            }
+                        },
+                        ignore: {
+                            label: "Ignore for now"
+                        }
+                    }
+                }).render(true);
+            }
+        }
+        this.update(updateData);
+    }
+
     private _calculateThresholds(mo: number, su: number, forte: number):
         { su: number, li: number, mi: number, se: number, tr: number, mo: number } {
         const maxGap = Math.ceil(forte / 2.0);

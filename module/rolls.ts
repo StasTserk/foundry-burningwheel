@@ -6,6 +6,7 @@ import { handleAttrRoll } from "./rolls/rollAttribute.js";
 import { handleCirclesRoll } from "./rolls/rollCircles.js";
 import { handleLearningRoll } from "./rolls/rollLearning.js";
 import { handleGritRoll, handleShrugRoll } from "./rolls/rollPtgs.js";
+import { handleResourcesRoll } from "./rolls/rollResources.js";
 import { handleSkillRoll } from "./rolls/rollSkill.js";
 import { handleStatRoll } from "./rolls/rollStat.js";
 
@@ -21,8 +22,10 @@ export async function handleRollable(
             return handleStatRoll(target, sheet);
         case "circles":
             return handleCirclesRoll(target, sheet);
-        case "attribute": case "resources":
+        case "attribute":
             return handleAttrRoll(target, sheet);
+        case "resources":
+            return handleResourcesRoll(target, sheet);
         case "learning":
             return handleLearningRoll(target, sheet);
         case "shrug":
@@ -96,12 +99,20 @@ export function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet )
     return { woundDice, obPenalty, diff, aDice, bDice, penaltySources, obstacleTotal };
 }
 
-export function extractString(html: JQuery<HTMLElement>, name: string): string {
+export function extractSelectString(html: JQuery<HTMLElement>, name: string): string | undefined {
+    return html.find(`select[name=\"${name}\"]`).val() as string;
+}
+
+export function extractSelectNumber(html: JQuery<HTMLElement>, name: string): number {
+    return parseInt(extractSelectString(html, name) || "0", 10) as number;
+}
+
+export function extractString(html: JQuery<HTMLElement>, name: string): string | undefined {
     return html.find(`input[name=\"${name}\"]`).val() as string;
 }
 
 export function extractNumber(html: JQuery<HTMLElement>, name: string): number {
-    return parseInt(extractString(html, name), 10);
+    return parseInt(extractString(html, name) || "0", 10);
 }
 
 export function extractForksValue(html: JQuery<HTMLElement>, name: string): number {
@@ -179,7 +190,9 @@ export const templates = {
     skillMessage: "systems/burningwheel/templates/chat/roll-message.html",
     statDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
     statMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    rerollChatMessage: "systems/burningwheel/templates/chat/fate-reroll-message.html"
+    rerollChatMessage: "systems/burningwheel/templates/chat/fate-reroll-message.html",
+    resourcesDialog: "systems/burningwheel/templates/chat/resources-dialog.html",
+    resourcesMessage: "systems/burningwheel/templates/chat/roll-message.html"
 };
 
 

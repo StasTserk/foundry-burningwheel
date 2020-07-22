@@ -1,7 +1,8 @@
 /**
  * Chat message helpers
  */
-import { handleFateReroll } from "./rolls.js";
+
+import { handleFateReroll } from "./rolls/rerollFate.js";
 
 /**
  * Binds buttons in chat log to perform actions

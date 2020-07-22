@@ -1,6 +1,6 @@
 <div class="chat-message flex-row">
     <div class="roll-full-width message-title {{nameClass}}">
-        {{name}}
+        {{name}} Test
     </div>
     <div class="roll-full-width roll-{{difficultyGroup}}">
         {{difficultyGroup}}
@@ -60,8 +60,11 @@
             data-actor-id="{{fateReroll.actorId}}"
             data-reroll-type="{{fateReroll.type}}"
             data-dice="{{fateReroll.dice}}"
+            data-roll-name="{{name}}"
             {{#if fateReroll.itemId}} data-item-id="{{fateReroll.itemId}}" {{/if}}
             {{#if fateReroll.accessor}} data-accessor="{{fateReroll.accessor}}" {{/if}}
+            {{#if fateReroll.learningTarget}} data-learning-target="{{fateReroll.learningTarget}}" {{/if}}
+            {{#if fateReroll.ptgsAction}} data-ptgs-action="{{fateReroll.ptgsAction}}" {{/if}}
             data-difficulty="{{obstacleTotal}}"
             data-successes="{{successes}}"
             data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>

@@ -1,0 +1,98 @@
+import { Ability, BWActor, TracksTests } from "../actor.js";
+import { BWActorSheet } from "../bwactor-sheet.js";
+import * as helpers from "../helpers.js";
+import {
+    buildDiceSourceObject,
+    buildFateRerollData,
+    extractBaseData,
+    getRollNameClass,
+    RollChatMessageData,
+    RollDialogData,
+    rollDice,
+    templates
+} from "../rolls.js";
+
+export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
+    const actor = sheet.actor as BWActor;
+    const statName = target.dataset.rollableName || "Unknown Stat";
+    let tax = 0;
+    if (target.dataset.rollableName!.toLowerCase() === "will") {
+        tax = parseInt(actor.data.data.willTax, 10);
+    }
+    const data: StatDialogData = {
+        name: `${statName} Test`,
+        difficulty: 3,
+        bonusDice: 0,
+        arthaDice: 0,
+        woundDice: actor.data.data.ptgs.woundDice,
+        obPenalty: actor.data.data.ptgs.obPenalty,
+        stat,
+        tax
+    };
+
+    const html = await renderTemplate(templates.statDialog, data);
+    return new Promise(_resolve =>
+        new Dialog({
+            title: `${statName} Test`,
+            content: html,
+            buttons: {
+                roll: {
+                    label: "Roll",
+                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                        statRollCallback(dialogHtml, stat, sheet, tax, statName, target.dataset.accessor || "")
+                }
+            }
+        }).render(true)
+    );
+}
+
+async function statRollCallback(
+        dialogHtml: JQuery<HTMLElement>,
+        stat: Ability,
+        sheet: BWActorSheet,
+        tax: number,
+        name: string,
+        accessor: string) {
+    const baseData = extractBaseData(dialogHtml, sheet);
+    const exp = parseInt(stat.exp, 10);
+
+    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
+
+    const roll = rollDice(
+        exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax,
+        stat.open,
+        stat.shade);
+    if (!roll) { return; }
+    const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+
+    const fateReroll = buildFateRerollData(sheet.actor, roll, accessor);
+
+    const data: RollChatMessageData = {
+        name: `${name}`,
+        successes: roll.result,
+        difficulty: baseData.diff + baseData.obPenalty,
+        obstacleTotal: baseData.obstacleTotal,
+        nameClass: getRollNameClass(stat.open, stat.shade),
+        success: isSuccessful,
+        rolls: roll.dice[0].rolls,
+        difficultyGroup: dg,
+        penaltySources: baseData.penaltySources,
+        dieSources,
+        fateReroll
+    };
+
+    sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful);
+
+    const messageHtml = await renderTemplate(templates.skillMessage, data);
+    return ChatMessage.create({
+        content: messageHtml,
+        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+    });
+}
+
+interface StatDialogData extends RollDialogData {
+    tax?: number;
+    stat: TracksTests;
+}

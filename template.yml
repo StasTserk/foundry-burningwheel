@@ -73,8 +73,8 @@ Actor:
         name: ''
       stride: 7
       mountedstride: 0
-      cash: ''
-      funds: ''
+      cash: 0
+      funds: 0
       property: ''
       loans: ''
       debt: ''

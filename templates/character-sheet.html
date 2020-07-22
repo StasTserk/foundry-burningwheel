@@ -179,11 +179,17 @@
             <br/>
             <div class="attributes-item flex-row">
                 <label class="debt-label">Cash</label>
-                <input type="text" class="attribute-text" name="data.cash" value="{{data.cash}}">
+                <div class="attribute-text">
+                    <input type="number" name="data.cash" value="{{data.cash}}" placeholder="0">
+                    Dice
+                </div>
             </div>
             <div class="attributes-item flex-row">
                 <label class="debt-label">Funds</label>
-                <input type="text" class="attribute-text" name="data.funds" value="{{data.funds}}">
+                <div class="attribute-text">
+                    <input type="number" name="data.funds" value="{{data.funds}}" placeholder="0">
+                    Dice
+                </div>
             </div>
             <div class="attributes-item flex-row">
                 <label class="debt-label">Property</label>

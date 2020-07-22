@@ -16,10 +16,6 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
-    let tax = 0;
-    if (attrName === "Resources") {
-        tax = parseInt(actor.data.data.resourcesTax, 10);
-    }
     const data: AttributeDialogData = {
         name: `${attrName} Test`,
         difficulty: 3,
@@ -27,7 +23,6 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
         arthaDice: 0,
         woundDice: attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined,
         obPenalty: actor.data.data.ptgs.obPenalty,
-        tax,
         stat,
     };
 
@@ -40,7 +35,7 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery<HTMLElement>) =>
-                        attrRollCallback(dialogHtml, stat, sheet, tax, attrName, target.dataset.accessor || "")
+                        attrRollCallback(dialogHtml, stat, sheet, attrName, target.dataset.accessor || "")
                 }
             }
         }).render(true)
@@ -51,15 +46,14 @@ async function attrRollCallback(
         dialogHtml: JQuery<HTMLElement>,
         stat: Ability,
         sheet: BWActorSheet,
-        tax: number,
         name: string,
         accessor: string) {
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
-    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
+    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice, baseData.diff);
 
-    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax;
+    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
     const roll = rollDice(numDice, stat.open, stat.shade);
     if (!roll) { return; }
 

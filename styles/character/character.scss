@@ -216,7 +216,7 @@
             }
 
             .attribute-value, .attribute-text {
-                font-size: 1.125;
+                font-size: 1.125em;
                 border: 0;
                 border-bottom: 1px solid black;
                 background-color: transparent;
@@ -229,7 +229,16 @@
             }
             .attribute-text {
                 width: 65%;
+                height: min-content;
                 border-radius: 0;
+                input {
+                    @include no-number-arrows;
+                    display: inline-block;
+                    background: rgba(black, .10);
+                    width: 2em;
+                    border: 0;
+                    text-align: center;
+                }
             }
         }
     }

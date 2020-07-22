@@ -1,0 +1,53 @@
+<form class="dialog">
+    <h2>{{name}}</h2>
+    <div class="flex-row">
+        <div class="flex-row dialog-row">
+            <label>Exponent</label>
+            <input type="number" class="exponent" disabled name="stat.exp" value="{{stat.exp}}">
+        </div>
+        {{#if tax}}
+        <div class="flex-row dialog-row">
+            <label>Tax</label>
+            <input type="number" class="exponent" disabled name="tax" value="{{tax}}">
+        </div>
+        {{/if}}
+        <div class="flex-row dialog-row">
+            <label>Difficulty</label>
+            <input type="number" class="exponent" name="difficulty" value="{{difficulty}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Bonus Dice</label>
+            <input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Artha Dice</label>
+            <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
+        </div>
+        {{#if cashDieOptions}}
+        <div class="flex-row dialog-row">
+            <label>Cash Dice</label>
+            <select name="cashDice">
+                {{#select cashDice}}
+                <option value="0">0</option>
+                {{#each cashDieOptions as |o|}}
+                <option value="{{plusone o 1}}">{{plusone o 1}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        {{/if}}
+        {{#if fundDieOptions}}
+        <div class="flex-row dialog-row">
+            <label>Fund Dice</label>
+            <select name="fundDice">
+                {{#select fundDice}}
+                <option value="0">0</option>
+                {{#each fundDieOptions as |o|}}
+                <option value="{{plusone o 1}}">{{plusone o 1}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        {{/if}}
+    </div>
+</form>

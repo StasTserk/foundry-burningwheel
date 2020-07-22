@@ -1,0 +1,12 @@
+.armor-sheet {
+    .clumsy-entry {
+        display: none;
+    }
+
+    .armor-leg .armor-leg,
+    .armor-head .armor-head,
+    .armor-torso .armor-torso,
+    .armor-arm .armor-arm {
+        display: block;
+    }
+}

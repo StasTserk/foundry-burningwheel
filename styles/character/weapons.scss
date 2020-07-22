@@ -7,6 +7,26 @@
         margin-left: 5px;
     }
 
+    .clumsy-stats {
+        width: 100%;
+
+        .clumsy-item {
+            width: 20%;
+            text-align: center;
+
+            .clumsy-label {
+                width: 70%;
+                text-align: right;
+                padding-right: 5px;
+            }
+            .clumsy-value {
+                border-bottom: 1px solid black;
+                width: 30%;
+                height: min-content;
+            }
+        }
+    }
+
     .weapon-grid {
         column-gap: 0px;
         row-gap: 0px;

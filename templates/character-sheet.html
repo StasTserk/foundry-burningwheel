@@ -316,5 +316,51 @@
         <div class="armor">
             {{> "systems/burningwheel/templates/parts/armor.html" armor=armor }}
         </div>
+        <div class="clumsy-stats">
+            <hr>
+            <div class="flex-row">
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Agility</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.agilityPenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Speed</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.speedObPenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Speed</label>
+                    <div class="clumsy-value">-{{data.clumsyWeight.speedDiePenalty}} Die</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Climbing</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.climbingPenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Health / Forte</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.healthFortePenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Throwing / Shooting</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.throwingShootingPenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Stealthy</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.stealthyPenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Swimming</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.swimmingPenalty}} Ob</div>
+                </div>
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Perception / Observation</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.helmetObPenalty}} Ob</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="footer">
+        <span class="footer-left">Sheet Version 0.1.2</span>
+        <span class="footer-right">See Release notes <a href="https://github.com/StasTserk/foundry-burningwheel/releases/">on github.</a></span>
     </div>
 </form>

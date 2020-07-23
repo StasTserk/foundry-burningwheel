@@ -16,6 +16,7 @@ export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSh
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const statName = target.dataset.rollableName || "Unknown Stat";
+    const rollModifiers = sheet.actor.getRollModifiers(statName);
     let tax = 0;
     if (target.dataset.rollableName!.toLowerCase() === "will") {
         tax = parseInt(actor.data.data.willTax, 10);
@@ -28,7 +29,9 @@ export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSh
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat,
-        tax
+        tax,
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
 
     const html = await renderTemplate(templates.statDialog, data);
@@ -58,10 +61,11 @@ async function statRollCallback(
     const exp = parseInt(stat.exp, 10);
 
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice, baseData.diff);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice + baseData.miscDice.sum,
+        baseData.obstacleTotal);
 
     const roll = rollDice(
-        exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax,
+        exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax + baseData.miscDice.sum,
         stat.open,
         stat.shade);
     if (!roll) { return; }
@@ -79,7 +83,7 @@ async function statRollCallback(
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
-        dieSources,
+        dieSources: { ...dieSources, ...baseData.miscDice.entries },
         fateReroll
     };
 

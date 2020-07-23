@@ -10,8 +10,6 @@ import { slugify } from "./helpers.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 
 Hooks.once("init", async () => {
-
-    console.info(" ... rebinding sheet ... ");
     CONFIG.Actor.entityClass = BWActor;
     CONFIG.Item.entityClass = BWItem;
 

@@ -18,6 +18,7 @@ import {
 export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
+    const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
     const data: LearningDialogData = {
         name: `Beginner's Luck ${target.dataset.rollableName} Test`,
@@ -26,7 +27,9 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
         arthaDice: 0,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
-        skill: { exp: 10 - (skill.data.data.aptitude || 1) } as any
+        skill: { exp: 10 - (skill.data.data.aptitude || 1) } as any,
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
 
     const html = await renderTemplate(templates.learnDialog, data);
@@ -49,15 +52,16 @@ async function learningRollCallback(
     dialogHtml: JQuery<HTMLElement>, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
     const baseData = extractBaseData(dialogHtml, sheet);
-    baseData.obstacleTotal += baseData.diff;
     baseData.penaltySources["Beginner's Luck"] = `+${baseData.diff}`;
     const exp = 10 - (skill.data.data.aptitude || 1);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice- baseData.woundDice, baseData.diff);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice + baseData.miscDice.sum,
+        baseData.obstacleTotal);
     const rollSettings = getRootStatInfo(skill, sheet.actor);
+    baseData.obstacleTotal += baseData.diff;
 
     const roll = rollDice(
-        exp + baseData.bDice + baseData.aDice - baseData.woundDice,
+        exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum,
         rollSettings.open,
         rollSettings.shade
     );
@@ -77,7 +81,7 @@ async function learningRollCallback(
             rolls: roll.dice[0].rolls,
             difficultyGroup: dg,
             penaltySources: baseData.penaltySources,
-            dieSources,
+            dieSources: { ...dieSources, ...baseData.miscDice.entries },
             fateReroll: fr
         };
         const messageHtml = await renderTemplate(templates.learnMessage, data);

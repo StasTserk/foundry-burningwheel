@@ -40,4 +40,24 @@
         {{/each}}
     </div>
     {{/if}}
+    {{#if optionalDiceModifiers}}
+    <hr>
+    <h2>Other Dice Modifiers</h2>
+    <div class="checkbox-grid">
+        {{#each optionalDiceModifiers as |mod|}}
+        <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
+        <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if optionalObModifiers}}
+    <hr>
+    <h2>Other Obstacle Modifiers</h2>
+    <div class="checkbox-grid">
+        {{#each optionalObModifiers as |mod|}}
+        <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
+        <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
 </form>

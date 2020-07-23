@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "./actor.js";
+import { Ability, BWActor, RollModifier, TracksTests } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as helpers from "./helpers.js";
 import { Skill, SkillDataRoot } from "./items/item.js";
@@ -90,13 +90,16 @@ export function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet )
     const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
-    const penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
+    let penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
+    const miscDice = extractMiscDice(html);
+    const miscObs = extractMiscObs(html);
+    penaltySources = {...penaltySources, ...miscObs.entries};
     const diff = extractNumber(html, "difficulty");
     const aDice = extractNumber(html, "arthaDice");
     const bDice = extractNumber(html, "bonusDice");
-    const obstacleTotal = diff + obPenalty;
+    const obstacleTotal = diff + obPenalty + miscObs.sum;
 
-    return { woundDice, obPenalty, diff, aDice, bDice, penaltySources, obstacleTotal };
+    return { woundDice, obPenalty, diff, aDice, bDice, miscDice, penaltySources, obstacleTotal };
 }
 
 export function extractSelectString(html: JQuery<HTMLElement>, name: string): string | undefined {
@@ -115,12 +118,34 @@ export function extractNumber(html: JQuery<HTMLElement>, name: string): number {
     return parseInt(extractString(html, name) || "0", 10);
 }
 
-export function extractForksValue(html: JQuery<HTMLElement>, name: string): number {
+export function extractCheckboxValue(html: JQuery<HTMLElement>, name: string): number {
     let sum: number = 0;
     html.find(`input[name=\"${name}\"]:checked`).each((_i, v) => {
         sum += parseInt(v.getAttribute("value") || "", 10);
     });
     return sum;
+}
+
+export function extractMiscDice(html: JQuery<HTMLElement>): { sum: number, entries: {[i:string]: string} } {
+    let sum = 0;
+    const entries = {};
+    html.find('input[name="miscDice"]:checked').each((_i, v) => {
+        const mod = parseInt(v.getAttribute("value") || "", 10);
+        sum += mod;
+        entries[v.dataset.name || "Misc"] = mod >= 0 ? `+${mod}` : `${mod}`;
+    });
+    return { sum, entries };
+}
+
+export function extractMiscObs(html: JQuery<HTMLElement>): { sum: number, entries: {[i:string]: string} } {
+    let sum = 0;
+    const entries = {};
+    html.find('input[name="miscObs"]:checked').each((_i, v) => {
+        const mod = parseInt(v.getAttribute("value") || "", 10);
+        sum += mod;
+        entries[v.dataset.name || "Misc"] = mod >= 0 ? `+${mod}` : `${mod}`;
+    });
+    return { sum, entries };
 }
 
 export function rollDice(numDice: number, open: boolean = false, shade: helpers.ShadeString = 'B'): Roll | null {
@@ -213,6 +238,9 @@ export interface RollDialogData {
     bonusDice: number;
     woundDice?: number;
     obPenalty?: number;
+    diceModifiers?: RollModifier[];
+    optionalDiceModifiers?: RollModifier[];
+    optionalObModifiers?: RollModifier[];
 }
 
 export interface RollChatMessageData {

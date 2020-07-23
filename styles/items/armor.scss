@@ -6,7 +6,11 @@
     .armor-leg .armor-leg,
     .armor-head .armor-head,
     .armor-torso .armor-torso,
-    .armor-arm .armor-arm {
+    .armor-arm .armor-arm,
+    .armor-all .armor-leg,
+    .armor-all .armor-head,
+    .armor-all .armor-arm,
+    .armor-all .armor-torso {
         display: block;
     }
 }

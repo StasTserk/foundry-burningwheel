@@ -16,6 +16,7 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
+    const rollModifiers = sheet.actor.getRollModifiers(attrName);
     const data: AttributeDialogData = {
         name: `${attrName} Test`,
         difficulty: 3,
@@ -24,6 +25,8 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
         woundDice: attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined,
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat,
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
 
     const html = await renderTemplate(templates.attrDialog, data);
@@ -51,13 +54,14 @@ async function attrRollCallback(
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(stat.exp, 10);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice, baseData.diff);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice + baseData.miscDice.sum,
+        baseData.obstacleTotal);
 
-    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
+    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum;
     const roll = rollDice(numDice, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff + baseData.obPenalty);
+    const isSuccessful = parseInt(roll.result, 10) >= (baseData.obstacleTotal);
 
     const fateReroll = buildFateRerollData(sheet.actor, roll, accessor);
     const data: RollChatMessageData = {
@@ -70,7 +74,7 @@ async function attrRollCallback(
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
-        dieSources,
+        dieSources: { ...dieSources, ...baseData.miscDice.entries },
         fateReroll
     };
 

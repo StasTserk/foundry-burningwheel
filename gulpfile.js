@@ -24,7 +24,6 @@ function lintTs() {
         .pipe(tslint.report());
 }
 function deploy() {
-
     return gulp.src(["system.json", "package.json", "dist/template.json", "dist/**/*"])
         .pipe(gulp.dest(config.deployDest, { overwrite: true }));
 }

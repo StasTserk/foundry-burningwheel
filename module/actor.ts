@@ -127,6 +127,22 @@ export class BWActor extends Actor {
         this.update(updateData);
     }
 
+    private _addRollModifier(rollName: string, modifier: RollModifier, onlyNonZero: boolean = false) {
+        rollName = rollName.toLowerCase();
+        if (onlyNonZero && !modifier.dice && !modifier.obstacle) {
+            return;
+        }
+        if (this.data.rollModifiers[rollName]) {
+            this.data.rollModifiers[rollName].push(modifier);
+        } else {
+            this.data.rollModifiers[rollName] = [modifier];
+        }
+    }
+
+    getRollModifiers(rollName: string) {
+        return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(this.data.rollModifiers.all || []);
+    }
+
     private _calculateThresholds(mo: number, su: number, forte: number):
         { su: number, li: number, mi: number, se: number, tr: number, mo: number } {
         const maxGap = Math.ceil(forte / 2.0);
@@ -193,6 +209,7 @@ export class BWActor extends Actor {
     }
 
     private _prepareCharacterData() {
+        this.data.rollModifiers = {};
         this._calculatePtgs();
         this._calculateClumsyWeight();
         const woundDice = this.data.data.ptgs.woundDice || 0;
@@ -225,6 +242,9 @@ export class BWActor extends Actor {
             this.data.items.forEach(i => {
                 if (i.type === "skill" && !(i as unknown as SkillDataRoot).data.learning) {
                     this.data.forks.push(i);
+                    if (i.name === "Armor Training") {
+                        this.data.armorTrained = true;
+                    }
                 } else if (i.type === "reputation") {
                     const rep = i as unknown as ReputationRootData;
                     if (rep.data.infamous) {
@@ -279,7 +299,9 @@ export class BWActor extends Actor {
             throwingShootingPenalty: 0,
             stealthyPenalty: 0,
             swimmingPenalty: 0,
-            helmetObPenalty: 0
+            helmetObPenalty: 0,
+            untrainedHealth: 0,
+            untrainedAll: 0
         };
 
         this.data.items.filter(i => i.type === "armor" && (i as unknown as ArmorRootData).data.equipped)
@@ -287,13 +309,13 @@ export class BWActor extends Actor {
             const a = i as unknown as ArmorRootData;
             switch (a.data.location) {
                 case "helmet":
-                    clumsyWeight.helmetObPenalty = parseInt(a.data.perceptionObservationPenalty, 10);
+                    clumsyWeight.helmetObPenalty = parseInt(a.data.perceptionObservationPenalty, 10) || 0;
                     break;
                 case "torso":
                     clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
-                        parseInt(a.data.healthFortePenalty, 10));
+                        parseInt(a.data.healthFortePenalty, 10) || 0);
                     clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
-                        parseInt(a.data.stealthyPenalty, 10));
+                        parseInt(a.data.stealthyPenalty, 10) || 0);
                     break;
                 case "left arm": case "right arm":
                     clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
@@ -331,6 +353,34 @@ export class BWActor extends Actor {
         });
 
         this.data.data.clumsyWeight = clumsyWeight;
+        const baseModifier = { optional: true, label: "Clumsy Weight" };
+        this._addRollModifier("climbing", { obstacle: clumsyWeight.climbingPenalty, ...baseModifier }, true);
+        this._addRollModifier("perception", { obstacle: clumsyWeight.helmetObPenalty,  ...baseModifier }, true);
+        this._addRollModifier("observation", { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier }, true);
+        this._addRollModifier("shooting", { obstacle: clumsyWeight.throwingShootingPenalty,  ...baseModifier }, true);
+        this._addRollModifier("bow", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
+        this._addRollModifier("crossbow", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
+        this._addRollModifier("firearms", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
+        this._addRollModifier("agility", { obstacle: clumsyWeight.agilityPenalty, ...baseModifier }, true);
+        this._addRollModifier("speed", { dice: -clumsyWeight.speedDiePenalty, ...baseModifier }, true);
+        this._addRollModifier("speed", { obstacle: clumsyWeight.speedObPenalty, ...baseModifier }, true);
+        this._addRollModifier("health", { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier }, true);
+        this._addRollModifier("forte", { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier }, true);
+        this._addRollModifier("stealthy", { obstacle: clumsyWeight.stealthyPenalty, ...baseModifier }, true);
+        this._addRollModifier("swimming", { obstacle: clumsyWeight.swimmingPenalty, ...baseModifier }, true);
+        this._addRollModifier(
+            "all",
+            { obstacle: clumsyWeight.untrainedAll, label: "Untrained Armor", optional: true },
+            true);
+
+        this._addRollModifier(
+            "health",
+            { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
+            true);
+        this._addRollModifier(
+            "forte",
+            { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
+            true);
     }
 }
 
@@ -340,6 +390,8 @@ export interface CharacterDataRoot extends ActorData {
     data: BWCharacterData;
     items: Item[];
     forks: Skill[];
+    armorTrained: boolean;
+    rollModifiers: { [rollName:string]: RollModifier[]; };
 }
 
 interface BWCharacterData extends Common, DisplayProps, Ptgs {
@@ -453,4 +505,13 @@ interface ClumsyWeightData {
     stealthyPenalty: number;
     swimmingPenalty: number;
     helmetObPenalty: number;
+    untrainedHealth: number;
+    untrainedAll: number;
+}
+
+export interface RollModifier {
+    dice?: number;
+    obstacle?: number;
+    optional: boolean;
+    label: string;
 }

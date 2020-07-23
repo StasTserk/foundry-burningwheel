@@ -20,6 +20,7 @@ export async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActo
         circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
     }
     const actor = sheet.actor as BWActor;
+    const rollModifiers = sheet.actor.getRollModifiers("cicles");
     const data: CirclesDialogData = {
         name: target.dataset.rollableName || "Circles Test",
         difficulty: 3,
@@ -29,7 +30,9 @@ export async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActo
         stat,
         circlesBonus: actor.data.circlesBonus,
         circlesMalus: actor.data.circlesMalus,
-        circlesContact
+        circlesContact,
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
 
     const html = await renderTemplate(templates.circlesDialog, data);
@@ -70,7 +73,9 @@ async function circlesRollCallback(
         baseData.bDice ++;
     }
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum, stat.open, stat.shade);
+    const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum + baseData.miscDice.sum,
+        stat.open,
+        stat.shade);
     if (!roll) { return; }
 
     const fateReroll = buildFateRerollData(sheet.actor, roll, "data.circles");

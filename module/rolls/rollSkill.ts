@@ -6,7 +6,7 @@ import {
     buildDiceSourceObject,
     buildFateRerollData,
     extractBaseData,
-    extractForksValue,
+    extractCheckboxValue,
     getRollNameClass,
     RollChatMessageData,
     RollDialogData,
@@ -17,6 +17,7 @@ import {
 export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
+    const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
     const templateData: SkillDialogData = {
         name: skill.data.name,
@@ -26,7 +27,9 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         skill: skill.data.data,
-        forkOptions: actor.getForkOptions(skill.data.name)
+        forkOptions: actor.getForkOptions(skill.data.name),
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
     const html = await renderTemplate(templates.skillDialog, templateData);
     return new Promise(_resolve =>
@@ -47,14 +50,15 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
 async function skillRollCallback(
     dialogHtml: JQuery<HTMLElement>, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
-    const forks = extractForksValue(dialogHtml, "forkOptions");
+    const forks = extractCheckboxValue(dialogHtml, "forkOptions");
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(skill.data.data.exp, 10);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice, baseData.diff);
+    const dg = helpers.difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice + baseData.miscDice.sum,
+        baseData.obstacleTotal);
 
     const roll = rollDice(
-        exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice,
+        exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice + baseData.miscDice.sum,
         skill.data.data.open,
         skill.data.data.shade);
     if (!roll) { return; }
@@ -70,7 +74,7 @@ async function skillRollCallback(
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
-        dieSources,
+        dieSources: { ...dieSources, ...baseData.miscDice.entries },
         fateReroll
     };
 

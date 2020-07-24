@@ -98,10 +98,10 @@ export function getArmorLocationDatafromItem(i: ArmorRootData): { [k: string]: A
     const data: any = {};
     data.head = i.data.hasHelm && i;
     data.torso = i.data.hasTorso && i;
-    data["left arm"] = i.data.hasLeftArm && i;
-    data["right arm"] = i.data.hasRightArm && i;
-    data["right leg"] = i.data.hasRightLeg && i;
-    data["left leg"] = i.data.hasLeftLeg && i;
+    data.leftArm = i.data.hasLeftArm && i;
+    data.rightArm = i.data.hasRightArm && i;
+    data.rightLeg = i.data.hasRightLeg && i;
+    data.leftLeg = i.data.hasLeftLeg && i;
     data.shield = i.data.hasShield && i;
     return data;
 }

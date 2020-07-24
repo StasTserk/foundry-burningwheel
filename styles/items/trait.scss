@@ -1,0 +1,54 @@
+.trait-sheet {
+    .traits-die {
+        display: none;
+    }
+
+    select[value="die"] ~ .traits-die{
+        display: flex;
+    }
+
+    .trait-effect-section {
+        width: 100%;
+    }
+
+    .trait-effect-selection {
+        border-right: 1px solid black;
+        padding-right: 5px;
+        width: 10em;
+        place-content: space-evenly;
+    }
+
+    .trait-effect-details {
+        display: none;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 2fr) minmax(60px, 1fr) minmax(60px, 1fr));
+        border: 1px solid black;
+        border-top: 1px solid darkgrey;
+        border-left: 1px solid darkgrey;
+        padding: 1px 3px;
+        width: calc(100% - 11em);
+
+        .trait-input-double {
+            grid-column: 1 / 3;
+        }
+    }
+
+    .trait-effect-label {
+        text-align: center;
+        font-size: 1em;
+        background: linear-gradient(rgba(black, .05), rgba(black, 0.25));
+        border: 2px solid darkgrey;
+        border-radius: 3px;
+        padding: 1px 3px;
+        margin: 5px 0px;
+    }
+
+    .trait-effect-checkbox:checked + .trait-effect-label {
+        background: linear-gradient(rgba(green, .05), rgba(green, 0.25));
+        border: 2px solid #005500;
+        color: #005500;
+    }
+
+    .trait-effect-checkbox:checked ~ .trait-effect-details {
+        display: grid;
+    }
+}

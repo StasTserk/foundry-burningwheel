@@ -3,7 +3,6 @@ import { DisplayClass } from "./item.js";
 export class Armor extends Item {
     prepareData() {
         this.data.data.cssClass = "equipment-armor";
-        this.data.data.cssClass += " " + armorCssClassLookup[this.data.data.location];
     }
 
     data: ArmorRootData;
@@ -15,11 +14,25 @@ export interface ArmorRootData extends BaseEntityData {
 
 export interface ArmorData extends DisplayClass {
     quality: string;
-    location: string;
     dice: string; // as number
-    damage: string; // as number
     description: string;
     equipped: boolean;
+
+    // damage info
+    hasHelm: boolean;
+    damageHelm: 0;
+    hasTorso: boolean;
+    damageTorso: 0;
+    hasLeftArm: boolean;
+    damageLeftArm: 0;
+    hasRightArm: boolean;
+    damageRightArm: 0;
+    hasLeftLeg: boolean;
+    damageLeftLeg: 0;
+    hasRightLeg: boolean;
+    damageRightLeg: 0;
+    hasShield: boolean;
+    damageShield: 0;
 
     // clumsy weight info
     agilityPenalty: string; // as number
@@ -33,14 +46,3 @@ export interface ArmorData extends DisplayClass {
     perceptionObservationPenalty: string; // as number
     untrainedPenalty: string;
 }
-
-const armorCssClassLookup = {
-    "head": "armor-head",
-    "torso": "armor-torso",
-    "right arm": "armor-arm",
-    "left arm": "armor-arm",
-    "right leg": "armor-leg",
-    "left leg": "armor-leg",
-    "shield": "armor-shield",
-    "all": "armor-all"
-};

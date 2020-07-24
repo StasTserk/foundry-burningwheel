@@ -7,10 +7,6 @@
             <label for="number-dice">Armor Dice</label>
         </div>
         <div>
-            <input id="number-damage" type="number" name="data.damage" value="{{data.damage}}">
-            <label for="number-damage">Damage</label>
-        </div>
-        <div>
             <input id="checkbox-equipped" type="checkbox" name="data.equipped" {{ checked data.equipped}}>
             <label for="checkbox-equipped">Equipped</label>
         </div>
@@ -25,21 +21,6 @@
             <label for="select-quality">Armor Quality</label>
         </div>
         <div>
-            <select id="select-location" name="data.location" value="{{data.location}}">
-                {{#select data.location}}
-                <option value="all">All</option>
-                {{#each armorLocations as |title value|}}
-                <option value="{{value}}">{{title}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-            <label for="select-location">Armor Location</label>
-        </div>
-    </div>
-    <hr/>
-    <h3>Clumsy Weight</h3>
-    <div class="input-grid {{data.cssClass}}">
-        <div>
             <select id="select-untrained" name="data.untrainedPenalty" value="{{data.untrainedPenalty}}">
                 {{#select data.untrainedPenalty}}
                 <option value="none">None</option>
@@ -50,41 +31,123 @@
             </select>
             <label for="select-location">Untrained Penalty Type</label>
         </div>
-        <div class="clumsy-entry armor-arm">
-            <input id="agilityPenalty" type="number" name="data.agilityPenalty" value="{{data.agilityPenalty}}" placeholder="0">
-            <label for="agilityPenalty">Agility Penalty</label>
+    </div>
+    <hr/>
+    <div class="flex-column">
+        <div class="armor-location-group flex-row">
+            <input type="checkbox" class="hidden armor-location-checkbox" id="checkbox-has-helm" name="data.hasHelm" {{checked data.hasHelm}}>
+            <div class="armor-location-selection flex-column">
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasHelm}}>
+                <label for="checkbox-has-helm" class="armor-location-label">Has Helm</label>
+            </div>
+            <div class="armor-location-details input-grid">
+                <div >
+                    <input id="damageHelm" type="number" name="data.damageHelm" value="{{data.damageHelm}}" placeholder="0">
+                    <label for="damageHelm">Helm Damage</label>
+                </div>
+                <div >
+                    <input id="perceptionObservationPenalty" type="number" name="data.perceptionObservationPenalty" value="{{data.perceptionObservationPenalty}}" placeholder="0">
+                    <label for="perceptionObservationPenalty">Perception/Observation Penalty</label>
+                </div>
+            </div>
         </div>
-        <div class="clumsy-entry armor-leg">
-            <input id="speedObPenalty" type="number" name="data.speedObPenalty" value="{{data.speedObPenalty}}" placeholder="0">
-            <label for="speedObPenalty">Speed Obstacle Penalty</label>
+        <div class="armor-location-group flex-row">
+            <input type="checkbox" class="hidden armor-location-checkbox" id="checkbox-has-torso" name="data.hasTorso" {{checked data.hasTorso}}>
+            <div class="armor-location-selection flex-column">
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasTorso}}>
+                <label for="checkbox-has-torso" class="armor-location-label">Has Torso</label>
+            </div>
+            <div class="armor-location-details input-grid">
+                <div>
+                    <input id="damageTorso" type="number" name="data.damageTorso" value="{{data.damageTorso}}" placeholder="0">
+                    <label for="damageTorso">Torso Damage</label>
+                </div>
+                <div>
+                    <input id="healthFortePenalty" type="number" name="data.healthFortePenalty" value="{{data.healthFortePenalty}}" placeholder="0">
+                    <label for="healthFortePenalty">Health/Forte Fatigue Penalty</label>
+                </div>
+                <div class="clumsy-entry armor-torso">
+                    <input id="stealthyPenalty" type="number" name="data.stealthyPenalty" value="{{data.stealthyPenalty}}" placeholder="0">
+                    <label for="stealthyPenalty">Stealthy Penalty</label>
+                </div>
+            </div>
         </div>
-        <div class="clumsy-entry armor-leg">
-            <input id="speedDiePenalty" type="number" name="data.speedDiePenalty" value="{{data.speedDiePenalty}}" placeholder="0">
-            <label for="speedDiePenalty">Speed Die Penalty</label>
+        <div class="armor-location-group flex-row">
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="checkbox-has-left-arm" name="data.hasLeftArm" {{checked data.hasLeftArm}}>
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="checkbox-has-right-arm" name="data.hasRightArm" {{checked data.hasRightArm}}>
+            <div class="armor-location-selection flex-column">
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasLeftArm}}>
+                <label for="checkbox-has-left-arm" class="armor-location-label">Has Left Arm</label>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasRightArm}}>
+                <label for="checkbox-has-right-arm" class="armor-location-label">Has Right Arm</label>
+            </div>
+            <div class="armor-location-details input-grid">
+                <div class="armor-damage-left">
+                    <input id="damageLeftArm" type="number" name="data.damageLeftArm" value="{{data.damageLeftArm}}" placeholder="0">
+                    <label for="damageLeftArm">Left Arm Damage</label>
+                </div>
+                <div class="armor-damage-right">
+                    <input id="damageRightArm" type="number" name="data.damageRightArm" value="{{data.damageRightArm}}" placeholder="0">
+                    <label for="damageRightArm">Right Arm Damage</label>
+                </div>
+                <div>
+                    <input id="agilityPenalty" type="number" name="data.agilityPenalty" value="{{data.agilityPenalty}}" placeholder="0">
+                    <label for="agilityPenalty">Agility Penalty</label>
+                </div>
+                <div>
+                    <input id="throwingShootingPenalty" type="number" name="data.throwingShootingPenalty" value="{{data.throwingShootingPenalty}}" placeholder="0">
+                    <label for="throwingShootingPenalty">Throwing/Shooting Penalty</label>
+                </div>
+            </div>
         </div>
-        <div class="clumsy-entry armor-leg">
-            <input id="climbingPnalty" type="number" name="data.climbingPnalty" value="{{data.climbingPnalty}}" placeholder="0">
-            <label for="climbingPnalty">Climbing Penalty</label>
+        <div class="armor-location-group flex-row">
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="checkbox-has-left-leg" name="data.hasLeftLeg" {{checked data.hasLeftLeg}}>
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="checkbox-has-right-leg" name="data.hasRightLeg" {{checked data.hasRightLeg}}>
+            <div class="armor-location-selection flex-column">
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasLeftLeg}}>
+                <label for="checkbox-has-left-leg" class="armor-location-label">Has Left Leg</label>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasRightLeg}}>
+                <label for="checkbox-has-right-leg" class="armor-location-label">Has Right Leg</label>
+            </div>
+            <div class="armor-location-details input-grid">
+                <div class="armor-damage-left">
+                    <input id="damageLeftLeg" type="number" name="data.damageLeftLeg" value="{{data.damageLeftLeg}}" placeholder="0">
+                    <label for="damageLeftLeg">Left Leg Damage</label>
+                </div>
+                <div class="armor-damage-right">
+                    <input id="damageRightLeg" type="number" name="data.damageRightLeg" value="{{data.damageRightLeg}}" placeholder="0">
+                    <label for="damageRightLeg">Right Leg Damage</label>
+                </div>
+                <div>
+                    <input id="speedObPenalty" type="number" name="data.speedObPenalty" value="{{data.speedObPenalty}}" placeholder="0">
+                    <label for="speedObPenalty">Speed Obstacle Penalty</label>
+                </div>
+                <div>
+                    <input id="speedDiePenalty" type="number" name="data.speedDiePenalty" value="{{data.speedDiePenalty}}" placeholder="0">
+                    <label for="speedDiePenalty">Speed Die Penalty</label>
+                </div>
+                <div>
+                    <input id="climbingPnalty" type="number" name="data.climbingPnalty" value="{{data.climbingPnalty}}" placeholder="0">
+                    <label for="climbingPnalty">Climbing Penalty</label>
+                </div>
+                <div>
+                    <input id="swimmingPenalty" type="number" name="data.swimmingPenalty" value="{{data.swimmingPenalty}}" placeholder="0">
+                    <label for="swimmingPenalty">Swimming Penalty</label>
+                </div>
+            </div>
         </div>
-        <div class="clumsy-entry armor-torso">
-            <input id="healthFortePenalty" type="number" name="data.healthFortePenalty" value="{{data.healthFortePenalty}}" placeholder="0">
-            <label for="healthFortePenalty">Health/Forte Fatigue Penalty</label>
-        </div>
-        <div class="clumsy-entry armor-arm">
-            <input id="throwingShootingPenalty" type="number" name="data.throwingShootingPenalty" value="{{data.throwingShootingPenalty}}" placeholder="0">
-            <label for="throwingShootingPenalty">Throwing/Shooting Penalty</label>
-        </div>
-        <div class="clumsy-entry armor-torso">
-            <input id="stealthyPenalty" type="number" name="data.stealthyPenalty" value="{{data.stealthyPenalty}}" placeholder="0">
-            <label for="stealthyPenalty">Stealthy Penalty</label>
-        </div>
-        <div class="clumsy-entry armor-leg">
-            <input id="swimmingPenalty" type="number" name="data.swimmingPenalty" value="{{data.swimmingPenalty}}" placeholder="0">
-            <label for="swimmingPenalty">Swimming Penalty</label>
-        </div>
-        <div class="clumsy-entry armor-head">
-            <input id="perceptionObservationPenalty" type="number" name="data.perceptionObservationPenalty" value="{{data.perceptionObservationPenalty}}" placeholder="0">
-            <label for="perceptionObservationPenalty">Perception/Observation Penalty</label>
+        <div class="armor-location-group flex-row">
+            <input type="checkbox" class="hidden armor-location-checkbox" id="checkbox-has-shield" name="data.hasShield" {{checked data.hasShield}}>
+            <div class="armor-location-selection flex-column">
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasShield}}>
+                <label for="checkbox-has-shield" class="armor-location-label">Has Shield</label>
+            </div>
+            <div class="armor-location-details input-grid">
+                <div >
+                    <input id="damageShield" type="number" name="data.damageShield" value="{{data.damageShield}}" placeholder="0">
+                    <label for="damageShield">Shield Damage</label>
+                </div>
+            </div>
         </div>
     </div>
     <hr/>

@@ -201,9 +201,21 @@ Item:
     description: ''
   armor:
     quality: run-of-the-mill
-    location: ''
     dice: 1
-    damage: 0
+    hasHelm: false
+    damageHelm: 0
+    hasTorso: false
+    damageTorso: 0
+    hasLeftArm: false
+    damageLeftArm: 0
+    hasRightArm: false
+    damageRightArm: 0
+    hasLeftLeg: false
+    damageLeftLeg: 0
+    hasRightLeg: false
+    damageRightLeg: 0
+    hasShield: false
+    damageShield: 0
     description: ''
     equipped: false
     untrainedPenalty: 'none'

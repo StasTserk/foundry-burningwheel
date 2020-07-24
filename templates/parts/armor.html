@@ -3,10 +3,38 @@
     <div class="armor-header">Dmg</div>
     <div class="armor-header">Location</div>
     <div class="armor-header">Type</div>
-    {{#each armor as |a key|}}
-        <div class="armor-row">{{a.data.dice}}</div>
-        <div class="armor-row">{{a.data.damage}}</div>
-        <div class="armor-row">{{titlecase key}}</div>
-        <div class="armor-row">{{a.name}}</div>
-    {{/each}}
+    <div class="armor-row">{{armor.head.data.dice}}</div>
+    <div class="armor-row">{{armor.head.data.damageHelm}}</div>
+    <div class="armor-row">Head</div>
+    <div class="armor-row">{{armor.head.name}}</div>
+
+    <div class="armor-row">{{armor.torso.data.dice}}</div>
+    <div class="armor-row">{{armor.torso.data.damageTorso}}</div>
+    <div class="armor-row">Torso</div>
+    <div class="armor-row">{{armor.torso.name}}</div>
+    
+    <div class="armor-row">{{armor.leftArm.data.dice}}</div>
+    <div class="armor-row">{{armor.leftArm.data.damageLeftArm}}</div>
+    <div class="armor-row">Left Arm</div>
+    <div class="armor-row">{{armor.leftArm.name}}</div>
+    
+    <div class="armor-row">{{armor.rightArm.data.dice}}</div>
+    <div class="armor-row">{{armor.rightArm.data.damageRightArm}}</div>
+    <div class="armor-row">Right Arm</div>
+    <div class="armor-row">{{armor.rightArm.name}}</div>
+    
+    <div class="armor-row">{{armor.leftLeg.data.dice}}</div>
+    <div class="armor-row">{{armor.leftLeg.data.damageLeftLeg}}</div>
+    <div class="armor-row">Left Leg</div>
+    <div class="armor-row">{{armor.leftLeg.name}}</div>
+    
+    <div class="armor-row">{{armor.rightLeg.data.dice}}</div>
+    <div class="armor-row">{{armor.rightLeg.data.damageRightLeg}}</div>
+    <div class="armor-row">Right Leg</div>
+    <div class="armor-row">{{armor.rightLeg.name}}</div>
+    
+    <div class="armor-row">{{armor.shield.data.dice}}</div>
+    <div class="armor-row">{{armor.shield.data.damageShield}}</div>
+    <div class="armor-row">Shield</div>
+    <div class="armor-row">{{armor.shield.name}}</div>
 </div>

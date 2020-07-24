@@ -355,6 +355,20 @@
                     <label class="clumsy-label">Perception / Observation</label>
                     <div class="clumsy-value">+{{data.clumsyWeight.helmetObPenalty}} Ob</div>
                 </div>
+                {{#unless data.armorTrained}}
+                {{#if data.clumsyWeight.untrainedHealth}}
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Untrained Health/Forte Penalty</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.untrainedHealth}} Ob</div>
+                </div>
+                {{/if}}
+                {{#if data.clumsyWeight.untrainedAll}}
+                <div class="clumsy-item flex-row">
+                    <label class="clumsy-label">Untrained Global Penalty</label>
+                    <div class="clumsy-value">+{{data.clumsyWeight.untrainedAll}} Ob</div>
+                </div>
+                {{/if}}
+                {{/unless}}
             </div>
         </div>
     </div>

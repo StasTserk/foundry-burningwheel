@@ -31,6 +31,7 @@ export interface ArmorData extends DisplayClass {
     stealthyPenalty: string; // as number
     swimmingPenalty: string; // as number
     perceptionObservationPenalty: string; // as number
+    untrainedPenalty: string;
 }
 
 const armorCssClassLookup = {

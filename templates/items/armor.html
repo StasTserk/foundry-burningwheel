@@ -39,6 +39,17 @@
     <hr/>
     <h3>Clumsy Weight</h3>
     <div class="input-grid {{data.cssClass}}">
+        <div>
+            <select id="select-untrained" name="data.untrainedPenalty" value="{{data.untrainedPenalty}}">
+                {{#select data.untrainedPenalty}}
+                <option value="none">None</option>
+                <option value="light">Light</option>
+                <option value="heavy">Heavy</option>
+                <option value="plate">Plate</option>
+                {{/select}}
+            </select>
+            <label for="select-location">Untrained Penalty Type</label>
+        </div>
         <div class="clumsy-entry armor-arm">
             <input id="agilityPenalty" type="number" name="data.agilityPenalty" value="{{data.agilityPenalty}}" placeholder="0">
             <label for="agilityPenalty">Agility Penalty</label>

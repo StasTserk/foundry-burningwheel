@@ -350,6 +350,17 @@ export class BWActor extends Actor {
                     }
                     break;
             }
+            if (a.data.location !== "shield" && !this.data.armorTrained) {
+                if (a.data.untrainedPenalty === "plate") {
+                    clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 2);
+                    clumsyWeight.untrainedHealth = 0;
+                } else if (a.data.untrainedPenalty === "heavy") {
+                    clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 1);
+                    clumsyWeight.untrainedHealth = 0;
+                } else if (a.data.untrainedPenalty === "light" && clumsyWeight.untrainedAll === 0) {
+                    clumsyWeight.untrainedHealth = 1;
+                }
+            }
         });
 
         this.data.data.clumsyWeight = clumsyWeight;

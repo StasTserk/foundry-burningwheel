@@ -1,5 +1,5 @@
 import { TracksTests } from "./actor.js";
-import { DisplayClass, Skill } from "./items/item.js";
+import { ArmorRootData, DisplayClass, Skill } from "./items/item.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0) {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
@@ -92,6 +92,18 @@ export function difficultyGroup(dice: number, difficulty: number): TestString {
     }
 
      return (dice - spread >= difficulty) ? "Routine" : "Difficult";
+}
+
+export function getArmorLocationDatafromItem(i: ArmorRootData): { [k: string]: ArmorRootData } {
+    const data: any = {};
+    data.head = i.data.hasHelm && i;
+    data.torso = i.data.hasTorso && i;
+    data["left arm"] = i.data.hasLeftArm && i;
+    data["right arm"] = i.data.hasRightArm && i;
+    data["right leg"] = i.data.hasRightLeg && i;
+    data["left leg"] = i.data.hasLeftLeg && i;
+    data.shield = i.data.hasShield && i;
+    return data;
 }
 
 const AbilityLookup = {

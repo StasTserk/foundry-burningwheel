@@ -1,5 +1,6 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
+import * as helpers from "./helpers.js";
 import {
     Armor,
     ArmorRootData,
@@ -103,11 +104,11 @@ export class BWCharacterSheet extends BWActorSheet {
     }
 
     getArmorDictionary(armorItems: Item[]): { [key: string]: Item | null; } {
-        const armorLocs: { [key: string]: Armor | null; } = {};
+        let armorLocs: { [key: string]: Armor | null; } = {};
         constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
         armorItems.forEach(i =>
-            armorLocs[(i as any as ArmorRootData).data.location] =
-            (i as any as ArmorRootData).data.equipped ? i : null);
+            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDatafromItem(i as unknown as ArmorRootData)} as any
+        );
         return armorLocs;
     }
 

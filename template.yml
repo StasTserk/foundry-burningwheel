@@ -133,9 +133,22 @@ Item:
     text: ''
   trait:
     name: ''
-    traittype: ''
+    traittype: character
     text: ''
     collapsed: true
+    hasDieModifier: false
+    dieModifier: 0
+    dieModifierTarget: ''
+    hasObModifier: false
+    obModifierTarget: ''
+    obModifier: 0
+    addsReputation: false
+    reputationName: ''
+    reputationDice: 0
+    reputationInfamous: false
+    addsAffiliation: false
+    affiliationName: ''
+    affiliationDice: 0
   skill:
     name: ''
     shade: B

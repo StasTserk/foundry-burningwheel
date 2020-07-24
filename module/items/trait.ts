@@ -12,4 +12,21 @@ export class Trait extends Item {
 export interface TraitData extends BaseEntityData {
     traittype: string;
     text: string;
+
+    hasDieModifier: boolean;
+    dieModifier: string; // as number
+    dieModifierTarget: string;
+
+    hasObModifier: boolean;
+    obModifierTarget: string;
+    obModifier: string; // as number
+
+    addsReputation: boolean;
+    reputationName: string;
+    reputationDice: string; // as number
+    reputationInfamous: boolean;
+
+    addsAffiliation: boolean;
+    affiliationName: string;
+    affiliationDice: string; // as number
 }

@@ -128,4 +128,4 @@ const prototypeList: { [i: string]: typeof Item} = {
     "posession": Possession,
     "property": Property,
     "reputation": Reputation
-}
+};

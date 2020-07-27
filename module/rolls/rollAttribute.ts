@@ -58,7 +58,7 @@ async function attrRollCallback(
         baseData.obstacleTotal);
 
     const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum;
-    const roll = rollDice(numDice, stat.open, stat.shade);
+    const roll = await rollDice(numDice, stat.open, stat.shade);
     if (!roll) { return; }
 
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.obstacleTotal);

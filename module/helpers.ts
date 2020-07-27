@@ -106,6 +106,10 @@ export function getArmorLocationDatafromItem(i: ArmorRootData): { [k: string]: A
     return data;
 }
 
+export async function sleep(ms: number) {
+    return new Promise(r => setTimeout(r, ms));
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

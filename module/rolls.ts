@@ -148,13 +148,20 @@ export function extractMiscObs(html: JQuery<HTMLElement>): { sum: number, entrie
     return { sum, entries };
 }
 
-export function rollDice(numDice: number, open: boolean = false, shade: helpers.ShadeString = 'B'): Roll | null {
+export async function rollDice(numDice: number, open: boolean = false, shade: helpers.ShadeString = 'B'):
+    Promise<Roll | undefined> {
     if (numDice <= 0) {
         getNoDiceErrorDialog(numDice);
-        return null;
+        return;
     } else {
         const tgt = shade === 'B' ? '3' : (shade === 'G' ? '2' : '1');
-        return new Roll(`${numDice}d6${open?'x':''}cs>${tgt}`).roll();
+        const roll = new Roll(`${numDice}d6${open?'x':''}cs>${tgt}`).roll();
+        if ((game as any).dice3d) {
+            return (game as any).dice3d.showForRoll(roll, game.user, true, null, false)
+                .then(_ => helpers.sleep(1000))
+                .then(_ => roll);
+        }
+        return new Promise(r => r(roll));
     }
 }
 

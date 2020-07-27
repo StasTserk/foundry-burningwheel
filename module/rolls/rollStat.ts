@@ -64,7 +64,7 @@ async function statRollCallback(
     const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
 
-    const roll = rollDice(
+    const roll = await rollDice(
         exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax + baseData.miscDice.sum,
         stat.open,
         stat.shade);

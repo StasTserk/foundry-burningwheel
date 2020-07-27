@@ -21,14 +21,14 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
 
     const successTarget = rollStat.shade === "B" ? 3 : (rollStat.shade === "G" ? 2 : 1);
 
-    let reroll: Roll | null;
+    let reroll: Roll | undefined;
     if (rollStat.open) {
         // only reroll dice if there were any traitors
         const numDice = rollArray.filter(r => r <= successTarget).length ? 1 : 0;
-        reroll = rollDice(numDice, false, rollStat.shade);
+        reroll = await rollDice(numDice, false, rollStat.shade);
     } else {
         const numDice = rollArray.filter(s => s === 6).length;
-        reroll = rollDice(numDice, true, rollStat.shade);
+        reroll = await rollDice(numDice, true, rollStat.shade);
     }
 
     if (!reroll) { return; }

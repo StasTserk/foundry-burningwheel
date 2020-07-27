@@ -60,7 +60,7 @@ async function learningRollCallback(
     const rollSettings = getRootStatInfo(skill, sheet.actor);
     baseData.obstacleTotal += baseData.diff;
 
-    const roll = rollDice(
+    const roll = await rollDice(
         exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum,
         rollSettings.open,
         rollSettings.shade

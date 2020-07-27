@@ -66,7 +66,7 @@ async function resourcesRollCallback(
         exp + baseData.bDice + cash + funds - tax,
         baseData.diff + baseData.obPenalty);
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice + cash + funds - tax, stat.open, stat.shade);
+    const roll = await rollDice(exp + baseData.bDice + baseData.aDice + cash + funds - tax, stat.open, stat.shade);
     if (!roll) { return; }
     const fateReroll = buildFateRerollData(sheet.actor, roll, "data.resources");
     const isSuccess = parseInt(roll.result, 10) >= baseData.obstacleTotal;

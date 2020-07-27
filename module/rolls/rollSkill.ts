@@ -57,7 +57,7 @@ async function skillRollCallback(
     const dg = helpers.difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
 
-    const roll = rollDice(
+    const roll = await rollDice(
         exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice + baseData.miscDice.sum,
         skill.data.data.open,
         skill.data.data.shade);

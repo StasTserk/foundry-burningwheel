@@ -90,7 +90,7 @@ async function ptgsRollCallback(
     const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
     const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
 
-    const roll = rollDice(numDice, stat.open, stat.shade);
+    const roll = await rollDice(numDice, stat.open, stat.shade);
     if (!roll) { return; }
 
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);

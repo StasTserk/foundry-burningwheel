@@ -73,7 +73,7 @@ async function circlesRollCallback(
         baseData.bDice ++;
     }
 
-    const roll = rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum + baseData.miscDice.sum,
+    const roll = await rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum + baseData.miscDice.sum,
         stat.open,
         stat.shade);
     if (!roll) { return; }

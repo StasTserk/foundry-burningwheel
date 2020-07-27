@@ -3,6 +3,29 @@ import { ArmorRootData, DisplayClass, ReputationRootData, Trait, TraitDataRoot }
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
+    processNewItem(item: BaseEntityData) {
+        if (item.type === "trait") {
+            const trait = item as TraitDataRoot;
+            if (trait.data.addsReputation) {
+                const repData: any = {};
+                repData["data.dice"] = trait.data.reputationDice;
+                repData["data.infamous"] = trait.data.reputationInfamous;
+                repData["data.description"] = trait.data.text;
+                repData.name = trait.data.reputationName;
+                repData.type = "reputation";
+                this.createOwnedItem(repData);
+            }
+            if (trait.data.addsAffiliation) {
+                const repData: any = {};
+                repData["data.dice"] = trait.data.affiliationDice;
+                repData["data.description"] = trait.data.text;
+                repData.name = trait.data.affiliationName;
+                repData.type = "affiliation";
+                this.createOwnedItem(repData);
+            }
+            console.log("New trait added " + trait);
+        }
+    }
     data!: CharacterDataRoot;
 
     prepareData() {

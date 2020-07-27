@@ -16,6 +16,7 @@ import {
 export async function handleResourcesRoll(_target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;
     const actor = sheet.actor as BWActor;
+    const rollModifiers = sheet.actor.getRollModifiers("resources");
     const data: ResourcesDialogData = {
         name: "Resources Test",
         difficulty: 3,
@@ -24,7 +25,9 @@ export async function handleResourcesRoll(_target: HTMLButtonElement, sheet: BWA
         tax: parseInt(actor.data.data.resourcesTax, 10),
         stat,
         cashDieOptions: Array.from(Array(parseInt(actor.data.data.cash, 10) || 0).keys()),
-        fundDieOptions: Array.from(Array(parseInt(actor.data.data.funds, 10) || 0).keys())
+        fundDieOptions: Array.from(Array(parseInt(actor.data.data.funds, 10) || 0).keys()),
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
 
     const html = await renderTemplate(templates.resourcesDialog, data);
@@ -62,11 +65,10 @@ async function resourcesRollCallback(
     if (funds) {
         dieSources["Fund Dice"] = `+${funds}`;
     }
-    const dg = helpers.difficultyGroup(
-        exp + baseData.bDice + cash + funds - tax,
-        baseData.diff + baseData.obPenalty);
+    const numDice = baseData.miscDice.sum + exp + baseData.bDice + baseData.aDice + cash + funds - tax;
+    const dg = helpers.difficultyGroup(numDice, baseData.obstacleTotal);
 
-    const roll = await rollDice(exp + baseData.bDice + baseData.aDice + cash + funds - tax, stat.open, stat.shade);
+    const roll = await rollDice(numDice + baseData.aDice, stat.open, stat.shade);
     if (!roll) { return; }
     const fateReroll = buildFateRerollData(sheet.actor, roll, "data.resources");
     const isSuccess = parseInt(roll.result, 10) >= baseData.obstacleTotal;
@@ -80,7 +82,7 @@ async function resourcesRollCallback(
         success: isSuccess,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
-        dieSources,
+        dieSources: { ...dieSources, ...baseData.miscDice.entries },
         penaltySources: baseData.penaltySources,
         fateReroll
     };

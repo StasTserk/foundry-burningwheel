@@ -80,3 +80,4 @@ function registerHelpers() {
 
 Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
+Hooks.on("createOwnedItem", (actor: BWActor, item: BaseEntityData, options: any) => actor.processNewItem(item));

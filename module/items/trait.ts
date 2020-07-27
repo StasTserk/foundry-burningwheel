@@ -1,3 +1,5 @@
+import { RollModifier } from "module/actor";
+
 export class Trait extends Item {
     prepareData() {
         this.traittype = this.data.data.traittype || "character";
@@ -6,10 +8,30 @@ export class Trait extends Item {
 
     traittype: string;
     text: string;
+    data: TraitDataRoot;
+
+    static asRollDieModifier(trait: TraitDataRoot): RollModifier {
+        return {
+            label: trait.name,
+            optional: true,
+            dice: parseInt(trait.data.dieModifier, 10) || 0
+        };
+    }
+
+    static asRollObModifier(trait: TraitDataRoot): RollModifier {
+        return {
+            label: trait.name,
+            optional: true,
+            obstacle: parseInt(trait.data.obModifier, 10) || 0
+        };
+    }
+}
+
+export interface TraitDataRoot extends BaseEntityData {
     data: TraitData;
 }
 
-export interface TraitData extends BaseEntityData {
+export interface TraitData {
     traittype: string;
     text: string;
 

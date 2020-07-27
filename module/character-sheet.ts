@@ -11,7 +11,8 @@ import {
     RangedWeapon,
     Relationship,
     Skill,
-    Trait
+    Trait,
+    TraitDataRoot
 } from "./items/item.js";
 import { handleRollable } from "./rolls.js";
 
@@ -92,7 +93,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
         if (traits.length !== 0) {
             traits.forEach((trait) => {
-                switch (trait.data.traittype) {
+                switch ((trait as unknown as TraitDataRoot).data.traittype) {
                     case "character": traitLists.character.push(trait); break;
                     case "die": traitLists.die.push(trait); break;
                     default: traitLists.callon.push(trait); break;

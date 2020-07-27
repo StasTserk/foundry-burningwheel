@@ -1,5 +1,5 @@
 import { canAdvance, ShadeString, TestString, updateTestsNeeded } from "./helpers.js";
-import { ArmorRootData, DisplayClass, ReputationRootData } from "./items/item.js";
+import { ArmorRootData, DisplayClass, ReputationRootData, Trait, TraitDataRoot } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -240,20 +240,39 @@ export class BWActor extends Actor {
         this.data.circlesMalus = [];
         if (this.data.items) {
             this.data.items.forEach(i => {
-                if (i.type === "skill" && !(i as unknown as SkillDataRoot).data.learning) {
-                    this.data.forks.push(i);
-                    if (i.name === "Armor Training") {
-                        this.data.armorTrained = true;
-                    }
-                } else if (i.type === "reputation") {
-                    const rep = i as unknown as ReputationRootData;
-                    if (rep.data.infamous) {
-                        this.data.circlesMalus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
-                    } else {
-                        this.data.circlesBonus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
-                    }
-                } else if (i.type === "affiliation") {
-                    this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) });
+                switch (i.type) {
+                    case "skill":
+                        if (!(i as unknown as SkillDataRoot).data.learning) {
+                            this.data.forks.push(i);
+                        }
+                        if (i.name === "Armor Training") {
+                            this.data.armorTrained = true;
+                        }
+                        break;
+                    case "reputation":
+                        const rep = i as unknown as ReputationRootData;
+                        if (rep.data.infamous) {
+                            this.data.circlesMalus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
+                        } else {
+                            this.data.circlesBonus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
+                        }
+                        break;
+                    case "affiliation":
+                        this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) });
+                        break;
+                    case "trait":
+                        const t = i as unknown as TraitDataRoot;
+                        if (t.data.traittype === "die") {
+                            if (t.data.hasDieModifier && t.data.dieModifierTarget) {
+                                t.data.dieModifierTarget.split(',').forEach(target =>
+                                    this._addRollModifier(target.trim(), Trait.asRollDieModifier(t)));
+                            }
+                            if (t.data.hasObModifier && t.data.obModifierTarget) {
+                                t.data.obModifierTarget.split(',').forEach(target =>
+                                    this._addRollModifier(target.trim(), Trait.asRollObModifier(t)));
+                            }
+                        }
+                        break;
                 }
             });
         }

@@ -26,6 +26,7 @@ export class BWCharacterSheet extends BWActorSheet {
         const items = data.items;
         const skills: Skill[] = [];
         const training: Skill[] = [];
+        const learning: Skill[] = [];
         const relationships: Relationship[] = [];
         const equipment: Item[] = [];
         const melee: MeleeWeapon[] = [];
@@ -42,7 +43,8 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
                 case "skill":
-                    (i as any).data.learning ? training.push(i) : skills.push(i);
+                    (i as any).data.learning ? learning.push(i) : (
+                        (i as any).data.training ? training.push(i) : skills.push(i));
                     Skill.disableIfWounded.bind(i)(woundDice);
                     break;
                 case "relationship": relationships.push(i as Relationship); break;
@@ -80,6 +82,7 @@ export class BWCharacterSheet extends BWActorSheet {
         data.beliefs = beliefs;
         data.instincts = instincts;
         data.skills = skills.sort(byName);
+        data.learning = learning.sort(byName);
         data.training = training.sort(byName);
         data.relationships = relationships.sort(byName);
         data.equipment = equipment.sort(equipmentCompare);
@@ -124,7 +127,8 @@ export class BWCharacterSheet extends BWActorSheet {
             ".relationship > i",
             ".reputation > i",
             ".affiliation > i",
-            ".gear > div > i"
+            ".gear > div > i",
+            ".training-skill > div > i"
         ];
         html.find(selectors.join(", ")).click(e => this._manageItems(e));
 
@@ -208,6 +212,7 @@ interface CharacterSheetData extends ActorSheetData {
     beliefs: Belief[];
     instincts: Instinct[];
     skills: Skill[];
+    learning: Skill[];
     training: Skill[];
     traits: CharacterSheetTraits;
 }

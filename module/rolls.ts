@@ -62,12 +62,9 @@ export function buildDiceSourceObject(
     return dieSources;
 }
 
-export function buildFateRerollData(actor: BWActor, roll: Roll, accessor?: string, itemId?: string):
-        FateRerollData | undefined {
-    if (!parseInt(actor.data.data.fate, 10)) {
-        return;
-    }
-    const coreData: FateRerollData = {
+export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, itemId?: string):
+        RerollData | undefined {
+    const coreData: RerollData = {
         dice: roll.dice[0].rolls.map(r => r.roll).join(","),
         actorId: actor._id,
     };
@@ -222,7 +219,7 @@ export const templates = {
     skillMessage: "systems/burningwheel/templates/chat/roll-message.html",
     statDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
     statMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    rerollChatMessage: "systems/burningwheel/templates/chat/fate-reroll-message.html",
+    rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.html",
     resourcesDialog: "systems/burningwheel/templates/chat/resources-dialog.html",
     resourcesMessage: "systems/burningwheel/templates/chat/roll-message.html"
 };
@@ -263,10 +260,11 @@ export interface RollChatMessageData {
 
     dieSources?: { [i: string]: string };
     penaltySources?: { [i: string]: string };
-    fateReroll?: FateRerollData;
+    fateReroll?: RerollData;
+    callons: RerollData[];
 }
 
-export interface FateRerollData {
+export interface RerollData {
     dice: string;
     actorId: string;
     type?: "stat" | "skill" | "learning";
@@ -274,4 +272,15 @@ export interface FateRerollData {
     ptgsAction?: string;
     itemId?: string;
     accessor?: string;
+    label?: string;
+}
+
+export interface RerollMessageData {
+    title: string;
+    rolls: { roll: number, success: boolean }[];
+    rerolls: { roll: number, success: boolean }[];
+    success: boolean;
+    successes: number;
+    newSuccesses: number;
+    obstacleTotal: number;
 }

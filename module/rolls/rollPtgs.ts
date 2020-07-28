@@ -4,9 +4,10 @@ import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
     getRollNameClass,
+    RerollData,
     RollChatMessageData,
     rollDice,
     templates
@@ -94,8 +95,11 @@ async function ptgsRollCallback(
     if (!roll) { return; }
 
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
-    const fateReroll = buildFateRerollData(sheet.actor, roll, "data.health");
+    const fateReroll = buildRerollData(sheet.actor, roll, "data.health");
     if (fateReroll) { fateReroll.ptgsAction = shrugging? "shrugging" : "gritting"; }
+    const callons: RerollData[] = sheet.actor.getCallons("health").map(s => {
+        return { label: s, ptgsAction: shrugging ? "shrugging" : "gritting", ...buildRerollData(sheet.actor, roll, "data.health") as RerollData };
+    });
 
     const data: RollChatMessageData = {
         name: shrugging ? "Shrug It Off Health" : "Grit Your Teeth Health",
@@ -107,7 +111,8 @@ async function ptgsRollCallback(
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         dieSources,
-        fateReroll
+        fateReroll,
+        callons
     };
     if (isSuccessful) {
         const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";

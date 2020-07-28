@@ -4,9 +4,10 @@ import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
     getRollNameClass,
+    RerollData,
     RollChatMessageData,
     rollDice,
     templates
@@ -63,7 +64,10 @@ async function attrRollCallback(
 
     const isSuccessful = parseInt(roll.result, 10) >= (baseData.obstacleTotal);
 
-    const fateReroll = buildFateRerollData(sheet.actor, roll, accessor);
+    const fateReroll = buildRerollData(sheet.actor, roll, accessor);
+    const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData(sheet.actor, roll, accessor) as RerollData };
+    });
     const data: RollChatMessageData = {
         name: `${name}`,
         successes: roll.result,
@@ -75,7 +79,8 @@ async function attrRollCallback(
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources: { ...dieSources, ...baseData.miscDice.entries },
-        fateReroll
+        fateReroll,
+        callons
     };
 
     sheet.actor.addAttributeTest(stat, name, accessor, dg, isSuccessful);

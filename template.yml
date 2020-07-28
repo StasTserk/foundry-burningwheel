@@ -149,6 +149,7 @@ Item:
     addsAffiliation: false
     affiliationName: ''
     affiliationDice: 0
+    callonTarget: ''
   skill:
     name: ''
     shade: B

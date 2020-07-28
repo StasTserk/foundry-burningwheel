@@ -4,10 +4,11 @@ import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
     extractSelectNumber,
     getRollNameClass,
+    RerollData,
     RollChatMessageData,
     rollDice,
     templates,
@@ -70,8 +71,11 @@ async function resourcesRollCallback(
 
     const roll = await rollDice(numDice + baseData.aDice, stat.open, stat.shade);
     if (!roll) { return; }
-    const fateReroll = buildFateRerollData(sheet.actor, roll, "data.resources");
+    const fateReroll = buildRerollData(sheet.actor, roll, "data.resources");
     const isSuccess = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+    const callons: RerollData[] = sheet.actor.getCallons("resources").map(s => {
+        return { label: s, ...buildRerollData(sheet.actor, roll, "data.resources") as RerollData };
+    });
 
     const data: RollChatMessageData = {
         name: 'Resources',
@@ -84,7 +88,8 @@ async function resourcesRollCallback(
         difficultyGroup: dg,
         dieSources: { ...dieSources, ...baseData.miscDice.entries },
         penaltySources: baseData.penaltySources,
-        fateReroll
+        fateReroll,
+        callons
     };
     const messageHtml = await renderTemplate(templates.resourcesMessage, data);
 

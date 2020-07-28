@@ -51,4 +51,6 @@ export interface TraitData {
     addsAffiliation: boolean;
     affiliationName: string;
     affiliationDice: string; // as number
+
+    callonTarget: string;
 }

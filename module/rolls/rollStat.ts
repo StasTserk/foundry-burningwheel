@@ -3,9 +3,10 @@ import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
     getRollNameClass,
+    RerollData,
     RollChatMessageData,
     RollDialogData,
     rollDice,
@@ -71,7 +72,10 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
 
-    const fateReroll = buildFateRerollData(sheet.actor, roll, accessor);
+    const fateReroll = buildRerollData(sheet.actor, roll, accessor);
+    const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData(sheet.actor, roll, accessor) as RerollData };
+    });
 
     const data: RollChatMessageData = {
         name: `${name}`,
@@ -84,7 +88,8 @@ async function statRollCallback(
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources: { ...dieSources, ...baseData.miscDice.entries },
-        fateReroll
+        fateReroll,
+        callons
     };
 
     sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful);

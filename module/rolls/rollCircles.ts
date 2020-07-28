@@ -5,9 +5,10 @@ import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
     getRollNameClass,
+    RerollData,
     RollChatMessageData,
     rollDice,
     templates
@@ -78,7 +79,10 @@ async function circlesRollCallback(
         stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildFateRerollData(sheet.actor, roll, "data.circles");
+    const fateReroll = buildRerollData(sheet.actor, roll, "data.circles");
+    const callons: RerollData[] = sheet.actor.getCallons("circles").map(s => {
+        return { label: s, ...buildRerollData(sheet.actor, roll, "data.circles") as RerollData };
+    });
 
     baseData.obstacleTotal += penaltyData.sum;
     const data: RollChatMessageData = {
@@ -92,7 +96,8 @@ async function circlesRollCallback(
         difficultyGroup: dg,
         dieSources,
         penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses },
-        fateReroll
+        fateReroll,
+        callons
     };
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
 

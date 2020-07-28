@@ -1,7 +1,7 @@
 import { TestString } from "module/helpers.js";
 import { Ability, BWActor, TracksTests } from "../actor.js";
 import { Skill, SkillData } from "../items/item.js";
-import { rollDice, templates } from "../rolls.js";
+import { RerollMessageData, rollDice, templates } from "../rolls.js";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
     const actor = game.actors.get(target.dataset.actorId || "") as BWActor;
@@ -97,7 +97,8 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         actor.update({ 'data.fate': actorFateCount -1 });
     }
 
-    const data: FateRerollMessageData = {
+    const data: RerollMessageData = {
+        title: "Fate Reroll",
         rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         rerolls: reroll.dice[0].rolls,
         successes,
@@ -110,14 +111,4 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         content: html,
         speaker: ChatMessage.getSpeaker({actor})
     });
-}
-
-
-export interface FateRerollMessageData {
-    rolls: { roll: number, success: boolean }[];
-    rerolls: { roll: number, success: boolean }[];
-    success: boolean;
-    successes: number;
-    newSuccesses: number;
-    obstacleTotal: number;
 }

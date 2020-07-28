@@ -1,9 +1,10 @@
 .trait-sheet {
-    .traits-die {
+    .traits-die, .traits-callon {
         display: none;
     }
 
-    select[value="die"] ~ .traits-die{
+    select[value="die"] ~ .traits-die,
+    select[value="call-on"] ~ .traits-callon {
         display: flex;
     }
 

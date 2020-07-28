@@ -4,10 +4,11 @@ import * as helpers from "../helpers.js";
 import { Skill } from "../items/item.js";
 import {
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
     extractCheckboxValue,
     getRollNameClass,
+    RerollData,
     RollChatMessageData,
     RollDialogData,
     rollDice,
@@ -62,7 +63,10 @@ async function skillRollCallback(
         skill.data.data.open,
         skill.data.data.shade);
     if (!roll) { return; }
-    const fateReroll = buildFateRerollData(sheet.actor, roll, undefined, skill._id);
+    const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
+    const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
+        return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
+    });
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,
@@ -75,7 +79,8 @@ async function skillRollCallback(
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources: { ...dieSources, ...baseData.miscDice.entries },
-        fateReroll
+        fateReroll,
+        callons
     };
 
     await helpers.addTestToSkill(skill, dg);

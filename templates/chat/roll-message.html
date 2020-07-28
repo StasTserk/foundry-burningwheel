@@ -53,21 +53,38 @@
         Failure!
     </div>
     {{/if}}
-    {{#if fateReroll}}
-    <div class="chat-fate-reroll roll-full-width">
-        <hr/>
-        <button class="chat-fate-button"
-            data-actor-id="{{fateReroll.actorId}}"
-            data-reroll-type="{{fateReroll.type}}"
-            data-dice="{{fateReroll.dice}}"
-            data-roll-name="{{name}}"
-            {{#if fateReroll.itemId}} data-item-id="{{fateReroll.itemId}}" {{/if}}
-            {{#if fateReroll.accessor}} data-accessor="{{fateReroll.accessor}}" {{/if}}
-            {{#if fateReroll.learningTarget}} data-learning-target="{{fateReroll.learningTarget}}" {{/if}}
-            {{#if fateReroll.ptgsAction}} data-ptgs-action="{{fateReroll.ptgsAction}}" {{/if}}
-            data-difficulty="{{obstacleTotal}}"
-            data-successes="{{successes}}"
-            data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>
+    <div class="reroll-buttons roll-full-width flex-column">
+        {{#each callons as |c|}}
+        <div class="chat-reroll">
+            <button class="chat-callon-button"
+                data-actor-id="{{c.actorId}}"
+                data-reroll-type="{{c.type}}"
+                data-dice="{{c.dice}}"
+                data-roll-name="{{../name}}"
+                {{#if c.itemId}} data-item-id="{{c.itemId}}" {{/if}}
+                {{#if c.accessor}} data-accessor="{{c.accessor}}" {{/if}}
+                {{#if c.learningTarget}} data-learning-target="{{c.learningTarget}}" {{/if}}
+                {{#if c.ptgsAction}} data-ptgs-action="{{c.ptgsAction}}" {{/if}}
+                data-difficulty="{{../obstacleTotal}}"
+                data-successes="{{../successes}}"
+                data-difficulty-group="{{../difficultyGroup}}">Call-on: {{c.label}}</button>
+        </div>
+        {{/each}}
+        {{#if fateReroll}}
+        <div class="chat-reroll">
+            <button class="chat-fate-button"
+                data-actor-id="{{fateReroll.actorId}}"
+                data-reroll-type="{{fateReroll.type}}"
+                data-dice="{{fateReroll.dice}}"
+                data-roll-name="{{name}}"
+                {{#if fateReroll.itemId}} data-item-id="{{fateReroll.itemId}}" {{/if}}
+                {{#if fateReroll.accessor}} data-accessor="{{fateReroll.accessor}}" {{/if}}
+                {{#if fateReroll.learningTarget}} data-learning-target="{{fateReroll.learningTarget}}" {{/if}}
+                {{#if fateReroll.ptgsAction}} data-ptgs-action="{{fateReroll.ptgsAction}}" {{/if}}
+                data-difficulty="{{obstacleTotal}}"
+                data-successes="{{successes}}"
+                data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>
+        </div>
+        {{/if}}
     </div>
-    {{/if}}
 </div>

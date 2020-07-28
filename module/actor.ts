@@ -61,12 +61,14 @@ export class BWActor extends Actor {
             difficultyGroup: TestString,
             isSuccessful: boolean,
             routinesNeeded: boolean = false) {
-        const onlySuccessCounts = name === "Resources" || name === "Faith" || name === "Perception";
+        name = name.toLowerCase();
+        const onlySuccessCounts = name === "resources" || name === "faith" || name === "perception";
 
-        if ((onlySuccessCounts && isSuccessful) || !onlySuccessCounts) {
-            this._addTestToStat(stat, accessor, difficultyGroup);
+        if (onlySuccessCounts && !isSuccessful) {
+            return;
         }
 
+        this._addTestToStat(stat, accessor, difficultyGroup);
         if (canAdvance(stat, routinesNeeded)) {
             Dialog.confirm({
                 title: `Advance ${name}?`,
@@ -222,6 +224,7 @@ export class BWActor extends Actor {
                 break;
         }
     }
+
     private async _advanceStat(accessor: string, newExp: number) {
         const updateData = {};
         updateData[`${accessor}.routine`] = 0;
@@ -233,6 +236,7 @@ export class BWActor extends Actor {
 
     private _prepareCharacterData() {
         this.data.rollModifiers = {};
+        this.data.callOns = {};
         this._calculatePtgs();
         this._calculateClumsyWeight();
         const woundDice = this.data.data.ptgs.woundDice || 0;
@@ -294,11 +298,30 @@ export class BWActor extends Actor {
                                 t.data.obModifierTarget.split(',').forEach(target =>
                                     this._addRollModifier(target.trim(), Trait.asRollObModifier(t)));
                             }
+                        } if (t.data.traittype === "call-on") {
+                            if (t.data.callonTarget) {
+                                this._addCallon(t.data.callonTarget, t.name);
+                            }
                         }
                         break;
                 }
             });
         }
+    }
+    private _addCallon(callonTarget: string, name: string) {
+        callonTarget.split(',').forEach(s => {
+            if (this.data.callOns[s.trim().toLowerCase()]) {
+                this.data.callOns[s.trim().toLowerCase()].push(name);
+            }
+            else {
+                this.data.callOns[s.trim().toLowerCase()] = [name];
+            }
+        });
+
+    }
+
+    getCallons(roll: string): string[] {
+        return this.data.callOns[roll.toLowerCase()] || [];
     }
 
     private _calculatePtgs() {
@@ -429,6 +452,7 @@ export interface CharacterDataRoot extends ActorData {
     forks: Skill[];
     armorTrained: boolean;
     rollModifiers: { [rollName:string]: RollModifier[]; };
+    callOns: { [rollName:string]: string[] };
 }
 
 interface BWCharacterData extends Common, DisplayProps, Ptgs {

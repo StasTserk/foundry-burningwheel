@@ -4,12 +4,12 @@ import { Skill } from "module/items/item.js";
 import * as helpers from "../helpers.js";
 import {
     buildDiceSourceObject,
-    buildFateRerollData,
+    buildRerollData,
     extractBaseData,
-    FateRerollData,
     getRollNameClass,
     getRootStatInfo,
     LearningDialogData,
+    RerollData,
     RollChatMessageData,
     rollDice,
     templates
@@ -67,10 +67,17 @@ async function learningRollCallback(
     );
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
-    const fateReroll = buildFateRerollData(sheet.actor, roll, undefined, skill._id);
+    const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
     if (fateReroll) { fateReroll!.type = "learning"; }
+    const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
+        return {
+            label: skill.name,
+            type: "learning",
+            ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData
+        };
+    });
 
-    const sendChatMessage = async (fr?: FateRerollData) => {
+    const sendChatMessage = async (fr?: RerollData) => {
         const data: RollChatMessageData = {
             name: `Beginner's Luck ${skill.data.name}`,
             successes: roll.result,
@@ -82,7 +89,8 @@ async function learningRollCallback(
             difficultyGroup: dg,
             penaltySources: baseData.penaltySources,
             dieSources: { ...dieSources, ...baseData.miscDice.entries },
-            fateReroll: fr
+            fateReroll: fr,
+            callons
         };
         const messageHtml = await renderTemplate(templates.learnMessage, data);
         return ChatMessage.create({
@@ -99,8 +107,8 @@ async function advanceLearning(
         owner: BWActor,
         difficultyGroup: helpers.TestString,
         isSuccessful: boolean,
-        fr: FateRerollData | undefined,
-        cb: (fr?: FateRerollData) => Promise<Entity>) {
+        fr: RerollData | undefined,
+        cb: (fr?: RerollData) => Promise<Entity>) {
     switch (difficultyGroup) {
         default:
             return advanceBaseStat(skill, owner, difficultyGroup, isSuccessful, fr, cb);
@@ -131,8 +139,8 @@ async function advanceBaseStat(
         owner: BWActor,
         difficultyGroup: helpers.TestString,
         isSuccessful: boolean,
-        fr: FateRerollData | undefined,
-        cb: (fr?: FateRerollData) => Promise<Entity>) {
+        fr: RerollData | undefined,
+        cb: (fr?: RerollData) => Promise<Entity>) {
     if (!skill.data.data.root2) {
         // we can immediately apply the test to the one root stat.
         const rootName = skill.data.data.root1;
@@ -179,8 +187,8 @@ async function advanceBaseStat(
 
 async function advanceLearningProgress(
         skill: Skill,
-        fr: FateRerollData | undefined,
-        cb: (fr?: FateRerollData) => Promise<Entity>) {
+        fr: RerollData | undefined,
+        cb: (fr?: RerollData) => Promise<Entity>) {
     const progress = parseInt(skill.data.data.learningProgress, 10);
     const requiredTests = skill.data.data.aptitude || 10;
 

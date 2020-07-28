@@ -102,4 +102,10 @@
     .roll-failure {
         background-color: rgba(red, .5);
     }
+
+    .reroll-buttons {
+        .chat-reroll > button {
+            line-height: 1.5em;
+        }
+    }
 }

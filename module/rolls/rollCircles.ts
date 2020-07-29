@@ -103,7 +103,16 @@ async function circlesRollCallback(
 
     // incremet relationship tracking values...
     if (contact && contact.data.data.building) {
-        contact.update({"data.buildingProgress": parseInt(contact.data.data.buildingProgress, 10) + 1 }, null);
+        const progress = (parseInt(contact.data.data.buildingProgress, 10) || 0) + 1;
+        contact.update({"data.buildingProgress": progress }, null);
+        if (progress >= (contact.data.data.aptitude || 10)) {
+            Dialog.confirm({
+                title: "Relationship Building Complete",
+                content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
+                yes: () => { contact.update({"data.building": false}, null); },
+                no: () => { return; }
+            });
+        }
     }
 
     sheet.actor.addAttributeTest(stat, "Circles", "data.circles", dg, true);

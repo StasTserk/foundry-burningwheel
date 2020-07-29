@@ -24,14 +24,14 @@
     </div>
     <div class="ptgs-scale flex-column">
         {{#multiboxes wound.amount}}
-        <input type="radio" id="{{@key}}-0" name="data.ptgs.{{@key}}.amount" value="0" checked="checked">
-        <label for="{{@key}}-0" class="wound-clear"><i class="fas fa-times-circle"></i></label>
-        <input type="radio" id="{{@key}}-1" name="data.ptgs.{{@key}}.amount" value="1">
-        <label for="{{@key}}-1" class="wound-tick wound-tick-1">&nbsp;</label>
-        <input type="radio" id="{{@key}}-2" name="data.ptgs.{{@key}}.amount" value="2">
-        <label for="{{@key}}-2" class="wound-tick wound-tick-2">&nbsp;</label>
-        <input type="radio" id="{{@key}}-3" name="data.ptgs.{{@key}}.amount" value="3">
-        <label for="{{@key}}-3" class="wound-tick wound-tick-3">&nbsp;</label>
+        <input type="radio" id="{{../id}}-{{@key}}-0" name="data.ptgs.{{@key}}.amount" value="0" checked="checked">
+        <label for="{{../id}}-{{@key}}-0" class="wound-clear"><i class="fas fa-times-circle"></i></label>
+        <input type="radio" id="{{../id}}-{{@key}}-1" name="data.ptgs.{{@key}}.amount" value="1">
+        <label for="{{../id}}-{{@key}}-1" class="wound-tick wound-tick-1">&nbsp;</label>
+        <input type="radio" id="{{../id}}-{{@key}}-2" name="data.ptgs.{{@key}}.amount" value="2">
+        <label for="{{../id}}-{{@key}}-2" class="wound-tick wound-tick-2">&nbsp;</label>
+        <input type="radio" id="{{../id}}-{{@key}}-3" name="data.ptgs.{{@key}}.amount" value="3">
+        <label for="{{../id}}-{{@key}}-3" class="wound-tick wound-tick-3">&nbsp;</label>
         {{/multiboxes}}
     </div>
 </div>

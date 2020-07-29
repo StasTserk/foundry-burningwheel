@@ -2,8 +2,8 @@
     <input type="text" name="name" value="{{item.name}}">
     <hr/>
     <div class="checkbox-grid">
-        <input id="checkbox-isWorkshop" type="checkbox" name="data.isWorkshop" {{checked data.isWorkshop}}>
-        <label for="checkbox-isWorkshop">Workshop</label>
+        <input id="{{item._id}}-checkbox-isWorkshop" type="checkbox" name="data.isWorkshop" {{checked data.isWorkshop}}>
+        <label for="{{item._id}}-checkbox-isWorkshop">Workshop</label>
     </div>
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>

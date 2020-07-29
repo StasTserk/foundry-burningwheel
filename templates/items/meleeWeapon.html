@@ -4,19 +4,19 @@
     <h2>Stats</h2>
     <div class="input-grid">
         <div>
-            <input id="number-power" type="number" name="data.power" value="{{data.power}}">
-            <label for="number-power">Power</label>
+            <input id="{{item._id}}-number-power" type="number" name="data.power" value="{{data.power}}">
+            <label for="{{item._id}}-number-power">Power</label>
         </div>
         <div>
-            <input id="number-add" type="number" name="data.add" value="{{data.add}}">
-            <label for="number-add">Add</label>
+            <input id="{{item._id}}-number-add" type="number" name="data.add" value="{{data.add}}">
+            <label for="{{item._id}}-number-add">Add</label>
         </div>
         <div>
-            <input id="number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
-            <label for="number-va">Vs. Armor</label>
+            <input id="{{item._id}}-number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
+            <label for="{{item._id}}-number-va">Vs. Armor</label>
         </div>
         <div>
-            <select id="select-speed" name="data.weaponSpeed" value="{{data.weaponSpeed}}">
+            <select id="{{item._id}}-select-speed" name="data.weaponSpeed" value="{{data.weaponSpeed}}">
                 {{#select data.weaponSpeed}}
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -25,36 +25,36 @@
                 <option value="x">X</option>
                 {{/select}}
             </select>
-            <label for="select-speed">Weapon Speed</label>
+            <label for="{{item._id}}-select-speed">Weapon Speed</label>
         </div>
         <div>
-            <select id="select-length" name="data.weaponLength" value="{{data.weaponLength}}">
+            <select id="{{item._id}}-select-length" name="data.weaponLength" value="{{data.weaponLength}}">
                 {{#select data.weaponLength}}
                 {{#each weaponLengths as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <label for="select-length">Weapon Length</label>
+            <label for="{{item._id}}-select-length">Weapon Length</label>
         </div>
         <div>
-            <select id="select-quality" name="data.quality" value="{{data.quality}}">
+            <select id="{{item._id}}-select-quality" name="data.quality" value="{{data.quality}}">
                 {{#select data.quality}}
                 {{#each weaponQualities as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <label for="select-quality">Weapon Quality</label>
+            <label for="{{item._id}}-select-quality">Weapon Quality</label>
         </div>
         <div>
-            <select id="select-handedness" name="data.handedness" value="{{data.handedness}}">
+            <select id="{{item._id}}-select-handedness" name="data.handedness" value="{{data.handedness}}">
                 {{#select data.handedness}}
                 <option value="one">One-handed</option>
                 <option value="two">Two-handed</option>
                 {{/select}}
             </select>
-            <label for="select-handedness">Handedness</label>
+            <label for="{{item._id}}-select-handedness">Handedness</label>
         </div>
     </div>
     <hr/>

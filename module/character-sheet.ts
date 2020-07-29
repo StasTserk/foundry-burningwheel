@@ -174,7 +174,7 @@ export class BWCharacterSheet extends BWActorSheet {
         return this.actor.createOwnedItem({ name: "Instinct 1", type: "instinct", data: {}})
             .then(() => this.actor.createOwnedItem({ name: "Instinct 2", type: "instinct", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Instinct 3", type: "instinct", data: {}}))
-            .then(() => this.actor.createOwnedItem({ name: "Instinct Speceial", type: "instinct", data: {}}))
+            .then(() => this.actor.createOwnedItem({ name: "Instinct Special", type: "instinct", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief 1", type: "belief", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief 2", type: "belief", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Belief 3", type: "belief", data: {}}))

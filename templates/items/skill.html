@@ -1,5 +1,6 @@
 <form autocomplete="off" class="skill-form flex-row">
     <input name="name" type="text" value="{{item.name}}">
+    <hr>
     <div class="skill-form-group">
         <label>
             Skill Type
@@ -12,10 +13,8 @@
             {{/select}}
         </select>
     </div>
-    <div class="skill-form-group half-width">
-        <label>
-            Root 1
-        </label>
+    <div class="skill-form-group">
+        <label>Root 1</label>
         <select name="data.root1" value={{data.root1}} >
             {{#select data.root1}}
             {{#each skillRoots as |root r|}}
@@ -23,9 +22,7 @@
             {{/each}}
             {{/select}}
         </select>
-        <label>
-            Root 2 (Optional)
-        </label>
+        <label>Root 2 (Optional)</label>
         <select name="data.root2" value={{data.root2}} >
             {{#select data.root2}}
             <option value="">None</option>
@@ -34,15 +31,18 @@
             {{/each}}
             {{/select}}
         </select>
+        <hr>
     </div>
     <div class="skill-form-group half-width">
-        <label>Aptitude</label>
-        <input type="number" name="data.aptitude" class="exponent" disabled value={{data.aptitude}}>
         <label>Learning</label>
         <input type="checkbox" name="data.learning" {{ checked data.learning }}>
+        <label>Aptitude</label>
+        <input type="number" name="data.aptitude" class="exponent" disabled value={{data.aptitude}}>
+    </div>
+    <div class="skill-form-group half-width">
         <label>Open</label>
         <input type="checkbox" name="data.open" {{ checked data.open }}>
-        <label>Training</label>
+        <label>Training Skill</label>
         <input type="checkbox" name="data.training" {{ checked data.training }}>
     </div>
     <textarea name="data.description">{{data.description}}</textarea>

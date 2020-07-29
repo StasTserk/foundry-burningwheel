@@ -1,13 +1,26 @@
 .skill-form {
     .skill-form-group {
+        display: grid;
+        grid-template-columns: repeat(4, min-content);
+        column-gap: 1em;
+        text-align: right;
+        margin-top: 5px;
+        font-size: 1em;
+        line-height: 1em;
+        
         label {
+            white-space: nowrap;
             display: inline-block;
-            width: 9em;
+            margin-left: 10px;
+            vertical-align: middle;
+            line-height: 1.75em;
+            width: min-content;
         }
         width: 100%;
 
         &.half-width {
             width: 50%;
+            grid-template-columns: repeat(2, min-content);
         }
     }
 }

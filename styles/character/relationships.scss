@@ -8,9 +8,19 @@
         }
     }
 
-    .item-title {
-        width: calc(100% - 2em - 41px);
+    .relationship {
+        .item-title {
+            width: calc(100% - 5em);
+        }
+    }
 
+    .reputation, .affiliation {
+        .item-title {
+            width: calc(100% - 2.6em);
+        }
+    }
+
+    .item-title {
         & ~ button.rollable {
             width: 2em;
             height: 2em;

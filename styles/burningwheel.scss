@@ -165,3 +165,9 @@ input.circle-input {
         float: left;
     }
 }
+
+textarea {
+    font-family: unset;
+    resize: vertical;
+    height: 8em;
+}

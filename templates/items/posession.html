@@ -2,10 +2,10 @@
     <input type="text" name="name" value="{{item.name}}">
     <hr/>
     <div class="checkbox-grid">
-        <input id="checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
-        <label for="checkbox-toolkit">Toolkit</label>
-        <input id="checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
-        <label for="checkbox-expended">Expended</label>
+        <input id="{{item._id}}-checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
+        <label for="{{item._id}}-checkbox-toolkit">Toolkit</label>
+        <input id="{{item._id}}-checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
+        <label for="{{item._id}}-checkbox-expended">Expended</label>
     </div>
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>

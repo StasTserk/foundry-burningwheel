@@ -3,59 +3,59 @@
     <hr/>
     <h2>Stats</h2>
     <div class="checkbox-grid">
-        <input id="checkbox-usePower" type="checkbox" name="data.usePower" {{checked data.usePower}}>
-        <label for="checkbox-usePower">Use Power</label>
-        <input id="checkbox-hasGonpowder" type="checkbox" name="data.hasGonpowder" {{checked data.hasGonpowder}}>
-        <label for="checkbox-hasGonpowder">Gunpowder Weapon</label>
+        <input id="{{item._id}}-checkbox-usePower" type="checkbox" name="data.usePower" {{checked data.usePower}}>
+        <label for="{{item._id}}-checkbox-usePower">Use Power</label>
+        <input id="{{item._id}}-checkbox-hasGonpowder" type="checkbox" name="data.hasGonpowder" {{checked data.hasGonpowder}}>
+        <label for="{{item._id}}-checkbox-hasGonpowder">Gunpowder Weapon</label>
     </div>
     <hr />
     {{#if data.usePower}}
     <div class="input-grid">
         <div>
-            <input id="number-power" type="number" name="data.powerBonus" value="{{data.powerBonus}}">
-            <label for="number-power">Power Bonus</label>
+            <input id="{{item._id}}-number-power" type="number" name="data.powerBonus" value="{{data.powerBonus}}">
+            <label for="{{item._id}}-number-power">Power Bonus</label>
         </div>
     </div>
     <hr />
     {{/if}}
     <div class="input-grid">
         <div>
-            <input id="number-incidental" type="number" name="data.incidental" value="{{data.incidental}}" {{ disabled data.usePower }} >
-            <label for="number-incidental">Incidental: {{ data.incidentalLabel }}</label>
+            <input id="{{item._id}}-number-incidental" type="number" name="data.incidental" value="{{data.incidental}}" {{ disabled data.usePower }} >
+            <label for="{{item._id}}-number-incidental">Incidental: {{ data.incidentalLabel }}</label>
         </div>
         <div>
-            <input id="number-mark" type="number" name="data.mark" value="{{data.mark}}" {{ disabled data.usePower }} >
-            <label for="number-mark">Mark: {{ data.markLabel }}</label>
+            <input id="{{item._id}}-number-mark" type="number" name="data.mark" value="{{data.mark}}" {{ disabled data.usePower }} >
+            <label for="{{item._id}}-number-mark">Mark: {{ data.markLabel }}</label>
         </div>
         <div>
-            <input id="number-superb" type="number" name="data.superb" value="{{data.superb}}" {{ disabled data.usePower }} >
-            <label for="number-superb">Superb: {{ data.superbLabel }}</label>
+            <input id="{{item._id}}-number-superb" type="number" name="data.superb" value="{{data.superb}}" {{ disabled data.usePower }} >
+            <label for="{{item._id}}-number-superb">Superb: {{ data.superbLabel }}</label>
         </div>
         <div>
-            <input id="number-incidentalMax" type="number" name="data.incidentalRoll" value="{{data.incidentalRoll}}" >
-            <label for="number-incidentalMax" title="Maximum DoF number that results in an incidental hit">Incidental Threshold</label>
+            <input id="{{item._id}}-number-incidentalMax" type="number" name="data.incidentalRoll" value="{{data.incidentalRoll}}" >
+            <label for="{{item._id}}-number-incidentalMax" title="Maximum DoF number that results in an incidental hit">Incidental Threshold</label>
         </div>
         <div>
-            <input id="number-markMax" type="number" name="data.markRoll" value="{{data.markRoll}}" >
-            <label for="number-markMax" title="Maximum DoF number that results in an mark hit">Mark Threshold</label>
+            <input id="{{item._id}}-number-markMax" type="number" name="data.markRoll" value="{{data.markRoll}}" >
+            <label for="{{item._id}}-number-markMax" title="Maximum DoF number that results in an mark hit">Mark Threshold</label>
         </div>
         <div>
-            <input id="number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
-            <label for="number-va">Vs. Armor</label>
+            <input id="{{item._id}}-number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
+            <label for="{{item._id}}-number-va">Vs. Armor</label>
         </div>
         <div>
-            <select id="select-quality" name="data.quality" value="{{data.quality}}">
+            <select id="{{item._id}}-select-quality" name="data.quality" value="{{data.quality}}">
                 {{#select data.quality}}
                 {{#each weaponQualities as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <label for="select-quality">Weapon Quality</label>
+            <label for="{{item._id}}-select-quality">Weapon Quality</label>
         </div>
         <div>
-            <input id="number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
-            <label for="number-rang">Max Range</label>
+            <input id="{{item._id}}-number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
+            <label for="{{item._id}}-number-rang">Max Range</label>
         </div>
     </div>
     <hr/>

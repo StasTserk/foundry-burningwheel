@@ -104,6 +104,7 @@ export class BWCharacterSheet extends BWActorSheet {
             });
         }
         data.traits = traitLists;
+        data.systemVersion = game.system.data.version;
         return data;
     }
 
@@ -216,6 +217,7 @@ interface CharacterSheetData extends ActorSheetData {
     learning: Skill[];
     training: Skill[];
     traits: CharacterSheetTraits;
+    systemVersion: string;
 }
 
 interface CharacterSheetTraits {

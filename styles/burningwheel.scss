@@ -156,7 +156,12 @@ input.circle-input {
 .footer {
     font-size: .7em;
     color: #333;
+    text-align: center;
+
     .footer-right {
         float: right;
+    }
+    .footer-left {
+        float: left;
     }
 }

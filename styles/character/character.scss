@@ -104,7 +104,7 @@
         column-gap: 5px;
         row-gap: 5px;
 
-        .rollable {
+        div.rollable {
             &.wound-disabled {
                 background-color: rgba(red, 0.15);
                 &:hover {
@@ -123,9 +123,35 @@
                 background-color: rgba(orange, 0.25);
             }
 
-            select.shade, input.exponent, button {
-                width: 3em;
+            button {
+                width: 2.25em;
+                height: calc(2em - 1px);
+                box-sizing: border-box;
+                padding: 0;
+                line-height: calc(2em - 3px);
+            }
+
+            input.exponent {
+                @include no-number-arrows;
+                background-color: rgba(black, .10);
+                border-radius: 0;
+                border: 0;
+                border-bottom: 1px solid black;
+                text-align: center;
+                width: 2em;
                 height: 2em;
+                margin-left: 2px;
+                font-weight: bold;
+            }
+
+            select.shade {
+                @include select-no-arrow;
+                height: 2em;
+                width: 2em;
+                border: 1px solid black;
+                border-radius: 0;
+                text-align-last: center;
+                font-weight: bold;
             }
         }
 
@@ -136,9 +162,11 @@
             padding: 1px 0px;
         }
         .rollable-name {
-            width: calc(100% - 10.5em);
+            width: calc(100% - 8em);
+            margin: 0;
             margin-right: 1em;
             font-size: 1.125em;
+            line-height: 1.75em;
         }
 
         .rollable-open-checkbox:checked + .rollable-open-toggle > label{
@@ -174,6 +202,8 @@
 
         .collapse-label {
             margin-right: 5px;
+            height: 1.75em;
+            padding-top: 5px;
         }
 
         .collapse-checkbox:checked + .collapse-label > i {

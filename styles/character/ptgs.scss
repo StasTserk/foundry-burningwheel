@@ -9,15 +9,7 @@
         border: 1px solid black;
     }
     select {
-        /* remove dropdown triangle for IE-10 */
-        &::-ms-expand {
-            display: none;
-        }
-        /* for Firefox */
-        -moz-appearance: none;
-        /* for Chrome */
-        -webkit-appearance: none;
-        border: 0;
+        @include select-no-arrow;
     }
 
     .ptgs-top {

@@ -14,6 +14,20 @@
             margin-top: .75em;
             margin-bottom: 0px;
             background-color: rgba(0,0,0,0.05);
+
+            .settings-gear {
+                font-size: .75em;
+                float: right;
+                margin: 5px 5px 0 0;
+                color: grey;
+                &:hover {
+                    color: red;
+                }
+            }
+
+            .settings-checkbox:checked ~ .settings-gear {
+                color: black;
+            }
         }
 
         text-align: center;

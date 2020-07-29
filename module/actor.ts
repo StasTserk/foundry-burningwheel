@@ -62,8 +62,7 @@ export class BWActor extends Actor {
             isSuccessful: boolean,
             routinesNeeded: boolean = false) {
         name = name.toLowerCase();
-        const onlySuccessCounts = name === "resources" || name === "faith" || name === "perception";
-
+        const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
         if (onlySuccessCounts && !isSuccessful) {
             return;
         }
@@ -235,6 +234,11 @@ export class BWActor extends Actor {
     }
 
     private _prepareCharacterData() {
+        if (!this.data.data.settings) {
+            this.data.data.settings = {
+                onlySuccessesCount: 'Faith, Resources, Perception'
+            } as any;
+        }
         this.data.rollModifiers = {};
         this.data.callOns = {};
         this._calculatePtgs();
@@ -253,14 +257,23 @@ export class BWActor extends Actor {
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
 
-        this.data.data.reflexesExp = Math.floor((parseInt(this.data.data.perception.exp, 10) +
+        const unRoundedReflexes =
+            (parseInt(this.data.data.perception.exp, 10) +
             parseInt(this.data.data.agility.exp, 10) +
-            parseInt(this.data.data.speed.exp, 10)) / 3) -
-            (this.data.data.ptgs.woundDice || 0);
+            parseInt(this.data.data.speed.exp, 10)) / 3.0;
+        this.data.data.reflexesExp = (this.data.data.settings.roundUpReflexes ?
+            Math.ceil(unRoundedReflexes) : Math.floor(unRoundedReflexes))
+            - (this.data.data.ptgs.woundDice || 0);
 
-        this.data.data.mortalWound = Math.floor((parseInt(this.data.data.power.exp, 10) +
-            parseInt(this.data.data.forte.exp, 10)) / 2 + 6);
+        const unRoundedMortalWound =
+            (parseInt(this.data.data.power.exp, 10) + parseInt(this.data.data.forte.exp, 10)) / 2 + 6;
+        this.data.data.mortalWound = this.data.data.settings.roundUpMortalWound ?
+            Math.ceil(unRoundedMortalWound) : Math.floor(unRoundedMortalWound);
         this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
+
+        this.data.successOnlyRolls = (this.data.data.settings.onlySuccessesCount || '')
+            .split(',')
+            .map(s => s.trim().toLowerCase());
 
         this.data.forks = [];
         this.data.circlesBonus = [];
@@ -269,11 +282,9 @@ export class BWActor extends Actor {
             this.data.items.forEach(i => {
                 switch (i.type) {
                     case "skill":
-                        if (!(i as unknown as SkillDataRoot).data.learning) {
+                        if (!(i as unknown as SkillDataRoot).data.learning &&
+                            !(i as unknown as SkillDataRoot).data.training) {
                             this.data.forks.push(i);
-                        }
-                        if (i.name === "Armor Training") {
-                            this.data.armorTrained = true;
                         }
                         break;
                     case "reputation":
@@ -308,6 +319,7 @@ export class BWActor extends Actor {
             });
         }
     }
+
     private _addCallon(callonTarget: string, name: string) {
         callonTarget.split(',').forEach(s => {
             if (this.data.callOns[s.trim().toLowerCase()]) {
@@ -344,7 +356,7 @@ export class BWActor extends Actor {
 
         if (suCount >= 3) {
             woundDice ++;
-        } else if (!this.data.data.ptgs.shrugging && suCount >= 1) {
+        } else if (!this.data.data.ptgs.shrugging && suCount >= 1 && !this.data.data.settings.ignoreSuperficialWounds) {
             this.data.data.ptgs.obPenalty = 1;
         }
         if (this.data.data.ptgs.gritting && woundDice) {
@@ -398,7 +410,7 @@ export class BWActor extends Actor {
 
 
             if ((a.data.hasHelm || a.data.hasLeftArm || a.data.hasRightArm || a.data.hasTorso
-                || a.data.hasLeftLeg || a.data.hasRightLeg ) && !this.data.armorTrained) {
+                || a.data.hasLeftLeg || a.data.hasRightLeg ) && !this.data.data.settings.armorTrained) {
                 // if this is more than just a shield
                 if (a.data.untrainedPenalty === "plate") {
                     clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 2);
@@ -453,6 +465,7 @@ export interface CharacterDataRoot extends ActorData {
     armorTrained: boolean;
     rollModifiers: { [rollName:string]: RollModifier[]; };
     callOns: { [rollName:string]: string[] };
+    successOnlyRolls: string[];
 }
 
 interface BWCharacterData extends Common, DisplayProps, Ptgs {
@@ -463,10 +476,7 @@ interface BWCharacterData extends Common, DisplayProps, Ptgs {
     homeland: string;
     features: string;
 
-    beliefs: Item[];
-    instincts: Item[];
-    traits: Item[];
-    skills: Skill[];
+    settings: ChraracterSettings;
 
     hesitation?: number;
     mortalWound?: number;
@@ -575,4 +585,15 @@ export interface RollModifier {
     obstacle?: number;
     optional: boolean;
     label: string;
+}
+
+export interface ChraracterSettings {
+    showSettings: boolean;
+
+    roundUpMortalWound: boolean;
+    roundUpHealth: boolean;
+    roundUpReflexes: boolean;
+    onlySuccessesCount: string;
+    armorTrained: boolean;
+    ignoreSuperficialWounds: boolean;
 }

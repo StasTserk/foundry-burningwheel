@@ -67,6 +67,7 @@ async function skillRollCallback(
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
         return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
     });
+    const success = parseInt(roll.result, 10) >= baseData.obstacleTotal;
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,
@@ -74,7 +75,7 @@ async function skillRollCallback(
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
-        success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
+        success,
         rolls: roll.dice[0].rolls,
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
@@ -82,9 +83,10 @@ async function skillRollCallback(
         fateReroll,
         callons
     };
-
-    await helpers.addTestToSkill(skill, dg);
-    skill = sheet.actor.getOwnedItem(skill._id) as Skill; // update skill with new data
+    if (success || sheet.actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
+        await helpers.addTestToSkill(skill, dg);
+        skill = sheet.actor.getOwnedItem(skill._id) as Skill; // update skill with new data
+    }
     if (helpers.canAdvance(skill.data.data)) {
         Dialog.confirm({
             title: `Advance ${skill.name}?`,

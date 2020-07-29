@@ -83,11 +83,20 @@ Actor:
       fate: 0
       persona: 0
       deeds: 0
+    settings:
+      settings:
+        showSettings: false
+        roundUpMortalWound: false
+        roundUpReflexes: false
+        onlySuccessesCount: 'Faith, Resources, Perception'
+        armorTrained: false
+        ignoreSuperficialWounds: false
   character:
     templates:
       - common
       - displayProps
       - ptgs
+      - settings
     stock: ''
     age: 18
     lifepathString: ''

@@ -1,10 +1,16 @@
 <form autocomplete="off" class="character">
+    {{#if data.settings.showSettings}}
+    {{> "systems/burningwheel/templates/parts/character-settings.html"}}
+    {{/if}}
     <div class="character-header flex-row">
         <div class="portrait">
             <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
         </div>
         <div class="section-index item-grid col-2">
-            <h2 class="section-header">Character Index</h2>
+            <h2 class="section-header">Character Index
+                <input id="{{actor._id}}-settings-checkbox" type="checkbox" class="hidden settings-checkbox" name="data.settings.showSettings" {{checked data.settings.showSettings}}>
+                <label class="settings-gear" for="{{actor._id}}-settings-checkbox"><i class="fas fa-cogs"></i></label>
+            </h2>
             <div>
                 <label for="character-name">Name</label>
                 <input id="character-name" type="text" name="name" value="{{actor.name}}">

@@ -110,6 +110,12 @@ export async function sleep(ms: number) {
     return new Promise(r => setTimeout(r, ms));
 }
 
+export function isStat(name: string) {
+    return ([
+        "forte", "power", "will", "perception", "agility", "speed"
+    ].indexOf(name.toLowerCase()) !== -1);
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

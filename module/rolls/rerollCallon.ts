@@ -1,5 +1,6 @@
 import { TestString } from "module/helpers.js";
 import { Ability, BWActor, TracksTests } from "../actor.js";
+import * as helpers from "../helpers.js";
 import { Skill, SkillData } from "../items/item.js";
 import { rollDice, templates } from "../rolls.js";
 
@@ -37,21 +38,23 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
                 updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
                 actor.update(updateData);
             }
-            if (name === "Faith" || name === "Resources") {
-                actor.addAttributeTest(
-                    getProperty(actor, `data.${accessor}`) as TracksTests,
-                    name,
-                    accessor,
-                    target.dataset.difficultyGroup as TestString,
-                    true);
-            }
-            if (name === "Perception") {
-                actor.addStatTest(
-                    getProperty(actor, `data.${accessor}`) as TracksTests,
-                    name,
-                    accessor,
-                    target.dataset.difficultyGroup as TestString,
-                    true);
+            if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
+                if (!helpers.isStat(name)) {
+                    actor.addAttributeTest(
+                        getProperty(actor, `data.${accessor}`) as TracksTests,
+                        name,
+                        accessor,
+                        target.dataset.difficultyGroup as TestString,
+                        true);
+                }
+                else {
+                    actor.addStatTest(
+                        getProperty(actor, `data.${accessor}`) as TracksTests,
+                        name,
+                        accessor,
+                        target.dataset.difficultyGroup as TestString,
+                        true);
+                }
             }
         }
 

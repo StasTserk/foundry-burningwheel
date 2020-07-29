@@ -128,7 +128,8 @@ export class BWCharacterSheet extends BWActorSheet {
             ".reputation > i",
             ".affiliation > i",
             ".gear > div > i",
-            ".training-skill > div > i"
+            ".training-skill > div > i",
+            ".setting-item-row > div > i"
         ];
         html.find(selectors.join(", ")).click(e => this._manageItems(e));
 

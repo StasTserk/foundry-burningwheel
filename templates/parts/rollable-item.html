@@ -1,6 +1,6 @@
 <div class="rollable flex-row {{stat.cssClass}}">
-    <input id="{{actor._id}}-{{statName}}Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
-    <label for="{{actor._id}}-{{statName}}Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
+    <input id="{{actor._id}}-{{namePrefix}}-Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
+    <label for="{{actor._id}}-{{namePrefix}}-Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     {{#if customName }}
     <input type="text" name="{{namePrefix}}.name" value="{{stat.name}}" class="rollable-name">
     {{else}}
@@ -21,16 +21,16 @@
             <div class="test-title">Routine: </div>
             <input class="tests-needed" name="{{namePrefix}}.routineNeeded" value="{{stat.routineNeeded}}" disabled>
             {{#multiboxes stat.routine needed=stat.routineNeeded}}
-            <input type="radio" id="{{actor._id}}-{{statName}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked">
-            <label for="{{actor._id}}-{{statName}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-routine-1" name="{{namePrefix}}.routine" value="1">
-            <label for="{{actor._id}}-{{statName}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-routine-2" name="{{namePrefix}}.routine" value="2">
-            <label for="{{actor._id}}-{{statName}}-routine-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-routine-3" name="{{namePrefix}}.routine" value="3">
-            <label for="{{actor._id}}-{{statName}}-routine-3" class="progress-tick progress-tick-3">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-routine-4" name="{{namePrefix}}.routine" value="4">
-            <label for="{{actor._id}}-{{statName}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked">
+            <label for="{{actor._id}}-{{namePrefix}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-routine-1" name="{{namePrefix}}.routine" value="1">
+            <label for="{{actor._id}}-{{namePrefix}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-routine-2" name="{{namePrefix}}.routine" value="2">
+            <label for="{{actor._id}}-{{namePrefix}}-routine-2" class="progress-tick progress-tick-2">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-routine-3" name="{{namePrefix}}.routine" value="3">
+            <label for="{{actor._id}}-{{namePrefix}}-routine-3" class="progress-tick progress-tick-3">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-routine-4" name="{{namePrefix}}.routine" value="4">
+            <label for="{{actor._id}}-{{namePrefix}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         {{/if}}
@@ -38,30 +38,30 @@
             <div class="test-title">Difficult:</div>
             <input class="tests-needed" name="{{namePrefix}}.difficultNeeded" value="{{stat.difficultNeeded}}" disabled>
             {{#multiboxes stat.difficult needed=stat.difficultNeeded}}
-            <input type="radio" id="{{actor._id}}-{{statName}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked">
-            <label for="{{actor._id}}-{{statName}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-difficult-1" name="{{namePrefix}}.difficult" value="1">
-            <label for="{{actor._id}}-{{statName}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-difficult-2" name="{{namePrefix}}.difficult" value="2">
-            <label for="{{actor._id}}-{{statName}}-difficult-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-difficult-3" name="{{namePrefix}}.difficult" value="3">
-            <label for="{{actor._id}}-{{statName}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-difficult-4" name="{{namePrefix}}.difficult" value="4">
-            <label for="{{actor._id}}-{{statName}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked">
+            <label for="{{actor._id}}-{{namePrefix}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-difficult-1" name="{{namePrefix}}.difficult" value="1">
+            <label for="{{actor._id}}-{{namePrefix}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-difficult-2" name="{{namePrefix}}.difficult" value="2">
+            <label for="{{actor._id}}-{{namePrefix}}-difficult-2" class="progress-tick progress-tick-2">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-difficult-3" name="{{namePrefix}}.difficult" value="3">
+            <label for="{{actor._id}}-{{namePrefix}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-difficult-4" name="{{namePrefix}}.difficult" value="4">
+            <label for="{{actor._id}}-{{namePrefix}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         <div class="test-tracking">
             <div class="test-title">Challenging:</div>
             <input class="tests-needed" name="{{namePrefix}}.challengingNeeded" value="{{stat.challengingNeeded}}" disabled>
             {{#multiboxes stat.challenging needed=stat.challengingNeeded}}
-            <input type="radio" id="{{actor._id}}-{{statName}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked">
-            <label for="{{actor._id}}-{{statName}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-challenging-1" name="{{namePrefix}}.challenging" value="1">
-            <label for="{{actor._id}}-{{statName}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-challenging-2" name="{{namePrefix}}.challenging" value="2">
-            <label for="{{actor._id}}-{{statName}}-challenging-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{actor._id}}-{{statName}}-challenging-3" name="{{namePrefix}}.challenging" value="3">
-            <label for="{{actor._id}}-{{statName}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked">
+            <label for="{{actor._id}}-{{namePrefix}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-challenging-1" name="{{namePrefix}}.challenging" value="1">
+            <label for="{{actor._id}}-{{namePrefix}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-challenging-2" name="{{namePrefix}}.challenging" value="2">
+            <label for="{{actor._id}}-{{namePrefix}}-challenging-2" class="progress-tick progress-tick-2">&nbsp;</label>
+            <input type="radio" id="{{actor._id}}-{{namePrefix}}-challenging-3" name="{{namePrefix}}.challenging" value="3">
+            <label for="{{actor._id}}-{{namePrefix}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
         <input type="number" class="circle-input" placeholder="F" title="Fate points spent on {{statName}}" name="{{namePrefix}}.fate" value="{{stat.fate}}">
@@ -73,9 +73,9 @@
             <input type="number" class="circle-input" name="{{taxName}}" value="{{taxValue}}">
         </div>
         {{/if}}
-        <input type="checkbox" class="hidden rollable-open-checkbox" id="{{actor._id}}-{{statName}}-open" name="{{namePrefix}}.open" {{checked stat.open}}>
+        <input type="checkbox" class="hidden rollable-open-checkbox" id="{{actor._id}}-{{namePrefix}}-open" name="{{namePrefix}}.open" {{checked stat.open}}>
         <div class="rollable-open-toggle">
-            <label for="{{actor._id}}-{{statName}}-open">Open</label>
+            <label for="{{actor._id}}-{{namePrefix}}-open">Open</label>
         </div>
     </div>
 </div>

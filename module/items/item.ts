@@ -8,6 +8,7 @@ import { Reputation } from "./reputation.js";
 import { AffiliationSheet } from "./sheets/affiliation-sheet.js";
 import { ArmorSheet } from "./sheets/armor-sheet.js";
 import { BeliefSheet } from "./sheets/belief-sheet.js";
+import { InstinctSheet } from "./sheets/instinct-sheet.js";
 import { MeleeWeaponSheet } from "./sheets/melee-sheet.js";
 import { PosessionSheet } from "./sheets/posession-sheet.js";
 import { PropertySheet } from "./sheets/property-sheet.js";
@@ -31,6 +32,7 @@ export * from "./reputation.js";
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
 export * from "./sheets/belief-sheet.js";
+export * from "./sheets/instinct-sheet.js";
 export * from "./sheets/melee-sheet.js";
 export * from "./sheets/posession-sheet.js";
 export * from "./sheets/property-sheet.js";
@@ -65,6 +67,10 @@ export function RegisterItemSheets() {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("burningwheel", BeliefSheet, {
         types: ["belief"],
+        makeDefault: true
+    });
+    Items.registerSheet("burningwheel", InstinctSheet, {
+        types: ["instinct"],
         makeDefault: true
     });
     Items.registerSheet("burningwheel", TraitSheet, {

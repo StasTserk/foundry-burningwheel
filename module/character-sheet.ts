@@ -153,7 +153,7 @@ export class BWCharacterSheet extends BWActorSheet {
                 .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
 
             // cache the current list of skills since it'll be used after for the actual skill data
-            (game as any).burningwheel.skills = skills;
+            game.burningwheel.skills = skills;
             console.log(skills);
             const html = await renderTemplate("systems/burningwheel/templates/chat/new-skill-dialog.html", { skills });
             const dialog = new Dialog({
@@ -166,7 +166,7 @@ export class BWCharacterSheet extends BWActorSheet {
                             const skillData: SkillDataRoot[] = [];
                             dialogHtml.find('input:checked')
                                 .each((_, element: HTMLInputElement) => {
-                                    const skillRoot: SkillDataRoot = (game as any).burningwheel.skills
+                                    const skillRoot: SkillDataRoot = game.burningwheel.skills
                                         .find((s: Skill) => s._id === element.value).data;
                                     skillRoot.data.learning = true;
                                     skillData.push(skillRoot);

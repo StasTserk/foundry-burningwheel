@@ -144,4 +144,4 @@ export type ItemType =
     "belief" | "instinct" | "trait" |
     "skill" | "armor" | "posession" |
     "property" | "relationship" | "melee weapon" |
-    "ranged weapon" | "reputation";
+    "ranged weapon" | "reputation" | "affiliation";

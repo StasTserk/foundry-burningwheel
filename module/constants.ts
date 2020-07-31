@@ -1,3 +1,4 @@
+import { NewItemData } from "./actor.js";
 import { toDictionary } from "./helpers.js";
 import { MeleeWeaponData } from "./items/meleeWeapon.js";
 
@@ -21,7 +22,7 @@ const fistData: MeleeWeaponData = {
     baseOb: "1",
     weaponSpeed: "X"
 };
-export const bareFistData = {
+export const bareFistData: NewItemData = {
     name: "Bare Fist",
     type: "melee weapon",
     data: fistData

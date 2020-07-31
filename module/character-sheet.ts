@@ -1,3 +1,4 @@
+import { BWActor, NewItemData } from "./actor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
 import * as helpers from "./helpers.js";
@@ -11,8 +12,9 @@ import {
     RangedWeapon,
     Relationship,
     Skill,
+    SkillDataRoot,
     Trait,
-    TraitDataRoot
+    TraitDataRoot,
 } from "./items/item.js";
 import { handleRollable } from "./rolls.js";
 
@@ -43,8 +45,8 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "instinct": instincts.push(i as Instinct); break;
                 case "trait": traits.push(i as Trait); break;
                 case "skill":
-                    (i as any).data.learning ? learning.push(i) : (
-                        (i as any).data.training ? training.push(i) : skills.push(i));
+                    (i as any).data.learning ? learning.push(i as Skill) : (
+                        (i as any).data.training ? training.push(i as Skill) : skills.push(i as Skill));
                     Skill.disableIfWounded.bind(i)(woundDice);
                     break;
                 case "relationship": relationships.push(i as Relationship); break;
@@ -137,7 +139,71 @@ export class BWCharacterSheet extends BWActorSheet {
         // roll macros
         html.find("button.rollable").click(e => handleRollable(e, this));
         html.find("i[data-action=\"refresh-ptgs\"]").click(e => this.actor.updatePtgs());
+        html.find('*[data-action="learn-skill"]').click(e => this.learnNewSkill(e, this.actor));
         super.activateListeners(html);
+    }
+
+    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor) {
+        e.preventDefault();
+
+        const loadExistingCallback = async (_html) => {
+            const skills = (await helpers.getItemsOfType("skill"))
+                .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
+
+            // cache the current list of skills since it'll be used after for the actual skill data
+            (game as any).burningwheel.skills = skills;
+            console.log(skills);
+            const html = await renderTemplate("systems/burningwheel/templates/chat/new-skill-dialog.html", { skills });
+            const dialog = new Dialog({
+                title: "Pick a new skill to learn",
+                content: html,
+                buttons: {
+                    add: {
+                        label: "Add",
+                        callback: (dialogHtml: JQuery) => {
+                            const skillData: SkillDataRoot[] = [];
+                            dialogHtml.find('input:checked')
+                                .each((_, element: HTMLInputElement) => {
+                                    const skillRoot: SkillDataRoot = (game as any).burningwheel.skills
+                                        .find((s: Skill) => s._id === element.value).data;
+                                    skillRoot.data.learning = true;
+                                    skillData.push(skillRoot);
+                                    actor.createOwnedItem(skillRoot, {});
+                                });
+                        }
+                    },
+                    cancel: {
+                        label: "Cancel"
+                    }
+                }
+            });
+            dialog.render(true);
+        };
+
+        return new Dialog({
+            title: "Learn new Skill",
+            buttons: {
+                makeNew: {
+                    label: "Make new skill",
+                    callback: async () => {
+                        const i = await actor.createOwnedItem({
+                            name: "New Skill",
+                            type: "skill",
+                            data: {
+                                learning: true,
+                                root1: "perception",
+                                skilltype: "special"
+                            }
+                        });
+                        return this.actor.getOwnedItem(i._id)!.sheet.render(true);
+                    }
+                },
+                loadExisting: {
+                    label: "Load existing skill",
+                    callback: (html) => loadExistingCallback(html)
+                }
+            }
+        }).render(true);
     }
 
     private async _manageItems(e: JQuery.ClickEvent) {
@@ -145,7 +211,7 @@ export class BWCharacterSheet extends BWActorSheet {
         const t = event!.currentTarget as EventTarget;
         const action = $(t).data("action");
         const id = $(t).data("id") as string;
-        let options = {};
+        let options: NewItemData;
         switch (action) {
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }};

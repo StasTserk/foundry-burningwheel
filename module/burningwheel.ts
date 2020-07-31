@@ -12,6 +12,7 @@ import { preloadHandlebarsTemplates } from "./templates.js";
 Hooks.once("init", async () => {
     CONFIG.Actor.entityClass = BWActor;
     CONFIG.Item.entityClass = BWItem;
+    (game as any).burningwheel = {};
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("burningwheel", BWCharacterSheet, {

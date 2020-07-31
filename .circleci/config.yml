@@ -8,6 +8,7 @@ jobs:
     steps:
       - checkout
       - node/with-cache:
+          cache-version: v2
           steps:
             - run: npm install
             - run: sudo npm install -g gulp

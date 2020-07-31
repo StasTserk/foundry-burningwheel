@@ -16,7 +16,7 @@ import {
     Trait,
     TraitDataRoot,
 } from "./items/item.js";
-import { handleRollable } from "./rolls.js";
+import { handleRollable } from "./rolls/rolls.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
@@ -71,15 +71,7 @@ export class BWCharacterSheet extends BWActorSheet {
             }
         }
 
-        if (beliefs.length === 0 && instincts.length === 0) {
-            console.log("adding default beliefs");
-            this.addDefaultItems();
-        }
-
-        if (addFist) {
-            // we need to add the default fist weapon to weapons list
-            this.actor.createOwnedItem(constants.bareFistData).then(i => data.melee.push(i as MeleeWeapon));
-        }
+        this._maybeInitializeActor();
 
         data.beliefs = beliefs;
         data.instincts = instincts;
@@ -108,6 +100,16 @@ export class BWCharacterSheet extends BWActorSheet {
         data.traits = traitLists;
         data.systemVersion = game.system.data.version;
         return data;
+    }
+
+    async _maybeInitializeActor() {
+        const initialized = await this.actor.getFlag("burningwheel", "initialized") as boolean;
+        if (initialized) {
+            return;
+        }
+        await this.actor.setFlag("burningwheel", "initialized", true);
+        await this.addDefaultItems();
+        return this.actor.createOwnedItem(constants.bareFistData);
     }
 
     getArmorDictionary(armorItems: Item[]): { [key: string]: Item | null; } {

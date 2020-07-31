@@ -11,7 +11,7 @@ import {
     RollChatMessageData,
     rollDice,
     templates
-} from "../rolls.js";
+} from "./rolls.js";
 
 export async function handleShrugRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     return handlePtgsRoll(target, sheet, true);

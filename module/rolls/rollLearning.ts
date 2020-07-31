@@ -13,7 +13,7 @@ import {
     RollChatMessageData,
     rollDice,
     templates
-} from "../rolls.js";
+} from "./rolls.js";
 
 export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const skillId = target.dataset.skillId || "";

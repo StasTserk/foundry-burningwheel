@@ -7,6 +7,8 @@ import {
 
 import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
 import { slugify } from "./helpers.js";
+import { migrateData } from "./migration.js";
+import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 
 Hooks.once("init", async () => {
@@ -21,8 +23,13 @@ Hooks.once("init", async () => {
     });
     RegisterItemSheets();
 
+    registerSystemSettings();
     preloadHandlebarsTemplates();
     registerHelpers();
+});
+
+Hooks.once("ready", async() => {
+    migrateData();
 });
 
 function registerHelpers() {

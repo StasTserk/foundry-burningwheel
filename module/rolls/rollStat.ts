@@ -11,7 +11,7 @@ import {
     RollDialogData,
     rollDice,
     templates
-} from "../rolls.js";
+} from "./rolls.js";
 
 export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;

@@ -1,5 +1,5 @@
 import { canAdvance, ShadeString, TestString, updateTestsNeeded } from "./helpers.js";
-import { ArmorRootData, DisplayClass, ReputationRootData, Trait, TraitDataRoot } from "./items/item.js";
+import { ArmorRootData, DisplayClass, ItemType, ReputationRootData, Trait, TraitDataRoot } from "./items/item.js";
 import { Skill, SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -27,6 +27,10 @@ export class BWActor extends Actor {
         }
     }
     data!: CharacterDataRoot;
+
+    async createOwnedItem(itemData: NewItemData, options?: object): Promise<Item> {
+        return super.createOwnedItem(itemData, options);
+    }
 
     prepareData() {
         super.prepareData();
@@ -284,7 +288,7 @@ export class BWActor extends Actor {
                     case "skill":
                         if (!(i as unknown as SkillDataRoot).data.learning &&
                             !(i as unknown as SkillDataRoot).data.training) {
-                            this.data.forks.push(i);
+                            this.data.forks.push(i as Skill);
                         }
                         break;
                     case "reputation":
@@ -596,4 +600,10 @@ export interface ChraracterSettings {
     onlySuccessesCount: string;
     armorTrained: boolean;
     ignoreSuperficialWounds: boolean;
+}
+
+export interface NewItemData {
+    name: string;
+    type: ItemType;
+    [index: string]: any;
 }

@@ -1,0 +1,7 @@
+<h2>Pick a new skill</h2>
+<div class="checkbox-grid">
+    {{#each skills as |s|}}
+    <input type="checkbox" id="{{s._id}}" value="{{s._id}}">
+    <label for="{{s._id}}">{{s.name}}</label>
+    {{/each}}
+</div>

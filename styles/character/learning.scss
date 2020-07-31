@@ -4,9 +4,13 @@
 .practice-log { 
     width: 33%;
 
+    .add-new-item-label {
+        @include button-like(green);
+    }
+
     textarea {
         resize: vertical;
-        height: 100%;
+        height: calc(100% - 2.5em);
     }
 }
 

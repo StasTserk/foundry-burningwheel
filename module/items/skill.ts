@@ -1,6 +1,6 @@
 import { Ability, TracksTests } from "../actor.js";
 import { ShadeString, updateTestsNeeded } from "../helpers.js";
-import { DisplayClass } from "./item.js";
+import { DisplayClass, ItemType } from "./item.js";
 
 export class Skill extends Item {
     prepareData() {
@@ -24,10 +24,15 @@ export class Skill extends Item {
         }
     }
     data: SkillDataRoot;
+
+    get type(): ItemType {
+        return super.type as ItemType;
+    }
 }
 
 export interface SkillDataRoot extends BaseEntityData {
     data: SkillData;
+    type: ItemType;
 }
 
 export interface SkillData extends TracksTests, DisplayClass {

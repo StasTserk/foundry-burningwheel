@@ -51,6 +51,10 @@ export class BWItem extends Item {
             prototypeList[this.type].prototype.prepareData.bind(this)();
         }
     }
+
+    get type(): ItemType {
+        return super.type as ItemType;
+    }
 }
 
 export interface ArthaEarner {
@@ -135,3 +139,9 @@ const prototypeList: { [i: string]: typeof Item} = {
     "property": Property,
     "reputation": Reputation
 };
+
+export type ItemType =
+    "belief" | "instinct" | "trait" |
+    "skill" | "armor" | "posession" |
+    "property" | "relationship" | "melee weapon" |
+    "ranged weapon" | "reputation";

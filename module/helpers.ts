@@ -1,5 +1,5 @@
 import { TracksTests } from "./actor.js";
-import { ArmorRootData, DisplayClass, Skill } from "./items/item.js";
+import { ArmorRootData, BWItem, DisplayClass, ItemType, Skill } from "./items/item.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0) {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
@@ -114,6 +114,17 @@ export function isStat(name: string) {
     return ([
         "forte", "power", "will", "perception", "agility", "speed"
     ].indexOf(name.toLowerCase()) !== -1);
+}
+
+export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<T[]> {
+    const itemList = game.items.filter((i: T) => i.type === itemType) as T[];
+    let compendiumItems: T[] = [];
+    const packs = Array.from(game.packs.values());
+    for (const pack of packs) {
+        const packItems = await pack.getContent();
+        compendiumItems = compendiumItems.concat(...packItems.filter((item: T) => item.type === itemType) as T[]);
+    }
+    return itemList.concat(...compendiumItems);
 }
 
 const AbilityLookup = {

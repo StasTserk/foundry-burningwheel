@@ -241,6 +241,33 @@
         }
     }
 
+    .stats {
+        .stats-footer {
+            grid-column: 1 / 4;
+
+            label {
+                &:first-child {
+                    margin-left: calc(100% - 21em);
+                }
+
+                width: 8em;
+                font-size: 1.125em;
+                margin-right: .5em;
+                font-weight: bold;
+                text-align: right;
+            }
+            input {
+                font-size: 1.125em;
+                border: 0;
+                border-bottom: 1px solid black;
+                background-color: transparent;
+                text-align: center;
+                width: 2em;
+                @include no-number-arrows;
+            }
+        }
+    }
+
     .attributes {
         .attributes-derived {
             grid-column: 1 / 4;

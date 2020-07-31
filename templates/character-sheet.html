@@ -160,6 +160,10 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Perception" stat=data.perception namePrefix="data.perception" type="stat"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Forte" stat=data.forte namePrefix="data.forte" type="stat"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Speed" stat=data.speed namePrefix="data.speed" type="stat"}}
+        <div class="stats-footer flex-row">
+            <label>Stride</label><input type="number" placeholder="0" name="data.stride" value="{{data.stride}}">
+            <label>Mounted Stride</label><input type="number" placeholder="0" name="data.mountedstride" value="{{data.mountedstride}}">
+        </div>
     </div>
 
     <input type="checkbox" id="{{actor._id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse attributes-collapse" {{ checked data.collapseAttributes }}>

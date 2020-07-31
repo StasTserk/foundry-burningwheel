@@ -2,7 +2,7 @@ import { TestString } from "module/helpers.js";
 import { Ability, BWActor, TracksTests } from "../actor.js";
 import * as helpers from "../helpers.js";
 import { Skill, SkillData } from "../items/item.js";
-import { rollDice, templates } from "../rolls.js";
+import { rollDice, templates } from "./rolls.js";
 
 export async function handleCallonReroll(target: HTMLButtonElement): Promise<unknown> {
     const actor = game.actors.get(target.dataset.actorId || "") as BWActor;

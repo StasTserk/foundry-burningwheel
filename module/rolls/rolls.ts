@@ -1,14 +1,14 @@
-import { Ability, BWActor, RollModifier, TracksTests } from "./actor.js";
-import { BWActorSheet } from "./bwactor-sheet.js";
-import * as helpers from "./helpers.js";
-import { Skill, SkillDataRoot } from "./items/item.js";
-import { handleAttrRoll } from "./rolls/rollAttribute.js";
-import { handleCirclesRoll } from "./rolls/rollCircles.js";
-import { handleLearningRoll } from "./rolls/rollLearning.js";
-import { handleGritRoll, handleShrugRoll } from "./rolls/rollPtgs.js";
-import { handleResourcesRoll } from "./rolls/rollResources.js";
-import { handleSkillRoll } from "./rolls/rollSkill.js";
-import { handleStatRoll } from "./rolls/rollStat.js";
+import { Ability, BWActor, RollModifier, TracksTests } from "../actor.js";
+import { BWActorSheet } from "../bwactor-sheet.js";
+import * as helpers from "../helpers.js";
+import { Skill, SkillDataRoot } from "../items/item.js";
+import { handleAttrRoll } from "./rollAttribute.js";
+import { handleCirclesRoll } from "./rollCircles.js";
+import { handleLearningRoll } from "./rollLearning.js";
+import { handleGritRoll, handleShrugRoll } from "./rollPtgs.js";
+import { handleResourcesRoll } from "./rollResources.js";
+import { handleSkillRoll } from "./rollSkill.js";
+import { handleStatRoll } from "./rollStat.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>, sheet: BWActorSheet): Promise<unknown> {

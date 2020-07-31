@@ -12,7 +12,7 @@ import {
     RollChatMessageData,
     rollDice,
     templates,
-} from "../rolls.js";
+} from "./rolls.js";
 
 export async function handleResourcesRoll(_target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;

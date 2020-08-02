@@ -40,6 +40,16 @@
         {{/each}}
     </div>
     {{/if}}
+    {{#if wildForks}}
+    <hr>
+    <h2>Wild FoRKs</h2>
+    <div class="checkbox-grid">
+        {{#each wildForks as |skill|}}
+            <input id="checkbox-wild-{{@key}}" type="checkbox" name="wildForks" value="{{skill.amount}}">
+            <label for="checkbox-wild-{{@key}}">{{skill.name}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
     {{#if optionalDiceModifiers}}
     <hr>
     <h2>Other Dice Modifiers</h2>

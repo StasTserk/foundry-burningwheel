@@ -50,6 +50,17 @@ export class BWActor extends Actor {
             });
     }
 
+    getWildForks(skillName: string): { name: string, amount: number }[] {
+        return this.data.wildForks.filter(s =>
+            s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
+            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > (this.data.data.ptgs.woundDice || 0))
+            .map( s => {
+                const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
+                // skills at 7+ exp provide 2 dice in forks.
+                return { name: s.name, amount: exp >= 7 ? 2 : 1 };
+            });
+    }
+
     async addAttributeTest(
             stat: TracksTests,
             name: string,
@@ -280,6 +291,7 @@ export class BWActor extends Actor {
             .map(s => s.trim().toLowerCase());
 
         this.data.forks = [];
+        this.data.wildForks = [];
         this.data.circlesBonus = [];
         this.data.circlesMalus = [];
         if (this.data.items) {
@@ -288,7 +300,11 @@ export class BWActor extends Actor {
                     case "skill":
                         if (!(i as unknown as SkillDataRoot).data.learning &&
                             !(i as unknown as SkillDataRoot).data.training) {
-                            this.data.forks.push(i as Skill);
+                            if ((i as unknown as SkillDataRoot).data.wildFork) {
+                                this.data.wildForks.push(i as Skill);
+                            } else {
+                                this.data.forks.push(i as Skill);
+                            }
                         }
                         break;
                     case "reputation":
@@ -461,6 +477,7 @@ export class BWActor extends Actor {
 }
 
 export interface CharacterDataRoot extends ActorData {
+    wildForks: Skill[];
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
     data: BWCharacterData;

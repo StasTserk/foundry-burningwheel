@@ -29,6 +29,7 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
         obPenalty: actor.data.data.ptgs.obPenalty,
         skill: skill.data.data,
         forkOptions: actor.getForkOptions(skill.data.name),
+        wildForks: actor.getWildForks(skill.data.name),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
@@ -52,10 +53,15 @@ async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
     const forks = extractCheckboxValue(dialogHtml, "forkOptions");
+    const wildForks = extractWildForkBonus(dialogHtml);
     const baseData = extractBaseData(dialogHtml, sheet);
     const exp = parseInt(skill.data.data.exp, 10);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice + forks - baseData.woundDice + baseData.miscDice.sum,
+    if (wildForks) {
+        dieSources["Wild FoRKs"] = `+${wildForks}`;
+    }
+    const dg = helpers.difficultyGroup(
+        exp + baseData.bDice + forks + wildForks - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
 
     const roll = await rollDice(
@@ -63,20 +69,26 @@ async function skillRollCallback(
         skill.data.data.open,
         skill.data.data.shade);
     if (!roll) { return; }
+
+    const wildForkDie = await rollWildFork(wildForks, skill.data.data.shade);
+    const wildForkBonus = wildForkDie?.total || 0;
+    const wildForkDice = wildForkDie?.rolls || [];
+
     const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
         return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
     });
-    const success = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+    const success = parseInt(roll.result + wildForkBonus, 10) >= baseData.obstacleTotal;
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,
-        successes: roll.result,
+        successes: '' + (parseInt(roll.result, 10) + wildForkBonus),
         difficulty: baseData.diff,
         obstacleTotal: baseData.obstacleTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success,
         rolls: roll.dice[0].rolls,
+        wildRolls: wildForkDice,
         difficultyGroup: dg,
         penaltySources: baseData.penaltySources,
         dieSources: { ...dieSources, ...baseData.miscDice.entries },
@@ -105,7 +117,41 @@ async function skillRollCallback(
     });
 }
 
+function extractWildForkBonus(html: JQuery) {
+    return extractCheckboxValue(html, "wildForks");
+}
+
+async function rollWildFork(numDice: number, shade: helpers.ShadeString = 'B'): Promise<Die | undefined> {
+    if (numDice <= 0) {
+        return;
+    }
+    const tgt = shade === 'B' ? 3 : (shade === 'G' ? 2 : 1);
+    const die = new AstrologyDie(6);
+    die.roll(numDice);
+    die.explode([6,1]);
+    die.countSuccess(tgt, ">");
+    if (game.dice3d) {
+        game.dice3d.show({
+            formula: `${die.results.length}d6`,
+            results: die.rolls.map(r => r.roll),
+            whisper: null,
+            blind: false});
+    }
+    return new Promise(r => r(die));
+}
+
 interface SkillDialogData extends RollDialogData {
     skill: TracksTests;
     forkOptions: { name: string, amount: number }[];
+    wildForks: { name: string, amount: number }[];
+}
+
+export class AstrologyDie extends Die {
+    get results() {
+        return this.rolls.filter(r => !r.rerolled && !r.discarded).map(r => {
+            if ( r.success === true ) return 1;
+            else if (r.roll === 1) return -1;
+            else return 0;
+          });
+    }
 }

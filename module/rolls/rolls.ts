@@ -155,7 +155,7 @@ export async function rollDice(numDice: number, open: boolean = false, shade: he
         const roll = new Roll(`${numDice}d6${open?'x':''}cs>${tgt}`).roll();
         if (game.dice3d) {
             return game.dice3d.showForRoll(roll, game.user, true, null, false)
-                .then(_ => helpers.sleep(1000))
+                .then(_ => helpers.sleep(500))
                 .then(_ => roll);
         }
         return new Promise(r => r(roll));
@@ -258,6 +258,7 @@ export interface RollChatMessageData {
     nameClass: string;
     obstacleTotal: number;
 
+    wildRolls?: {success: boolean, roll: number}[];
     dieSources?: { [i: string]: string };
     penaltySources?: { [i: string]: string };
     fateReroll?: RerollData;

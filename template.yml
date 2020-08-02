@@ -178,6 +178,7 @@ Item:
     fate: 0
     deeds: 0
     open: false
+    wildFork: false
   relationship:
     description: ''
     forbidden: false

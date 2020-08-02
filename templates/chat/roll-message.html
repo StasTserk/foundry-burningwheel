@@ -43,6 +43,14 @@
             {{r.roll}}
         </div>
         {{/each}}
+        {{#if wildRolls}}
+        <div class="vertical-divider"></div>
+        {{#each wildRolls as |wr|}}
+        <div class="roll-die" data-success="{{wr.success}}">
+            {{wr.roll}}
+        </div>
+        {{/each}}
+        {{/if}}
     </div>
     {{#if success}}
     <div class="roll-result roll-full-width roll-success">

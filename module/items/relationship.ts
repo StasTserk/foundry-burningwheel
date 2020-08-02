@@ -18,7 +18,7 @@ export class Relationship extends Item {
     }
 
     get actor(): BWActor {
-        return this.actor;
+        return super.actor as BWActor;
     }
 
     data: RelationshipDataRoot;

@@ -21,7 +21,7 @@ export async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActo
         circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
     }
     const actor = sheet.actor as BWActor;
-    const rollModifiers = sheet.actor.getRollModifiers("cicles");
+    const rollModifiers = sheet.actor.getRollModifiers("circles");
     const data: CirclesDialogData = {
         name: target.dataset.rollableName || "Circles Test",
         difficulty: 3,
@@ -44,7 +44,7 @@ export async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActo
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                    callback: async (dialogHtml: JQuery) =>
                         circlesRollCallback(dialogHtml, stat, sheet, circlesContact)
                 }
             }
@@ -53,7 +53,7 @@ export async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActo
 }
 
 async function circlesRollCallback(
-        dialogHtml: JQuery<HTMLElement>,
+        dialogHtml: JQuery,
         stat: Ability,
         sheet: BWActorSheet,
         contact?: Relationship) {
@@ -101,7 +101,7 @@ async function circlesRollCallback(
     };
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
 
-    // incremet relationship tracking values...
+    // increment relationship tracking values...
     if (contact && contact.data.data.building) {
         const progress = (parseInt(contact.data.data.buildingProgress, 10) || 0) + 1;
         contact.update({"data.buildingProgress": progress }, null);
@@ -123,7 +123,7 @@ async function circlesRollCallback(
     });
 }
 
-function extractCirclesBonuses(html: JQuery<HTMLElement>, name: string):
+function extractCirclesBonuses(html: JQuery, name: string):
         { bonuses: {[name: string]: string }, sum: number} {
     const bonuses:{[name: string]: string } = {};
     let sum = 0;
@@ -134,7 +134,7 @@ function extractCirclesBonuses(html: JQuery<HTMLElement>, name: string):
     return { bonuses, sum };
 }
 
-function extractCirclesPenalty(html: JQuery<HTMLElement>, name: string):
+function extractCirclesPenalty(html: JQuery, name: string):
         { bonuses: {[name: string]: string }, sum: number} {
     return extractCirclesBonuses(html, name);
 }

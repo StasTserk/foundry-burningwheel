@@ -40,7 +40,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                    callback: async (dialogHtml: JQuery) =>
                         learningRollCallback(dialogHtml, skill, sheet)
                 }
             }
@@ -49,7 +49,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery<HTMLElement>, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
     const baseData = extractBaseData(dialogHtml, sheet);
     baseData.penaltySources["Beginner's Luck"] = `+${baseData.diff}`;
@@ -71,7 +71,7 @@ async function learningRollCallback(
     if (fateReroll) { fateReroll!.type = "learning"; }
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
         return {
-            label: skill.name,
+            label: s,
             type: "learning",
             ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData
         };
@@ -117,7 +117,7 @@ async function advanceLearning(
         case "Routine/Difficult":
             // we can either apply this to the base stat or to the learning
             const dialog = new Dialog({
-                title: "Pick where to assing the test",
+                title: "Pick where to assign the test",
                 content: "<p>This test can count as routine of difficult for the purposes of advancement</p><p>Pick which option you'd prefer.</p>",
                 buttons: {
                     skill: {

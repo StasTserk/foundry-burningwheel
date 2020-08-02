@@ -116,7 +116,7 @@ export class BWCharacterSheet extends BWActorSheet {
         let armorLocs: { [key: string]: Armor | null; } = {};
         constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
         armorItems.forEach(i =>
-            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDatafromItem(i as unknown as ArmorRootData)} as any
+            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i as unknown as ArmorRootData)} as any
         );
         return armorLocs;
     }
@@ -136,12 +136,12 @@ export class BWCharacterSheet extends BWActorSheet {
             ".training-skill > div > i",
             ".setting-item-row > div > i"
         ];
-        html.find(selectors.join(", ")).click(e => this._manageItems(e));
+        html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
 
         // roll macros
-        html.find("button.rollable").click(e => handleRollable(e, this));
-        html.find("i[data-action=\"refresh-ptgs\"]").click(e => this.actor.updatePtgs());
-        html.find('*[data-action="learn-skill"]').click(e => this.learnNewSkill(e, this.actor));
+        html.find("button.rollable").on("click",e => handleRollable(e, this));
+        html.find("i[data-action=\"refresh-ptgs\"]").on("click",_e => this.actor.updatePtgs());
+        html.find('*[data-action="learn-skill"]').on("click",e => this.learnNewSkill(e, this.actor));
         super.activateListeners(html);
     }
 
@@ -163,13 +163,11 @@ export class BWCharacterSheet extends BWActorSheet {
                     add: {
                         label: "Add",
                         callback: (dialogHtml: JQuery) => {
-                            const skillData: SkillDataRoot[] = [];
                             dialogHtml.find('input:checked')
                                 .each((_, element: HTMLInputElement) => {
                                     const skillRoot: SkillDataRoot = game.burningwheel.skills
                                         .find((s: Skill) => s._id === element.value).data;
                                     skillRoot.data.learning = true;
-                                    skillData.push(skillRoot);
                                     actor.createOwnedItem(skillRoot, {});
                                 });
                         }
@@ -210,7 +208,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
     private async _manageItems(e: JQuery.ClickEvent) {
         e.preventDefault();
-        const t = event!.currentTarget as EventTarget;
+        const t = e!.currentTarget as EventTarget;
         const action = $(t).data("action");
         const id = $(t).data("id") as string;
         let options: NewItemData;

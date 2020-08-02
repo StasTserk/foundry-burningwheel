@@ -1,3 +1,5 @@
+import { BWItem } from "./items/item.js";
+
 export async function migrateData() {
     const latest = game.system.data.version;
     const recentVersion = await game.settings.get("burningwheel", "version") || "0.0.0";
@@ -14,8 +16,42 @@ export async function migrateData() {
             const actors: Actor[] = Array.from(game.actors.values());
             for (const actor of actors) {
                 await actor.setFlag("burningwheel", "initialized", true);
+                for (const ownedItem of Array.from(actor.items.values())) {
+                    // also, the typo in the item type 'possession' has been fixed
+                    // any existing items need to be updated to match the new type
+                    if (ownedItem.type === "posession") {
+                        await ownedItem.update({type: "possession"}, null);
+                    }
+                }
+                const ms = getProperty(actor, "data.mountedstride");
+                await actor.update({
+                    "data.mountedstride": null,
+                    "data.mountedStride": ms
+                });
             }
-            ui.notifications.notify(`Your data has been updated to version 0.2.1 from ${recentVersion}`, 'info');
+
+            // possession item type updates need to happen in the world and all the
+            // compendium packs as well.
+            const items: Item[] = Array.from(game.items.values());
+            for (const item of items) {
+                if (item.type === "posession") {
+                    await item.update({type: "possession"}, null);
+                }
+            }
+
+            const packs = Array.from(game.packs.values());
+            for (const pack of packs) {
+                if (pack.cls === BWItem) {
+                    const packItems = await pack.getContent();
+                    for (const item of Array.from(packItems.values()) as Item[]) {
+                        if (item.type === "posession") {
+                            item.data.type = "possession";
+                            await pack.updateEntity(item.data);
+                        }
+                    }
+                }
+            }
+            ui.notifications.notify(`Applied 0.2.1 data migration.`, 'info');
         }
     }
 }

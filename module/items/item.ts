@@ -1,6 +1,6 @@
 import { Armor } from "./armor.js";
 import { MeleeWeapon } from "./meleeWeapon.js";
-import { Possession } from "./posession.js";
+import { Possession } from "./possession.js";
 import { Property } from "./property.js";
 import { RangedWeapon } from "./rangedWeapon.js";
 import { Relationship } from "./relationship.js";
@@ -10,7 +10,7 @@ import { ArmorSheet } from "./sheets/armor-sheet.js";
 import { BeliefSheet } from "./sheets/belief-sheet.js";
 import { InstinctSheet } from "./sheets/instinct-sheet.js";
 import { MeleeWeaponSheet } from "./sheets/melee-sheet.js";
-import { PosessionSheet } from "./sheets/posession-sheet.js";
+import { PossessionSheet } from "./sheets/possession-sheet.js";
 import { PropertySheet } from "./sheets/property-sheet.js";
 import { RangedWeaponSheet } from "./sheets/ranged-sheet.js";
 import { RelationshipSheet } from "./sheets/relationship-sheet.js";
@@ -24,7 +24,7 @@ export * from "./armor.js";
 export * from "./belief.js";
 export * from "./instinct.js";
 export * from "./meleeWeapon.js";
-export * from "./posession.js";
+export * from "./possession.js";
 export * from "./property.js";
 export * from "./rangedWeapon.js";
 export * from "./relationship.js";
@@ -34,7 +34,7 @@ export * from "./sheets/armor-sheet.js";
 export * from "./sheets/belief-sheet.js";
 export * from "./sheets/instinct-sheet.js";
 export * from "./sheets/melee-sheet.js";
-export * from "./sheets/posession-sheet.js";
+export * from "./sheets/possession-sheet.js";
 export * from "./sheets/property-sheet.js";
 export * from "./sheets/ranged-sheet.js";
 export * from "./sheets/relationship-sheet.js";
@@ -92,8 +92,8 @@ export function RegisterItemSheets() {
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", PosessionSheet, {
-        types: ["posession"],
+    Items.registerSheet("burningwheel", PossessionSheet, {
+        types: ["possession"],
         makeDefault: true
     });
 
@@ -135,13 +135,13 @@ const prototypeList: { [i: string]: typeof Item} = {
     "melee weapon": MeleeWeapon,
     "ranged weapon": RangedWeapon,
     "armor": Armor,
-    "posession": Possession,
+    "possession": Possession,
     "property": Property,
     "reputation": Reputation
 };
 
 export type ItemType =
     "belief" | "instinct" | "trait" |
-    "skill" | "armor" | "posession" |
+    "skill" | "armor" | "possession" |
     "property" | "relationship" | "melee weapon" |
     "ranged weapon" | "reputation" | "affiliation";

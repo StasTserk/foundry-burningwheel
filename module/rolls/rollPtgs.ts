@@ -34,7 +34,7 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
     const buttons: Record<string, DialogButton> = {};
     buttons.roll = {
         label: "Roll",
-        callback: async (dialogHtml: JQuery<HTMLElement>) =>
+        callback: async (dialogHtml: JQuery) =>
             ptgsRollCallback(dialogHtml, stat, sheet, shrugging)
     };
     const updateData = {};
@@ -42,7 +42,7 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
     updateData[accessor] = true;
     buttons.doIt = {
         label: "Just do It",
-        callback: async (_: JQuery<HTMLElement>) => actor.update(updateData)
+        callback: async (_: JQuery) => actor.update(updateData)
     };
 
     if (!shrugging && parseInt(actor.data.data.persona, 10)) {
@@ -50,7 +50,7 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
         // to spend persona.
         buttons.withPersona = {
             label: "Spend Persona",
-            callback: async (_: JQuery<HTMLElement>) => {
+            callback: async (_: JQuery) => {
                 updateData["data.persona"] = parseInt(actor.data.data.persona, 10) - 1;
                 updateData["data.health.persona"] = (parseInt(actor.data.data.health.persona, 10) || 0) + 1;
                 return actor.update(updateData);
@@ -62,7 +62,7 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
         // to spend fate.
         buttons.withFate = {
             label: "Spend Fate",
-            callback: async (_: JQuery<HTMLElement>) => {
+            callback: async (_: JQuery) => {
                 updateData["data.fate"] = parseInt(actor.data.data.fate, 10) - 1;
                 updateData["data.health.fate"] = (parseInt(actor.data.data.health.fate, 10) || 0) + 1;
                 return actor.update(updateData);
@@ -81,7 +81,7 @@ async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, sh
 }
 
 async function ptgsRollCallback(
-        dialogHtml: JQuery<HTMLElement>,
+        dialogHtml: JQuery,
         stat: Ability,
         sheet: BWActorSheet,
         shrugging: boolean) {

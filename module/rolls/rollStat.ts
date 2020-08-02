@@ -43,7 +43,7 @@ export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSh
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                    callback: async (dialogHtml: JQuery) =>
                         statRollCallback(dialogHtml, stat, sheet, tax, statName, target.dataset.accessor || "")
                 }
             }
@@ -52,7 +52,7 @@ export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSh
 }
 
 async function statRollCallback(
-        dialogHtml: JQuery<HTMLElement>,
+        dialogHtml: JQuery,
         stat: Ability,
         sheet: BWActorSheet,
         tax: number,

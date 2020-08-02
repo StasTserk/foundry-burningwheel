@@ -39,7 +39,7 @@ export async function handleResourcesRoll(_target: HTMLButtonElement, sheet: BWA
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                    callback: async (dialogHtml: JQuery) =>
                         resourcesRollCallback(dialogHtml, stat, sheet)
                 }
             }
@@ -48,7 +48,7 @@ export async function handleResourcesRoll(_target: HTMLButtonElement, sheet: BWA
 }
 
 async function resourcesRollCallback(
-        dialogHtml: JQuery<HTMLElement>,
+        dialogHtml: JQuery,
         stat: Ability,
         sheet: BWActorSheet) {
     const baseData = extractBaseData(dialogHtml, sheet);

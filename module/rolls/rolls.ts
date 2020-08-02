@@ -11,7 +11,7 @@ import { handleSkillRoll } from "./rollSkill.js";
 import { handleStatRoll } from "./rollStat.js";
 
 export async function handleRollable(
-    e: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>, sheet: BWActorSheet): Promise<unknown> {
+    e: JQuery.ClickEvent<any, undefined>, sheet: BWActorSheet): Promise<unknown> {
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
 
@@ -83,7 +83,7 @@ export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, i
     }
 }
 
-export function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet ) {
+export function extractBaseData(html: JQuery, sheet: BWActorSheet ) {
     const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
@@ -99,23 +99,23 @@ export function extractBaseData(html: JQuery<HTMLElement>, sheet: BWActorSheet )
     return { woundDice, obPenalty, diff, aDice, bDice, miscDice, penaltySources, obstacleTotal };
 }
 
-export function extractSelectString(html: JQuery<HTMLElement>, name: string): string | undefined {
+export function extractSelectString(html: JQuery, name: string): string | undefined {
     return html.find(`select[name=\"${name}\"]`).val() as string;
 }
 
-export function extractSelectNumber(html: JQuery<HTMLElement>, name: string): number {
+export function extractSelectNumber(html: JQuery, name: string): number {
     return parseInt(extractSelectString(html, name) || "0", 10) as number;
 }
 
-export function extractString(html: JQuery<HTMLElement>, name: string): string | undefined {
+export function extractString(html: JQuery, name: string): string | undefined {
     return html.find(`input[name=\"${name}\"]`).val() as string;
 }
 
-export function extractNumber(html: JQuery<HTMLElement>, name: string): number {
+export function extractNumber(html: JQuery, name: string): number {
     return parseInt(extractString(html, name) || "0", 10);
 }
 
-export function extractCheckboxValue(html: JQuery<HTMLElement>, name: string): number {
+export function extractCheckboxValue(html: JQuery, name: string): number {
     let sum: number = 0;
     html.find(`input[name=\"${name}\"]:checked`).each((_i, v) => {
         sum += parseInt(v.getAttribute("value") || "", 10);
@@ -123,7 +123,7 @@ export function extractCheckboxValue(html: JQuery<HTMLElement>, name: string): n
     return sum;
 }
 
-export function extractMiscDice(html: JQuery<HTMLElement>): { sum: number, entries: {[i:string]: string} } {
+export function extractMiscDice(html: JQuery): { sum: number, entries: {[i:string]: string} } {
     let sum = 0;
     const entries = {};
     html.find('input[name="miscDice"]:checked').each((_i, v) => {
@@ -134,7 +134,7 @@ export function extractMiscDice(html: JQuery<HTMLElement>): { sum: number, entri
     return { sum, entries };
 }
 
-export function extractMiscObs(html: JQuery<HTMLElement>): { sum: number, entries: {[i:string]: string} } {
+export function extractMiscObs(html: JQuery): { sum: number, entries: {[i:string]: string} } {
     let sum = 0;
     const entries = {};
     html.find('input[name="miscObs"]:checked').each((_i, v) => {

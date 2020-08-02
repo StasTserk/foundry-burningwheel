@@ -89,6 +89,6 @@ export const equipmentSheetOrder = {
     "melee weapon": 1,
     "ranged weapon": 1,
     "armor": 2,
-    "posession": 3,
+    "possession": 3,
     "property": 4
 };

@@ -42,7 +42,7 @@ export interface RangedWeaponData extends DisplayClass {
     optimalRange: string; // as number
     extremeRange: string; // as number
     maxRange: string;
-    hadnedness: string;
+    handedness: string;
     description: string;
 
     // derived data

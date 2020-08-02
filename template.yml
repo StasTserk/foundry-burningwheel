@@ -72,7 +72,7 @@ Actor:
         <<: *ability
         name: ''
       stride: 7
-      mountedstride: 0
+      mountedStride: 0
       cash: 0
       funds: 0
       property: ''
@@ -122,7 +122,7 @@ Item:
     - reputation
     - affiliation
     - weapon
-    - posession
+    - possession
     - property
     - melee weapon
     - ranged weapon
@@ -189,7 +189,7 @@ Item:
     enmity: false
     building: true
     buildingProgress: [0]
-  posession:
+  possession:
     isToolkit: false
     isExpended: false
     description: ''
@@ -251,7 +251,7 @@ Item:
     stealthyPenalty: 0
     swimmingPenalty: 0
     perceptionObservationPenalty: 0
-  reputation: &rep
+  reputation:
     description: ''
     dice: 0
     infamous: false

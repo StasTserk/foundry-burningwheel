@@ -17,5 +17,5 @@ export class TraitSheet extends ItemSheet {
 }
 
 interface TraitSheetData extends ItemSheetData {
-    traitTypes: { [index: string]: string }
+    traitTypes: { [index: string]: string };
 }

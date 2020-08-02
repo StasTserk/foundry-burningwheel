@@ -13,5 +13,5 @@ export class RangedWeaponSheet extends ItemSheet {
 }
 
 interface RangedSheetData extends ItemSheetData {
-    weaponQualities: { [index: string]: string }
+    weaponQualities: { [index: string]: string };
 }

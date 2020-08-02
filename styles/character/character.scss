@@ -8,7 +8,7 @@
             }
 
             margin-top: .75em;
-            margin-bottom: 0px;
+            margin-bottom: 0;
             background-color: rgba(0,0,0,0.05);
 
             .settings-gear {
@@ -101,7 +101,7 @@
         row-gap: 5px;
 
         div.rollable {
-            &.wound-disabled {
+          &.wound-disabled {
                 background-color: rgba(red, 0.15);
                 &:hover {
                     background-color: rgba(red, .25);
@@ -155,13 +155,12 @@
             border: 0;
             border-bottom: 1px solid black;
             border-radius: 0;
-            padding: 1px 0px;
+            padding: 1px 0;
             font-weight: bold;
         }
         .rollable-name {
             width: calc(100% - 8em);
-            margin: 0;
-            margin-right: 1em;
+            margin: 0 1em 0 0;
             font-size: 1.125em;
             line-height: 1.75em;
             font-weight: bold;

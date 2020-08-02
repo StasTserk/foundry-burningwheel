@@ -14,6 +14,6 @@ export class MeleeWeaponSheet extends ItemSheet {
 }
 
 interface MeleeSheetData extends ItemSheetData {
-    weaponLengths: { [index: string]: string }
-    weaponQualities: { [index: string]: string }
+    weaponLengths: { [index: string]: string };
+    weaponQualities: { [index: string]: string };
 }

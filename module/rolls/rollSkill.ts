@@ -40,7 +40,7 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                    callback: async (dialogHtml: JQuery) =>
                         skillRollCallback(dialogHtml, skill, sheet)
                 }
             }
@@ -49,7 +49,7 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
 }
 
 async function skillRollCallback(
-    dialogHtml: JQuery<HTMLElement>, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
     const forks = extractCheckboxValue(dialogHtml, "forkOptions");
     const baseData = extractBaseData(dialogHtml, sheet);

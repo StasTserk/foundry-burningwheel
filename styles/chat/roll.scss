@@ -9,16 +9,16 @@
         font-size: 1.5em;
         font-weight: bold;
 
-        &.shade-grey {
+      &.shade-grey {
             background-color: rgba(black, 0.35);
         }
 
-        &.shade-black {
+      &.shade-black {
             background-color: rgba(black, 0.75);
             color: white;
         }
 
-        &.shade-white {
+      &.shade-white {
             background-color:  rgba(white, .75);
             color: black;
         }
@@ -80,18 +80,18 @@
         font-size: 12px;
         font-weight: bold;
         text-align: center;
-        margin: 0px 2px;
+        margin: 0 2px;
     }
 
-    .roll-Routine {
+  .roll-Routine {
         background-color: rgba(white, .75);
     }
 
-    .roll-Difficult {
+  .roll-Difficult {
         background-color: rgba(black, 0.35);
     }
 
-    .roll-Challenging {
+  .roll-Challenging {
         background-color: rgba(black, 0.75);
         color: white;
     }

@@ -67,8 +67,8 @@
     }
 
     .weapon-grid {
-        column-gap: 0px;
-        row-gap: 0px;
+        column-gap: 0;
+        row-gap: 0;
         grid-template-columns: 5fr repeat(7, 1fr) 2fr 0;
         .weapon-header {
             background-color: rgba(black, .15);
@@ -80,8 +80,8 @@
     }
 
     .ranged-grid {
-        column-gap: 0px;
-        row-gap: 0px;
+        column-gap: 0;
+        row-gap: 0;
         grid-template-columns: 5fr repeat(5, 1fr) 2fr 0;
         .weapon-header {
             background-color: rgba(black, .15);

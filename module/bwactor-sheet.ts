@@ -15,12 +15,12 @@ export class BWActorSheet extends ActorSheet {
     activateListeners(html: JQuery) {
         super.activateListeners(html);
         html.find("input[data-item-id], select[data-item-id], textarea[data-item-id]")
-            .change((e) => this._updateItemField(e));
+            .on("change", (e) => this._updateItemField(e));
     }
 
     private _updateItemField(e: JQuery.ChangeEvent): void {
         e.preventDefault();
-        const t = event!.currentTarget as EventTarget;
+        const t = e!.currentTarget as EventTarget;
         let value: any;
 
         if ($(t).prop("type") === "checkbox") {

@@ -7,7 +7,7 @@ export class ArmorSheet extends ItemSheet {
 
     getData() {
         const data = super.getData() as MeleeSheetData;
-        data.armorLocations = armorLocationSelect
+        data.armorLocations = armorLocationSelect;
         data.armorQuality = gearQualitySelect;
         return data;
     }

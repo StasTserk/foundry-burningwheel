@@ -38,7 +38,7 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery<HTMLElement>) =>
+                    callback: async (dialogHtml: JQuery) =>
                         attrRollCallback(dialogHtml, stat, sheet, attrName, target.dataset.accessor || "")
                 }
             }
@@ -47,7 +47,7 @@ export async function handleAttrRoll(target: HTMLButtonElement, sheet: BWActorSh
 }
 
 async function attrRollCallback(
-        dialogHtml: JQuery<HTMLElement>,
+        dialogHtml: JQuery,
         stat: Ability,
         sheet: BWActorSheet,
         name: string,

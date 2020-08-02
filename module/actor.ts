@@ -90,7 +90,7 @@ export class BWActor extends Actor {
         const mw = this.data.data.mortalWound || 15;
         const su = Math.floor(forte / 2) + 1;
 
-        const wounds = this._calculateThresholds(mw, su, forte);
+        const wounds = BWActor._calculateThresholds(mw, su, forte);
         const updateData = {};
         let woundType = "bruise";
         for (let i = 1; i <= 16; i ++ ) {
@@ -141,7 +141,7 @@ export class BWActor extends Actor {
                                     "data.resources.exp": resourcesTax,
                                     "data.resources.routine": 0,
                                     "data.resources.difficult": 0,
-                                    "data.resources.challening": 0
+                                    "data.resources.challenging": 0
                                 });
                             }
                         },
@@ -171,13 +171,13 @@ export class BWActor extends Actor {
         return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(this.data.rollModifiers.all || []);
     }
 
-    private _calculateThresholds(mo: number, su: number, forte: number):
+    private static _calculateThresholds(mo: number, su: number, forte: number):
         { su: number, li: number, mi: number, se: number, tr: number, mo: number } {
         const maxGap = Math.ceil(forte / 2.0);
         const tr = Math.min(mo - 1, su + (maxGap * 4));
         const se = Math.min(tr - 1, su + (maxGap * 3));
         const mi = Math.min(se - 1, su + (maxGap * 2));
-        const li = Math.min(mi - 1, su + (maxGap * 1));
+        const li = Math.min(mi - 1, su + (maxGap));
 
         return { su, li, mi, se, tr, mo };
     }
@@ -344,7 +344,7 @@ export class BWActor extends Actor {
         let suCount = 0;
         let woundDice = 0;
         this.data.data.ptgs.obPenalty = 0;
-        Object.entries(this.data.data.ptgs).forEach(([key, value]) => {
+        Object.entries(this.data.data.ptgs).forEach(([_, value]) => {
             const w = value as Wound;
             const a = w.amount && parseInt(w.amount[0], 10);
             if ((w && a)) {
@@ -480,7 +480,7 @@ interface BWCharacterData extends Common, DisplayProps, Ptgs {
     homeland: string;
     features: string;
 
-    settings: ChraracterSettings;
+    settings: CharacterSettings;
 
     hesitation?: number;
     mortalWound?: number;
@@ -504,7 +504,7 @@ interface Common {
     custom1: Ability & { name: string };
     custom2: Ability & { name: string };
     stride: number;
-    mountedstride: number;
+    mountedStride: number;
     cash: string;
     funds: string;
     property: string;
@@ -591,7 +591,7 @@ export interface RollModifier {
     label: string;
 }
 
-export interface ChraracterSettings {
+export interface CharacterSettings {
     showSettings: boolean;
 
     roundUpMortalWound: boolean;

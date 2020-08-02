@@ -94,7 +94,7 @@ export function difficultyGroup(dice: number, difficulty: number): TestString {
      return (dice - spread >= difficulty) ? "Routine" : "Difficult";
 }
 
-export function getArmorLocationDatafromItem(i: ArmorRootData): { [k: string]: ArmorRootData } {
+export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData } {
     const data: any = {};
     data.head = i.data.hasHelm && i;
     data.torso = i.data.hasTorso && i;

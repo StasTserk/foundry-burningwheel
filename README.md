@@ -9,9 +9,9 @@ If you like this system, please support the developers at [burningwheel.com](htt
 ## Current features
 - Actor sheet support for Player Characters
 - Item sheet support for:
-  - Weapons, armor and other posessions.
+  - Weapons, armor and other possessions.
   - Skills
-  - Relationsips, reputations and affiliations
+  - Relationships, reputations and affiliations
 - Automation for tracking test advancement, calculating a number of derived attributes
 
 ## Near future plans

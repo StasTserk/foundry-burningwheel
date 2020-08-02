@@ -162,7 +162,7 @@
         {{> "systems/burningwheel/templates/parts/rollable-item.html" statName="Speed" stat=data.speed namePrefix="data.speed" type="stat"}}
         <div class="stats-footer flex-row">
             <label>Stride</label><input type="number" placeholder="0" name="data.stride" value="{{data.stride}}">
-            <label>Mounted Stride</label><input type="number" placeholder="0" name="data.mountedstride" value="{{data.mountedstride}}">
+            <label>Mounted Stride</label><input type="number" placeholder="0" name="data.mountedStride" value="{{data.mountedStride}}">
         </div>
     </div>
 
@@ -228,7 +228,7 @@
     </label>
     <div class="relationship-section flex-row">
         <div class="relationships">
-            <h2>Relationships  <i data-action="addRelationship" class="fas fa-plus"></i></h2></i>
+            <h2>Relationships  <i data-action="addRelationship" class="fas fa-plus"></i></h2>
             {{#each relationships as |r|}}
                 {{> "systems/burningwheel/templates/parts/relationships.html" relationship=r exp=../data.circles.exp}}
             {{/each}}
@@ -262,7 +262,7 @@
 
     <input type="checkbox" id="{{actor._id}}-collapseGear" name="data.collapseGear" class="section-collapse gear-collapse" {{ checked data.collapseGear }}>
     <label for="{{actor._id}}-collapseGear" class="section-collapse-label">
-        <h2 class="section-header"><i class="fas fa-chevron-down"></i>Gear, Posessions, and Property</h2>
+        <h2 class="section-header"><i class="fas fa-chevron-down"></i>Gear, Possessions, and Property</h2>
     </label>
     <div class="gear item-grid col-4">
         {{#each equipment as |e|}}

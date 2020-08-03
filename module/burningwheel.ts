@@ -12,7 +12,8 @@ import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 
 Hooks.once("init", async () => {
-    CONFIG.Actor.entityClass = <never>BWActor;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    CONFIG.Actor.entityClass = BWActor as any;
     CONFIG.Item.entityClass = BWItem;
     game.burningwheel = {};
 

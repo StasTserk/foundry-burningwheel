@@ -134,16 +134,17 @@ export function RegisterItemSheets(): void {
     });
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const prototypeList: { [i: string]: typeof Item} = {
     "trait": Trait,
-    "skill": <never>Skill,
-    "relationship": <never> Relationship,
-    "melee weapon":  <never> MeleeWeapon,
-    "ranged weapon":  <never> RangedWeapon,
-    "armor": <never> Armor,
-    "possession":  <never> Possession,
-    "property":  <never> Property,
-    "reputation":  <never> Reputation
+    "skill": Skill as any,
+    "relationship": Relationship as any,
+    "melee weapon":  MeleeWeapon as any,
+    "ranged weapon":  RangedWeapon as any,
+    "armor": Armor as any,
+    "possession":  Possession as any,
+    "property":  Property as any,
+    "reputation":  Reputation as any
 };
 
 export type ItemType =

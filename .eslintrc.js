@@ -21,6 +21,9 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": [
             "error",
             { "argsIgnorePattern": "^_" }
-        ]
+        ],
+        "@typescript-eslint/consistent-type-assertions": "error",
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"]
     }
 };

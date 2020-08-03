@@ -127,7 +127,7 @@ function extractCirclesBonuses(html: JQuery, name: string):
         { bonuses: {[name: string]: string }, sum: number} {
     const bonuses:{[name: string]: string } = {};
     let sum = 0;
-    html.find(`input[name=\"${name}\"]:checked`).each((_i, v) => {
+    html.find(`input[name="${name}"]:checked`).each((_i, v) => {
         sum += parseInt(v.getAttribute("value") || "", 10);
         bonuses[v.dataset.name || ""] = "+" + v.getAttribute("value");
     });

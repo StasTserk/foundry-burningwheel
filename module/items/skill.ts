@@ -2,14 +2,14 @@ import { Ability, TracksTests } from "../actor.js";
 import { ShadeString, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, ItemType } from "./item.js";
 
-export class Skill extends Item {
-    prepareData() {
+export class Skill extends Item<SkillData> {
+    prepareData(): void {
         updateTestsNeeded(this.data.data);
         Skill.calculateAptitude.bind(this)();
         this.data.data.safeId = this._id;
     }
 
-    static calculateAptitude(this: Skill) {
+    static calculateAptitude(this: Skill): void {
         if (!this.actor) { return; }
         const player = this.actor;
         const root1exp = (player.data.data[this.data.data.root1] as Ability).exp;
@@ -18,7 +18,7 @@ export class Skill extends Item {
         this.data.data.aptitude = 10 - rootAvg;
     }
 
-    static disableIfWounded(this: SkillDataRoot, woundDice: number) {
+    static disableIfWounded(this: SkillDataRoot, woundDice: number): void {
         if (!this.data.learning && parseInt(this.data.exp, 10) <= woundDice) {
             this.data.cssClass += " wound-disabled";
         }
@@ -30,8 +30,7 @@ export class Skill extends Item {
     }
 }
 
-export interface SkillDataRoot extends BaseEntityData {
-    data: SkillData;
+export interface SkillDataRoot extends ItemData<SkillData> {
     type: ItemType;
 }
 

@@ -11,7 +11,7 @@ import { handleSkillRoll } from "./rollSkill.js";
 import { handleStatRoll } from "./rollStat.js";
 
 export async function handleRollable(
-    e: JQuery.ClickEvent<any, undefined>, sheet: BWActorSheet): Promise<unknown> {
+    e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
 
@@ -50,7 +50,7 @@ export function buildDiceSourceObject(
         bDice: number,
         forks: number,
         woundDice: number,
-        tax: number) {
+        tax: number): helpers.StringIndexedObject<string> {
     const dieSources: { [i: string]: string } = {
         "Exponent": `+${exp}`,
     };
@@ -83,7 +83,7 @@ export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, i
     }
 }
 
-export function extractBaseData(html: JQuery, sheet: BWActorSheet ) {
+export function extractBaseData(html: JQuery, sheet: BWActorSheet ): BaseDataObject {
     const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
@@ -100,7 +100,7 @@ export function extractBaseData(html: JQuery, sheet: BWActorSheet ) {
 }
 
 export function extractSelectString(html: JQuery, name: string): string | undefined {
-    return html.find(`select[name=\"${name}\"]`).val() as string;
+    return html.find(`select[name="${name}"]`).val() as string;
 }
 
 export function extractSelectNumber(html: JQuery, name: string): number {
@@ -108,7 +108,7 @@ export function extractSelectNumber(html: JQuery, name: string): number {
 }
 
 export function extractString(html: JQuery, name: string): string | undefined {
-    return html.find(`input[name=\"${name}\"]`).val() as string;
+    return html.find(`input[name="${name}"]`).val() as string;
 }
 
 export function extractNumber(html: JQuery, name: string): number {
@@ -116,8 +116,8 @@ export function extractNumber(html: JQuery, name: string): number {
 }
 
 export function extractCheckboxValue(html: JQuery, name: string): number {
-    let sum: number = 0;
-    html.find(`input[name=\"${name}\"]:checked`).each((_i, v) => {
+    let sum = 0;
+    html.find(`input[name="${name}"]:checked`).each((_i, v) => {
         sum += parseInt(v.getAttribute("value") || "", 10);
     });
     return sum;
@@ -145,7 +145,7 @@ export function extractMiscObs(html: JQuery): { sum: number, entries: {[i:string
     return { sum, entries };
 }
 
-export async function rollDice(numDice: number, open: boolean = false, shade: helpers.ShadeString = 'B'):
+export async function rollDice(numDice: number, open = false, shade: helpers.ShadeString = 'B'):
     Promise<Roll | undefined> {
     if (numDice <= 0) {
         getNoDiceErrorDialog(numDice);
@@ -195,7 +195,7 @@ export function getRollNameClass(open: boolean, shade: helpers.ShadeString): str
     return css;
 }
 
-export async function getNoDiceErrorDialog(numDice: number) {
+export async function getNoDiceErrorDialog(numDice: number): Promise<Application> {
     return new Dialog({
         title: "Too Few Dice",
         content: `<p>Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}</p>`,
@@ -284,4 +284,18 @@ export interface RerollMessageData {
     successes: number;
     newSuccesses: number;
     obstacleTotal: number;
+}
+
+interface BaseDataObject {
+    woundDice: number,
+    obPenalty: number,
+    diff: number,
+    aDice: number,
+    bDice: number,
+    miscDice: {
+        sum: number,
+        entries: helpers.StringIndexedObject<string>
+    },
+    penaltySources: helpers.StringIndexedObject<string>,
+    obstacleTotal: number
 }

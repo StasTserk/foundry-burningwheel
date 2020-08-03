@@ -2,7 +2,7 @@ import { BWActor } from "../actor.js";
 import { DisplayClass } from "./item.js";
 
 export class MeleeWeapon extends Item {
-    prepareData() {
+    prepareData(): void {
         if (this.actor) {
             const baseDmg = parseInt(this.actor.data.data.power.exp, 10)
                 + parseInt(this.data.data.power, 10);
@@ -17,7 +17,7 @@ export class MeleeWeapon extends Item {
     data: MeleeWeaponRootData;
 }
 
-export interface MeleeWeaponRootData extends BaseEntityData {
+export interface MeleeWeaponRootData extends ItemData<MeleeWeaponData> {
     data: MeleeWeaponData;
 }
 

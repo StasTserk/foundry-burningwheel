@@ -1,9 +1,9 @@
 export class AffiliationSheet extends ItemSheet {
-    static get defaultOptions() {
+    static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
 
-    get template() {
+    get template(): string {
         return "systems/burningwheel/templates/items/affiliation.html";
     }
 }

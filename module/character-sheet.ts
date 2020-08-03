@@ -3,18 +3,15 @@ import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
 import * as helpers from "./helpers.js";
 import {
-    Armor,
     ArmorRootData,
-    Belief,
-    Instinct,
-    MeleeWeapon,
     MeleeWeaponData,
-    RangedWeapon,
-    Relationship,
     Skill,
     SkillDataRoot,
-    Trait,
     TraitDataRoot,
+    ReputationDataRoot,
+    RelationshipData,
+    MeleeWeaponRootData,
+    RangedWeaponRootData,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
 
@@ -22,45 +19,47 @@ export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
         const woundDice = this.actor.data.data.ptgs.woundDice;
-        const beliefs: Belief[] = [];
-        const instincts: Instinct[] = [];
-        const traits: Trait[] = [];
-        const items = data.items;
-        const skills: Skill[] = [];
-        const training: Skill[] = [];
-        const learning: Skill[] = [];
-        const relationships: Relationship[] = [];
-        const equipment: Item[] = [];
-        const melee: MeleeWeapon[] = [];
-        const ranged: RangedWeapon[] = [];
-        const armor: Armor[] = [];
-        const reps: Item[] = [];
-        const affs: Item[] = [];
+        const items = Array.from(data.items.values()) as unknown as ItemData[];
+
+        const beliefs: ItemData[] = [];
+        const instincts: ItemData[] = [];
+        const traits: ItemData[] = [];
+        const skills: SkillDataRoot[] = [];
+        const training: SkillDataRoot[] = [];
+        const learning: SkillDataRoot[] = [];
+        const relationships: ItemData<RelationshipData>[] = [];
+        const equipment: ItemData[] = [];
+        const melee: MeleeWeaponRootData[] = [];
+        const ranged: RangedWeaponRootData[] = [];
+        const armor: ArmorRootData[] = [];
+        const reps: ReputationDataRoot[] = [];
+        const affs: ItemData[] = [];
+
         let addFist = true; // do we need to add a fist weapon?
         for (const i of items) {
             switch(i.type) {
                 case "reputation": reps.push(i); break;
                 case "affiliation": affs.push(i); break;
-                case "belief": beliefs.push(i as Belief); break;
-                case "instinct": instincts.push(i as Instinct); break;
-                case "trait": traits.push(i as Trait); break;
+                case "belief": beliefs.push(i); break;
+                case "instinct": instincts.push(i); break;
+                case "trait": traits.push(i); break;
                 case "skill":
-                    (i as any).data.learning ? learning.push(i as Skill) : (
-                        (i as any).data.training ? training.push(i as Skill) : skills.push(i as Skill));
-                    Skill.disableIfWounded.bind(i)(woundDice);
+                    (i as SkillDataRoot).data.learning ? learning.push(i as SkillDataRoot) : (
+                        (i as SkillDataRoot).data.training ? training.push(i as SkillDataRoot) : skills.push(i as SkillDataRoot));
+                    Skill.disableIfWounded.call(i, woundDice);
                     break;
-                case "relationship": relationships.push(i as Relationship); break;
+                case "relationship": relationships.push(i as ItemData<RelationshipData>); break;
                 case "melee weapon":
                     if (addFist && i.name === "Bare Fist") {
                         addFist = false; // only add one fist weapon if none present
                     } else {
                         equipment.push(i); // don't count fists as equipment
                     }
-                    melee.push(i as MeleeWeapon);
+                    melee.push(i as MeleeWeaponRootData);
                     break;
                 case "ranged weapon":
                     equipment.push(i);
-                    ranged.push(i as RangedWeapon);
+                    ranged.push(i as RangedWeaponRootData);
                     break;
                 case "armor":
                     equipment.push(i);
@@ -102,7 +101,7 @@ export class BWCharacterSheet extends BWActorSheet {
         return data;
     }
 
-    async _maybeInitializeActor() {
+    async _maybeInitializeActor(): Promise<Item<unknown> | undefined> {
         const initialized = await this.actor.getFlag("burningwheel", "initialized") as boolean;
         if (initialized) {
             return;
@@ -112,16 +111,16 @@ export class BWCharacterSheet extends BWActorSheet {
         return this.actor.createOwnedItem(constants.bareFistData);
     }
 
-    getArmorDictionary(armorItems: Item[]): { [key: string]: Item | null; } {
-        let armorLocs: { [key: string]: Armor | null; } = {};
+    getArmorDictionary(armorItems: ItemData[]): { [key: string]: ItemData | null; } {
+        let armorLocs: { [key: string]: ArmorRootData | null; } = {};
         constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
         armorItems.forEach(i =>
-            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i as unknown as ArmorRootData)} as any
+            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i as ArmorRootData)}
         );
         return armorLocs;
     }
 
-    activateListeners(html: JQuery) {
+    activateListeners(html: JQuery): void {
         // add/delete buttons
 
         const selectors = [
@@ -145,7 +144,7 @@ export class BWCharacterSheet extends BWActorSheet {
         super.activateListeners(html);
     }
 
-    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor) {
+    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor): Promise<Application> {
         e.preventDefault();
 
         const loadExistingCallback = async (_html) => {
@@ -195,7 +194,7 @@ export class BWCharacterSheet extends BWActorSheet {
                                 skilltype: "special"
                             }
                         });
-                        return this.actor.getOwnedItem(i._id)!.sheet.render(true);
+                        return this.actor.getOwnedItem(i._id)?.sheet.render(true);
                     }
                 },
                 loadExisting: {
@@ -208,7 +207,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
     private async _manageItems(e: JQuery.ClickEvent) {
         e.preventDefault();
-        const t = e!.currentTarget as EventTarget;
+        const t = e.currentTarget as EventTarget;
         const action = $(t).data("action");
         const id = $(t).data("id") as string;
         let options: NewItemData;
@@ -216,28 +215,28 @@ export class BWCharacterSheet extends BWActorSheet {
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }};
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addReputation":
                 options = { name: "New Reputation", type: "reputation", data: {}};
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addAffiliation":
                 options = { name: "New Affiliation", type: "affiliation", data: {}};
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addTrait":
                 options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)!.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "delItem":
                 return this.actor.deleteOwnedItem(id);
             case "editItem":
-                return this.actor.getOwnedItem(id)!.sheet.render(true);
+                return this.actor.getOwnedItem(id)?.sheet.render(true);
         }
         return null;
     }
 
-    async addDefaultItems() {
+    async addDefaultItems():Promise<Item> {
         return this.actor.createOwnedItem({ name: "Instinct 1", type: "instinct", data: {}})
             .then(() => this.actor.createOwnedItem({ name: "Instinct 2", type: "instinct", data: {}}))
             .then(() => this.actor.createOwnedItem({ name: "Instinct 3", type: "instinct", data: {}}))
@@ -249,14 +248,14 @@ export class BWCharacterSheet extends BWActorSheet {
     }
 }
 
-function equipmentCompare(a: Item, b: Item): number {
+function equipmentCompare(a: ItemData, b: ItemData): number {
     if (constants.equipmentSheetOrder[a.type] !== constants.equipmentSheetOrder[b.type]) {
         return constants.equipmentSheetOrder[a.type] > constants.equipmentSheetOrder[b.type] ? 1 : -1;
     }
     return a.name.localeCompare(b.name);
 }
 
-function weaponCompare(a: Item, b: Item): number {
+function weaponCompare(a: ItemData, b: ItemData): number {
     if (a.name === "Bare Fist") {
         return -1;
     }
@@ -266,28 +265,28 @@ function weaponCompare(a: Item, b: Item): number {
     return a.name.localeCompare(b.name);
 }
 
-const byName = (a: Item, b: Item) => a.name.localeCompare(b.name);
+const byName = (a: ItemData, b: ItemData) => a.name.localeCompare(b.name);
 
 interface CharacterSheetData extends ActorSheetData {
-    reputations: Item[];
-    affiliations: Item[];
-    equipment: Item[];
-    melee: MeleeWeapon[];
+    reputations: ItemData[];
+    affiliations: ItemData[];
+    equipment: ItemData[];
+    melee: MeleeWeaponRootData[];
     fistStats: MeleeWeaponData;
-    armor: { [key: string]: Item | null}; // armor/location dictionary
-    ranged: RangedWeapon[];
-    relationships: Relationship[];
-    beliefs: Belief[];
-    instincts: Instinct[];
-    skills: Skill[];
-    learning: Skill[];
-    training: Skill[];
+    armor: { [key: string]: ItemData | null}; // armor/location dictionary
+    ranged: RangedWeaponRootData[];
+    relationships: ItemData<RelationshipData>[];
+    beliefs: ItemData[];
+    instincts: ItemData[];
+    skills: SkillDataRoot[];
+    learning: SkillDataRoot[];
+    training: SkillDataRoot[];
     traits: CharacterSheetTraits;
     systemVersion: string;
 }
 
 interface CharacterSheetTraits {
-    character: Trait[];
-    die: Trait[];
-    callon: Trait[];
+    character: ItemData[];
+    die: ItemData[];
+    callon: ItemData[];
 }

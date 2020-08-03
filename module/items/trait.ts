@@ -1,15 +1,6 @@
 import { RollModifier } from "module/actor";
 
 export class Trait extends Item {
-    prepareData() {
-        this.traittype = this.data.data.traittype || "character";
-        this.text = this.data.data.text || "test text";
-    }
-
-    traittype: string;
-    text: string;
-    data: TraitDataRoot;
-
     static asRollDieModifier(trait: TraitDataRoot): RollModifier {
         return {
             label: trait.name,
@@ -27,9 +18,7 @@ export class Trait extends Item {
     }
 }
 
-export interface TraitDataRoot extends BaseEntityData {
-    data: TraitData;
-}
+export type TraitDataRoot = ItemData<TraitData>;
 
 export interface TraitData {
     traittype: string;

@@ -10,7 +10,7 @@
 		"target": "ES2017",
 		"lib": [
 			"DOM",
-			"ES6"
+			"es2020"
         ],
         "outDir": "bin",
         "noUnusedLocals": true,

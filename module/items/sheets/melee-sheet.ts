@@ -1,11 +1,11 @@
 import { gearQualitySelect, weaponSpeedSelect } from "../../constants.js";
 
 export class MeleeWeaponSheet extends ItemSheet {
-    get template() {
+    get template(): string {
         return "systems/burningwheel/templates/items/meleeWeapon.html";
     }
 
-    getData() {
+    getData(): MeleeSheetData {
         const data = super.getData() as MeleeSheetData;
         data.weaponLengths = weaponSpeedSelect;
         data.weaponQualities = gearQualitySelect;

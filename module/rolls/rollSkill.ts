@@ -105,7 +105,7 @@ async function skillRollCallback(
             content: `<p>${skill.name} is ready to advance. Go ahead?</p>`,
             yes: () => helpers.advanceSkill(skill),
             // tslint:disable-next-line: no-empty
-            no: () => {},
+            no: () => { return; },
             defaultYes: true
         });
     }
@@ -147,7 +147,7 @@ interface SkillDialogData extends RollDialogData {
 }
 
 export class AstrologyDie extends Die {
-    get results() {
+    get results(): number[] {
         return this.rolls.filter(r => !r.rerolled && !r.discarded).map(r => {
             if ( r.success === true ) return 1;
             else if (r.roll === 1) return -1;

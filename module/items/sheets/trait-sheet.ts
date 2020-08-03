@@ -1,15 +1,15 @@
 import { traitTypeSelect } from "../../constants.js";
 
 export class TraitSheet extends ItemSheet {
-    static get defaultOptions() {
+    static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
 
-    get template() {
+    get template(): string {
         return "systems/burningwheel/templates/items/trait.html";
     }
 
-    getData() {
+    getData(): TraitSheetData {
         const data = super.getData() as TraitSheetData;
         data.traitTypes = traitTypeSelect;
         return data;

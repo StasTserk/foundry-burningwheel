@@ -9,12 +9,14 @@ import { handleFateReroll } from "./rolls/rerollFate.js";
  * Binds buttons in chat log to perform actions
  * @param html rendered html of the chat long
  */
-export function onChatLogRender(html: JQuery) {
+export function onChatLogRender(html: JQuery): void {
     html.on('click', 'button.chat-fate-button', (e) => handleFateReroll(e.target));
     html.on('click', 'button.chat-callon-button', (e) => handleCallonReroll(e.target));
 }
 
-export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data: any) {
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data: any): void {
     const message = html.find("div.chat-message");
     if (message.length > 0) {
         const actor = game.actors.get(data.message.speaker.actor);

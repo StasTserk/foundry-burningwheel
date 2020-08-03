@@ -22,9 +22,8 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
 
     const successTarget = rollStat.shade === "B" ? 3 : (rollStat.shade === "G" ? 2 : 1);
 
-    let reroll: Roll | undefined;
     const numDice = rollArray.filter(r => r <= successTarget).length || 0;
-    reroll = await rollDice(numDice, rollStat.open, rollStat.shade);
+    const reroll = await rollDice(numDice, rollStat.open, rollStat.shade);
 
     if (!reroll) { return; }
     const newSuccesses = parseInt(reroll.result, 10);

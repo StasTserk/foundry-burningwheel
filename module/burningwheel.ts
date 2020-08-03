@@ -12,7 +12,7 @@ import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 
 Hooks.once("init", async () => {
-    CONFIG.Actor.entityClass = BWActor;
+    CONFIG.Actor.entityClass = <never>BWActor;
     CONFIG.Item.entityClass = BWItem;
     game.burningwheel = {};
 
@@ -39,12 +39,12 @@ function registerHelpers() {
         if (options.hash.exp) {
             testsAllowed = 11 - parseInt(options.hash.exp, 10);
         }
-        else if (options.hash.hasOwnProperty("needed")) {
+        else if (Object.prototype.hasOwnProperty.call(options.hash, "needed")) {
             testsAllowed = parseInt(options.hash.needed, 10) + 1;
         }
 
         if (testsAllowed !== -1) {
-            const rgx = new RegExp(' value=\"' + testsAllowed + '\"');
+            const rgx = new RegExp(' value="' + testsAllowed + '"');
             html = html.replace(rgx, "$& disabled=\"disabled\"");
         }
         if (!selected) {
@@ -55,7 +55,7 @@ function registerHelpers() {
         selected.forEach((selectedValue: string) => {
             if (selectedValue) {
                 const escapedValue = Handlebars.escapeExpression(selectedValue);
-                const rgx = new RegExp(' value=\"' + escapedValue + '\"');
+                const rgx = new RegExp(' value="' + escapedValue + '"');
                 html = html.replace(rgx, "$& checked=\"checked\"");
             }
         });
@@ -88,4 +88,5 @@ function registerHelpers() {
 
 Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
-Hooks.on("createOwnedItem", (actor: BWActor, item: BaseEntityData, _options: any) => actor.processNewItem(item));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any) => actor.processNewItem(item));

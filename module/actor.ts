@@ -1,26 +1,28 @@
-import { canAdvance, ShadeString, TestString, updateTestsNeeded } from "./helpers.js";
-import { ArmorRootData, DisplayClass, ItemType, ReputationRootData, Trait, TraitDataRoot } from "./items/item.js";
-import { Skill, SkillDataRoot } from "./items/skill.js";
+import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject } from "./helpers.js";
+import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot } from "./items/item.js";
+import { SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
-    processNewItem(item: BaseEntityData) {
+    processNewItem(item: ItemData): void {
         if (item.type === "trait") {
             const trait = item as TraitDataRoot;
             if (trait.data.addsReputation) {
-                const repData: any = {};
+                const repData: NewItemData = {
+                    name: trait.data.reputationName,
+                    type: "reputation"
+                };
                 repData["data.dice"] = trait.data.reputationDice;
                 repData["data.infamous"] = trait.data.reputationInfamous;
                 repData["data.description"] = trait.data.text;
-                repData.name = trait.data.reputationName;
-                repData.type = "reputation";
                 this.createOwnedItem(repData);
             }
             if (trait.data.addsAffiliation) {
-                const repData: any = {};
+                const repData: NewItemData = {
+                    name: trait.data.affiliationName,
+                    type: "affiliation"
+                };
                 repData["data.dice"] = trait.data.affiliationDice;
                 repData["data.description"] = trait.data.text;
-                repData.name = trait.data.affiliationName;
-                repData.type = "affiliation";
                 this.createOwnedItem(repData);
             }
             console.log("New trait added " + trait);
@@ -28,11 +30,11 @@ export class BWActor extends Actor {
     }
     data!: CharacterDataRoot;
 
-    async createOwnedItem(itemData: NewItemData, options?: object): Promise<Item> {
+    async createOwnedItem(itemData: NewItemData, options?: Record<string, unknown>): Promise<Item> {
         return super.createOwnedItem(itemData, options);
     }
 
-    prepareData() {
+    prepareData(): void {
         super.prepareData();
         if (this.data.type === "character") {
             this._prepareCharacterData();
@@ -66,7 +68,7 @@ export class BWActor extends Actor {
             name: string,
             accessor: string,
             difficultyGroup: TestString,
-            isSuccessful: boolean) {
+            isSuccessful: boolean): Promise<void>  {
         return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
     }
     async addStatTest(
@@ -75,7 +77,7 @@ export class BWActor extends Actor {
             accessor: string,
             difficultyGroup: TestString,
             isSuccessful: boolean,
-            routinesNeeded: boolean = false) {
+            routinesNeeded = false): Promise<void> {
         name = name.toLowerCase();
         const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
         if (onlySuccessCounts && !isSuccessful) {
@@ -88,14 +90,13 @@ export class BWActor extends Actor {
                 title: `Advance ${name}?`,
                 content: `<p>${name} is ready to advance. Go ahead?</p>`,
                 yes: () => this._advanceStat(accessor, parseInt(stat.exp, 10) + 1),
-                // tslint:disable-next-line: no-empty
-                no: () => {},
+                no: () => { return; },
                 defaultYes: true
             });
         }
     }
 
-    async updatePtgs() {
+    async updatePtgs(): Promise<this> {
         const accessorBase = "data.ptgs.wound";
         const forte = parseInt(this.data.data.forte.exp, 10) || 1;
         const mw = this.data.data.mortalWound || 15;
@@ -166,7 +167,7 @@ export class BWActor extends Actor {
         this.update(updateData);
     }
 
-    private _addRollModifier(rollName: string, modifier: RollModifier, onlyNonZero: boolean = false) {
+    private _addRollModifier(rollName: string, modifier: RollModifier, onlyNonZero = false) {
         rollName = rollName.toLowerCase();
         if (onlyNonZero && !modifier.dice && !modifier.obstacle) {
             return;
@@ -178,7 +179,7 @@ export class BWActor extends Actor {
         }
     }
 
-    getRollModifiers(rollName: string) {
+    getRollModifiers(rollName: string): RollModifier[] {
         return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(this.data.rollModifiers.all || []);
     }
 
@@ -251,8 +252,14 @@ export class BWActor extends Actor {
     private _prepareCharacterData() {
         if (!this.data.data.settings) {
             this.data.data.settings = {
-                onlySuccessesCount: 'Faith, Resources, Perception'
-            } as any;
+                onlySuccessesCount: 'Faith, Resources, Perception',
+                showSettings: false,
+                roundUpHealth: false,
+                roundUpMortalWound: false,
+                roundUpReflexes: false,
+                armorTrained: false,
+                ignoreSuperficialWounds: false
+            };
         }
         this.data.rollModifiers = {};
         this.data.callOns = {};
@@ -298,17 +305,17 @@ export class BWActor extends Actor {
             this.data.items.forEach(i => {
                 switch (i.type) {
                     case "skill":
-                        if (!(i as unknown as SkillDataRoot).data.learning &&
-                            !(i as unknown as SkillDataRoot).data.training) {
-                            if ((i as unknown as SkillDataRoot).data.wildFork) {
-                                this.data.wildForks.push(i as Skill);
+                        if (!(i as SkillDataRoot).data.learning &&
+                            !(i as SkillDataRoot).data.training) {
+                            if ((i as SkillDataRoot).data.wildFork) {
+                                this.data.wildForks.push(i as SkillDataRoot);
                             } else {
-                                this.data.forks.push(i as Skill);
+                                this.data.forks.push(i as SkillDataRoot);
                             }
                         }
                         break;
                     case "reputation":
-                        const rep = i as unknown as ReputationRootData;
+                        const rep = i as ReputationDataRoot;
                         if (rep.data.infamous) {
                             this.data.circlesMalus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
                         } else {
@@ -316,10 +323,11 @@ export class BWActor extends Actor {
                         }
                         break;
                     case "affiliation":
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) });
                         break;
                     case "trait":
-                        const t = i as unknown as TraitDataRoot;
+                        const t = i as TraitDataRoot;
                         if (t.data.traittype === "die") {
                             if (t.data.hasDieModifier && t.data.dieModifierTarget) {
                                 t.data.dieModifierTarget.split(',').forEach(target =>
@@ -360,7 +368,7 @@ export class BWActor extends Actor {
         let suCount = 0;
         let woundDice = 0;
         this.data.data.ptgs.obPenalty = 0;
-        Object.entries(this.data.data.ptgs).forEach(([_, value]) => {
+        Object.entries(this.data.data.ptgs).forEach(([_key, value]) => {
             const w = value as Wound;
             const a = w.amount && parseInt(w.amount[0], 10);
             if ((w && a)) {
@@ -476,13 +484,13 @@ export class BWActor extends Actor {
     }
 }
 
-export interface CharacterDataRoot extends ActorData {
-    wildForks: Skill[];
+export interface CharacterDataRoot extends ActorData<BWCharacterData> {
+    wildForks: SkillDataRoot[];
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
     data: BWCharacterData;
-    items: Item[];
-    forks: Skill[];
+    items: ItemData[];
+    forks: SkillDataRoot[];
     armorTrained: boolean;
     rollModifiers: { [rollName:string]: RollModifier[]; };
     callOns: { [rollName:string]: string[] };
@@ -619,8 +627,8 @@ export interface CharacterSettings {
     ignoreSuperficialWounds: boolean;
 }
 
-export interface NewItemData {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface NewItemData extends StringIndexedObject<any> {
     name: string;
     type: ItemType;
-    [index: string]: any;
 }

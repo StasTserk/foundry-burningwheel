@@ -45,16 +45,22 @@ export * from "./skill.js";
 export * from "./trait.js";
 
 export class BWItem extends Item {
-    prepareData() {
+    prepareData(): void {
         super.prepareData();
         if (prototypeList[this.type]) {
             prototypeList[this.type].prototype.prepareData.bind(this)();
         }
     }
 
+    data: BWItemData;
+
     get type(): ItemType {
         return super.type as ItemType;
     }
+}
+
+export interface BWItemData extends ItemData {
+    type: ItemType;
 }
 
 export interface ArthaEarner {
@@ -67,7 +73,7 @@ export interface DisplayClass {
     cssClass?: string;
 }
 
-export function RegisterItemSheets() {
+export function RegisterItemSheets(): void {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("burningwheel", BeliefSheet, {
         types: ["belief"],
@@ -130,14 +136,14 @@ export function RegisterItemSheets() {
 
 const prototypeList: { [i: string]: typeof Item} = {
     "trait": Trait,
-    "skill": Skill,
-    "relationship": Relationship,
-    "melee weapon": MeleeWeapon,
-    "ranged weapon": RangedWeapon,
-    "armor": Armor,
-    "possession": Possession,
-    "property": Property,
-    "reputation": Reputation
+    "skill": <never>Skill,
+    "relationship": <never> Relationship,
+    "melee weapon":  <never> MeleeWeapon,
+    "ranged weapon":  <never> RangedWeapon,
+    "armor": <never> Armor,
+    "possession":  <never> Possession,
+    "property":  <never> Property,
+    "reputation":  <never> Reputation
 };
 
 export type ItemType =

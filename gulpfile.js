@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const tslint = require("gulp-tslint");
+const eslint = require('gulp-eslint');
 const yaml = require("gulp-yaml");
 const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
@@ -19,9 +19,10 @@ if (!fs.existsSync("./foundryConfig.json")) {
 const config = require("./foundryConfig.json");
 
 function lintTs() {
-    return gulp.src("module/*.ts")
-        .pipe(tslint())
-        .pipe(tslint.report());
+    return gulp.src("module/**/*.ts")
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 }
 function deploy() {
     return gulp.src(["system.json", "package.json", "dist/template.json", "dist/**/*"])

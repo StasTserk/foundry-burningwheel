@@ -1,14 +1,14 @@
 import { DisplayClass } from "./item.js";
 
 export class Property extends Item {
-    prepareData() {
+    prepareData(): void {
         this.data.data.cssClass = "equipment-property";
     }
 
     data: PropertyRootData;
 }
 
-export interface PropertyRootData extends BaseEntityData {
+export interface PropertyRootData extends ItemData<PropertyData> {
     data: PropertyData;
 }
 

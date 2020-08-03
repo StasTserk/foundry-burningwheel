@@ -2,7 +2,7 @@ import { BWActor } from "../actor.js";
 import { DisplayClass } from "./item.js";
 
 export class RangedWeapon extends Item {
-    prepareData() {
+    prepareData(): void {
         if (this.actor && this.data.data.usePower) {
             const baseDmg = parseInt(this.actor.data.data.power.exp, 10)
                 + parseInt(this.data.data.powerBonus, 10);
@@ -24,7 +24,7 @@ export class RangedWeapon extends Item {
     actor: BWActor | null;
 }
 
-export interface RangedWeaponRootData extends BaseEntityData{
+export interface RangedWeaponRootData extends ItemData<RangedWeaponData> {
     data: RangedWeaponData;
 }
 

@@ -19,7 +19,7 @@ export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSh
     const statName = target.dataset.rollableName || "Unknown Stat";
     const rollModifiers = sheet.actor.getRollModifiers(statName);
     let tax = 0;
-    if (target.dataset.rollableName!.toLowerCase() === "will") {
+    if (target.dataset.rollableName?.toLowerCase() === "will") {
         tax = parseInt(actor.data.data.willTax, 10);
     }
     const data: StatDialogData = {

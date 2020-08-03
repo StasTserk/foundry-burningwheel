@@ -1,14 +1,14 @@
 import { DisplayClass } from "./item.js";
 
-export class Reputation extends Item {
-    prepareData() {
+export class Reputation extends Item<ReputationData> {
+    prepareData(): void {
         this.data.data.cssClass = this.data.data.infamous ? "reputation-infamous" : "reputation-famous";
     }
 
-    data: ReputationRootData;
+    data: ReputationDataRoot;
 }
 
-export interface ReputationRootData extends BaseEntityData {
+export interface ReputationDataRoot extends ItemData {
     data: ReputationData;
 }
 

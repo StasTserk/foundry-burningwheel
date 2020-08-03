@@ -1,14 +1,14 @@
 import { DisplayClass } from "./item.js";
 
 export class Armor extends Item {
-    prepareData() {
+    prepareData(): void {
         this.data.data.cssClass = "equipment-armor";
     }
 
     data: ArmorRootData;
 }
 
-export interface ArmorRootData extends BaseEntityData {
+export interface ArmorRootData extends ItemData<ArmorData> {
     data: ArmorData;
 }
 

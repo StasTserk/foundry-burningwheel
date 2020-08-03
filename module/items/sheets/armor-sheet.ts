@@ -1,11 +1,11 @@
 import { armorLocationSelect, gearQualitySelect } from "../../constants.js";
 
 export class ArmorSheet extends ItemSheet {
-    get template() {
+    get template(): string {
         return "systems/burningwheel/templates/items/armor.html";
     }
 
-    getData() {
+    getData(): MeleeSheetData {
         const data = super.getData() as MeleeSheetData;
         data.armorLocations = armorLocationSelect;
         data.armorQuality = gearQualitySelect;

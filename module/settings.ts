@@ -1,4 +1,4 @@
-export function registerSystemSettings() {
+export function registerSystemSettings(): void {
     game.settings.register("burningwheel", "version", {
         name: "Current World Version",
         scope: "world",

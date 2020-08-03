@@ -1,7 +1,7 @@
 import { TracksTests } from "./actor.js";
 import { ArmorRootData, BWItem, DisplayClass, ItemType, Skill } from "./items/item.js";
 
-export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0) {
+export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0):void {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
     ability.routineNeeded = values.r;
     ability.challengingNeeded = values.c;
@@ -22,7 +22,7 @@ export function toDictionary(list: string[]): { [key:string]:string } {
     return o;
 }
 
-export function canAdvance(skill: TracksTests, needRoutines: boolean = true): boolean {
+export function canAdvance(skill: TracksTests, needRoutines = true): boolean {
     const enoughRoutine = (parseInt(skill.routine, 10) >= (skill.routineNeeded || 0 ));
     const enoughDifficult = parseInt(skill.difficult, 10) >= (skill.difficultNeeded || 0);
     const enoughChallenging = parseInt(skill.challenging, 10) >= (skill.challengingNeeded || 0);
@@ -41,7 +41,7 @@ export function canAdvance(skill: TracksTests, needRoutines: boolean = true): bo
 
 export function addTestToSkill(
         skill: Skill,
-        difficulty: TestString) {
+        difficulty: TestString): Promise<unknown> | undefined {
     switch (difficulty) {
         case "Routine":
             if (parseInt(skill.data.data.routine, 10) < (skill.data.data.routineNeeded || 0)) {
@@ -66,9 +66,10 @@ export function addTestToSkill(
             }
             break;
     }
+    return;
 }
 
-export function advanceSkill(skill: Skill) {
+export function advanceSkill(skill: Skill): Promise<Skill> {
     const exp = parseInt(skill.data.data.exp, 10);
     return skill.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
 }
@@ -94,23 +95,23 @@ export function difficultyGroup(dice: number, difficulty: number): TestString {
      return (dice - spread >= difficulty) ? "Routine" : "Difficult";
 }
 
-export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData } {
-    const data: any = {};
-    data.head = i.data.hasHelm && i;
-    data.torso = i.data.hasTorso && i;
-    data.leftArm = i.data.hasLeftArm && i;
-    data.rightArm = i.data.hasRightArm && i;
-    data.rightLeg = i.data.hasRightLeg && i;
-    data.leftLeg = i.data.hasLeftLeg && i;
-    data.shield = i.data.hasShield && i;
+export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData | null } {
+    const data: StringIndexedObject<ArmorRootData | null> = {};
+    data.head = i.data.hasHelm ? i : null;
+    data.torso = i.data.hasTorso ? i : null;
+    data.leftArm = i.data.hasLeftArm ? i : null;
+    data.rightArm = i.data.hasRightArm ? i : null;
+    data.rightLeg = i.data.hasRightLeg ? i : null;
+    data.leftLeg = i.data.hasLeftLeg ? i : null;
+    data.shield = i.data.hasShield ? i : null;
     return data;
 }
 
-export async function sleep(ms: number) {
+export async function sleep(ms: number): Promise<unknown> {
     return new Promise(r => setTimeout(r, ms));
 }
 
-export function isStat(name: string) {
+export function isStat(name: string): boolean {
     return ([
         "forte", "power", "will", "perception", "agility", "speed"
     ].indexOf(name.toLowerCase()) !== -1);
@@ -119,7 +120,7 @@ export function isStat(name: string) {
 export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<T[]> {
     const itemList = game.items.filter((i: T) => i.type === itemType) as T[];
     let compendiumItems: T[] = [];
-    const packs = Array.from(game.packs.values());
+    const packs = Array.from(game.packs.values()) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
         compendiumItems = compendiumItems.concat(...packItems.filter((item: T) => item.type === itemType) as T[]);
@@ -141,3 +142,4 @@ const AbilityLookup = {
 
 export type TestString = "Routine" | "Difficult" | "Challenging" | "Routine/Difficult";
 export type ShadeString = "B" | "G" | "W";
+export type StringIndexedObject<T> = { [i: string]: T };

@@ -3,16 +3,16 @@ import { BWActor } from "./actor";
 export class BWActorSheet extends ActorSheet {
     actor: BWActor;
 
-    get template() {
+    get template(): string {
         const path = "systems/burningwheel/templates";
         return `${path}/${this.actor.data.type}-sheet.html`;
     }
 
-    static get defaultOptions() {
+    static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
 
-    activateListeners(html: JQuery) {
+    activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.find("input[data-item-id], select[data-item-id], textarea[data-item-id]")
             .on("change", (e) => this._updateItemField(e));
@@ -20,8 +20,8 @@ export class BWActorSheet extends ActorSheet {
 
     private _updateItemField(e: JQuery.ChangeEvent): void {
         e.preventDefault();
-        const t = e!.currentTarget as EventTarget;
-        let value: any;
+        const t = e.currentTarget as EventTarget;
+        let value: string | boolean | undefined | number | string[];
 
         if ($(t).prop("type") === "checkbox") {
             value = $(t).prop("checked") as boolean;
@@ -35,10 +35,10 @@ export class BWActorSheet extends ActorSheet {
         const item = this.actor.getOwnedItem(id);
         const updateParams = {};
         updateParams[binding] = value;
-        item!.update(updateParams, {});
+        if (item) { item.update(updateParams, {}); }
     }
 
-    _getFormData(form: HTMLFormElement) {
+    _getFormData(form: HTMLFormElement): FormData {
         // fixes an issue with radio buttons all storing their values at the same
         // time inside an array for a given set of radio button options.
         // TODO check if this is needed after version 0.7

@@ -27,6 +27,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
         arthaDice: 0,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         skill: { exp: 10 - (skill.data.data.aptitude || 1) } as any,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
@@ -68,7 +69,7 @@ async function learningRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
     const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
-    if (fateReroll) { fateReroll!.type = "learning"; }
+    if (fateReroll) { fateReroll.type = "learning"; }
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
         return {
             label: s,
@@ -203,8 +204,7 @@ async function advanceLearningProgress(
                 updateData["data.exp"] = Math.floor((10 - requiredTests) / 2);
                 skill.update(updateData, {});
             },
-            // tslint:disable-next-line: no-empty
-            no: () => {},
+            no: () => { return; },
             defaultYes: true
         });
     }

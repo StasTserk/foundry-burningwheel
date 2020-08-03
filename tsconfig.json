@@ -1,6 +1,6 @@
 {
     "include": ["scripts/**/*.ts", "module/**/*.ts"],
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules", "node_modules/foundry-pc-types/types/framework/collection.d.ts"],
     "compilerOptions": {
         "baseUrl": ".",
         "sourceMap": true,
@@ -14,6 +14,7 @@
         ],
         "outDir": "bin",
         "noUnusedLocals": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "skipLibCheck": true
     }
 }

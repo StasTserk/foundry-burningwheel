@@ -169,22 +169,19 @@
         .rollable-open-checkbox:checked + .rollable-open-toggle > label{
             color: darkgreen;
             background-color: rgba(green, .15);
-            border-color: darkgreen;
+            border-color: green;
         }
         .rollable-open-toggle {
             width: min-content;
             display: inline-block;
             
             & > label {
+                @include button-like(grey);
                 display: block;
                 font-weight: bold;
                 height: 1.75em;
                 line-height: 1.5em;
-                width: 3.5em;
-                border: 2px solid grey;
                 color: grey;
-                border-radius: 1em;
-                text-align: center;
             }
         }
 

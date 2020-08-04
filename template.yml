@@ -207,6 +207,7 @@ Item:
     weaponLength: shortest
     handedness: one
     description: ''
+    skillId: ''
   ranged weapon:
     quality: run-of-the-mill
     hasGunpowder: false
@@ -223,6 +224,7 @@ Item:
     maxRange: 125 paces
     hadnedness: two
     description: ''
+    skillId: ''
   armor:
     quality: run-of-the-mill
     dice: 1

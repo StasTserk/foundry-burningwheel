@@ -128,6 +128,18 @@ export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Prom
     return itemList.concat(...compendiumItems);
 }
 
+export async function notifyError(title: string, errorMessage: string): Promise<Application> {
+    return new Dialog({
+        title,
+        content: `<p>${errorMessage}</p>`,
+        buttons: {
+            ok: {
+                label: "OK"
+            }
+        }
+    }).render(true);
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

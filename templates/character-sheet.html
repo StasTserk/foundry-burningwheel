@@ -325,10 +325,7 @@
     </label>
     <div class="combat-section flex-row">
         <div class="weapons">
-            {{> "systems/burningwheel/templates/parts/weapons.html" melee=melee ranged=ranged }}
-        </div>
-        <div class="armor">
-            {{> "systems/burningwheel/templates/parts/armor.html" armor=armor }}
+            {{> "systems/burningwheel/templates/parts/weapons.html" melee=melee ranged=ranged skills=actor.martialSkills}}
         </div>
         <div class="training-skills">
             <hr>
@@ -398,6 +395,10 @@
                 {{/if}}
                 {{/unless}}
             </div>
+        </div>
+        <div class="armor">
+            <hr>
+            {{> "systems/burningwheel/templates/parts/armor.html" armor=armor }}
         </div>
     </div>
     <hr>

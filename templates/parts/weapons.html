@@ -8,7 +8,9 @@
     <div class="weapon-header">Va</div>
     <div class="weapon-header">Ws</div>
     <div class="weapon-header">Length</div>
-    <br/>
+    <div class="weapon-header">Skill Used</div>
+    <div class="weapon-header">~</div>
+
     {{#each melee as |m|}}
     <div class="weapon-row">{{m.name}}</div>
     <div class="weapon-row">{{m.data.incidental}}</div>
@@ -19,7 +21,17 @@
     <div class="weapon-row">{{m.data.vsArmor}}</div>
     <div class="weapon-row">{{m.data.weaponSpeed}}</div>
     <div class="weapon-row">{{titlecase m.data.weaponLength}}</div>
-    <br/>
+    <div class="weapon-row">
+        <select class="weapon-skill-select" data-item-id="{{m._id}}" data-binding="data.skillId" value="{{m.data.skillId}}">
+            {{#select m.data.skillId}}
+            <option value="">None</option>
+            {{#each ../skills as |s|}}
+            <option value="{{s._id}}">{{s.name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="weapon-row"><button class="rollable" data-roll-type="weapon" data-skill-id="{{m.data.skillId}}"><i class="fas fa-dice"></i></button></div>
     {{/each}}
 </div>
 <hr>
@@ -31,15 +43,26 @@
     <div class="weapon-header">Opt</div>
     <div class="weapon-header">Extr</div>
     <div class="weapon-header">Max</div>
-    <br/>
+    <div class="weapon-header">Skill Used</div>
+    <div class="weapon-header">~</div>
     {{#each ranged as |r|}}
     <div class="weapon-row">{{r.name}}</div>
-    <div class="weapon-row"><div class="weapon-ims">{{r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div>
-    <div class="weapon-row"><div class="weapon-ims">{{r.data.mark}}</div><label class="weapon-dof">{{r.data.markLabel}}</label></div>
-    <div class="weapon-row"><div class="weapon-ims">{{r.data.superb}}</div><label class="weapon-dof">{{r.data.superbLabel}}</label></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{r.data.mark}}</div><label class="weapon-dof">{{r.data.markLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{r.data.superb}}</div><label class="weapon-dof">{{r.data.superbLabel}}</label></div></div>
     <div class="weapon-row">{{r.data.optimalRange}}D</div>
     <div class="weapon-row">{{r.data.extremeRange}}D</div>
     <div class="weapon-row">{{titlecase r.data.maxRange}}</div>
-    <br/>
+    <div class="weapon-row">
+        <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="data.skillId" value="{{r.data.skillId}}">
+            {{#select r.data.skillId}}
+            <option value="">None</option>
+            {{#each ../skills as |s|}}
+            <option value="{{s._id}}">{{s.name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div class="weapon-row"><button class="rollable" data-roll-type="weapon" data-skill-id="{{r.data.skillId}}"><i class="fas fa-dice"></i></button></div>
     {{/each}}
 </div>

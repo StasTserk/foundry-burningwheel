@@ -38,6 +38,18 @@ export async function handleRollable(
                 return sheet.actor.update({ "data.ptgs.gritting": false });
             }
             return handleGritRoll(target, sheet);
+        case "weapon":
+            const skillId = target.dataset.skillId;
+            if (!skillId) {
+                return helpers.notifyError("No Skill Specified",
+                    "A skill must be specified in order for the weapon attack to be rolled. Please pick from a list of martial skills of the character.");
+            }
+            const skill: Skill | null = sheet.actor.getOwnedItem(skillId) as Skill;
+            if (skill) {
+                return skill.data.data.learning ? 
+                    handleLearningRoll(target, sheet) :
+                    handleSkillRoll(target, sheet);
+            }
     }
 }
 
@@ -196,15 +208,8 @@ export function getRollNameClass(open: boolean, shade: helpers.ShadeString): str
 }
 
 export async function getNoDiceErrorDialog(numDice: number): Promise<Application> {
-    return new Dialog({
-        title: "Too Few Dice",
-        content: `<p>Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}</p>`,
-        buttons: {
-            ok: {
-                label: "OK"
-            }
-        }
-    }).render(true);
+    return helpers.notifyError("Too Few Dice",
+        `Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}`);
 }
 
 /* ============ Constants =============== */

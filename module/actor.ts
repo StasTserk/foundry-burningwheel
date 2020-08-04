@@ -1,5 +1,5 @@
 import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject } from "./helpers.js";
-import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot } from "./items/item.js";
+import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, BWItemData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -71,6 +71,7 @@ export class BWActor extends Actor {
             isSuccessful: boolean): Promise<void>  {
         return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
     }
+
     async addStatTest(
             stat: TracksTests,
             name: string,
@@ -301,8 +302,10 @@ export class BWActor extends Actor {
         this.data.wildForks = [];
         this.data.circlesBonus = [];
         this.data.circlesMalus = [];
+        this.data.martialSkills = [];
+        this.data.sorcerousSkills = [];
         if (this.data.items) {
-            this.data.items.forEach(i => {
+            this.data.items.forEach((i) => {
                 switch (i.type) {
                     case "skill":
                         if (!(i as SkillDataRoot).data.learning &&
@@ -312,6 +315,12 @@ export class BWActor extends Actor {
                             } else {
                                 this.data.forks.push(i as SkillDataRoot);
                             }
+                        }
+                        if ((i as SkillDataRoot).data.skilltype === "martial" &&
+                            !(i as SkillDataRoot).data.training) {
+                            this.data.martialSkills.push(i);
+                        } else if ((i as SkillDataRoot).data.skilltype === "sorcerous") {
+                            this.data.sorcerousSkills.push(i);
                         }
                         break;
                     case "reputation":
@@ -485,11 +494,13 @@ export class BWActor extends Actor {
 }
 
 export interface CharacterDataRoot extends ActorData<BWCharacterData> {
+    martialSkills: SkillDataRoot[];
+    sorcerousSkills: SkillDataRoot[];
     wildForks: SkillDataRoot[];
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
     data: BWCharacterData;
-    items: ItemData[];
+    items: BWItemData[];
     forks: SkillDataRoot[];
     armorTrained: boolean;
     rollModifiers: { [rollName:string]: RollModifier[]; };

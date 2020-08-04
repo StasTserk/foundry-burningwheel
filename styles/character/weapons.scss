@@ -1,15 +1,15 @@
 @import "../mixins.scss";
 .combat-section {
     .weapons {
-        width: calc(60% - 5px);
+        width: 100%
     }
     .armor {
         width: 40%;
-        margin-left: 5px;
+        margin-left: 1%;
     }
 
     .training-skills {
-        width: 33%;
+        width: 23%;
         margin-right: 1%;
 
         .training-skill {
@@ -39,7 +39,7 @@
     }
 
     .clumsy-stats {
-        width: 66%;
+        width: 35%;
 
         h3 {
             background-color: rgba(black, .15);
@@ -50,7 +50,7 @@
         }
 
         .clumsy-item {
-            width: 33%;
+            width: 50%;
             text-align: center;
 
             .clumsy-label {
@@ -69,39 +69,66 @@
     .weapon-grid {
         column-gap: 0;
         row-gap: 0;
-        grid-template-columns: 5fr repeat(7, 1fr) 2fr 0;
+        grid-template-columns: 5fr repeat(7, 1fr) 2fr 3fr 1fr;
         .weapon-header {
             background-color: rgba(black, .15);
         }
 
-        .weapon-row:nth-child(2n) {
-            background-color: rgba(black, .05);
+        .weapon-row:nth-child(22n+1), .weapon-row:nth-child(22n+2),
+        .weapon-row:nth-child(22n+3), .weapon-row:nth-child(22n+4),
+        .weapon-row:nth-child(22n+5), .weapon-row:nth-child(22n+6),
+        .weapon-row:nth-child(22n+7), .weapon-row:nth-child(22n+8),
+        .weapon-row:nth-child(22n+9), .weapon-row:nth-child(22n+10),
+        .weapon-row:nth-child(22n+11) {
+            background-color: rgba(black, .1);
         }
     }
 
     .ranged-grid {
         column-gap: 0;
         row-gap: 0;
-        grid-template-columns: 5fr repeat(5, 1fr) 2fr 0;
+        grid-template-columns: 5fr repeat(5, 1fr) 2fr 3fr 1fr;
         .weapon-header {
             background-color: rgba(black, .15);
         }
-        .weapon-row:nth-child(2n) {
-            background-color: rgba(black, .05);
+
+        .weapon-row:nth-child(18n+1), .weapon-row:nth-child(18n+2),
+        .weapon-row:nth-child(18n+3), .weapon-row:nth-child(18n+4),
+        .weapon-row:nth-child(18n+5), .weapon-row:nth-child(18n+6),
+        .weapon-row:nth-child(18n+7), .weapon-row:nth-child(18n+8),
+        .weapon-row:nth-child(18n+9) {
+            background-color: rgba(black, .1);
         }
-        .weapon-ims {
-            margin-bottom: -10px;
-        }
-        .weapon-dof {
-            text-align: center;
-            font-size: 10px;
+        .ims-pair {
+            line-height: 1em;
+
+            .weapon-ims {
+                line-height: 1.5em;
+                margin-bottom: -.5em;
+            }
+            .weapon-dof {
+                text-align: center;
+                font-size: 10px;
+                line-height: 10px;
+            }
         }
     }
 
     .weapon-grid, .ranged-grid {
         .weapon-row {
-            font-size: 16px;
+            font-size: 1.15em;
+            line-height: 1.9em;
             text-align: center;
+
+            .weapon-skill-select {
+                width: 100%;
+                text-align-last: center;
+            }
+
+            button {
+                height: 2em;
+                line-height: 1.75em;
+            }
         }
     }
 

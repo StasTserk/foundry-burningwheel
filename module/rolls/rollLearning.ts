@@ -21,7 +21,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
     const data: LearningDialogData = {
-        name: `Beginner's Luck ${target.dataset.rollableName} Test`,
+        name: `Beginner's Luck ${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -36,7 +36,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
     const html = await renderTemplate(templates.learnDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${target.dataset.rollableName}`,
+            title: `${skill.name}`,
             content: html,
             buttons: {
                 roll: {

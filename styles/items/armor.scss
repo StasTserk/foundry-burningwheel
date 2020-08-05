@@ -1,3 +1,5 @@
+@import "../mixins.scss";
+
 .armor-sheet {
     .armor-location-group {
         width: 100%;
@@ -31,9 +33,7 @@
         }
 
         .armor-location-checkbox:checked + .armor-location-label {
-            background: linear-gradient(rgba(green, .05), rgba(green, 0.25));
-            border: 2px solid #005500;
-            color: #005500;
+            @include button-like-active;
         }
         .armor-location-label {
             text-align: center;

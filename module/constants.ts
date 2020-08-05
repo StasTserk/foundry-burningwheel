@@ -2,14 +2,14 @@ import { NewItemData } from "./actor.js";
 import { toDictionary } from "./helpers.js";
 import { MeleeWeaponData } from "./items/meleeWeapon.js";
 
-export const weaponSpeeds = [
+export const weaponLengths = [
     "shortest",
     "short",
     "long",
     "longer",
     "longest"
 ];
-export const weaponSpeedSelect = toDictionary(weaponSpeeds);
+export const weaponLengthSelect = toDictionary(weaponLengths);
 
 const fistData: MeleeWeaponData = {
     weaponLength: "shortest",

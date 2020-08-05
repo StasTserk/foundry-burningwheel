@@ -12,6 +12,7 @@ import {
     RelationshipData,
     MeleeWeaponRootData,
     RangedWeaponRootData,
+    SpellDataRoot,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
 
@@ -34,6 +35,7 @@ export class BWCharacterSheet extends BWActorSheet {
         const armor: ArmorRootData[] = [];
         const reps: ReputationDataRoot[] = [];
         const affs: ItemData[] = [];
+        const spells: SpellDataRoot[] = [];
 
         let addFist = true; // do we need to add a fist weapon?
         for (const i of items) {
@@ -65,6 +67,9 @@ export class BWCharacterSheet extends BWActorSheet {
                     equipment.push(i);
                     armor.push(i);
                     break;
+                case "spell":
+                    spells.push(i as SpellDataRoot);
+                    break;
                 default:
                     equipment.push(i);
             }
@@ -84,6 +89,7 @@ export class BWCharacterSheet extends BWActorSheet {
         data.ranged = ranged.sort(weaponCompare);
         data.reputations = reps;
         data.affiliations = affs;
+        data.spells = spells;
 
         const traitLists: CharacterSheetTraits = { character: [], die: [], callon: [] };
 
@@ -280,6 +286,7 @@ interface CharacterSheetData extends ActorSheetData {
     instincts: ItemData[];
     skills: SkillDataRoot[];
     learning: SkillDataRoot[];
+    spells: SpellDataRoot[];
     training: SkillDataRoot[];
     traits: CharacterSheetTraits;
     systemVersion: string;

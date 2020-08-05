@@ -167,9 +167,7 @@
         }
 
         .rollable-open-checkbox:checked + .rollable-open-toggle > label{
-            color: darkgreen;
-            background-color: rgba(green, .15);
-            border-color: green;
+            @include button-like-active
         }
         .rollable-open-toggle {
             width: min-content;

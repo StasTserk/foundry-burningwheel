@@ -127,6 +127,7 @@ Item:
     - melee weapon
     - ranged weapon
     - armor
+    - spell
   templates:
     arthaEarner:
       fate: false
@@ -261,3 +262,23 @@ Item:
   affiliation:
     description: ''
     dice: 0
+  spell:
+    variableObstacle: false
+    variableObstalceDescription: ''
+    obstacle: 4
+    upSpell: false
+    actions: 1
+    description: A brand new spell
+    origin: ''
+    areaOfEffect: ''
+    element: ''
+    impetus: ''
+    duration: ''
+    rpCost: 0
+    isWeapon: false
+    willDamageBonus: 0
+    va: 0
+    weaponLength: shortest
+    optimalRange: 0
+    extremeRange: 0
+    maxRange: '10 Paces'

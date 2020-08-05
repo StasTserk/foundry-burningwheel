@@ -16,8 +16,8 @@ export function slugify(name: string): string {
     return name.trim().replace(" ", "-");
 }
 
-export function toDictionary(list: string[]): { [key:string]:string } {
-    const o: { [key:string]:string } = {};
+export function toDictionary(list: string[]): StringIndexedObject<string> {
+    const o:StringIndexedObject<string> = {};
     list.forEach(s => o[s] = s.titleCase());
     return o;
 }

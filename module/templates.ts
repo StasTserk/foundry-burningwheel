@@ -10,6 +10,7 @@ export async function preloadHandlebarsTemplates(): Promise<void> {
       "systems/burningwheel/templates/parts/relationships.html",
       "systems/burningwheel/templates/parts/rollable-item.html",
       "systems/burningwheel/templates/parts/rollable-skill.html",
+      "systems/burningwheel/templates/parts/spell.html",
       "systems/burningwheel/templates/parts/weapons.html",
       "systems/burningwheel/templates/parts/character-settings.html"
     ];

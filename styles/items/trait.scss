@@ -1,3 +1,5 @@
+@import "../mixins.scss";
+
 .trait-sheet {
     .traits-die, .traits-callon {
         display: none;
@@ -44,9 +46,7 @@
     }
 
     .trait-effect-checkbox:checked + .trait-effect-label {
-        background: linear-gradient(rgba(green, .05), rgba(green, 0.25));
-        border: 2px solid #005500;
-        color: #005500;
+        @include button-like-active;
     }
 
     .trait-effect-checkbox:checked ~ .trait-effect-details {

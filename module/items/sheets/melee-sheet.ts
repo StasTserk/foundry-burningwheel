@@ -1,4 +1,4 @@
-import { gearQualitySelect, weaponSpeedSelect } from "../../constants.js";
+import { gearQualitySelect, weaponLengthSelect } from "../../constants.js";
 
 export class MeleeWeaponSheet extends ItemSheet {
     get template(): string {
@@ -7,7 +7,7 @@ export class MeleeWeaponSheet extends ItemSheet {
 
     getData(): MeleeSheetData {
         const data = super.getData() as MeleeSheetData;
-        data.weaponLengths = weaponSpeedSelect;
+        data.weaponLengths = weaponLengthSelect;
         data.weaponQualities = gearQualitySelect;
         return data;
     }

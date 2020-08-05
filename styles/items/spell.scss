@@ -1,0 +1,53 @@
+@import "../mixins.scss";
+.spell-sheet {
+
+    .spell-sheet-entry {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 5px;
+        row-gap: 5px;
+        margin-bottom: 5px;
+
+        input[type='number'] {
+            @include no-number-arrows;
+        }
+    }
+
+    .item-sheet-name {
+        border: 0;
+        border-radius: 0;
+        font-size: 2em;
+        font-weight: bolder;
+        height: 1.25em;
+        border-bottom: 2px groove lightpink;
+        margin-bottom: .5em;
+    }
+    .spell-toggle-label {
+        @include button-like(grey);
+    }
+
+    .spell-toggle-checkbox:checked + .spell-toggle-label {
+        @include button-like-active;
+    }
+
+    .spell-setting-label {
+        font-weight: bold;
+    }
+
+    .spell-weapon-toggle {
+        margin-bottom: -2px;
+    }
+    .spell-weapon-toggle .spell-toggle-label {
+        border-radius: 0;
+        border-top-left-radius: 2em;
+        border-top-right-radius: 2em;
+        width: 8em;
+        display: inline-block;
+    }
+
+    .spell-weapon-stats {
+        background-color: rgba(black, 0.05);
+        padding: 5px;
+        border: 2px groove #f0f0e0;
+    }
+}

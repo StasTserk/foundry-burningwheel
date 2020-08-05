@@ -84,7 +84,7 @@
         }
 
         & input:checked + button {
-            background: linear-gradient(rgba(green, .05), rgba(green, 0.25));
+            @include button-like-active;
         }
 
         & > input {

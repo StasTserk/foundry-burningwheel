@@ -19,6 +19,8 @@ import { SkillSheet } from "./sheets/skill-sheet.js";
 import { TraitSheet } from "./sheets/trait-sheet.js";
 import { Skill } from "./skill.js";
 import { Trait } from "./trait.js";
+import { SpellSheet } from "./sheets/spell-sheet.js";
+import { Spell } from "./spell.js";
 
 export * from "./armor.js";
 export * from "./belief.js";
@@ -41,6 +43,8 @@ export * from "./sheets/relationship-sheet.js";
 export * from "./sheets/repuatation-sheet.js";
 export * from "./sheets/skill-sheet.js";
 export * from "./sheets/trait-sheet.js";
+export * from "./sheets/spell-sheet.js";
+export * from "./spell.js";
 export * from "./skill.js";
 export * from "./trait.js";
 
@@ -132,6 +136,11 @@ export function RegisterItemSheets(): void {
         types: ["affiliation"],
         makeDefault: true
     });
+
+    Items.registerSheet("burningwheel", SpellSheet, {
+        types: ["spell"],
+        makeDefault: true
+    });
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -144,7 +153,8 @@ const prototypeList: { [i: string]: typeof Item} = {
     "armor": Armor as any,
     "possession":  Possession as any,
     "property":  Property as any,
-    "reputation":  Reputation as any
+    "reputation":  Reputation as any,
+    "spell": Spell as any
 };
 
 export type ItemType =

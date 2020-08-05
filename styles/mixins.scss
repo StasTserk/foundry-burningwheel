@@ -107,3 +107,9 @@ $hover-color: rgba(0,0,0,0.1);
         background-color: rgba($color, .25);
     }
 }
+
+@mixin button-like-active {
+    background: linear-gradient(rgba(green, .05), rgba(green, 0.25));
+    border: 2px solid #005500;
+    color: #005500;
+}

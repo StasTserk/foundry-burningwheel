@@ -50,6 +50,20 @@ export async function handleRollable(
                     handleLearningRoll(target, sheet) :
                     handleSkillRoll(target, sheet);
             }
+            break;
+        case "spell":
+            const sorcerySkillId = target.dataset.skillId;
+            if (!sorcerySkillId) {
+                return helpers.notifyError("No Skill Specified",
+                    "A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.");
+            }
+            const sorcerySkill: Skill | null = sheet.actor.getOwnedItem(sorcerySkillId) as Skill;
+            if (sorcerySkill) {
+                return sorcerySkill.data.data.learning ? 
+                    handleLearningRoll(target, sheet) :
+                    handleSkillRoll(target, sheet);
+            }
+            break;
     }
 }
 

@@ -41,6 +41,7 @@ Actor:
       collapsePtgs: false
       collapseCombat: false
       collapseMisc: false
+      collapseSpells: false
     common:
       will: &stat
         exp: 1
@@ -282,3 +283,5 @@ Item:
     optimalRange: 0
     extremeRange: 0
     maxRange: '10 Paces'
+    collapsed: false
+    skillId: ''

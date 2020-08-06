@@ -579,8 +579,14 @@ export interface DisplayProps {
     collapseTraits: boolean;
     collapseStats: boolean;
     collapseAttributes: boolean;
+    collapseRelationships: boolean;
+    collapseGear: boolean;
+    collapseLearning: boolean;
     collapseSkills: boolean;
     collapsePtgs: boolean;
+    collapseCombat: boolean;
+    collapseMisc: boolean;
+    collapseSpells: boolean;
 }
 
 interface Ptgs {

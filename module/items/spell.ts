@@ -5,7 +5,7 @@ import { StringIndexedObject } from "../helpers.js";
 export class Spell extends Item<SpellData> {
     prepareData(): void {
         this.data.obstacleLabel = 
-            `Ob ${this.data.data.variableObstacle ?
+            `${this.data.data.variableObstacle ?
                 this.data.data.variableObstalceDescription :
                 this.data.data.obstacle}${this.data.data.upSpell?
                 '^':''}`;
@@ -50,6 +50,7 @@ export interface SpellData {
     optimalRange: number;
     extremeRange: number;
     maxRange: string;
+    collapsed: boolean;
 
     //derived values
     incidental?: number;

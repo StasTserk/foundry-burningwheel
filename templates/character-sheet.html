@@ -274,6 +274,16 @@
         {{/each}}
     </div>
 
+    <input type="checkbox" id="{{actor._id}}-collapse-spells" name="data.collapseSpells" class="section-collapse spells-collapse" {{ checked data.collapseSpells }}>
+    <label for="{{actor._id}}-collapse-spells" class="section-collapse-label">
+        <h2 class="section-header"><i class="fas fa-chevron-down"></i>Spells</h2>
+    </label>
+    <div class="spell-section item-grid col-3">
+        {{#each spells as |spell|}}
+        {{>"systems/burningwheel/templates/parts/spell.html" spell=spell skills=../actor.sorcerousSkills}}
+        {{/each}}
+    </div>
+
     <input type="checkbox" id="{{actor._id}}-collapseMisc" name="data.collapseMisc" class="section-collapse misc-collapse" {{ checked data.collapseMisc }}>
     <label for="{{actor._id}}-collapseMisc" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Notes, Spells and Other Miscellanea</h2>

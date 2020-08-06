@@ -130,16 +130,13 @@ export class BWCharacterSheet extends BWActorSheet {
         // add/delete buttons
 
         const selectors = [
-            ".trait-category i",
-            ".rollable > .collapsing-section > i",
-            ".learning > i",
-            ".relationship-section h2 > i",
-            ".relationship > i",
-            ".reputation > i",
-            ".affiliation > i",
-            ".gear > div > i",
-            ".training-skill > div > i",
-            ".setting-item-row > div > i"
+            'i[data-action="editItem"]',
+            'i[data-action="delItem"]',
+            'i[data-action="addAffiliation"]',
+            'i[data-action="addRelationship"]',
+            'i[data-action="addReputation"]',
+            'i[data-action="addTrait"]',
+            
         ];
         html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
 

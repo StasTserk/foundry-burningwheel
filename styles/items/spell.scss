@@ -12,15 +12,6 @@
         }
     }
 
-    .item-sheet-name {
-        border: 0;
-        border-radius: 0;
-        font-size: 2em;
-        font-weight: bolder;
-        height: 1.25em;
-        border-bottom: 2px groove lightpink;
-        margin-bottom: .5em;
-    }
     .spell-toggle-label {
         @include button-like(grey);
     }

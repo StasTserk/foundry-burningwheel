@@ -1,7 +1,7 @@
 import { BWActor, TracksTests } from "../actor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
-import { Skill } from "../items/item.js";
+import { Skill, PossessionRootData } from "../items/item.js";
 import {
     buildDiceSourceObject,
     buildRerollData,
@@ -12,7 +12,9 @@ import {
     RollChatMessageData,
     RollDialogData,
     rollDice,
-    templates
+    templates,
+    extractSelectString,
+    maybeExpendTools,
 } from "./rolls.js";
 
 export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
@@ -28,6 +30,8 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         skill: skill.data.data,
+        needsToolkit: skill.data.data.tools,
+        toolkits: actor.data.toolkits,
         forkOptions: actor.getForkOptions(skill.data.name),
         wildForks: actor.getWildForks(skill.data.name),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
@@ -60,6 +64,17 @@ async function skillRollCallback(
     if (wildForks) {
         dieSources["Wild FoRKs"] = `+${wildForks}`;
     }
+    if (skill.data.data.tools) {
+        if (extractCheckboxValue(dialogHtml, "toolPenalty")) {
+            baseData.penaltySources["No Tools"] = `+${baseData.diff}`;
+            baseData.obstacleTotal += baseData.diff;
+        }
+        const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
+        const tools = sheet.actor.getOwnedItem(toolkitId);
+        if (tools) {
+            maybeExpendTools(tools);
+        }
+    }
     const dg = helpers.difficultyGroup(
         exp + baseData.bDice + forks + wildForks - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
@@ -78,7 +93,7 @@ async function skillRollCallback(
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
         return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
     });
-    const success = parseInt(roll.result + wildForkBonus, 10) >= baseData.obstacleTotal;
+    const success = (parseInt(roll.result) + wildForkBonus) >= baseData.obstacleTotal;
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,
@@ -144,6 +159,8 @@ interface SkillDialogData extends RollDialogData {
     skill: TracksTests;
     forkOptions: { name: string, amount: number }[];
     wildForks: { name: string, amount: number }[];
+    needsToolkit: boolean;
+    toolkits: PossessionRootData[];
 }
 
 export class AstrologyDie extends Die {

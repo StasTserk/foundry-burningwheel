@@ -1,26 +1,22 @@
+@import "../mixins.scss";
 .skill-form {
     .skill-form-group {
         display: grid;
-        grid-template-columns: repeat(4, min-content);
-        column-gap: 1em;
-        text-align: right;
-        margin-top: 5px;
-        font-size: 1em;
-        line-height: 1em;
-        
-        label {
-            white-space: nowrap;
-            display: inline-block;
-            margin-left: 10px;
-            vertical-align: middle;
-            line-height: 1.75em;
-            width: min-content;
-        }
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 5px;
+        row-gap: 5px;
+        margin-bottom: 5px;
         width: 100%;
 
-        &.half-width {
-            width: 50%;
-            grid-template-columns: repeat(2, min-content);
+        .skill-setting-label {
+            font-weight: bold;
+        }
+
+        .skill-setting-toggle {
+            @include button-like(grey)
+        }
+        .skill-setting-checkbox:checked + .skill-setting-toggle {
+            @include button-like-active;
         }
     }
 }

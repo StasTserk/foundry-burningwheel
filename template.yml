@@ -265,7 +265,7 @@ Item:
     dice: 0
   spell:
     variableObstacle: false
-    variableObstalceDescription: ''
+    variableObstacleDescription: ''
     obstacle: 4
     upSpell: false
     actions: 1

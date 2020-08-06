@@ -1,6 +1,6 @@
 import { BWActor } from "module/actor.js";
 import { BWActorSheet } from "module/bwactor-sheet.js";
-import { Skill } from "module/items/item.js";
+import { Skill, SkillDataRoot, PossessionRootData } from "module/items/item.js";
 import * as helpers from "../helpers.js";
 import {
     buildDiceSourceObject,
@@ -8,11 +8,14 @@ import {
     extractBaseData,
     getRollNameClass,
     getRootStatInfo,
-    LearningDialogData,
     RerollData,
     RollChatMessageData,
     rollDice,
-    templates
+    templates,
+    extractCheckboxValue,
+    extractSelectString,
+    maybeExpendTools,
+    RollDialogData
 } from "./rolls.js";
 
 export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
@@ -27,6 +30,8 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
         arthaDice: 0,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
+        toolkits: actor.data.toolkits,
+        needsToolkit: skill.data.data.tools,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         skill: { exp: 10 - (skill.data.data.aptitude || 1) } as any,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
@@ -53,13 +58,26 @@ async function learningRollCallback(
     dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
 
     const baseData = extractBaseData(dialogHtml, sheet);
-    baseData.penaltySources["Beginner's Luck"] = `+${baseData.diff}`;
+    let beginnerPenalty = baseData.diff;
     const exp = 10 - (skill.data.data.aptitude || 1);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
+    if (skill.data.data.tools) {
+        if (extractCheckboxValue(dialogHtml, "toolPenalty")) {
+            baseData.penaltySources["No Tools"] = `+${baseData.diff}`;
+            baseData.obstacleTotal += baseData.diff;
+            beginnerPenalty *= 2;
+        }
+        const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
+        const tools = sheet.actor.getOwnedItem(toolkitId);
+        if (tools) {
+            maybeExpendTools(tools);
+        }
+    }
     const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
     const rollSettings = getRootStatInfo(skill, sheet.actor);
-    baseData.obstacleTotal += baseData.diff;
+    baseData.penaltySources["Beginner's Luck"] = `+${beginnerPenalty}`;
+    baseData.obstacleTotal += beginnerPenalty;
 
     const roll = await rollDice(
         exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum,
@@ -212,4 +230,10 @@ async function advanceLearningProgress(
         fr.learningTarget = "skill";
     }
     return cb(fr);
+}
+
+export interface LearningDialogData extends RollDialogData {
+    skill: SkillDataRoot;
+    needsToolkit: boolean;
+    toolkits: PossessionRootData[];
 }

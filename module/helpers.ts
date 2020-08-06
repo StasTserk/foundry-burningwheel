@@ -95,6 +95,15 @@ export function difficultyGroup(dice: number, difficulty: number): TestString {
      return (dice - spread >= difficulty) ? "Routine" : "Difficult";
 }
 
+export function getWorstShadeString(a: ShadeString, b: ShadeString): ShadeString {
+    if (a === b) {
+        return a;
+    } else if (a === "B" || b === "B") {
+        return "B";
+    }
+    return "G";
+}
+
 export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData | null } {
     const data: StringIndexedObject<ArmorRootData | null> = {};
     data.head = i.data.hasHelm ? i : null;

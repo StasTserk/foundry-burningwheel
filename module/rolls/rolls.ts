@@ -193,14 +193,7 @@ export function getRootStatInfo(skill: Skill, actor: BWActor): { open: boolean, 
     const root2 = skill.data.data.root2 ?
         getProperty(actor, `data.data.${skill.data.data.root2}`) as Ability : root1;
 
-    let shade: helpers.ShadeString;
-    if (root1.shade === root2.shade) {
-        shade = root1.shade;
-    } else if (root1.shade === "B" || root2.shade === "B") {
-        shade = "B";
-    } else {
-        shade = "G";
-    }
+    const shade = helpers.getWorstShadeString(root1.shade, root2.shade);
     return {
         open: root1.open && root2.open,
         shade

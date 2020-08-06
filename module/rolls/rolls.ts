@@ -1,7 +1,7 @@
 import { Ability, BWActor, RollModifier, TracksTests } from "../actor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
-import { Skill, SkillDataRoot, Possession } from "../items/item.js";
+import { Skill, Possession } from "../items/item.js";
 import { handleAttrRoll } from "./rollAttribute.js";
 import { handleCirclesRoll } from "./rollCircles.js";
 import { handleLearningRoll } from "./rollLearning.js";
@@ -257,10 +257,6 @@ export const templates = {
 
 
 /* =============== Types ================= */
-export interface LearningDialogData extends RollDialogData {
-    skill: SkillDataRoot;
-}
-
 export interface AttributeDialogData extends RollDialogData {
     stat: TracksTests;
     tax?: number;

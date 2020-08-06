@@ -181,6 +181,7 @@ Item:
     deeds: 0
     open: false
     wildFork: false
+    tools: false
   relationship:
     description: ''
     forbidden: false

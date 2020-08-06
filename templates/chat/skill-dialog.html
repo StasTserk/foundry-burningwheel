@@ -40,6 +40,25 @@
         {{/each}}
     </div>
     {{/if}}
+    {{#if needsToolkit}}
+    <hr>
+    <h2>Tools</h2>
+    <div class="item-grid col-2">
+        <div class="checkbox-grid">
+            <input id="checkbox-tool-penalty" type="checkbox" name="toolPenalty" value="1">
+            <label for="checkbox-tool-penalty">No Tools Penalty</label>
+        </div>
+        <div class="flex-row">
+            <label for="select-toolkit" name="toolkit">Expend Toolkit?</label>
+            <select id="select-toolkit" name="toolkitId">
+                <option value="">None</option>
+                {{#each toolkits as |t|}}
+                <option value="{{t._id}}">{{t.name}}{{#if t.data.isExpended}} (Expended){{/if}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    {{/if}}
     {{#if wildForks}}
     <hr>
     <h2>Wild FoRKs</h2>

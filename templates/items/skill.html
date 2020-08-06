@@ -1,8 +1,8 @@
 <form autocomplete="off" class="skill-form flex-row">
-    <input name="name" type="text" value="{{item.name}}">
+    <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     <hr>
     <div class="skill-form-group">
-        <label>
+        <label class="skill-setting-label">
             Skill Type
         </label>
         <select name="data.skilltype" value={{data.skilltype}} >
@@ -14,7 +14,7 @@
         </select>
     </div>
     <div class="skill-form-group">
-        <label>Root 1</label>
+        <label class="skill-setting-label">Root 1</label>
         <select name="data.root1" value={{data.root1}} >
             {{#select data.root1}}
             {{#each skillRoots as |root r|}}
@@ -22,7 +22,7 @@
             {{/each}}
             {{/select}}
         </select>
-        <label>Root 2 (Optional)</label>
+        <label class="skill-setting-label">Root 2 (Optional)</label>
         <select name="data.root2" value={{data.root2}} >
             {{#select data.root2}}
             <option value="">None</option>
@@ -33,19 +33,19 @@
         </select>
         <hr>
     </div>
-    <div class="skill-form-group half-width">
-        <label>Learning</label>
-        <input type="checkbox" name="data.learning" {{ checked data.learning }}>
-        <label>Aptitude</label>
-        <input type="number" name="data.aptitude" class="exponent" disabled value={{data.aptitude}}>
-        <label title="This skill explodes on 1's and 6's when used as a fork.">Wild Fork</label>
-        <input type="checkbox" name="data.wildFork" {{ checked data.wildFork }}>
-    </div>
-    <div class="skill-form-group half-width">
-        <label>Open</label>
-        <input type="checkbox" name="data.open" {{ checked data.open }}>
-        <label>Training Skill</label>
-        <input type="checkbox" name="data.training" {{ checked data.training }}>
+    <div class="skill-form-group">
+        <input id="{{item._id}}-learning" class="skill-setting-checkbox hidden" type="checkbox" name="data.learning" {{ checked data.learning }}>
+        <label for="{{item._id}}-learning" class="skill-setting-toggle">Learning</label>
+        <input id="{{item._id}}-aptitude" class="skill-setting-checkbox hidden" type="number" name="data.aptitude" class="exponent" disabled value={{data.aptitude}}>
+        <label for="{{item._id}}-aptitude" class="skill-setting-toggle">Aptitude</label>
+        <input id="{{item._id}}-wild" class="skill-setting-checkbox hidden" type="checkbox" name="data.wildFork" {{ checked data.wildFork }}>
+        <label for="{{item._id}}-wild" class="skill-setting-toggle" title="This skill explodes on 1's and 6's when used as a fork.">Wild Fork</label>
+        <input id="{{item._id}}-open-skill" class="skill-setting-checkbox hidden" type="checkbox" name="data.open" {{ checked data.open }}>
+        <label for="{{item._id}}-open-skill" class="skill-setting-toggle">Open</label>
+        <input id="{{item._id}}-training" class="skill-setting-checkbox hidden" type="checkbox" name="data.training" {{ checked data.training }}>
+        <label for="{{item._id}}-training" class="skill-setting-toggle">Training Skill</label>
+        <input id="{{item._id}}-tools" class="skill-setting-checkbox hidden" type="checkbox" name="data.tools" {{ checked data.tools }}>
+        <label for="{{item._id}}-tools" class="skill-setting-toggle">Requires Tools</label>
     </div>
     <textarea name="data.description">{{data.description}}</textarea>
 </form>

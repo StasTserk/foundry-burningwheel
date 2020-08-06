@@ -1,7 +1,7 @@
 import { Ability, BWActor, RollModifier, TracksTests } from "../actor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
-import { Skill, SkillDataRoot } from "../items/item.js";
+import { Skill, SkillDataRoot, Possession } from "../items/item.js";
 import { handleAttrRoll } from "./rollAttribute.js";
 import { handleCirclesRoll } from "./rollCircles.js";
 import { handleLearningRoll } from "./rollLearning.js";
@@ -224,6 +224,18 @@ export function getRollNameClass(open: boolean, shade: helpers.ShadeString): str
 export async function getNoDiceErrorDialog(numDice: number): Promise<Application> {
     return helpers.notifyError("Too Few Dice",
         `Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}`);
+}
+
+export async function maybeExpendTools(tools: Possession): Promise<unknown> {
+    const roll = await rollDice(1, false, "B");
+    if (roll && roll.dice[0].rolls[0].roll === 1) {
+        return Dialog.confirm({
+            title: "Expend toolkit",
+            content: `<p>The die of fate result was a 1 and thus the toolkit used (${tools.name}) is expended.</p><hr><p>Update the toolkit?</p>`,
+            yes: () => { tools.update({"data.isExpended": true}, null); },
+            no: () => { return; }
+        });
+    }
 }
 
 /* ============ Constants =============== */

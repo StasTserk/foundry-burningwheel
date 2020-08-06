@@ -1,5 +1,5 @@
 import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject } from "./helpers.js";
-import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, BWItemData } from "./items/item.js";
+import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, BWItemData, PossessionRootData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
@@ -304,6 +304,7 @@ export class BWActor extends Actor {
         this.data.circlesMalus = [];
         this.data.martialSkills = [];
         this.data.sorcerousSkills = [];
+        this.data.toolkits = [];
         if (this.data.items) {
             this.data.items.forEach((i) => {
                 switch (i.type) {
@@ -352,6 +353,10 @@ export class BWActor extends Actor {
                             }
                         }
                         break;
+                    case "possession":
+                        if ((i as PossessionRootData).data.isToolkit) {
+                            this.data.toolkits.push(i);
+                        }
                 }
             });
         }
@@ -446,8 +451,8 @@ export class BWActor extends Actor {
             }
 
 
-            if ((a.data.hasHelm || a.data.hasLeftArm || a.data.hasRightArm || a.data.hasTorso
-                || a.data.hasLeftLeg || a.data.hasRightLeg ) && !this.data.data.settings.armorTrained) {
+            if (!this.data.data.settings.armorTrained &&
+                (a.data.hasHelm || a.data.hasLeftArm || a.data.hasRightArm || a.data.hasTorso || a.data.hasLeftLeg || a.data.hasRightLeg)) {
                 // if this is more than just a shield
                 if (a.data.untrainedPenalty === "plate") {
                     clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 2);
@@ -494,9 +499,11 @@ export class BWActor extends Actor {
 }
 
 export interface CharacterDataRoot extends ActorData<BWCharacterData> {
+    toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
     sorcerousSkills: SkillDataRoot[];
     wildForks: SkillDataRoot[];
+
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
     data: BWCharacterData;

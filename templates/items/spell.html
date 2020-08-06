@@ -3,16 +3,16 @@
     <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
     {{#if data.variableObstacle}}
     <div class="spell-sheet-entry">
-        <label for="{{item._id}}-var-obstalce-in" class="spell-setting-label">Obstacle</label>
-        <input id="{{item._id}}-var-obstalce-in"
+        <label for="{{item._id}}-var-obstacle-in" class="spell-setting-label">Obstacle</label>
+        <input id="{{item._id}}-var-obstacle-in"
             onClick="this.select();"
             type="text"
-            name="data.variableObstalceDescription"
-            value="{{data.variableObstalceDescription}}">
+            name="data.variableObstacleDescription"
+            value="{{data.variableObstacleDescription}}">
         <input id="{{item._id}}-up-spell" class="hidden spell-toggle-checkbox" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
         <label for="{{item._id}}-up-spell" class="spell-toggle-label">Up Spell</label>
-        <input id="{{item._id}}-var-obstalce" class="hidden spell-toggle-checkbox" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
-        <label for="{{item._id}}-var-obstalce" class="spell-toggle-label">Variable Ob</label>
+        <input id="{{item._id}}-var-obstacle" class="hidden spell-toggle-checkbox" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+        <label for="{{item._id}}-var-obstacle" class="spell-toggle-label">Variable Ob</label>
     </div>
     {{else}}
     <div class="spell-sheet-entry">
@@ -26,8 +26,8 @@
             class="exponent">
         <input id="{{item._id}}-up-spell" class="hidden spell-toggle-checkbox" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
         <label for="{{item._id}}-up-spell" class="spell-toggle-label">Up Spell</label>
-        <input id="{{item._id}}-var-obstalce" class="hidden spell-toggle-checkbox" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
-        <label for="{{item._id}}-var-obstalce" class="spell-toggle-label">Variable Ob</label>
+        <input id="{{item._id}}-var-obstacle" class="hidden spell-toggle-checkbox" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+        <label for="{{item._id}}-var-obstacle" class="spell-toggle-label">Variable Ob</label>
     </div>
     {{/if}}
     <div class="spell-sheet-entry">

@@ -6,7 +6,7 @@ export class Spell extends Item<SpellData> {
     prepareData(): void {
         this.data.obstacleLabel = 
             `${this.data.data.variableObstacle ?
-                this.data.data.variableObstalceDescription :
+                this.data.data.variableObstacleDescription :
                 this.data.data.obstacle}${this.data.data.upSpell?
                 '^':''}`;
         if (this.data.data.isWeapon && this.owner && this.actor) {
@@ -31,7 +31,7 @@ export interface SpellDataRoot extends ItemData<SpellData> {
 
 export interface SpellData {
     variableObstacle: boolean;
-    variableObstalceDescription: string;
+    variableObstacleDescription: string;
     obstacle: number;
     upSpell: boolean;
     actions: number;

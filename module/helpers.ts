@@ -104,15 +104,16 @@ export function getWorstShadeString(a: ShadeString, b: ShadeString): ShadeString
     return "G";
 }
 
-export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData | null } {
-    const data: StringIndexedObject<ArmorRootData | null> = {};
-    data.head = i.data.hasHelm ? i : null;
-    data.torso = i.data.hasTorso ? i : null;
-    data.leftArm = i.data.hasLeftArm ? i : null;
-    data.rightArm = i.data.hasRightArm ? i : null;
-    data.rightLeg = i.data.hasRightLeg ? i : null;
-    data.leftLeg = i.data.hasLeftLeg ? i : null;
-    data.shield = i.data.hasShield ? i : null;
+export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData } {
+    if (!i.data.equipped) { return {}; }
+    const data: StringIndexedObject<ArmorRootData> = {};
+    if (i.data.hasHelm) { data.head = i; }
+    if (i.data.hasTorso) { data.torso = i; }
+    if (i.data.hasLeftArm) { data.leftArm = i; }
+    if (i.data.hasRightArm) { data.rightArm = i; }
+    if (i.data.hasRightLeg) { data.rightLeg = i; }
+    if (i.data.hasLeftLeg) { data.leftLeg = i; }
+    if (i.data.hasShield) { data.shield = i; }
     return data;
 }
 

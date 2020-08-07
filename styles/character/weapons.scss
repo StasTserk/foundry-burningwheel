@@ -140,7 +140,7 @@
     }
 
     .armor-grid {
-        grid-template-columns: 2.75em 2.75em 6em 1fr;
+        grid-template-columns: 2.5em 2.75em 2.75em 6em 1fr;
         row-gap: 0;
         column-gap: 0;
 
@@ -152,6 +152,11 @@
             text-align: center;
             border-bottom: 1px solid black;
             margin: 0 2px;
+        }
+
+        button.rollable {
+            height: 1.5em;
+            line-height: 1.25em;
         }
     }
 }

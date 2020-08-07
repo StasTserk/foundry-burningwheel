@@ -9,6 +9,7 @@ import { handleGritRoll, handleShrugRoll } from "./rollPtgs.js";
 import { handleResourcesRoll } from "./rollResources.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import { handleStatRoll } from "./rollStat.js";
+import { handleArmorRoll } from "./rollArmor.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
@@ -64,6 +65,8 @@ export async function handleRollable(
                     handleSkillRoll(target, sheet);
             }
             break;
+        case "armor":
+            return handleArmorRoll(target, sheet);
     }
 }
 

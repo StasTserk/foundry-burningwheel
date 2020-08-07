@@ -154,7 +154,15 @@
             margin: 0 2px;
         }
 
-        button.rollable {
+        .armor-damage-input {
+            background-color: rgba(black, .1);
+            text-align: center;
+            border: 0;
+            border-bottom: 1px solid black;
+            @include no-number-arrows;
+        }
+
+        button {
             height: 1.5em;
             line-height: 1.25em;
         }

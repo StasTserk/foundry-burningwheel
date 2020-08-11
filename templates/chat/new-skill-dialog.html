@@ -1,7 +1,25 @@
 <h2>Pick a new skill</h2>
-<div class="checkbox-grid">
+<div class="search-box">
+    <i class="fas fa-search"></i>
+    <input type="text" class="new-skill-dialog-search">
+</div>
+<div class="search-grid">
     {{#each skills as |s|}}
-    <input type="checkbox" id="{{s._id}}" value="{{s._id}}">
-    <label for="{{s._id}}">{{s.name}}</label>
+    <div data-skill-name="{{s.name}}" class="flex-row search-entry">
+        <div class="item-select-header">
+            <input type="checkbox" id="{{s.id}}" value="{{s.id}}">
+            <label for="{{s.id}}">{{s.name}}</label>
+        </div>
+        <div class="item-select-info">
+            Root(s): {{titlecase s.data.data.root1}} {{titlecase s.data.data.root2}}
+        </div>
+        <div class="item-select-info">
+            Type: {{titlecase s.data.data.skilltype}}
+        </div>
+        <div class="item-select-info">
+            Src: {{s.itemSource}}
+        </div>
+    </div>
     {{/each}}
 </div>
+<hr>

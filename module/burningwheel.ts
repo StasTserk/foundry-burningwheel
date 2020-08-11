@@ -91,3 +91,18 @@ Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any) => actor.processNewItem(item));
+
+Hooks.on('renderDialog', (dialog, html: JQuery) => {
+    if (dialog.data.id && dialog.data.id === 'learn-skill') {
+        html.find('input.new-skill-dialog-search').on('input', (e) => {
+            const searchTerm = $(e.target).val() as string;
+            html.find('.search-grid > .search-entry').each((_, item) => {
+                if ((item.dataset.skillName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+        });
+    }
+});

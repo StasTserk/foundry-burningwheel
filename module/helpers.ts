@@ -127,13 +127,25 @@ export function isStat(name: string): boolean {
     ].indexOf(name.toLowerCase()) !== -1);
 }
 
-export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<T[]> {
-    const itemList = game.items.filter((i: T) => i.type === itemType) as T[];
+export async function getItemsOfType<T extends BWItem & {itemSource?: string }>(itemType: ItemType): Promise<T[]> {
+    const itemList = game.items.filter((i: T) => i.type === itemType)
+        .map((item: T) => {
+            item.itemSource = "World"; 
+            return item; 
+        }) as T[];
+
     let compendiumItems: T[] = [];
+    let sourceLabel = "";
     const packs = Array.from(game.packs.values()) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
-        compendiumItems = compendiumItems.concat(...packItems.filter((item: T) => item.type === itemType) as T[]);
+        sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).titleCase();
+        compendiumItems = compendiumItems.concat(
+            ...packItems.filter((item: T) => item.type === itemType)
+            .map((item: T) => {
+                item.itemSource = sourceLabel;
+                return item;
+            })) as T[];
     }
     return itemList.concat(...compendiumItems);
 }

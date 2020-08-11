@@ -172,7 +172,7 @@ Item:
     root2: ''
     learning: false
     learningProgress: 0
-    skilltype: ''
+    skilltype: 'academic'
     training: false
     description: ''
     collapsed: false

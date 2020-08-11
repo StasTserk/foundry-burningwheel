@@ -12,6 +12,10 @@
             {{/each}}
             {{/select}}
         </select>
+        <label class="skill-setting-label">
+            Restrictions
+        </label>
+        <input type="text" name="data.restrictions" value="{{data.restrictions}}" placeholder="None">
     </div>
     <div class="skill-form-group">
         <label class="skill-setting-label">Root 1</label>
@@ -31,7 +35,6 @@
             {{/each}}
             {{/select}}
         </select>
-        <hr>
     </div>
     <div class="skill-form-group">
         <input id="{{item._id}}-learning" class="skill-setting-checkbox hidden" type="checkbox" name="data.learning" {{ checked data.learning }}>

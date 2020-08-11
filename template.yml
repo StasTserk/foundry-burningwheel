@@ -182,6 +182,7 @@ Item:
     open: false
     wildFork: false
     tools: false
+    restrictions: ''
   relationship:
     description: ''
     forbidden: false

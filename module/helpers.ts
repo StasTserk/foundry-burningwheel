@@ -139,7 +139,7 @@ export async function getItemsOfType<T extends BWItem & {itemSource?: string }>(
     const packs = Array.from(game.packs.values()) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
-        sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).titleCase();
+        sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).replace('-', ' ').titleCase();
         compendiumItems = compendiumItems.concat(
             ...packItems.filter((item: T) => item.type === itemType)
             .map((item: T) => {

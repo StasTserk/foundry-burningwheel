@@ -1,6 +1,6 @@
-import { BWActor } from "module/actor.js";
-import { BWActorSheet } from "module/bwactor-sheet.js";
-import { Skill, SkillDataRoot, PossessionRootData } from "module/items/item.js";
+import { BWActor } from "../actor.js";
+import { BWActorSheet } from "../bwactor-sheet.js";
+import { Skill, SkillDataRoot, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
     buildDiceSourceObject,

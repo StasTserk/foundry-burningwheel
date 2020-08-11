@@ -1,6 +1,6 @@
-import { Ability, BWActor } from "module/actor.js";
-import { BWActorSheet } from "module/bwactor-sheet.js";
-import { Relationship } from "module/items/item.js";
+import { Ability, BWActor } from "../actor.js";
+import { BWActorSheet } from "../bwactor-sheet.js";
+import { Relationship } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,

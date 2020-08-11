@@ -3,6 +3,7 @@ import { Armor, AssignDamage } from "../items/item.js";
 import { rollDice, RollDialogData, templates, RollChatMessageData, extractNumber, getRollNameClass, buildRerollData, extractBaseData, buildDiceSourceObject } from "./rolls.js";
 import { BWActor } from "../actor.js";
 import { StringIndexedObject } from "module/helpers.js";
+import * as helpers from "../helpers.js";
 
 export async function handleArmorRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
     const actor = sheet.actor;
@@ -13,7 +14,7 @@ export async function handleArmorRoll(target: HTMLButtonElement, sheet: BWActorS
 
     const dialogData: ArmorDialogData = {
         difficulty: 1,
-        name: "Armor Roll",
+        name: "Armor",
         arthaDice: 0,
         bonusDice: 0,
         armor: armorItem.data.data.dice,
@@ -57,7 +58,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const rerollData = buildRerollData(actor, roll, undefined, armorItem._id);
     rerollData.type = "armor";
     const messageData: RollChatMessageData = {
-        name: "Armor Roll",
+        name: "Armor",
         successes: "" + roll.dice[0].total,
         success: isSuccess,
         rolls: roll.dice[0].rolls,
@@ -70,10 +71,10 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
         dieSources: {
             ...dieSources,
             ...buildDiceSourceObject(0, baseData.aDice, baseData.bDice, 0, 0, 0)
-        }
+        },
+        extraInfo: damageAssigned ? `${armorItem.name} took ${damageAssigned} damage to its ${helpers.deCamelCaseify(location).toLowerCase()}` : undefined
     };
-    console.log(`Armor took ${damageAssigned} damage`);
-
+    
     const messageHtml = await renderTemplate(templates.armorMessage, messageData);
     return ChatMessage.create({
         content: messageHtml,

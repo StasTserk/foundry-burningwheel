@@ -287,6 +287,7 @@ export interface RollChatMessageData {
     penaltySources?: { [i: string]: string };
     fateReroll?: RerollData;
     callons: RerollData[];
+    extraInfo?: string | HTMLElement;
 }
 
 export interface RerollData {

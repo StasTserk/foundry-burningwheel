@@ -61,6 +61,11 @@
         Failure!
     </div>
     {{/if}}
+    {{#if extraInfo}}
+    <div class="roll-full-width">
+        {{extraInfo}}
+    </div>
+    {{/if}}
     <div class="reroll-buttons roll-full-width flex-column">
         {{#each callons as |c|}}
         <div class="chat-reroll">

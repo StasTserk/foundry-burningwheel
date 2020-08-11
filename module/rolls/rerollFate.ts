@@ -1,7 +1,7 @@
 import { TestString } from "module/helpers.js";
-import { Ability, BWActor, TracksTests } from "../actor.js";
+import { BWActor, TracksTests } from "../actor.js";
 import * as helpers from "../helpers.js";
-import { Skill, SkillData } from "../items/item.js";
+import { Skill } from "../items/item.js";
 import { RerollMessageData, rollDice, templates } from "./rolls.js";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
@@ -13,9 +13,11 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     const successes = parseInt(target.dataset.successes || "0", 10);
     const obstacleTotal = parseInt(target.dataset.difficulty || "0", 10);
 
-    let rollStat: Ability | SkillData;
+    let rollStat: { shade: helpers.ShadeString, open: boolean };
     if (target.dataset.rerollType === "stat") {
         rollStat = getProperty(actor, `data.${accessor}`);
+    } else if (target.dataset.rerollType === "armor") {
+        rollStat = { shade: "B", open: false, };
     } else {
         rollStat = (actor.getOwnedItem(itemId) as Skill).data.data;
     }

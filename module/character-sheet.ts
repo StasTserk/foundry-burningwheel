@@ -159,6 +159,7 @@ export class BWCharacterSheet extends BWActorSheet {
             console.log(skills);
             const html = await renderTemplate("systems/burningwheel/templates/chat/new-skill-dialog.html", { skills });
             const dialog = new Dialog({
+                id: 'learn-skill',
                 title: "Pick a new skill to learn",
                 content: html,
                 buttons: {
@@ -178,7 +179,8 @@ export class BWCharacterSheet extends BWActorSheet {
                         label: "Cancel"
                     }
                 }
-            });
+            } as DialogData & { id: string },
+            { width: 530 });
             dialog.render(true);
         };
 

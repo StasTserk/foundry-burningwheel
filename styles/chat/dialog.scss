@@ -17,3 +17,38 @@
         }
     }
 }
+
+.search-box {
+    border-bottom: 2px groove salmon;
+    font-size: 1.125em;
+
+    .new-skill-dialog-search {
+        border: 0;
+        width: calc(100% - 3em);
+    }
+}
+
+.search-grid {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.search-entry {
+    margin-bottom: 2px;
+    @include button-like(gray);
+    border-radius: 0;
+    padding: 1px 3px;
+}
+
+.item-select-header {
+    text-align: left;
+    width: 100%;
+    border-bottom: 2px groove salmon;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.item-select-info {
+    width: 33%;
+    text-align: right;
+}

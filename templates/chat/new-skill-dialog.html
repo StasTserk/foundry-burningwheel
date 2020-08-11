@@ -11,7 +11,7 @@
             <label for="{{s.id}}">{{s.name}}</label>
         </div>
         <div class="item-select-info">
-            Root(s): {{titlecase s.data.data.root1}} {{titlecase s.data.data.root2}}
+            {{#if s.data.data.restrictions}}Restrictions: {{titlecase s.data.data.restrictions}}{{/if}}
         </div>
         <div class="item-select-info">
             Type: {{titlecase s.data.data.skilltype}}

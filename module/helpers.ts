@@ -150,6 +150,10 @@ export async function notifyError(title: string, errorMessage: string): Promise<
     }).render(true);
 }
 
+export function deCamelCaseify(phrase: string): string {
+    return phrase.replace(/([a-zA-Z])(?=[A-Z])/, '$1 ');
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

@@ -80,9 +80,8 @@ export function buildDiceSourceObject(
         forks: number,
         woundDice: number,
         tax: number): helpers.StringIndexedObject<string> {
-    const dieSources: { [i: string]: string } = {
-        "Exponent": `+${exp}`,
-    };
+    const dieSources: { [i: string]: string } = {};
+    if (exp) { dieSources.Exponent = `+${exp}`; }
     if (aDice) { dieSources.Artha = `+${aDice}`; }
     if (bDice) { dieSources.Bonus = `+${bDice}`; }
     if (forks) { dieSources.FoRKs = `+${forks}`; }
@@ -92,7 +91,7 @@ export function buildDiceSourceObject(
 }
 
 export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, itemId?: string):
-        RerollData | undefined {
+        RerollData {
     const coreData: RerollData = {
         dice: roll.dice[0].rolls.map(r => r.roll).join(","),
         actorId: actor._id,
@@ -236,6 +235,8 @@ export async function maybeExpendTools(tools: Possession): Promise<unknown> {
 
 /* ============ Constants =============== */
 export const templates = {
+    armorDialog: "systems/burningwheel/templates/chat/armor-dialog.html",
+    armorMessage: "systems/burningwheel/templates/chat/roll-message.html",
     attrDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
     attrMessage: "systems/burningwheel/templates/chat/roll-message.html",
     circlesDialog: "systems/burningwheel/templates/chat/circles-dialog.html",
@@ -291,7 +292,7 @@ export interface RollChatMessageData {
 export interface RerollData {
     dice: string;
     actorId: string;
-    type?: "stat" | "skill" | "learning";
+    type?: "stat" | "skill" | "learning" | "armor";
     learningTarget?: string; // for reroll, which attribute to apply the fate to.
     ptgsAction?: string;
     itemId?: string;

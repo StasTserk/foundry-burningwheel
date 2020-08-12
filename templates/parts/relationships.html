@@ -2,7 +2,7 @@
     <div class="item-title">
         {{ relationship.name }}
     </div>
-    <button class="rollable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id={{relationship._id}}><i class="fas fa-dice"></i></button>
+    <button class="rollable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id="{{relationship._id}}"><i class="fas fa-dice"></i></button>
     <i class="fas fa-edit" data-action="editItem" data-id="{{relationship._id}}"></i>
     <i class="fas fa-trash" data-action="delItem" data-id="{{relationship._id}}"></i>
     {{#if relationship.data.building}}

@@ -2,7 +2,7 @@
 .skill-form {
     .skill-form-group {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, calc(25% - 5px));
         column-gap: 5px;
         row-gap: 5px;
         margin-bottom: 5px;

@@ -1,6 +1,6 @@
 <form autocomplete="off" class="trait-sheet">
     <input name="name" type="text" value="{{item.name}}">
-    <select name="data.traittype" value={{data.traittype}} >
+    <select name="data.traittype" value="{{data.traittype}}" >
         {{#select data.traittype}}
         {{#each traitTypes as |type t|}}
         <option value="{{t}}">{{type}}</option>

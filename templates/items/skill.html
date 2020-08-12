@@ -5,7 +5,7 @@
         <label class="skill-setting-label">
             Skill Type
         </label>
-        <select name="data.skilltype" value={{data.skilltype}} >
+        <select name="data.skilltype" value="{{data.skilltype}}" >
             {{#select data.skilltype}}
             {{#each skillTypes as |type t|}}
             <option value="{{t}}">{{type}}</option>
@@ -19,7 +19,7 @@
     </div>
     <div class="skill-form-group">
         <label class="skill-setting-label">Root 1</label>
-        <select name="data.root1" value={{data.root1}} >
+        <select name="data.root1" value="{{data.root1}}" >
             {{#select data.root1}}
             {{#each skillRoots as |root r|}}
             <option value="{{r}}">{{root}}</option>
@@ -27,7 +27,7 @@
             {{/select}}
         </select>
         <label class="skill-setting-label">Root 2 (Optional)</label>
-        <select name="data.root2" value={{data.root2}} >
+        <select name="data.root2" value="{{data.root2}}" >
             {{#select data.root2}}
             <option value="">None</option>
             {{#each skillRoots as |root r|}}
@@ -37,10 +37,10 @@
         </select>
     </div>
     <div class="skill-form-group">
+        <label for="{{item._id}}-aptitude" class="skill-setting-label">Aptitude</label>
+        <input id="{{item._id}}-aptitude" type="number" name="data.aptitude" disabled value="{{data.aptitude}}" placeholder="N/A">
         <input id="{{item._id}}-learning" class="skill-setting-checkbox hidden" type="checkbox" name="data.learning" {{ checked data.learning }}>
         <label for="{{item._id}}-learning" class="skill-setting-toggle">Learning</label>
-        <input id="{{item._id}}-aptitude" class="skill-setting-checkbox hidden" type="number" name="data.aptitude" class="exponent" disabled value={{data.aptitude}}>
-        <label for="{{item._id}}-aptitude" class="skill-setting-toggle">Aptitude</label>
         <input id="{{item._id}}-wild" class="skill-setting-checkbox hidden" type="checkbox" name="data.wildFork" {{ checked data.wildFork }}>
         <label for="{{item._id}}-wild" class="skill-setting-toggle" title="This skill explodes on 1's and 6's when used as a fork.">Wild Fork</label>
         <input id="{{item._id}}-open-skill" class="skill-setting-checkbox hidden" type="checkbox" name="data.open" {{ checked data.open }}>

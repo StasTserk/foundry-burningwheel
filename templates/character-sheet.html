@@ -116,7 +116,7 @@
                 <i data-action="addTrait" data-id="die" class="fas fa-plus"></i>
             </h2>
             {{#each traits.die as |trait|}}
-                <input type="checkbox" id={{trait._id}}-toggle class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
+                <input type="checkbox" id="{{trait._id}}-toggle" class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
                 <div class="trait" data-item-id="{{trait._id}}">
                     <label for="{{trait._id}}-toggle">
                         <h3>
@@ -134,7 +134,7 @@
                 <i data-action="addTrait" data-id="call-on" class="fas fa-plus"></i>
             </h2>
             {{#each traits.callon as |trait|}}
-            <input type="checkbox" id={{trait._id}}-toggle class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
+            <input type="checkbox" id="{{trait._id}}-toggle" class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
                 <div class="trait" data-item-id="{{trait._id}}">
                     <label for="{{trait._id}}-toggle">
                         <h3>

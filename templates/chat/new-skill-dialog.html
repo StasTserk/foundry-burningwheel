@@ -1,8 +1,4 @@
 <h2>Pick a new skill</h2>
-<div class="search-box">
-    <i class="fas fa-search"></i>
-    <input type="text" class="new-skill-dialog-search">
-</div>
 <div class="search-grid">
     {{#each skills as |s|}}
     <div data-skill-name="{{s.name}}" class="flex-row search-entry">
@@ -22,4 +18,7 @@
     </div>
     {{/each}}
 </div>
-<hr>
+<div class="search-box">
+    <i class="fas fa-search"></i>
+    <input type="text" class="new-skill-dialog-search" placeholder="Search">
+</div>

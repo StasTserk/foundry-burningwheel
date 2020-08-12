@@ -19,18 +19,20 @@
 }
 
 .search-box {
-    border-bottom: 2px groove salmon;
+    border-top: 2px groove salmon;
     font-size: 1.125em;
+    padding: 3px;
 
     .new-skill-dialog-search {
         border: 0;
-        width: calc(100% - 3em);
+        width: calc(100% - 1.5em);
     }
 }
 
 .search-grid {
     height: 500px;
     overflow-y: auto;
+    margin-bottom: 3px;
 }
 
 .search-entry {

@@ -1,5 +1,6 @@
 import { BWActor } from "../actor.js";
 import { DisplayClass } from "./item.js";
+import * as helpers from "../helpers.js";
 
 export class RangedWeapon extends Item {
     prepareData(): void {
@@ -18,6 +19,24 @@ export class RangedWeapon extends Item {
         this.data.data.superbLabel = (markRange === 5 ) ? `6` : `${markRange + 1}-6`;
 
         this.data.data.cssClass = "equipment-weapon";
+    }
+
+    static GetWeaponMessageData(weapon: RangedWeapon): string {
+        const element = document.createElement("div");
+        element.className = "ranged-extra-info";
+        element.appendChild(helpers.DivOfText(weapon.name, "ims-title shade-black"));
+        element.appendChild(helpers.DivOfText("I", "ims-header"));
+        element.appendChild(helpers.DivOfText("M", "ims-header"));
+        element.appendChild(helpers.DivOfText("S", "ims-header"));
+        element.appendChild(helpers.DivOfText("Va", "ims-header"));
+        element.appendChild(helpers.DivOfText("DoF", "ims-header"));
+    
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.incidental));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.mark));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.superb));
+        element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
+        element.appendChild(helpers.DivOfText(`${weapon.data.data.incidentalLabel}/${weapon.data.data.markLabel}/${weapon.data.data.superbLabel}`));
+        return element.outerHTML;
     }
 
     data: RangedWeaponRootData;

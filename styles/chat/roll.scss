@@ -9,16 +9,16 @@
         font-size: 1.5em;
         font-weight: bold;
 
-      &.shade-grey {
+        &.shade-grey {
             background-color: rgba(black, 0.35);
         }
 
-      &.shade-black {
+        &.shade-black {
             background-color: rgba(black, 0.75);
             color: white;
         }
 
-      &.shade-white {
+        &.shade-white {
             background-color:  rgba(white, .75);
             color: black;
         }
@@ -59,6 +59,10 @@
         padding: 5px;
         border: 1px black solid;
         margin-bottom: -1px;
+
+        &.roll-extra-info {
+            padding: 0;
+        }
     }
 
     .roll-dice {

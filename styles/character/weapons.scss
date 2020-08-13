@@ -168,3 +168,50 @@
         }
     }
 }
+
+.chat-message {
+    .weapon-extra-info, .ranged-extra-info {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr) 2fr;
+        margin: -1px 0 0 -1px;
+
+        &>div {
+            border: 1px solid black;
+            margin-bottom: -1px;
+            margin-right: -1px;
+        }
+
+        .ims-title {
+            grid-column: 1 / 7;
+            font-weight: bold;
+            font-size: 1.125em;
+
+
+            &.shade-grey {
+                background-color: rgba(black, 0.35);
+            }
+    
+            &.shade-black {
+                background-color: rgba(black, 0.75);
+                color: white;
+            }
+    
+            &.shade-white {
+                background-color:  rgba(white, .75);
+                color: black;
+            }
+        }
+        .ims-header {
+            background: rgba(black, .15);
+            font-weight: bold;
+        }
+    }
+
+    .ranged-extra-info {
+        grid-template-columns: repeat(4, 1fr) 3fr;
+
+        .ims-title {
+            grid-column: 1 / 6;
+        }
+    }
+}

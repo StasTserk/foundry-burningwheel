@@ -74,3 +74,42 @@
         }
     }
 }
+
+.chat-message {
+    .spell-extra-info {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr) 2fr;
+        margin: -1px 0 0 -1px;
+
+        .roll-die {
+            background-color: rgba(orange, .15);
+            color: orangered;
+            border-color: orangered;
+            margin: auto;
+        }
+
+        &>div {
+            border: 1px solid black;
+            margin-bottom: -1px;
+            margin-right: -1px;
+            text-align: center;
+        }
+
+        .highlight {
+            color: orangered;
+            font-weight: bold;
+        }
+
+        .spell-title {
+            grid-column: 1 / 8;
+            font-weight: bold;
+            font-size: 1.125em;
+            background-color: rgba(black, 0.75);
+            color: white;
+        }
+        .ims-header {
+            background: rgba(black, .15);
+            font-weight: bold;
+        }
+    }
+}

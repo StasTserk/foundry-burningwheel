@@ -1,6 +1,6 @@
 import { BWActor } from "../actor.js";
 import { weaponLengthSelect } from "../constants.js";
-import { StringIndexedObject } from "../helpers.js";
+import { StringIndexedObject, DivOfText } from "../helpers.js";
 
 export class Spell extends Item<SpellData> {
     prepareData(): void {
@@ -17,6 +17,33 @@ export class Spell extends Item<SpellData> {
             this.data.data.superb = Math.floor(this.data.data.mark * 1.5);
         }
         this.data.spellLengths = weaponLengthSelect;
+    }
+
+    static GetSpellMessageData(spell: Spell): string {
+        const element = document.createElement("div");
+        element.className = "spell-extra-info";
+        element.appendChild(DivOfText(spell.name, "spell-title"));
+        if (spell.data.data.isWeapon) {
+            const roll = new Roll("1d6").roll().dice[0].rolls[0].roll as number;
+            element.appendChild(DivOfText("I", "ims-header"));
+            element.appendChild(DivOfText("M", "ims-header"));
+            element.appendChild(DivOfText("S", "ims-header"));
+            element.appendChild(DivOfText("Va", "ims-header"));
+            element.appendChild(DivOfText("Act.", "ims-header"));
+            element.appendChild(DivOfText("DoF", "ims-header"));
+            element.appendChild(DivOfText("Length", "ims-header"));
+        
+            element.appendChild(DivOfText("B " + spell.data.data.incidental, roll < 3 ? "highlight" : undefined));
+            element.appendChild(DivOfText("B " + spell.data.data.mark, [3,4].includes(roll) ? "highlight" : undefined));
+            element.appendChild(DivOfText("B " + spell.data.data.superb, roll > 4 ? "highlight" : undefined));
+            element.appendChild(DivOfText("" + spell.data.data.va));
+            element.appendChild(DivOfText("" + spell.data.data.actions));
+            element.appendChild(DivOfText(`${roll}`, "roll-die"));
+            element.appendChild(DivOfText(spell.data.data.weaponLength));
+        }
+        
+
+        return element.outerHTML;
     }
 
     data: SpellDataRoot;

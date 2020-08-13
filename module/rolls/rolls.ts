@@ -11,6 +11,7 @@ import { handleSkillRoll } from "./rollSkill.js";
 import { handleStatRoll } from "./rollStat.js";
 import { handleArmorRoll } from "./rollArmor.js";
 import { handleWeaponRoll } from "./rollWeapon.js";
+import { handleSpellRoll } from "./rollSpell.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
@@ -43,18 +44,7 @@ export async function handleRollable(
         case "weapon":
             return handleWeaponRoll(target, sheet);
         case "spell":
-            const sorcerySkillId = target.dataset.skillId;
-            if (!sorcerySkillId) {
-                return helpers.notifyError("No Skill Specified",
-                    "A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.");
-            }
-            const sorcerySkill: Skill | null = sheet.actor.getOwnedItem(sorcerySkillId) as Skill;
-            if (sorcerySkill) {
-                return sorcerySkill.data.data.learning ? 
-                    handleLearningRoll(target, sheet) :
-                    handleSkillRoll(target, sheet);
-            }
-            break;
+            return handleSpellRoll(target, sheet);
         case "armor":
             return handleArmorRoll(target, sheet);
     }

@@ -17,7 +17,7 @@ import {
     maybeExpendTools,
 } from "./rolls.js";
 
-export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
@@ -46,7 +46,7 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        skillRollCallback(dialogHtml, skill, sheet)
+                        skillRollCallback(dialogHtml, skill, sheet, extraInfo)
                 }
             }
         }).render(true)
@@ -54,7 +54,7 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
 }
 
 async function skillRollCallback(
-    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
 
     const forks = extractCheckboxValue(dialogHtml, "forkOptions");
     const wildForks = extractWildForkBonus(dialogHtml);
@@ -108,7 +108,8 @@ async function skillRollCallback(
         penaltySources: baseData.penaltySources,
         dieSources: { ...dieSources, ...baseData.miscDice.entries },
         fateReroll,
-        callons
+        callons,
+        extraInfo
     };
     if (success || sheet.actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
         await helpers.addTestToSkill(skill, dg);

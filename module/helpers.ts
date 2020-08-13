@@ -166,6 +166,13 @@ export function deCamelCaseify(phrase: string): string {
     return phrase.replace(/([a-zA-Z])(?=[A-Z])/, '$1 ');
 }
 
+export function DivOfText(text: string, cssClass?: string): HTMLDivElement {
+    const element = document.createElement("div");
+    element.innerHTML = text;
+    if (cssClass) { element.className = cssClass; }
+    return element;
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

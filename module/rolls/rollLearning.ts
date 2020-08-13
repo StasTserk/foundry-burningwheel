@@ -18,7 +18,7 @@ import {
     RollDialogData
 } from "./rolls.js";
 
-export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
@@ -47,7 +47,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        learningRollCallback(dialogHtml, skill, sheet)
+                        learningRollCallback(dialogHtml, skill, sheet, extraInfo)
                 }
             }
         }).render(true)
@@ -55,7 +55,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
 
     const baseData = extractBaseData(dialogHtml, sheet);
     let beginnerPenalty = baseData.diff;
@@ -109,7 +109,8 @@ async function learningRollCallback(
             penaltySources: baseData.penaltySources,
             dieSources: { ...dieSources, ...baseData.miscDice.entries },
             fateReroll: fr,
-            callons
+            callons,
+            extraInfo
         };
         const messageHtml = await renderTemplate(templates.learnMessage, data);
         return ChatMessage.create({

@@ -10,6 +10,7 @@ import { handleResourcesRoll } from "./rollResources.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import { handleStatRoll } from "./rollStat.js";
 import { handleArmorRoll } from "./rollArmor.js";
+import { handleWeaponRoll } from "./rollWeapon.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
@@ -40,18 +41,7 @@ export async function handleRollable(
             }
             return handleGritRoll(target, sheet);
         case "weapon":
-            const skillId = target.dataset.skillId;
-            if (!skillId) {
-                return helpers.notifyError("No Skill Specified",
-                    "A skill must be specified in order for the weapon attack to be rolled. Please pick from a list of martial skills of the character.");
-            }
-            const skill: Skill | null = sheet.actor.getOwnedItem(skillId) as Skill;
-            if (skill) {
-                return skill.data.data.learning ? 
-                    handleLearningRoll(target, sheet) :
-                    handleSkillRoll(target, sheet);
-            }
-            break;
+            return handleWeaponRoll(target, sheet);
         case "spell":
             const sorcerySkillId = target.dataset.skillId;
             if (!sorcerySkillId) {

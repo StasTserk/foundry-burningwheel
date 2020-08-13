@@ -1,0 +1,76 @@
+@import "../mixins.scss";
+
+.spell-section {
+    .spell-section-item {
+        height: min-content;
+        @include colored-item(black);
+    }
+
+    .spell-item-title {
+        width: calc(100% - 2.5em);
+        display: block;
+        font-weight: bold;
+        font-size: 1.125em;
+        line-height: 2em;
+
+        i {
+            font-size: 14px;
+        }
+    }
+    .spell-details {
+        position: relative;
+        .edit-icons {
+            position: absolute;
+            bottom: 1px;
+            right: 3px;
+            &:hover {
+                background-color: unset;
+            }
+            i:hover {
+                color: red;
+            }
+        }
+
+        &:hover {
+            background-color: unset;
+        }
+        width: 100%;
+        border-top: 2px groove salmon;
+
+        .spell-details-label {
+            font-weight: bold;
+        }
+        .spell-details-label, .spell-details-data {
+            &:hover {
+                background-color: unset;
+            }
+            width: 50%;
+        }
+
+        select {
+            height: unset;
+        }
+
+        .spell-weapon {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            width: 75%;
+
+            .table-header {
+                background-color: rgba(black, 0.15);
+                font-weight: bold;;
+            }
+            
+            &:hover {
+                background-color: unset;
+            }
+
+            div {
+                border: 1px solid black;
+                margin-bottom: -1px;
+                margin-right: -1px;
+                text-align: center;
+            }
+        }
+    }
+}

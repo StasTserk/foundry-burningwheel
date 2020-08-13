@@ -1,5 +1,6 @@
 import { BWActor } from "../actor.js";
 import { DisplayClass } from "./item.js";
+import * as helpers from "../helpers.js";
 
 export class MeleeWeapon extends Item {
     prepareData(): void {
@@ -12,6 +13,27 @@ export class MeleeWeapon extends Item {
         }
         this.data.data.cssClass = "equipment-weapon";
     }
+
+    static GetWeaponMessageData(weapon: MeleeWeapon): string {
+        const element = document.createElement("div");
+        element.className = "weapon-extra-info";
+        element.appendChild(helpers.DivOfText(weapon.name, "ims-title shade-black"));
+        element.appendChild(helpers.DivOfText("I", "ims-header"));
+        element.appendChild(helpers.DivOfText("M", "ims-header"));
+        element.appendChild(helpers.DivOfText("S", "ims-header"));
+        element.appendChild(helpers.DivOfText("Add", "ims-header"));
+        element.appendChild(helpers.DivOfText("Va", "ims-header"));
+        element.appendChild(helpers.DivOfText("Length", "ims-header"));
+    
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.incidental));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.mark));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.superb));
+        element.appendChild(helpers.DivOfText(weapon.data.data.add));
+        element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
+        element.appendChild(helpers.DivOfText(weapon.data.data.weaponLength.titleCase()));
+        return element.outerHTML;
+    }
+    
     actor: BWActor | null;
 
     data: MeleeWeaponRootData;

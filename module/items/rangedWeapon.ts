@@ -23,19 +23,25 @@ export class RangedWeapon extends Item {
 
     static GetWeaponMessageData(weapon: RangedWeapon): string {
         const element = document.createElement("div");
+        const roll = new Roll("1d6").roll().dice[0].rolls[0].roll as number;
+        const incidental = roll <= (weapon.data.data.incidentalRoll || 0);
+        const mark = !incidental && roll <= (weapon.data.data.markRoll || 0);
+
         element.className = "ranged-extra-info";
         element.appendChild(helpers.DivOfText(weapon.name, "ims-title shade-black"));
         element.appendChild(helpers.DivOfText("I", "ims-header"));
         element.appendChild(helpers.DivOfText("M", "ims-header"));
         element.appendChild(helpers.DivOfText("S", "ims-header"));
         element.appendChild(helpers.DivOfText("Va", "ims-header"));
-        element.appendChild(helpers.DivOfText("DoF", "ims-header"));
+        element.appendChild(helpers.DivOfText("DoF Ranges", "ims-header"));
+        element.appendChild(helpers.DivOfText("Die", "ims-header"));
     
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.incidental));
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.mark));
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.superb));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.incidental, incidental ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.mark, mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText("B " + weapon.data.data.superb, !incidental && !mark ? "highlight" : undefined));
         element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
         element.appendChild(helpers.DivOfText(`${weapon.data.data.incidentalLabel}/${weapon.data.data.markLabel}/${weapon.data.data.superbLabel}`));
+        element.appendChild(helpers.DivOfText("" + roll, "roll-die"));
         return element.outerHTML;
     }
 

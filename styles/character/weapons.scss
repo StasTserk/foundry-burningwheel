@@ -204,14 +204,29 @@
         .ims-header {
             background: rgba(black, .15);
             font-weight: bold;
+
+            &.no-left {
+                border-left: 0;
+            }
+            &.no-right {
+                border-right: 0;
+            }
+        }
+
+        .highlight {
+            color: orangered;
+            font-weight: bold;
+        }
+
+        .roll-die {
+            background-color: rgba(orange, .15);
+            color: orangered;
+            border-color: orangered;
+            margin: auto;
         }
     }
 
     .ranged-extra-info {
-        grid-template-columns: repeat(4, 1fr) 3fr;
-
-        .ims-title {
-            grid-column: 1 / 6;
-        }
+        grid-template-columns: repeat(4, 1fr) 3fr 1fr;
     }
 }

@@ -1,4 +1,4 @@
-import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject } from "./helpers.js";
+import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject, getWorstShadeString } from "./helpers.js";
 import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, BWItemData, PossessionRootData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
 
@@ -287,11 +287,23 @@ export class BWActor extends Actor {
         this.data.data.reflexesExp = (this.data.data.settings.roundUpReflexes ?
             Math.ceil(unRoundedReflexes) : Math.floor(unRoundedReflexes))
             - (this.data.data.ptgs.woundDice || 0);
+        const shades = [this.data.data.perception.shade, this.data.data.agility.shade, this.data.data.speed.shade];
+        this.data.data.reflexesShade = getWorstShadeString(getWorstShadeString(shades[0], shades[1]), shades[2]);
+        if (this.data.data.reflexesShade === "B") {
+            this.data.data.reflexesExp += shades.filter(s => s !== "B").length;
+        } else if (this.data.data.reflexesShade === "G") {
+            this.data.data.reflexesExp += shades.filter(s => s === "W").length;
+        }
 
         const unRoundedMortalWound =
             (parseInt(this.data.data.power.exp, 10) + parseInt(this.data.data.forte.exp, 10)) / 2 + 6;
         this.data.data.mortalWound = this.data.data.settings.roundUpMortalWound ?
             Math.ceil(unRoundedMortalWound) : Math.floor(unRoundedMortalWound);
+        if (this.data.data.power.shade !== this.data.data.forte.shade) {
+            this.data.data.mortalWound += 1;
+        }
+        this.data.data.mortalWoundShade = getWorstShadeString(this.data.data.power.shade, this.data.data.forte.shade);
+
         this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
 
         this.data.successOnlyRolls = (this.data.data.settings.onlySuccessesCount || '')
@@ -527,8 +539,9 @@ interface BWCharacterData extends Common, DisplayProps, Ptgs {
 
     hesitation?: number;
     mortalWound?: number;
+    mortalWoundShade?: ShadeString;
     reflexesExp?: number;
-    reflexesShade?: string;
+    reflexesShade?: ShadeString;
 
     clumsyWeight?: ClumsyWeightData;
 }

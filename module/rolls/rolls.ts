@@ -1,7 +1,7 @@
-import { Ability, BWActor, RollModifier, TracksTests } from "../actor.js";
+import { BWActor, RollModifier, TracksTests } from "../actor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
-import { Skill, Possession } from "../items/item.js";
+import { Possession } from "../items/item.js";
 import { handleAttrRoll } from "./rollAttribute.js";
 import { handleCirclesRoll } from "./rollCircles.js";
 import { handleLearningRoll } from "./rollLearning.js";
@@ -168,18 +168,6 @@ export async function rollDice(numDice: number, open = false, shade: helpers.Sha
         }
         return new Promise(r => r(roll));
     }
-}
-
-export function getRootStatInfo(skill: Skill, actor: BWActor): { open: boolean, shade: helpers.ShadeString } {
-    const root1 = getProperty(actor, `data.data.${skill.data.data.root1}`) as Ability;
-    const root2 = skill.data.data.root2 ?
-        getProperty(actor, `data.data.${skill.data.data.root2}`) as Ability : root1;
-
-    const shade = helpers.getWorstShadeString(root1.shade, root2.shade);
-    return {
-        open: root1.open && root2.open,
-        shade
-    };
 }
 
 export function getRollNameClass(open: boolean, shade: helpers.ShadeString): string {

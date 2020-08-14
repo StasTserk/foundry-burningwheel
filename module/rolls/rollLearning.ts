@@ -1,13 +1,12 @@
-import { BWActor } from "../actor.js";
+import { BWActor, TracksTests, Ability } from "../actor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
-import { Skill, SkillDataRoot, PossessionRootData } from "../items/item.js";
+import { Skill, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
     buildDiceSourceObject,
     buildRerollData,
     extractBaseData,
     getRollNameClass,
-    getRootStatInfo,
     RerollData,
     RollChatMessageData,
     rollDice,
@@ -21,8 +20,35 @@ import {
 export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
+    if (skill.data.data.root2) {
+        return new Dialog({
+            title: "Pick Root Stat",
+            content: "<p>The skill being learned is derived from two roots. Pick one to use for the roll.</p>",
+            buttons: {
+                root1: {
+                    label: skill.data.data.root1.titleCase(),
+                    callback: () => {
+                        return buildLearningDialog(skill, skill.data.data.root1, sheet, extraInfo);
+                    }
+                },
+                root2: {
+                    label: skill.data.data.root2.titleCase(),
+                    callback: () => {
+                        return buildLearningDialog(skill, skill.data.data.root2, sheet, extraInfo);
+                    }
+                }
+            }
+        }).render(true);
+    }
+    return buildLearningDialog(skill, skill.data.data.root1, sheet, extraInfo);
+
+}
+
+async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string) {
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
+    const stat = getProperty(actor.data.data, statName);
+
     const data: LearningDialogData = {
         name: `Beginner's Luck ${skill.name} Test`,
         difficulty: 3,
@@ -33,7 +59,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
         toolkits: actor.data.toolkits,
         needsToolkit: skill.data.data.tools,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        skill: { exp: 10 - (skill.data.data.aptitude || 1) } as any,
+        skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
@@ -47,7 +73,7 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        learningRollCallback(dialogHtml, skill, sheet, extraInfo)
+                        learningRollCallback(dialogHtml, skill, statName, sheet, extraInfo)
                 }
             }
         }).render(true)
@@ -55,11 +81,12 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
-
+    dialogHtml: JQuery, skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
+    
     const baseData = extractBaseData(dialogHtml, sheet);
     let beginnerPenalty = baseData.diff;
-    const exp = 10 - (skill.data.data.aptitude || 1);
+    const stat = getProperty(sheet.actor.data.data, statName) as Ability;
+    const exp = parseInt(stat.exp);
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
     if (skill.data.data.tools) {
         if (extractCheckboxValue(dialogHtml, "toolPenalty")) {
@@ -75,14 +102,12 @@ async function learningRollCallback(
     }
     const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
-    const rollSettings = getRootStatInfo(skill, sheet.actor);
     baseData.penaltySources["Beginner's Luck"] = `+${beginnerPenalty}`;
     baseData.obstacleTotal += beginnerPenalty;
 
     const roll = await rollDice(
         exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum,
-        rollSettings.open,
-        rollSettings.shade
+        stat.open, stat.shade,
     );
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
@@ -102,7 +127,7 @@ async function learningRollCallback(
             successes: roll.result,
             difficulty: baseData.diff,
             obstacleTotal: baseData.obstacleTotal,
-            nameClass: getRollNameClass(rollSettings.open, rollSettings.shade),
+            nameClass: getRollNameClass(stat.open, stat.shade),
             success: isSuccessful,
             rolls: roll.dice[0].rolls,
             difficultyGroup: dg,
@@ -119,11 +144,12 @@ async function learningRollCallback(
         });
     };
 
-    return advanceLearning(skill, sheet.actor, dg, isSuccessful, fateReroll, sendChatMessage);
+    return advanceLearning(skill, statName, sheet.actor, dg, isSuccessful, fateReroll, sendChatMessage);
 }
 
 async function advanceLearning(
         skill: Skill,
+        statName: string,
         owner: BWActor,
         difficultyGroup: helpers.TestString,
         isSuccessful: boolean,
@@ -131,7 +157,7 @@ async function advanceLearning(
         cb: (fr?: RerollData) => Promise<Entity>) {
     switch (difficultyGroup) {
         default:
-            return advanceBaseStat(skill, owner, difficultyGroup, isSuccessful, fr, cb);
+            return advanceBaseStat(skill, owner, statName, difficultyGroup, isSuccessful, fr, cb);
         case "Routine":
             return advanceLearningProgress(skill, fr, cb);
         case "Routine/Difficult":
@@ -146,7 +172,7 @@ async function advanceLearning(
                     },
                     stat: {
                         label: "Apply as Difficult",
-                        callback: async () => advanceBaseStat(skill, owner, "Difficult", isSuccessful, fr, cb)
+                        callback: async () => advanceBaseStat(skill, owner, statName, "Difficult", isSuccessful, fr, cb)
                     }
                 }
             });
@@ -157,52 +183,17 @@ async function advanceLearning(
 async function advanceBaseStat(
         skill: Skill,
         owner: BWActor,
+        statName: string,
         difficultyGroup: helpers.TestString,
         isSuccessful: boolean,
         fr: RerollData | undefined,
         cb: (fr?: RerollData) => Promise<Entity>) {
-    if (!skill.data.data.root2) {
-        // we can immediately apply the test to the one root stat.
-        const rootName = skill.data.data.root1;
-        const accessor = `data.${rootName.toLowerCase()}`;
-        const rootStat = getProperty(owner, `data.${accessor}`);
-        await owner.addStatTest(rootStat, rootName, accessor, difficultyGroup, isSuccessful);
-        if (fr) { fr.learningTarget = skill.data.data.root1; }
-        return cb(fr);
-    }
 
-    // otherwise we have 2 roots and we let the player pick one.
-    const choice = new Dialog({
-        title: "Pick root stat to advance",
-        content: `<p>This test can count towards advancing ${skill.data.data.root1} or ${skill.data.data.root2}</p><p>Which one to advance?</p>`,
-        buttons: {
-            stat1: {
-                label: skill.data.data.root1,
-                callback: async () => {
-                    const rootName = skill.data.data.root1.titleCase();
-                    const accessor = `data.${rootName.toLowerCase()}`;
-                    const rootStat = getProperty(owner, `data.${accessor}`);
-                    await owner.addStatTest(
-                        rootStat, rootName, `${accessor}`, difficultyGroup, isSuccessful);
-                    if (fr) { fr.learningTarget = skill.data.data.root1; }
-                    return cb(fr);
-                }
-            },
-            stat2: {
-                label: skill.data.data.root2,
-                callback: async () => {
-                    const rootName = skill.data.data.root2.titleCase();
-                    const accessor = `data.${rootName.toLowerCase()}`;
-                    const rootStat = getProperty(owner, `data.${accessor}`);
-                    await owner.addStatTest(
-                        rootStat, rootName, `${accessor}`, difficultyGroup, isSuccessful);
-                    if (fr) { fr.learningTarget = skill.data.data.root2; }
-                    return cb(fr);
-                }
-            }
-        }
-    });
-    return choice.render(true);
+    const accessor = `data.${statName.toLowerCase()}`;
+    const rootStat = getProperty(owner, `data.${accessor}`);
+    await owner.addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    if (fr) { fr.learningTarget = skill.data.data.root1; }
+    return cb(fr);
 }
 
 async function advanceLearningProgress(
@@ -248,7 +239,7 @@ async function advanceLearningProgress(
 }
 
 export interface LearningDialogData extends RollDialogData {
-    skill: SkillDataRoot;
+    skill: TracksTests;
     needsToolkit: boolean;
     toolkits: PossessionRootData[];
 }

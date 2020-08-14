@@ -25,9 +25,9 @@ export class MeleeWeapon extends Item {
         element.appendChild(helpers.DivOfText("Va", "ims-header"));
         element.appendChild(helpers.DivOfText("Length", "ims-header"));
     
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.incidental));
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.mark));
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.superb));
+        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.incidental));
+        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.mark));
+        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.superb));
         element.appendChild(helpers.DivOfText(weapon.data.data.add));
         element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
         element.appendChild(helpers.DivOfText(weapon.data.data.weaponLength.titleCase()));
@@ -53,6 +53,7 @@ export interface MeleeWeaponData extends DisplayClass {
     weaponLength: string;
     handedness: string;
     description: string;
+    shade: helpers.ShadeString;
 
     // derived stats
     incidental?: number;

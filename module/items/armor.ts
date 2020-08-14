@@ -1,5 +1,6 @@
 import { DisplayClass } from "./item.js";
 import { rollDice } from "../rolls/rolls.js";
+import { ShadeString } from "../helpers.js";
 
 export class Armor extends Item {
     prepareData(): void {
@@ -78,4 +79,6 @@ export interface ArmorData extends DisplayClass {
     swimmingPenalty: string; // as number
     perceptionObservationPenalty: string; // as number
     untrainedPenalty: string;
+
+    shade: ShadeString;
 }

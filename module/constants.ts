@@ -20,7 +20,8 @@ const fistData: MeleeWeaponData = {
     handedness: "one",
     description: "Your bare fist",
     baseOb: "1",
-    weaponSpeed: "X"
+    weaponSpeed: "X",
+    shade: "B"
 };
 export const bareFistData: NewItemData = {
     name: "Bare Fist",

@@ -49,9 +49,8 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
         dieSources.Damage = `-${damage}`;
     }
 
-
     const numDice = dice - damage;
-    const roll = await rollDice(numDice, false, "B");
+    const roll = await rollDice(numDice, false, armorItem.data.data.shade || "B");
     if (!roll) { return; }
     const damageAssigned = await AssignDamage(armorItem, roll, location);
     const isSuccess = roll.total > 1 + va;
@@ -63,7 +62,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
         success: isSuccess,
         rolls: roll.dice[0].rolls,
         difficulty: 1 + va,
-        nameClass: getRollNameClass(false, "B"),
+        nameClass: getRollNameClass(false, armorItem.data.data.shade || "B"),
         difficultyGroup: "N/A",
         obstacleTotal: 1 + va,
         callons: [],

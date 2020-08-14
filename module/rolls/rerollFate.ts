@@ -1,7 +1,7 @@
 import { TestString } from "module/helpers.js";
 import { BWActor, TracksTests } from "../actor.js";
 import * as helpers from "../helpers.js";
-import { Skill } from "../items/item.js";
+import { Skill, Armor } from "../items/item.js";
 import { RerollMessageData, rollDice, templates } from "./rolls.js";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
@@ -17,7 +17,8 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     if (target.dataset.rerollType === "stat") {
         rollStat = getProperty(actor, `data.${accessor}`);
     } else if (target.dataset.rerollType === "armor") {
-        rollStat = { shade: "B", open: false, };
+        const armorItem = actor.getOwnedItem(itemId) as Armor;
+        rollStat = { shade: armorItem.data.data.shade, open: false, };
     } else {
         rollStat = (actor.getOwnedItem(itemId) as Skill).data.data;
     }

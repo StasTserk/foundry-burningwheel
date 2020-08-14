@@ -54,6 +54,16 @@
             <label for="{{item._id}}-select-quality">Weapon Quality</label>
         </div>
         <div>
+            <select id="{{item._id}}-select-shade" name="data.shade" value="{{data.shade}}">
+                {{#select data.shade}}
+                <option value="B">Black</option>
+                <option value="G">Grey</option>
+                <option value="W">White</option>
+                {{/select}}
+            </select>
+            <label for="{{item._id}}-select-shade">Shade</label>
+        </div>
+        <div>
             <input id="{{item._id}}-number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
             <label for="{{item._id}}-number-range">Max Range</label>
         </div>

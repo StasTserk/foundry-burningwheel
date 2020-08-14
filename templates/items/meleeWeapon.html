@@ -4,6 +4,16 @@
     <h2>Stats</h2>
     <div class="input-grid">
         <div>
+            <select id="{{item._id}}-select-shade" name="data.shade" value="{{data.shade}}">
+                {{#select data.shade}}
+                <option value="B">Black</option>
+                <option value="G">Grey</option>
+                <option value="W">White</option>
+                {{/select}}
+            </select>
+            <label for="{{item._id}}-select-shade">Shade</label>
+        </div>
+        <div>
             <input id="{{item._id}}-number-power" type="number" name="data.power" value="{{data.power}}">
             <label for="{{item._id}}-number-power">Power</label>
         </div>

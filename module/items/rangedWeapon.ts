@@ -36,9 +36,9 @@ export class RangedWeapon extends Item {
         element.appendChild(helpers.DivOfText("DoF Ranges", "ims-header"));
         element.appendChild(helpers.DivOfText("Die", "ims-header"));
     
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.incidental, incidental ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.mark, mark ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText("B " + weapon.data.data.superb, !incidental && !mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.incidental, incidental ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.mark, mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.superb, !incidental && !mark ? "highlight" : undefined));
         element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
         element.appendChild(helpers.DivOfText(`${weapon.data.data.incidentalLabel}/${weapon.data.data.markLabel}/${weapon.data.data.superbLabel}`));
         element.appendChild(helpers.DivOfText("" + roll, "roll-die"));
@@ -69,6 +69,7 @@ export interface RangedWeaponData extends DisplayClass {
     maxRange: string;
     handedness: string;
     description: string;
+    shade: helpers.ShadeString;
 
     // derived data
     incidentalLabel?: string;

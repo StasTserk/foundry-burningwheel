@@ -212,6 +212,7 @@ Item:
     handedness: one
     description: ''
     skillId: ''
+    shade: 'B'
   ranged weapon:
     quality: run-of-the-mill
     hasGunpowder: false
@@ -229,6 +230,7 @@ Item:
     hadnedness: two
     description: ''
     skillId: ''
+    shade: 'B'
   armor:
     quality: run-of-the-mill
     dice: 1
@@ -258,6 +260,7 @@ Item:
     stealthyPenalty: 0
     swimmingPenalty: 0
     perceptionObservationPenalty: 0
+    shade: 'B'
   reputation:
     description: ''
     dice: 0

@@ -15,6 +15,7 @@ import {
     SpellDataRoot,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
+import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
@@ -144,6 +145,7 @@ export class BWCharacterSheet extends BWActorSheet {
         html.find("button.rollable").on("click",e => handleRollable(e, this));
         html.find("i[data-action=\"refresh-ptgs\"]").on("click",_e => this.actor.updatePtgs());
         html.find('*[data-action="learn-skill"]').on("click",e => this.learnNewSkill(e, this.actor));
+        html.find('label.character-burner-icon').on("click", _e => CharacterBurnerDialog.Open(this.actor));
         super.activateListeners(html);
     }
 

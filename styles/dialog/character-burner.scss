@@ -1,0 +1,36 @@
+@import "../mixins.scss";
+
+.character-burner {
+    .lifepath-grid {
+        width: 66%;
+        display: grid;
+        grid-template-columns: 6fr 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+
+        input {
+            width: 100%;
+
+            &[type="number"] {
+                @include no-number-arrows;
+                text-align: center;
+            }
+        }
+
+        .inline-text input {
+            width: calc(100% - 1.5em);
+        }
+
+        .lifepath-grid-header {
+            background-color: rgba(black, 0.1);
+            font-size: 1.125;
+            font-weight: bold;
+        }
+        
+        .lifepath-footer {
+            &:first-child {
+                text-align: right;
+            }
+
+            text-align: center;
+        }
+    }
+}

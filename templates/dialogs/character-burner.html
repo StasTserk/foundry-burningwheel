@@ -1,0 +1,40 @@
+<form class="character-burner">
+    <h3>Character Burner Worksheet</h3>
+    <div class="flex-row">
+        <div class="burner-label">Character Concept</div><input type="text" value="">
+        <div class="burner-label">Recommended # of Lifepaths</div><input type="number" name="data.lps" class="exponent" min="0" value="{{data.lps}}">
+        <div class="burner-label">Stock</div><input type="text" value="">
+    </div>
+    <div class="lifepath-grid">
+        <div class="lifepath-grid-header">2. Lifepaths</div>
+        <div class="lifepath-grid-header">Time</div>
+        <div class="lifepath-grid-header">Lead</div>
+        <div class="lifepath-grid-header">Res.</div>
+        <div class="lifepath-grid-header">Stat</div>
+        <div class="lifepath-grid-header"></div>
+        <div class="lifepath-grid-header">Skill</div>
+        <div class="lifepath-grid-header">Gen.</div>
+        <div class="lifepath-grid-header">Trait</div>
+    {{log data}}
+    {{#each data.lifepaths as |lp key|}}
+        <input type="text" class="lifepath-input" value="{{lp.name}}">
+        <input type="number" class="lifepath-input" name="time" value="{{lp.time}}">
+        <input type="number" class="lifepath-input" name="lead" value="{{lp.lead}}">
+        <input type="number" class="lifepath-input" name="resources" value="{{lp.resources}}">
+        <div class="inline-text">M<input type="number" class="lifepath-input" name="mentalStat" value="{{lp.mentalStat}}"></div>
+        <div class="inline-text">P<input type="number" class="lifepath-input" name="physicalStat" value="{{lp.physicalStat}}"></div>
+        <input type="number" class="lifepath-input" name="skillPts" value="{{lp.skillPts}}">
+        <input type="number" class="lifepath-input" name="generalSkillPts" value="{{lp.generalSkillPts}}">
+        <input type="number" class="lifepath-input" name="traitPts" value="{{lp.traitPts}}">
+    {{/each}}
+    <div class="lifepath-grid-totals">Totals</div>
+    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="timeTotal" value="0">
+    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="leadTotal" value="0">
+    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="resources" value="0">
+    <div class="inline-text">M<input type="number" disabled class="lifepath-grid-totals lifepath-input" name="mentalStatTotal" value="0"></div>
+    <div class="inline-text">P<input type="number" disabled class="lifepath-grid-totals lifepath-input" name="physicalStatTotal" value="0"></div>
+    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="skillPtsTotal" value="0">
+    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="generalSkillPtsTotal" value="0">
+    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="traitPtsTotal" value="0">
+    </div>
+</form>

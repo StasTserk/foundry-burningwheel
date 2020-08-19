@@ -45,22 +45,59 @@ export class CharacterBurnerDialog extends Dialog {
 
     activateListeners(html: JQuery): void {
         this._lpTotalBindings = [
-            html.find("input[name='time']").on('change', e => this._updateTotal(e, html, "time")),
-            html.find("input[name='lead']").on('change', e => this._updateTotal(e, html, "lead")),
-            html.find("input[name='resources']").on('change', e => this._updateTotal(e, html, "resources")),
-            html.find("input[name='mentalStat']").on('change', e => this._updateTotal(e, html, "mentalStat")),
-            html.find("input[name='physicalStat']").on('change', e => this._updateTotal(e, html, "physicalStat")),
-            html.find("input[name='skillPts']").on('change', e => this._updateTotal(e, html, "skillPts")),
-            html.find("input[name='generalSkillPts']").on('change', e => this._updateTotal(e, html, "generalSkillPts")),
-            html.find("input[name='traitPts']").on('change', e => this._updateTotal(e, html, "traitPts"))
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            html.find("input:enabled").on('focus', e => $(e.target).select()),
+            html.find("input[name='time']").on('change', _ => this._storeSum(html, "timeTotal", "time")),
+            html.find("input[name='lead']").on('change', _ => this._storeSum(html, "leadTotal", "lead")),
+            html.find("input[name='timeTotal'], input[name='leadTotal']").on('change', _ => this._storeSum(html, "ageTotal", "timeTotal", "leadTotal")),
+
+            html.find("input[name='resources']").on('change', _ => this._storeSum(html, "resourcesTotal", "resources")),
+
+            html.find("input[name='mentalStat']").on('change', _ => this._storeSum(html, "mentalStatTotal", "mentalStat")),
+            html.find("input[name='mentalStatTotal'], select[name='mentalPool']").on('change', _ => 
+                this._storeSum(html, "mentalPoolTotal", "mentalStatTotal", "mentalPool")),
+
+            html.find("input[name='physicalStat']").on('change', _ => this._storeSum(html, "physicalStatTotal", "physicalStat")),
+            html.find("input[name='physicalPool'], input[name='physicalStatTotal']").on('change', _ =>
+                this._storeSum(html, "physicalPoolTotal", "physicalStatTotal", "physicalPool")),
+            html.find("input[name='physicalPoolTotal'], input[name='physicalPoolSpent']").on('change', _ =>
+            this._storeDiff(html, "physicalPoolLeft", "physicalPoolTotal", "physicalPoolSpent")),
+
+            html.find("input[name='skillPts']").on('change', _ => this._storeSum(html, "skillPtsTotal", "skillPts")),
+            html.find("input[name='generalSkillPts']").on('change', _ => this._storeSum(html, "generalSkillPtsTotal", "generalSkillPts")),
+            html.find("input[name='traitPts']").on('change', _ => this._storeSum(html, "traitPtsTotal", "traitPts")),
+
+            html.find("input[name='mentalPoolTotal'], input[name='mentalPoolSpent']").on('change', _ =>
+                this._storeDiff(html, "mentalPoolLeft", "mentalPoolTotal", "mentalPoolSpent")),
+            html.find("input[name='willSpent'], select[name='willShadeSpent'], input[name='perceptionSpent'], select[name='perceptionShadeSpent']").on('change', _ => {
+                this._storeSum(html, "mentalPoolSpent", "willSpent", "willShadeSpent", "mentalPoolOffset", "perceptionSpent", "perceptionShadeSpent");
+            }),
+            html.find("input[name='powerSpent'], select[name='powerShadeSpent'], input[name='forteSpent'], select[name='forteShadeSpent'], " +
+                "input[name='agilitySpent'], select[name='agilityShadeSpent'], input[name='speedSpent'], select[name='speedShadeSpent']").on('change', _ => {
+                this._storeSum(html, "physicalPoolSpent", "physicalPoolOffset",
+                    "powerSpent", "powerShadeSpent", "forteSpent", "forteShadeSpent",
+                    "agilitySpent", "agilityShadeSpent", "speedSpent", "speedShadeSpent");
+            }),
         ];
         super.activateListeners(html);
     }
 
-    private _updateTotal(_e: JQuery.ChangeEvent<HTMLElement, undefined, HTMLElement, HTMLElement>, html: JQuery, fieldName: string): void {
+    private _storeSum(html: JQuery, targetName: string, ...sourceNames: string[]): void {
+        html.find(`input[name="${targetName}"]`).val(this._calculateSum(html, ...sourceNames)).change();
+        // html.find(`input[name="${targetName}"]`).change();
+    }
+
+    private _storeDiff(html: JQuery, targetName: string, source1: string, source2: string) {
+        const sum1 = this._calculateSum(html, source1);
+        const sum2 = this._calculateSum(html, source2);
+        html.find(`input[name="${targetName}"]`).val(sum1 - sum2).change();
+    }
+
+    private _calculateSum(html: JQuery, ...sourceNames: string[]): number {
+        const selector = sourceNames.map(a => `input[name='${a}'], select[name='${a}']`).join(', ');
         let total = 0;
-        html.find(`input[name="${fieldName}"]`).each((_i, elem) => { total += parseInt($(elem).val() as string); });
-        html.find(`input[name="${fieldName}Total"]`).val(total);
+        html.find(selector).each((_i, elem) => { total += parseInt($(elem).val() as string); });
+        return total;
     }
 
     close(): Promise<unknown> {

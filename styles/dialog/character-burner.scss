@@ -1,36 +1,92 @@
 @import "../mixins.scss";
 
+.dialog > .window-content > .character-burner {
+    flex: unset;
+}
+
 .character-burner {
+    input {
+        background-color: transparent;
+        &:enabled {
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid black;
+            height: min-content;
+        }
+
+        &[type="number"] {
+            @include no-number-arrows;
+            text-align: center;
+        }
+    }
+    h2 {
+        width: 100%;
+    }
+    .burner-label {
+        font-weight: bold;
+    }
+
+    .burner-subtitle {
+        margin-bottom: 1em;
+        input {
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid black;
+            height: 1.125em;
+            margin: 0 1em 0 1em;
+            &[type='text'] {
+                width: 12em;
+            }
+        }
+    }
+
     .lifepath-grid {
         width: 66%;
         display: grid;
         grid-template-columns: 6fr 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
 
-        input {
+        input:enabled {
+            width: calc(100% - 2px);
+            height: 100%;
+        }
+        input:disabled {
             width: 100%;
-
-            &[type="number"] {
-                @include no-number-arrows;
-                text-align: center;
-            }
         }
 
         .inline-text input {
-            width: calc(100% - 1.5em);
+            width: calc(100% - 1em);
+            height: 100%
         }
 
         .lifepath-grid-header {
             background-color: rgba(black, 0.1);
-            font-size: 1.125;
+            font-size: 1.1em;
             font-weight: bold;
         }
         
-        .lifepath-footer {
-            &:first-child {
-                text-align: right;
-            }
-
+        div.lifepath-grid-totals {
+            text-align: right;
+        }
+        .lifepath-grid-totals {
             text-align: center;
+            font-weight: bold;
+            background-color: rgba(black, 0.1);
+        }
+    }
+
+    .base-stats {
+        width: 33%;
+        margin-left: 1%;
+
+        .stat-input-box {
+            select {
+                @include select-no-arrow;
+            }
+            input {
+                height: 100%;
+                width: 1.5em;
+                border: 1px solid black;
+            }
         }
     }
 }

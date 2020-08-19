@@ -1,6 +1,6 @@
-<form class="character-burner">
-    <h3>Character Burner Worksheet</h3>
-    <div class="flex-row">
+<form class="character-burner flex-row">
+    <h2>Character Burner Worksheet</h2>
+    <div class="flex-row burner-subtitle">
         <div class="burner-label">Character Concept</div><input type="text" value="">
         <div class="burner-label">Recommended # of Lifepaths</div><input type="number" name="data.lps" class="exponent" min="0" value="{{data.lps}}">
         <div class="burner-label">Stock</div><input type="text" value="">
@@ -15,26 +15,135 @@
         <div class="lifepath-grid-header">Skill</div>
         <div class="lifepath-grid-header">Gen.</div>
         <div class="lifepath-grid-header">Trait</div>
-    {{log data}}
-    {{#each data.lifepaths as |lp key|}}
-        <input type="text" class="lifepath-input" value="{{lp.name}}">
-        <input type="number" class="lifepath-input" name="time" value="{{lp.time}}">
-        <input type="number" class="lifepath-input" name="lead" value="{{lp.lead}}">
-        <input type="number" class="lifepath-input" name="resources" value="{{lp.resources}}">
-        <div class="inline-text">M<input type="number" class="lifepath-input" name="mentalStat" value="{{lp.mentalStat}}"></div>
-        <div class="inline-text">P<input type="number" class="lifepath-input" name="physicalStat" value="{{lp.physicalStat}}"></div>
-        <input type="number" class="lifepath-input" name="skillPts" value="{{lp.skillPts}}">
-        <input type="number" class="lifepath-input" name="generalSkillPts" value="{{lp.generalSkillPts}}">
-        <input type="number" class="lifepath-input" name="traitPts" value="{{lp.traitPts}}">
-    {{/each}}
-    <div class="lifepath-grid-totals">Totals</div>
-    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="timeTotal" value="0">
-    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="leadTotal" value="0">
-    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="resources" value="0">
-    <div class="inline-text">M<input type="number" disabled class="lifepath-grid-totals lifepath-input" name="mentalStatTotal" value="0"></div>
-    <div class="inline-text">P<input type="number" disabled class="lifepath-grid-totals lifepath-input" name="physicalStatTotal" value="0"></div>
-    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="skillPtsTotal" value="0">
-    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="generalSkillPtsTotal" value="0">
-    <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="traitPtsTotal" value="0">
+        {{#each data.lifepaths as |lp key|}}
+            <input type="text" class="lifepath-input" value="{{lp.name}}">
+            <input type="number" class="lifepath-input" name="time" value="{{lp.time}}">
+            <input type="number" class="lifepath-input" name="lead" value="{{lp.lead}}">
+            <input type="number" class="lifepath-input" name="resources" value="{{lp.resources}}">
+            <div class="inline-text"><label>M</label><input type="number" class="lifepath-input" name="mentalStat" value="{{lp.mentalStat}}"></div>
+            <div class="inline-text"><label>P</label><input type="number" class="lifepath-input" name="physicalStat" value="{{lp.physicalStat}}"></div>
+            <input type="number" class="lifepath-input" name="skillPts" value="{{lp.skillPts}}">
+            <input type="number" class="lifepath-input" name="generalSkillPts" value="{{lp.generalSkillPts}}">
+            <input type="number" class="lifepath-input" name="traitPts" value="{{lp.traitPts}}">
+        {{/each}}
+        <div class="lifepath-grid-totals">Totals... </div>
+        <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="timeTotal" value="0">
+        <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="leadTotal" value="0">
+        <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="resourcesTotal" value="0">
+        <div class="inline-text"><label>M</label><input type="number" disabled class="lifepath-grid-totals lifepath-input" name="mentalStatTotal" value="0"></div>
+        <div class="inline-text"><label>P</label><input type="number" disabled class="lifepath-grid-totals lifepath-input" name="physicalStatTotal" value="0"></div>
+        <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="skillPtsTotal" value="0">
+        <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="generalSkillPtsTotal" value="0">
+        <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="traitPtsTotal" value="0">
+    </div>
+    <div class="base-stats flex-column">
+        <div class="item-grid col-2">
+            <div class="burner-label">3. Age</div>
+            <input disabled type="number" class="exponent" name="ageTotal" value="0">
+        </div>
+        <div class="flex-column">
+            <div class="burner-label">4. Stats </div>
+            <div class="burner-label">The Age Chart</div>
+            <div class="item-grid col-2">
+                <div>Mental Age</div>
+                <select name="mentalPool">
+                    <optgroup label="Mannish Stock">
+                        <option value="5">1-10 Years</option>
+                        <option value="6">11-14 Years</option>
+                        <option value="6">15-16 Years</option>
+                        <option value="7">17-25 Years</option>
+                        <option value="7">26-29 Years</option>
+                        <option value="7">30-35 Years</option>
+                        <option value="7">36-40 Years</option>
+                        <option value="7">41-55 Years</option>
+                        <option value="7">56-65 Years</option>
+                        <option value="7">66-79 Years</option>
+                        <option value="6">80-100 Years</option>
+                    </optgroup>
+                </select>
+                <div>Physical Age</div>
+                <select name="physicalPool">
+                    <optgroup label="Mannish Stock">
+                        <option value="10">1-10 Years</option>
+                        <option value="14">11-14 Years</option>
+                        <option value="16">15-16 Years</option>
+                        <option value="16">17-25 Years</option>
+                        <option value="15">26-29 Years</option>
+                        <option value="14">30-35 Years</option>
+                        <option value="13">36-40 Years</option>
+                        <option value="12">41-55 Years</option>
+                        <option value="11">56-65 Years</option>
+                        <option value="10">66-79 Years</option>
+                        <option value="9">80-100 Years</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="item-grid col-2">
+                <div>Mental Pool</div>
+                <input disabled type="hidden" class="exponent" name="mentalPoolTotal" value="5">
+                <input disabled type="hidden" class="exponent" name="mentalPoolOffset" value="-2">
+                <input disabled type="hidden" class="exponent" name="mentalPoolSpent" value="0">
+                <input disabled type="number" class="exponent" name="mentalPoolLeft" value="5">
+                <div class="stat-input-box">
+                    <label>Will</label>
+                    <select name="willShadeSpent">
+                        <option value="0">B</option>
+                        <option value="5">G</option>
+                        <option value="10">W</option>
+                    </select>
+                    <input type="number" class="exponent" name="willSpent" value="1" min="1">
+                </div>
+                <div class="stat-input-box">
+                    <label>Perception</label>
+                    <select name="perceptionShadeSpent">
+                        <option value="0">B</option>
+                        <option value="5">G</option>
+                        <option value="10">W</option>
+                    </select>
+                    <input type="number" class="exponent" name="perceptionSpent" value="1" min="1">
+                </div>
+                <div>Physical Pool</div>
+                <input disabled type="hidden" class="exponent" name="physicalPoolTotal" value="10">
+                <input disabled type="hidden" class="exponent" name="physicalPoolOffset" value="-4">
+                <input disabled type="hidden" class="exponent" name="physicalPoolSpent" value="0">
+                <input disabled type="number" class="exponent" name="physicalPoolLeft" value="10">
+                <div class="stat-input-box">
+                    <label>Power</label>
+                    <select name="powerShadeSpent">
+                        <option value="0">B</option>
+                        <option value="5">G</option>
+                        <option value="10">W</option>
+                    </select>
+                    <input type="number" class="exponent" name="powerSpent" value="1" min="1">
+                </div>
+                <div class="stat-input-box">
+                    <label>Forte</label>
+                    <select name="forteShadeSpent">
+                        <option value="0">B</option>
+                        <option value="5">G</option>
+                        <option value="10">W</option>
+                    </select>
+                    <input type="number" class="exponent" name="forteSpent" value="1" min="1">
+                </div>
+                <div class="stat-input-box">
+                    <label>Agility</label>
+                    <select name="agilityShadeSpent">
+                        <option value="0">B</option>
+                        <option value="5">G</option>
+                        <option value="10">W</option>
+                    </select>
+                    <input type="number" class="exponent" name="agilitySpent" value="1" min="1">
+                </div>
+                <div class="stat-input-box">
+                    <label>Speed</label>
+                    <select name="speedShadeSpent">
+                        <option value="0">B</option>
+                        <option value="5">G</option>
+                        <option value="10">W</option>
+                    </select>
+                    <input type="number" class="exponent" name="speedSpent" value="1" min="1">
+                </div>
+            </div>
+        </div>
     </div>
 </form>

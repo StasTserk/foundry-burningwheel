@@ -105,21 +105,58 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("input[name='skillAdvances'], input[name='skillOpened'], input[name='skillTraining'], select[name='skillShade']").on('change', (e: JQuery.ChangeEvent) =>
                 this._calculateSkillWorth(e)),
             html.find("input[name='skillPtsWorth']").on('change', _ => this._storeSum(html, "skillPtsSpent", "skillPtsWorth")),
-            html.find("input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e))
+
+            html.find("*[name='powerSpent'], *[name='powerShadeSpent'], *[name='forteSpent'], *[name='forteShadeSpent'], " +
+                "*[name='agilitySpent'], *[name='agilityShadeSpent'], *[name='speedSpent'], *[name='speedShadeSpent'], " + 
+                "*[name='willSpent'], *[name='willShadeSpent'], *[name='perceptionSpent'], *[name='perceptionShadeSpent']").on('change', e => 
+                this._calculateAllSkillExponents(e, html)),
+            html.find("input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e.currentTarget, html))
         ];
         super.activateListeners(html);
     }
 
-    private _calculateSkillExponent(_e: JQuery.ChangeEvent): void {
-        console.log("Updating starting exponent not implemented yet");
+    private _calculateSkillExponent(target: JQuery, html: JQuery): void {
+        const skillRow = $(target).parent();
+        const root1 = skillRow.children("*[name='skillRoot1']").val() as string;
+        const root2 = skillRow.children("*[name='skillRoot2']").val() as string;
+        const advances = parseInt(skillRow.children("*[name='skillAdvances']").val() as string) || 0;
+        let root1exp = parseInt(html.find(`*[name='${root1}Spent']`).val() as string) || 1;
+        const root2exp = parseInt(html.find(`*[name='${root2}Spent']`).val() as string) || root1exp;
+        const root1Shade = parseInt(html.find(`*[name='${root1}ShadeSpent']`).val() as string) || 0;
+        let root2Shade = parseInt(html.find(`*[name='${root2}ShadeSpent']`).val() as string) || 0;
+        if (isNaN(root2Shade)) { root2Shade = root1Shade; }
+        if (root1Shade != root2Shade) {
+            root1exp += 2;
+        }
+
+        const result = Math.floor((root1exp + root2exp) / 4.0) + advances;
+
+        skillRow.children("*[name='skillExponent']").val(result);
+        skillRow.children("*[name='skillShadeRefund']").val(-Math.min(root1Shade, root2Shade));
+        skillRow.children("*[name='skillShade']").val(Math.min(root1Shade, root2Shade)).change();
     }
+
+    private _calculateAllSkillExponents(e: JQuery.ChangeEvent, html: JQuery): void {
+        const inputName = $(e.currentTarget).prop("name");
+        let statName = inputName.substring(0, inputName.length-5);
+        if (inputName.indexOf("Shade") !== -1) {
+            statName = statName.substring(0, statName.length-5);
+        }
+        html.find("select[name='skillRoot1'], select[name='skillRoot2']").each((_, element) => {
+            if ($(element).val() === statName) {
+                this._calculateSkillExponent($(element), html);
+            }
+        });
+    }
+
     private _calculateSkillWorth(e: JQuery.ChangeEvent): void {
         const parent = $(e.currentTarget).parent();
         const advances = parseInt(parent.children("*[name='skillAdvances']").val() as string) || 0;
         const shade = parseInt(parent.children("*[name='skillShade']").val() as string) || 0;
+        const refund = parseInt(parent.children("*[name='skillShadeRefund']").val() as string) || 0;
         const open = parent.children("*[name='skillOpened']").prop("checked") ? 1 : 0;
         const training = parent.children("*[name='skillTraining']").prop("checked") ? open : 0;
-        parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training).change();
+        parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + refund).change();
     }
     private _tryLoadSkill(e: JQueryInputEventObject): void {
         const inputTarget = $(e.currentTarget);

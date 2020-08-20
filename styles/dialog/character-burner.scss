@@ -11,7 +11,6 @@
             border: 0;
             border-radius: 0;
             border-bottom: 1px solid black;
-            height: min-content;
         }
 
         &[type="number"] {
@@ -86,6 +85,65 @@
                 height: 100%;
                 width: 1.5em;
                 border: 1px solid black;
+            }
+        }
+    }
+
+    .skills-grid, .skills-header {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 2em 2em 2em 2em 2em 2em min-content;
+        width: 66%;
+
+    }
+    .skills-header {
+        margin-top: 1em;
+        .lifepath-skill-header {
+            font-weight: bold;
+            background-color: rgba(black, 0.1);
+        }
+    }
+    .skills-grid {
+        select.shade {
+            @include select-no-arrow;
+            text-align-last: center;
+        }
+
+        input[type="checkbox"] {
+            width: 1em;
+            height: 1em;    
+        }
+
+        .skill-status {
+            height: 100%;
+            padding-top: 6px;
+
+            & > .fas { display: none; }
+            &.none > .fa-ellipsis-h,
+            &.success > .fa-check-circle,
+            &.loading > .fa-spinner,
+            &.fail > .fa-question-circle {
+                display: block;
+            }
+            
+            .fa-spinner {
+                animation-name: spin;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                @keyframes spin {
+                    from {transform:rotate(0deg);}
+                    to {transform:rotate(360deg);}
+                }
+            }
+
+            .fa-check-circle {
+                color: green;
+            }
+            .fa-question-circle {
+                color: teal;
+            }
+            .fa-ellipsis-h {
+                color: rgba(black, 0.5);
             }
         }
     }

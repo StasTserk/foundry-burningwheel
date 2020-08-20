@@ -47,43 +47,30 @@
             <div class="item-grid col-2">
                 <div>Mental Age</div>
                 <select name="mentalPool">
-                    <optgroup label="Mannish Stock">
-                        <option value="5">1-10 Years</option>
-                        <option value="6">11-14 Years</option>
-                        <option value="6">15-16 Years</option>
-                        <option value="7">17-25 Years</option>
-                        <option value="7">26-29 Years</option>
-                        <option value="7">30-35 Years</option>
-                        <option value="7">36-40 Years</option>
-                        <option value="7">41-55 Years</option>
-                        <option value="7">56-65 Years</option>
-                        <option value="7">66-79 Years</option>
-                        <option value="6">80-100 Years</option>
+                    {{#each ageTable as |ageGroup key|}}
+                    <optgroup label="{{key}}">
+                        {{#each ageGroup as |age|}}
+                        <option value="{{age.mental}}">{{age.label}} Years - {{age.mental}} Pts.</option>
+                        {{/each}}
                     </optgroup>
+                    {{/each}}
                 </select>
                 <div>Physical Age</div>
                 <select name="physicalPool">
-                    <optgroup label="Mannish Stock">
-                        <option value="10">1-10 Years</option>
-                        <option value="14">11-14 Years</option>
-                        <option value="16">15-16 Years</option>
-                        <option value="16">17-25 Years</option>
-                        <option value="15">26-29 Years</option>
-                        <option value="14">30-35 Years</option>
-                        <option value="13">36-40 Years</option>
-                        <option value="12">41-55 Years</option>
-                        <option value="11">56-65 Years</option>
-                        <option value="10">66-79 Years</option>
-                        <option value="9">80-100 Years</option>
+                    {{#each ageTable as |ageGroup key|}}
+                    <optgroup label="{{key}}">
+                        {{#each ageGroup as |age|}}
+                        <option value="{{age.physical}}">{{age.label}} Years - {{age.physical}} Pts.</option>
+                        {{/each}}
                     </optgroup>
+                    {{/each}}
                 </select>
             </div>
             <div class="item-grid col-2">
-                <div>Mental Pool</div>
+                <div class="burner-label">Mental Pool</div>
                 <input disabled type="hidden" class="exponent" name="mentalPoolTotal" value="5">
-                <input disabled type="hidden" class="exponent" name="mentalPoolOffset" value="-2">
-                <input disabled type="hidden" class="exponent" name="mentalPoolSpent" value="0">
-                <input disabled type="number" class="exponent" name="mentalPoolLeft" value="5">
+                <input disabled type="hidden" class="exponent" name="mentalPoolSpent" value="2">
+                <input disabled type="number" class="exponent" name="mentalPoolLeft" value="3">
                 <div class="stat-input-box">
                     <label>Will</label>
                     <select name="willShadeSpent">
@@ -102,11 +89,10 @@
                     </select>
                     <input type="number" class="exponent" name="perceptionSpent" value="1" min="1">
                 </div>
-                <div>Physical Pool</div>
+                <div class="burner-label">Physical Pool</div>
                 <input disabled type="hidden" class="exponent" name="physicalPoolTotal" value="10">
-                <input disabled type="hidden" class="exponent" name="physicalPoolOffset" value="-4">
-                <input disabled type="hidden" class="exponent" name="physicalPoolSpent" value="0">
-                <input disabled type="number" class="exponent" name="physicalPoolLeft" value="10">
+                <input disabled type="hidden" class="exponent" name="physicalPoolSpent" value="4">
+                <input disabled type="number" class="exponent" name="physicalPoolLeft" value="6">
                 <div class="stat-input-box">
                     <label>Power</label>
                     <select name="powerShadeSpent">
@@ -146,4 +132,58 @@
             </div>
         </div>
     </div>
+    <div class="skills-header">
+        <input type="hidden" name="combinedSkillPts" value="0">
+        <input type="hidden" name="skillPtsSpent" value="0">
+        <div class="lifepath-skill-header flex-row"><div>5. Skills</div><input type="number" disabled class="exponent" name="skillPtsLeft" value="0"><div>Pts. left</div></div>
+        <div class="lifepath-skill-header">Roots</div>
+        <div class="lifepath-skill-header">&nbsp;</div>
+        <div class="lifepath-skill-header">Req</div>
+        <div class="lifepath-skill-header">Opn</div>
+        <div class="lifepath-skill-header">Tr *</div>
+        <div class="lifepath-skill-header">Adv.</div>
+        <div class="lifepath-skill-header">Shd.</div>
+        <div class="lifepath-skill-header">Exp</div>
+        <div class="lifepath-skill-header"><i class="fas fa-question-circle" title="Status of loading skill from compendium."></i></div>
+    </div>
+    {{#each data.skills as |skill|}}
+        <div class="skills-grid">
+            <input type="text" name="skillName" value="">
+            <select name="skillRoot1" value="perception">
+                <option value="will">Will</option>
+                <option value="perception">Perception</option>
+                <option value="power">Power</option>
+                <option value="forte">Forte</option>
+                <option value="agility">Agility</option>
+                <option value="speed">Speed</option>
+            </select>
+            <select name="skillRoot2" value="">
+                <option value=""></option>
+                <option value="will">Will</option>
+                <option value="perception">Perception</option>
+                <option value="power">Power</option>
+                <option value="forte">Forte</option>
+                <option value="agility">Agility</option>
+                <option value="speed">Speed</option>
+            </select>
+            <input type="checkbox" name="skillRequired">
+            <input type="checkbox" name="skillOpened">
+            <input type="checkbox" name="skillTraining">
+            <input type="number" name="skillAdvances" value="0">
+            <select class="shade" name="skillShade">
+                <option value="0">B</option>
+                <option value="5">G</option>
+                <option value="10">W</option>
+            </select>
+            <input type="number" disabled name="skillExponent" value="1">
+            <div class="skill-status none">
+                <i class="fas fa-ellipsis-h" title="Waiting for name of skill to be entered."></i>
+                <i class="fas fa-question-circle" title="No matching skill found. Will create a new skill when worksheet is submitted."></i>
+                <i class="fas fa-spinner"></i>
+                <i class="fas fa-check-circle" title="Found skill in one of the compendiums. Will load this skill when worksheet is submitted."></i>
+            </div>
+            <input type="hidden" name="skillId">
+            <input type="hidden" name="skillPtsWorth" value="0">
+        </div>
+    {{/each}}
 </form>

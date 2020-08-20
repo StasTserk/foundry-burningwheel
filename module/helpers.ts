@@ -127,25 +127,25 @@ export function isStat(name: string): boolean {
     ].indexOf(name.toLowerCase()) !== -1);
 }
 
-export async function getItemsOfType<T extends BWItem & {itemSource?: string }>(itemType: ItemType): Promise<T[]> {
+export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<(T & {itemSource?: string })[]> {
     const itemList = game.items.filter((i: T) => i.type === itemType)
-        .map((item: T) => {
+        .map((item: T & {itemSource?: string } ) => {
             item.itemSource = "World"; 
             return item; 
-        }) as T[];
+        }) as (T & {itemSource?: string })[];
 
-    let compendiumItems: T[] = [];
+    let compendiumItems: (T & {itemSource?: string })[] = [];
     let sourceLabel = "";
     const packs = Array.from(game.packs.values()) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
         sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).replace('-', ' ').titleCase();
         compendiumItems = compendiumItems.concat(
-            ...packItems.filter((item: T) => item.type === itemType)
-            .map((item: T) => {
+            ...packItems.filter((item: (T & {itemSource?: string })) => item.type === itemType)
+            .map((item: T & {itemSource?: string } ) => {
                 item.itemSource = sourceLabel;
                 return item;
-            })) as T[];
+            })) as (T & {itemSource?: string })[];
     }
     return itemList.concat(...compendiumItems);
 }

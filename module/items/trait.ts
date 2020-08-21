@@ -1,6 +1,7 @@
 import { RollModifier } from "module/actor";
+import { ItemType } from "./item.js";
 
-export class Trait extends Item {
+export class Trait extends Item<TraitData> {
     static asRollDieModifier(trait: TraitDataRoot): RollModifier {
         return {
             label: trait.name,
@@ -16,9 +17,15 @@ export class Trait extends Item {
             obstacle: parseInt(trait.data.obModifier, 10) || 0
         };
     }
+
+    get type(): ItemType { return super.type as ItemType; }
+
+    data: TraitDataRoot;
 }
 
-export type TraitDataRoot = ItemData<TraitData>;
+export interface TraitDataRoot extends ItemData<TraitData> {
+    type: ItemType;
+}
 
 export interface TraitData {
     traittype: string;

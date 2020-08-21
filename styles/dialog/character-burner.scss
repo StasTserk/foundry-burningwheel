@@ -5,6 +5,46 @@
 }
 
 .character-burner {
+    .fa-check-circle {
+        color: green;
+    }
+    .fa-question-circle {
+        color: teal;
+    }
+    .fa-ellipsis-h {
+        color: rgba(black, 0.5);
+    }
+
+    .burner-right-third {
+        width: 39%;
+        margin-left: 1%;
+        margin-top: 1em;
+    }
+
+    .load-status {
+        height: 100%;
+        padding-top: 6px;
+
+        & > .fas { display: none; }
+        &.none > .fa-ellipsis-h,
+        &.success > .fa-check-circle,
+        &.loading > .fa-spinner,
+        &.fail > .fa-question-circle {
+            display: block;
+        }
+        
+        .fa-spinner {
+            animation-name: spin;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            @keyframes spin {
+                from {transform:rotate(0deg);}
+                to {transform:rotate(360deg);}
+            }
+        }
+    }
+
     input {
         background-color: transparent;
         &:enabled {
@@ -25,6 +65,11 @@
         font-weight: bold;
     }
 
+    .burner-section-header {
+        background-color: rgba(black, 0.1);
+        font-weight: bold;
+    }
+
     .burner-subtitle {
         margin-bottom: 1em;
         input {
@@ -40,7 +85,7 @@
     }
 
     .lifepath-grid {
-        width: 66%;
+        width: 60%;
         display: grid;
         grid-template-columns: 6fr 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
 
@@ -56,12 +101,6 @@
             width: calc(100% - 1em);
             height: 100%
         }
-
-        .lifepath-grid-header {
-            background-color: rgba(black, 0.1);
-            font-size: 1.1em;
-            font-weight: bold;
-        }
         
         div.lifepath-grid-totals {
             text-align: right;
@@ -73,47 +112,64 @@
         }
     }
 
-    .base-stats {
-        width: 33%;
-        margin-left: 1%;
+    .stat-input-box {
+        height: min-content;
+        select {
+            @include select-no-arrow;
+        }
+        input[type="number"] {
+            height: 100%;
+            width: 1.5em;
+            border: 1px solid black;
+        }
+        input[type="text"] {
+            width: 6em;
+        }
+    }
 
-        .stat-input-box {
-            select {
-                @include select-no-arrow;
+    .burner-skills-section {
+        width: 60%;
+
+        .skills-grid, .skills-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2em 2em 2em 2em 2em 2em min-content;
+        }
+        .skills-header {
+            margin-top: 1em;
+            .lifepath-skill-header {
+                font-weight: bold;
+                background-color: rgba(black, 0.1);
             }
-            input {
-                height: 100%;
-                width: 1.5em;
-                border: 1px solid black;
+        }
+        .skills-grid {
+            select.shade {
+                @include select-no-arrow;
+                text-align-last: center;
+            }
+    
+            input[type="checkbox"] {
+                width: 1em;
+                height: 1em;    
             }
         }
     }
 
-    .skills-grid, .skills-header {
+    .burner-traits-grid {
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr 2em 2em 2em 2em 2em 2em min-content;
-        width: 66%;
+        grid-template-columns: 2fr 1fr 2em 2em min-content;
 
-    }
-    .skills-header {
-        margin-top: 1em;
-        .lifepath-skill-header {
+        .traits-header {
             font-weight: bold;
             background-color: rgba(black, 0.1);
-        }
-    }
-    .skills-grid {
-        select.shade {
-            @include select-no-arrow;
-            text-align-last: center;
+            height: min-content;
         }
 
         input[type="checkbox"] {
+            height: 1em;
             width: 1em;
-            height: 1em;    
         }
 
-        .skill-status {
+        .trait-status {
             height: 100%;
             padding-top: 6px;
 
@@ -124,27 +180,19 @@
             &.fail > .fa-question-circle {
                 display: block;
             }
-            
-            .fa-spinner {
-                animation-name: spin;
-                animation-duration: 1s;
-                animation-iteration-count: infinite;
-                animation-timing-function: linear;
-                @keyframes spin {
-                    from {transform:rotate(0deg);}
-                    to {transform:rotate(360deg);}
-                }
-            }
+        }
+    }
 
-            .fa-check-circle {
-                color: green;
-            }
-            .fa-question-circle {
-                color: teal;
-            }
-            .fa-ellipsis-h {
-                color: rgba(black, 0.5);
-            }
+    .burner-attributes-section {
+        margin-top: 1em;
+    }
+
+    .burner-resources {
+        width: 100%;
+
+        .burner-property {
+            display: grid;
+            grid-template-columns: 1fr 2em min-content;
         }
     }
 }

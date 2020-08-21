@@ -145,7 +145,7 @@ export function RegisterItemSheets(): void {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const prototypeList: { [i: string]: typeof Item} = {
-    "trait": Trait,
+    "trait": Trait as any,
     "skill": Skill as any,
     "relationship": Relationship as any,
     "melee weapon":  MeleeWeapon as any,

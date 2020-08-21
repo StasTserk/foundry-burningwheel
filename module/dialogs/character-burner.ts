@@ -1,11 +1,11 @@
 import { BWActor } from "../actor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType } from "../helpers.js";
-import { Skill } from "../items/item.js";
+import { Skill, Trait } from "../items/item.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor;
     private _burnerListeners: JQuery<HTMLElement>[];
-    private readonly _skillLookup: {
+    private readonly _itemLookup: {
         loading: boolean;
         timer: number;
     } = {
@@ -13,10 +13,12 @@ export class CharacterBurnerDialog extends Dialog {
         timer: 0
     };
     private _skills: Skill[];
+    private _traits: Trait[];
 
     static async Open(parent: BWActor): Promise<Application> {
         const dialog = new CharacterBurnerDialog(parent);
         dialog._skills = await getItemsOfType<Skill>("skill");
+        dialog._traits = await getItemsOfType<Trait>("trait");
 
         return dialog.render(true);
     }
@@ -39,7 +41,7 @@ export class CharacterBurnerDialog extends Dialog {
     }
 
     static get defaultOptions(): FormApplicationOptions {
-        return mergeObject(super.defaultOptions, { width: 800, height: 800 }, { overwrite: true });
+        return mergeObject(super.defaultOptions, { width: 900, height: 800 }, { overwrite: true });
     }
 
     getData(): CharacterBurnerData {
@@ -49,6 +51,10 @@ export class CharacterBurnerDialog extends Dialog {
         data.data = data.data || {};
         data.data.lifepaths = [];
         data.data.skills = [];
+        data.data.traits = [];
+        data.data.relationships = [];
+        data.data.property = [];
+        data.data.reputations = [];
         data.ageTable = ageTable;
         data.data.lps = 4;
         for (let i = 0; i < 10; i ++) {
@@ -57,6 +63,15 @@ export class CharacterBurnerDialog extends Dialog {
         for (let i = 0; i < 30; i ++) {
             data.data.skills.push(Object.assign({}, blankSkill));
         }
+        for (let i = 0; i < 15; i ++) {
+            data.data.traits.push({});
+        }
+
+        for (let i = 0; i < 10; i ++) {
+            data.data.property.push({});
+            data.data.relationships.push({});
+            data.data.reputations.push({});
+        }
         data.data.lifepaths[0].name = "Born ...";
 
         return data;
@@ -64,7 +79,6 @@ export class CharacterBurnerDialog extends Dialog {
 
     activateListeners(html: JQuery): void {
         this._burnerListeners = [
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             html.find("input:enabled").on('focus', e => $(e.target).select()),
             html.find("input[name='time']").on('change', _ => this._storeSum(html, "timeTotal", "time")),
             html.find("input[name='lead']").on('change', _ => this._storeSum(html, "leadTotal", "lead")),
@@ -110,7 +124,11 @@ export class CharacterBurnerDialog extends Dialog {
                 "*[name='agilitySpent'], *[name='agilityShadeSpent'], *[name='speedSpent'], *[name='speedShadeSpent'], " + 
                 "*[name='willSpent'], *[name='willShadeSpent'], *[name='perceptionSpent'], *[name='perceptionShadeSpent']").on('change', e => 
                 this._calculateAllSkillExponents(e, html)),
-            html.find("input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e.currentTarget, html))
+            html.find("input[name='skillOpened'], input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e.currentTarget, html)),
+
+            html.find("input[name='traitName']").on('input', (e: JQueryInputEventObject) => this._tryLoadTrait(e)),
+            html.find("input[name='traitCost']").on('change', _ => this._storeSum(html, "traitPtsSpent", "traitCost")),
+            html.find("input[name='traitPtsSpent'], input[name='traitPtsTotal']").on('change', _ => this._storeDiff(html, "traitPtsLeft", "traitPtsTotal", "traitPtsSpent")),
         ];
         super.activateListeners(html);
     }
@@ -129,7 +147,8 @@ export class CharacterBurnerDialog extends Dialog {
             root1exp += 2;
         }
 
-        const result = Math.floor((root1exp + root2exp) / 4.0) + advances;
+        let result = Math.floor((root1exp + root2exp) / 4.0) + advances;
+        if (!skillRow.children("*[name='skillOpened']").prop("checked")) { result = 0; }
 
         skillRow.children("*[name='skillExponent']").val(result);
         skillRow.children("*[name='skillShadeRefund']").val(-Math.min(root1Shade, root2Shade));
@@ -158,24 +177,57 @@ export class CharacterBurnerDialog extends Dialog {
         const training = parent.children("*[name='skillTraining']").prop("checked") ? open : 0;
         parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + refund).change();
     }
+
+    _tryLoadTrait(e: JQueryInputEventObject): void {
+        const inputTarget = $(e.currentTarget);
+        const lookupCallback = () => {
+            const traitName = inputTarget.val() as string;
+            this._itemLookup.loading = false;
+            if (!traitName) {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
+                inputTarget.siblings("*[name='traitId']").val("");
+                return;
+            }
+            const trait = this._traits.find(t => t.name === traitName);
+            if (!trait) {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
+                inputTarget.siblings("*[name='traitId']").val("");
+            }
+            else {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
+                inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).change();
+                inputTarget.siblings("*[name='traitId']").val(trait._id);
+            }
+        };
+
+        if (!this._itemLookup.loading) {
+            this._itemLookup.loading = true;
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
+        } else {
+            window.clearTimeout(this._itemLookup.timer);
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+        }
+    }
+
     private _tryLoadSkill(e: JQueryInputEventObject): void {
         const inputTarget = $(e.currentTarget);
         
         const lookupCallback = () => {
             const skillName = inputTarget.val() as string;
-            this._skillLookup.loading = false;
+            this._itemLookup.loading = false;
             if (!skillName) {
-                inputTarget.siblings(".skill-status").removeClass("none loading fail success").addClass("none");
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
                 inputTarget.siblings("*[name='skillId']").val("");
                 return;
             }
             const skill = this._skills.find(s => s.name === skillName);
             if (!skill) {
-                inputTarget.siblings(".skill-status").removeClass("none loading fail success").addClass("fail");
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
                 inputTarget.siblings("*[name='skillId']").val("");
             }
             else {
-                inputTarget.siblings(".skill-status").removeClass("none loading fail success").addClass("success");
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
                 inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).change();
                 inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).change();
                 inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
@@ -183,13 +235,13 @@ export class CharacterBurnerDialog extends Dialog {
             }
         };
 
-        if (!this._skillLookup.loading) {
-            this._skillLookup.loading = true;
-            this._skillLookup.timer = window.setTimeout(lookupCallback, 1000);
-            inputTarget.siblings(".skill-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
+        if (!this._itemLookup.loading) {
+            this._itemLookup.loading = true;
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
         } else {
-            window.clearTimeout(this._skillLookup.timer);
-            this._skillLookup.timer = window.setTimeout(lookupCallback, 1000);
+            window.clearTimeout(this._itemLookup.timer);
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
         }
     }
 
@@ -221,6 +273,10 @@ interface CharacterBurnerData {
         lps: number;
         lifepaths: LifepathEntry[];
         skills: SkillEntry[];
+        traits: unknown[];
+        reputations: unknown[];
+        property: unknown[];
+        relationships: unknown[];
     }
     ageTable: StringIndexedObject<{
         label: string;

@@ -401,26 +401,33 @@ export class CharacterBurnerDialog extends Dialog {
 
     private async _finishBurning(e: JQuery.ClickEvent, html: JQuery): Promise<unknown> {
         e.preventDefault();
-        const baseCharacterData = extractBaseCharacterData(html);
-        const skillData = extractSkillData(html, this._skills);
-        const traitData = extractTraitData(html, this._traits);
-        const propertyData = extractPropertyData(html, this._property);
-        const repData = extractRepuatationData(html);
-        const relData = extractRelData(html);
-        const gearData = extractGearData(html, this._gear);
-        await this._parent.update({ data: baseCharacterData }, {});
-        await this._parent.updatePtgs();
+        return Dialog.confirm({
+            title: "About to Apply Burner Sheet",
+            content: "You are about to submit the character burner worksheet result. If this is being done to an already burned character it may do some damage. Continue?",
+            yes: async () => {
+                const baseCharacterData = extractBaseCharacterData(html);
+                const skillData = extractSkillData(html, this._skills);
+                const traitData = extractTraitData(html, this._traits);
+                const propertyData = extractPropertyData(html, this._property);
+                const repData = extractRepuatationData(html);
+                const relData = extractRelData(html);
+                const gearData = extractGearData(html, this._gear);
+                await this._parent.update({ data: baseCharacterData }, {});
+                await this._parent.updatePtgs();
+                
+                this.close();
         
-        this.close();
-
-        return this._parent.createEmbeddedEntity("OwnedItem", [
-            ...skillData,
-            ...traitData,
-            ...propertyData,
-            ...repData,
-            ...relData,
-            ...gearData,
-        ], {});
+                return this._parent.createEmbeddedEntity("OwnedItem", [
+                    ...skillData,
+                    ...traitData,
+                    ...propertyData,
+                    ...repData,
+                    ...relData,
+                    ...gearData,
+                ], {});
+            },
+            no: () => { return; }
+        });
     }
 
     close(): Promise<unknown> {

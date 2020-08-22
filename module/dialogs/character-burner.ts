@@ -1,7 +1,7 @@
 import { BWActor } from "../actor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
 import { Skill, Trait, BWItem, Property } from "../items/item.js";
-import { extractRelationshipData } from "./burner-data-helpers.js";
+import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractRepuatationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor;
@@ -163,9 +163,12 @@ export class CharacterBurnerDialog extends Dialog {
             // extra rules totals
             html.find("input[name='reputationSpent'], input[name='propertySpent']").on('change', _ => this._storeSum(html, "resourceExponentAmount", "reputationSpent", "propertySpent")),
             html.find("input[name='relationshipsSpent'], input[name='propertySpent']").on('change', _ => this._storeSum(html, "circlesExponentBonus", "relationshipsSpent", "propertySpent")),
+
+            html.find("button.submit-burner-button").on('click', e => this._finishBurning(e, html))
         ];
         super.activateListeners(html);
     }
+
     _calculateRelationshipCost(target: JQuery<HTMLElement>): void {
         const parent = target.parent();
         if (!parent.children("input[name='relationshipName']").val()) {
@@ -203,13 +206,16 @@ export class CharacterBurnerDialog extends Dialog {
 
     private _calculateSkillExponent(target: JQuery, html: JQuery): void {
         const skillRow = $(target).parent();
+        if (!skillRow.children("*[name='skillName']").val()) {
+            return;
+        }
         const root1 = skillRow.children("*[name='skillRoot1']").val() as string;
         const root2 = skillRow.children("*[name='skillRoot2']").val() as string;
         const advances = parseInt(skillRow.children("*[name='skillAdvances']").val() as string) || 0;
         let root1exp = parseInt(html.find(`*[name='${root1}Spent']`).val() as string) || 1;
         const root2exp = parseInt(html.find(`*[name='${root2}Spent']`).val() as string) || root1exp;
         const root1Shade = parseInt(html.find(`*[name='${root1}ShadeSpent']`).val() as string) || 0;
-        let root2Shade = parseInt(html.find(`*[name='${root2}ShadeSpent']`).val() as string) || 0;
+        let root2Shade = parseInt(html.find(`*[name='${root2}ShadeSpent']`).val() as string);
         if (isNaN(root2Shade)) { root2Shade = root1Shade; }
         if (root1Shade != root2Shade) {
             root1exp += 2;
@@ -391,6 +397,29 @@ export class CharacterBurnerDialog extends Dialog {
         let total = 0;
         html.find(selector).each((_i, elem) => { total += parseInt($(elem).val() as string) || 0; });
         return total;
+    }
+
+    private async _finishBurning(e: JQuery.ClickEvent, html: JQuery): Promise<void> {
+        e.preventDefault();
+        const baseCharacterData = extractBaseCharacterData(html);
+        const skillData = extractSkillData(html, this._skills);
+        const traitData = extractTraitData(html, this._traits);
+        const propertyData = extractPropertyData(html, this._property);
+        const repData = extractRepuatationData(html);
+        const relData = extractRelData(html);
+        const gearData = extractGearData(html, this._gear);
+        await this._parent.update({ data: baseCharacterData }, {});
+        await this._parent.updatePtgs();
+
+        const addedItems = await this._parent.createEmbeddedEntity("OwnedItem", [
+            ...skillData,
+            ...traitData,
+            ...propertyData,
+            ...repData,
+            ...relData,
+            ...gearData,
+        ], {});
+        console.log(addedItems);
     }
 
     close(): Promise<unknown> {

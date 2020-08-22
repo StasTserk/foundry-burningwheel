@@ -22,6 +22,7 @@ import { Trait } from "./trait.js";
 import { SpellSheet } from "./sheets/spell-sheet.js";
 import { Spell } from "./spell.js";
 
+export * from "./affiliation.js";
 export * from "./armor.js";
 export * from "./belief.js";
 export * from "./instinct.js";

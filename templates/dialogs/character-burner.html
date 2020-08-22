@@ -3,7 +3,7 @@
     <div class="flex-row burner-subtitle">
         <div class="burner-label">Character Concept</div><input type="text" value="">
         <div class="burner-label">Recommended # of Lifepaths</div><input type="number" name="data.lps" class="exponent" min="0" value="{{data.lps}}">
-        <div class="burner-label">Stock</div><input type="text" value="">
+        <div class="burner-label">Stock</div><input type="text" value="" name="stock">
     </div>
     <div class="lifepath-grid">
         <div class="burner-section-header">2. Lifepaths</div>
@@ -16,7 +16,7 @@
         <div class="burner-section-header">Gen.</div>
         <div class="burner-section-header">Trait</div>
         {{#each data.lifepaths as |lp key|}}
-            <input type="text" class="lifepath-input" value="{{lp.name}}">
+            <input type="text" class="lifepath-input" value="{{lp.name}}" name="lifepathName">
             <input type="number" class="lifepath-input" name="time" value="{{lp.time}}">
             <input type="number" class="lifepath-input" name="lead" value="{{lp.lead}}">
             <input type="number" class="lifepath-input" name="resources" value="{{lp.resources}}">
@@ -37,14 +37,14 @@
         <input type="number" disabled class="lifepath-grid-totals lifepath-input" name="traitPtsTotal" value="0">
     </div>
     <div class="base-stats flex-column burner-right-third">
-        <div class="item-grid col-2">
+        <div class="burner-grid col-2">
             <div class="burner-label">3. Age</div>
             <input disabled type="number" class="exponent" name="ageTotal" value="0">
         </div>
         <div class="flex-column">
             <div class="burner-label">4. Stats </div>
             <div class="burner-label">The Age Chart</div>
-            <div class="item-grid col-2">
+            <div class="burner-grid col-2">
                 <div>Mental Age</div>
                 <select name="mentalPool">
                     {{#each ageTable as |ageGroup key|}}
@@ -66,7 +66,7 @@
                     {{/each}}
                 </select>
             </div>
-            <div class="item-grid col-2">
+            <div class="burner-grid col-2">
                 <div class="burner-label">Mental Pool</div>
                 <input disabled type="hidden" class="exponent" name="mentalPoolTotal" value="5">
                 <input disabled type="hidden" class="exponent" name="mentalPoolSpent" value="2">
@@ -217,14 +217,14 @@
             </div>
         </div>
         {{/each}}
-        <div class="burner-attributes-section item-grid col-2">
+        <div class="burner-attributes-section burner-grid col-2">
             <div class="burner-label">7. Attributes</div><div></div>
             <div class="stat-input-box">
                 <label>Health</label>
                 <select name="healthShade">
-                    <option value="0">B</option>
-                    <option value="5">G</option>
-                    <option value="10">W</option>
+                    <option value="B">B</option>
+                    <option value="G">G</option>
+                    <option value="W">W</option>
                 </select>
                 <input type="number" class="exponent" name="healthStat" value="0" min="1">
             </div>
@@ -234,9 +234,9 @@
             <div class="stat-input-box">
                 <label>Steel</label>
                 <select name="steelShade">
-                    <option value="0">B</option>
-                    <option value="5">G</option>
-                    <option value="10">W</option>
+                    <option value="B">B</option>
+                    <option value="G">G</option>
+                    <option value="W">W</option>
                 </select>
                 <input type="number" class="exponent" name="steelStat" value="3" min="1">
             </div>
@@ -271,7 +271,7 @@
         </div>
     </div>
 
-    <div class="burner-resources item-grid col-3">
+    <div class="burner-resources burner-grid col-3">
         <input type="hidden" name="resourcePointsSpent" value="0">
         <div class="burner-label">
             8. Resource Points <input type="text" disabled name="resourcePointsLeft" class="burner-inline-total" value="0"> Points left
@@ -313,7 +313,7 @@
             </div>
             {{/each}}
         </div>
-        <div class="item-grid col-2">
+        <div class="burner-grid col-2">
             <div class="stat-input-box">
                 <label>Resources</label>
                 <select name="resourcesShade">
@@ -329,12 +329,12 @@
             </div>
             <div class="stat-input-box">
                 <label>Circles</label>
-                <select name="resourcesShade">
+                <select name="circlesShade">
                     <option value="B">B</option>
                     <option value="G">G</option>
                     <option value="W">W</option>
                 </select>
-                <input type="number" class="exponent" name="resourcesStat" value="1" min="1">
+                <input type="number" class="exponent" name="circlesStat" value="1" min="1">
             </div>
             <div class="rules-text">
                 Starts at half of Will. Uses Will shade. If you spend more than 50 points on relationships or
@@ -342,7 +342,7 @@
             </div>
         </div>
     </div>
-    <div class="burner-resources item-grid col-2">
+    <div class="burner-resources burner-grid col-2">
         <div>
             <div class="burner-relationships">
                 <div class="burner-section-header">Relationships <input type="number" disabled class="burner-inline-total" name="relationshipsSpent" value="0"> Pts. Spent</div>
@@ -395,13 +395,36 @@
                 </select>
                 <input type="number" name="itemCost" value="0">
                 <div class="load-status none">
-                    <i class="fas fa-ellipsis-h" title="Waiting for name of trait to be entered."></i>
-                    <i class="fas fa-question-circle" title="No matching trait found. Will create a new trait when worksheet is submitted."></i>
+                    <i class="fas fa-ellipsis-h" title="Waiting for name of item to be entered."></i>
+                    <i class="fas fa-question-circle" title="No matching item found. Will create a new item when worksheet is submitted."></i>
                     <i class="fas fa-spinner"></i>
-                    <i class="fas fa-check-circle" title="Found trait in one of the compendiums. Will load this trait when worksheet is submitted."></i>
+                    <i class="fas fa-check-circle" title="Found item in one of the compendiums. Will load this item when worksheet is submitted."></i>
                 </div>
             </div>
             {{/each}}
         </div>
     </div>
+    <div class="burner-settings burner-grid">
+        <div class="burner-label whole-row">9a. A few sheet level settings...</div>
+        <input type="checkbox" id="armor-trained-check" class="hidden" name="settingArmorTrained">
+        <label for="armor-trained-check" class="sheet-setting-toggle">Armor Trained</label>
+        <div>Select this if the character has recieved armor training.</div>
+        <input type="checkbox" id="tough-check" class="hidden" name="settingTough">
+        <label for="tough-check" class="sheet-setting-toggle">Round up Mortal Wound</label>
+        <div>Select this if the character rounds up when factoring mortal wound such as from the Tough trait.</div>
+        <input type="checkbox" id="reflex-check" class="hidden" name="settingReflex">
+        <label for="reflex-check" class="sheet-setting-toggle">Round up Reflexes</label>
+        <div>Select this if the character rounds up when factoring reflexes such as from the Quickened Pulse trait.</div>
+        <input type="checkbox" id="numb-check" class="hidden" name="settingNumb">
+        <label for="numb-check" class="sheet-setting-toggle">Ignore Superficial</label>
+        <div>Select this if the character ignores superficial wounds such as from the numb trait.</div>
+    </div>
+    <div class="burner-finishing burner-right-third">
+        <div class="burner-label">10. Physical Tolerances</div>
+        <div>Physical tolernaces will be calculated automatically once this sheet is submitted, but do check the PTGS on the sheet to make sure things are correct.</div>
+        <div class="burner-label">11. Beliefs and Instincts</div>
+        <div>Once the data is transfered over, fill out the beliefs and instincts are filled out. Write some good ones!</div>
+        <div class="burner-label">12. Name them and you're finished!</div>
+    </div>
+    <button class="submit-burner-button" name="finish-burn">Complete Character Burning</button>
 </form>

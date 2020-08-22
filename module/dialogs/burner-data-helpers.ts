@@ -90,7 +90,8 @@ export function extractBaseCharacterData(html: JQuery<HTMLElement>): StringIndex
         roundUpMortalWound: extractNamedCheck(html, "settingTough"),
         armorTrained: extractNamedCheck(html, "settingTough"),
         roundUpReflexes: extractNamedCheck(html, "settingReflex"),
-        ignoreSuperficialWounds: extractNamedCheck(html, "settingNumb")
+        ignoreSuperficialWounds: extractNamedCheck(html, "settingNumb"),
+        showBurner: false
     };
     baseData.settings = settings;
     return baseData;

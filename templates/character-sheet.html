@@ -10,7 +10,7 @@
             <h2 class="section-header">Character Index
                 <input id="{{actor._id}}-settings-checkbox" type="checkbox" class="hidden settings-checkbox" name="data.settings.showSettings" {{checked data.settings.showSettings}}>
                 <label class="settings-gear" for="{{actor._id}}-settings-checkbox"><i class="fas fa-cogs"></i></label>
-                <label class="settings-gear character-burner-icon"><i class="fas fa-fire-alt"></i></label>
+                {{#if data.settings.showBurner}}<label class="settings-gear character-burner-icon"><i class="fas fa-fire-alt"></i></label>{{/if}}
             </h2>
             <div>
                 <label for="{{actor._id}}-character-name">Name</label>

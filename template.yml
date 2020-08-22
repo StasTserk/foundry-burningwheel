@@ -92,6 +92,7 @@ Actor:
         onlySuccessesCount: 'Faith, Resources, Perception'
         armorTrained: false
         ignoreSuperficialWounds: false
+        showBurner: true
   character:
     templates:
       - common

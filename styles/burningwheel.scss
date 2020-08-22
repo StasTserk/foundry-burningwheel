@@ -176,3 +176,14 @@ textarea {
     resize: vertical;
     height: 8em;
 }
+
+.character-burner-icon {
+    @keyframes pulsing {
+        0%   { text-shadow: 0 0 -10px orangered; }
+        40%  { text-shadow: 0 0 20px  orangered; }
+        60%  { text-shadow: 0 0 20px  orangered; }
+        100% { text-shadow: 0 0 -10px orangered; }
+    }
+    i { color: darkred; }
+    animation: pulsing 5000ms infinite;
+}

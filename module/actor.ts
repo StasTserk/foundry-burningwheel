@@ -3,7 +3,7 @@ import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, Reputation
 import { SkillDataRoot } from "./items/skill.js";
 
 export class BWActor extends Actor {
-    processNewItem(item: ItemData): void {
+    async processNewItem(item: ItemData): Promise<unknown> {
         if (item.type === "trait") {
             const trait = item as TraitDataRoot;
             if (trait.data.addsReputation) {
@@ -14,7 +14,7 @@ export class BWActor extends Actor {
                 repData["data.dice"] = trait.data.reputationDice;
                 repData["data.infamous"] = trait.data.reputationInfamous;
                 repData["data.description"] = trait.data.text;
-                this.createOwnedItem(repData);
+                return this.createOwnedItem(repData);
             }
             if (trait.data.addsAffiliation) {
                 const repData: NewItemData = {
@@ -23,14 +23,13 @@ export class BWActor extends Actor {
                 };
                 repData["data.dice"] = trait.data.affiliationDice;
                 repData["data.description"] = trait.data.text;
-                this.createOwnedItem(repData);
+                return this.createOwnedItem(repData);
             }
-            console.log("New trait added " + trait);
         }
     }
     data!: CharacterDataRoot;
 
-    async createOwnedItem(itemData: NewItemData, options?: Record<string, unknown>): Promise<Item> {
+    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<Item> {
         return super.createOwnedItem(itemData, options);
     }
 

@@ -1,6 +1,7 @@
 import { BWActor } from "../actor.js";
-import { ShadeString, StringIndexedObject, getItemsOfType } from "../helpers.js";
-import { Skill, Trait } from "../items/item.js";
+import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
+import { Skill, Trait, BWItem, Property } from "../items/item.js";
+import { extractRelationshipData } from "./burner-data-helpers.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor;
@@ -14,11 +15,15 @@ export class CharacterBurnerDialog extends Dialog {
     };
     private _skills: Skill[];
     private _traits: Trait[];
+    private _gear: BWItem[];
+    private _property: Property[];
 
     static async Open(parent: BWActor): Promise<Application> {
         const dialog = new CharacterBurnerDialog(parent);
         dialog._skills = await getItemsOfType<Skill>("skill");
         dialog._traits = await getItemsOfType<Trait>("trait");
+        dialog._property = await getItemsOfType<Property>("property");
+        dialog._gear = await getItemsOfTypes("melee weapon", "ranged weapon", "armor", "spell", "possession");
 
         return dialog.render(true);
     }
@@ -55,6 +60,7 @@ export class CharacterBurnerDialog extends Dialog {
         data.data.relationships = [];
         data.data.property = [];
         data.data.reputations = [];
+        data.data.gear = [];
         data.ageTable = ageTable;
         data.data.lps = 4;
         for (let i = 0; i < 10; i ++) {
@@ -65,6 +71,7 @@ export class CharacterBurnerDialog extends Dialog {
         }
         for (let i = 0; i < 15; i ++) {
             data.data.traits.push({});
+            data.data.gear.push({});
         }
 
         for (let i = 0; i < 10; i ++) {
@@ -126,11 +133,72 @@ export class CharacterBurnerDialog extends Dialog {
                 this._calculateAllSkillExponents(e, html)),
             html.find("input[name='skillOpened'], input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e.currentTarget, html)),
 
+            // trait points spent
             html.find("input[name='traitName']").on('input', (e: JQueryInputEventObject) => this._tryLoadTrait(e)),
             html.find("input[name='traitCost']").on('change', _ => this._storeSum(html, "traitPtsSpent", "traitCost")),
             html.find("input[name='traitPtsSpent'], input[name='traitPtsTotal']").on('change', _ => this._storeDiff(html, "traitPtsLeft", "traitPtsTotal", "traitPtsSpent")),
+
+            // all resource points
+            html.find("input[name='resourcePointsSpent'], input[name='resourcesTotal']").on('change', _ => this._storeDiff(html, "resourcePointsLeft", "resourcesTotal", "resourcePointsSpent")),
+            html.find("input[name='reputationSpent'], input[name='relationshipsSpent'], input[name='propertySpent'], input[name='gearSpent']").on('change', _ =>
+                this._storeSum(html, "resourcePointsSpent", "reputationSpent", "relationshipsSpent", "propertySpent", "gearSpent")),
+
+            // reputation/affiliation totals
+            html.find("input[name='reputationName'], input[name='reputationType'], input[name='reputationDice']").on('change', e => 
+                this._calculateRepAffCost($(e.currentTarget))),
+            html.find("input[name='reputationCost']").on('change', _e => this._storeSum(html, "reputationSpent", "reputationCost")),
+
+            // relationsip totals
+            html.find("input[name='relationshipName'], select[name='relPow'], select[name='relFam'], input[name='relRom'], input[name='relFor'], input[name='relHat']").on('change', e => 
+                this._calculateRelationshipCost($(e.currentTarget))),
+            html.find("input[name='relationshipCost']").on('change', _e => this._storeSum(html, "relationshipsSpent", "relationshipCost")),
+
+            // property
+            html.find("input[name='propertyName']").on('input', (e: JQueryInputEventObject) => this._tryLoadProperty(e)),
+            html.find("input[name='propertyCost']").on('change', _ => this._storeSum(html, "propertySpent", "propertyCost")),
+            // gear
+            html.find("input[name='itemName']").on('input', (e: JQueryInputEventObject) => this._tryLoadGear(e)),
+            html.find("input[name='itemCost']").on('change', _ => this._storeSum(html, "gearSpent", "itemCost")),
+
+            // extra rules totals
+            html.find("input[name='reputationSpent'], input[name='propertySpent']").on('change', _ => this._storeSum(html, "resourceExponentAmount", "reputationSpent", "propertySpent")),
+            html.find("input[name='relationshipsSpent'], input[name='propertySpent']").on('change', _ => this._storeSum(html, "circlesExponentBonus", "relationshipsSpent", "propertySpent")),
         ];
         super.activateListeners(html);
+    }
+    _calculateRelationshipCost(target: JQuery<HTMLElement>): void {
+        const parent = target.parent();
+        if (!parent.children("input[name='relationshipName']").val()) {
+            parent.parent().children("input[name='relationshipCost']").val(0).change();
+            return;
+        }
+        
+        const relData = extractRelationshipData(parent);
+        let sum = relData.power;
+        if (relData.forbidden) { sum --; }
+        if (relData.hateful) { sum -= 2; }
+        if (relData.closeFamily) { sum -= 2; }
+        if (relData.otherFamily) { sum --; }
+        if (relData.romantic) { sum -= 2; }
+
+        parent.parent().children("input[name='relationshipCost']").val(sum).change();
+    }
+
+    private _calculateRepAffCost(target: JQuery): void {
+        const parent = target.parent();
+        if (!parent.children("input[name='reputationName']").val()) {
+            parent.children("input[name='reputationCost']").val(0).change();
+            return;
+        }
+        const isAff = parent.children("input[name='reputationType']").prop("checked");
+        const dice = parseInt(parent.children("input[name='reputationDice']").val() as string) || 0;
+        if (isAff) {
+            const result = dice === 1 ? 10 : (dice === 2 ? 25 : (dice === 3 ? 50 : 0));
+            parent.children("input[name='reputationCost']").val(result).change();
+        } else {
+            const result = dice === 1 ? 7 : (dice === 2 ? 25 : (dice === 3 ? 45 : 0));
+            parent.children("input[name='reputationCost']").val(result).change();
+        } 
     }
 
     private _calculateSkillExponent(target: JQuery, html: JQuery): void {
@@ -245,6 +313,69 @@ export class CharacterBurnerDialog extends Dialog {
         }
     }
 
+    private _tryLoadProperty(e: JQueryInputEventObject): void {
+        const inputTarget = $(e.currentTarget);
+        const lookupCallback = () => {
+            const propertyName = inputTarget.val() as string;
+            this._itemLookup.loading = false;
+            if (!propertyName) {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
+                inputTarget.siblings("*[name='propertyId']").val("");
+                return;
+            }
+            const property = this._property.find(p => p.name === propertyName);
+            if (!property) {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
+                inputTarget.siblings("*[name='propertyId']").val("");
+            }
+            else {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
+                inputTarget.siblings("*[name='propertyId']").val(property._id);
+            }
+        };
+
+        if (!this._itemLookup.loading) {
+            this._itemLookup.loading = true;
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
+        } else {
+            window.clearTimeout(this._itemLookup.timer);
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+        }
+    }
+
+    private _tryLoadGear(e: JQueryInputEventObject): void {
+        const inputTarget = $(e.currentTarget);
+        const lookupCallback = () => {
+            const gearName = inputTarget.val() as string;
+            this._itemLookup.loading = false;
+            if (!gearName) {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
+                inputTarget.siblings("*[name='gearId']").val("");
+                return;
+            }
+            const gear = this._gear.find(p => p.name === gearName);
+            if (!gear) {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
+                inputTarget.siblings("*[name='gearId']").val("");
+            }
+            else {
+                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
+                inputTarget.siblings("*[name='itemType']").val(gear.type);
+                inputTarget.siblings("*[name='gearId']").val(gear._id);
+            }
+        };
+
+        if (!this._itemLookup.loading) {
+            this._itemLookup.loading = true;
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
+        } else {
+            window.clearTimeout(this._itemLookup.timer);
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+        }
+    }
+
     private _storeSum(html: JQuery, targetName: string, ...sourceNames: string[]): void {
         html.find(`input[name="${targetName}"]`).val(this._calculateSum(html, ...sourceNames)).change();
     }
@@ -275,6 +406,7 @@ interface CharacterBurnerData {
         skills: SkillEntry[];
         traits: unknown[];
         reputations: unknown[];
+        gear: unknown[];
         property: unknown[];
         relationships: unknown[];
     }

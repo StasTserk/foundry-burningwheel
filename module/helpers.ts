@@ -127,27 +127,31 @@ export function isStat(name: string): boolean {
     ].indexOf(name.toLowerCase()) !== -1);
 }
 
-export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<(T & {itemSource?: string })[]> {
-    const itemList = game.items.filter((i: T) => i.type === itemType)
-        .map((item: T & {itemSource?: string } ) => {
+export async function getItemsOfTypes(...itemTypes: ItemType[]): Promise<(BWItem & {itemSource?: string })[]> {
+    const itemList = game.items.filter((i: BWItem) => itemTypes.indexOf(i.type) !== -1)
+        .map((item: BWItem & {itemSource?: string } ) => {
             item.itemSource = "World"; 
             return item; 
-        }) as (T & {itemSource?: string })[];
+        }) as (BWItem & {itemSource?: string })[];
 
-    let compendiumItems: (T & {itemSource?: string })[] = [];
+    let compendiumItems: (BWItem & {itemSource?: string })[] = [];
     let sourceLabel = "";
     const packs = Array.from(game.packs.values()) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
         sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).replace('-', ' ').titleCase();
         compendiumItems = compendiumItems.concat(
-            ...packItems.filter((item: (T & {itemSource?: string })) => item.type === itemType)
-            .map((item: T & {itemSource?: string } ) => {
+            ...packItems.filter((item: (BWItem & {itemSource?: string })) => itemTypes.indexOf(item.type) !== -1)
+            .map((item: BWItem & {itemSource?: string } ) => {
                 item.itemSource = sourceLabel;
                 return item;
-            })) as (T & {itemSource?: string })[];
+            })) as (BWItem & {itemSource?: string })[];
     }
     return itemList.concat(...compendiumItems);
+}
+
+export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<(T & {itemSource?: string })[]> {
+    return getItemsOfTypes(itemType) as Promise<(T & {itemSource?: string })[]>;
 }
 
 export async function notifyError(title: string, errorMessage: string): Promise<Application> {

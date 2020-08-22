@@ -399,7 +399,7 @@ export class CharacterBurnerDialog extends Dialog {
         return total;
     }
 
-    private async _finishBurning(e: JQuery.ClickEvent, html: JQuery): Promise<void> {
+    private async _finishBurning(e: JQuery.ClickEvent, html: JQuery): Promise<unknown> {
         e.preventDefault();
         const baseCharacterData = extractBaseCharacterData(html);
         const skillData = extractSkillData(html, this._skills);
@@ -410,8 +410,10 @@ export class CharacterBurnerDialog extends Dialog {
         const gearData = extractGearData(html, this._gear);
         await this._parent.update({ data: baseCharacterData }, {});
         await this._parent.updatePtgs();
+        
+        this.close();
 
-        const addedItems = await this._parent.createEmbeddedEntity("OwnedItem", [
+        return this._parent.createEmbeddedEntity("OwnedItem", [
             ...skillData,
             ...traitData,
             ...propertyData,
@@ -419,7 +421,6 @@ export class CharacterBurnerDialog extends Dialog {
             ...relData,
             ...gearData,
         ], {});
-        console.log(addedItems);
     }
 
     close(): Promise<unknown> {

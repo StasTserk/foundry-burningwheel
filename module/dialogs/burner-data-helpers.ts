@@ -88,7 +88,7 @@ export function extractBaseCharacterData(html: JQuery<HTMLElement>): StringIndex
 
     const settings: Partial<CharacterSettings> = {
         roundUpMortalWound: extractNamedCheck(html, "settingTough"),
-        armorTrained: extractNamedCheck(html, "settingTough"),
+        armorTrained: extractNamedCheck(html, "settingArmorTrained"),
         roundUpReflexes: extractNamedCheck(html, "settingReflex"),
         ignoreSuperficialWounds: extractNamedCheck(html, "settingNumb"),
         showBurner: false

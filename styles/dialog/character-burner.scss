@@ -15,6 +15,11 @@
         color: rgba(black, 0.5);
     }
 
+    .burner-inline-total {
+        display: inline-block;
+        width: 2em;
+    }
+
     .burner-right-third {
         width: 39%;
         margin-left: 1%;
@@ -188,11 +193,67 @@
     }
 
     .burner-resources {
+        margin-top: 1em;
         width: 100%;
 
         .burner-property {
             display: grid;
             grid-template-columns: 1fr 2em min-content;
+        }
+
+        .burner-reputations {
+            display: grid;
+            grid-template-columns: 1fr 2em 2em 2em;
+
+
+            .burner-rel-aff {
+                @include button-like(orange);
+                line-height: 1.4em;
+            }
+            .burner-rel-rep {
+                display: none;
+                @include button-like(blue);
+                line-height: 1.4em;
+            }
+            .burner-rel-checkbox:checked {
+                & ~ .burner-rel-aff {
+                    display: none;
+                }
+                & ~ .burner-rel-rep {
+                    display: block;
+                }
+            }
+        }
+
+        .burner-relationships {
+            display: grid;
+            grid-template-columns: 1fr 2em;
+            
+
+            .burner-relationship-info {
+                font-size: .75em;
+                .rel-name {
+                    font-size: 1.5em;
+                    font-weight: bold;
+                    width: 100%;
+                }
+
+                select {
+                    @include select-no-arrow;
+                    height: min-content;
+                }
+
+                input[type="checkbox"] {
+                    width: .75em;
+                    height: .75em;
+                    margin-right: -5px;
+                }
+            }
+        }
+
+        .burner-gear {
+            display: grid;
+            grid-template-columns: 2fr 1fr 2em min-content;
         }
     }
 }

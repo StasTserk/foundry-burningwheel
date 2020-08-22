@@ -272,24 +272,46 @@
     </div>
 
     <div class="burner-resources item-grid col-3">
+        <input type="hidden" name="resourcePointsSpent" value="0">
         <div class="burner-label">
-            8. Resource Points 
-        </div><div></div><div></div>
-        <div class="burner-property">
-            <div class="burner-section-header">Property</div>
-            <div class="burner-section-header">Cost</div>
-            <div class="burner-section-header"><i class="fas fa-question-circle" title="Status of loading property from compendium."></i></div>
+            8. Resource Points <input type="text" disabled name="resourcePointsLeft" class="burner-inline-total" value="0"> Points left
+        </div><div></div><div class="burner-label">9. Resources and Circles</div>
+        <div>
+            <div class="burner-property">
+                <div class="burner-section-header">Property<input type="number" disabled class="burner-inline-total" name="propertySpent" value="0">Spent</div>
+                <div class="burner-section-header">Cost</div>
+                <div class="burner-section-header"><i class="fas fa-question-circle" title="Status of loading property from compendium."></i></div>
+            </div>
             {{#each data.property}}
+            <div class="burner-property">
+                <input type="hidden" name="propertyId">
                 <input type="text" name="propertyName">
-                <input type="number" name="propertyCost">
-                <div class="load-status none"><i class="fas fa-question-circle" title="Status of loading property from compendium."></i></div>
+                <input type="number" name="propertyCost" value="0" min="0">
+                <div class="load-status none">
+                    <i class="fas fa-ellipsis-h" title="Waiting for name of trait to be entered."></i>
+                    <i class="fas fa-question-circle" title="No matching trait found. Will create a new trait when worksheet is submitted."></i>
+                    <i class="fas fa-spinner"></i>
+                    <i class="fas fa-check-circle" title="Found trait in one of the compendiums. Will load this trait when worksheet is submitted."></i>
+                </div>
+            </div>
             {{/each}}
         </div>
-        <div class="burner-relationships">
-            <div class="burner-section-header">Reputations/Affiliations</div>
-            <div class="burner-section-header" title="Reputation or Affiliation?">R/A</div>
-            <div class="burner-section-header">Dice</div>
-            <div class="burner-section-header">Cost</div>
+        <div>
+            <div class="burner-reputations">
+                <div class="burner-section-header">Reputations/Affiliations<input type="number" disabled class="burner-inline-total" name="reputationSpent" value="0"></div>
+                <div class="burner-section-header" title="Reputation or Affiliation?">R/A</div>
+                <div class="burner-section-header">Dice</div>
+                <div class="burner-section-header">Cost</div>
+            </div>
+            {{#each data.reputations}}
+            <div class="burner-reputations">
+                <input type="text" name="reputationName">
+                <input id="burner-rel-{{@key}}" type="checkbox" name="reputationType" class="hidden burner-rel-checkbox">
+                    <label for="burner-rel-{{@key}}" class="burner-rel-aff">A</label><label for="burner-rel-{{@key}}" class="burner-rel-rep">R</label>
+                <input type="number" name="reputationDice" min="0" max="3" value="0">
+                <input type="number" disabled name="reputationCost" min="0" value="0">
+            </div>
+            {{/each}}
         </div>
         <div class="item-grid col-2">
             <div class="stat-input-box">
@@ -303,6 +325,7 @@
             </div>
             <div class="rules-text">
                 Divide resource points spent on property, affiliations, and reputations by 15.
+                (Spent <input disabled type="number" name="resourceExponentAmount" value="0" class="burner-inline-total">)
             </div>
             <div class="stat-input-box">
                 <label>Circles</label>
@@ -315,8 +338,70 @@
             </div>
             <div class="rules-text">
                 Starts at half of Will. Uses Will shade. If you spend more than 50 points on relationships or
-                property, increase exponent by 1.
+                property, increase exponent by 1. (Spent <input disabled type="number" name="circlesExponentBonus" value="0" class="burner-inline-total">)
             </div>
+        </div>
+    </div>
+    <div class="burner-resources item-grid col-2">
+        <div>
+            <div class="burner-relationships">
+                <div class="burner-section-header">Relationships <input type="number" disabled class="burner-inline-total" name="relationshipsSpent" value="0"> Pts. Spent</div>
+                <div class="burner-section-header">Cost</div>
+            </div>
+            {{#each data.relationships}}
+            <div class="burner-relationships">
+                <div class="burner-relationship-info flex-row">
+                    <input name="relationshipName" class="rel-name">
+                    Power
+                    <select name="relPow">
+                        <option value="5">Minor</option>
+                        <option value="10">Important</option>
+                        <option value="15">Powerful</option>
+                    </select>
+                    Related?
+                    <select name="relFam">
+                        <option value="0">No</option>
+                        <option value="-2">Immediate</option>
+                        <option value="-1">Other</option>
+                    </select>
+                    <input id="rel-rom-{{@key}}" type="checkbox" name="relRom" value="-2">
+                    <label for="rel-rom-{{@key}}">Romantic</label>
+                    <input id="rel-for-{{@key}}" type="checkbox" name="relFor" value="-1">
+                    <label for="rel-for-{{@key}}">Forbidden</label>
+                    <input id="rel-hat-{{@key}}" type="checkbox" name="relHat" value="-2">
+                    <label for="rel-hat-{{@key}}">Hateful</label>
+                </div>
+                <input type="number" disabled name="relationshipCost" value="0">
+            </div>
+            {{/each}}
+        </div>
+        <div>
+            <div class="burner-gear">
+                <div class="burner-section-header">Other Gear, Equipment, and Spells<input type="number" disabled value="0" class="burner-inline-total" name="gearSpent"></div>
+                <div class="burner-section-header">Type</div>
+                <div class="burner-section-header">Cost</div>
+                <div class="burner-section-header"><i class="fas fa-question-circle" title="Status of loading item from compendium."></i></div>
+            </div>
+            {{#each data.gear}}
+            <div class="burner-gear">
+                <input type="hidden" name="gearId" value="">
+                <input type="text" name="itemName">
+                <select name="itemType">
+                    <option value="possession">Possession</option>
+                    <option value="melee weapon">Melee Weapon</option>
+                    <option value="ranged weapon">Ranged Weapon</option>
+                    <option value="armor">Armor</option>
+                    <option value="spell">Spell</option>
+                </select>
+                <input type="number" name="itemCost" value="0">
+                <div class="load-status none">
+                    <i class="fas fa-ellipsis-h" title="Waiting for name of trait to be entered."></i>
+                    <i class="fas fa-question-circle" title="No matching trait found. Will create a new trait when worksheet is submitted."></i>
+                    <i class="fas fa-spinner"></i>
+                    <i class="fas fa-check-circle" title="Found trait in one of the compendiums. Will load this trait when worksheet is submitted."></i>
+                </div>
+            </div>
+            {{/each}}
         </div>
     </div>
 </form>

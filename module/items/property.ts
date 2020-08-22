@@ -1,4 +1,4 @@
-import { DisplayClass } from "./item.js";
+import { DisplayClass, ItemType } from "./item.js";
 
 export class Property extends Item {
     prepareData(): void {
@@ -6,10 +6,14 @@ export class Property extends Item {
     }
 
     data: PropertyRootData;
+    get type(): ItemType {
+        return super.type as ItemType;
+    }
 }
 
 export interface PropertyRootData extends ItemData<PropertyData> {
     data: PropertyData;
+    type: ItemType;
 }
 
 export interface PropertyData extends DisplayClass {

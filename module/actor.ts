@@ -258,7 +258,8 @@ export class BWActor extends Actor {
                 roundUpMortalWound: false,
                 roundUpReflexes: false,
                 armorTrained: false,
-                ignoreSuperficialWounds: false
+                ignoreSuperficialWounds: false,
+                showBurner: false
             };
         }
         this.data.rollModifiers = {};
@@ -654,6 +655,7 @@ export interface RollModifier {
 
 export interface CharacterSettings {
     showSettings: boolean;
+    showBurner: boolean;
 
     roundUpMortalWound: boolean;
     roundUpHealth: boolean;

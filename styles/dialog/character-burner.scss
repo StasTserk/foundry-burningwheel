@@ -5,6 +5,18 @@
 }
 
 .character-burner {
+    .submit-burner-button {
+        height: 1.5em;
+        line-height: 1.5em;
+        position: absolute;
+        bottom: 0;
+        right: 6px;
+        background-color: lightgray;
+        width: calc(100% - 10px);
+        font-size: 2em;
+        font-weight: bold;
+    }
+
     .fa-check-circle {
         color: green;
     }
@@ -47,6 +59,27 @@
                 from {transform:rotate(0deg);}
                 to {transform:rotate(360deg);}
             }
+        }
+    }
+
+    .burner-grid {
+        display: grid;
+        column-gap: 5px;
+        row-gap: 5px;
+
+        & > .whole-row {
+            grid-column: 1 / -1;
+        }
+
+        &.col-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        &.col-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        &.col-4 {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
         }
     }
 
@@ -255,5 +288,23 @@
             display: grid;
             grid-template-columns: 2fr 1fr 2em min-content;
         }
+    }
+
+    .burner-settings {
+        margin-bottom: 3em;
+        width: 60%;
+        grid-template-columns: 1fr 2fr;
+
+        .sheet-setting-toggle {
+            @include button-like(black);
+        }
+
+        input[type="checkbox"]:checked + .sheet-setting-toggle {
+            @include button-like-active;
+        }
+    }
+
+    .burner-finishing {
+        margin-bottom: 3em;
     }
 }

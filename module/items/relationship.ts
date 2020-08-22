@@ -24,7 +24,7 @@ export class Relationship extends Item<RelationshipData> {
     data: RelationshipDataRoot;
 }
 
-interface RelationshipDataRoot extends ItemData<RelationshipData> {
+export interface RelationshipDataRoot extends ItemData<RelationshipData> {
     data: RelationshipData;
 }
 
@@ -37,7 +37,7 @@ export interface RelationshipData extends DisplayClass {
     hateful: boolean;
     enmity: boolean;
     influence: string;
-    building: string;
+    building: boolean;
     buildingProgress: string; // as number
 
     safeId?: string;

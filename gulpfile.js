@@ -29,6 +29,13 @@ function deploy() {
         .pipe(gulp.dest(config.deployDest, { overwrite: true }));
 }
 
+function select2() {
+    return gulp.src([
+            "node_modules/select2/dist/js/select2.min.js",
+            "node_modules/select2/dist/css/select2.min.css"])
+        .pipe(gulp.dest("dist/lib/select2"));
+}
+
 function compileTs() {
     return tsProject.src()
         .pipe(tsProject())
@@ -83,6 +90,7 @@ const build = gulp.series(
     buildCss,
     buildHtml,
     buildYml,
+    select2,
     deploy
 )
 

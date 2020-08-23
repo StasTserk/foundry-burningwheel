@@ -8,9 +8,12 @@
     "esmodules": [
         "module/burningwheel.js"
     ],
-    "scripts": [],
+    "scripts": [
+        "lib/select2/select2.min.js"
+    ],
     "styles": [
-        "styles/burningwheel.css"
+        "styles/burningwheel.css",
+        "lib/select2/select2.min.css"
     ],
     "packs": [],
     "minimumCoreVersion": "0.6.0",

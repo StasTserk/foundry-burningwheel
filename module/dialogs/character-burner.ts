@@ -19,13 +19,18 @@ export class CharacterBurnerDialog extends Dialog {
     private _property: Property[];
 
     static async Open(parent: BWActor): Promise<Application> {
+        const loadingDialog = new Dialog({
+            content: "Loading character burner data...",
+            buttons: {}
+        });
+        await loadingDialog.render(true);
         const dialog = new CharacterBurnerDialog(parent);
         dialog._skills = await getItemsOfType<Skill>("skill");
         dialog._traits = await getItemsOfType<Trait>("trait");
         dialog._property = await getItemsOfType<Property>("property");
         dialog._gear = await getItemsOfTypes("melee weapon", "ranged weapon", "armor", "spell", "possession");
-
-        return dialog.render(true);
+        await dialog.render(true);
+        return loadingDialog.close();
     }
     private constructor(parent: BWActor) {
         super({
@@ -81,11 +86,21 @@ export class CharacterBurnerDialog extends Dialog {
         }
         data.data.lifepaths[0].name = "Born ...";
 
+        data.data.skillNames = this._skills.map(s => s.name);
+
         return data;
     }
 
     activateListeners(html: JQuery): void {
         this._burnerListeners = [
+            $(html.find("select[name='skillName']")).select2({
+                tags: true,
+                width: "100%",
+                placeholder: "",
+                allowClear: true,
+                maximumSelectionLength: 10
+            }),
+
             html.find("input:enabled").on('focus', e => $(e.target).select()),
             html.find("input[name='time']").on('change', _ => this._storeSum(html, "timeTotal", "time")),
             html.find("input[name='lead']").on('change', _ => this._storeSum(html, "leadTotal", "lead")),
@@ -122,7 +137,7 @@ export class CharacterBurnerDialog extends Dialog {
             }),
             html.find("input[name='skillPtsSpent'], input[name='combinedSkillPts']").on('change', _ =>
                 this._storeDiff(html, "skillPtsLeft", "combinedSkillPts", "skillPtsSpent")),
-            html.find("input[name='skillName']").on('input', (e: JQueryInputEventObject) => this._tryLoadSkill(e)),
+            html.find("select[name='skillName']").on('input', (e: JQueryInputEventObject) => this._tryLoadSkill(e)),
             html.find("input[name='skillAdvances'], input[name='skillOpened'], input[name='skillTraining'], select[name='skillShade']").on('change', (e: JQuery.ChangeEvent) =>
                 this._calculateSkillWorth(e)),
             html.find("input[name='skillPtsWorth']").on('change', _ => this._storeSum(html, "skillPtsSpent", "skillPtsWorth")),
@@ -290,47 +305,36 @@ export class CharacterBurnerDialog extends Dialog {
 
         if (!this._itemLookup.loading) {
             this._itemLookup.loading = true;
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 20);
             inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
         } else {
             window.clearTimeout(this._itemLookup.timer);
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+            this._itemLookup.timer = window.setTimeout(lookupCallback, 20);
         }
     }
 
     private _tryLoadSkill(e: JQueryInputEventObject): void {
         const inputTarget = $(e.currentTarget);
-        
-        const lookupCallback = () => {
-            const skillName = inputTarget.val() as string;
-            this._itemLookup.loading = false;
-            if (!skillName) {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
-                inputTarget.siblings("*[name='skillId']").val("");
-                return;
-            }
-            const skill = this._skills.find(s => s.name === skillName);
-            if (!skill) {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
-                inputTarget.siblings("*[name='skillId']").val("");
-            }
-            else {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-                inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).change();
-                inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).change();
-                inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
-                inputTarget.siblings("*[name='skillId']").val(skill._id);
-            }
-        };
 
-        if (!this._itemLookup.loading) {
-            this._itemLookup.loading = true;
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
-            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
-        } else {
-            window.clearTimeout(this._itemLookup.timer);
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+        const skillName = inputTarget.val() as string;
+        if (!skillName) {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
+            inputTarget.siblings("*[name='skillId']").val("");
+            return;
         }
+        const skill = this._skills.find(s => s.name === skillName);
+        if (!skill) {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
+            inputTarget.siblings("*[name='skillId']").val("");
+        }
+        else {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
+            inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).change();
+            inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).change();
+            inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
+            inputTarget.siblings("*[name='skillId']").val(skill._id);
+        }
+
     }
 
     private _tryLoadProperty(e: JQueryInputEventObject): void {
@@ -464,6 +468,8 @@ interface CharacterBurnerData {
         gear: unknown[];
         property: unknown[];
         relationships: unknown[];
+
+        skillNames: string[];
     }
     ageTable: StringIndexedObject<{
         label: string;

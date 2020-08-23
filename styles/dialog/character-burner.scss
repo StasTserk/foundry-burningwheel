@@ -170,7 +170,7 @@
 
         .skills-grid, .skills-header {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 2em 2em 2em 2em 2em 2em min-content;
+            grid-template-columns: 145px 100px 100px 2em 2em 2em 2em 2em 2em min-content;
         }
         .skills-header {
             margin-top: 1em;
@@ -306,5 +306,44 @@
 
     .burner-finishing {
         margin-bottom: 3em;
+    }
+
+    .select2-container--default {
+        .select2-selection {
+            .select2-selection__arrow {
+                display: none;
+            }
+
+            &.select2-selection--single {
+                height: 25px;
+                background: rgba(0, 0, 0, 0.05);
+                border-bottom: 1px solid black;
+                border-radius: 0px;
+                padding: 0 4px;
+                text-overflow: ellipsis;
+
+                .select2-selection__rendered {
+                    height: 25px;
+                    padding-right: 0px;
+                    line-height: 25px;
+
+                    &:focus {
+                        border: 0;
+                        background-color: rgba(black, 0.1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.select2-container--default { 
+    .select2-dropdown {
+        background-color: #aa9;
+    }
+
+    .select2-results .select2-results__option--highlighted[aria-selected] {
+        background-color: #833;
+        color: white;
     }
 }

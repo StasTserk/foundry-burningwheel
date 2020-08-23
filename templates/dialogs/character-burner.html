@@ -149,7 +149,12 @@
         </div>
         {{#each data.skills as |skill|}}
         <div class="skills-grid">
-            <input type="text" name="skillName" value="">
+            <select name="skillName" value="">
+                <option value=""></option>
+                {{#each ../data.skillNames as |name|}}
+                <option value="{{name}}">{{name}}</option>
+                {{/each}}
+            </select>
             <select name="skillRoot1" value="perception">
                 <option value="will">Will</option>
                 <option value="perception">Perception</option>

@@ -5,7 +5,8 @@
         "baseUrl": ".",
         "sourceMap": true,
         "types": [
-            "foundry-pc-types"
+            "foundry-pc-types",
+            "select2"
         ],
 		"target": "ES2017",
 		"lib": [

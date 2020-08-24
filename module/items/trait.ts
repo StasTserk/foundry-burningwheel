@@ -2,6 +2,10 @@ import { RollModifier } from "module/actor";
 import { ItemType, HasPointCost } from "./item.js";
 
 export class Trait extends Item<TraitData> {
+    prepareData(): void {
+        this.data.isCallonTrait = this.data.data.traittype === "call-on";
+        this.data.isDieTrait = this.data.data.traittype === "die";
+    }
     static asRollDieModifier(trait: TraitDataRoot): RollModifier {
         return {
             label: trait.name,
@@ -25,6 +29,8 @@ export class Trait extends Item<TraitData> {
 
 export interface TraitDataRoot extends ItemData<TraitData> {
     type: ItemType;
+    isDieTrait: boolean;
+    isCallonTrait: boolean;
 }
 
 export interface TraitData extends HasPointCost {

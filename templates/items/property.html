@@ -1,10 +1,15 @@
 <form autocomplete="off">
-    <input type="text" name="name" value="{{item.name}}">
-    <hr/>
-    <div class="checkbox-grid">
-        <input id="{{item._id}}-checkbox-isWorkshop" type="checkbox" name="data.isWorkshop" {{checked data.isWorkshop}}>
-        <label for="{{item._id}}-checkbox-isWorkshop">Workshop</label>
+    <input type="text" name="name" class="item-sheet-name" value="{{item.name}}">
+    <div class="item-form-group">
+
     </div>
+    <div class="item-form-group">
+        <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <input id="{{item._id}}-point-cost" type="number" class="exponent" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+        <input id="{{item._id}}-checkbox-isWorkshop" type="checkbox" class="item-setting-checkbox hidden" name="data.isWorkshop" {{checked data.isWorkshop}}>
+        <label for="{{item._id}}-checkbox-isWorkshop" class="item-setting-toggle">Workshop</label>
+    </div>
+    
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>
 </form>

@@ -1,46 +1,43 @@
 <form autocomplete="off" class="armor-sheet">
-    <input name="name" type="text" value="{{item.name}}">
-    <hr/>
-    <div class="input-grid">
-        <div>
-            <input id="{{item._id}}-number-dice" type="number" name="data.dice" value="{{data.dice}}">
-            <label for="{{item._id}}-number-dice">Armor Dice</label>
-        </div>
-        <div>
-            <input id="{{item._id}}-checkbox-equipped" type="checkbox" name="data.equipped" {{ checked data.equipped}}>
-            <label for="{{item._id}}-checkbox-equipped">Equipped</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-quality" name="data.quality" value="{{data.quality}}">
-                {{#select data.quality}}
-                {{#each armorQuality as |title value|}}
-                <option value="{{value}}">{{title}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-quality">Armor Quality</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-shade" name="data.shade" value="{{data.shade}}">
-                {{#select data.shade}}
-                <option value="B">Black</option>
-                <option value="G">Grey</option>
-                <option value="W">White</option>
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-shade">Shade</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-untrained" name="data.untrainedPenalty" value="{{data.untrainedPenalty}}">
-                {{#select data.untrainedPenalty}}
-                <option value="none">None</option>
-                <option value="light">Light</option>
-                <option value="heavy">Heavy</option>
-                <option value="plate">Plate</option>
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-untrained">Untrained Penalty Type</label>
-        </div>
+    <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
+    <div class="item-form-group">
+        <label for="{{item._id}}-number-dice" class="item-setting-label">Armor Dice</label>
+        <input id="{{item._id}}-number-dice" type="number" class="exponent" name="data.dice" value="{{data.dice}}">
+        
+        <label for="{{item._id}}-checkbox-equipped" class="item-setting-label">Equipped</label>
+        <input id="{{item._id}}-checkbox-equipped" type="checkbox" name="data.equipped" {{ checked data.equipped}}>
+        
+        <label for="{{item._id}}-select-quality" class="item-setting-label">Armor Quality</label>
+        <select id="{{item._id}}-select-quality" name="data.quality" value="{{data.quality}}">
+            {{#select data.quality}}
+            {{#each armorQuality as |title value|}}
+            <option value="{{value}}">{{title}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        
+        <label for="{{item._id}}-select-shade" class="item-setting-label">Shade</label>
+        <select id="{{item._id}}-select-shade" name="data.shade" value="{{data.shade}}">
+            {{#select data.shade}}
+            <option value="B">Black</option>
+            <option value="G">Grey</option>
+            <option value="W">White</option>
+            {{/select}}
+        </select>
+        
+        <label for="{{item._id}}-select-untrained" class="item-setting-label">Untrained Penalty Type</label>
+        <select id="{{item._id}}-select-untrained" name="data.untrainedPenalty" value="{{data.untrainedPenalty}}">
+            {{#select data.untrainedPenalty}}
+            <option value="none">None</option>
+            <option value="light">Light</option>
+            <option value="heavy">Heavy</option>
+            <option value="plate">Plate</option>
+            {{/select}}
+        </select>
+
+        <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <input id="{{item._id}}-point-cost" type="number" class="exponent" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+
     </div>
     <hr/>
     <div class="flex-column">

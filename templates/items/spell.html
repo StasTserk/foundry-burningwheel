@@ -68,6 +68,8 @@
             type="text"
             name="data.duration"
             value="{{data.duration}}">
+        <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <input id="{{item._id}}-point-cost" type="number" class="exponent" name="data.pointCost" onClick="this.select();" value="{{data.pointCost}}" data-dtype="Number">
     </div>
     <div class="spell-weapon-toggle">
         <input id="{{item._id}}-is-weapon" class="hidden spell-toggle-checkbox" type="checkbox" name="data.isWeapon" {{checked data.isWeapon}}>

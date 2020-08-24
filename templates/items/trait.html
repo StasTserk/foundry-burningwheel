@@ -1,13 +1,23 @@
-<form autocomplete="off" class="trait-sheet">
-    <input name="name" type="text" value="{{item.name}}">
-    <select name="data.traittype" value="{{data.traittype}}" >
-        {{#select data.traittype}}
-        {{#each traitTypes as |type t|}}
-        <option value="{{t}}">{{type}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
+    <form autocomplete="off" class="trait-sheet">
+    <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
+    <div class="item-form-group">
+        <label class="item-setting-label">Trait Type</label>
+        <select name="data.traittype" value="{{data.traittype}}" >
+            {{#select data.traittype}}
+            {{#each traitTypes as |type t|}}
+            <option value="{{t}}">{{type}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+
+        <label for="{{item._id}}-restrictions" class="item-setting-label">Restrictions</label>
+        <input id="{{item._id}}-restrictions" type="text" name="data.restrictions" value="{{data.restrictions}}">
+
+        <label for="{{item._id}}-point-cost" class="item-setting-label">Point Cost</label>
+        <input id="{{item._id}}-point-cost" class="exponent" type="number" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+    </div>
     <hr/>
+    {{#if item.isDieTrait}}
     <div class="flex-column traits-die">
         <div class="trait-effect-section flex-row">
             <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-dice" name="data.hasDieModifier" {{checked data.hasDieModifier}}>
@@ -82,10 +92,13 @@
             </div>
         </div>
     </div>
+    {{/if}}
+    {{#if item.isCallonTrait}}
     <div class="flex-column traits-callon">
         <input id="{{item._id}}-callonTarget" type="text" name="data.callonTarget" value="{{data.callonTarget}}">
         <label for="{{item._id}}-callonTarget">Call-on Rolls</label>
         <hr>
     </div>
+    {{/if}}
     <textarea name="data.text">{{data.text}}</textarea>
 </form>

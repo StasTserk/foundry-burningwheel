@@ -1,12 +1,12 @@
 <form autocomplete="off">
-    <input name="name" type="text" value="{{item.name}}">
+    <input name="name" type="text" class="item-sheet-name" value="{{item.name}}">
     <hr/>
     <h2>Stats</h2>
-    <div class="checkbox-grid">
-        <input id="{{item._id}}-checkbox-usePower" type="checkbox" name="data.usePower" {{checked data.usePower}}>
-        <label for="{{item._id}}-checkbox-usePower">Use Power</label>
-        <input id="{{item._id}}-checkbox-hasGunpowder" type="checkbox" name="data.hasGunpowder" {{checked data.hasGunpowder}}>
-        <label for="{{item._id}}-checkbox-hasGunpowder">Gunpowder Weapon</label>
+    <div class="item-form-group">
+        <input id="{{item._id}}-checkbox-usePower" class="item-setting-checkbox hidden" type="checkbox" name="data.usePower" {{checked data.usePower}}>
+        <label for="{{item._id}}-checkbox-usePower" class="item-setting-toggle">Use Power</label>
+        <input id="{{item._id}}-checkbox-hasGunpowder" class="item-setting-checkbox hidden" type="checkbox" name="data.hasGunpowder" {{checked data.hasGunpowder}}>
+        <label for="{{item._id}}-checkbox-hasGunpowder" class="item-setting-toggle">Use Gunpowder</label>
     </div>
     <hr />
     {{#if data.usePower}}
@@ -66,6 +66,11 @@
         <div>
             <input id="{{item._id}}-number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
             <label for="{{item._id}}-number-range">Max Range</label>
+        </div>
+
+        <div>
+            <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+            <input id="{{item._id}}-point-cost" type="number" class="exponent" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
         </div>
     </div>
     <hr/>

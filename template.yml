@@ -166,6 +166,7 @@ Item:
     affiliationName: ''
     affiliationDice: 0
     callonTarget: ''
+    restrictions: ''
   skill:
     name: ''
     shade: B

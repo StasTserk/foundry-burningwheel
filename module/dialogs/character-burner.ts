@@ -1,6 +1,6 @@
 import { BWActor } from "../actor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
-import { Skill, Trait, BWItem, Property } from "../items/item.js";
+import { Skill, Trait, BWItem, Property, HasPointCost } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractRepuatationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
 
 export class CharacterBurnerDialog extends Dialog {
@@ -135,7 +135,7 @@ export class CharacterBurnerDialog extends Dialog {
 
             // trait points spent
             html.find("input[name='traitName']").on('input', (e: JQueryInputEventObject) => this._tryLoadTrait(e)),
-            html.find("input[name='traitCost']").on('change', _ => this._storeSum(html, "traitPtsSpent", "traitCost")),
+            html.find("input[name='traitCost'], input[name='traitTaken']").on('change', _ => this._calculateSpentTraits(html)),
             html.find("input[name='traitPtsSpent'], input[name='traitPtsTotal']").on('change', _ => this._storeDiff(html, "traitPtsLeft", "traitPtsTotal", "traitPtsSpent")),
 
             // all resource points
@@ -167,6 +167,16 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("button.submit-burner-button").on('click', e => this._finishBurning(e, html))
         ];
         super.activateListeners(html);
+    }
+    _calculateSpentTraits(html: JQuery<HTMLElement>): void {
+        // , "traitPtsSpent", "traitCost"
+        let sum = 0;
+        html.find("input[name='traitCost']").each((_, t) => {
+            if ($(t).prev().prop("checked")) {
+                sum += parseInt($(t).val() as string || "0");
+            }
+        });
+        html.find("input[name='traitPtsSpent']").val(sum).change();
     }
 
     _calculateRelationshipCost(target: JQuery<HTMLElement>): void {
@@ -260,17 +270,21 @@ export class CharacterBurnerDialog extends Dialog {
             if (!traitName) {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
                 inputTarget.siblings("*[name='traitId']").val("");
+                inputTarget.siblings("*[name='traitCost']").val("0").change();
                 return;
             }
             const trait = this._traits.find(t => t.name === traitName);
             if (!trait) {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
                 inputTarget.siblings("*[name='traitId']").val("");
+                inputTarget.siblings("*[name='traitCost']").val("1").change();
             }
             else {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
                 inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).change();
                 inputTarget.siblings("*[name='traitId']").val(trait._id);
+                const cost = isNaN(trait.data.data.pointCost) ? 1 : trait.data.data.pointCost;
+                inputTarget.siblings("*[name='traitCost']").val(cost).change();
             }
         };
 
@@ -327,6 +341,7 @@ export class CharacterBurnerDialog extends Dialog {
             if (!propertyName) {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
                 inputTarget.siblings("*[name='propertyId']").val("");
+                inputTarget.siblings("*[name='propertyCost']").val("0").change();
                 return;
             }
             const property = this._property.find(p => p.name === propertyName);
@@ -337,6 +352,7 @@ export class CharacterBurnerDialog extends Dialog {
             else {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
                 inputTarget.siblings("*[name='propertyId']").val(property._id);
+                inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).change();
             }
         };
 
@@ -358,6 +374,7 @@ export class CharacterBurnerDialog extends Dialog {
             if (!gearName) {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
                 inputTarget.siblings("*[name='gearId']").val("");
+                inputTarget.siblings("*[name='itemCost']").val("0").change();
                 return;
             }
             const gear = this._gear.find(p => p.name === gearName);
@@ -369,6 +386,7 @@ export class CharacterBurnerDialog extends Dialog {
                 inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
                 inputTarget.siblings("*[name='itemType']").val(gear.type);
                 inputTarget.siblings("*[name='gearId']").val(gear._id);
+                inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).change();
             }
         };
 

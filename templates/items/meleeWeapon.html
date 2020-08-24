@@ -1,71 +1,64 @@
 <form autocomplete="off">
-    <input name="name" type="text" value="{{item.name}}">
-    <hr/>
+    <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
     <h2>Stats</h2>
-    <div class="input-grid">
-        <div>
-            <select id="{{item._id}}-select-shade" name="data.shade" value="{{data.shade}}">
-                {{#select data.shade}}
-                <option value="B">Black</option>
-                <option value="G">Grey</option>
-                <option value="W">White</option>
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-shade">Shade</label>
-        </div>
-        <div>
-            <input id="{{item._id}}-number-power" type="number" name="data.power" value="{{data.power}}">
-            <label for="{{item._id}}-number-power">Power</label>
-        </div>
-        <div>
-            <input id="{{item._id}}-number-add" type="number" name="data.add" value="{{data.add}}">
-            <label for="{{item._id}}-number-add">Add</label>
-        </div>
-        <div>
-            <input id="{{item._id}}-number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
-            <label for="{{item._id}}-number-va">Vs. Armor</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-speed" name="data.weaponSpeed" value="{{data.weaponSpeed}}">
-                {{#select data.weaponSpeed}}
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="x">X</option>
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-speed">Weapon Speed</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-length" name="data.weaponLength" value="{{data.weaponLength}}">
-                {{#select data.weaponLength}}
-                {{#each weaponLengths as |title value|}}
-                <option value="{{value}}">{{title}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-length">Weapon Length</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-quality" name="data.quality" value="{{data.quality}}">
-                {{#select data.quality}}
-                {{#each weaponQualities as |title value|}}
-                <option value="{{value}}">{{title}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-quality">Weapon Quality</label>
-        </div>
-        <div>
-            <select id="{{item._id}}-select-handedness" name="data.handedness" value="{{data.handedness}}">
-                {{#select data.handedness}}
-                <option value="one">One-handed</option>
-                <option value="two">Two-handed</option>
-                {{/select}}
-            </select>
-            <label for="{{item._id}}-select-handedness">Handedness</label>
-        </div>
+    <div class="item-form-group">
+        <label for="{{item._id}}-select-shade" class="item-setting-label">Shade</label>
+        <select id="{{item._id}}-select-shade" name="data.shade" value="{{data.shade}}">
+            {{#select data.shade}}
+            <option value="B">Black</option>
+            <option value="G">Grey</option>
+            <option value="W">White</option>
+            {{/select}}
+        </select>
+
+        <label for="{{item._id}}-select-quality" class="item-setting-label">Weapon Quality</label>
+        <select id="{{item._id}}-select-quality" name="data.quality" value="{{data.quality}}">
+            {{#select data.quality}}
+            {{#each weaponQualities as |title value|}}
+            <option value="{{value}}">{{title}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+            
+        <label for="{{item._id}}-number-power" class="item-setting-label">Power</label>
+        <input id="{{item._id}}-number-power" type="number" class="exponent" name="data.power" value="{{data.power}}">
+            
+        <label for="{{item._id}}-number-add" class="item-setting-label">Add</label>
+        <input id="{{item._id}}-number-add" type="number" class="exponent" name="data.add" value="{{data.add}}">
+            
+        <label for="{{item._id}}-number-va" class="item-setting-label">Vs. Armor</label>
+        <input id="{{item._id}}-number-va" type="number" class="exponent" name="data.vsArmor" value="{{data.vsArmor}}">
+            
+        <label for="{{item._id}}-select-speed" class="item-setting-label">Weapon Speed</label>
+        <select id="{{item._id}}-select-speed" name="data.weaponSpeed" value="{{data.weaponSpeed}}">
+            {{#select data.weaponSpeed}}
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="x">X</option>
+            {{/select}}
+        </select>
+
+        <label for="{{item._id}}-select-length" class="item-setting-label">Weapon Length</label>
+        <select id="{{item._id}}-select-length" name="data.weaponLength" value="{{data.weaponLength}}">
+            {{#select data.weaponLength}}
+            {{#each weaponLengths as |title value|}}
+            <option value="{{value}}">{{title}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+
+        <label for="{{item._id}}-select-handedness" class="item-setting-label">Handedness</label>
+        <select id="{{item._id}}-select-handedness" name="data.handedness" value="{{data.handedness}}">
+            {{#select data.handedness}}
+            <option value="one">One-handed</option>
+            <option value="two">Two-handed</option>
+            {{/select}}
+        </select>
+            
+        <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <input id="{{item._id}}-point-cost" type="number" name="data.pointCost" value="{{data.pointCost}}" class="exponent" data-dtype="Number">
     </div>
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>

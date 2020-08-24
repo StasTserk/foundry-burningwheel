@@ -1,3 +1,5 @@
+@import "../mixins.scss";
+
 input.item-sheet-name {
     border: 0;
     border-radius: 0;
@@ -6,4 +8,25 @@ input.item-sheet-name {
     height: 1.25em;
     border-bottom: 2px groove lightpink;
     margin-bottom: .5em;
+}
+
+.item-form-group {
+    display: grid;
+    grid-template-columns: repeat(4, calc(25% - 5px));
+    column-gap: 5px;
+    row-gap: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+
+    .item-setting-label {
+        font-weight: bold;
+    }
+
+    .item-setting-toggle {
+        @include button-like(grey);
+        height: min-content;
+    }
+    .item-setting-checkbox:checked + .item-setting-toggle {
+        @include button-like-active;
+    }
 }

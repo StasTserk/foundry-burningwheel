@@ -1,4 +1,4 @@
-import { DisplayClass } from "./item.js";
+import { DisplayClass, HasPointCost } from "./item.js";
 import { rollDice } from "../rolls/rolls.js";
 import { ShadeString } from "../helpers.js";
 
@@ -46,7 +46,7 @@ export interface ArmorRootData extends ItemData<ArmorData> {
     data: ArmorData;
 }
 
-export interface ArmorData extends DisplayClass {
+export interface ArmorData extends DisplayClass, HasPointCost {
     quality: string;
     dice: string; // as number
     description: string;

@@ -1,5 +1,5 @@
 import { RollModifier } from "module/actor";
-import { ItemType } from "./item.js";
+import { ItemType, HasPointCost } from "./item.js";
 
 export class Trait extends Item<TraitData> {
     static asRollDieModifier(trait: TraitDataRoot): RollModifier {
@@ -27,7 +27,7 @@ export interface TraitDataRoot extends ItemData<TraitData> {
     type: ItemType;
 }
 
-export interface TraitData {
+export interface TraitData extends HasPointCost {
     traittype: string;
     text: string;
 

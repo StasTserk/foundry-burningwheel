@@ -195,6 +195,7 @@
             <div class="burner-section-header flex-row"><div>6. Traits</div><input type="number" disabled class="exponent" name="traitPtsLeft" value="0"><div>left</div></div>
             <div class="burner-section-header">Type</div>
             <div class="burner-section-header">Req</div>
+            <div class="burner-section-header">Taken</div>
             <div class="burner-section-header">Cost</div>
             <div class="burner-section-header"><i class="fas fa-question-circle" title="Status of loading trait from compendium."></i></div>
         </div>
@@ -203,11 +204,12 @@
             <input type="hidden" name="traitId">
             <input type="text" name="traitName" value="{{trait.name}}">
             <select name="traitType">
-                <option value="character">Character</option>
+                <option value="character">Char</option>
                 <option value="die">Die</option>
-                <option value="call-on">Call-on</option>
+                <option value="call-on">C-o</option>
             </select>
             <input type="checkbox" name="traitReq">
+            <input type="checkbox" name="traitTaken">
             <input type="number" name="traitCost" value="0">
             <div class="load-status none">
                 <i class="fas fa-ellipsis-h" title="Waiting for name of trait to be entered."></i>

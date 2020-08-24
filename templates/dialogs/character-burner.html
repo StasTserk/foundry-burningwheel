@@ -207,7 +207,12 @@
         {{#each data.traits as |trait|}}
         <div class="burner-traits-grid">
             <input type="hidden" name="traitId">
-            <input type="text" name="traitName" value="{{trait.name}}">
+            <select name="traitName" value="">
+                <option value=""></option>
+                {{#each ../data.traitNames as |t|}}
+                <option value="{{t.name}}">{{t.label}}</option>
+                {{/each}}
+            </select>
             <select name="traitType">
                 <option value="character">Char</option>
                 <option value="die">Die</option>

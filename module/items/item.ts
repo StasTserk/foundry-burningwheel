@@ -74,6 +74,10 @@ export interface ArthaEarner {
     deeds: boolean;
 }
 
+export interface HasPointCost {
+    pointCost: number;
+}
+
 export interface DisplayClass {
     cssClass?: string;
 }

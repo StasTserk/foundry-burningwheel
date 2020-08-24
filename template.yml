@@ -135,6 +135,8 @@ Item:
       fate: false
       persona: false
       deeds: false
+    pointCost:
+      pointCost: 1
   belief:
     templates: 
       - arthaEarner
@@ -144,6 +146,8 @@ Item:
       - arthaEarner
     text: ''
   trait:
+    templates:
+      - pointCost
     name: ''
     traittype: character
     text: ''
@@ -196,13 +200,19 @@ Item:
     building: true
     buildingProgress: [0]
   possession:
+    templates:
+      - pointCost
     isToolkit: false
     isExpended: false
     description: ''
   property:
+    templates:
+      - pointCost
     isWorkshop: false
     description: ''
   melee weapon:
+    templates:
+      - pointCost
     quality: run-of-the-mill
     baseOb: 1
     power: 1
@@ -215,6 +225,8 @@ Item:
     skillId: ''
     shade: 'B'
   ranged weapon:
+    templates:
+      - pointCost
     quality: run-of-the-mill
     hasGunpowder: false
     usePower: false
@@ -233,6 +245,8 @@ Item:
     skillId: ''
     shade: 'B'
   armor:
+    templates:
+      - pointCost
     quality: run-of-the-mill
     dice: 1
     hasHelm: false
@@ -270,6 +284,8 @@ Item:
     description: ''
     dice: 0
   spell:
+    templates:
+      - pointCost
     variableObstacle: false
     variableObstacleDescription: ''
     obstacle: 4

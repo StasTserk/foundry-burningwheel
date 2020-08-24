@@ -1,4 +1,4 @@
-import { DisplayClass, ItemType } from "./item.js";
+import { DisplayClass, ItemType, HasPointCost } from "./item.js";
 
 export class Property extends Item {
     prepareData(): void {
@@ -16,7 +16,7 @@ export interface PropertyRootData extends ItemData<PropertyData> {
     type: ItemType;
 }
 
-export interface PropertyData extends DisplayClass {
+export interface PropertyData extends DisplayClass, HasPointCost {
     isWorkshop: boolean;
     description: string;
 }

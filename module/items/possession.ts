@@ -1,4 +1,4 @@
-import { DisplayClass } from "./item.js";
+import { DisplayClass, HasPointCost } from "./item.js";
 
 export class Possession extends Item {
     prepareData(): void {
@@ -12,7 +12,7 @@ export interface PossessionRootData extends ItemData<PossessionData> {
     data: PossessionData;
 }
 
-export interface PossessionData extends DisplayClass {
+export interface PossessionData extends DisplayClass, HasPointCost {
     isToolkit: boolean;
     isExpended: boolean;
     description: string;

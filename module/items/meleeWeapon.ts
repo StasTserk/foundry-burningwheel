@@ -1,5 +1,5 @@
 import { BWActor } from "../actor.js";
-import { DisplayClass } from "./item.js";
+import { DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 
 export class MeleeWeapon extends Item {
@@ -43,7 +43,7 @@ export interface MeleeWeaponRootData extends ItemData<MeleeWeaponData> {
     data: MeleeWeaponData;
 }
 
-export interface MeleeWeaponData extends DisplayClass {
+export interface MeleeWeaponData extends DisplayClass, HasPointCost {
     quality: string;
     baseOb: string; // as number
     power: string; // as number

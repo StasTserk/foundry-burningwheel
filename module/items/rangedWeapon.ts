@@ -1,5 +1,5 @@
 import { BWActor } from "../actor.js";
-import { DisplayClass } from "./item.js";
+import { DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 
 export class RangedWeapon extends Item {
@@ -53,7 +53,7 @@ export interface RangedWeaponRootData extends ItemData<RangedWeaponData> {
     data: RangedWeaponData;
 }
 
-export interface RangedWeaponData extends DisplayClass {
+export interface RangedWeaponData extends DisplayClass, HasPointCost {
     quality: string;
     hasGunpowder: boolean;
     usePower: boolean;

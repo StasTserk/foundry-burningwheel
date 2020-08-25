@@ -36,6 +36,7 @@ export interface TraitDataRoot extends ItemData<TraitData> {
 export interface TraitData extends HasPointCost {
     traittype: string;
     text: string;
+    restrictions: string;
 
     hasDieModifier: boolean;
     dieModifier: string; // as number

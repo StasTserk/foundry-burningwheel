@@ -4,6 +4,42 @@
     flex: unset;
 }
 
+.loading-dialog {
+    .window-header {
+        display: none;
+    }
+
+    .window-content {
+        overflow: hidden;
+        background: unset;
+        background-color: rgba(white, 0.75);
+    }
+
+    .loading-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .burner-loading-spinner {
+        font-size: 300px;
+        color: darkred;
+        -webkit-text-stroke-width: 8px;
+        -webkit-text-stroke-color: orange;
+
+        i {
+            animation-name: spin;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            @keyframes spin {
+                from {transform:rotate(0deg);}
+                to {transform:rotate(360deg);}
+            }
+        }
+    }
+}
+
 .character-burner {
     .submit-burner-button {
         height: 1.5em;

@@ -142,7 +142,7 @@ export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]):
     let traitData: Partial<TraitDataRoot> | undefined;
     html.find(".burner-traits-grid").each((_, e) => {
         traitName = extractNamedChildString($(e), "traitName");
-        if (!traitName || !extractNamedChildNumber($(e), "traitCost")) { return; }
+        if (!traitName || !extractNamedChildCheck($(e), "traitTaken")) { return; }
         traitId = extractNamedChildString($(e), "traitId");
         if (traitId) {
             traitData = traitList.find(t => t._id === traitId)?.data;

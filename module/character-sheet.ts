@@ -108,14 +108,35 @@ export class BWCharacterSheet extends BWActorSheet {
         return data;
     }
 
-    async _maybeInitializeActor(): Promise<Item<unknown> | undefined> {
+    async _maybeInitializeActor(): Promise<Application | void> {
         const initialized = await this.actor.getFlag("burningwheel", "initialized") as boolean;
         if (initialized) {
             return;
         }
         await this.actor.setFlag("burningwheel", "initialized", true);
         await this.addDefaultItems();
-        return this.actor.createOwnedItem(constants.bareFistData);
+        await this.actor.createOwnedItem(constants.bareFistData);
+        return new Dialog({
+            title: "Launch Burner?",
+            content: "This is a new character. Would you like to launch the character burner?",
+            buttons: {
+                yes: {
+                    label: "Yes",
+                    callback: () => {
+                        CharacterBurnerDialog.Open(this.actor);
+                    }
+                },
+                later: {
+                    label: "Later"
+                },
+                never: {
+                    label: "No",
+                    callback: () => {
+                        this.actor.update({ "data.settings.showBurner": false });
+                    }
+                }
+            }
+        }).render(true);
     }
 
     getArmorDictionary(armorItems: ItemData[]): { [key: string]: ItemData | null; } {

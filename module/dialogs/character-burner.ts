@@ -81,8 +81,22 @@ export class CharacterBurnerDialog extends Dialog {
         data.data.lifepaths[0].name = "Born ...";
 
         data.data.skillNames = this._skills.map(s => s.name);
-        data.data.traitNames = this._traits.map(s => {
-            return { name: s.name, label: s.data.data.pointCost ? `${s.name} - ${s.data.data.pointCost} Pts` : s.name };
+        data.data.traitNames = {
+            Unrestricted: []
+        };
+        this._traits.forEach(s => {
+            const trait = {
+                name: s.name,
+                label: s.data.data.pointCost ? `${s.name} - ${s.data.data.pointCost} Pts` : s.name
+            };
+            if (!s.data.data.restrictions) {
+                data.data.traitNames.Unrestricted.push(trait);
+                return;
+            }
+            if (!data.data.traitNames[s.data.data.restrictions]) {
+                data.data.traitNames[s.data.data.restrictions] = [];   
+            }
+            data.data.traitNames[s.data.data.restrictions].push(trait);
         });
         data.data.propertyNames = this._property.map(p => p.name);
         data.data.armorNames = [];
@@ -450,7 +464,7 @@ interface CharacterBurnerData {
         relationships: unknown[];
 
         skillNames: string[];
-        traitNames: { name: string, label: string }[];
+        traitNames: StringIndexedObject<{ name: string, label: string }[]>;
 
         propertyNames: string[];
         armorNames: { name: string, label: string }[];

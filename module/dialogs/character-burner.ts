@@ -6,13 +6,6 @@ import { extractRelationshipData, extractBaseCharacterData, extractSkillData, ex
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor;
     private _burnerListeners: JQuery<HTMLElement>[];
-    private readonly _itemLookup: {
-        loading: boolean;
-        timer: number;
-    } = {
-        loading: false,
-        timer: 0
-    };
     private _skills: Skill[];
     private _traits: Trait[];
     private _gear: BWItem[];
@@ -20,9 +13,10 @@ export class CharacterBurnerDialog extends Dialog {
 
     static async Open(parent: BWActor): Promise<Application> {
         const loadingDialog = new Dialog({
-            content: "Loading character burner data...",
-            buttons: {}
-        });
+            title: "",
+            content: "<div class='loading-title'>Loading Character Burner data...</div><div class='burner-loading-spinner'><i class='fas fa-dharmachakra'></i></div>",
+            buttons: {},
+        }, {classes: ["loading-dialog"], width: "300px"});
         await loadingDialog.render(true);
         const dialog = new CharacterBurnerDialog(parent);
         dialog._skills = await getItemsOfType<Skill>("skill");
@@ -90,6 +84,30 @@ export class CharacterBurnerDialog extends Dialog {
         data.data.traitNames = this._traits.map(s => {
             return { name: s.name, label: s.data.data.pointCost ? `${s.name} - ${s.data.data.pointCost} Pts` : s.name };
         });
+        data.data.propertyNames = this._property.map(p => p.name);
+        data.data.armorNames = [];
+        data.data.possessionNames = [];
+        data.data.weaponNames = [];
+        data.data.spellNames = [];
+
+        this._gear.forEach(g => {
+            const entry = { name: g.name, label: g.data.data.pointCost ? `${g.name} - ${g.data.data.pointCost} Pts` : g.name };
+            switch(g.type) {
+                case "melee weapon":
+                case "ranged weapon":
+                    data.data.weaponNames.push(entry);
+                    break;
+                case "armor":
+                    data.data.armorNames.push(entry);
+                    break;
+                case "spell":
+                    data.data.spellNames.push(entry);
+                    break;
+                case "possession":
+                    data.data.possessionNames.push(entry);
+                    break;
+            }
+        });
 
         return data;
     }
@@ -98,6 +116,8 @@ export class CharacterBurnerDialog extends Dialog {
         this._burnerListeners = [
             $(html.find("select[name='skillName']")).select2(defaultSelectOptions),
             $(html.find("select[name='traitName']")).select2(defaultSelectOptions),
+            $(html.find("select[name='propertyName']")).select2(defaultSelectOptions),
+            $(html.find("select[name='itemName']")).select2(defaultSelectOptions),
 
             html.find("input:enabled").on('focus', e => $(e.target).select()),
             html.find("input[name='time']").on('change', _ => this._storeSum(html, "timeTotal", "time")),
@@ -167,10 +187,10 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("input[name='relationshipCost']").on('change', _e => this._storeSum(html, "relationshipsSpent", "relationshipCost")),
 
             // property
-            html.find("input[name='propertyName']").on('input', (e: JQueryInputEventObject) => this._tryLoadProperty(e)),
+            html.find("select[name='propertyName']").on('input', (e: JQueryInputEventObject) => this._tryLoadProperty(e)),
             html.find("input[name='propertyCost']").on('change', _ => this._storeSum(html, "propertySpent", "propertyCost")),
             // gear
-            html.find("input[name='itemName']").on('input', (e: JQueryInputEventObject) => this._tryLoadGear(e)),
+            html.find("select[name='itemName']").on('input', (e: JQueryInputEventObject) => this._tryLoadGear(e)),
             html.find("input[name='itemCost']").on('change', _ => this._storeSum(html, "gearSpent", "itemCost")),
 
             // extra rules totals
@@ -294,7 +314,7 @@ export class CharacterBurnerDialog extends Dialog {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).change();
             inputTarget.siblings("*[name='traitId']").val(trait._id);
-            const cost = isNaN(trait.data.data.pointCost) ? 1 : trait.data.data.pointCost;
+            const cost = (!trait.data.data.pointCost || isNaN(trait.data.data.pointCost)) ? 1 : trait.data.data.pointCost;
             inputTarget.siblings("*[name='traitCost']").val(cost).change();
         }
     }
@@ -323,68 +343,44 @@ export class CharacterBurnerDialog extends Dialog {
 
     private _tryLoadProperty(e: JQueryInputEventObject): void {
         const inputTarget = $(e.currentTarget);
-        const lookupCallback = () => {
-            const propertyName = inputTarget.val() as string;
-            this._itemLookup.loading = false;
-            if (!propertyName) {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
-                inputTarget.siblings("*[name='propertyId']").val("");
-                inputTarget.siblings("*[name='propertyCost']").val("0").change();
-                return;
-            }
-            const property = this._property.find(p => p.name === propertyName);
-            if (!property) {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
-                inputTarget.siblings("*[name='propertyId']").val("");
-            }
-            else {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-                inputTarget.siblings("*[name='propertyId']").val(property._id);
-                inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).change();
-            }
-        };
-
-        if (!this._itemLookup.loading) {
-            this._itemLookup.loading = true;
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
-            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
-        } else {
-            window.clearTimeout(this._itemLookup.timer);
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+        const propertyName = inputTarget.val() as string;
+        if (!propertyName) {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
+            inputTarget.siblings("*[name='propertyId']").val("");
+            inputTarget.siblings("*[name='propertyCost']").val("0").change();
+            return;
+        }
+        const property = this._property.find(p => p.name === propertyName);
+        if (!property) {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
+            inputTarget.siblings("*[name='propertyId']").val("");
+        }
+        else {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
+            inputTarget.siblings("*[name='propertyId']").val(property._id);
+            inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).change();
         }
     }
 
     private _tryLoadGear(e: JQueryInputEventObject): void {
         const inputTarget = $(e.currentTarget);
-        const lookupCallback = () => {
-            const gearName = inputTarget.val() as string;
-            this._itemLookup.loading = false;
-            if (!gearName) {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
-                inputTarget.siblings("*[name='gearId']").val("");
-                inputTarget.siblings("*[name='itemCost']").val("0").change();
-                return;
-            }
-            const gear = this._gear.find(p => p.name === gearName);
-            if (!gear) {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
-                inputTarget.siblings("*[name='gearId']").val("");
-            }
-            else {
-                inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-                inputTarget.siblings("*[name='itemType']").val(gear.type);
-                inputTarget.siblings("*[name='gearId']").val(gear._id);
-                inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).change();
-            }
-        };
-
-        if (!this._itemLookup.loading) {
-            this._itemLookup.loading = true;
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
-            inputTarget.siblings(".load-status").removeClass(["none", "fail", "success", "loading"]).addClass("loading");
-        } else {
-            window.clearTimeout(this._itemLookup.timer);
-            this._itemLookup.timer = window.setTimeout(lookupCallback, 1000);
+        const gearName = inputTarget.val() as string;
+        if (!gearName) {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
+            inputTarget.siblings("*[name='gearId']").val("");
+            inputTarget.siblings("*[name='itemCost']").val("0").change();
+            return;
+        }
+        const gear = this._gear.find(p => p.name === gearName);
+        if (!gear) {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
+            inputTarget.siblings("*[name='gearId']").val("");
+        }
+        else {
+            inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
+            inputTarget.siblings("*[name='itemType']").val(gear.type);
+            inputTarget.siblings("*[name='gearId']").val(gear._id);
+            inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).change();
         }
     }
 
@@ -455,6 +451,12 @@ interface CharacterBurnerData {
 
         skillNames: string[];
         traitNames: { name: string, label: string }[];
+
+        propertyNames: string[];
+        armorNames: { name: string, label: string }[];
+        possessionNames: { name: string, label: string }[];
+        weaponNames: { name: string, label: string }[];
+        spellNames: { name: string, label: string }[];
     }
     ageTable: StringIndexedObject<{
         label: string;

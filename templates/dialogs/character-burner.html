@@ -297,7 +297,12 @@
             {{#each data.property}}
             <div class="burner-property">
                 <input type="hidden" name="propertyId">
-                <input type="text" name="propertyName">
+                <select name="propertyName">
+                    <option value=""></option>
+                    {{#each ../data.propertyNames as |name|}}
+                    <option value="{{name}}">{{name}}</option>
+                    {{/each}}
+                </select>
                 <input type="number" name="propertyCost" value="0" min="0">
                 <div class="load-status none">
                     <i class="fas fa-ellipsis-h" title="Waiting for name of trait to be entered."></i>
@@ -397,7 +402,29 @@
             {{#each data.gear}}
             <div class="burner-gear">
                 <input type="hidden" name="gearId" value="">
-                <input type="text" name="itemName">
+                <select name="itemName">
+                    <option value=""></option>
+                    <optgroup label="Armor">
+                        {{#each ../data.armorNames as |s|}}
+                        <option value="{{s.name}}">{{s.label}}</option>
+                        {{/each}}
+                    </optgroup>
+                    <optgroup label="Possessions">
+                        {{#each ../data.possessionNames as |s|}}
+                        <option value="{{s.name}}">{{s.label}}</option>
+                        {{/each}}
+                    </optgroup>
+                    <optgroup label="Spells">
+                        {{#each ../data.spellNames as |s|}}
+                        <option value="{{s.name}}">{{s.label}}</option>
+                        {{/each}}
+                    </optgroup>
+                    <optgroup label="Weapons">
+                        {{#each ../data.weaponNames as |s|}}
+                        <option value="{{s.name}}">{{s.label}}</option>
+                        {{/each}}
+                    </optgroup>
+                </select>
                 <select name="itemType">
                     <option value="possession">Possession</option>
                     <option value="melee weapon">Melee Weapon</option>

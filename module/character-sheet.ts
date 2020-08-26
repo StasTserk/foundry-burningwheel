@@ -179,7 +179,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
             // cache the current list of skills since it'll be used after for the actual skill data
             game.burningwheel.skills = skills;
-            const html = await renderTemplate("systems/burningwheel/templates/chat/new-skill-dialog.hbs", { skills });
+            const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-skill-dialog.hbs", { skills });
             const dialog = new Dialog({
                 id: 'learn-skill',
                 title: "Pick a new skill to learn",
@@ -232,6 +232,63 @@ export class BWCharacterSheet extends BWActorSheet {
         }).render(true);
     }
 
+    async learnNewTrait(actor: BWActor, traitType: string, ): Promise<Application> { 
+        const loadExistingCallback = async (_html) => {
+            const traits = (await helpers.getItemsOfType("trait"))
+                .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
+
+            // cache the current list of skills since it'll be used after for the actual skill data
+            game.burningwheel.traits = traits;
+            const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-trait-dialog.hbs", { traits });
+            const dialog = new Dialog({
+                id: 'learn-trait',
+                title: "Pick a new trait to learn",
+                content: html,
+                buttons: {
+                    add: {
+                        label: "Add",
+                        callback: (dialogHtml: JQuery) => {
+                            dialogHtml.find('input:checked')
+                                .each((_, element: HTMLInputElement) => {
+                                    const traitRoot: TraitDataRoot = game.burningwheel.traits
+                                        .find((s: Skill) => s._id === element.value).data;
+                                    actor.createOwnedItem(traitRoot, {});
+                                });
+                        }
+                    },
+                    cancel: {
+                        label: "Cancel"
+                    }
+                }
+            } as DialogData & { id: string },
+            { width: 530 });
+            dialog.render(true);
+        };
+
+        return new Dialog({
+            title: "Learn new Trait",
+            buttons: {
+                makeNew: {
+                    label: "Make new trait",
+                    callback: async () => {
+                        const i = await actor.createOwnedItem({
+                            name: `New ${traitType} Trait`,
+                            type: "trait",
+                            data: {
+                                traittype: traitType
+                            }
+                        });
+                        return this.actor.getOwnedItem(i._id)?.sheet.render(true);
+                    }
+                },
+                loadExisting: {
+                    label: "Load existing trait",
+                    callback: (html) => loadExistingCallback(html)
+                }
+            }
+        }).render(true);
+    }
+
     private async _manageItems(e: JQuery.ClickEvent) {
         e.preventDefault();
         const t = e.currentTarget as EventTarget;
@@ -252,9 +309,7 @@ export class BWCharacterSheet extends BWActorSheet {
                 return this.actor.createOwnedItem(options).then(i =>
                     this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addTrait":
-                options = { name: `New ${id.titleCase()} Trait`, type: "trait", data: { traittype: id }};
-                return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+                return this.learnNewTrait(this.actor, id);
             case "delItem":
                 return this.actor.deleteOwnedItem(id);
             case "editItem":

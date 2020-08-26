@@ -506,7 +506,7 @@ const ageTable: StringIndexedObject<{
     mental: number;
     physical: number;
 }[]> = {
-    "Mannish Stock": [
+    "Men": [
         { label: "1-10", mental: 5, physical: 10 },
         { label: "11-14", mental: 6, physical: 13 },
         { label: "15-16", mental: 6, physical: 16 },
@@ -518,6 +518,88 @@ const ageTable: StringIndexedObject<{
         { label: "56-65", mental: 7, physical: 11 },
         { label: "66-79", mental: 7, physical: 10 },
         { label: "80-100", mental: 6, physical: 9 }
+    ],
+    "Dwarves": [
+        { label: "1-20", mental: 6, physical: 13 },
+        { label: "21-30", mental: 7, physical: 13 },
+        { label: "31-50", mental: 7, physical: 14 },
+        { label: "51-76", mental: 8, physical: 15 },
+        { label: "77-111", mental: 8, physical: 16 },
+        { label: "112-151", mental: 9, physical: 16 },
+        { label: "152-199", mental: 9, physical: 17 },
+        { label: "200-245", mental: 10, physical: 18 },
+        { label: "246-300", mental: 11, physical: 17 },
+        { label: "301-345", mental: 11, physical: 16 },
+        { label: "346-395", mental: 12, physical: 15 },
+        { label: "397-445", mental: 11, physical: 14 },
+        { label: "446-525", mental: 11, physical: 13 },
+        { label: "526-600", mental: 10, physical: 12 }
+    ],
+    "Elves": [
+        { label: "1-25", mental: 7, physical: 13 },
+        { label: "26-60", mental: 8, physical: 13 },
+        { label: "61-100", mental: 9, physical: 14 },
+        { label: "101-125", mental: 9, physical: 15 },
+        { label: "126-160", mental: 10, physical: 16 },
+        { label: "161-225", mental: 10, physical: 17 },
+        { label: "226-325", mental: 11, physical: 17 },
+        { label: "326-425", mental: 12, physical: 17 },
+        { label: "426-525", mental: 13, physical: 17 },
+        { label: "526-625", mental: 13, physical: 16 },
+        { label: "626-725", mental: 14, physical: 15 },
+        { label: "726-825", mental: 14, physical: 14 },
+        { label: "826-925", mental: 15, physical: 13 },
+        { label: "926-1025", mental: 15, physical: 12 },
+        { label: "1026-1125", mental: 15, physical: 12 },
+        { label: "1126-1225", mental: 15, physical: 12 },
+        { label: "1226-1325", mental: 15, physical: 12 },
+        { label: "1325+", mental: 16, physical: 12 }
+    ],
+    "Orcs": [
+        { label: "1-10", mental: 3, physical: 10 },
+        { label: "11-16", mental: 4, physical: 11 },
+        { label: "17-22", mental: 5, physical: 12 },
+        { label: "23-30", mental: 6, physical: 13 },
+        { label: "31-40", mental: 6, physical: 14 },
+        { label: "41-50", mental: 6, physical: 15 },
+        { label: "51-60", mental: 7, physical: 16 },
+        { label: "61-80", mental: 7, physical: 17 },
+        { label: "81-99", mental: 8, physical: 17 },
+        { label: "100-125", mental: 8, physical: 18 },
+        { label: "126-150", mental: 9, physical: 18 },
+        { label: "151+", mental: 9, physical: 19 }
+    ],
+    "Roden": [
+        { label: "1-5", mental: 6, physical: 10 },
+        { label: "6-10", mental: 7, physical: 13 },
+        { label: "11-15", mental: 7, physical: 14 },
+        { label: "16-24", mental: 8, physical: 15 },
+        { label: "25-30", mental: 8, physical: 14 },
+        { label: "31-36", mental: 7, physical: 13 },
+        { label: "37-40", mental: 7, physical: 12 },
+        { label: "41-45", mental: 7, physical: 11 },
+        { label: "46-49", mental: 6, physical: 10 }
+    ],
+    "Trolls": [
+        { label: "1-5", mental: 3, physical: 11 },
+        { label: "6-12", mental: 4, physical: 14 },
+        { label: "13-19", mental: 4, physical: 17 },
+        { label: "20-27", mental: 4, physical: 19 },
+        { label: "28-57", mental: 4, physical: 20 },
+        { label: "58-80", mental: 4, physical: 19 },
+        { label: "81-124", mental: 4, physical: 18 },
+        { label: "125-213", mental: 5, physical: 17 },
+        { label: "214-390", mental: 5, physical: 16 },
+        { label: "391-712", mental: 6, physical: 15 }
+    ],
+    "Great Wolves": [
+        { label: "1", mental: 6, physical: 12 },
+        { label: "2-3", mental: 7, physical: 16 },
+        { label: "4-5", mental: 7, physical: 17 },
+        { label: "6-7", mental: 7, physical: 16 },
+        { label: "8-9", mental: 6, physical: 14 },
+        { label: "10-11", mental: 6, physical: 12 },
+        { label: "12-15", mental: 5, physical: 10 }
     ]
 };
 

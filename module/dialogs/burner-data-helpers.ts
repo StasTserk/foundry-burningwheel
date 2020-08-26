@@ -186,7 +186,7 @@ export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Pro
     return properties;
 }
 
-export function extractRepuatationData(html: JQuery<HTMLElement>): Partial<ReputationDataRoot | AffiliationDataRoot>[] {
+export function extractReputationData(html: JQuery<HTMLElement>): Partial<ReputationDataRoot | AffiliationDataRoot>[] {
     const reputations: Partial<AffiliationDataRoot | ReputationDataRoot>[] = [];
     let repName = "";
     let repDice = "0";

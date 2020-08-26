@@ -1,7 +1,7 @@
 import { BWActor } from "../actor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
 import { Skill, Trait, BWItem, Property, HasPointCost } from "../items/item.js";
-import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractRepuatationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
+import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor;
@@ -195,7 +195,7 @@ export class CharacterBurnerDialog extends Dialog {
                 this._calculateRepAffCost($(e.currentTarget))),
             html.find("input[name='reputationCost']").on('change', _e => this._storeSum(html, "reputationSpent", "reputationCost")),
 
-            // relationsip totals
+            // relationship totals
             html.find("input[name='relationshipName'], select[name='relPow'], select[name='relFam'], input[name='relRom'], input[name='relFor'], input[name='relHat']").on('change', e => 
                 this._calculateRelationshipCost($(e.currentTarget))),
             html.find("input[name='relationshipCost']").on('change', _e => this._storeSum(html, "relationshipsSpent", "relationshipCost")),
@@ -425,7 +425,7 @@ export class CharacterBurnerDialog extends Dialog {
                 const skillData = extractSkillData(html, this._skills);
                 const traitData = extractTraitData(html, this._traits);
                 const propertyData = extractPropertyData(html, this._property);
-                const repData = extractRepuatationData(html);
+                const repData = extractReputationData(html);
                 const relData = extractRelData(html);
                 const gearData = extractGearData(html, this._gear);
                 await this._parent.update({ data: baseCharacterData }, {});

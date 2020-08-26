@@ -49,7 +49,7 @@ function buildCss() {
 }
 
 function buildHtml() {
-    return gulp.src("templates/**/*.html")
+    return gulp.src(["templates/**/*.html", "templates/**/*.hbs"])
         .pipe(gulp.dest("dist/templates"));
 }
 
@@ -98,6 +98,7 @@ function watch() {
     gulp.watch("**/*.ts", tsTask);
     gulp.watch("styles/**/**.scss", sassTask);
     gulp.watch("templates/**/*.html", htmlTask);
+    gulp.watch("templates/**/*.hbs", htmlTask);
 }
 
 exports.default = build;

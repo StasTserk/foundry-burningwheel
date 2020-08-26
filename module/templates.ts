@@ -4,15 +4,15 @@ export async function preloadHandlebarsTemplates(): Promise<void> {
     // Define template paths to load
     const templatePaths = [
       // Actor Sheet Partials
-      "systems/burningwheel/templates/parts/armor.html",
-      "systems/burningwheel/templates/parts/learning.html",
-      "systems/burningwheel/templates/parts/ptgs.html",
-      "systems/burningwheel/templates/parts/relationships.html",
-      "systems/burningwheel/templates/parts/rollable-item.html",
-      "systems/burningwheel/templates/parts/rollable-skill.html",
-      "systems/burningwheel/templates/parts/spell.html",
-      "systems/burningwheel/templates/parts/weapons.html",
-      "systems/burningwheel/templates/parts/character-settings.html"
+      "systems/burningwheel/templates/parts/armor.hbs",
+      "systems/burningwheel/templates/parts/learning.hbs",
+      "systems/burningwheel/templates/parts/ptgs.hbs",
+      "systems/burningwheel/templates/parts/relationships.hbs",
+      "systems/burningwheel/templates/parts/rollable-item.hbs",
+      "systems/burningwheel/templates/parts/rollable-skill.hbs",
+      "systems/burningwheel/templates/parts/spell.hbs",
+      "systems/burningwheel/templates/parts/weapons.hbs",
+      "systems/burningwheel/templates/parts/character-settings.hbs"
     ];
 
     // Load the template parts

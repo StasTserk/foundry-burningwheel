@@ -6,7 +6,7 @@ export class SkillSheet extends ItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/skill.html";
+        return "systems/burningwheel/templates/items/skill.hbs";
     }
 
     getData(): SkillSheetData {

@@ -5,7 +5,7 @@ export class BWActorSheet extends ActorSheet {
 
     get template(): string {
         const path = "systems/burningwheel/templates";
-        return `${path}/${this.actor.data.type}-sheet.html`;
+        return `${path}/${this.actor.data.type}-sheet.hbs`;
     }
 
     static get defaultOptions(): FormApplicationOptions {

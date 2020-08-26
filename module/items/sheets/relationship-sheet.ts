@@ -4,6 +4,6 @@ export class RelationshipSheet extends ItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/relationship.html";
+        return "systems/burningwheel/templates/items/relationship.hbs";
     }
 }

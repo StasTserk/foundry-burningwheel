@@ -2,7 +2,7 @@ import { gearQualitySelect } from "../../constants.js";
 
 export class RangedWeaponSheet extends ItemSheet {
     get template(): string {
-        return "systems/burningwheel/templates/items/rangedWeapon.html";
+        return "systems/burningwheel/templates/items/rangedWeapon.hbs";
     }
 
     getData(): RangedSheetData {

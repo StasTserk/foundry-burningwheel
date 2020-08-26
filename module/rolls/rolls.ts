@@ -203,21 +203,21 @@ export async function maybeExpendTools(tools: Possession): Promise<unknown> {
 
 /* ============ Constants =============== */
 export const templates = {
-    armorDialog: "systems/burningwheel/templates/chat/armor-dialog.html",
-    armorMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    attrDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
-    attrMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    circlesDialog: "systems/burningwheel/templates/chat/circles-dialog.html",
-    circlesMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    learnDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
-    learnMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    skillDialog: "systems/burningwheel/templates/chat/skill-dialog.html",
-    skillMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    statDialog: "systems/burningwheel/templates/chat/roll-dialog.html",
-    statMessage: "systems/burningwheel/templates/chat/roll-message.html",
-    rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.html",
-    resourcesDialog: "systems/burningwheel/templates/chat/resources-dialog.html",
-    resourcesMessage: "systems/burningwheel/templates/chat/roll-message.html"
+    armorDialog: "systems/burningwheel/templates/chat/armor-dialog.hbs",
+    armorMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    attrDialog: "systems/burningwheel/templates/chat/roll-dialog.hbs",
+    attrMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    circlesDialog: "systems/burningwheel/templates/chat/circles-dialog.hbs",
+    circlesMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    learnDialog: "systems/burningwheel/templates/chat/roll-dialog.hbs",
+    learnMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    skillDialog: "systems/burningwheel/templates/chat/skill-dialog.hbs",
+    skillMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    statDialog: "systems/burningwheel/templates/chat/roll-dialog.hbs",
+    statMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.hbs",
+    resourcesDialog: "systems/burningwheel/templates/chat/resources-dialog.hbs",
+    resourcesMessage: "systems/burningwheel/templates/chat/roll-message.hbs"
 };
 
 

@@ -4,6 +4,6 @@ export class ReputationSheet extends ItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/reputation.html";
+        return "systems/burningwheel/templates/items/reputation.hbs";
     }
 }

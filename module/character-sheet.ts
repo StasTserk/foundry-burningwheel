@@ -179,7 +179,7 @@ export class BWCharacterSheet extends BWActorSheet {
 
             // cache the current list of skills since it'll be used after for the actual skill data
             game.burningwheel.skills = skills;
-            const html = await renderTemplate("systems/burningwheel/templates/chat/new-skill-dialog.html", { skills });
+            const html = await renderTemplate("systems/burningwheel/templates/chat/new-skill-dialog.hbs", { skills });
             const dialog = new Dialog({
                 id: 'learn-skill',
                 title: "Pick a new skill to learn",

@@ -41,7 +41,7 @@ export class CharacterBurnerDialog extends Dialog {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/dialogs/character-burner.html";
+        return "systems/burningwheel/templates/dialogs/character-burner.hbs";
     }
 
     static get defaultOptions(): FormApplicationOptions {

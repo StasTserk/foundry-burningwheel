@@ -4,6 +4,6 @@ export class AffiliationSheet extends ItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/affiliation.html";
+        return "systems/burningwheel/templates/items/affiliation.hbs";
     }
 }

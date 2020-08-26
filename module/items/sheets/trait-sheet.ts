@@ -6,7 +6,7 @@ export class TraitSheet extends ItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/trait.html";
+        return "systems/burningwheel/templates/items/trait.hbs";
     }
 
     getData(): TraitSheetData {

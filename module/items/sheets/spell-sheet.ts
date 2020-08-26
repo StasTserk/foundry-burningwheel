@@ -7,7 +7,7 @@ export class SpellSheet extends ItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/spell.html";
+        return "systems/burningwheel/templates/items/spell.hbs";
     }
 
     getData(): TraitSheetData {

@@ -8,7 +8,7 @@ export async function migrateData(): Promise<void> {
     if (isNewerVersion(latest, recentVersion)) {
         // we need to do some updates.
         if (isNewerVersion("0.2.1", recentVersion)) {
-            // refactored intiatilization code to use a flag for actors
+            // refactored initialization code to use a flag for actors
             // to initialize fists, beliefs and instincts on new characters
             // only if a flag was set.
             // these items will have already been initialized on existing

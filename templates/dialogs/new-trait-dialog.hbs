@@ -1,0 +1,24 @@
+<h2>Pick a new trait</h2>
+<div class="search-grid">
+    {{#each traits as |t|}}
+    <div data-trait-name="{{t.name}}" class="flex-row search-entry">
+        <div class="item-select-header">
+            <input type="checkbox" id="{{t.id}}" value="{{t.id}}">
+            <label for="{{t.id}}">{{t.name}}</label>
+        </div>
+        <div class="item-select-info">
+            {{#if t.data.data.restrictions}}Restrictions: {{titlecase t.data.data.restrictions}}{{/if}}
+        </div>
+        <div class="item-select-info">
+            Type: {{titlecase t.data.data.traittype}}
+        </div>
+        <div class="item-select-info">
+            Src: {{t.itemSource}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+<div class="search-box">
+    <i class="fas fa-search"></i>
+    <input type="text" class="new-trait-dialog-search" placeholder="Search">
+</div>

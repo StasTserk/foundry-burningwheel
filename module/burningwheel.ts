@@ -104,5 +104,16 @@ Hooks.on('renderDialog', (dialog, html: JQuery) => {
                 }
             });
         });
+    } else if (dialog.data.id && dialog.data.id === 'learn-trait') {
+        html.find('input.new-trait-dialog-search').on('input', (e) => {
+            const searchTerm = $(e.target).val() as string;
+            html.find('.search-grid > .search-entry').each((_, item) => {
+                if ((item.dataset.traitName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+        });
     }
 });

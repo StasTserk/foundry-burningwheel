@@ -30,8 +30,8 @@ export function handleWeaponRoll(target: HTMLButtonElement, sheet: BWActorSheet)
     const skill: Skill | null = sheet.actor.getOwnedItem(skillId) as Skill;
     if (skill) {
         return skill.data.data.learning ? 
-            handleLearningRoll(target, sheet, weaponExtraData) :
-            handleSkillRoll(target, sheet, weaponExtraData);
+            handleLearningRoll({ target, sheet, extraInfo: weaponExtraData }) :
+            handleSkillRoll({ target, sheet, extraInfo: weaponExtraData });
     }
     throw Error("Provided skillID did not correspond to an owned skill.");
 }

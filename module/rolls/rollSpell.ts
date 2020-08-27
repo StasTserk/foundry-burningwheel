@@ -23,9 +23,10 @@ export async function handleSpellRoll(target: HTMLButtonElement, sheet: BWActorS
 
     const sorcerySkill: Skill | null = sheet.actor.getOwnedItem(sorcerySkillId) as Skill;
     if (sorcerySkill) {
+        const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
         return sorcerySkill.data.data.learning ? 
-            handleLearningRoll(target, sheet, spellData) :
-            handleSkillRoll(target, sheet, spellData);
+            handleLearningRoll({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle } }) :
+            handleSkillRoll({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle } });
     }
     throw Error("The designated skill no longer exists on the character");
 }

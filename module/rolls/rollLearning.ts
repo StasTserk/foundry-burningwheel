@@ -17,7 +17,7 @@ import {
     RollDialogData
 } from "./rolls.js";
 
-export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
+export async function handleLearningRoll({ target, sheet, extraInfo, dataPreset }: LearningRollOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     if (skill.data.data.root2) {
@@ -28,13 +28,13 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
                 root1: {
                     label: skill.data.data.root1.titleCase(),
                     callback: () => {
-                        return buildLearningDialog(skill, skill.data.data.root1, sheet, extraInfo);
+                        return buildLearningDialog(skill, skill.data.data.root1, sheet, extraInfo, dataPreset);
                     }
                 },
                 root2: {
                     label: skill.data.data.root2.titleCase(),
                     callback: () => {
-                        return buildLearningDialog(skill, skill.data.data.root2, sheet, extraInfo);
+                        return buildLearningDialog(skill, skill.data.data.root2, sheet, extraInfo, dataPreset);
                     }
                 }
             }
@@ -44,12 +44,12 @@ export async function handleLearningRoll(target: HTMLButtonElement, sheet: BWAct
 
 }
 
-async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string) {
+async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string, presetData?: Partial<LearningDialogData>) {
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
     const stat = getProperty(actor.data.data, statName);
 
-    const data: LearningDialogData = {
+    const data: LearningDialogData = Object.assign({
         name: `Beginner's Luck ${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -62,7 +62,7 @@ async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActo
         skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
-    };
+    }, presetData);
 
     const html = await renderTemplate(templates.learnDialog, data);
     return new Promise(_resolve =>
@@ -242,4 +242,11 @@ export interface LearningDialogData extends RollDialogData {
     skill: TracksTests;
     needsToolkit: boolean;
     toolkits: PossessionRootData[];
+}
+
+export interface LearningRollOptions {
+    target: HTMLButtonElement;
+    sheet: BWActorSheet;
+    extraInfo?: string;
+    dataPreset?: Partial<LearningDialogData>
 }

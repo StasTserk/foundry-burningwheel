@@ -17,12 +17,12 @@ import {
     maybeExpendTools,
 } from "./rolls.js";
 
-export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
+export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo }: SkillRollOptions ): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
-    const templateData: SkillDialogData = {
+    const templateData: SkillDialogData = Object.assign({
         name: skill.data.name,
         difficulty: 3,
         bonusDice: 0,
@@ -36,7 +36,7 @@ export async function handleSkillRoll(target: HTMLButtonElement, sheet: BWActorS
         wildForks: actor.getWildForks(skill.data.name),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
-    };
+    }, dataPreset);
     const html = await renderTemplate(templates.skillDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
@@ -172,4 +172,11 @@ export class AstrologyDie extends Die {
             else return 0;
           });
     }
+}
+
+export interface SkillRollOptions {
+    target: HTMLButtonElement;
+    sheet: BWActorSheet;
+    dataPreset?: Partial<SkillDialogData>;
+    extraInfo?: string;
 }

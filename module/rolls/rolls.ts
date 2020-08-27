@@ -20,7 +20,7 @@ export async function handleRollable(
 
     switch(rollType) {
         case "skill":
-            return handleSkillRoll(target, sheet);
+            return handleSkillRoll({ target, sheet });
         case "stat":
             return handleStatRoll(target, sheet);
         case "circles":
@@ -30,7 +30,7 @@ export async function handleRollable(
         case "resources":
             return handleResourcesRoll(target, sheet);
         case "learning":
-            return handleLearningRoll(target, sheet);
+            return handleLearningRoll({ target, sheet });
         case "shrug":
             if (sheet.actor.data.data.ptgs.shrugging) {
                 return sheet.actor.update({ "data.ptgs.shrugging": false });

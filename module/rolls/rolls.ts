@@ -12,6 +12,7 @@ import { handleStatRoll } from "./rollStat.js";
 import { handleArmorRoll } from "./rollArmor.js";
 import { handleWeaponRoll } from "./rollWeapon.js";
 import { handleSpellRoll } from "./rollSpell.js";
+import { handleSpellTaxRoll } from "./rollSpellTax.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
@@ -22,31 +23,33 @@ export async function handleRollable(
         case "skill":
             return handleSkillRoll({ target, sheet });
         case "stat":
-            return handleStatRoll(target, sheet);
+            return handleStatRoll({ target, sheet });
         case "circles":
-            return handleCirclesRoll(target, sheet);
+            return handleCirclesRoll({ target, sheet });
         case "attribute":
-            return handleAttrRoll(target, sheet);
+            return handleAttrRoll({ target, sheet });
         case "resources":
-            return handleResourcesRoll(target, sheet);
+            return handleResourcesRoll({ target, sheet });
         case "learning":
             return handleLearningRoll({ target, sheet });
         case "shrug":
             if (sheet.actor.data.data.ptgs.shrugging) {
                 return sheet.actor.update({ "data.ptgs.shrugging": false });
             }
-            return handleShrugRoll(target, sheet);
+            return handleShrugRoll({ target, sheet });
         case "grit":
             if (sheet.actor.data.data.ptgs.gritting) {
                 return sheet.actor.update({ "data.ptgs.gritting": false });
             }
-            return handleGritRoll(target, sheet);
+            return handleGritRoll({ target, sheet });
         case "weapon":
-            return handleWeaponRoll(target, sheet);
+            return handleWeaponRoll({ target, sheet });
         case "spell":
-            return handleSpellRoll(target, sheet);
+            return handleSpellRoll({ target, sheet });
         case "armor":
-            return handleArmorRoll(target, sheet);
+            return handleArmorRoll({ target, sheet });
+        case "spellTax":
+            return handleSpellTaxRoll(target, sheet);
     }
 }
 
@@ -291,4 +294,11 @@ interface BaseDataObject {
     },
     penaltySources: helpers.StringIndexedObject<string>,
     obstacleTotal: number
+}
+
+export interface RollOptions {
+    target: HTMLButtonElement;
+    sheet: BWActorSheet;
+    extraInfo?: string;
+    dataPreset?: Partial<RollDialogData>;
 }

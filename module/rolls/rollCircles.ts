@@ -11,10 +11,11 @@ import {
     RerollData,
     RollChatMessageData,
     rollDice,
-    templates
+    templates,
+    RollOptions
 } from "./rolls.js";
 
-export async function handleCirclesRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+export async function handleCirclesRoll({ target, sheet }: RollOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {

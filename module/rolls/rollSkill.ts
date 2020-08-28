@@ -15,6 +15,7 @@ import {
     templates,
     extractSelectString,
     maybeExpendTools,
+    RollOptions,
 } from "./rolls.js";
 
 export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo }: SkillRollOptions ): Promise<unknown> {
@@ -174,9 +175,7 @@ export class AstrologyDie extends Die {
     }
 }
 
-export interface SkillRollOptions {
-    target: HTMLButtonElement;
-    sheet: BWActorSheet;
+export interface SkillRollOptions extends RollOptions {
     dataPreset?: Partial<SkillDialogData>;
     extraInfo?: string;
 }

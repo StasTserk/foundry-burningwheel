@@ -3,6 +3,7 @@ import { Skill, Spell } from "../items/item.js";
 import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import { RollOptions } from "./rolls.js";
+import { showSpellTaxDialog } from "./rollSpellTax.js";
 
 export async function handleSpellRoll({ target, sheet }: RollOptions): Promise<unknown> {
     const sorcerySkillId = target.dataset.skillId;
@@ -25,8 +26,11 @@ export async function handleSpellRoll({ target, sheet }: RollOptions): Promise<u
     if (sorcerySkill) {
         const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
         return sorcerySkill.data.data.learning ? 
-            handleLearningRoll({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle } }) :
-            handleSkillRoll({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle } });
+            handleLearningRoll({ target, sheet, extraInfo: spellData,
+                dataPreset: { difficulty: obstacle },
+                onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, sheet) }) :
+            handleSkillRoll({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle },
+                onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, sheet) });
     }
     throw Error("The designated skill no longer exists on the character");
 }

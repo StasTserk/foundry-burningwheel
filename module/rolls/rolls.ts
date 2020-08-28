@@ -301,4 +301,5 @@ export interface RollOptions {
     sheet: BWActorSheet;
     extraInfo?: string;
     dataPreset?: Partial<RollDialogData>;
+    onRollCallback?: () => Promise<unknown>;
 }

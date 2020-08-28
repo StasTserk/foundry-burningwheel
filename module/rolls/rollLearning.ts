@@ -18,9 +18,9 @@ import {
     RollOptions
 } from "./rolls.js";
 
-export async function handleLearningRoll({ target, sheet, extraInfo, dataPreset }: LearningRollOptions): Promise<unknown> {
-    const skillId = target.dataset.skillId || "";
-    const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
+export async function handleLearningRoll(rollOptions: LearningRollOptions): Promise<unknown> {
+    const skillId = rollOptions.target.dataset.skillId || "";
+    const skill = (rollOptions.sheet.actor.getOwnedItem(skillId) as Skill);
     if (skill.data.data.root2) {
         return new Dialog({
             title: "Pick Root Stat",
@@ -29,32 +29,40 @@ export async function handleLearningRoll({ target, sheet, extraInfo, dataPreset 
                 root1: {
                     label: skill.data.data.root1.titleCase(),
                     callback: () => {
-                        return buildLearningDialog(skill, skill.data.data.root1, sheet, extraInfo, dataPreset);
+                        return buildLearningDialog({ skill, statName: skill.data.data.root1, ...rollOptions });
                     }
                 },
                 root2: {
                     label: skill.data.data.root2.titleCase(),
                     callback: () => {
-                        return buildLearningDialog(skill, skill.data.data.root2, sheet, extraInfo, dataPreset);
+                        return buildLearningDialog({ skill, statName: skill.data.data.root2,  ...rollOptions });
                     }
                 }
             }
         }).render(true);
     }
-    return buildLearningDialog(skill, skill.data.data.root1, sheet, extraInfo);
+    return buildLearningDialog({ skill, statName: skill.data.data.root1,...rollOptions });
 
 }
 
-async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string, presetData?: Partial<LearningDialogData>) {
+async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPreset, onRollCallback }: LearningRollDialogSettings) {
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
     const stat = getProperty(actor.data.data, statName);
+
+    let tax;
+    if (statName.toLowerCase() === "will") {
+        tax = sheet.actor.data.data.willTax;
+    } else if (statName.toLowerCase() === "forte") {
+        tax = sheet.actor.data.data.forteTax;
+    }
 
     const data: LearningDialogData = Object.assign({
         name: `Beginner's Luck ${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
+        tax,
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         toolkits: actor.data.toolkits,
@@ -63,7 +71,7 @@ async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActo
         skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
-    }, presetData);
+    }, dataPreset);
 
     const html = await renderTemplate(templates.learnDialog, data);
     return new Promise(_resolve =>
@@ -74,7 +82,7 @@ async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActo
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        learningRollCallback(dialogHtml, skill, statName, sheet, extraInfo)
+                        learningRollCallback(dialogHtml, skill, statName, tax, sheet, extraInfo, onRollCallback)
                 }
             }
         }).render(true)
@@ -82,7 +90,7 @@ async function buildLearningDialog(skill: Skill, statName: string, sheet: BWActo
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery, skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, statName: string, tax: number, sheet: BWActorSheet, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
     
     const baseData = extractBaseData(dialogHtml, sheet);
     let beginnerPenalty = baseData.diff;
@@ -101,15 +109,12 @@ async function learningRollCallback(
             maybeExpendTools(tools);
         }
     }
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice + baseData.miscDice.sum,
-        baseData.obstacleTotal);
+    const numDice = exp + baseData.bDice - baseData.woundDice - tax + baseData.miscDice.sum;
+    const dg = helpers.difficultyGroup(numDice, baseData.obstacleTotal);
     baseData.penaltySources["Beginner's Luck"] = `+${beginnerPenalty}`;
     baseData.obstacleTotal += beginnerPenalty;
 
-    const roll = await rollDice(
-        exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum,
-        stat.open, stat.shade,
-    );
+    const roll = await rollDice(numDice, stat.open, stat.shade);
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
     const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
@@ -139,6 +144,7 @@ async function learningRollCallback(
             extraInfo
         };
         const messageHtml = await renderTemplate(templates.learnMessage, data);
+        if (onRollCallback) { onRollCallback(); }
         return ChatMessage.create({
             content: messageHtml,
             speaker: ChatMessage.getSpeaker({actor: sheet.actor})
@@ -247,4 +253,9 @@ export interface LearningDialogData extends RollDialogData {
 
 export interface LearningRollOptions extends RollOptions {
     dataPreset?: Partial<LearningDialogData>
+}
+
+interface LearningRollDialogSettings extends RollOptions {
+    skill: Skill;
+    statName: string;
 }

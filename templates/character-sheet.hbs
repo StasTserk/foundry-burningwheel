@@ -332,12 +332,13 @@
 
     <input type="checkbox" id="{{actor._id}}-collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
     <label for="{{actor._id}}-collapseSkills" class="section-collapse-label">
-        <h2 class="section-header"><i class="fas fa-chevron-down"></i>Skills</h2>
+        <h2 class="section-header"><i class="fas fa-chevron-down"></i>Skills</i></h2>
     </label>
     <div class="skills">
         {{#each skills as |skill|}}
             {{> "systems/burningwheel/templates/parts/rollable-skill.hbs" skill=skill }}
         {{/each}}
+        <div class="add-new-skill-label" data-action="addSkill"><i class="fas fa-plus"></i>Add New Skill</div>
     </div>
 
     <input type="checkbox" id="{{actor._id}}-collapseLearning" name="data.collapseLearning" class="section-collapse learning-collapse" {{ checked data.collapseLearning }}>

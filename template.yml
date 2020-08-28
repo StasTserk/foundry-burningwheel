@@ -81,6 +81,7 @@ Actor:
       debt: ''
       resourcesTax: 0
       willTax: 0
+      forteTax: 0
       fate: 0
       persona: 0
       deeds: 0
@@ -93,12 +94,22 @@ Actor:
         armorTrained: false
         ignoreSuperficialWounds: false
         showBurner: true
+    spellsSustained:
+      sustainedSpell1: ''
+      sustainedSpell1Ob: 0
+      sustainedSpell2: ''
+      sustainedSpell2Ob: 0
+      sustainedSpell3: ''
+      sustainedSpell3Ob: 0
+      sustainedSpell4: ''
+      sustainedSpell4Ob: 0
   character:
     templates:
       - common
       - displayProps
       - ptgs
       - settings
+      - spellsSustained
     stock: ''
     age: 18
     lifepathString: ''

@@ -57,7 +57,7 @@ input.hidden {
     column-gap: 5px;
     row-gap: 5px;
 
-    div {
+    & > div {
         &:hover {
             background-color: $hover-color;
         }

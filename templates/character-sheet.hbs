@@ -155,11 +155,11 @@
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Stats</h2>
     </label>
     <div class="stats">
-        {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=data.will namePrefix="data.will" taxName="data.willTax" taxValue=data.willTax type="stat"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=data.will namePrefix="data.will" taxName="data.willTax" taxValue=data.willTax type="stat" taxDisabled=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Power" stat=data.power namePrefix="data.power" type="stat"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Agility" stat=data.agility namePrefix="data.agility" type="stat"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Perception" stat=data.perception namePrefix="data.perception" type="stat"}}
-        {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Forte" stat=data.forte namePrefix="data.forte" type="stat"}}
+        {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Forte" stat=data.forte namePrefix="data.forte" type="stat" taxName="data.forteTax" taxValue=data.forteTax taxDisabled=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Speed" stat=data.speed namePrefix="data.speed" type="stat"}}
         <div class="stats-footer flex-row">
             <label>Stride</label><input type="number" placeholder="0" name="data.stride" value="{{data.stride}}">
@@ -280,6 +280,41 @@
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Spells</h2>
     </label>
     <div class="spell-section item-grid col-3">
+        <div class="spell-sustained-info">
+            <div>
+                Spells Sustained
+            </div>
+            <div><input type="number" name="data.willTax" value="{{data.willTax}}" data-dtype="Number" class="exponent"> / {{ data.maxSustained }}</div>
+            
+            <div>
+                Forte Tax
+            </div>
+            <div><input type="number" name="data.forteTax" value="{{data.forteTax}}" data-dtype="Number" class="exponent"> / {{ data.forte.exp }}</div>
+            
+            <div>
+                Maximum Sustainable Obstacle
+            </div>
+            <div><input type="number" disabled value="{{data.maxObSustained}}" class="exponent"></div>
+            
+        </div>
+        <div class="sustained-spell-list">
+            <div class="grid-header">Sustained Spell</div><div class="grid-header">Ob</div><div class="grid-header">Test</div><div class="grid-header">Sustained Spell</div class="grid-header"><div class="grid-header">Ob</div><div class="grid-header">Test</div>
+            <input type="text" name="data.sustainedSpell1" value="{{data.sustainedSpell1}}">
+            <input type="number" data-dtype="Number" name="data.sustainedSpell1Ob" value="{{data.sustainedSpell1Ob}}">
+            <button class="rollable" data-rollable-name="{{data.sustainedSpell1}}" data-obstacle="{{data.sustainedSpell1Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+
+            <input type="text" name="data.sustainedSpell2" value="{{data.sustainedSpell2}}">
+            <input type="number" data-dtype="Number" name="data.sustainedSpell2Ob" value="{{data.sustainedSpell2Ob}}">
+            <button class="rollable" data-rollable-name="{{data.sustainedSpell2}}" data-obstacle="{{data.sustainedSpell2Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+
+            <input type="text" name="data.sustainedSpell3" value="{{data.sustainedSpell3}}">
+            <input type="number" data-dtype="Number" name="data.sustainedSpell3Ob" value="{{data.sustainedSpell3Ob}}">
+            <button class="rollable" data-rollable-name="{{data.sustainedSpell3}}" data-obstacle="{{data.sustainedSpell3Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+
+            <input type="text" name="data.sustainedSpell4" value="{{data.sustainedSpell4}}">
+            <input type="number" data-dtype="Number" name="data.sustainedSpell4Ob" value="{{data.sustainedSpell4Ob}}">
+            <button class="rollable" data-rollable-name="{{data.sustainedSpell4}}" data-obstacle="{{data.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+        </div>
         {{#each spells as |spell|}}
         {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.sorcerousSkills}}
         {{/each}}

@@ -70,7 +70,7 @@
         {{#if taxName}}
         <div class="attribute-subrow">
             <label class="attribute-label">Tax</label>
-            <input type="number" class="circle-input" name="{{taxName}}" value="{{taxValue}}">
+            <input type="number" class="circle-input" value="{{taxValue}}" {{#if taxDisabled}}disabled{{else}}name="{{taxName}}"{{/if}}>
         </div>
         {{/if}}
         <input type="checkbox" class="hidden rollable-open-checkbox" id="{{actor._id}}-{{namePrefix}}-open" name="{{namePrefix}}.open" {{checked stat.open}}>

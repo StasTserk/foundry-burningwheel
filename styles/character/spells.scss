@@ -1,6 +1,30 @@
 @import "../mixins.scss";
 
 .spell-section {
+    .spell-sustained-info {
+        display: grid;
+        grid-template-columns: 1fr 4em;
+    }
+    .sustained-spell-list {
+        .grid-header {
+            font-weight: bold;
+        }
+
+        grid-column: 2 / span 2;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr 3em min-content);
+
+        input {
+            @include underlined-input;
+            height: 100%;
+
+            &[type="number"] {
+                width: 3em;
+                @include no-number-arrows;
+            }
+        }
+    }
+
     .spell-section-item {
         height: min-content;
         @include colored-item(black);

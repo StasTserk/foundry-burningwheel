@@ -13,9 +13,11 @@ import {
     MeleeWeaponRootData,
     RangedWeaponRootData,
     SpellDataRoot,
+    Trait,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
 import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
+import { addNewItem } from "./dialogs/importItemDialog.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
@@ -158,7 +160,7 @@ export class BWCharacterSheet extends BWActorSheet {
             'i[data-action="addRelationship"]',
             'i[data-action="addReputation"]',
             'i[data-action="addTrait"]',
-            
+            '*[data-action="addSkill"]',
         ];
         html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
 
@@ -172,121 +174,21 @@ export class BWCharacterSheet extends BWActorSheet {
 
     async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor): Promise<Application> {
         e.preventDefault();
-
-        const loadExistingCallback = async (_html) => {
-            const skills = (await helpers.getItemsOfType("skill"))
-                .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
-
-            // cache the current list of skills since it'll be used after for the actual skill data
-            game.burningwheel.skills = skills;
-            const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-skill-dialog.hbs", { skills });
-            const dialog = new Dialog({
-                id: 'learn-skill',
-                title: "Pick a new skill to learn",
-                content: html,
-                buttons: {
-                    add: {
-                        label: "Add",
-                        callback: (dialogHtml: JQuery) => {
-                            dialogHtml.find('input:checked')
-                                .each((_, element: HTMLInputElement) => {
-                                    const skillRoot: SkillDataRoot = game.burningwheel.skills
-                                        .find((s: Skill) => s._id === element.value).data;
-                                    skillRoot.data.learning = true;
-                                    actor.createOwnedItem(skillRoot, {});
-                                });
-                        }
-                    },
-                    cancel: {
-                        label: "Cancel"
-                    }
-                }
-            } as DialogData & { id: string },
-            { width: 530 });
-            dialog.render(true);
-        };
-
-        return new Dialog({
-            title: "Learn new Skill",
-            buttons: {
-                makeNew: {
-                    label: "Make new skill",
-                    callback: async () => {
-                        const i = await actor.createOwnedItem({
-                            name: "New Skill",
-                            type: "skill",
-                            data: {
-                                learning: true,
-                                root1: "perception",
-                                skilltype: "special"
-                            }
-                        });
-                        return this.actor.getOwnedItem(i._id)?.sheet.render(true);
-                    }
-                },
-                loadExisting: {
-                    label: "Load existing skill",
-                    callback: (html) => loadExistingCallback(html)
-                }
+        return addNewItem({
+            actor: actor,
+            searchTitle: "Learn New Skill",
+            itemType: "skill",
+            itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
+            itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
+            baseData: {
+                learning: true,
+                root1: "perception",
+                skilltype: "special"
+            },
+            forcedData: {
+                learning: true
             }
-        }).render(true);
-    }
-
-    async learnNewTrait(actor: BWActor, traitType: string, ): Promise<Application> { 
-        const loadExistingCallback = async (_html) => {
-            const traits = (await helpers.getItemsOfType("trait"))
-                .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
-
-            // cache the current list of skills since it'll be used after for the actual skill data
-            game.burningwheel.traits = traits;
-            const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-trait-dialog.hbs", { traits });
-            const dialog = new Dialog({
-                id: 'learn-trait',
-                title: "Pick a new trait to learn",
-                content: html,
-                buttons: {
-                    add: {
-                        label: "Add",
-                        callback: (dialogHtml: JQuery) => {
-                            dialogHtml.find('input:checked')
-                                .each((_, element: HTMLInputElement) => {
-                                    const traitRoot: TraitDataRoot = game.burningwheel.traits
-                                        .find((s: Skill) => s._id === element.value).data;
-                                    actor.createOwnedItem(traitRoot, {});
-                                });
-                        }
-                    },
-                    cancel: {
-                        label: "Cancel"
-                    }
-                }
-            } as DialogData & { id: string },
-            { width: 530 });
-            dialog.render(true);
-        };
-
-        return new Dialog({
-            title: "Learn new Trait",
-            buttons: {
-                makeNew: {
-                    label: "Make new trait",
-                    callback: async () => {
-                        const i = await actor.createOwnedItem({
-                            name: `New ${traitType} Trait`,
-                            type: "trait",
-                            data: {
-                                traittype: traitType
-                            }
-                        });
-                        return this.actor.getOwnedItem(i._id)?.sheet.render(true);
-                    }
-                },
-                loadExisting: {
-                    label: "Load existing trait",
-                    callback: (html) => loadExistingCallback(html)
-                }
-            }
-        }).render(true);
+        });
     }
 
     private async _manageItems(e: JQuery.ClickEvent) {
@@ -308,8 +210,27 @@ export class BWCharacterSheet extends BWActorSheet {
                 options = { name: "New Affiliation", type: "affiliation", data: {}};
                 return this.actor.createOwnedItem(options).then(i =>
                     this.actor.getOwnedItem(i._id)?.sheet.render(true));
+            case "addSkill": 
+                return addNewItem({
+                    actor: this.actor,
+                    searchTitle: "Add New Skill",
+                    itemType: "skill",
+                    itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
+                    itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
+                    baseData: { root1: "perception", skilltype: "special" },
+                    popupMessage: "Add a new skill to the character sheet."
+                        + "Note this is different than learning a new skill via the beginner's luck rules."
+                        + "Check the learning section if you want to begin learning the skill."
+                });
             case "addTrait":
-                return this.learnNewTrait(this.actor, id);
+                return addNewItem({
+                    actor: this.actor,
+                    searchTitle: "Add New Trait",
+                    itemType: "trait",
+                    itemDataLeft: (i: Trait) => i.data.data.restrictions.titleCase(),
+                    itemDataMid: (i: Trait) => i.data.data.traittype.titleCase(),
+                    baseData: { traittype: id }
+                });
             case "delItem":
                 return this.actor.deleteOwnedItem(id);
             case "editItem":

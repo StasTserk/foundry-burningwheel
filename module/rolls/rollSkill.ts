@@ -18,7 +18,7 @@ import {
     RollOptions,
 } from "./rolls.js";
 
-export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo }: SkillRollOptions ): Promise<unknown> {
+export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollOptions ): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
@@ -46,8 +46,12 @@ export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo }: 
             buttons: {
                 roll: {
                     label: "Roll",
-                    callback: async (dialogHtml: JQuery) =>
-                        skillRollCallback(dialogHtml, skill, sheet, extraInfo)
+                    callback: async (dialogHtml: JQuery) => {
+                        skillRollCallback(dialogHtml, skill, sheet, extraInfo);
+                        if (onRollCallback) {
+                            onRollCallback();
+                        }
+                    }
                 }
             }
         }).render(true)

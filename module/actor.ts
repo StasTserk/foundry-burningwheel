@@ -280,6 +280,9 @@ export class BWActor extends Actor {
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
 
+        this.data.data.maxSustained = parseInt(this.data.data.will.exp) - (this.data.data.ptgs.woundDice || 0) - 1;
+        this.data.data.maxObSustained = parseInt(this.data.data.forte.exp) - (this.data.data.ptgs.woundDice || 0) - this.data.data.forteTax - 1;
+
         const unRoundedReflexes =
             (parseInt(this.data.data.perception.exp, 10) +
             parseInt(this.data.data.agility.exp, 10) +
@@ -527,7 +530,7 @@ export interface CharacterDataRoot extends ActorData<BWCharacterData> {
     successOnlyRolls: string[];
 }
 
-interface BWCharacterData extends Common, DisplayProps, Ptgs {
+interface BWCharacterData extends Common, DisplayProps, Ptgs, SpellsMaintainedInfo {
     stock: string;
     age: number;
     lifepathString: string;
@@ -566,7 +569,10 @@ interface Common {
     property: string;
     loans: string;
     debt: string;
-    willTax: string;
+
+    willTax: number;
+    forteTax: number;
+
     resourcesTax: string;
     fate: string;
     persona: string;
@@ -669,4 +675,18 @@ export interface CharacterSettings {
 export interface NewItemData extends StringIndexedObject<any> {
     name: string;
     type: ItemType;
+}
+
+export interface SpellsMaintainedInfo {
+    sustainedSpell1: string;
+    sustainedSpell1Ob: number;
+    sustainedSpell2: string;
+    sustainedSpell2Ob: number;
+    sustainedSpell3: string;
+    sustainedSpell3Ob: number;
+    sustainedSpell4: string;
+    sustainedSpell5: string;
+
+    maxSustained?: number;
+    maxObSustained?: number;
 }

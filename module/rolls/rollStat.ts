@@ -20,7 +20,9 @@ export async function handleStatRoll(target: HTMLButtonElement, sheet: BWActorSh
     const rollModifiers = sheet.actor.getRollModifiers(statName);
     let tax = 0;
     if (target.dataset.rollableName?.toLowerCase() === "will") {
-        tax = parseInt(actor.data.data.willTax, 10);
+        tax = actor.data.data.willTax;
+    } else if (target.dataset.rollableName?.toLowerCase() === "forte") {
+        tax = actor.data.data.forteTax;
     }
     const data: StatDialogData = {
         name: `${statName} Test`,
@@ -62,11 +64,11 @@ async function statRollCallback(
     const exp = parseInt(stat.exp, 10);
 
     const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - tax - baseData.woundDice + baseData.miscDice.sum,
+    const dg = helpers.difficultyGroup(exp + baseData.bDice - (tax || 0) - baseData.woundDice + baseData.miscDice.sum,
         baseData.obstacleTotal);
 
     const roll = await rollDice(
-        exp + baseData.bDice + baseData.aDice - baseData.woundDice - tax + baseData.miscDice.sum,
+        exp + baseData.bDice + baseData.aDice - baseData.woundDice - (tax || 0) + baseData.miscDice.sum,
         stat.open,
         stat.shade);
     if (!roll) { return; }

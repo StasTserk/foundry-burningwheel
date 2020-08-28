@@ -251,7 +251,7 @@ Item:
     optimalRange: 1
     extremeRange: 3
     maxRange: 125 paces
-    hadnedness: two
+    handedness: two
     description: ''
     skillId: ''
     shade: 'B'

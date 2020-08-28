@@ -14,7 +14,8 @@ import {
     extractCheckboxValue,
     extractSelectString,
     maybeExpendTools,
-    RollDialogData
+    RollDialogData,
+    RollOptions
 } from "./rolls.js";
 
 export async function handleLearningRoll({ target, sheet, extraInfo, dataPreset }: LearningRollOptions): Promise<unknown> {
@@ -244,9 +245,6 @@ export interface LearningDialogData extends RollDialogData {
     toolkits: PossessionRootData[];
 }
 
-export interface LearningRollOptions {
-    target: HTMLButtonElement;
-    sheet: BWActorSheet;
-    extraInfo?: string;
+export interface LearningRollOptions extends RollOptions {
     dataPreset?: Partial<LearningDialogData>
 }

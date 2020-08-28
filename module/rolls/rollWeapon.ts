@@ -1,10 +1,10 @@
 import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon } from "../items/item.js";
+import { RollOptions } from "./rolls.js";
 
-export function handleWeaponRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknown> {
     const weaponId = target.dataset.weaponId;
     if (!weaponId) {
         throw Error("Malformed weapon roll button. Weapon ID must be specified");

@@ -10,17 +10,18 @@ import {
     RerollData,
     RollChatMessageData,
     rollDice,
-    templates
+    templates,
+    RollOptions
 } from "./rolls.js";
 
-export async function handleShrugRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    return handlePtgsRoll(target, sheet, true);
+export async function handleShrugRoll({ target, sheet }: RollOptions): Promise<unknown> {
+    return handlePtgsRoll({ target, sheet, shrugging: true });
 }
-export async function handleGritRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
-    return handlePtgsRoll(target, sheet, false);
+export async function handleGritRoll({ target, sheet }: RollOptions): Promise<unknown> {
+    return handlePtgsRoll({ target, sheet, shrugging: false });
 }
 
-async function handlePtgsRoll(target: HTMLButtonElement, sheet: BWActorSheet, shrugging: boolean): Promise<unknown> {
+async function handlePtgsRoll({ target, sheet, shrugging }: PtgsRollOptions): Promise<unknown> {
     const actor = sheet.actor as BWActor;
     const stat = getProperty(actor.data, "data.health" || "") as Ability;
     const data: AttributeDialogData = {
@@ -126,4 +127,8 @@ async function ptgsRollCallback(
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
     });
+}
+
+export interface PtgsRollOptions extends RollOptions {
+    shrugging: boolean;
 }

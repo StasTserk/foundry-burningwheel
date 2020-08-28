@@ -1,10 +1,10 @@
-import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Skill, Spell } from "../items/item.js";
 import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
+import { RollOptions } from "./rolls.js";
 
-export async function handleSpellRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+export async function handleSpellRoll({ target, sheet }: RollOptions): Promise<unknown> {
     const sorcerySkillId = target.dataset.skillId;
     if (!sorcerySkillId) {
         return helpers.notifyError("No Skill Specified",

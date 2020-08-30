@@ -84,6 +84,19 @@ function registerHelpers() {
     Handlebars.registerHelper("slugify", (value: string) => {
         return slugify(value.toLowerCase());
     });
+
+    Handlebars.registerHelper("add", (...args): number => {
+        return (Array.prototype.slice.call(args, 0, -1) as (string|number)[]).reduce<number>((acc: number, val) => {
+            if (typeof val === "number") {
+                return acc + val as number;
+            }
+            return acc + parseInt(val as string);
+        }, 0);
+    });
+
+    Handlebars.registerHelper("sub", (a: string, b: string): number => {
+        return parseInt(a) - parseInt(b);
+    });
 }
 
 

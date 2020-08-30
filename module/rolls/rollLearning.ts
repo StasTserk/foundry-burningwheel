@@ -50,7 +50,7 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
     const actor = sheet.actor as BWActor;
     const stat = getProperty(actor.data.data, statName);
 
-    let tax;
+    let tax = 0;
     if (statName.toLowerCase() === "will") {
         tax = sheet.actor.data.data.willTax;
     } else if (statName.toLowerCase() === "forte") {

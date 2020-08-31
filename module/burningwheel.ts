@@ -10,6 +10,7 @@ import { slugify } from "./helpers.js";
 import { migrateData } from "./migration.js";
 import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
+import { NpcSheet } from "./npc-sheet.js";
 
 Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +23,11 @@ Hooks.once("init", async () => {
         types: ["character"],
         makeDefault: true
     });
+    Actors.registerSheet("burningwheel", NpcSheet, {
+        types: ["npc"],
+        makeDefault: true
+    });
+    
     RegisterItemSheets();
 
     registerSystemSettings();

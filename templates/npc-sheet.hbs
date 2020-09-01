@@ -1,3 +1,39 @@
-<form autocomplete="off" class="npc">
-    Placeholder NPC sheet.
+<form autocomplete="off" class="npc flex-row">
+    <div class="portrait">
+        <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+    </div>
+    <div class="npc-header">
+        <h1><input type="text" name="actor.name" value="{{actor.name}}"></h1>
+        <div class="npc-bio">
+            <div>
+                <label class="npc-section-label" for="{{actor._id}}-bio">Bio</label>
+                <textarea id="{{actor._id}}-bio">{{actor.bio}}</textarea>
+            </div>
+            <div class="flex-row artha-points">
+                <div>
+                    <label for="{{actor._id}}-fate-points" class="artha-label">Fate</label>
+                    <input id="{{actor._id}}-fate-points" name="data.fate" value="{{data.fate}}" data-dtype="Number" min="0" class="artha-input">
+                </div>
+                <div>
+                    <label for="{{actor._id}}-persona-points" class="artha-label">Persona</label>
+                    <input id="{{actor._id}}-persona-points" name="data.persona" value="{{data.persona}}" data-dtype="Number" min="0" class="artha-input">
+                </div>
+                <div>
+                    <label for="{{actor._id}}-deeds-points" class="artha-label">Deeds</label>
+                    <input id="{{actor._id}}-deeds-points" name="data.deeds" value="{{data.deeds}}" data-dtype="Number" min="0" class="artha-input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="npc-stats">
+        {{#each statRow as |stat|}}
+            {{> "systems/burningwheel/templates/parts/npc-stat.hbs"
+                label=stat.label
+                attributeValue = stat.value
+                attributeShade = stat.shade
+                attributeShadePath = stat.shadePath
+                attributePath = stat.valuePath
+                editMode = data.editMode}}
+        {{/each}}
+    </div>
 </form>

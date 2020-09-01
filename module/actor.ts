@@ -1,6 +1,8 @@
 import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject, getWorstShadeString } from "./helpers.js";
 import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, BWItemData, PossessionRootData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
+import * as constants from "./constants.js";
+import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 
 export class BWActor extends Actor {
     async processNewItem(item: ItemData): Promise<unknown> {
@@ -421,6 +423,50 @@ export class BWActor extends Actor {
         }
 
         this.data.data.ptgs.woundDice = woundDice;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+    _onCreate(data: any, options: any, userId: string, context: any): void {
+        super._onCreate(data, options, userId, context);
+        this.createOwnedItem([
+            { name: "Instinct 1", type: "instinct", data: {}},
+            { name: "Instinct 2", type: "instinct", data: {}},
+            { name: "Instinct 3", type: "instinct", data: {}},
+            { name: "Instinct Special", type: "instinct", data: {}},
+            { name: "Belief 1", type: "belief", data: {}},
+            { name: "Belief 2", type: "belief", data: {}},
+            { name: "Belief 3", type: "belief", data: {}},
+            { name: "Belief Special", type: "belief", data: {}}
+        ]);
+        this.createOwnedItem(constants.bareFistData);
+
+        if (this.data.type === "character") {
+            setTimeout(() => {
+                if (this.data.data.settings.showBurner) {
+                    new Dialog({
+                        title: "Launch Burner?",
+                        content: "This is a new character. Would you like to launch the character burner?",
+                        buttons: {
+                            yes: {
+                                label: "Yes",
+                                callback: () => {
+                                    CharacterBurnerDialog.Open(this);
+                                }
+                            },
+                            later: {
+                                label: "Later"
+                            },
+                            never: {
+                                label: "No",
+                                callback: () => {
+                                    this.update({ "data.settings.showBurner": false });
+                                }
+                            }
+                        }
+                    }).render(true);
+                }
+            }, 500);
+        }
     }
 
     private _calculateClumsyWeight() {

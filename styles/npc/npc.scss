@@ -1,0 +1,78 @@
+.npc {
+    .portrait {
+        width: 150px;
+        height: 150px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .npc-section-label {
+        font-size: 1.25em;
+        font-weight: bold;
+    }
+
+    .npc-header {
+        height: 150px;
+        width: calc(100% - 155px);
+        margin-left: 5px;
+
+        .npc-bio {
+            display: grid;
+            grid-template-columns: 1fr 9em;
+            height: calc(150px - 2.5em - 10px);
+
+            textarea {
+                resize: none;
+                height: calc(100% - 1.5em);
+            }
+        
+            .artha-points {
+                place-content: space-evenly;
+                div {
+                    background-color: transparent;
+                }
+                &:hover {
+                    background-color: transparent;
+                }
+                .artha-label {
+                    font-size: .75em;
+                    display: block;
+                    width: 3em;
+                    text-align: center;
+                }
+
+                .artha-input {
+                    border: 2px inset black;
+                    border-bottom-color: grey;
+                    border-right-color: grey;
+                    border-radius: .75em;
+                    height: 1.5em;
+                    width: 1.5em;
+                    font-size: 1.5em;
+                    text-align: center;
+
+                    &:hover {
+                        background-color: rgba(black, .15);
+                    }
+                }
+            }
+        }
+    }
+
+    .npc-stats {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(14, 1fr);
+        text-align: center;
+        font-size: 1.25em;
+
+        .stat-header {
+            font-weight: bold;
+            border-bottom: 1px solid black;
+        }
+    }
+}

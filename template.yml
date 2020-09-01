@@ -124,7 +124,14 @@ Actor:
     templates:
       - common
       - displayProps
-      - ptgs
+    bio: ''
+    ptgs:
+      woundShade: 'B'
+      suThresh: 3
+      liThresh: 5
+      miThresh: 7
+      seThresh: 8
+      trThresh: 9
 Item:
   types:
     - belief

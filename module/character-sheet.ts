@@ -78,8 +78,6 @@ export class BWCharacterSheet extends BWActorSheet {
             }
         }
 
-        this._maybeInitializeActor();
-
         data.beliefs = beliefs;
         data.instincts = instincts;
         data.skills = skills.sort(byName);
@@ -108,37 +106,6 @@ export class BWCharacterSheet extends BWActorSheet {
         data.traits = traitLists;
         data.systemVersion = game.system.data.version;
         return data;
-    }
-
-    async _maybeInitializeActor(): Promise<Application | void> {
-        const initialized = await this.actor.getFlag("burningwheel", "initialized") as boolean;
-        if (initialized) {
-            return;
-        }
-        await this.actor.setFlag("burningwheel", "initialized", true);
-        await this.addDefaultItems();
-        await this.actor.createOwnedItem(constants.bareFistData);
-        return new Dialog({
-            title: "Launch Burner?",
-            content: "This is a new character. Would you like to launch the character burner?",
-            buttons: {
-                yes: {
-                    label: "Yes",
-                    callback: () => {
-                        CharacterBurnerDialog.Open(this.actor);
-                    }
-                },
-                later: {
-                    label: "Later"
-                },
-                never: {
-                    label: "No",
-                    callback: () => {
-                        this.actor.update({ "data.settings.showBurner": false });
-                    }
-                }
-            }
-        }).render(true);
     }
 
     getArmorDictionary(armorItems: ItemData[]): { [key: string]: ItemData | null; } {
@@ -237,19 +204,6 @@ export class BWCharacterSheet extends BWActorSheet {
                 return this.actor.getOwnedItem(id)?.sheet.render(true);
         }
         return null;
-    }
-
-    async addDefaultItems():Promise<Item> {
-        return this.actor.createOwnedItem([
-            { name: "Instinct 1", type: "instinct", data: {}},
-            { name: "Instinct 2", type: "instinct", data: {}},
-            { name: "Instinct 3", type: "instinct", data: {}},
-            { name: "Instinct Special", type: "instinct", data: {}},
-            { name: "Belief 1", type: "belief", data: {}},
-            { name: "Belief 2", type: "belief", data: {}},
-            { name: "Belief 3", type: "belief", data: {}},
-            { name: "Belief Special", type: "belief", data: {}}
-        ]);
     }
 }
 

@@ -12,7 +12,9 @@ export async function preloadHandlebarsTemplates(): Promise<void> {
       "systems/burningwheel/templates/parts/rollable-skill.hbs",
       "systems/burningwheel/templates/parts/spell.hbs",
       "systems/burningwheel/templates/parts/weapons.hbs",
-      "systems/burningwheel/templates/parts/character-settings.hbs"
+      "systems/burningwheel/templates/parts/character-settings.hbs",
+
+      "systems/burningwheel/templates/parts/npc-stat.hbs"
     ];
 
     // Load the template parts

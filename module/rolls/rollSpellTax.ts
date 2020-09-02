@@ -100,7 +100,7 @@ async function taxTestCallback(
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWCharacter).addStatTest(stat, "Forte", "data.forte", dg, isSuccessful);
+        (sheet.actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", dg, isSuccessful);
     }
 
     if (!isSuccessful) {

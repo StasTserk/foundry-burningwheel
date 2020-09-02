@@ -84,7 +84,7 @@ async function attrRollCallback(
         callons
     };
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWCharacter).addAttributeTest(stat, name, accessor, dg, isSuccessful);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, name, accessor, dg, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({

@@ -103,11 +103,11 @@ async function resourcesRollCallback(
                 buttons: {
                     full: {
                         label: `Full Tax (${taxAmount} tax)`,
-                        callback: () => (sheet.actor as BWCharacter).taxResources(taxAmount, funds)
+                        callback: () => (sheet.actor as BWActor &  BWCharacter).taxResources(taxAmount, funds)
                     },
                     cut: {
                         label: "Cut your losses. (1 tax)",
-                        callback: () => (sheet.actor as BWCharacter).taxResources(1, funds)
+                        callback: () => (sheet.actor as BWActor &  BWCharacter).taxResources(1, funds)
                     },
                     skip: {
                         label: "Skip for now"
@@ -116,7 +116,7 @@ async function resourcesRollCallback(
             });
             taxMessage.render(true);
         }
-        (sheet.actor as BWCharacter).addAttributeTest(stat, "Resources", "data.resources", dg, isSuccess);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Resources", "data.resources", dg, isSuccess);
     }
 
     return ChatMessage.create({

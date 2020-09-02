@@ -122,7 +122,7 @@ async function ptgsRollCallback(
         sheet.actor.update(updateData);
     }
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWCharacter).addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({

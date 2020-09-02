@@ -51,7 +51,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 }
                 if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                     if (!helpers.isStat(name)) {
-                        (actor as BWCharacter).addAttributeTest(
+                        (actor as BWActor & BWCharacter).addAttributeTest(
                             getProperty(actor, `data.${accessor}`) as TracksTests,
                             name,
                             accessor,
@@ -59,7 +59,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                             true);
                     }
                     else {
-                        (actor as BWCharacter).addStatTest(
+                        (actor as BWActor & BWCharacter).addStatTest(
                             getProperty(actor, `data.${accessor}`) as TracksTests,
                             name,
                             accessor,
@@ -83,7 +83,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
             } else {
                 if (successes <= obstacleTotal && success) {
                     if (learningTarget === "perception") {
-                        (actor as BWCharacter).addStatTest(
+                        (actor as BWActor & BWCharacter).addStatTest(
                             getProperty(actor, "data.data.perception") as TracksTests,
                             "Perception",
                             "data.perception",

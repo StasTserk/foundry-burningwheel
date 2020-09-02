@@ -116,7 +116,7 @@ async function circlesRollCallback(
         }
     }
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWCharacter).addAttributeTest(stat, "Circles", "data.circles", dg, true);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Circles", "data.circles", dg, true);
     }
 
     return ChatMessage.create({

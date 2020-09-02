@@ -198,7 +198,7 @@ async function advanceBaseStat(
 
     const accessor = `data.${statName.toLowerCase()}`;
     const rootStat = getProperty(owner, `data.${accessor}`);
-    await (owner as BWCharacter).addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    await (owner as BWActor & BWCharacter).addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
     if (fr) { fr.learningTarget = skill.data.data.root1; }
     return cb(fr);
 }

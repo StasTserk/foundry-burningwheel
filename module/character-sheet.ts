@@ -1,4 +1,4 @@
-import { BWActor, NewItemData } from "./actor.js";
+import { BWActor, NewItemData } from "./bwactor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
 import * as helpers from "./helpers.js";

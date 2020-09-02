@@ -75,4 +75,22 @@
             border-bottom: 1px solid black;
         }
     }
+
+    .indented-section {
+        height: min-content;
+        margin-left: 20px;
+        .npc-section-label {
+            margin-left: -20px;
+            &:after {
+                content: "—";
+            }
+        }
+        .item-entry {
+            font-size: 1.125em;
+            margin-left: 5px;
+            &:hover {
+                color: red;
+            }
+        }
+    }
 }

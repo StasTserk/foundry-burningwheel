@@ -1,6 +1,13 @@
 import { StringIndexedObject, ShadeString } from "../helpers.js";
-import { CharacterSettings } from "../actor.js";
-import { SkillDataRoot, Skill, Trait, TraitDataRoot, TraitData, PropertyRootData, PropertyData, Property, ReputationDataRoot, ReputationData, AffiliationData, AffiliationDataRoot, RelationshipData, RelationshipDataRoot, BWItem, BWItemData, ItemType, SkillData } from "../items/item.js";
+import {
+    Skill, SkillDataRoot, SkillData,
+    Trait, TraitDataRoot, TraitData,
+    PropertyRootData, PropertyData, Property,
+    ReputationDataRoot, ReputationData,
+    AffiliationData, AffiliationDataRoot,
+    RelationshipData, RelationshipDataRoot,
+    BWItem, BWItemData, ItemType } from "../items/item.js";
+import { CharacterSettings } from "module/bwactor.js";
 
 export function extractRelationshipData(parent: JQuery): BurnerRelationshipData {
     return {

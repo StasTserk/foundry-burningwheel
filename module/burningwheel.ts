@@ -1,4 +1,4 @@
-import { BWActor } from "./actor.js";
+import { BWActor } from "./bwactor.js";
 import { BWCharacterSheet } from "./character-sheet.js";
 import {
     BWItem,

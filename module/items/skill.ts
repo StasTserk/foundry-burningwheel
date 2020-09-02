@@ -1,4 +1,4 @@
-import { Ability, TracksTests } from "../actor.js";
+import { Ability, TracksTests } from "../bwactor.js";
 import { ShadeString, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, ItemType } from "./item.js";
 

@@ -1,4 +1,4 @@
-import { BWActor, TracksTests } from "../actor.js";
+import { BWActor, TracksTests } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Skill, PossessionRootData } from "../items/item.js";

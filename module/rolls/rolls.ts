@@ -1,4 +1,4 @@
-import { BWActor, RollModifier, TracksTests } from "../actor.js";
+import { BWActor, RollModifier, TracksTests } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Possession } from "../items/item.js";

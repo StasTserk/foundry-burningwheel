@@ -1,4 +1,4 @@
-import { TracksTests } from "./actor.js";
+import { TracksTests } from "./bwactor.js";
 import { ArmorRootData, BWItem, DisplayClass, ItemType, Skill } from "./items/item.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0):void {

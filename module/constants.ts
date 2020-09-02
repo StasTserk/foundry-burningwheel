@@ -1,4 +1,4 @@
-import { NewItemData } from "./actor.js";
+import { NewItemData } from "./bwactor.js";
 import { toDictionary } from "./helpers.js";
 import { MeleeWeaponData } from "./items/meleeWeapon.js";
 

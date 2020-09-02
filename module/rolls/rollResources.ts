@@ -1,4 +1,4 @@
-import { Ability, BWActor } from "module/actor.js";
+import { Ability, BWActor, BWCharacter } from "module/bwactor.js";
 import { BWActorSheet } from "module/bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
@@ -93,31 +93,31 @@ async function resourcesRollCallback(
         callons
     };
     const messageHtml = await renderTemplate(templates.resourcesMessage, data);
-
-    if (!isSuccess) {
-        const taxAmount = dg === "Challenging" ? (baseData.obstacleTotal - parseInt(roll.result, 10)) :
-            (dg === "Difficult" ? 2 : 1);
-        const taxMessage = new Dialog({
-            title: "Failed Resource Roll!",
-            content: `<p>You have failed a ${dg} Resource test.</p><p>How do you wish to be taxed?</p><hr/>`,
-            buttons: {
-                full: {
-                    label: `Full Tax (${taxAmount} tax)`,
-                    callback: () => sheet.actor.taxResources(taxAmount, funds)
-                },
-                cut: {
-                    label: "Cut your losses. (1 tax)",
-                    callback: () => sheet.actor.taxResources(1, funds)
-                },
-                skip: {
-                    label: "Skip for now"
+    if (sheet.actor.data.type === "character") {
+        if (!isSuccess) {
+            const taxAmount = dg === "Challenging" ? (baseData.obstacleTotal - parseInt(roll.result, 10)) :
+                (dg === "Difficult" ? 2 : 1);
+            const taxMessage = new Dialog({
+                title: "Failed Resource Roll!",
+                content: `<p>You have failed a ${dg} Resource test.</p><p>How do you wish to be taxed?</p><hr/>`,
+                buttons: {
+                    full: {
+                        label: `Full Tax (${taxAmount} tax)`,
+                        callback: () => (sheet.actor as BWCharacter).taxResources(taxAmount, funds)
+                    },
+                    cut: {
+                        label: "Cut your losses. (1 tax)",
+                        callback: () => (sheet.actor as BWCharacter).taxResources(1, funds)
+                    },
+                    skip: {
+                        label: "Skip for now"
+                    }
                 }
-            }
-        });
-        taxMessage.render(true);
+            });
+            taxMessage.render(true);
+        }
+        (sheet.actor as BWCharacter).addAttributeTest(stat, "Resources", "data.resources", dg, isSuccess);
     }
-
-    sheet.actor.addAttributeTest(stat, "Resources", "data.resources", dg, isSuccess);
 
     return ChatMessage.create({
         content: messageHtml,

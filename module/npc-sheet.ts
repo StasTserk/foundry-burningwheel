@@ -1,6 +1,7 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { ShadeString } from "./helpers.js";
-import { BWActor } from "./actor.js";
+import { BWActor } from "./bwactor.js";
+import { TraitDataRoot } from "./items/item.js";
 
 export class NpcSheet extends BWActorSheet {
     getData(): ActorSheetData<unknown> {
@@ -22,17 +23,28 @@ export class NpcSheet extends BWActorSheet {
             { label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp", shade: actor.data.data.circles.shade, shadePath: "circles.shade" },
             { label: "Str", value: actor.data.data.stride, valuePath: "stride" },
         ];
+        data.beliefs = [];
+        data.traits = [];
+        data.instincts = [];
+        actor.items.forEach((i: ItemData) => {
+            if (i.type === "belief") { data.beliefs.push(i); }
+            if (i.type === "trait") { data.traits.push(i as TraitDataRoot); }
+            if (i.type === "instinct") { data.instincts.push(i); }
+        });
+
         return data;
     }
 }
 
 export interface NpcSheetData extends ActorSheetData {
     statRow: NPCStatEntry[];
+    beliefs: ItemData[];
+    instincts: ItemData[];
+    traits: TraitDataRoot[];
     actor: BWActor;
 }
 
 interface NPCStatEntry {
-    
 
     label: string;
     valuePath: string;

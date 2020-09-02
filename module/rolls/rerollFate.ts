@@ -1,5 +1,5 @@
 import { TestString } from "module/helpers.js";
-import { BWActor, TracksTests } from "../actor.js";
+import { BWActor, TracksTests, BWCharacter } from "../bwactor.js";
 import * as helpers from "../helpers.js";
 import { Skill, Armor } from "../items/item.js";
 import { RerollMessageData, rollDice, templates } from "./rolls.js";
@@ -39,7 +39,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     const newSuccesses = parseInt(reroll.result, 10);
     const success = (newSuccesses + successes) >= obstacleTotal;
 
-    if (actor.data.data.fate !== "0") {
+    if (actor.data.data.fate !== "0" && actor.data.type === "character") {
         if (target.dataset.rerollType === "stat") {
             const fateSpent = parseInt(getProperty(actor, `data.${accessor}.fate`) || "0", 10);
             const updateData = {};
@@ -51,7 +51,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 }
                 if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                     if (!helpers.isStat(name)) {
-                        actor.addAttributeTest(
+                        (actor as BWCharacter).addAttributeTest(
                             getProperty(actor, `data.${accessor}`) as TracksTests,
                             name,
                             accessor,
@@ -59,7 +59,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                             true);
                     }
                     else {
-                        actor.addStatTest(
+                        (actor as BWCharacter).addStatTest(
                             getProperty(actor, `data.${accessor}`) as TracksTests,
                             name,
                             accessor,
@@ -83,7 +83,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
             } else {
                 if (successes <= obstacleTotal && success) {
                     if (learningTarget === "perception") {
-                        actor.addStatTest(
+                        (actor as BWCharacter).addStatTest(
                             getProperty(actor, "data.data.perception") as TracksTests,
                             "Perception",
                             "data.perception",

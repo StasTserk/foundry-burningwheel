@@ -1,4 +1,4 @@
-import { BWActor } from "../actor.js";
+import { BWActor } from "../bwactor.js";
 import { weaponLengthSelect } from "../constants.js";
 import { StringIndexedObject, DivOfText } from "../helpers.js";
 import { HasPointCost } from "./item.js";

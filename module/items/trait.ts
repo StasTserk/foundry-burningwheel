@@ -1,4 +1,4 @@
-import { RollModifier } from "module/actor";
+import { RollModifier } from "module/bwactor";
 import { ItemType, HasPointCost } from "./item.js";
 
 export class Trait extends Item<TraitData> {

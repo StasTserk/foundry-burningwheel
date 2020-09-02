@@ -1,4 +1,4 @@
-import { BWActor, TracksTests, Ability } from "../actor.js";
+import { BWActor, TracksTests, Ability, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import { Skill, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
@@ -198,7 +198,7 @@ async function advanceBaseStat(
 
     const accessor = `data.${statName.toLowerCase()}`;
     const rootStat = getProperty(owner, `data.${accessor}`);
-    await owner.addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    await (owner as BWCharacter).addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
     if (fr) { fr.learningTarget = skill.data.data.root1; }
     return cb(fr);
 }

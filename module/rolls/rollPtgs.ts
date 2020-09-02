@@ -1,4 +1,4 @@
-import { Ability, BWActor } from "../actor.js";
+import { Ability, BWActor, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
@@ -121,7 +121,9 @@ async function ptgsRollCallback(
         updateData[accessor] = true;
         sheet.actor.update(updateData);
     }
-    sheet.actor.addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
+    if (sheet.actor.data.type === "character") {
+        (sheet.actor as BWCharacter).addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
+    }
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({
         content: messageHtml,

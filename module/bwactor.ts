@@ -1,10 +1,12 @@
-import { canAdvance, ShadeString, TestString, updateTestsNeeded, StringIndexedObject, getWorstShadeString } from "./helpers.js";
-import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, BWItemData, PossessionRootData } from "./items/item.js";
+import { ShadeString, updateTestsNeeded, StringIndexedObject, getWorstShadeString, TestString, canAdvance } from "./helpers.js";
+import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, PossessionRootData, BWItemData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
 import * as constants from "./constants.js";
 import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 
 export class BWActor extends Actor {
+    data!: BWActorDataRoot;
+
     async processNewItem(item: ItemData): Promise<unknown> {
         if (item.type === "trait") {
             const trait = item as TraitDataRoot;
@@ -29,7 +31,6 @@ export class BWActor extends Actor {
             }
         }
     }
-    data!: CharacterDataRoot;
 
     async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<Item> {
         return super.createOwnedItem(itemData, options);
@@ -64,40 +65,6 @@ export class BWActor extends Actor {
             });
     }
 
-    async addAttributeTest(
-            stat: TracksTests,
-            name: string,
-            accessor: string,
-            difficultyGroup: TestString,
-            isSuccessful: boolean): Promise<void>  {
-        return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
-    }
-
-    async addStatTest(
-            stat: TracksTests,
-            name: string,
-            accessor: string,
-            difficultyGroup: TestString,
-            isSuccessful: boolean,
-            routinesNeeded = false): Promise<void> {
-        name = name.toLowerCase();
-        const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
-        if (onlySuccessCounts && !isSuccessful) {
-            return;
-        }
-
-        this._addTestToStat(stat, accessor, difficultyGroup);
-        if (canAdvance(stat, routinesNeeded)) {
-            Dialog.confirm({
-                title: `Advance ${name}?`,
-                content: `<p>${name} is ready to advance. Go ahead?</p>`,
-                yes: () => this._advanceStat(accessor, parseInt(stat.exp, 10) + 1),
-                no: () => { return; },
-                defaultYes: true
-            });
-        }
-    }
-
     async updatePtgs(): Promise<this> {
         const accessorBase = "data.ptgs.wound";
         const forte = parseInt(this.data.data.forte.exp, 10) || 1;
@@ -128,47 +95,6 @@ export class BWActor extends Actor {
         return this.update(updateData);
     }
 
-    taxResources(amount: number, maxFundLoss: number): void {
-        const updateData = {};
-        let resourcesTax = parseInt(this.data.data.resourcesTax, 10) || 0;
-        const resourceExp = parseInt(this.data.data.resources.exp, 10) || 0;
-        const fundDice = parseInt(this.data.data.funds, 10) || 0;
-        if (amount <= maxFundLoss) {
-            updateData["data.funds"] = fundDice - amount;
-        } else {
-            updateData["data.funds"] = 0;
-            amount -= maxFundLoss;
-            resourcesTax = Math.min(resourceExp, amount+resourcesTax);
-            updateData["data.resourcesTax"] = resourcesTax;
-            if (resourcesTax === resourceExp) {
-                // you taxed all your resources away, they degrade
-                new Dialog({
-                    title: "Overtaxed Resources!",
-                    content: "<p>Tax has reduced your resources exponent to 0.</p><hr>",
-                    buttons: {
-                        reduce: {
-                            label: "Reduce exponent by 1",
-                            callback: () => {
-                                resourcesTax --;
-                                this.update({
-                                    "data.resourcesTax": resourcesTax,
-                                    "data.resources.exp": resourcesTax,
-                                    "data.resources.routine": 0,
-                                    "data.resources.difficult": 0,
-                                    "data.resources.challenging": 0
-                                });
-                            }
-                        },
-                        ignore: {
-                            label: "Ignore for now"
-                        }
-                    }
-                }).render(true);
-            }
-        }
-        this.update(updateData);
-    }
-
     private _addRollModifier(rollName: string, modifier: RollModifier, onlyNonZero = false) {
         rollName = rollName.toLowerCase();
         if (onlyNonZero && !modifier.dice && !modifier.obstacle) {
@@ -196,62 +122,8 @@ export class BWActor extends Actor {
         return { su, li, mi, se, tr, mo };
     }
 
-    private async _addTestToStat(stat: TracksTests, accessor: string, difficultyGroup: TestString) {
-        let testNumber = 0;
-        const updateData = {};
-        switch (difficultyGroup) {
-            case "Challenging":
-                testNumber = parseInt(stat.challenging, 10);
-                if (testNumber < (stat.challengingNeeded || 0)) {
-                    updateData[`${accessor}.challenging`] = testNumber +1;
-                    stat.challenging = `${testNumber+1}`;
-                    return this.update(updateData, {});
-                }
-                break;
-            case "Difficult":
-                testNumber = parseInt(stat.difficult, 10);
-                if (testNumber < (stat.difficultNeeded || 0)) {
-                    updateData[`${accessor}.difficult`] = testNumber +1;
-                    stat.difficult = `${testNumber+1}`;
-                    return this.update(updateData, {});
-                }
-                break;
-            case "Routine":
-                testNumber = parseInt(stat.routine, 10);
-                if (testNumber < (stat.routineNeeded || 0)) {
-                    updateData[`${accessor}.routine`] = testNumber +1;
-                    stat.routine = `${testNumber+1}`;
-                    return this.update(updateData, {});
-                }
-                break;
-            case "Routine/Difficult":
-                testNumber = parseInt(stat.difficult, 10);
-                if (testNumber < (stat.difficultNeeded || 0)) {
-                    updateData[`${accessor}.difficult`] = testNumber +1;
-                    stat.difficult = `${testNumber+1}`;
-                    return this.update(updateData, {});
-                } else {
-                    testNumber = parseInt(stat.routine, 10);
-                    if (testNumber < (stat.routineNeeded || 0)) {
-                        updateData[`${accessor}.routine`] = testNumber +1;
-                        stat.routine = `${testNumber+1}`;
-                        return this.update(updateData, {});
-                    }
-                }
-                break;
-        }
-    }
-
-    private async _advanceStat(accessor: string, newExp: number) {
-        const updateData = {};
-        updateData[`${accessor}.routine`] = 0;
-        updateData[`${accessor}.difficult`] = 0;
-        updateData[`${accessor}.challenging`] = 0;
-        updateData[`${accessor}.exp`] = newExp;
-        return this.update(updateData);
-    }
-
     private _prepareCharacterData() {
+        BWCharacter.prototype.bindCharacterFunctions.call(this);
         if (!this.data.data.settings) {
             this.data.data.settings = {
                 onlySuccessesCount: 'Faith, Resources, Perception',
@@ -559,43 +431,7 @@ export class BWActor extends Actor {
     }
 }
 
-export interface CharacterDataRoot extends ActorData<BWCharacterData> {
-    toolkits: PossessionRootData[];
-    martialSkills: SkillDataRoot[];
-    sorcerousSkills: SkillDataRoot[];
-    wildForks: SkillDataRoot[];
-
-    circlesMalus: { name: string, amount: number }[];
-    circlesBonus: { name: string, amount: number }[];
-    data: BWCharacterData;
-    items: BWItemData[];
-    forks: SkillDataRoot[];
-    armorTrained: boolean;
-    rollModifiers: { [rollName:string]: RollModifier[]; };
-    callOns: { [rollName:string]: string[] };
-    successOnlyRolls: string[];
-}
-
-interface BWCharacterData extends Common, DisplayProps, Ptgs, SpellsMaintainedInfo {
-    stock: string;
-    age: number;
-    lifepathString: string;
-    alias: string;
-    homeland: string;
-    features: string;
-
-    settings: CharacterSettings;
-
-    hesitation?: number;
-    mortalWound?: number;
-    mortalWoundShade?: ShadeString;
-    reflexesExp?: number;
-    reflexesShade?: ShadeString;
-
-    clumsyWeight?: ClumsyWeightData;
-}
-
-interface Common {
+export interface Common {
     will: Ability;
     power: Ability;
     agility: Ability;
@@ -623,6 +459,24 @@ interface Common {
     fate: string;
     persona: string;
     deeds: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface BWActorDataRoot extends ActorData<any> {
+    toolkits: PossessionRootData[];
+    martialSkills: SkillDataRoot[];
+    sorcerousSkills: SkillDataRoot[];
+    wildForks: SkillDataRoot[];
+
+    circlesMalus: { name: string, amount: number }[];
+    circlesBonus: { name: string, amount: number }[];
+    items: BWItemData[];
+    forks: SkillDataRoot[];
+    rollModifiers: { [rollName:string]: RollModifier[]; };
+    callOns: { [rollName:string]: string[] };
+    successOnlyRolls: string[];
+
+    type: "character" | "npc";
 }
 
 export interface Ability extends TracksTests, DisplayClass {
@@ -661,7 +515,7 @@ export interface DisplayProps {
     collapseSpells: boolean;
 }
 
-interface Ptgs {
+export interface Ptgs {
     ptgs: {
         wound1: Wound, wound2: Wound, wound3: Wound, wound4: Wound,
         wound5: Wound, wound6: Wound, wound7: Wound, wound8: Wound,
@@ -684,7 +538,7 @@ interface Wound {
     threshold: string;
 }
 
-interface ClumsyWeightData {
+export interface ClumsyWeightData {
     agilityPenalty: number;
     speedObPenalty: number;
     speedDiePenalty: number;
@@ -705,6 +559,178 @@ export interface RollModifier {
     label: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface NewItemData extends StringIndexedObject<any> {
+    name: string;
+    type: ItemType;
+}
+
+// ====================== Character Class ===============================
+export class BWCharacter extends BWActor {
+    data: CharacterDataRoot;
+
+    bindCharacterFunctions(): void {
+        this.addStatTest = BWCharacter.prototype.addStatTest.bind(this);
+        this.addAttributeTest = BWCharacter.prototype.addAttributeTest.bind(this);
+        this._addTestToStat = BWCharacter.prototype._addTestToStat.bind(this);
+        this.taxResources = BWCharacter.prototype.taxResources.bind(this);
+        this._advanceStat = BWCharacter.prototype._advanceStat.bind(this);
+    }
+
+    async addStatTest(
+            stat: TracksTests,
+            name: string,
+            accessor: string,
+            difficultyGroup: TestString,
+            isSuccessful: boolean,
+            routinesNeeded = false): Promise<void> {
+        name = name.toLowerCase();
+        const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
+        if (onlySuccessCounts && !isSuccessful) {
+            return;
+        }
+
+        this._addTestToStat(stat, accessor, difficultyGroup);
+        if (canAdvance(stat, routinesNeeded)) {
+            Dialog.confirm({
+                title: `Advance ${name}?`,
+                content: `<p>${name} is ready to advance. Go ahead?</p>`,
+                yes: () => this._advanceStat(accessor, parseInt(stat.exp, 10) + 1),
+                no: () => { return; },
+                defaultYes: true
+            });
+        }
+    }
+
+    async addAttributeTest(
+            stat: TracksTests,
+            name: string,
+            accessor: string,
+            difficultyGroup: TestString,
+            isSuccessful: boolean): Promise<void>  {
+        return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
+    }
+
+    private async _addTestToStat(stat: TracksTests, accessor: string, difficultyGroup: TestString) {
+        let testNumber = 0;
+        const updateData = {};
+        switch (difficultyGroup) {
+            case "Challenging":
+                testNumber = parseInt(stat.challenging, 10);
+                if (testNumber < (stat.challengingNeeded || 0)) {
+                    updateData[`${accessor}.challenging`] = testNumber +1;
+                    stat.challenging = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                }
+                break;
+            case "Difficult":
+                testNumber = parseInt(stat.difficult, 10);
+                if (testNumber < (stat.difficultNeeded || 0)) {
+                    updateData[`${accessor}.difficult`] = testNumber +1;
+                    stat.difficult = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                }
+                break;
+            case "Routine":
+                testNumber = parseInt(stat.routine, 10);
+                if (testNumber < (stat.routineNeeded || 0)) {
+                    updateData[`${accessor}.routine`] = testNumber +1;
+                    stat.routine = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                }
+                break;
+            case "Routine/Difficult":
+                testNumber = parseInt(stat.difficult, 10);
+                if (testNumber < (stat.difficultNeeded || 0)) {
+                    updateData[`${accessor}.difficult`] = testNumber +1;
+                    stat.difficult = `${testNumber+1}`;
+                    return this.update(updateData, {});
+                } else {
+                    testNumber = parseInt(stat.routine, 10);
+                    if (testNumber < (stat.routineNeeded || 0)) {
+                        updateData[`${accessor}.routine`] = testNumber +1;
+                        stat.routine = `${testNumber+1}`;
+                        return this.update(updateData, {});
+                    }
+                }
+                break;
+        }
+    }
+
+    taxResources(amount: number, maxFundLoss: number): void {
+        const updateData = {};
+        let resourcesTax = parseInt(this.data.data.resourcesTax, 10) || 0;
+        const resourceExp = parseInt(this.data.data.resources.exp, 10) || 0;
+        const fundDice = parseInt(this.data.data.funds, 10) || 0;
+        if (amount <= maxFundLoss) {
+            updateData["data.funds"] = fundDice - amount;
+        } else {
+            updateData["data.funds"] = 0;
+            amount -= maxFundLoss;
+            resourcesTax = Math.min(resourceExp, amount+resourcesTax);
+            updateData["data.resourcesTax"] = resourcesTax;
+            if (resourcesTax === resourceExp) {
+                // you taxed all your resources away, they degrade
+                new Dialog({
+                    title: "Overtaxed Resources!",
+                    content: "<p>Tax has reduced your resources exponent to 0.</p><hr>",
+                    buttons: {
+                        reduce: {
+                            label: "Reduce exponent by 1",
+                            callback: () => {
+                                resourcesTax --;
+                                this.update({
+                                    "data.resourcesTax": resourcesTax,
+                                    "data.resources.exp": resourcesTax,
+                                    "data.resources.routine": 0,
+                                    "data.resources.difficult": 0,
+                                    "data.resources.challenging": 0
+                                });
+                            }
+                        },
+                        ignore: {
+                            label: "Ignore for now"
+                        }
+                    }
+                }).render(true);
+            }
+        }
+        this.update(updateData);
+    }
+
+    private async _advanceStat(accessor: string, newExp: number) {
+        const updateData = {};
+        updateData[`${accessor}.routine`] = 0;
+        updateData[`${accessor}.difficult`] = 0;
+        updateData[`${accessor}.challenging`] = 0;
+        updateData[`${accessor}.exp`] = newExp;
+        return this.update(updateData);
+    }
+}
+
+export interface CharacterDataRoot extends BWActorDataRoot {
+    data: BWCharacterData;
+}
+
+interface BWCharacterData extends Common, DisplayProps, Ptgs, SpellsMaintainedInfo {
+    stock: string;
+    age: number;
+    lifepathString: string;
+    alias: string;
+    homeland: string;
+    features: string;
+
+    settings: CharacterSettings;
+
+    hesitation?: number;
+    mortalWound?: number;
+    mortalWoundShade?: ShadeString;
+    reflexesExp?: number;
+    reflexesShade?: ShadeString;
+
+    clumsyWeight?: ClumsyWeightData;
+}
+
 export interface CharacterSettings {
     showSettings: boolean;
     showBurner: boolean;
@@ -715,12 +741,6 @@ export interface CharacterSettings {
     onlySuccessesCount: string;
     armorTrained: boolean;
     ignoreSuperficialWounds: boolean;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface NewItemData extends StringIndexedObject<any> {
-    name: string;
-    type: ItemType;
 }
 
 export interface SpellsMaintainedInfo {

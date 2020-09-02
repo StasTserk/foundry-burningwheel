@@ -1,4 +1,4 @@
-import { BWActor } from "../actor.js";
+import { BWActor } from "../bwactor.js";
 import { DisplayClass } from "./item.js";
 
 export class Relationship extends Item<RelationshipData> {

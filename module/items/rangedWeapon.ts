@@ -1,4 +1,4 @@
-import { BWActor } from "../actor.js";
+import { BWActor } from "../bwactor.js";
 import { DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 

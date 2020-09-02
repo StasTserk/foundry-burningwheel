@@ -1,5 +1,5 @@
-import { Ability, BWActor } from "module/actor.js";
-import { BWActorSheet } from "module/bwactor-sheet.js";
+import { Ability, BWActor, BWCharacter } from "../bwactor.js";
+import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
@@ -83,8 +83,9 @@ async function attrRollCallback(
         fateReroll,
         callons
     };
-
-    sheet.actor.addAttributeTest(stat, name, accessor, dg, isSuccessful);
+    if (sheet.actor.data.type === "character") {
+        (sheet.actor as BWCharacter).addAttributeTest(stat, name, accessor, dg, isSuccessful);
+    }
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({
         content: messageHtml,

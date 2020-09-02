@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../actor.js";
+import { Ability, TracksTests, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
@@ -16,7 +16,7 @@ import {
 
 export async function handleStatRoll({ target, sheet }: RollOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
-    const actor = sheet.actor as BWActor;
+    const actor = sheet.actor as BWCharacter;
     const statName = target.dataset.rollableName || "Unknown Stat";
     const rollModifiers = sheet.actor.getRollModifiers(statName);
     let tax = 0;
@@ -94,8 +94,9 @@ async function statRollCallback(
         fateReroll,
         callons
     };
-
-    sheet.actor.addStatTest(stat, name, accessor, dg, isSuccessful);
+    if (sheet.actor.data.type === "character") {
+        (sheet.actor as BWCharacter).addStatTest(stat, name, accessor, dg, isSuccessful);
+    }
 
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({

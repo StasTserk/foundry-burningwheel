@@ -128,10 +128,16 @@ Actor:
     ptgs:
       woundShade: 'B'
       suThresh: 3
+      suTaken: 0
       liThresh: 5
+      liTaken: 0
       miThresh: 7
+      miTaken: 0
       seThresh: 8
+      seTaken: 0
       trThresh: 9
+      trTaken: 0
+      moTaken: 0
 Item:
   types:
     - belief

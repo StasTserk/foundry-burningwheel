@@ -1,4 +1,4 @@
-import { BWActor } from "../actor.js";
+import { BWActor } from "../bwactor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
 import { Skill, Trait, BWItem, Property, HasPointCost } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burner-data-helpers.js";

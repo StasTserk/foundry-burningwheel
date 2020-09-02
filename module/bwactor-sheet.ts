@@ -1,4 +1,4 @@
-import { BWActor } from "./actor";
+import { BWActor } from "./bwactor.js";
 
 export class BWActorSheet extends ActorSheet {
     actor: BWActor;

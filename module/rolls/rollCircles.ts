@@ -1,4 +1,4 @@
-import { Ability, BWActor } from "../actor.js";
+import { Ability, BWActor, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import { Relationship } from "../items/item.js";
 import * as helpers from "../helpers.js";
@@ -115,8 +115,9 @@ async function circlesRollCallback(
             });
         }
     }
-
-    sheet.actor.addAttributeTest(stat, "Circles", "data.circles", dg, true);
+    if (sheet.actor.data.type === "character") {
+        (sheet.actor as BWCharacter).addAttributeTest(stat, "Circles", "data.circles", dg, true);
+    }
 
     return ChatMessage.create({
         content: messageHtml,

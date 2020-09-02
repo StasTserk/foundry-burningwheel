@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../actor.js";
+import { Ability, BWActor, TracksTests, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
@@ -99,7 +99,9 @@ async function taxTestCallback(
         callons
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
-    sheet.actor.addStatTest(stat, "Forte", "data.forte", dg, isSuccessful);
+    if (sheet.actor.data.type === "character") {
+        (sheet.actor as BWCharacter).addStatTest(stat, "Forte", "data.forte", dg, isSuccessful);
+    }
 
     if (!isSuccessful) {
         const margin = baseData.obstacleTotal - parseInt(roll.result);

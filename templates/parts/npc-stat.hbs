@@ -1,7 +1,7 @@
 <div>
     <div class="stat-header">{{label}}</div>
+    {{#if editMode}}
     <div class="stat-value">
-        {{#if editMode}}
             {{#if attributeShadePath}}
             <select name="data.{{attributeShadePath}}">
                 {{#select attributeShade}}
@@ -12,8 +12,21 @@
             </select>
             {{/if}}
         <input type="number" name="data.{{attributePath}}" data-dtype="Number" value="{{attributeValue}}">
-        {{else}}
-        {{attributeShade}} {{attributeValue}}
-        {{/if}}
     </div>
+    {{else}}
+        {{#if rollable}}
+        <div
+            {{#if open}}data-action="rollStatOpen"
+            {{else}}data-action="rollStat"
+            {{/if}}
+            data-stat="data.{{attributePath}}"
+            data-shade="data.{{attributeShadePath}}"
+            data-rollable-name="{{statName}}"
+            class="stat-value stat-rollable">
+        {{else}}
+        <div class="stat-value">
+        {{/if}}
+        {{attributeShade}}{{attributeValue}}
+    </div>
+    {{/if}}
 </div>

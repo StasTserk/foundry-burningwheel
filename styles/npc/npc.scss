@@ -117,6 +117,10 @@
                 @include select-no-arrow;
                 text-align-last: center;
             }
+
+            &.stat-rollable:hover {
+                color: red;
+            }
         }
     }
 

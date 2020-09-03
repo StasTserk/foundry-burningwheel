@@ -28,45 +28,48 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
     if (!reroll) { return; }
     const newSuccesses = parseInt(reroll.result, 10);
     const success = (newSuccesses + successes) >= obstacleTotal;
-
-    if (target.dataset.rerollType === "stat") {
-        if (successes <= obstacleTotal && success) {
-            // we turned a failure into a success. we might need to retroactively award xp.
-            if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.
-                const updateData = {};
-                updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
-                actor.update(updateData);
-            }
-            if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
-                if (!helpers.isStat(name)) {
-                    actor.addAttributeTest(
-                        getProperty(actor, `data.${accessor}`) as TracksTests,
-                        name,
-                        accessor,
-                        target.dataset.difficultyGroup as TestString,
-                        true);
+    if (actor.data.type === "character") {
+        // only characters worry about turning failures into successes.
+        // NPCs don't track things closely enough.
+        if (target.dataset.rerollType === "stat") {
+            if (successes <= obstacleTotal && success) {
+                // we turned a failure into a success. we might need to retroactively award xp.
+                if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.
+                    const updateData = {};
+                    updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
+                    actor.update(updateData);
                 }
-                else {
-                    actor.addStatTest(
-                        getProperty(actor, `data.${accessor}`) as TracksTests,
-                        name,
-                        accessor,
-                        target.dataset.difficultyGroup as TestString,
-                        true);
+                if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
+                    if (!helpers.isStat(name)) {
+                        actor.addAttributeTest(
+                            getProperty(actor, `data.${accessor}`) as TracksTests,
+                            name,
+                            accessor,
+                            target.dataset.difficultyGroup as TestString,
+                            true);
+                    }
+                    else {
+                        actor.addStatTest(
+                            getProperty(actor, `data.${accessor}`) as TracksTests,
+                            name,
+                            accessor,
+                            target.dataset.difficultyGroup as TestString,
+                            true);
+                    }
                 }
             }
-        }
 
-    } else if (target.dataset.rerollType === "learning") {
-        const learningTarget = target.dataset.learningTarget || 'skill';
-        if (learningTarget === 'perception' && successes <= obstacleTotal && success) {
-            // we need to give perception a success that was not counted
-            actor.addStatTest(
-                getProperty(actor, "data.data.perception") as TracksTests,
-                "Perception",
-                "data.perception",
-                target.dataset.difficultyGroup as TestString,
-                true);
+        } else if (target.dataset.rerollType === "learning") {
+            const learningTarget = target.dataset.learningTarget || 'skill';
+            if (learningTarget === 'perception' && successes <= obstacleTotal && success) {
+                // we need to give perception a success that was not counted
+                actor.addStatTest(
+                    getProperty(actor, "data.data.perception") as TracksTests,
+                    "Perception",
+                    "data.perception",
+                    target.dataset.difficultyGroup as TestString,
+                    true);
+            }
         }
     }
 

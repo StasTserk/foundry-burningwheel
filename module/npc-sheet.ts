@@ -3,26 +3,28 @@ import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
 import { TraitDataRoot, SkillDataRoot } from "./items/item.js";
 import { Npc } from "./npc.js";
+import { handleNpcStatRoll } from "./rolls/rollNpcStat.js";
 
 export class NpcSheet extends BWActorSheet {
     actor: BWActor & Npc;
     getData(): ActorSheetData<unknown> {
         const data = super.getData() as NpcSheetData;
+        const rollable = true; const open = true;
         const actor = this.actor;
         data.statRow = [
-            { label: "Wi", value: actor.data.data.will.exp, valuePath: "will.exp", shade: actor.data.data.will.shade, shadePath: "will.shade" },
-            { label: "Pe", value: actor.data.data.perception.exp, valuePath: "perception.exp", shade: actor.data.data.perception.shade, shadePath: "perception.shade" },
-            { label: "Ag", value: actor.data.data.agility.exp, valuePath: "agility.exp", shade: actor.data.data.agility.shade, shadePath: "agility.shade" },
-            { label: "Sp", value: actor.data.data.speed.exp, valuePath: "speed.exp", shade: actor.data.data.speed.shade, shadePath: "speed.shade" },
-            { label: "Po", value: actor.data.data.power.exp, valuePath: "power.exp", shade: actor.data.data.power.shade, shadePath: "power.shade" },
-            { label: "Fo", value: actor.data.data.forte.exp, valuePath: "forte.exp", shade: actor.data.data.forte.shade, shadePath: "forte.shade" },
-            { label: "Hea", value: actor.data.data.health.exp, valuePath: "health.exp", shade: actor.data.data.health.shade, shadePath: "health.shade" },
+            { statName: "will", rollable, label: "Wi", value: actor.data.data.will.exp, valuePath: "will.exp", shade: actor.data.data.will.shade, shadePath: "will.shade" },
+            { statName: "perception", rollable, label: "Pe", value: actor.data.data.perception.exp, valuePath: "perception.exp", shade: actor.data.data.perception.shade, shadePath: "perception.shade" },
+            { statName: "agility", rollable, label: "Ag", value: actor.data.data.agility.exp, valuePath: "agility.exp", shade: actor.data.data.agility.shade, shadePath: "agility.shade" },
+            { statName: "speed", rollable, label: "Sp", value: actor.data.data.speed.exp, valuePath: "speed.exp", shade: actor.data.data.speed.shade, shadePath: "speed.shade" },
+            { statName: "power", rollable, label: "Po", value: actor.data.data.power.exp, valuePath: "power.exp", shade: actor.data.data.power.shade, shadePath: "power.shade" },
+            { statName: "forte", rollable, label: "Fo", value: actor.data.data.forte.exp, valuePath: "forte.exp", shade: actor.data.data.forte.shade, shadePath: "forte.shade" },
+            { statName: "health", rollable, label: "Hea", value: actor.data.data.health.exp, valuePath: "health.exp", shade: actor.data.data.health.shade, shadePath: "health.shade" },
             { label: "Ref", value: actor.data.data.reflexes || 0, valuePath: "reflexes", shade: actor.data.data.reflexesShade, shadePath: "reflexesShade" },
             { label: "MW", value: actor.data.data.ptgs.moThresh || 0, valuePath: "ptgs.moThresh", shade: actor.data.data.ptgs.woundShade, shadePath: "ptgs.woundShade" },
-            { label: "Ste", value: actor.data.data.steel.exp, valuePath: "steel.exp", shade: actor.data.data.steel.shade, shadePath: "steel.shade" },
+            { statName: "steel", rollable, open, label: "Ste", value: actor.data.data.steel.exp, valuePath: "steel.exp", shade: actor.data.data.steel.shade, shadePath: "steel.shade" },
             { label: "Hes", value: actor.data.data.hesitation || 0, valuePath: "hesitation" },
-            { label: "Res", value: actor.data.data.resources.exp, valuePath: "resources.exp", shade: actor.data.data.resources.shade, shadePath: "resources.shade" },
-            { label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp", shade: actor.data.data.circles.shade, shadePath: "circles.shade" },
+            { statName: "resources", rollable, label: "Res", value: actor.data.data.resources.exp, valuePath: "resources.exp", shade: actor.data.data.resources.shade, shadePath: "resources.shade" },
+            { statName: "circles", rollable, label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp", shade: actor.data.data.circles.shade, shadePath: "circles.shade" },
             { label: "Str", value: actor.data.data.stride, valuePath: "stride" },
         ];
         data.beliefs = [];
@@ -71,6 +73,7 @@ export class NpcSheet extends BWActorSheet {
         html.find("div[data-action='edit']").on('click', (e) => this._editSheetItem(e));
         html.find("div[data-action='delete']").on('click', (e) => this._deleteSheetItem(e));
         html.find("i[data-action='add']").on('click', (e) => this._addSheetItem(e));
+        html.find("div[data-action='rollStat'], div[data-action='rollStatOpen']").on('click', (e) => handleNpcStatRoll({ target: e.target, sheet: this}));
     }
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
@@ -106,10 +109,12 @@ export interface NpcSheetData extends ActorSheetData {
 }
 
 interface NPCStatEntry {
-
+    rollable?: boolean;
+    open?: boolean;
     label: string;
     valuePath: string;
     value: string | number;
+    statName?: string;
     shade?: ShadeString;
     shadePath?: string;
 }

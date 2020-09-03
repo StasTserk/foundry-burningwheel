@@ -3,7 +3,13 @@
         <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
     </div>
     <div class="npc-header">
-        <h1><input type="text" name="actor.name" value="{{actor.name}}"></h1>
+        <h1>
+            <input type="text" name="actor.name" value="{{actor.name}}">
+            <div class="npc-checkbox">
+                <input id="{{actor._id}}-edit-mode" type="checkbox" name="data.editMode" {{checked data.editMode}}>
+                <label for="{{actor._id}}-edit-mode"><i class="fas fa-edit"></i></label>
+            </div>
+        </h1>
         <div class="npc-bio">
             <div>
                 <label class="npc-section-label" for="{{actor._id}}-bio">Bio</label>
@@ -25,6 +31,7 @@
             </div>
         </div>
     </div>
+
     <div class="npc-stats">
         {{#each statRow as |stat|}}
             {{> "systems/burningwheel/templates/parts/npc-stat.hbs"
@@ -33,16 +40,197 @@
                 attributeShade = stat.shade
                 attributeShadePath = stat.shadePath
                 attributePath = stat.valuePath
-                editMode = data.editMode}}
+                editMode = ../data.editMode}}
+        {{/each}}
+    </div>
+    <div class="npc-ptgs">
+        <div class="ptgs-header">
+            <div>PTGS</div>
+            <div class="ptgs-subheader">+Ob: {{data.ptgs.obPenalty}}</div>
+            <div class="ptgs-subheader">-Dice: {{data.ptgs.woundDice}}</div>
+        </div>
+        <div class="ptgs-category">
+            Su:
+            {{#if data.editMode}}
+            {{data.ptgs.woundShade}}
+            <input type="number" data-dtype="Number" name="data.ptgs.suThresh" value="{{data.ptgs.suThresh}}">
+            {{else}}
+            {{data.ptgs.woundShade}}{{data.ptgs.suThresh}}
+            {{/if}}
+        </div>
+        <div class="ptgs-category">
+            Li:
+            {{#if data.editMode}}
+            {{data.ptgs.woundShade}}
+            <input type="number" data-dtype="Number" name="data.ptgs.liThresh" value="{{data.ptgs.liThresh}}">
+            {{else}}
+            {{data.ptgs.woundShade}}{{data.ptgs.liThresh}}
+            {{/if}}
+        </div>
+        <div class="ptgs-category">
+            Mi:
+            {{#if data.editMode}}
+            {{data.ptgs.woundShade}}
+            <input type="number" data-dtype="Number" name="data.ptgs.miThresh" value="{{data.ptgs.miThresh}}">
+            {{else}}
+            {{data.ptgs.woundShade}}{{data.ptgs.miThresh}}
+            {{/if}}
+        </div>
+        <div class="ptgs-category">
+            Se:
+            {{#if data.editMode}}
+            {{data.ptgs.woundShade}}
+            <input type="number" data-dtype="Number" name="data.ptgs.seThresh" value="{{data.ptgs.seThresh}}">
+            {{else}}
+            {{data.ptgs.woundShade}}{{data.ptgs.seThresh}}
+            {{/if}}
+        </div>
+        <div class="ptgs-category">
+            Tr:
+            {{#if data.editMode}}
+            {{data.ptgs.woundShade}}
+            <input type="number" data-dtype="Number" name="data.ptgs.trThresh" value="{{data.ptgs.trThresh}}">
+            {{else}}
+            {{data.ptgs.woundShade}}{{data.ptgs.trThresh}}
+            {{/if}}
+        </div>
+        <div class="ptgs-category">
+            Mo:
+            {{data.ptgs.woundShade}}{{data.ptgs.moThresh}}
+        </div>
+        <div class="ptgs-input">
+            <input type="number" data-dtype="Number" name="data.ptgs.suTaken" value="{{data.ptgs.suTaken}}">
+        </div>
+        <div class="ptgs-input">
+            <input type="number" data-dtype="Number" name="data.ptgs.liTaken" value="{{data.ptgs.liTaken}}">
+        </div>
+        <div class="ptgs-input">
+            <input type="number" data-dtype="Number" name="data.ptgs.miTaken" value="{{data.ptgs.miTaken}}">
+        </div>
+        <div class="ptgs-input">
+            <input type="number" data-dtype="Number" name="data.ptgs.seTaken" value="{{data.ptgs.seTaken}}">
+        </div>
+        <div class="ptgs-input">
+            <input type="number" data-dtype="Number" name="data.ptgs.trTaken" value="{{data.ptgs.trTaken}}">
+        </div>
+        <div class="ptgs-input">
+            <input type="number" data-dtype="Number" name="data.ptgs.moTaken" value="{{data.ptgs.moTaken}}">
+        </div>
+    </div>
+    {{#if data.editMode}}
+    <div class="bits-section">
+        <div class="npc-section-label">Beliefs</div>
+        {{#each beliefs as |b|}}
+        <div class="bits-name">{{b.name}}</div><input type="text" data-item-id="{{b._id}}" data-binding="data.text" value="{{b.data.text}}">
+        {{/each}}
+    </div>
+    <div class="bits-section">
+        <div class="npc-section-label">
+            Instincts
+        </div>
+        {{#each instincts as |i|}}
+        <div class="bits-name">{{i.name}}</div><input type="text" data-item-id="{{i._id}}" data-binding="data.text" value="{{i.data.text}}">
+        {{/each}}
+    </div>
+    <div class="editable-section">
+        <div class="npc-section-label">
+            Traits
+            <i data-action="add" data-type="trait" class="fas fa-plus"></i>
+        </div>
+        {{#each traits as |t|}}
+        {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=t}}
+        {{/each}}
+    </div>
+
+    <div class="editable-section">
+        <div class="npc-section-label">
+            Affiliations
+            <i data-action="add" data-type="affiliation" class="fas fa-plus"></i>
+        </div>
+        {{#each affiliations as |a|}}
+         {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=a}}
+        {{/each}}
+    </div>
+    <div class="editable-section">
+        <div class="npc-section-label">
+            Relationships
+            <i data-action="add" data-type="relationship" class="fas fa-plus"></i>
+        </div>
+        {{#each relationships as |r|}}
+         {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=r}}
+        {{/each}}
+    </div>
+    <div class="editable-section">
+        <div class="npc-section-label">
+            Reputations
+            <i data-action="add" data-type="reputation" class="fas fa-plus"></i>
+        </div>
+        {{#each reputations as |r|}}
+        {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=r}}
+        {{/each}}
+    </div>
+    <div class="editable-section">
+        <div class="npc-section-label">Gear</div>
+        {{#each gear as |g|}}
+         {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=g}}
+        {{/each}}
+    </div>
+
+    {{else}}
+
+    <div class="indented-section">
+        <span class="npc-section-label">Beliefs</span>
+        {{#each beliefs as |b|}}
+        {{#if b.data.text}}<span class="item-entry">{{b.data.text}}</span>{{/if}}
+        {{/each}}
+    </div>
+    <div class="indented-section">
+        <span class="npc-section-label">Instincts</span>
+        {{#each instincts as |i|}}
+        {{#if i.data.text}}<span class="item-entry">{{i.data.text}}</span>{{/if}}
+        {{/each}}
+    </div>
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Traits</div>
+        {{#each traits as |t|}}
+        <div class="item-entry" data-id="{{t._id}}" data-action="edit">{{t.name}} [{{titlecase t.data.traittype}}],</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Skills</div>
-        {{#each beliefs}}
-        <div class="item-entry">Some Skill B3,</div>
-        {{/each}}
-        {{#each instincts}}
-        <div class="item-entry">Some Other Skill B2,</div>
+        {{#each skills as |s|}}
+        <div class="item-entry">{{s.name}} [{{s.data.shade}}{{s.data.exp}}],</div>
         {{/each}}
     </div>
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Affiliations</div>
+        {{#each affiliations as |a|}}
+        <div class="item-entry" data-id="{{a._id}}" data-action="edit">{{a.data.dice}}D {{a.name}},</div>
+        {{/each}}
+    </div>
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Relationships</div>
+        {{#each relationships as |r|}}
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.name}},</div>
+        {{/each}}
+    </div>
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Reputations</div>
+        {{#each reputations as |r|}}
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.data.dice}}D {{r.name}},</div>
+        {{/each}}
+    </div>
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Gear</div>
+        {{#each gear as |g|}}
+        <div class="item-entry" data-id="{{g._id}}" data-action="edit">{{g.name}},</div>
+        {{/each}}
+    </div>
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Weapons</div>
+        {{#each weapons as |w|}}
+        <div class="item-entry">{{w.name}} — I:{{w.data.shade}}{{w.data.incidental}} M:{{w.data.shade}}{{w.data.mark}} S: {{w.data.shade}}{{w.data.superb}}, Add {{w.data.add}}, VA {{w.data.vsArmor}}, WS {{w.data.weaponSpeed}}, {{w.data.weaponLength}}</div>
+        {{/each}}
+    </div>
+    {{/if}}
 </form>

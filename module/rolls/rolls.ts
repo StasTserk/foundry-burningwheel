@@ -13,6 +13,7 @@ import { handleArmorRoll } from "./rollArmor.js";
 import { handleWeaponRoll } from "./rollWeapon.js";
 import { handleSpellRoll } from "./rollSpell.js";
 import { handleSpellTaxRoll } from "./rollSpellTax.js";
+import { BWCharacterSheet } from "module/character-sheet.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
@@ -33,12 +34,12 @@ export async function handleRollable(
         case "learning":
             return handleLearningRoll({ target, sheet });
         case "shrug":
-            if (sheet.actor.data.data.ptgs.shrugging) {
+            if ((sheet as BWCharacterSheet).actor.data.data.ptgs.shrugging) {
                 return sheet.actor.update({ "data.ptgs.shrugging": false });
             }
             return handleShrugRoll({ target, sheet });
         case "grit":
-            if (sheet.actor.data.data.ptgs.gritting) {
+            if ((sheet as BWCharacterSheet).actor.data.data.ptgs.gritting) {
                 return sheet.actor.update({ "data.ptgs.gritting": false });
             }
             return handleGritRoll({ target, sheet });

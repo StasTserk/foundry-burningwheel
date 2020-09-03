@@ -1,4 +1,10 @@
+@import "../mixins.scss";
 .npc {
+    align-content: flex-start;
+    & > div {
+        height: min-content;
+        margin-bottom: 5px;
+    }
     .portrait {
         width: 150px;
         height: 150px;
@@ -7,6 +13,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+    }
+
+    .npc-checkbox {
+        width: 2em;
+        text-align: center;
+        input[type='checkbox'] {
+            display: none;
+        }
+
+        label {
+            color: gray;
+        }
+
+        input:checked + label {
+            color: red;
         }
     }
 
@@ -19,6 +41,13 @@
         height: 150px;
         width: calc(100% - 155px);
         margin-left: 5px;
+
+        h1 {
+            display: flex;
+            & > input[type='text'] {
+                width: calc(100% - 2em);
+            }
+        }
 
         .npc-bio {
             display: grid;
@@ -74,11 +103,67 @@
             font-weight: bold;
             border-bottom: 1px solid black;
         }
+
+        .stat-value {
+            text-align: center;
+            input {
+                display: inline-block;
+                width: 2em;
+                @include no-number-arrows;
+                text-align: center;
+            }
+            select {
+                display: inline-block;
+                @include select-no-arrow;
+                text-align-last: center;
+            }
+        }
+    }
+
+    .npc-ptgs {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        input[type='number'] {
+            width: 1.25em;
+            background-color: transparent;
+            font-size: 1em;
+            text-align: center;
+            border: 0;
+            border-bottom: 1px solid black;
+            margin-top: 5px;
+            @include no-number-arrows;
+        }
+        .ptgs-header {
+            grid-row: 1 / 3;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            line-height: 2em;
+            .ptgs-subheader {
+                line-height: 1em;
+                font-size: .75em;
+                font-weight: normal;
+            }
+        }
+        .ptgs-category {
+            font-size: 1.5em;
+            background-color: rgba(black, .1);
+        }
+
+        .ptgs-input > input[type="number"] {
+            font-size: 1.25em;
+        }
+        .ptgs-input, .ptgs-category, .ptgs-header  {
+            text-align: center;
+            border: 1px solid black;
+        }
     }
 
     .indented-section {
         height: min-content;
         margin-left: 20px;
+        widtH: 100%;
         .npc-section-label {
             margin-left: -20px;
             &:after {
@@ -91,6 +176,30 @@
             &:hover {
                 color: red;
             }
+        }
+        span.item-entry {
+            display: inline;
+            margin-left: 0;
+            margin-right: 5px;
+        }
+    }
+
+    .bits-section {
+        display: grid;
+        grid-template-columns: 80px 100px 1fr;
+        width: 100%;
+
+        & > .npc-section-label {
+            grid-row: 1 / 5;
+        }
+    }
+
+    .editable-section {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        & > .npc-editable {
+            @include button-like(black);
         }
     }
 }

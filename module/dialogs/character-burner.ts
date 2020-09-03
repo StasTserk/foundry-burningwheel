@@ -2,16 +2,17 @@ import { BWActor } from "../bwactor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
 import { Skill, Trait, BWItem, Property, HasPointCost } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
+import { BWCharacter } from "module/character.js";
 
 export class CharacterBurnerDialog extends Dialog {
-    private readonly _parent: BWActor;
+    private readonly _parent: BWActor & BWCharacter;
     private _burnerListeners: JQuery<HTMLElement>[];
     private _skills: Skill[];
     private _traits: Trait[];
     private _gear: BWItem[];
     private _property: Property[];
 
-    static async Open(parent: BWActor): Promise<Application> {
+    static async Open(parent: BWActor & BWCharacter): Promise<Application> {
         const loadingDialog = new Dialog({
             title: "",
             content: "<div class='loading-title'>Loading Character Burner data...</div><div class='burner-loading-spinner'><i class='fas fa-dharmachakra'></i></div>",
@@ -26,7 +27,7 @@ export class CharacterBurnerDialog extends Dialog {
         await dialog.render(true);
         return loadingDialog.close();
     }
-    private constructor(parent: BWActor) {
+    private constructor(parent: BWActor & BWCharacter) {
         super({
             title: "Character Burner",
             buttons: {

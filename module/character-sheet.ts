@@ -18,8 +18,11 @@ import {
 import { handleRollable } from "./rolls/rolls.js";
 import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 import { addNewItem } from "./dialogs/importItemDialog.js";
+import { BWCharacter } from "./character.js";
 
 export class BWCharacterSheet extends BWActorSheet {
+    actor: BWActor & BWCharacter;
+    
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
         const woundDice = this.actor.data.data.ptgs.woundDice;

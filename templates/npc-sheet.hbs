@@ -193,37 +193,37 @@
     <div class="indented-section flex-row">
         <div class="npc-section-label">Traits</div>
         {{#each traits as |t|}}
-        <div class="item-entry" data-id="{{t._id}}" data-action="edit">{{t.name}} [{{titlecase t.data.traittype}}],</div>
+        <div class="item-entry" data-id="{{t._id}}" data-action="edit">{{t.name}} [{{titlecase t.data.traittype}}]</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Skills</div>
         {{#each skills as |s|}}
-        <div class="item-entry">{{s.name}} [{{s.data.shade}}{{s.data.exp}}],</div>
+        <div class="item-entry">{{s.name}} [{{s.data.shade}}{{s.data.exp}}]</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Affiliations</div>
         {{#each affiliations as |a|}}
-        <div class="item-entry" data-id="{{a._id}}" data-action="edit">{{a.data.dice}}D {{a.name}},</div>
+        <div class="item-entry" data-id="{{a._id}}" data-action="edit">{{a.data.dice}}D {{a.name}}</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Relationships</div>
         {{#each relationships as |r|}}
-        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.name}},</div>
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.name}}</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Reputations</div>
         {{#each reputations as |r|}}
-        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.data.dice}}D {{r.name}},</div>
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.data.dice}}D {{r.name}}</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Gear</div>
         {{#each gear as |g|}}
-        <div class="item-entry" data-id="{{g._id}}" data-action="edit">{{g.name}},</div>
+        <div class="item-entry" data-id="{{g._id}}" data-action="edit">{{g.name}}</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">

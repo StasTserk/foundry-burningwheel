@@ -180,6 +180,12 @@
             &:hover {
                 color: red;
             }
+            &:after {
+                content: ",";
+            }
+            &:last-child:after {
+                content: "";
+            }
         }
         span.item-entry {
             display: inline;

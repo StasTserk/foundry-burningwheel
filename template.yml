@@ -124,7 +124,11 @@ Actor:
     templates:
       - common
       - displayProps
+    editMode: false
     bio: ''
+    hesitation: 5
+    reflexes: 1
+    reflexesShade: 'B'
     ptgs:
       woundShade: 'B'
       suThresh: 3
@@ -138,6 +142,7 @@ Actor:
       trThresh: 9
       trTaken: 0
       moTaken: 0
+      moThresh: 10
 Item:
   types:
     - belief

@@ -96,6 +96,7 @@ export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, i
 }
 
 export function extractBaseData(html: JQuery, sheet: BWActorSheet ): BaseDataObject {
+    const exponent = extractNumber(html, "stat.exp");
     const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = actorData.data.ptgs.obPenalty || 0;
@@ -108,7 +109,7 @@ export function extractBaseData(html: JQuery, sheet: BWActorSheet ): BaseDataObj
     const bDice = extractNumber(html, "bonusDice");
     const obstacleTotal = diff + obPenalty + miscObs.sum;
 
-    return { woundDice, obPenalty, diff, aDice, bDice, miscDice, penaltySources, obstacleTotal };
+    return { exponent, woundDice, obPenalty, diff, aDice, bDice, miscDice, penaltySources, obstacleTotal };
 }
 
 export function extractSelectString(html: JQuery, name: string): string | undefined {
@@ -284,6 +285,7 @@ export interface RerollMessageData {
 }
 
 interface BaseDataObject {
+    exponent: number,
     woundDice: number,
     obPenalty: number,
     diff: number,
@@ -298,7 +300,7 @@ interface BaseDataObject {
 }
 
 export interface RollOptions {
-    target: HTMLButtonElement;
+    target: HTMLElement;
     sheet: BWActorSheet;
     extraInfo?: string;
     dataPreset?: Partial<RollDialogData>;

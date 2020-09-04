@@ -1,0 +1,12 @@
+<div class="npc-editable">
+    <div class="npc-weapon-name" data-id="{{weapon._id}}" data-action="edit">{{weapon.name}}</div>
+    <select data-item-id="{{weapon._id}}" data-binding="data.skillId">
+        {{#select weapon.data.skillId}}
+        <option value="">None</option>
+        {{#each martialSkills as |s|}}
+        <option value="{{s._id}}">{{s.name}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+    <i class="fas fa-trash" data-id="{{skill._id}}" data-action="delete"></i>
+</div>

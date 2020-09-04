@@ -13,7 +13,7 @@
         <div class="npc-bio">
             <div>
                 <label class="npc-section-label" for="{{actor._id}}-bio">Bio</label>
-                <textarea id="{{actor._id}}-bio">{{actor.bio}}</textarea>
+                <textarea id="{{actor._id}}-bio" name="data.bio">{{data.bio}}</textarea>
             </div>
             <div class="flex-row artha-points">
                 <div>
@@ -182,6 +182,16 @@
         <div class="npc-section-label">Gear</div>
         {{#each gear as |g|}}
          {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=g}}
+        {{/each}}
+    </div>
+
+    <div class="weapon-section">
+        <div class="npc-section-label">
+            Weapons
+            <i data-action="add" data-type="melee weapon" class="fas fa-plus"></i>
+        </div>
+        {{#each weapons as |w|}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.martialSkills}}
         {{/each}}
     </div>
 

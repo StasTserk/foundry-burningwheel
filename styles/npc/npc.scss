@@ -186,6 +186,10 @@
             &:last-child:after {
                 content: "";
             }
+
+            &.wide {
+                min-width: 80%;
+            }
         }
         span.item-entry {
             display: inline;

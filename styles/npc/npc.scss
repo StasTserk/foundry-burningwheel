@@ -252,4 +252,24 @@
             }
         }
     }
+    .weapon-section {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        & > .npc-editable {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1em;
+            @include button-like(black);
+            height: min-content;
+
+            & > .npc-weapon-name {
+                width: calc(100% - 4em);
+            }
+            select {
+                @include select-no-arrow;
+                margin-left: 3px;
+                text-align-last: center;
+            }
+        }
+    }
 }

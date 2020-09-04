@@ -8,10 +8,14 @@
             type="text"
             name="data.variableObstacleDescription"
             value="{{data.variableObstacleDescription}}">
-        <input id="{{item._id}}-up-spell" class="hidden spell-toggle-checkbox" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
-        <label for="{{item._id}}-up-spell" class="spell-toggle-label">Up Spell</label>
-        <input id="{{item._id}}-var-obstacle" class="hidden spell-toggle-checkbox" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
-        <label for="{{item._id}}-var-obstacle" class="spell-toggle-label">Variable Ob</label>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
+            <label for="{{item._id}}-up-spell">Up Spell</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+            <label for="{{item._id}}-var-obstacle">Variable Ob</label>
+        </div>
     </div>
     {{else}}
     <div class="spell-sheet-entry">
@@ -23,10 +27,14 @@
             name="data.obstacle"
             value="{{data.obstacle}}"
             class="exponent">
-        <input id="{{item._id}}-up-spell" class="hidden spell-toggle-checkbox" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
-        <label for="{{item._id}}-up-spell" class="spell-toggle-label">Up Spell</label>
-        <input id="{{item._id}}-var-obstacle" class="hidden spell-toggle-checkbox" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
-        <label for="{{item._id}}-var-obstacle" class="spell-toggle-label">Variable Ob</label>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
+            <label for="{{item._id}}-up-spell">Up Spell</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+            <label for="{{item._id}}-var-obstacle">Variable Ob</label>
+        </div>
     </div>
     {{/if}}
     <div class="spell-sheet-entry">
@@ -68,12 +76,14 @@
             type="text"
             name="data.duration"
             value="{{data.duration}}">
-        <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <label for="{{item._id}}-point-cost" class="spell-setting-label">Resource Point Cost</label>
         <input id="{{item._id}}-point-cost" type="number" class="exponent" name="data.pointCost" onfocus="this.select();" value="{{data.pointCost}}" data-dtype="Number">
     </div>
     <div class="spell-weapon-toggle">
-        <input id="{{item._id}}-is-weapon" class="hidden spell-toggle-checkbox" type="checkbox" name="data.isWeapon" {{checked data.isWeapon}}>
-        <label for="{{item._id}}-is-weapon" class="spell-toggle-label">Is a Weapon</label>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-is-weapon" type="checkbox" name="data.isWeapon" {{checked data.isWeapon}}>
+            <label for="{{item._id}}-is-weapon" class="spell-toggle-label">Is a Weapon</label>
+        </div>
     </div>
     <div class="spell-weapon-stats">
         {{#if data.isWeapon}}

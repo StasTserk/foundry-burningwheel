@@ -1,6 +1,7 @@
 <form autocomplete="off">
-    <input name="name" type="text" value="{{item.name}}">
-    <div class="item-grid">
+    <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    <div class="item-form-group">
+        <div class="item-setting-label">Dice</div>
         <select name="data.dice" value="{{data.dice}}" >
             {{#select data.dice}}
             <option value="0">None</option>

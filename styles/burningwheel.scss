@@ -17,6 +17,7 @@
 @import "./items/skill.scss";
 @import "./items/trait.scss";
 @import "./npc/npc.scss";
+@import "./mixins.scss";
 
 .subheader,
 .header {
@@ -35,6 +36,10 @@ button.rollable {
 input.exponent {
     width: 2.5em;
     max-height: 28px;
+
+    &.no-arrows {
+        @include no-number-arrows;
+    }
 }
 
 input.hidden {
@@ -86,6 +91,14 @@ input.section-collapse:checked + label.section-collapse-label > h2 > i {
 label.section-collapse-label > h2 > i {
     margin-left: 10px;
     float: left;
+}
+
+div.pill-toggle {
+    @include pill-toggle;
+
+    &.min-content {
+        height: min-content;
+    }
 }
 
 input.attributes-collapse:checked ~ .attributes,

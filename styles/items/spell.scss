@@ -12,14 +12,6 @@
         }
     }
 
-    .spell-toggle-label {
-        @include button-like(grey);
-    }
-
-    .spell-toggle-checkbox:checked + .spell-toggle-label {
-        @include button-like-active;
-    }
-
     .spell-setting-label {
         font-weight: bold;
     }

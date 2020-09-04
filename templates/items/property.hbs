@@ -5,9 +5,11 @@
     </div>
     <div class="item-form-group">
         <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
-        <input id="{{item._id}}-point-cost" type="number" class="exponent" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
-        <input id="{{item._id}}-checkbox-isWorkshop" type="checkbox" class="item-setting-checkbox hidden" name="data.isWorkshop" {{checked data.isWorkshop}}>
-        <label for="{{item._id}}-checkbox-isWorkshop" class="item-setting-toggle">Workshop</label>
+        <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+        <div class="pill-toggle min-content">
+            <input id="{{item._id}}-checkbox-isWorkshop" type="checkbox" class="item-setting-checkbox hidden" name="data.isWorkshop" {{checked data.isWorkshop}}>
+            <label for="{{item._id}}-checkbox-isWorkshop" class="item-setting-toggle">Workshop</label>
+        </div>
     </div>
     
     <hr/>

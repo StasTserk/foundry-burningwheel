@@ -1,6 +1,5 @@
 <form autocomplete="off" class="relationship-sheet">
-    <label for="{{item._id}}-name-input">Name</label>
-    <input id="{{item._id}}-name-input" type="text" value="{{item.name}}" name="name">
+    <input id="{{item._id}}-name-input" type="text" value="{{item.name}}" name="name" class="item-sheet-name">
     <div class="checkbox-grid">
         <input id="{{item._id}}-checkbox-forbidden" type="checkbox" name="data.forbidden" {{checked data.forbidden}}>
         <label for="{{item._id}}-checkbox-forbidden">Forbidden</label>

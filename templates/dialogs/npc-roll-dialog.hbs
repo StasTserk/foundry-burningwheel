@@ -41,6 +41,26 @@
             <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
         </div>
     </div>
+    {{#if forkOptions}}
+    <hr>
+    <h2>FoRKs</h2>
+    <div class="checkbox-grid">
+        {{#each forkOptions as |skill|}}
+            <input id="checkbox-fork-{{@key}}" type="checkbox" name="forkOptions" value="{{skill.amount}}">
+            <label for="checkbox-fork-{{@key}}">{{skill.name}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if wildForks}}
+    <hr>
+    <h2>Wild FoRKs</h2>
+    <div class="checkbox-grid">
+        {{#each wildForks as |skill|}}
+            <input id="checkbox-wild-{{@key}}" type="checkbox" name="wildForks" value="{{skill.amount}}">
+            <label for="checkbox-wild-{{@key}}">{{skill.name}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
     {{#if circlesBonus}}
     <hr>
     <h2>Reputations & Affiliations</h2>
@@ -80,6 +100,7 @@
         </div>
     </div>
     {{/if}}
+
     {{#if optionalDiceModifiers}}
     <hr>
     <h2>Other Dice Modifiers</h2>

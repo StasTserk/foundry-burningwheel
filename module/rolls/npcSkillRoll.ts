@@ -9,10 +9,11 @@ import {
     rollDice,
     templates,
     RollOptions,
-    extractNpcRollData
+    extractNpcRollData,
+    rollWildFork
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
-import { Skill, MeleeWeapon, RangedWeapon, Spell } from "../items/item.js";
+import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
 import { notifyError } from "../helpers.js";
 
 export async function handleNpcWeaponRoll({ target, sheet }: NpcRollOptions): Promise<unknown> {
@@ -46,7 +47,7 @@ export async function handleNpcSkillRoll({ target, sheet }: NpcRollOptions): Pro
     
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
 
-    const data: NpcStatDialogData = {
+    const data: NpcSkillDialogData = {
         name: `${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -54,6 +55,10 @@ export async function handleNpcSkillRoll({ target, sheet }: NpcRollOptions): Pro
         woundDice: actor.data.data.ptgs.woundDice,
         obPenalty: actor.data.data.ptgs.obPenalty,
         skill: skill.data.data,
+        needsToolkit: skill.data.data.tools,
+        toolkits: actor.data.toolkits,
+        forkOptions: actor.getForkOptions(skill.data.name),
+        wildForks: actor.getWildForks(skill.data.name),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
@@ -84,7 +89,12 @@ async function skillRollCallback(
 
     const roll = await rollDice(rollData.diceTotal, skill.data.data.open, skill.data.data.shade);
     if (!roll) { return; }
-    const isSuccessful = parseInt(roll.result, 10) >= rollData.difficultyTotal;
+
+    const wildForkDie = await rollWildFork(rollData.wildForks, skill.data.data.shade);
+    const wildForkBonus = wildForkDie?.total || 0;
+    const wildForkDice = wildForkDie?.rolls || [];
+
+    const isSuccessful = parseInt(roll.result) + wildForkBonus >= rollData.difficultyTotal;
 
     const fateReroll = buildRerollData(sheet.actor, roll, accessor);
     const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
@@ -93,12 +103,13 @@ async function skillRollCallback(
     
     const data: RollChatMessageData = {
         name: `${skill.name}`,
-        successes: roll.result,
+        successes: '' + (parseInt(roll.result) + wildForkBonus),
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
+        wildRolls: wildForkDice,
         difficultyGroup: dg,
         penaltySources: rollData.obSources,
         dieSources: rollData.dieSources,
@@ -113,8 +124,12 @@ async function skillRollCallback(
     });
 }
 
-interface NpcStatDialogData extends RollDialogData {
+interface NpcSkillDialogData extends RollDialogData {
     skill: TracksTests;
+    needsToolkit: boolean;
+    toolkits: PossessionRootData[];
+    forkOptions: {name: string; amount: number}[];
+    wildForks: {name: string; amount: number}[];
 }
 
 interface NpcRollOptions extends RollOptions {

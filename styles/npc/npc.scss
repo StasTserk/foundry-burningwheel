@@ -214,6 +214,42 @@
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         & > .npc-editable {
             @include button-like(black);
+            height: min-content;
+        }
+    }
+    .skill-section {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        & > .npc-editable {
+            @include button-like(black);
+            height: min-content;
+
+            & > .npc-skill-name {
+                width: calc(100% - 4em);
+            }
+
+            input[type="number"] {
+                @include no-number-arrows;
+                width: 1.5em;
+                height: 1.5em;
+                text-align: center;
+                background-color: transparent;
+                border: 0;
+                border-bottom: 1px solid black;
+            }
+            select {
+                @include select-no-arrow;
+                width: 1.5em;
+                height: 1.5em;
+                border: 1px solid black;
+                margin-left: 3px;
+                border-radius: 0;
+                text-align-last: center;
+            }
+            i {
+                margin-top: 3px;
+            }
         }
     }
 }

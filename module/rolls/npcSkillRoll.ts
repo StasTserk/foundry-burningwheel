@@ -41,13 +41,13 @@ export async function handleNpcSpellRoll({ target, sheet }: NpcRollOptions): Pro
     return handleNpcSkillRoll({target, sheet, extraInfo, dataPreset});
 }
 
-export async function handleNpcSkillRoll({ target, sheet }: NpcRollOptions): Promise<unknown> {
+export async function handleNpcSkillRoll({ target, sheet, extraInfo, dataPreset }: NpcRollOptions): Promise<unknown> {
     const actor = sheet.actor;
     const skill = actor.getOwnedItem(target.dataset.skillId || "") as Skill;
     
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
 
-    const data: NpcSkillDialogData = {
+    const data: NpcSkillDialogData = Object.assign({
         name: `${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -61,7 +61,7 @@ export async function handleNpcSkillRoll({ target, sheet }: NpcRollOptions): Pro
         wildForks: actor.getWildForks(skill.data.name),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
@@ -72,7 +72,7 @@ export async function handleNpcSkillRoll({ target, sheet }: NpcRollOptions): Pro
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        skillRollCallback(dialogHtml, sheet, skill)
+                        skillRollCallback(dialogHtml, sheet, skill, extraInfo)
                 }
             }
         }).render(true)
@@ -82,7 +82,8 @@ export async function handleNpcSkillRoll({ target, sheet }: NpcRollOptions): Pro
 async function skillRollCallback(
         dialogHtml: JQuery,
         sheet: NpcSheet,
-        skill: Skill) {
+        skill: Skill,
+        extraInfo?: string) {
     const rollData = extractNpcRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
     const accessor = `data.${name}`;
@@ -114,7 +115,8 @@ async function skillRollCallback(
         penaltySources: rollData.obSources,
         dieSources: rollData.dieSources,
         fateReroll,
-        callons
+        callons,
+        extraInfo
     };
 
     const messageHtml = await renderTemplate(templates.npcMessage, data);

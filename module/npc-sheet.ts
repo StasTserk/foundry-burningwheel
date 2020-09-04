@@ -4,7 +4,7 @@ import { BWActor } from "./bwactor.js";
 import { TraitDataRoot, SkillDataRoot } from "./items/item.js";
 import { Npc } from "./npc.js";
 import { handleNpcStatRoll } from "./rolls/npcStatRoll.js";
-import { handleNpcSkillRoll, handleNpcWeaponRoll } from "./rolls/npcSkillRoll.js";
+import { handleNpcSkillRoll, handleNpcWeaponRoll, handleNpcSpellRoll } from "./rolls/npcSkillRoll.js";
 
 export class NpcSheet extends BWActorSheet {
     actor: BWActor & Npc;
@@ -38,6 +38,7 @@ export class NpcSheet extends BWActorSheet {
         data.relationships = [];
         data.gear = [];
         data.spells = [];
+        data.ranged = [];
         actor.data.items.forEach((i) => {
             switch (i.type) {
                 case "belief":
@@ -54,6 +55,8 @@ export class NpcSheet extends BWActorSheet {
                     }
                     data.weapons.push(i);
                     break;
+                case "ranged weapon":
+                    data.ranged.push(i); break;
                 case "relationship":
                     data.relationships.push(i); break;
                 case "reputation":
@@ -72,6 +75,7 @@ export class NpcSheet extends BWActorSheet {
         data.instincts.sort(byName);
         data.skills.sort(byName);
         data.weapons.sort(byName);
+        data.ranged.sort(byName);
         data.affiliations.sort(byName);
         data.reputations.sort(byName);
         data.relationships.sort(byName);
@@ -88,6 +92,7 @@ export class NpcSheet extends BWActorSheet {
         html.find("div[data-action='rollStat'], div[data-action='rollStatOpen']").on('click', (e) => handleNpcStatRoll({ target: e.target, sheet: this}));
         html.find("div[data-action='rollSkill']").on('click', (e) => handleNpcSkillRoll({ target: e.target, sheet: this}));
         html.find("div[data-action='rollWeapon']").on('click', (e) => handleNpcWeaponRoll({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollSpell']").on('click', (e) => handleNpcSpellRoll({ target: e.target, sheet: this}));
     }
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
@@ -118,6 +123,7 @@ export interface NpcSheetData extends ActorSheetData {
     traits: TraitDataRoot[];
     skills: SkillDataRoot[];
     weapons: ItemData[];
+    ranged: ItemData[];
     affiliations: ItemData[];
     reputations: ItemData[];
     relationships: ItemData[];

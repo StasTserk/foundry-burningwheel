@@ -252,7 +252,7 @@
             }
         }
     }
-    .weapon-section {
+    .weapon-section, .spell-section {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -262,7 +262,7 @@
             @include button-like(black);
             height: min-content;
 
-            & > .npc-weapon-name {
+            & > .npc-weapon-name, & > .npc-spell-name {
                 width: calc(100% - 4em);
             }
             select {

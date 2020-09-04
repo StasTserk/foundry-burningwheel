@@ -8,20 +8,25 @@ If you like this system, please support the developers at [burningwheel.com](htt
 
 ## Current features
 - Actor sheet support for Player Characters
+- Actor Sheet support for NPCs
 - Item sheet support for:
   - Weapons, armor and other possessions.
   - Skills
   - Relationships, reputations and affiliations
+  - Spells
 - Automation for tracking test advancement, calculating a number of derived attributes
+- Character burner
+- Support for GM created compendiums in play and character burning.
 
 ## Near future plans
 - Advanced artha tracking
-- Spellcasting item type and sheet section
 - Sheet layout support and other customization options
+- Compendium use improvements
 - More automation
 
 ## Distant plans
-- Character burner
+- Duel of Wits, Range and Cover, and Fight support.
+- Lifepath item type for character burning
 
 ## Installation
 To install and use The Burning Wheel for foundry, paste the following URL into the Install System dialog in the setup menu of the application.

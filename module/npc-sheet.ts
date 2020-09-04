@@ -3,7 +3,8 @@ import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
 import { TraitDataRoot, SkillDataRoot } from "./items/item.js";
 import { Npc } from "./npc.js";
-import { handleNpcStatRoll } from "./rolls/rollNpcStat.js";
+import { handleNpcStatRoll } from "./rolls/npcStatRoll.js";
+import { handleNpcSkillRoll, handleNpcWeaponRoll } from "./rolls/npcSkillRoll.js";
 
 export class NpcSheet extends BWActorSheet {
     actor: BWActor & Npc;
@@ -71,9 +72,11 @@ export class NpcSheet extends BWActorSheet {
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.find("div[data-action='edit']").on('click', (e) => this._editSheetItem(e));
-        html.find("div[data-action='delete']").on('click', (e) => this._deleteSheetItem(e));
+        html.find("i[data-action='delete']").on('click', (e) => this._deleteSheetItem(e));
         html.find("i[data-action='add']").on('click', (e) => this._addSheetItem(e));
         html.find("div[data-action='rollStat'], div[data-action='rollStatOpen']").on('click', (e) => handleNpcStatRoll({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollSkill']").on('click', (e) => handleNpcSkillRoll({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollWeapon']").on('click', (e) => handleNpcWeaponRoll({ target: e.target, sheet: this}));
     }
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;

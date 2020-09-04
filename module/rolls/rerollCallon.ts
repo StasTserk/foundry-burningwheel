@@ -1,4 +1,4 @@
-import { TestString } from "module/helpers.js";
+import { TestString } from "../helpers.js";
 import { Ability, TracksTests, BWCharacter } from "../bwactor.js";
 import * as helpers from "../helpers.js";
 import { Skill, SkillData } from "../items/item.js";

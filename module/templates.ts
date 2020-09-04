@@ -16,6 +16,7 @@ export async function preloadHandlebarsTemplates(): Promise<void> {
 
       "systems/burningwheel/templates/parts/npc-stat.hbs",
       "systems/burningwheel/templates/parts/npc-editable.hbs",
+      "systems/burningwheel/templates/parts/npc-skill.hbs"
     ];
 
     // Load the template parts

@@ -1,0 +1,12 @@
+<div class="npc-editable">
+    <div class="npc-spell-name" data-id="{{spell._id}}" data-action="edit">{{spell.name}}</div>
+    <select data-item-id="{{spell._id}}" data-binding="data.skillId">
+        {{#select spell.data.skillId}}
+        <option value="">None</option>
+        {{#each skills as |s|}}
+        <option value="{{s._id}}">{{s.name}}</option>
+        {{/each}}
+        {{/select}}
+    </select>
+    <i class="fas fa-trash" data-id="{{spell._id}}" data-action="delete"></i>
+</div>

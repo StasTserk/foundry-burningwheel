@@ -62,7 +62,7 @@ export class BWActor extends Actor {
     getWildForks(skillName: string): { name: string, amount: number }[] {
         return this.data.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > (this.data.data.ptgs.woundDice || 0))
+            && parseInt((s as unknown as SkillDataRoot).data.exp) > (this.data.data.ptgs.woundDice || 0))
             .map( s => {
                 const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
                 // skills at 7+ exp provide 2 dice in forks.

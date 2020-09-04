@@ -245,7 +245,7 @@ export function extractNpcRollData(html: JQuery): RollData {
     const obstacleTotal = diff + obPenalty + miscObs.sum + toolkitPenalty + circlesMalus.sum;
     const tax = extractNumber(html, "tax");
     const forks = extractCheckboxValue(html, "forkOptions");
-    const wildForks = extractCheckboxValue(html, "forkOptions");
+    const wildForks = extractCheckboxValue(html, "wildForks");
 
     let dieSources: { [s:string]: string } = {
         "Exponent": `+${exponent}`
@@ -273,6 +273,35 @@ export function extractNpcRollData(html: JQuery): RollData {
         wildForks: wildForks,
         difficultyGroup: helpers.difficultyGroup(difficultyDice, obstacleTotal)
     };
+}
+
+export async function rollWildFork(numDice: number, shade: helpers.ShadeString = 'B'): Promise<Die | undefined> {
+    if (numDice <= 0) {
+        return;
+    }
+    const tgt = shade === 'B' ? 3 : (shade === 'G' ? 2 : 1);
+    const die = new AstrologyDie(6);
+    die.roll(numDice);
+    die.explode([6,1]);
+    die.countSuccess(tgt, ">");
+    if (game.dice3d) {
+        game.dice3d.show({
+            formula: `${die.results.length}d6`,
+            results: die.rolls.map(r => r.roll),
+            whisper: null,
+            blind: false});
+    }
+    return new Promise(r => r(die));
+}
+
+export class AstrologyDie extends Die {
+    get results(): number[] {
+        return this.rolls.filter(r => !r.rerolled && !r.discarded).map(r => {
+            if ( r.success === true ) return 1;
+            else if (r.roll === 1) return -1;
+            else return 0;
+          });
+    }
 }
 
 export interface RollData {

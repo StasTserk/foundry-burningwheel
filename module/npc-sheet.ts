@@ -66,6 +66,17 @@ export class NpcSheet extends BWActorSheet {
                     data.gear.push(i); break;
             }
         });
+
+        data.beliefs.sort(byName);
+        data.traits.sort(byName);
+        data.instincts.sort(byName);
+        data.skills.sort(byName);
+        data.weapons.sort(byName);
+        data.affiliations.sort(byName);
+        data.reputations.sort(byName);
+        data.relationships.sort(byName);
+        data.gear.sort(byName);
+        data.spells.sort(byName);
         return data;
     }
 
@@ -94,6 +105,10 @@ export class NpcSheet extends BWActorSheet {
             type: itemType
         }).then(i => this.actor.getOwnedItem(i._id)?.sheet.render(true));
     }
+}
+
+function byName(a: ItemData, b: ItemData): number {
+    return a.name.localeCompare(b.name);
 }
 
 export interface NpcSheetData extends ActorSheetData {

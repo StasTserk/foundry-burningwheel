@@ -16,6 +16,7 @@ import {
     extractSelectString,
     maybeExpendTools,
     RollOptions,
+    rollWildFork,
 } from "./rolls.js";
 
 export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollOptions ): Promise<unknown> {
@@ -142,25 +143,6 @@ function extractWildForkBonus(html: JQuery) {
     return extractCheckboxValue(html, "wildForks");
 }
 
-async function rollWildFork(numDice: number, shade: helpers.ShadeString = 'B'): Promise<Die | undefined> {
-    if (numDice <= 0) {
-        return;
-    }
-    const tgt = shade === 'B' ? 3 : (shade === 'G' ? 2 : 1);
-    const die = new AstrologyDie(6);
-    die.roll(numDice);
-    die.explode([6,1]);
-    die.countSuccess(tgt, ">");
-    if (game.dice3d) {
-        game.dice3d.show({
-            formula: `${die.results.length}d6`,
-            results: die.rolls.map(r => r.roll),
-            whisper: null,
-            blind: false});
-    }
-    return new Promise(r => r(die));
-}
-
 interface SkillDialogData extends RollDialogData {
     skill: TracksTests;
     forkOptions: { name: string, amount: number }[];
@@ -169,15 +151,7 @@ interface SkillDialogData extends RollDialogData {
     toolkits: PossessionRootData[];
 }
 
-export class AstrologyDie extends Die {
-    get results(): number[] {
-        return this.rolls.filter(r => !r.rerolled && !r.discarded).map(r => {
-            if ( r.success === true ) return 1;
-            else if (r.roll === 1) return -1;
-            else return 0;
-          });
-    }
-}
+
 
 export interface SkillRollOptions extends RollOptions {
     dataPreset?: Partial<SkillDialogData>;

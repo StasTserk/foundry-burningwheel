@@ -113,3 +113,29 @@ $hover-color: rgba(0,0,0,0.1);
     border: 2px solid #005500;
     color: #005500;
 }
+
+@mixin pill-toggle {
+    display: flex;
+    & > input[type="checkbox"] {
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+        display: inline-block;
+        &:checked + label {
+            @include button-like-active;
+        }
+
+        &:focus + label {
+            border-color: green;
+        }
+    }
+
+    & > label {
+        margin-left: -20px;
+        display: block;
+        width: 100%;
+        @include button-like(black);
+    }
+
+}

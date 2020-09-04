@@ -1,6 +1,7 @@
 <form autocomplete="off">
-    <input name="name" type="text" value="{{item.name}}">
-    <div class="item-grid">
+    <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    <div class="item-form-group">
+        <div class="item-setting-label">Dice</div>
         <select name="data.dice" value="{{data.dice}}" >
             {{#select data.dice}}
             <option value="0">None</option>
@@ -9,10 +10,11 @@
             <option value="3">3D</option>
             {{/select}}
         </select>
-        <div>
+        <div class="pill-toggle">
             <input id="{{item._id}}-checkbox-infamous" type="checkbox" name="data.infamous" {{checked data.infamous}}>
             <label for="{{item._id}}-checkbox-infamous">Infamous</label>
         </div>
     </div>
+    <hr>
     <textarea name="data.description">{{data.description}}</textarea>
 </form>

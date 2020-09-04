@@ -330,14 +330,6 @@
         margin-bottom: 3em;
         width: 60%;
         grid-template-columns: 1fr 2fr;
-
-        .sheet-setting-toggle {
-            @include button-like(black);
-        }
-
-        input[type="checkbox"]:checked + .sheet-setting-toggle {
-            @include button-like-active;
-        }
     }
 
     .burner-finishing {

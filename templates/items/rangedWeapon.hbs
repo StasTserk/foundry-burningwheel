@@ -1,12 +1,14 @@
 <form autocomplete="off">
     <input name="name" type="text" class="item-sheet-name" value="{{item.name}}">
-    <hr/>
-    <h2>Stats</h2>
     <div class="item-form-group">
-        <input id="{{item._id}}-checkbox-usePower" class="item-setting-checkbox hidden" type="checkbox" name="data.usePower" {{checked data.usePower}}>
-        <label for="{{item._id}}-checkbox-usePower" class="item-setting-toggle">Use Power</label>
-        <input id="{{item._id}}-checkbox-hasGunpowder" class="item-setting-checkbox hidden" type="checkbox" name="data.hasGunpowder" {{checked data.hasGunpowder}}>
-        <label for="{{item._id}}-checkbox-hasGunpowder" class="item-setting-toggle">Use Gunpowder</label>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-usePower" type="checkbox" name="data.usePower" {{checked data.usePower}}>
+            <label for="{{item._id}}-checkbox-usePower" >Use Power</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-hasGunpowder" type="checkbox" name="data.hasGunpowder" {{checked data.hasGunpowder}}>
+            <label for="{{item._id}}-checkbox-hasGunpowder">Use Gunpowder</label>
+        </div>
     </div>
     <hr />
     {{#if data.usePower}}

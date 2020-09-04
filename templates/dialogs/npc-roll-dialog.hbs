@@ -1,0 +1,103 @@
+<form class="dialog">
+    <h2>{{name}}</h2>
+    <div class="flex-row">
+        <div class="flex-row dialog-row">
+            <label>Exponent</label>
+            {{#if skill}}
+            <input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">
+            {{/if}}
+            {{#if stat}}
+            <input type="number" class="exponent" disabled name="stat.exp" value="{{stat.exp}}">
+            {{/if}}
+        </div>
+        {{#if woundDice}}
+        <div class="flex-row dialog-row">
+            <label>Wound Penalty</label>
+            <input type="number" class="exponent" disabled name="woundDice" value="{{woundDice}}">
+        </div>
+        {{/if}}
+        {{#if obPenalty}}
+        <div class="flex-row dialog-row">
+            <label>Ob Penalty</label>
+            <input type="number" class="exponent" disabled name="obPenalty" value="{{obPenalty}}">
+        </div>
+        {{/if}}
+        {{#if tax}}
+        <div class="flex-row dialog-row">
+            <label>Tax</label>
+            <input type="number" class="exponent" disabled name="tax" value="{{tax}}">
+        </div>
+        {{/if}}
+        <div class="flex-row dialog-row">
+            <label>Difficulty</label>
+            <input type="number" class="exponent" name="difficulty" value="{{difficulty}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Bonus Dice</label>
+            <input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Artha Dice</label>
+            <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
+        </div>
+    </div>
+    {{#if circlesBonus}}
+    <hr>
+    <h2>Reputations & Affiliations</h2>
+    <div class="checkbox-grid">
+        {{#each circlesBonus as |b|}}
+            <input id="checkbox-{{@key}}-{{slugify b.name}}" type="checkbox" name="circlesBonus" value="{{b.amount}}" data-name="{{b.name}}">
+            <label for="checkbox-{{@key}}-{{slugify b.name}}">{{b.name}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if circlesMalus}}
+    <hr>
+    <h2>Infamies</h2>
+    <div class="checkbox-grid">
+        {{#each circlesMalus as |b|}}
+            <input id="checkbox-{{@key}}-{{slugify b.name}}" type="checkbox" name="circlesMalus" value="{{b.amount}}" data-name="{{b.name}}">
+            <label for="checkbox-{{@key}}-{{slugify b.name}}">{{b.name}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if needsToolkit}}
+    <hr>
+    <h2>Tools</h2>
+    <div class="item-grid col-2">
+        <div class="checkbox-grid">
+            <input id="checkbox-tool-penalty" type="checkbox" name="toolPenalty" value="1">
+            <label for="checkbox-tool-penalty">No Tools Penalty</label>
+        </div>
+        <div class="flex-row">
+            <label for="select-toolkit" name="toolkit">Expend Toolkit?</label>
+            <select id="select-toolkit" name="toolkitId">
+                <option value="">None</option>
+                {{#each toolkits as |t|}}
+                <option value="{{t._id}}">{{t.name}}{{#if t.data.isExpended}} (Expended){{/if}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    {{/if}}
+    {{#if optionalDiceModifiers}}
+    <hr>
+    <h2>Other Dice Modifiers</h2>
+    <div class="checkbox-grid">
+        {{#each optionalDiceModifiers as |mod|}}
+        <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
+        <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if optionalObModifiers}}
+    <hr>
+    <h2>Other Obstacle Modifiers</h2>
+    <div class="checkbox-grid">
+        {{#each optionalObModifiers as |mod|}}
+        <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
+        <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
+        {{/each}}
+    </div>
+    {{/if}}
+</form>

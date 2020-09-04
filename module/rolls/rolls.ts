@@ -222,7 +222,9 @@ export const templates = {
     statMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
     rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.hbs",
     resourcesDialog: "systems/burningwheel/templates/chat/resources-dialog.hbs",
-    resourcesMessage: "systems/burningwheel/templates/chat/roll-message.hbs"
+    resourcesMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    npcRollDialog: "systems/burningwheel/templates/dialogs/npc-roll-dialog.hbs",
+    npcMessage: "systems/burningwheel/templates/chat/roll-message.hbs"
 };
 
 

@@ -7,7 +7,11 @@ import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 export class BWActor extends Actor {
     data!: BWActorDataRoot;
 
-    async processNewItem(item: ItemData): Promise<unknown> {
+    async processNewItem(item: ItemData, userId: string): Promise<unknown> {
+        if (game.userId !== userId) {
+            // this item has been added by someone else.
+            return;
+        }
         if (item.type === "trait") {
             const trait = item as TraitDataRoot;
             if (trait.data.addsReputation) {

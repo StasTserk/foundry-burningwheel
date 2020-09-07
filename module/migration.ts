@@ -1,6 +1,10 @@
 import { BWItem } from "./items/item.js";
 
 export async function migrateData(): Promise<void> {
+    if (!game.user.isGM) {
+        // players can't do this stuff anyhow.
+        return;
+    }
     const latest = game.system.data.version;
     const recentVersion = await game.settings.get("burningwheel", "version") || "0.0.0";
     await game.settings.set("burningwheel", "version", latest);

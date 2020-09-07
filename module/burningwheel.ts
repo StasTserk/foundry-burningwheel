@@ -109,7 +109,7 @@ function registerHelpers() {
 Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any) => actor.processNewItem(item));
+Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any, userId: string) => actor.processNewItem(item, userId));
 
 Hooks.on('renderDialog', (dialog, html: JQuery) => {
     if (dialog.data.id && dialog.data.id === 'import-item') {

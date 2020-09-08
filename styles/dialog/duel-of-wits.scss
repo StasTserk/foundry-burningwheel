@@ -1,0 +1,55 @@
+@import "../mixins.scss";
+
+.dow {
+    input[type="number"] {
+        width: 2em;
+        text-align: center;
+        @include no-number-arrows;
+    }
+
+    img.dow-portrait {
+        width: 40px; height: 40px;
+        border: 0;
+    }
+
+    .dow-side {
+        width: 50%;
+    }
+
+    .dow-volleys {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: 100%;
+
+        .dow-participant {
+            width: 100%;
+        }
+
+        .dow-volley {
+            .card-back, .action-card {
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+                height: 150px;
+                border: 3px solid #800;
+                color: #800;
+                background-color: rgb(170, 159, 0);
+                border-radius: 10px;
+                text-align: center;
+            }
+
+            .card-back {
+                line-height: 150px;
+                font-size: 5em;
+            }
+
+            .action-card {
+                font-size: 1.5em;
+                font-weight: bold;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+            }
+        }
+    }
+}

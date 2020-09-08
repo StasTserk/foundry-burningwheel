@@ -5,5 +5,12 @@ export function registerSystemSettings(): void {
         config: false,
         type: String,
         default: "0.0.0"
-      });
+    });
+    game.settings.register("burningwheel", "dow-data", {
+        name: "Serialized Duel of Wits dialog data.",
+        scope: "world",
+        config: false,
+        type: String,
+        default: "{}"
+    });
 }

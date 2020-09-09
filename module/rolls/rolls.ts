@@ -218,14 +218,15 @@ function extractSourcedValue(html: JQuery, name: string):
     return { sum, entries };
 }
 
-
-export function extractNpcRollData(html: JQuery): RollData {
+export function extractRollData(html: JQuery): RollData {
     const exponent = extractNumber(html, "stat.exp") + extractNumber(html, "skill.exp");
     const diff = extractNumber(html, "difficulty");
     const aDice = extractNumber(html, "arthaDice");
     const bDice = extractNumber(html, "bonusDice");
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = extractNumber(html, "obPenalty") || 0;
+    const cashDice = extractSelectNumber(html, "cashDice") || 0;
+    const fundDice = extractSelectNumber(html, "fundDice") || 0;
     
     const miscDice = extractMiscDice(html);
     const miscObs = extractMiscObs(html);
@@ -256,9 +257,11 @@ export function extractNpcRollData(html: JQuery): RollData {
     if (forks) { dieSources.FoRKs = `+${forks}`; }
     if (circlesBonus.sum) { dieSources = { ...dieSources, ...circlesBonus.entries}; }
     if (tax) { dieSources.Tax = `-${tax}`; }
+    if (cashDice) { dieSources.Cash = `+${cashDice}`; }
+    if (fundDice) { dieSources.Funds = `+${fundDice}`; }
 
-    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks - tax + circlesBonus.sum;
-    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice - tax + circlesBonus.sum;
+    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks - tax + circlesBonus.sum + cashDice + fundDice;
+    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice - tax + circlesBonus.sum + cashDice + fundDice;
 
     return { 
         baseDifficulty: diff,
@@ -271,7 +274,9 @@ export function extractNpcRollData(html: JQuery): RollData {
             ...penaltySources
         },
         wildForks: wildForks,
-        difficultyGroup: helpers.difficultyGroup(difficultyDice, obstacleTotal)
+        difficultyGroup: helpers.difficultyGroup(difficultyDice, obstacleTotal),
+        cashDice,
+        fundDice
     };
 }
 
@@ -305,15 +310,28 @@ export class AstrologyDie extends Die {
 }
 
 export interface RollData {
+    /** Difficulty of test before modifiers */
     baseDifficulty: number;
+    /** Total number of dice rolled normally. Includes artha, not wild forks. */
     diceTotal: number;
+    /** Total number of dice that count for test difficulty. Includes wild forks, not artha */
     difficultyDice: number;
+    /** Total modified test obstacle */
     difficultyTotal: number;
+    /** Obstacle counted towards test difficulty */
     difficultyTestTotal: number;
+    /** Number of wild forks used in test */
     wildForks: number;
+    /** Collection of sources of die number modifiers */
     dieSources: { [s:string]: string };
+    /** Collection of sources of obstacle modifiers */
     obSources: { [s:string]: string };
+    /** String representing difficulty class of the test */
     difficultyGroup: helpers.TestString;
+    /** Number of cash dice spent for test */
+    cashDice: number;
+    /** Number of fund dice spent for test */
+    fundDice: number;
 }
 
 /* ============ Constants =============== */

@@ -10,7 +10,7 @@ import {
     rollDice,
     templates,
     RollOptions,
-    extractNpcRollData
+    extractRollData
 } from "./rolls.js";
 import { NpcSheet } from "module/npc-sheet.js";
 
@@ -61,7 +61,7 @@ async function statRollCallback(
         name: string,
         shade: helpers.ShadeString,
         open: boolean) {
-    const rollData = extractNpcRollData(dialogHtml);
+    const rollData = extractRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
     const accessor = `data.${name}`;
 

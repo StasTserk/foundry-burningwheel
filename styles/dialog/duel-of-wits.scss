@@ -16,6 +16,14 @@
         width: 50%;
     }
 
+    .dow-resets {
+        width: 100%;
+        height: min-content;
+        .reset-option {
+            @include button-like(gold);
+        }
+    }
+
     .dow-volleys {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -52,4 +60,11 @@
             }
         }
     }
+}
+
+.dow-sidebar-button {
+    background: linear-gradient(rgba(red, .15), rgba(red, 0.45));
+    color: gold;
+    border-color: gold;
+    width: 95%;
 }

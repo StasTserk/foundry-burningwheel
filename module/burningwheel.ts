@@ -44,7 +44,6 @@ Hooks.once("init", async () => {
             data
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
-        setTimeout(() => game.burningwheel.dow.render(true), 1000);
     } catch (err) {
         throw Error(err);
     }
@@ -52,6 +51,12 @@ Hooks.once("init", async () => {
 
 Hooks.once("ready", async() => {
     migrateData();
+});
+
+Hooks.on("renderSidebarTab", async (_data, html: JQuery) => {
+    if (html.prop("id") === "combat") { // this is the combat tab
+        DuelOfWitsDialog.addSidebarControl(html);
+    }
 });
 
 function registerHelpers() {

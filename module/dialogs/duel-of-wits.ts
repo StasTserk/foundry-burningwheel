@@ -4,7 +4,7 @@ export class DuelOfWitsDialog extends Dialog {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
         
-        this.data.data.actionOptions = options;
+        this.data.actionOptions = options;
         this.data.data.showV1 = false;
         this.data.data.showV2 = false;
         this.data.data.showV3 = false;
@@ -18,6 +18,7 @@ export class DuelOfWitsDialog extends Dialog {
 
     data: {
         data: DuelOfWitsData;
+        actionOptions: StringIndexedObject<string[]>;
     };
 
     static get defaultOptions(): FormApplicationOptions {
@@ -27,12 +28,15 @@ export class DuelOfWitsDialog extends Dialog {
     activateListeners(html: JQuery): void {
         html.submit((e) => { e.preventDefault(); });
         html.find("input, select, textarea").on('change', (e) => this._propagateChange(e));
+        html.find("button[data-action='reset-round']").on('click', (_) => this.clearRound());
+        html.find("button[data-action='reset-everything']").on('click', (_) => this.clearEverything());
         this.activateSocketListeners();
     }
 
     getData(): unknown {
         const data = Object.assign(super.getData(), this.data.data ) as DuelOfWitsData;
         const actors = game.actors.entities;
+        data.actionOptions = this.data.actionOptions;
 
         data.side1Options = actors.filter(a => a._id !== data.side2ActorId);
         data.side2Options = actors.filter(a => a._id !== data.side1ActorId);
@@ -74,6 +78,42 @@ export class DuelOfWitsDialog extends Dialog {
         e.target.focus();
     }
 
+    async clearEverything(): Promise<void> {
+        await this.clearRound();
+        const data = this.data.data;
+        data.blindS1 = false;
+        data.blindS2 = false;
+        data.boa1 = 0;
+        data.boa1Max = 0;
+        data.boa2 = 0;
+        data.boa2Max = 0;
+        data.side1ActorId = "";
+        data.side2ActorId = "";
+        data.statement1 = "";
+        data.statement2 = "";
+
+        await game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
+        game.socket.emit("system.burningwheel", { type: "updateDuel", data});
+        this.render(true);
+    }
+
+    async clearRound(): Promise<void> {
+        const data = this.data.data;
+        data.v1s1 = "?";
+        data.v1s2 = "?";
+        data.v2s1 = "?";
+        data.v2s2 = "?";
+        data.v3s1 = "?";
+        data.v3s2 = "?";
+
+        data.showV1 = false;
+        data.showV2 = false;
+        data.showV3 = false;
+        await game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
+        game.socket.emit("system.burningwheel", { type: "updateDuel", data});
+        this.render(true);
+    }
+
     activateSocketListeners(): void {
         game.socket.on("system.burningwheel", ({type, data}) => {
             console.log("wew lad");
@@ -86,6 +126,15 @@ export class DuelOfWitsDialog extends Dialog {
             }
         });
         game.socket.on("pause", () => console.log('pause toggle!'));
+    }
+
+    static addSidebarControl(html: JQuery): void {
+        const buttonElement = document.createElement("button");
+        buttonElement.textContent = "Duel of Wits";
+        buttonElement.className = "dow-sidebar-button";
+        buttonElement.onclick = () => game.burningwheel.dow.render(true);
+        const combatHeader = $(html).find("header");
+        combatHeader.prepend(buttonElement);
     }
 }
 

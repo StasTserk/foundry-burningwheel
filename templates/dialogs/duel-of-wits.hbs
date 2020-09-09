@@ -12,7 +12,7 @@
         {{else}}
         <div class="participant-name">{{actor1.name}}</div>
         {{/if}}
-        <textarea name="statement1" {{disabled side1ReadOnly}} >{{statement1}}</textarea>
+        <textarea name="statement1" {{disabled side1ReadOnly}} placeholder="Statement of Purpose">{{statement1}}</textarea>
     </div>
     <div class="dow-side">
         {{#if gmView}}
@@ -27,7 +27,7 @@
         {{else}}
         <div class="participant-name">{{actor2.name}}</div>
         {{/if}}
-        <textarea name="statement2" {{disabled side2ReadOnly}}>{{statement2}}</textarea>
+        <textarea name="statement2" {{disabled side2ReadOnly}} placeholder="Statement of Purpose">{{statement2}}</textarea>
     </div>
     {{#if gmView}}
     <div class="dow-resets item-grid col-2">
@@ -37,7 +37,7 @@
     {{/if}}
     <div class="dow-volleys">
         <div class="dow-participant">
-            <div>{{actor1.name}}</div>
+            <div class="participant-name">{{actor1.name}}</div>
             {{#if actor1}}
             <img class="dow-portrait" src="{{actor1.img}}" title="{{actor1.name}}" data-edit="img"/>
             {{else}}
@@ -135,7 +135,7 @@
             {{/if}}
         </div>
         <div class="dow-participant">
-            <div>{{actor2.name}}</div>
+            <div class="participant-name">{{actor2.name}}</div>
             {{#if actor2}}
             <img class="dow-portrait" src="{{actor2.img}}" title="{{actor2.name}}" data-edit="img"/>
             {{else}}

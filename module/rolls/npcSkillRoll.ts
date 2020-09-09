@@ -9,7 +9,7 @@ import {
     rollDice,
     templates,
     RollOptions,
-    extractNpcRollData,
+    extractRollData,
     rollWildFork
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
@@ -84,7 +84,7 @@ async function skillRollCallback(
         sheet: NpcSheet,
         skill: Skill,
         extraInfo?: string) {
-    const rollData = extractNpcRollData(dialogHtml);
+    const rollData = extractRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
     const accessor = `data.${name}`;
 

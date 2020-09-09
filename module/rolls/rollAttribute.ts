@@ -1,17 +1,15 @@
 import { Ability, BWActor, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
-import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
-    buildDiceSourceObject,
     buildRerollData,
-    extractBaseData,
     getRollNameClass,
     RerollData,
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions
+    RollOptions,
+    extractRollData
 } from "./rolls.js";
 
 export async function handleAttrRoll({ target, sheet }: RollOptions): Promise<unknown> {
@@ -53,17 +51,12 @@ async function attrRollCallback(
         sheet: BWActorSheet,
         name: string,
         accessor: string) {
-    const baseData = extractBaseData(dialogHtml, sheet);
-    const exp = parseInt(stat.exp, 10);
-    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - baseData.woundDice + baseData.miscDice.sum,
-        baseData.obstacleTotal);
+    const rollData = extractRollData(dialogHtml);
 
-    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice + baseData.miscDice.sum;
-    const roll = await rollDice(numDice, stat.open, stat.shade);
+    const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const isSuccessful = parseInt(roll.result, 10) >= (baseData.obstacleTotal);
+    const isSuccessful = parseInt(roll.result) >= (rollData.difficultyTotal);
 
     const fateReroll = buildRerollData(sheet.actor, roll, accessor);
     const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
@@ -72,19 +65,19 @@ async function attrRollCallback(
     const data: RollChatMessageData = {
         name: `${name}`,
         successes: roll.result,
-        difficulty: baseData.diff,
-        obstacleTotal: baseData.obstacleTotal,
+        difficulty: rollData.baseDifficulty,
+        obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(stat.open, stat.shade),
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: dg,
-        penaltySources: baseData.penaltySources,
-        dieSources: { ...dieSources, ...baseData.miscDice.entries },
+        difficultyGroup: rollData.difficultyGroup,
+        penaltySources: rollData.obSources,
+        dieSources: { ...rollData.dieSources },
         fateReroll,
         callons
     };
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, name, accessor, dg, isSuccessful);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({

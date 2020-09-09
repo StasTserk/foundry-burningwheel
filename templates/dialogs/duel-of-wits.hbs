@@ -29,6 +29,12 @@
         {{/if}}
         <textarea name="statement2" {{disabled side2ReadOnly}}>{{statement2}}</textarea>
     </div>
+    {{#if gmView}}
+    <div class="dow-resets item-grid col-2">
+        <button class="reset-option" data-action="reset-everything">Clear All</button>
+        <button class="reset-option" data-action="reset-round">Reset Round</button>
+    </div>
+    {{/if}}
     <div class="dow-volleys">
         <div class="dow-participant">
             <div>{{actor1.name}}</div>
@@ -39,7 +45,7 @@
             {{/if}}
             <div>Body of Argument:</div>
             <input type="number" {{disabled side1ReadOnly}} name="boa1" value="{{boa1}}">/
-            <input type="number" {{disabled side1ReadOnly}} name="boa1max" value="{{boa1max}}">
+            <input type="number" {{disabled side1ReadOnly}} name="boa1Max" value="{{boa1Max}}">
             {{#if gmView}}
             <div class="pill-toggle">
                 <input type="checkbox" name="blindS1" id="blindS1" {{checked blindS1}}>
@@ -137,7 +143,7 @@
             {{/if}}
             <div>Body of Argument:</div>
             <input type="number" {{disabled side2ReadOnly}} name="boa2" value="{{boa2}}">/
-            <input type="number" {{disabled side2ReadOnly}} name="boa2max" value="{{boa2max}}">
+            <input type="number" {{disabled side2ReadOnly}} name="boa2Max" value="{{boa2Max}}">
             {{#if gmView}}
             <div class="pill-toggle">
                 <input type="checkbox" name="blindS2" id="blindS2" {{checked blindS2}}>

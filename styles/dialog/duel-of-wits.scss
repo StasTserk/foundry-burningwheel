@@ -7,13 +7,18 @@
         @include no-number-arrows;
     }
 
-    img.dow-portrait {
-        width: 40px; height: 40px;
-        border: 0;
-    }
-
     .dow-side {
         width: 50%;
+        .participant-name {
+            min-height: 1.5em;
+        }
+        textarea {
+            resize: none;
+        }
+
+        select {
+            max-width: 100%;
+        }
     }
 
     .dow-resets {
@@ -28,9 +33,19 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         width: 100%;
+        text-align: center;
 
         .dow-participant {
-            width: 100%;
+            .participant-name {
+                font-weight: bold;
+            }
+            img.dow-portrait {
+                margin-left: auto;
+                margin-right: auto;
+                width: 80px; height: 80px;
+                border: 0;
+                object-fit: cover;
+            }
         }
 
         .dow-volley {
@@ -41,7 +56,7 @@
                 height: 150px;
                 border: 3px solid #800;
                 color: #800;
-                background-color: rgb(170, 159, 0);
+                background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
                 border-radius: 10px;
                 text-align: center;
             }

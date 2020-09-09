@@ -5,11 +5,11 @@ export class DuelOfWitsDialog extends Dialog {
         super(d, o);
         
         this.data.actionOptions = options;
-        this.data.data.showV1 = false;
-        this.data.data.showV2 = false;
-        this.data.data.showV3 = false;
-        this.data.data.blindS1 = false;
-        this.data.data.blindS2 = false;
+        this.data.data.showV1 = this.data.data.showV1 || false;
+        this.data.data.showV2 = this.data.data.showV2 || false;
+        this.data.data.showV3 = this.data.data.showV3 || false;
+        this.data.data.blindS1 = this.data.data.blindS1 || false;
+        this.data.data.blindS2 = this.data.data.blindS2 || false;
     }
 
     get template(): string {

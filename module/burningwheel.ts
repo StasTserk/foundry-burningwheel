@@ -38,15 +38,17 @@ Hooks.once("init", async () => {
     let data = {};
     try {
         data = await JSON.parse(game.settings.get("burningwheel", "dow-data"));
-        game.burningwheel.dow = new DuelOfWitsDialog({
-            title: "Duel of Wits",
-            buttons: {},
-            data
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any);
     } catch (err) {
-        throw Error(err);
+        console.log("Error parsing serialized duel of wits dat");
     }
+    
+    game.burningwheel.dow = new DuelOfWitsDialog({
+        title: "Duel of Wits",
+        buttons: {},
+        data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
+
 });
 
 Hooks.once("ready", async() => {

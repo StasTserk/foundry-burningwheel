@@ -6,11 +6,11 @@
     <div class="armor-header">Type</div>
 
     {{#if armor.head}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.head._id}}" data-location="Helm">
+    <button class="rollable {{armor.head.data.helmDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.head._id}}" data-location="Helm">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.head.data.shade}}{{armor.head.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.head._id}}" data-binding="data.damageHelm" value="{{armor.head.data.damageHelm}}">
+    <input type="number" class="armor-damage-input {{armor.head.data.helmDisplayClass}}" data-item-id="{{armor.head._id}}" data-binding="data.damageHelm" value="{{armor.head.data.damageHelm}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>
@@ -20,11 +20,11 @@
     <div class="armor-row">{{armor.head.name}}</div>
 
     {{#if armor.torso}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.torso._id}}" data-location="Torso">
+    <button class="rollable {{armor.torso.data.torsoDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.torso._id}}" data-location="Torso">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.torso.data.shade}}{{armor.torso.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.torso._id}}" data-binding="data.damageTorso" value="{{armor.torso.data.damageTorso}}">
+    <input type="number" class="armor-damage-input {{armor.torso.data.torsoDisplayClass}}" data-item-id="{{armor.torso._id}}" data-binding="data.damageTorso" value="{{armor.torso.data.damageTorso}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>
@@ -34,11 +34,11 @@
     <div class="armor-row">{{armor.torso.name}}</div>
 
     {{#if armor.leftArm}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.leftArm._id}}" data-location="LeftArm">
+    <button class="rollable {{armor.leftArm.data.leftArmDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.leftArm._id}}" data-location="LeftArm">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.leftArm.data.shade}}{{armor.leftArm.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.leftArm._id}}" data-binding="data.damageLeftArm" value="{{armor.leftArm.data.damageLeftArm}}">
+    <input type="number" class="armor-damage-input {{armor.leftArm.data.leftArmDisplayClass}}" data-item-id="{{armor.leftArm._id}}" data-binding="data.damageLeftArm" value="{{armor.leftArm.data.damageLeftArm}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>
@@ -48,11 +48,11 @@
     <div class="armor-row">{{armor.leftArm.name}}</div>
 
     {{#if armor.rightArm}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.rightArm._id}}" data-location="RightArm">
+    <button class="rollable {{armor.rightArm.data.rightArmDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.rightArm._id}}" data-location="RightArm">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.rightArm.data.shade}}{{armor.rightArm.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.rightArm._id}}" data-binding="data.damageRightArm" value="{{armor.rightArm.data.damageRightArm}}">
+    <input type="number" class="armor-damage-input {{armor.rightArm.data.rightArmDisplayClass}}" data-item-id="{{armor.rightArm._id}}" data-binding="data.damageRightArm" value="{{armor.rightArm.data.damageRightArm}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>
@@ -62,11 +62,11 @@
     <div class="armor-row">{{armor.rightArm.name}}</div>
 
     {{#if armor.leftLeg}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.leftLeg._id}}" data-location="LeftLeg">
+    <button class="rollable {{armor.leftLeg.data.leftLegDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.leftLeg._id}}" data-location="LeftLeg">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.leftLeg.data.shade}}{{armor.leftLeg.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.leftLeg._id}}" data-binding="data.damageLeftLeg" value="{{armor.leftLeg.data.damageLeftLeg}}">
+    <input type="number" class="armor-damage-input {{armor.leftLeg.data.leftLegDisplayClass}}" data-item-id="{{armor.leftLeg._id}}" data-binding="data.damageLeftLeg" value="{{armor.leftLeg.data.damageLeftLeg}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>
@@ -76,11 +76,11 @@
     <div class="armor-row">{{armor.leftLeg.name}}</div>
 
     {{#if armor.rightLeg}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.rightLeg._id}}" data-location="RightLeg">
+    <button class="rollable {{armor.rightLeg.data.rightLegDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.rightLeg._id}}" data-location="RightLeg">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.rightLeg.data.shade}}{{armor.rightLeg.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.rightLeg._id}}" data-binding="data.damageRightLeg" value="{{armor.rightLeg.data.damageRightLeg}}">
+    <input type="number" class="armor-damage-input {{armor.rightLeg.data.rightLegDisplayClass}}" data-item-id="{{armor.rightLeg._id}}" data-binding="data.damageRightLeg" value="{{armor.rightLeg.data.damageRightLeg}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>
@@ -90,11 +90,11 @@
     <div class="armor-row">{{armor.rightLeg.name}}</div>
 
     {{#if armor.shield}}
-    <button class="rollable" data-roll-type="armor" data-item-id="{{armor.shield._id}}" data-location="Shield">
+    <button class="rollable {{armor.shield.data.shieldDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.shield._id}}" data-location="Shield">
         <i class="fas fa-dice"></i>
     </button>
     <div class="armor-row">{{armor.shield.data.shade}}{{armor.shield.data.dice}}</div>
-    <input type="number" class="armor-damage-input" data-item-id="{{armor.shield._id}}" data-binding="data.damageShield" value="{{armor.shield.data.damageShield}}">
+    <input type="number" class="armor-damage-input {{armor.shield.data.shieldDisplayClass}}" data-item-id="{{armor.shield._id}}" data-binding="data.damageShield" value="{{armor.shield.data.damageShield}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>
     <div class="armor-row"></div>

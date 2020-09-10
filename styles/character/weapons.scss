@@ -162,7 +162,15 @@
             @include no-number-arrows;
         }
 
+        .armor-broken {
+            background-color: rgba(red, .1);
+            color: #800;
+        }
+
         button {
+            &.armor-broken {
+                pointer-events: none;
+            }
             height: 1.5em;
             line-height: 1.25em;
         }

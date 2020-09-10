@@ -10,6 +10,7 @@ export async function handleArmorRoll({ target, sheet }: RollOptions): Promise<u
     const armorId = target.dataset.itemId || "";
     const armorItem = actor.getOwnedItem(armorId) as Armor;
     const location = target.dataset.location || "";
+    const chestBonus = location === "Torso" ? 1 : 0;
     const damage = armorItem.data.data[`damage${location}`];
 
     const dialogData: ArmorDialogData = {
@@ -17,7 +18,7 @@ export async function handleArmorRoll({ target, sheet }: RollOptions): Promise<u
         name: "Armor",
         arthaDice: 0,
         bonusDice: 0,
-        armor: armorItem.data.data.dice,
+        armor: parseInt(armorItem.data.data.dice) + chestBonus,
         damage
     };
     const html = await renderTemplate(templates.armorDialog, dialogData);
@@ -37,7 +38,7 @@ export async function handleArmorRoll({ target, sheet }: RollOptions): Promise<u
 }
 
 export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: BWActorSheet, location: string): Promise<unknown> {   
-    const dice = parseInt(armorItem.data.data.dice);
+    const dice = extractNumber(html, "armor");
     const damage = parseInt(armorItem.data.data[`damage${location}`]);
     const va = extractNumber(html, "vsArmor");
     const actor = armorItem.actor as BWActor;
@@ -53,7 +54,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const roll = await rollDice(numDice, false, armorItem.data.data.shade || "B");
     if (!roll) { return; }
     const damageAssigned = await AssignDamage(armorItem, roll, location);
-    const isSuccess = roll.total > 1 + va;
+    const isSuccess = roll.total >= 1 + va;
     const rerollData = buildRerollData(actor, roll, undefined, armorItem._id);
     rerollData.type = "armor";
     const messageData: RollChatMessageData = {
@@ -71,7 +72,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
             ...dieSources,
             ...buildDiceSourceObject(0, baseData.aDice, baseData.bDice, 0, 0, 0)
         },
-        extraInfo: damageAssigned ? `${armorItem.name} took ${damageAssigned} damage to its ${helpers.deCamelCaseify(location).toLowerCase()}` : undefined
+        extraInfo: damageAssigned ? `${armorItem.name} ${helpers.deCamelCaseify(location).toLowerCase()} lost ${damageAssigned} ${damageAssigned > 1 ? 'dice' : 'die'} to damage.` : undefined
     };
     
     const messageHtml = await renderTemplate(templates.armorMessage, messageData);
@@ -84,5 +85,5 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
 
 interface ArmorDialogData extends RollDialogData {
     damage: string;
-    armor: string;
+    armor: number;
 }

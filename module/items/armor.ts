@@ -5,6 +5,15 @@ import { ShadeString } from "../helpers.js";
 export class Armor extends Item {
     prepareData(): void {
         this.data.data.cssClass = "equipment-armor";
+
+        const dice = parseInt(this.data.data.dice);
+        this.data.data.helmDisplayClass = calculateDisplayClass(dice, this.data.data.damageHelm);
+        this.data.data.torsoDisplayClass = calculateDisplayClass(dice+1, this.data.data.damageTorso);
+        this.data.data.leftArmDisplayClass = calculateDisplayClass(dice, this.data.data.damageLeftArm);
+        this.data.data.rightArmDisplayClass = calculateDisplayClass(dice, this.data.data.damageRightArm);
+        this.data.data.leftLegDisplayClass= calculateDisplayClass(dice, this.data.data.damageLeftLeg);
+        this.data.data.rightLegDisplayClass = calculateDisplayClass(dice, this.data.data.damageRightLeg);
+        this.data.data.shieldDisplayClass = calculateDisplayClass(dice, this.data.data.damageShield);
     }
 
     data: ArmorRootData;
@@ -42,6 +51,13 @@ export async function AssignDamage(armor: Armor, roll: Roll, location: string): 
 
 }
 
+function calculateDisplayClass(dice: number, locationDice: string): string {
+    if (parseInt(locationDice) >= dice) {
+        return "armor-broken";
+    }
+    return "";
+}
+
 export interface ArmorRootData extends ItemData<ArmorData> {
     data: ArmorData;
 }
@@ -54,19 +70,19 @@ export interface ArmorData extends DisplayClass, HasPointCost {
 
     // damage info
     hasHelm: boolean;
-    damageHelm: 0;
+    damageHelm: string;
     hasTorso: boolean;
-    damageTorso: 0;
+    damageTorso: string;
     hasLeftArm: boolean;
-    damageLeftArm: 0;
+    damageLeftArm: string;
     hasRightArm: boolean;
-    damageRightArm: 0;
+    damageRightArm: string;
     hasLeftLeg: boolean;
-    damageLeftLeg: 0;
+    damageLeftLeg: string;
     hasRightLeg: boolean;
-    damageRightLeg: 0;
+    damageRightLeg: string;
     hasShield: boolean;
-    damageShield: 0;
+    damageShield: string;
 
     // clumsy weight info
     agilityPenalty: string; // as number
@@ -81,4 +97,12 @@ export interface ArmorData extends DisplayClass, HasPointCost {
     untrainedPenalty: string;
 
     shade: ShadeString;
+
+    helmDisplayClass?: string;
+    torsoDisplayClass?: string;
+    leftArmDisplayClass?: string;
+    rightArmDisplayClass?: string;
+    leftLegDisplayClass?: string;
+    rightLegDisplayClass?: string;
+    shieldDisplayClass?: string;
 }

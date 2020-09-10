@@ -127,16 +127,21 @@ export function isStat(name: string): boolean {
     ].indexOf(name.toLowerCase()) !== -1);
 }
 
-export async function getItemsOfTypes(...itemTypes: ItemType[]): Promise<(BWItem & {itemSource?: string })[]> {
-    const itemList = game.items.filter((i: BWItem) => itemTypes.indexOf(i.type) !== -1)
+export async function getItemsOfTypes(itemTypes: ItemType[], compendiums?: string[]): Promise<(BWItem & {itemSource?: string })[]> {
+    let itemList: (BWItem & {itemSource?: string })[] = [];
+    const useAll = !compendiums;
+    const useWorld = compendiums?.indexOf('world') !== -1;
+    if (useWorld) {
+        itemList = game.items.filter((i: BWItem) => itemTypes.indexOf(i.type) !== -1)
         .map((item: BWItem & {itemSource?: string } ) => {
             item.itemSource = "World"; 
             return item; 
         }) as (BWItem & {itemSource?: string })[];
+    }
 
     let compendiumItems: (BWItem & {itemSource?: string })[] = [];
     let sourceLabel = "";
-    const packs = Array.from(game.packs.values()) as Compendium[];
+    const packs = Array.from(game.packs.values()).filter(p => useAll || compendiums?.indexOf(p.collection) !== -1) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
         sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).replace('-', ' ').titleCase();
@@ -150,8 +155,20 @@ export async function getItemsOfTypes(...itemTypes: ItemType[]): Promise<(BWItem
     return itemList.concat(...compendiumItems);
 }
 
-export async function getItemsOfType<T extends BWItem>(itemType: ItemType): Promise<(T & {itemSource?: string })[]> {
-    return getItemsOfTypes(itemType) as Promise<(T & {itemSource?: string })[]>;
+export async function getItemsOfType<T extends BWItem>(itemType: ItemType, compendiums?: string[]): Promise<(T & {itemSource?: string })[]> {
+    return getItemsOfTypes([itemType], compendiums) as Promise<(T & {itemSource?: string })[]>;
+}
+
+export function getCompendiumList(): { name: string, label: string}[] {
+    const packs = Array.from(game.packs.values()) as Compendium[];
+    return [ { name: "world", label: "World Content" }].concat(
+        ...packs.map(p => {
+            return {
+                name: p.collection,
+                label: p.collection.substr(p.collection.indexOf('.')+1).replace('-', ' ').titleCase()
+            };
+        })
+    );
 }
 
 export async function notifyError(title: string, errorMessage: string): Promise<Application> {

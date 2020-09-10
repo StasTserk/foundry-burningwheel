@@ -52,7 +52,7 @@ async function resourcesRollCallback(
     const rollData = extractRollData(dialogHtml);
 
     if (rollData.cashDice) {
-        const currentCash = parseInt(sheet.actor.data.data.cash, 10) || 0;
+        const currentCash = parseInt(sheet.actor.data.data.cash) || 0;
         sheet.actor.update({"data.cash": currentCash - rollData.cashDice});
     }
 

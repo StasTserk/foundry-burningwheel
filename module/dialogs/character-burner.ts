@@ -1,5 +1,5 @@
 import { BWActor } from "../bwactor.js";
-import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes } from "../helpers.js";
+import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList } from "../helpers.js";
 import { Skill, Trait, BWItem, Property, HasPointCost } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
 import { BWCharacter } from "module/character.js";
@@ -13,19 +13,37 @@ export class CharacterBurnerDialog extends Dialog {
     private _property: Property[];
 
     static async Open(parent: BWActor & BWCharacter): Promise<Application> {
-        const loadingDialog = new Dialog({
-            title: "",
-            content: "<div class='loading-title'>Loading Character Burner data...</div><div class='burner-loading-spinner'><i class='fas fa-dharmachakra'></i></div>",
-            buttons: {},
-        }, {classes: ["loading-dialog"], width: "300px"});
-        await loadingDialog.render(true);
-        const dialog = new CharacterBurnerDialog(parent);
-        dialog._skills = await getItemsOfType<Skill>("skill");
-        dialog._traits = await getItemsOfType<Trait>("trait");
-        dialog._property = await getItemsOfType<Property>("property");
-        dialog._gear = await getItemsOfTypes("melee weapon", "ranged weapon", "armor", "spell", "possession");
-        await dialog.render(true);
-        return loadingDialog.close();
+        const html = await renderTemplate("systems/burningwheel/templates/dialogs/compendium-select.hbs", { compendiums: getCompendiumList() });
+        const compendiumSelect = new Dialog({
+            title: "Pick Compendiums",
+            content: html,
+            buttons: {
+                select: {
+                    label: "Select",
+                    callback: async (html: JQuery) => {
+                        const usedSources = html.find("input[name='compendiumList']:checked").map((_, e) => $(e).val() as string).toArray();
+
+                        const loadingDialog = new Dialog({
+                            title: "",
+                            content: "<div class='loading-title'>Loading Character Burner data...</div><div class='burner-loading-spinner'><i class='fas fa-dharmachakra'></i></div>",
+                            buttons: {},
+                        }, {classes: ["loading-dialog"], width: "300px"});
+                        await loadingDialog.render(true);
+                        const dialog = new CharacterBurnerDialog(parent);
+                        dialog._skills = await getItemsOfType<Skill>("skill", usedSources);
+                        dialog._traits = await getItemsOfType<Trait>("trait", usedSources);
+                        dialog._property = await getItemsOfType<Property>("property", usedSources);
+                        dialog._gear = await getItemsOfTypes(["melee weapon", "ranged weapon", "armor", "spell", "possession"], usedSources);
+                        await dialog.render(true);
+                        return loadingDialog.close();
+                    }
+                },
+                cancel: {
+                    label: "Cancel"
+                }
+            }
+        });
+        return compendiumSelect.render(true);
     }
     private constructor(parent: BWActor & BWCharacter) {
         super({

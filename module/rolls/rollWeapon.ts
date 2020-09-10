@@ -25,9 +25,9 @@ export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknow
     const quality = (weapon as MeleeWeapon | RangedWeapon).data.data.quality;
     let dataPreset: Partial<RollDialogData> | undefined;
     if (quality === "superior") {
-        dataPreset = { optionalDiceModifiers: [ { dice: 1, label: "Superior Quality", optional: true }]};
+        dataPreset = { diceModifiers: [ { dice: 1, label: "Superior Quality", optional: false }]};
     } else if (quality === "poor") {
-        dataPreset = { optionalObModifiers: [ { obstacle: 1, label: "Poor Quality", optional: true }]};
+        dataPreset = { obModifiers: [ { obstacle: 1, label: "Poor Quality", optional: false }]};
     }
 
     const skillId = target.dataset.skillId;

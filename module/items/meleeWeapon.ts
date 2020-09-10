@@ -1,6 +1,7 @@
 import { BWActor } from "../bwactor.js";
 import { DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
+import { QualityString } from "../constants.js";
 
 export class MeleeWeapon extends Item {
     prepareData(): void {
@@ -44,7 +45,7 @@ export interface MeleeWeaponRootData extends ItemData<MeleeWeaponData> {
 }
 
 export interface MeleeWeaponData extends DisplayClass, HasPointCost {
-    quality: string;
+    quality: QualityString;
     baseOb: string; // as number
     power: string; // as number
     add: string; // as number

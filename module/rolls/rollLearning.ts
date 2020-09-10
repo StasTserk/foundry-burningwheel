@@ -55,6 +55,15 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
         tax = sheet.actor.data.data.forteTax;
     }
 
+    if (dataPreset) {
+        if (dataPreset.optionalDiceModifiers) {
+            dataPreset.optionalDiceModifiers.concat(...rollModifiers.filter(r => r.optional && r.dice));
+        }
+        if (dataPreset.optionalObModifiers) {
+            dataPreset.optionalObModifiers.concat(...rollModifiers.filter(r => r.optional && r.obstacle));
+        }
+    }
+
     const data: LearningDialogData = Object.assign({
         name: `Beginner's Luck ${skill.name} Test`,
         difficulty: 3,

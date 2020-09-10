@@ -1,17 +1,15 @@
 import { Ability, BWActor, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
-import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
-    buildDiceSourceObject,
     buildRerollData,
-    extractBaseData,
     getRollNameClass,
     RerollData,
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions
+    RollOptions,
+    extractRollData
 } from "./rolls.js";
 
 export async function handleShrugRoll({ target, sheet }: RollOptions): Promise<unknown> {
@@ -21,15 +19,18 @@ export async function handleGritRoll({ target, sheet }: RollOptions): Promise<un
     return handlePtgsRoll({ target, sheet, shrugging: false });
 }
 
-async function handlePtgsRoll({ target, sheet, shrugging }: PtgsRollOptions): Promise<unknown> {
+async function handlePtgsRoll({ sheet, shrugging }: PtgsRollOptions): Promise<unknown> {
     const actor = sheet.actor as BWActor;
     const stat = getProperty(actor.data, "data.health" || "") as Ability;
+    const rollModifiers = sheet.actor.getRollModifiers("health");
     const data: AttributeDialogData = {
         name: shrugging ? "Shrug It Off" : "Grit Your Teeth",
         difficulty: shrugging ? 2 : 4,
         bonusDice: 0,
         arthaDice: 0,
-        stat
+        stat,
+        optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     };
 
     const buttons: Record<string, DialogButton> = {};
@@ -74,7 +75,7 @@ async function handlePtgsRoll({ target, sheet, shrugging }: PtgsRollOptions): Pr
     const html = await renderTemplate(templates.attrDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${target.dataset.rollableName} Test`,
+            title: `${data.name} Test`,
             content: html,
             buttons
         }).render(true)
@@ -86,32 +87,29 @@ async function ptgsRollCallback(
         stat: Ability,
         sheet: BWActorSheet,
         shrugging: boolean) {
-    const baseData = extractBaseData(dialogHtml, sheet);
-    const exp = parseInt(stat.exp, 10);
-    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice, baseData.diff);
-    const numDice = exp + baseData.bDice + baseData.aDice - baseData.woundDice;
+    const { diceTotal, baseDifficulty, difficultyTotal, difficultyGroup, dieSources, obSources } = extractRollData(dialogHtml);
 
-    const roll = await rollDice(numDice, stat.open, stat.shade);
+    const roll = await rollDice(diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const isSuccessful = parseInt(roll.result, 10) >= (baseData.diff);
     const fateReroll = buildRerollData(sheet.actor, roll, "data.health");
     if (fateReroll) { fateReroll.ptgsAction = shrugging? "shrugging" : "gritting"; }
     const callons: RerollData[] = sheet.actor.getCallons("health").map(s => {
         return { label: s, ptgsAction: shrugging ? "shrugging" : "gritting", ...buildRerollData(sheet.actor, roll, "data.health") as RerollData };
     });
+    const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
     const data: RollChatMessageData = {
         name: shrugging ? "Shrug It Off Health" : "Grit Your Teeth Health",
         successes: roll.result,
-        difficulty: baseData.diff,
+        difficulty: baseDifficulty,
         nameClass: getRollNameClass(stat.open, stat.shade),
-        obstacleTotal: baseData.obstacleTotal -= baseData.obPenalty,
+        obstacleTotal: difficultyTotal,
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: dg,
+        difficultyGroup,
         dieSources,
+        penaltySources: obSources,
         fateReroll,
         callons
     };
@@ -122,7 +120,7 @@ async function ptgsRollCallback(
         sheet.actor.update(updateData);
     }
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Health", "data.health", dg, isSuccessful);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.attrMessage, data);
     return ChatMessage.create({

@@ -3,19 +3,17 @@ import { BWActorSheet } from "../bwactor-sheet.js";
 import { Skill, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
-    buildDiceSourceObject,
     buildRerollData,
-    extractBaseData,
     getRollNameClass,
     RerollData,
     RollChatMessageData,
     rollDice,
     templates,
-    extractCheckboxValue,
     extractSelectString,
     maybeExpendTools,
     RollDialogData,
-    RollOptions
+    RollOptions,
+    extractRollData
 } from "./rolls.js";
 
 export async function handleLearningRoll(rollOptions: LearningRollOptions): Promise<unknown> {
@@ -67,7 +65,7 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
         obPenalty: actor.data.data.ptgs.obPenalty,
         toolkits: actor.data.toolkits,
         needsToolkit: skill.data.data.tools,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        learning: 1,
         skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
@@ -82,7 +80,7 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        learningRollCallback(dialogHtml, skill, statName, tax, sheet, extraInfo, onRollCallback)
+                        learningRollCallback(dialogHtml, skill, statName, sheet, extraInfo, onRollCallback)
                 }
             }
         }).render(true)
@@ -90,33 +88,21 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery, skill: Skill, statName: string, tax: number, sheet: BWActorSheet, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
     
-    const baseData = extractBaseData(dialogHtml, sheet);
-    let beginnerPenalty = baseData.diff;
+    const rollData = extractRollData(dialogHtml);
     const stat = getProperty(sheet.actor.data.data, statName) as Ability;
-    const exp = parseInt(stat.exp);
-    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, 0);
     if (skill.data.data.tools) {
-        if (extractCheckboxValue(dialogHtml, "toolPenalty")) {
-            baseData.penaltySources["No Tools"] = `+${baseData.diff}`;
-            baseData.obstacleTotal += baseData.diff;
-            beginnerPenalty *= 2;
-        }
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
         const tools = sheet.actor.getOwnedItem(toolkitId);
         if (tools) {
             maybeExpendTools(tools);
         }
     }
-    const numDice = exp + baseData.bDice - baseData.woundDice - tax + baseData.miscDice.sum;
-    const dg = helpers.difficultyGroup(numDice, baseData.obstacleTotal);
-    baseData.penaltySources["Beginner's Luck"] = `+${beginnerPenalty}`;
-    baseData.obstacleTotal += beginnerPenalty;
 
-    const roll = await rollDice(numDice, stat.open, stat.shade);
+    const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
-    const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+    const isSuccessful = parseInt(roll.result) >= rollData.difficultyTotal;
     const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
     if (fateReroll) { fateReroll.type = "learning"; }
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
@@ -131,14 +117,14 @@ async function learningRollCallback(
         const data: RollChatMessageData = {
             name: `Beginner's Luck ${skill.data.name}`,
             successes: roll.result,
-            difficulty: baseData.diff,
-            obstacleTotal: baseData.obstacleTotal,
+            difficulty: rollData.baseDifficulty,
+            obstacleTotal: rollData.difficultyTotal,
             nameClass: getRollNameClass(stat.open, stat.shade),
             success: isSuccessful,
             rolls: roll.dice[0].rolls,
-            difficultyGroup: dg,
-            penaltySources: baseData.penaltySources,
-            dieSources: { ...dieSources, ...baseData.miscDice.entries },
+            difficultyGroup: rollData.difficultyGroup,
+            penaltySources: rollData.obSources,
+            dieSources: rollData.dieSources,
             fateReroll: fr,
             callons,
             extraInfo
@@ -151,7 +137,7 @@ async function learningRollCallback(
         });
     };
 
-    return advanceLearning(skill, statName, sheet.actor, dg, isSuccessful, fateReroll, sendChatMessage);
+    return advanceLearning(skill, statName, sheet.actor, rollData.difficultyGroup, isSuccessful, fateReroll, sendChatMessage);
 }
 
 async function advanceLearning(

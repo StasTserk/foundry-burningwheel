@@ -4,15 +4,14 @@ import { Relationship } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
-    buildDiceSourceObject,
     buildRerollData,
-    extractBaseData,
     getRollNameClass,
     RerollData,
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions
+    RollOptions,
+    extractRollData
 } from "./rolls.js";
 
 export async function handleCirclesRoll({ target, sheet }: RollOptions): Promise<unknown> {
@@ -58,26 +57,16 @@ async function circlesRollCallback(
         stat: Ability,
         sheet: BWActorSheet,
         contact?: Relationship) {
-    const baseData = extractBaseData(dialogHtml, sheet);
-    const bonusData = extractCirclesBonuses(dialogHtml, "circlesBonus");
-    const penaltyData = extractCirclesPenalty(dialogHtml, "circlesMalus");
-    const exp = parseInt(stat.exp, 10);
-    const dieSources = {
-        ...buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, 0, 0),
-        ...bonusData.bonuses
-    };
-    const dg = helpers.difficultyGroup(
-        exp + baseData.bDice,
-        baseData.diff + baseData.obPenalty + penaltyData.sum);
+    const rollData = extractRollData(dialogHtml);
 
     if (contact) {
-        dieSources["Named Contact"] = "+1";
-        baseData.bDice ++;
+        rollData.dieSources["Named Contact"] = "+1";
+        rollData.diceTotal ++;
+        rollData.difficultyDice ++;
+        rollData.difficultyGroup = helpers.difficultyGroup(rollData.difficultyDice, rollData.difficultyTestTotal);
     }
 
-    const roll = await rollDice(exp + baseData.bDice + baseData.aDice + bonusData.sum + baseData.miscDice.sum,
-        stat.open,
-        stat.shade);
+    const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
     const fateReroll = buildRerollData(sheet.actor, roll, "data.circles");
@@ -85,18 +74,17 @@ async function circlesRollCallback(
         return { label: s, ...buildRerollData(sheet.actor, roll, "data.circles") as RerollData };
     });
 
-    baseData.obstacleTotal += penaltyData.sum;
     const data: RollChatMessageData = {
         name: `Circles`,
         successes: roll.result,
-        difficulty: baseData.diff,
-        obstacleTotal: baseData.obstacleTotal,
+        difficulty: rollData.baseDifficulty,
+        obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(stat.open, stat.shade),
-        success: parseInt(roll.result, 10) >= baseData.obstacleTotal,
+        success: parseInt(roll.result) >= rollData.difficultyTotal,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: dg,
-        dieSources,
-        penaltySources: { ...baseData.penaltySources, ...penaltyData.bonuses },
+        difficultyGroup: rollData.difficultyGroup,
+        dieSources: rollData.dieSources,
+        penaltySources: rollData.obSources,
         fateReroll,
         callons
     };
@@ -106,7 +94,7 @@ async function circlesRollCallback(
     if (contact && contact.data.data.building) {
         const progress = (parseInt(contact.data.data.buildingProgress, 10) || 0) + 1;
         contact.update({"data.buildingProgress": progress }, null);
-        if (progress >= (contact.data.data.aptitude || 10)) {
+        if (progress >= 10 - (contact.data.data.aptitude || 10)) {
             Dialog.confirm({
                 title: "Relationship Building Complete",
                 content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
@@ -116,29 +104,13 @@ async function circlesRollCallback(
         }
     }
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Circles", "data.circles", dg, true);
+        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
     }
 
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
     });
-}
-
-function extractCirclesBonuses(html: JQuery, name: string):
-        { bonuses: {[name: string]: string }, sum: number} {
-    const bonuses:{[name: string]: string } = {};
-    let sum = 0;
-    html.find(`input[name="${name}"]:checked`).each((_i, v) => {
-        sum += parseInt(v.getAttribute("value") || "", 10);
-        bonuses[v.dataset.name || ""] = "+" + v.getAttribute("value");
-    });
-    return { bonuses, sum };
-}
-
-function extractCirclesPenalty(html: JQuery, name: string):
-        { bonuses: {[name: string]: string }, sum: number} {
-    return extractCirclesBonuses(html, name);
 }
 
 export interface CirclesDialogData extends AttributeDialogData {

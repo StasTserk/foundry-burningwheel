@@ -239,7 +239,7 @@ export function extractRollData(html: JQuery): RollData {
     const toolkitPenalty = extractNumber(html, "toolPenalty") ? diff : 0;
     if (toolkitPenalty) { penaltySources["No Toolkit"] = `+${toolkitPenalty}`; }
     const learningPenalty = extractNumber(html, "learning") ? diff + toolkitPenalty : 0;
-    if (learningPenalty) { penaltySources["No Toolkit"] = `+${learningPenalty}`; }
+    if (learningPenalty) { penaltySources["Beginner's Luck"] = `+${learningPenalty}`; }
 
     penaltySources = {...penaltySources, ...miscObs.entries, ...circlesMalus.entries};
 
@@ -259,6 +259,7 @@ export function extractRollData(html: JQuery): RollData {
     if (tax) { dieSources.Tax = `-${tax}`; }
     if (cashDice) { dieSources.Cash = `+${cashDice}`; }
     if (fundDice) { dieSources.Funds = `+${fundDice}`; }
+    if (miscDice) { dieSources = { ...dieSources, ...miscDice.entries }; }
 
     const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks - tax + circlesBonus.sum + cashDice + fundDice;
     const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice - tax + circlesBonus.sum + cashDice + fundDice;

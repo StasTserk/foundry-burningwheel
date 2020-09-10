@@ -1,6 +1,7 @@
 import { BWActor } from "../bwactor.js";
 import { DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
+import { QualityString } from "../constants.js";
 
 export class RangedWeapon extends Item {
     prepareData(): void {
@@ -54,7 +55,7 @@ export interface RangedWeaponRootData extends ItemData<RangedWeaponData> {
 }
 
 export interface RangedWeaponData extends DisplayClass, HasPointCost {
-    quality: string;
+    quality: QualityString;
     hasGunpowder: boolean;
     usePower: boolean;
     powerBonus: string; // as number

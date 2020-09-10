@@ -75,6 +75,7 @@ export const gearQuality = [
     "superior"
 ];
 export const gearQualitySelect = toDictionary(gearQuality);
+export type QualityString = "basic" | "superior" | "run of the mill" | "poor";
 
 export const armorLocations = [
     "head",

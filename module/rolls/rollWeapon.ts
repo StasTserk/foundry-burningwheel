@@ -2,7 +2,7 @@ import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
 import { Skill, MeleeWeapon, RangedWeapon } from "../items/item.js";
-import { RollOptions } from "./rolls.js";
+import { RollOptions, RollDialogData } from "./rolls.js";
 
 export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknown> {
     const weaponId = target.dataset.weaponId;
@@ -22,6 +22,14 @@ export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknow
         weaponExtraData = RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
     }
     
+    const quality = (weapon as MeleeWeapon | RangedWeapon).data.data.quality;
+    let dataPreset: Partial<RollDialogData> | undefined;
+    if (quality === "superior") {
+        dataPreset = { optionalDiceModifiers: [ { dice: 1, label: "Superior Quality", optional: true }]};
+    } else if (quality === "poor") {
+        dataPreset = { optionalObModifiers: [ { obstacle: 1, label: "Poor Quality", optional: true }]};
+    }
+
     const skillId = target.dataset.skillId;
     if (!skillId) {
         return helpers.notifyError("No Skill Specified",
@@ -30,8 +38,8 @@ export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknow
     const skill: Skill | null = sheet.actor.getOwnedItem(skillId) as Skill;
     if (skill) {
         return skill.data.data.learning ? 
-            handleLearningRoll({ target, sheet, extraInfo: weaponExtraData }) :
-            handleSkillRoll({ target, sheet, extraInfo: weaponExtraData });
+            handleLearningRoll({ target, sheet, extraInfo: weaponExtraData, dataPreset }) :
+            handleSkillRoll({ target, sheet, extraInfo: weaponExtraData, dataPreset });
     }
     throw Error("Provided skillID did not correspond to an owned skill.");
 }

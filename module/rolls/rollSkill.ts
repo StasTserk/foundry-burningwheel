@@ -22,6 +22,16 @@ export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, on
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
     const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
+
+    if (dataPreset) {
+        if (dataPreset.optionalDiceModifiers) {
+            dataPreset.optionalDiceModifiers.concat(...rollModifiers.filter(r => r.optional && r.dice));
+        }
+        if (dataPreset.optionalObModifiers) {
+            dataPreset.optionalObModifiers.concat(...rollModifiers.filter(r => r.optional && r.obstacle));
+        }
+    }
+
     const templateData: SkillDialogData = Object.assign({
         name: skill.data.name,
         difficulty: 3,

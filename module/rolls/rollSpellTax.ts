@@ -2,15 +2,14 @@ import { Ability, BWActor, TracksTests, BWCharacter } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import {
-    buildDiceSourceObject,
     buildRerollData,
-    extractBaseData,
     getRollNameClass,
     RerollData,
     RollChatMessageData,
     RollDialogData,
     rollDice,
-    templates
+    templates,
+    extractRollData
 } from "./rolls.js";
 
 export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
@@ -65,19 +64,11 @@ async function taxTestCallback(
         sheet: BWActorSheet,
         tax: number,
         spellName: string) {
-    const baseData = extractBaseData(dialogHtml, sheet);
-    const exp = parseInt(stat.exp, 10);
+    const { diceTotal, difficultyTotal, difficultyGroup, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
 
-    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, 0, baseData.woundDice, tax);
-    const dg = helpers.difficultyGroup(exp + baseData.bDice - (tax || 0) - baseData.woundDice + baseData.miscDice.sum,
-        baseData.obstacleTotal);
-
-    const roll = await rollDice(
-        exp + baseData.bDice + baseData.aDice - baseData.woundDice - (tax || 0) + baseData.miscDice.sum,
-        stat.open,
-        stat.shade);
+    const roll = await rollDice(diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
-    const isSuccessful = parseInt(roll.result, 10) >= baseData.obstacleTotal;
+    const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
     const fateReroll = buildRerollData(sheet.actor, roll, "data.forte");
     const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
@@ -87,28 +78,28 @@ async function taxTestCallback(
     const data: RollChatMessageData = {
         name: `${spellName} Tax`,
         successes: roll.result,
-        difficulty: baseData.diff + baseData.obPenalty,
-        obstacleTotal: baseData.obstacleTotal,
+        difficulty: baseDifficulty,
+        obstacleTotal: difficultyTotal,
         nameClass: getRollNameClass(stat.open, stat.shade),
         success: isSuccessful,
         rolls: roll.dice[0].rolls,
-        difficultyGroup: dg,
-        penaltySources: baseData.penaltySources,
-        dieSources: { ...dieSources, ...baseData.miscDice.entries },
+        difficultyGroup: difficultyGroup,
+        penaltySources: obSources,
+        dieSources,
         fateReroll,
         callons
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
     if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", dg, isSuccessful);
+        (sheet.actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
     }
 
     if (!isSuccessful) {
-        const margin = baseData.obstacleTotal - parseInt(roll.result);
+        const margin = difficultyTotal - parseInt(roll.result);
         const forteExp = parseInt(stat.exp);
         if (forteExp < margin + tax ) {
             // overtax.
-            const baseWound = (margin + tax - forteExp) * baseData.obstacleTotal;
+            const baseWound = (margin + tax - forteExp) * difficultyTotal;
             data.extraInfo += ` Tax test failed by ${margin}. The caster maxes out their Forte tax and risks a B${baseWound} wound.`;
             new Dialog({
                 title: "Overtaxed!",

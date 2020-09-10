@@ -3,10 +3,7 @@ import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Skill, PossessionRootData } from "../items/item.js";
 import {
-    buildDiceSourceObject,
     buildRerollData,
-    extractBaseData,
-    extractCheckboxValue,
     getRollNameClass,
     RerollData,
     RollChatMessageData,
@@ -17,6 +14,7 @@ import {
     maybeExpendTools,
     RollOptions,
     rollWildFork,
+    extractRollData,
 } from "./rolls.js";
 
 export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollOptions ): Promise<unknown> {
@@ -61,34 +59,18 @@ export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, on
 
 async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
+    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
 
-    const forks = extractCheckboxValue(dialogHtml, "forkOptions");
-    const wildForks = extractWildForkBonus(dialogHtml);
-    const baseData = extractBaseData(dialogHtml, sheet);
-    const exp = parseInt(skill.data.data.exp, 10);
-    const dieSources = buildDiceSourceObject(exp, baseData.aDice, baseData.bDice, forks, baseData.woundDice, 0);
-    if (wildForks) {
-        dieSources["Wild FoRKs"] = `+${wildForks}`;
-    }
     if (skill.data.data.tools) {
-        if (extractCheckboxValue(dialogHtml, "toolPenalty")) {
-            baseData.penaltySources["No Tools"] = `+${baseData.diff}`;
-            baseData.obstacleTotal += baseData.diff;
-        }
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
         const tools = sheet.actor.getOwnedItem(toolkitId);
         if (tools) {
             maybeExpendTools(tools);
         }
     }
-    const dg = helpers.difficultyGroup(
-        exp + baseData.bDice + forks + wildForks - baseData.woundDice + baseData.miscDice.sum,
-        baseData.obstacleTotal);
+    const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
-    const roll = await rollDice(
-        exp + baseData.bDice + baseData.aDice + forks - baseData.woundDice + baseData.miscDice.sum,
-        skill.data.data.open,
-        skill.data.data.shade);
+    const roll = await rollDice(diceTotal, skill.data.data.open, skill.data.data.shade);
     if (!roll) { return; }
 
     const wildForkDie = await rollWildFork(wildForks, skill.data.data.shade);
@@ -99,20 +81,20 @@ async function skillRollCallback(
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
         return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
     });
-    const success = (parseInt(roll.result) + wildForkBonus) >= baseData.obstacleTotal;
+    const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,
-        successes: '' + (parseInt(roll.result, 10) + wildForkBonus),
-        difficulty: baseData.diff,
-        obstacleTotal: baseData.obstacleTotal,
+        successes: '' + (parseInt(roll.result) + wildForkBonus),
+        difficulty: baseDifficulty,
+        obstacleTotal: difficultyTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success,
         rolls: roll.dice[0].rolls,
         wildRolls: wildForkDice,
         difficultyGroup: dg,
-        penaltySources: baseData.penaltySources,
-        dieSources: { ...dieSources, ...baseData.miscDice.entries },
+        penaltySources: obSources,
+        dieSources,
         fateReroll,
         callons,
         extraInfo
@@ -137,10 +119,6 @@ async function skillRollCallback(
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})
     });
-}
-
-function extractWildForkBonus(html: JQuery) {
-    return extractCheckboxValue(html, "wildForks");
 }
 
 interface SkillDialogData extends RollDialogData {

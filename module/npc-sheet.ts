@@ -1,10 +1,11 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
-import { TraitDataRoot, SkillDataRoot } from "./items/item.js";
+import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData } from "./items/item.js";
 import { Npc } from "./npc.js";
 import { handleNpcStatRoll } from "./rolls/npcStatRoll.js";
 import { handleNpcSkillRoll, handleNpcWeaponRoll, handleNpcSpellRoll } from "./rolls/npcSkillRoll.js";
+import { handleArmorRoll } from "./rolls/rollArmor.js";
 
 export class NpcSheet extends BWActorSheet {
     actor: BWActor & Npc;
@@ -28,6 +29,7 @@ export class NpcSheet extends BWActorSheet {
             { statName: "circles", rollable, label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp", shade: actor.data.data.circles.shade, shadePath: "circles.shade" },
             { label: "Str", value: actor.data.data.stride, valuePath: "stride" },
         ];
+        const armor: BWItemData[] = [];
         data.beliefs = [];
         data.traits = [];
         data.instincts = [];
@@ -65,6 +67,9 @@ export class NpcSheet extends BWActorSheet {
                     data.affiliations.push(i); break;
                 case "spell":
                     data.spells.push(i); break;
+                case "armor":
+                    armor.push(i);
+                    data.gear.push(i); break;
                 default:
                     data.gear.push(i); break;
             }
@@ -81,6 +86,7 @@ export class NpcSheet extends BWActorSheet {
         data.relationships.sort(byName);
         data.gear.sort(byName);
         data.spells.sort(byName);
+        data.armor = this.getArmorDictionary(armor);
         return data;
     }
 
@@ -93,6 +99,7 @@ export class NpcSheet extends BWActorSheet {
         html.find("div[data-action='rollSkill']").on('click', (e) => handleNpcSkillRoll({ target: e.target, sheet: this}));
         html.find("div[data-action='rollWeapon']").on('click', (e) => handleNpcWeaponRoll({ target: e.target, sheet: this}));
         html.find("div[data-action='rollSpell']").on('click', (e) => handleNpcSpellRoll({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollArmor']").on('click', (e) => handleArmorRoll({ target: e.target, sheet: this}));
     }
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
@@ -117,6 +124,7 @@ function byName(a: ItemData, b: ItemData): number {
 }
 
 export interface NpcSheetData extends ActorSheetData {
+    armor: { [key: string]: ItemData<ArmorData> | null; };
     statRow: NPCStatEntry[];
     beliefs: ItemData[];
     instincts: ItemData[];

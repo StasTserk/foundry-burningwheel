@@ -10,7 +10,7 @@ export async function handleArmorRoll({ target, sheet }: RollOptions): Promise<u
     const armorId = target.dataset.itemId || "";
     const armorItem = actor.getOwnedItem(armorId) as Armor;
     const location = target.dataset.location || "";
-    const chestBonus = location === "Torso" ? 1 : 0;
+    const chestBonus = location.toLowerCase() === "torso" ? 1 : 0;
     const damage = armorItem.data.data[`damage${location}`];
 
     const dialogData: ArmorDialogData = {

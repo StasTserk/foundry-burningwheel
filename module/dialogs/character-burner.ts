@@ -449,6 +449,8 @@ export class CharacterBurnerDialog extends Dialog {
                 const gearData = extractGearData(html, this._gear);
                 await this._parent.update({ data: baseCharacterData }, {});
                 await this._parent.updatePtgs();
+
+                skillData.forEach(s => { if (s.data) { s.data.learning = false; }});
                 
                 this.close();
         

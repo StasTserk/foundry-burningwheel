@@ -1,7 +1,7 @@
 import { BWActor } from "../bwactor.js";
 import { weaponLengthSelect } from "../constants.js";
 import { StringIndexedObject, DivOfText } from "../helpers.js";
-import { HasPointCost } from "./item.js";
+import { HasPointCost, BWItemData } from "./item.js";
 
 export class Spell extends Item<SpellData> {
     prepareData(): void {
@@ -51,10 +51,12 @@ export class Spell extends Item<SpellData> {
     actor: BWActor;
 }
 
-export interface SpellDataRoot extends ItemData<SpellData> {
+export interface SpellDataRoot extends ItemData<SpellData>, BWItemData {
     spellLengths: StringIndexedObject<string>;
     obstacleLabel: string;
     hasOwner: boolean;
+    type: "spell"
+    data: SpellData
 }
 
 export interface SpellData extends HasPointCost {

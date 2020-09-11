@@ -340,7 +340,7 @@
         {{#each skills as |skill|}}
             {{> "systems/burningwheel/templates/parts/rollable-skill.hbs" skill=skill }}
         {{/each}}
-        <div class="right-floating-add-button" data-action="addSkill"><i class="fas fa-plus"></i>Add New Skill</div>
+        <div class="right-floating-add-button" data-action="addSkill"><i class="fas fa-plus"></i> Add New Skill</div>
     </div>
 
     <input type="checkbox" id="{{actor._id}}-collapseLearning" name="data.collapseLearning" class="section-collapse learning-collapse" {{ checked data.collapseLearning }}>

@@ -100,12 +100,6 @@
         column-gap: 5px;
         row-gap: 5px;
 
-        .add-new-skill-label {
-            @include button-like(green);
-            grid-column: 3;
-            height: min-content;
-        }
-
         div.rollable {
           &.wound-disabled {
                 background-color: rgba(red, 0.15);
@@ -310,5 +304,11 @@
                 }
             }
         }
+    }
+
+    .right-floating-add-button {
+        @include button-like(green);
+        grid-column: -2;
+        height: min-content;
     }
 }

@@ -255,7 +255,7 @@ export function extractRollData(html: JQuery): RollData {
     if (aDice) { dieSources.Artha = `+${aDice}`; }
     if (bDice) { dieSources.Bonus = `+${bDice}`; }
     if (forks) { dieSources.FoRKs = `+${forks}`; }
-    if (wildForks) { dieSources["Wild FoRKs"] = `${wildForks}`; }
+    if (wildForks) { dieSources["Wild FoRKs"] = `+${wildForks}`; }
     if (circlesBonus.sum) { dieSources = { ...dieSources, ...circlesBonus.entries}; }
     if (tax) { dieSources.Tax = `-${tax}`; }
     if (cashDice) { dieSources.Cash = `+${cashDice}`; }

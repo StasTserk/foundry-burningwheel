@@ -1,4 +1,7 @@
 import { BWActor } from "./bwactor.js";
+import { ArmorRootData } from "./items/armor.js";
+import * as constants from "./constants.js";
+import * as helpers from "./helpers.js";
 
 export class BWActorSheet extends ActorSheet {
     actor: BWActor;
@@ -64,5 +67,14 @@ export class BWActorSheet extends ActorSheet {
             fd.set(k, JSON.stringify(dataValues[k]));
         }
         return fd;
+    }
+
+    getArmorDictionary(armorItems: ItemData[]): { [key: string]: ItemData | null; } {
+        let armorLocs: { [key: string]: ArmorRootData | null; } = {};
+        constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
+        armorItems.forEach(i =>
+            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i as ArmorRootData)}
+        );
+        return armorLocs;
     }
 }

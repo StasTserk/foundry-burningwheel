@@ -1,7 +1,6 @@
 import { BWActor, NewItemData } from "./bwactor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
-import * as helpers from "./helpers.js";
 import {
     ArmorRootData,
     MeleeWeaponData,
@@ -110,15 +109,6 @@ export class BWCharacterSheet extends BWActorSheet {
         data.traits = traitLists;
         data.systemVersion = game.system.data.version;
         return data;
-    }
-
-    getArmorDictionary(armorItems: ItemData[]): { [key: string]: ItemData | null; } {
-        let armorLocs: { [key: string]: ArmorRootData | null; } = {};
-        constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
-        armorItems.forEach(i =>
-            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i as ArmorRootData)}
-        );
-        return armorLocs;
     }
 
     activateListeners(html: JQuery): void {

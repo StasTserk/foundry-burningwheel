@@ -188,7 +188,8 @@
     <div class="weapon-section">
         <div class="npc-section-label">
             Weapons
-            <i data-action="add" data-type="melee weapon" class="fas fa-plus"></i>
+            <i data-action="add" data-type="melee weapon" class="fas fa-hammer" title="Add Melee Weapon"></i>
+            <i data-action="add" data-type="ranged weapon" class="fas fa-fan" title="Add Ranged Weapon"></i>
         </div>
         {{#each weapons as |w|}}
         {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.martialSkills}}
@@ -269,6 +270,39 @@
             {{w.name}} — I:{{w.data.shade}}{{w.data.incidental}} M:{{w.data.shade}}{{w.data.mark}} S: {{w.data.shade}}{{w.data.superb}}, VA {{w.data.vsArmor}}, Opt: {{w.data.optimalRange}}D, Extr: {{w.data.extremeRange}}D</div>
         {{/each}}
     </div>
+    {{#if (or armor.head armor.torso armor.leftArm armor.rightArm (or armor.leftLeg armor.rightLeg armor.shield))}}
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Armor</div>
+        {{#if armor.head}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.head._id}}" data-location="Helm">
+            Helm: {{sub armor.head.data.dice armor.head.data.damageHelm}}D</div>
+        {{/if}}
+        {{#if armor.torso}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.torso._id}}" data-location="Torso">
+            Torso: {{plusone (sub armor.torso.data.dice armor.torso.data.damageTorso)}}D</div>
+        {{/if}}
+        {{#if armor.leftArm}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.leftArm._id}}" data-location="LeftArm">
+            Left Arm: {{sub armor.leftArm.data.dice armor.leftArm.data.damageLeftArm}}D</div>
+        {{/if}}
+        {{#if armor.rightArm}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.rightArm._id}}" data-location="RightArm">
+            Right Arm: {{sub armor.rightArm.data.dice armor.rightArm.data.damageRightArm}}D</div>
+        {{/if}}
+        {{#if armor.leftLeg}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.leftLeg._id}}" data-location="LeftLeg">
+            Left Leg: {{sub armor.leftLeg.data.dice armor.leftArm.data.damageLeftLeg}}D</div>
+        {{/if}}
+        {{#if armor.rightLeg}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.rightLeg._id}}" data-location="RightLeg">
+            Right Leg: {{sub armor.rightLeg.data.dice armor.rightArm.data.damageRightLeg}}D</div>
+        {{/if}}
+        {{#if armor.shield}}
+        <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.shield._id}}" data-location="Shield">
+            Shield: {{sub armor.shield.data.dice armor.shield.data.damageRightLeg}}D</div>
+        {{/if}}
+    </div>
+    {{/if}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Spells</div>
         {{#each spells as |s|}}

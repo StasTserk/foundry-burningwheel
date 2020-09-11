@@ -55,6 +55,7 @@ export class BWItem extends Item {
         if (prototypeList[this.type]) {
             prototypeList[this.type].prototype.prepareData.bind(this)();
         }
+        this.data.hasOwner = !!this.actor;
     }
 
     data: BWItemData;
@@ -66,6 +67,7 @@ export class BWItem extends Item {
 
 export interface BWItemData extends ItemData {
     type: ItemType;
+    hasOwner: boolean;
 }
 
 export interface ArthaEarner {

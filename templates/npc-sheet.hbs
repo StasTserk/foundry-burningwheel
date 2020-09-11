@@ -179,7 +179,12 @@
         {{/each}}
     </div>
     <div class="editable-section">
-        <div class="npc-section-label">Gear</div>
+        <div class="npc-section-label">
+            Gear
+            <i data-action="add" data-type="armor" class="fas fa-tshirt" title="Add Armor"></i>
+            <i data-action="add" data-type="possession" class="fas fa-socks" title="Add Possession"></i>
+            <i data-action="add" data-type="property" class="fas fa-home" title="Add Property"></i>
+            </div>
         {{#each gear as |g|}}
          {{> "systems/burningwheel/templates/parts/npc-editable.hbs" item=g}}
         {{/each}}

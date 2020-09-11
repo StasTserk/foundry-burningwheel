@@ -1,5 +1,5 @@
-import { RollModifier } from "module/bwactor";
-import { ItemType, HasPointCost } from "./item.js";
+import { RollModifier } from "../bwactor.js";
+import { ItemType, HasPointCost, BWItemData } from "./item.js";
 
 export class Trait extends Item<TraitData> {
     prepareData(): void {
@@ -27,10 +27,11 @@ export class Trait extends Item<TraitData> {
     data: TraitDataRoot;
 }
 
-export interface TraitDataRoot extends ItemData<TraitData> {
+export interface TraitDataRoot extends ItemData<TraitData>, BWItemData {
     type: ItemType;
     isDieTrait: boolean;
     isCallonTrait: boolean;
+    data: TraitData;
 }
 
 export interface TraitData extends HasPointCost {

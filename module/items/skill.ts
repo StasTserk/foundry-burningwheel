@@ -1,6 +1,6 @@
 import { Ability, TracksTests } from "../bwactor.js";
 import { ShadeString, updateTestsNeeded } from "../helpers.js";
-import { DisplayClass, ItemType } from "./item.js";
+import { DisplayClass, ItemType, BWItemData } from "./item.js";
 
 export class Skill extends Item<SkillData> {
     prepareData(): void {
@@ -30,8 +30,9 @@ export class Skill extends Item<SkillData> {
     }
 }
 
-export interface SkillDataRoot extends ItemData<SkillData> {
+export interface SkillDataRoot extends ItemData<SkillData>, BWItemData {
     type: ItemType;
+    data: SkillData;
 }
 
 export interface SkillData extends TracksTests, DisplayClass {

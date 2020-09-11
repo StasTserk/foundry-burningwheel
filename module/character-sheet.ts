@@ -14,6 +14,7 @@ import {
     RangedWeaponRootData,
     SpellDataRoot,
     Trait,
+    Spell,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
 import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
@@ -131,6 +132,8 @@ export class BWCharacterSheet extends BWActorSheet {
             'i[data-action="addReputation"]',
             'i[data-action="addTrait"]',
             '*[data-action="addSkill"]',
+            '*[data-action="addSpell"]',
+            '*[data-action="addGear"]',
         ];
         html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
 
@@ -188,8 +191,8 @@ export class BWCharacterSheet extends BWActorSheet {
                     itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
                     itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
                     baseData: { root1: "perception", skilltype: "special" },
-                    popupMessage: "Add a new skill to the character sheet."
-                        + "Note this is different than learning a new skill via the beginner's luck rules."
+                    popupMessage: "Add a new skill to the character sheet.  "
+                        + "Note this is different than learning a new skill via the beginner's luck rules.  "
                         + "Check the learning section if you want to begin learning the skill."
                 });
             case "addTrait":
@@ -199,6 +202,24 @@ export class BWCharacterSheet extends BWActorSheet {
                     itemType: "trait",
                     itemDataLeft: (i: Trait) => i.data.data.restrictions.titleCase(),
                     itemDataMid: (i: Trait) => i.data.data.traittype.titleCase(),
+                    baseData: { traittype: id }
+                });
+            case "addSpell":
+                return addNewItem({
+                    actor: this.actor,
+                    searchTitle: "Add New Spell",
+                    itemType: "spell",
+                    itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
+                    baseData: { traittype: id }
+                });
+            case "addGear":
+                return addNewItem({
+                    actor: this.actor,
+                    searchTitle: "Add New Gear",
+                    itemTypes: ["melee weapon", "ranged weapon", "armor", "possession", "property" ],
+                    itemDataLeft: (_: Item) => "",
+                    itemDataMid: (i: Item) => `Type: ${i.type.titleCase()}`,
                     baseData: { traittype: id }
                 });
             case "delItem":

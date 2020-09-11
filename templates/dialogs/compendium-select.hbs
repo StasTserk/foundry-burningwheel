@@ -1,7 +1,7 @@
-<div>
+<div class="compendium-select">
     Choose Compendiums to Use
     {{#each compendiums as |c|}}
-    <div>
+    <div class="compendium-item">
         <input type="checkbox" id="compendium-select-{{@key}}" name="compendiumList" value="{{c.name}}">
         <label for="compendium-select-{{@key}}">{{c.label}}</label>
     </div>

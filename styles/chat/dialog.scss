@@ -54,3 +54,24 @@
     width: 33%;
     text-align: right;
 }
+
+.compendium-select {
+    max-height: 400px;
+    overflow-y: auto;
+    .compendium-item {
+        border: 2px groove grey;
+        border-radius: 3px;
+        margin-bottom: 3px;
+        background: linear-gradient(0deg, gray, darkgray);
+        label {
+            font-size: 1.25em;
+            font-weight: bold;
+            width: calc(100% - 2em);
+            display: inline-block;
+        }
+        input {
+            height: 1.125em;
+            width: 1.125em;
+        }
+    }
+}

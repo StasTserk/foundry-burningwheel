@@ -25,12 +25,13 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
                 add: {
                     label: "Add",
                     callback: (dialogHtml: JQuery) => {
-                        dialogHtml.find('input:checked')
-                            .each((_, element: HTMLInputElement) => {
+                        const newItems = dialogHtml.find('input:checked')
+                            .map((_, element: HTMLInputElement) => {
                                 const itemRoot = (items.find((s: BWItem) => s._id === element.value) as BWItem).data;
                                 Object.assign(itemRoot.data, options.forcedData);
-                                actor.createOwnedItem(itemRoot, {});
-                            });
+                                return itemRoot;
+                            }).toArray();
+                        actor.createOwnedItem(newItems);
                     }
                 },
                 cancel: {

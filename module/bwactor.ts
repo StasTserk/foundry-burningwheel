@@ -7,6 +7,26 @@ import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 export class BWActor extends Actor {
     data!: BWActorDataRoot;
 
+    readonly batchAdd = {
+        task: -1,
+        items: [] as NewItemData[]
+    };
+
+    private async _handleBatchAdd(): Promise<unknown> {
+        const items = this.batchAdd.items;
+        this.batchAdd.items = [];
+        clearTimeout(this.batchAdd.task);
+        this.batchAdd.task = -1;
+        return this.createOwnedItem(items);
+    }
+
+    batchAddItem(item: NewItemData): void {
+        if (this.batchAdd.task === -1) {
+            this.batchAdd.task = setTimeout(() => this._handleBatchAdd(), 500);
+        }
+        this.batchAdd.items.push(item);
+    }
+
     async processNewItem(item: ItemData, userId: string): Promise<unknown> {
         if (game.userId !== userId) {
             // this item has been added by someone else.
@@ -22,7 +42,7 @@ export class BWActor extends Actor {
                 repData["data.dice"] = trait.data.reputationDice;
                 repData["data.infamous"] = trait.data.reputationInfamous;
                 repData["data.description"] = trait.data.text;
-                return this.createOwnedItem(repData);
+                this.batchAddItem(repData);
             }
             if (trait.data.addsAffiliation) {
                 const repData: NewItemData = {
@@ -31,7 +51,7 @@ export class BWActor extends Actor {
                 };
                 repData["data.dice"] = trait.data.affiliationDice;
                 repData["data.description"] = trait.data.text;
-                return this.createOwnedItem(repData);
+                this.batchAddItem(repData);
             }
         }
     }

@@ -116,7 +116,6 @@ export class DuelOfWitsDialog extends Dialog {
 
     activateSocketListeners(): void {
         game.socket.on("system.burningwheel", ({type, data}) => {
-            console.log("wew lad");
             if (type === "updateDuel") {
                 mergeObject(this.data.data, data);
                 if (game.user.isGM) {
@@ -125,7 +124,6 @@ export class DuelOfWitsDialog extends Dialog {
                 this.render(true);
             }
         });
-        game.socket.on("pause", () => console.log('pause toggle!'));
     }
 
     static addSidebarControl(html: JQuery): void {

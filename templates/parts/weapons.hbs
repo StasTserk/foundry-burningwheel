@@ -12,26 +12,32 @@
     <div class="weapon-header">~</div>
 
     {{#each melee as |m|}}
-    <div class="weapon-row">{{m.name}}</div>
-    <div class="weapon-row">{{m.data.shade}}{{m.data.incidental}}</div>
-    <div class="weapon-row">{{m.data.shade}}{{m.data.mark}}</div>
-    <div class="weapon-row">{{m.data.shade}}{{m.data.superb}}</div>
-    <div class="weapon-row">{{m.data.power}}</div>
-    <div class="weapon-row">{{m.data.add}}</div>
-    <div class="weapon-row">{{m.data.vsArmor}}</div>
-    <div class="weapon-row">{{m.data.weaponSpeed}}</div>
-    <div class="weapon-row">{{titlecase m.data.weaponLength}}</div>
-    <div class="weapon-row">
-        <select class="weapon-skill-select" data-item-id="{{m._id}}" data-binding="data.skillId" value="{{m.data.skillId}}">
-            {{#select m.data.skillId}}
-            <option value="">None</option>
-            {{#each ../skills as |s|}}
-            <option value="{{s._id}}">{{s.name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
-    <div class="weapon-row"><button class="rollable" data-roll-type="weapon" data-skill-id="{{m.data.skillId}}" data-weapon-id="{{m._id}}"><i class="fas fa-dice"></i></button></div>
+        {{#each m.data.attacks as |a|}}
+        <div class="weapon-row">{{../name}}{{#if a.attackName}} {{a.attackName}}{{/if}}</div>
+        <div class="weapon-row">{{../data.shade}}{{a.incidental}}</div>
+        <div class="weapon-row">{{../data.shade}}{{a.mark}}</div>
+        <div class="weapon-row">{{../data.shade}}{{a.superb}}</div>
+        <div class="weapon-row">{{a.power}}</div>
+        <div class="weapon-row">{{a.add}}</div>
+        <div class="weapon-row">{{a.vsArmor}}</div>
+        <div class="weapon-row">{{a.weaponSpeed}}</div>
+        <div class="weapon-row">{{titlecase a.weaponLength}}</div>
+        <div class="weapon-row">
+            <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="data.skillId" value="{{../data.skillId}}">
+                {{#select ../data.skillId}}
+                <option value="">None</option>
+                {{#each ../../skills as |s|}}
+                <option value="{{s._id}}">{{s.name}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+        </div>
+        <div class="weapon-row">
+            <button class="rollable" data-roll-type="weapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}">
+                <i class="fas fa-dice"></i>
+            </button>
+        </div>
+        {{/each}}
     {{/each}}
 </div>
 <hr>

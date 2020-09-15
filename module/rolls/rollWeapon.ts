@@ -17,7 +17,8 @@ export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknow
 
     let weaponExtraData: string | undefined;
     if (weapon.type === "melee weapon") {
-        weaponExtraData = MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon);
+        const index = parseInt(target.dataset.attackIndex as string);
+        weaponExtraData = MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, index);
     } else {
         weaponExtraData = RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
     }

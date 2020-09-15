@@ -12,16 +12,18 @@ export const weaponLengths = [
 export const weaponLengthSelect = toDictionary(weaponLengths);
 
 const fistData: MeleeWeaponData = {
-    weaponLength: "shortest",
-    power: "0",
     quality: "basic",
-    add: "2",
-    vsArmor: "0",
     handedness: "one",
     description: "Your bare fist",
-    baseOb: "1",
-    weaponSpeed: "X",
     shade: "B",
+    attacks: [{
+        attackName: "",
+        power: 0,
+        weaponLength: "shortest",
+        add: 2,
+        vsArmor: 0,
+        weaponSpeed: "X",
+    }],
     pointCost: 0
 };
 export const bareFistData: NewItemData = {

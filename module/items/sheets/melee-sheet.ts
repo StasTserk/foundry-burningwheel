@@ -1,6 +1,8 @@
 import { gearQualitySelect, weaponLengthSelect } from "../../constants.js";
+import { MeleeWeapon, MeleeWeaponData } from "../meleeWeapon.js";
 
-export class MeleeWeaponSheet extends ItemSheet {
+export class MeleeWeaponSheet extends ItemSheet<MeleeWeaponData> {
+    item: MeleeWeapon;
     get template(): string {
         return "systems/burningwheel/templates/items/meleeWeapon.hbs";
     }
@@ -10,6 +12,29 @@ export class MeleeWeaponSheet extends ItemSheet {
         data.weaponLengths = weaponLengthSelect;
         data.weaponQualities = gearQualitySelect;
         return data;
+    }
+
+    activateListeners(html: JQuery): void {
+        super.activateListeners(html);
+        html.find(".fa-plus").on('click', () => {
+            const attacks = Array.from(Object.entries(this.item.data.data.attacks), a => a[1]);
+            attacks.push({
+                attackName: "Alternate",
+                power: 1,
+                add: 2,
+                vsArmor: 0,
+                weaponLength: "Shortest",
+                weaponSpeed: "2"
+            });
+            this.item.update({ "data.attacks": attacks}, {});
+        });
+        html.find(".fa-minus").on('click', (e: JQuery.ClickEvent) => {
+            const target = e.target;
+            const index = parseInt(target.dataset.index);
+            const attacks = Array.from(Object.entries(this.item.data.data.attacks), a => a[1]);
+            attacks.splice(index, 1);
+            this.item.update({ "data.attacks": attacks}, {});
+        });
     }
 }
 

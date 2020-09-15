@@ -3,7 +3,7 @@
     "title": "The Burning Wheel",
     "description": "Community Foundry implementation of The Burning Wheel",
     "version": "0.4.0",
-    "templateVersion": 11,
+    "templateVersion": 12,
     "author": "Stas Tserkovny",
     "esmodules": [
         "module/burningwheel.js"

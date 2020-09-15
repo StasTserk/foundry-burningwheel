@@ -17,7 +17,7 @@ export class MeleeWeaponSheet extends ItemSheet<MeleeWeaponData> {
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.find(".fa-plus").on('click', () => {
-            const attacks = Array.from(Object.entries(this.item.data.data.attacks), a => a[1]);
+            const attacks = Array.from(Object.entries(this.item.data.data.attacks || []), a => a[1]);
             attacks.push({
                 attackName: "Alternate",
                 power: 1,
@@ -31,7 +31,7 @@ export class MeleeWeaponSheet extends ItemSheet<MeleeWeaponData> {
         html.find(".fa-minus").on('click', (e: JQuery.ClickEvent) => {
             const target = e.target;
             const index = parseInt(target.dataset.index);
-            const attacks = Array.from(Object.entries(this.item.data.data.attacks), a => a[1]);
+            const attacks = Array.from(Object.entries(this.item.data.data.attacks || []), a => a[1]);
             attacks.splice(index, 1);
             this.item.update({ "data.attacks": attacks}, {});
         });

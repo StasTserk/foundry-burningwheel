@@ -187,9 +187,9 @@ export function deCamelCaseify(phrase: string): string {
     return phrase.replace(/([a-zA-Z])(?=[A-Z])/, '$1 ');
 }
 
-export function DivOfText(text: string, cssClass?: string): HTMLDivElement {
+export function DivOfText(text: string | number, cssClass?: string): HTMLDivElement {
     const element = document.createElement("div");
-    element.innerHTML = text;
+    element.innerHTML = text.toString();
     if (cssClass) { element.className = cssClass; }
     return element;
 }

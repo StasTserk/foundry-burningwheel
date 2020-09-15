@@ -1,4 +1,4 @@
-<form autocomplete="off">
+<form autocomplete="off" class="melee-weapon-sheet">
     <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
     <h2>Stats</h2>
     <div class="item-form-group">
@@ -19,35 +19,6 @@
             {{/each}}
             {{/select}}
         </select>
-            
-        <label for="{{item._id}}-number-power" class="item-setting-label">Power</label>
-        <input id="{{item._id}}-number-power" type="number" class="exponent" name="data.power" value="{{data.power}}">
-            
-        <label for="{{item._id}}-number-add" class="item-setting-label">Add</label>
-        <input id="{{item._id}}-number-add" type="number" class="exponent" name="data.add" value="{{data.add}}">
-            
-        <label for="{{item._id}}-number-va" class="item-setting-label">Vs. Armor</label>
-        <input id="{{item._id}}-number-va" type="number" class="exponent" name="data.vsArmor" value="{{data.vsArmor}}">
-            
-        <label for="{{item._id}}-select-speed" class="item-setting-label">Weapon Speed</label>
-        <select id="{{item._id}}-select-speed" name="data.weaponSpeed" value="{{data.weaponSpeed}}">
-            {{#select data.weaponSpeed}}
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="x">X</option>
-            {{/select}}
-        </select>
-
-        <label for="{{item._id}}-select-length" class="item-setting-label">Weapon Length</label>
-        <select id="{{item._id}}-select-length" name="data.weaponLength" value="{{data.weaponLength}}">
-            {{#select data.weaponLength}}
-            {{#each weaponLengths as |title value|}}
-            <option value="{{value}}">{{title}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
 
         <label for="{{item._id}}-select-handedness" class="item-setting-label">Handedness</label>
         <select id="{{item._id}}-select-handedness" name="data.handedness" value="{{data.handedness}}">
@@ -60,6 +31,41 @@
         <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
         <input id="{{item._id}}-point-cost" type="number" name="data.pointCost" value="{{data.pointCost}}" class="exponent" data-dtype="Number">
     </div>
+    
     <hr/>
+    <h2>Attacks</h2>
+    <div class="weapon-attack-row">
+        <div class="attack-grid-header">Name</div>
+        <div class="attack-grid-header">Pow</div>
+        <div class="attack-grid-header">Add</div>
+        <div class="attack-grid-header">Va</div>
+        <div class="attack-grid-header">Ws</div>
+        <div class="attack-grid-header">Length</div>
+        <div><i class="fas fa-plus"></i></div>
+        {{#each data.attacks}}
+            <input type="text" name="data.attacks.{{@key}}.attackName" value="{{this.attackName}}" placeholder="Default">
+            <input type="number" class="exponent" name="data.attacks.{{@key}}.power" value="{{this.power}}" data-dtype="Number">
+            <input type="number" class="exponent" name="data.attacks.{{@key}}.add" value="{{this.add}}" data-dtype="Number">
+            <input type="number" class="exponent" name="data.attacks.{{@key}}.vsArmor" value="{{this.vsArmor}}" data-dtype="Number">
+            <select name="data.attacks.{{@key}}.weaponSpeed">
+                {{#select this.weaponSpeed}}
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="x">X</option>
+                {{/select}}
+            </select>
+            <select name="data.attacks.{{@key}}.weaponLength">
+                {{#select this.weaponLength}}
+                {{#each ../weaponLengths as |title value|}}
+                <option value="{{value}}">{{title}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+            <div><i class="fas fa-minus" data-index="{{@key}}"></i></div>
+        {{/each}}
+    </div>
+    <hr>
     <textarea name="data.description">{{data.description}}</textarea>
 </form>

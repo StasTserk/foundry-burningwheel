@@ -24,7 +24,7 @@ export async function handleNpcWeaponRoll({ target, sheet }: NpcRollOptions): Pr
     }
     const weapon = sheet.actor.getOwnedItem(itemId) as MeleeWeapon | RangedWeapon;
     const extraInfo = weapon.type === "melee weapon" ? 
-        MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon) :
+        MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, parseInt(target.dataset.attackIndex as string)) :
         RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
     return handleNpcSkillRoll({target, sheet, extraInfo});
 }

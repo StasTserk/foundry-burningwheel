@@ -1,7 +1,19 @@
+@import "../mixins.scss";
+
 .melee-weapon-sheet {
     .weapon-attack-row {
         display: grid;
         grid-template-columns: 3fr 1fr 1fr 1fr 1fr 2.5fr 15px;
         column-gap: 3px;
+
+        .attack-grid-header {
+            font-weight: bold;
+        }
+        .exponent {
+            @include no-number-arrows;
+        }
+        i:hover {
+            color: red;
+        }
     }
 }

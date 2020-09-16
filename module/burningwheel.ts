@@ -12,6 +12,7 @@ import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { NpcSheet } from "./npc-sheet.js";
 import { DuelOfWitsDialog } from "./dialogs/duel-of-wits.js";
+import { applyImportBindings } from "./dialogs/importItemDialog.js";
 
 Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -141,17 +142,4 @@ Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any, userId: string) => actor.processNewItem(item, userId));
 
-Hooks.on('renderDialog', (dialog, html: JQuery) => {
-    if (dialog.data.id && dialog.data.id === 'import-item') {
-        html.find('input.new-item-dialog-search').on('input', (e) => {
-            const searchTerm = $(e.target).val() as string;
-            html.find('.search-grid > .search-entry').each((_, item) => {
-                if ((item.dataset.skillName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
-                    $(item).show();
-                } else {
-                    $(item).hide();
-                }
-            });
-        });
-    }
-});
+Hooks.on('renderDialog', (dialog, html: JQuery) => applyImportBindings(dialog, html));

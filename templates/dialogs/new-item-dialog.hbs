@@ -1,7 +1,7 @@
 <h2>Pick a new skill</h2>
 <div class="search-grid">
     {{#each items as |i|}}
-    <div data-skill-name="{{i.name}}" class="flex-row search-entry">
+    <div data-skill-name="{{i.name}}" class="flex-row search-entry" data-item-source="{{i.itemSource}}">
         <div class="item-select-header">
             <input type="checkbox" id="{{i.id}}" value="{{i.id}}">
             <label for="{{i.id}}">{{i.name}}</label>
@@ -21,4 +21,12 @@
 <div class="search-box">
     <i class="fas fa-search"></i>
     <input type="text" class="new-item-dialog-search" placeholder="Search">
+</div>
+<div class="import-compendium-select">
+    Sources:
+    <select name="select-compendiums">
+        {{#each sources as |c|}}
+        <option value="{{c}}">{{c}}</option>
+        {{/each}}
+    </select>
 </div>

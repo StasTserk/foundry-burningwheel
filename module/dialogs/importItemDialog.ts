@@ -11,12 +11,20 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
     }
 
     const actor = options.actor;
-    const loadExistingCallback = async (_html) => {
+    const loadExistingCallback = async (_html: HTMLElement | JQuery<HTMLElement>) => {
         // cache the current list of skills since it'll be used after for the actual skill data
         const items = (await helpers.getItemsOfTypes(options.itemTypes as ItemType[]))
             .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
-        
-        const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-item-dialog.hbs", { items: items.map((i) => ItemToRowData(i, options)) });
+        const sourceList = ["World"].concat(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Array.from(game.packs.values()).filter((p:any) => !p.private).map((p: Compendium) => {
+                return helpers.compendiumName(p);
+        }));
+
+        const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-item-dialog.hbs", {
+            items: items.map((i) => ItemToRowData(i, options)),
+            sources: sourceList,
+        });
         const dialog = new Dialog({
             id: 'import-item',
             title: options.searchTitle,
@@ -67,9 +75,38 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
         title: options.searchTitle,
         content: options.popupMessage,
         buttons: makeNewButtons
+    }, { 
+        classes: ["dialog", "import-dialog"]
+    }).render(true);
+}
+
+export function applyImportBindings(dialog: { data: { id: string; }; }, html: JQuery): void {
+    if (dialog.data.id && dialog.data.id === 'import-item') {
+        let searchTerm = '';
+        let source = [''];
+        html.find('input.new-item-dialog-search').on('input', (e) => {
+            searchTerm = $(e.target).val() as string;
+            html.find('.search-grid > .search-entry').each((_, item) => {
+                if (source.indexOf(item.dataset.itemSource as string) !== -1 && (item.dataset.skillName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+        });
+        html.find('select[name="select-compendiums"]').select2({
+            multiple: true
+        }).on('change', (e) => {
+            source = $(e.target).val() as string[];
+            html.find('.search-grid > .search-entry').each((_, item) => {
+                if (source.indexOf(item.dataset.itemSource as string) !== -1 && (item.dataset.skillName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+        }).find("option").each((_, o) => { $(o).prop("selected", "selected"); console.log("selected an option"); }).parent().trigger("change");
     }
-    , { classes: ["dialog", "import-dialog"]}
-    ).render(true);
 }
 
 function ItemToRowData(item: BWItem & { itemSource?: string }, options: AddItemOptions): ItemRowData {

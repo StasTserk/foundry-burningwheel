@@ -23,9 +23,21 @@
     font-size: 1.125em;
     padding: 3px;
 
-    .new-trait-dialog-search {
+    .new-item-dialog-search {
         border: 0;
         width: calc(100% - 1.5em);
+    }
+}
+
+.import-compendium-select {
+    select {
+        width: 95%;        
+        height: 4em;
+    }
+
+    .select2-selection--multiple {
+        height: 4em;
+        overflow-y: scroll;
     }
 }
 

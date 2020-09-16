@@ -25,6 +25,21 @@ export class DuelOfWitsDialog extends Dialog {
         return mergeObject(super.defaultOptions, { width: 600, height: 600, resizable: true }, { overwrite: true });
     }
 
+    _getHeaderButtons(): { label: string, icon: string, class: string, onclick: (e: JQuery.ClickEvent) => void; }[] {
+        let buttons = super._getHeaderButtons();
+        if (game.user.isGM) {
+            buttons = [{
+                label: "Show",
+                icon: "fas fa-eye",
+                class: "force-show-dow",
+                onclick: (_) => {
+                    game.socket.emit("system.burningwheel", { type: "showDuel" });
+                }
+            }].concat(buttons);
+        }
+        return buttons;
+    }
+
     activateListeners(html: JQuery): void {
         html.submit((e) => { e.preventDefault(); });
         html.find("input, select, textarea").on('change', (e) => this._propagateChange(e));
@@ -121,6 +136,8 @@ export class DuelOfWitsDialog extends Dialog {
                     game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
                 }
                 if (this.rendered) { this.render(true); }
+            } else if (type === "showDuel") {
+                this.render(true);
             }
         });
     }

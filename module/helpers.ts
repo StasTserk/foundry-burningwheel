@@ -144,7 +144,7 @@ export async function getItemsOfTypes(itemTypes: ItemType[], compendiums?: strin
     const packs = Array.from(game.packs.values()).filter(p => useAll || compendiums?.indexOf(p.collection) !== -1) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
-        sourceLabel = pack.collection.substr(pack.collection.indexOf('.')+1).replace('-', ' ').titleCase();
+        sourceLabel = compendiumName(pack);
         compendiumItems = compendiumItems.concat(
             ...packItems.filter((item: (BWItem & {itemSource?: string })) => itemTypes.indexOf(item.type) !== -1)
             .map((item: BWItem & {itemSource?: string } ) => {
@@ -155,6 +155,10 @@ export async function getItemsOfTypes(itemTypes: ItemType[], compendiums?: strin
     return itemList.concat(...compendiumItems);
 }
 
+export function compendiumName(c: Compendium): string {
+    return c.collection.substr(c.collection.indexOf('.')+1).replace('-', ' ').titleCase();
+}
+
 export async function getItemsOfType<T extends BWItem>(itemType: ItemType, compendiums?: string[]): Promise<(T & {itemSource?: string })[]> {
     return getItemsOfTypes([itemType], compendiums) as Promise<(T & {itemSource?: string })[]>;
 }
@@ -162,12 +166,15 @@ export async function getItemsOfType<T extends BWItem>(itemType: ItemType, compe
 export function getCompendiumList(): { name: string, label: string}[] {
     const packs = Array.from(game.packs.values()) as Compendium[];
     return [ { name: "world", label: "World Content" }].concat(
-        ...packs.map(p => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...packs.filter((p: any) => game.user.isGM || !p.private)
+        .map(p => {
             return {
                 name: p.collection,
-                label: p.collection.substr(p.collection.indexOf('.')+1).replace('-', ' ').titleCase()
+                label: compendiumName(p)
             };
         })
+        .sort((a, b) => a.label.localeCompare(b.label))
     );
 }
 

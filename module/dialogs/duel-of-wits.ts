@@ -30,7 +30,6 @@ export class DuelOfWitsDialog extends Dialog {
         html.find("input, select, textarea").on('change', (e) => this._propagateChange(e));
         html.find("button[data-action='reset-round']").on('click', (_) => this.clearRound());
         html.find("button[data-action='reset-everything']").on('click', (_) => this.clearEverything());
-        this.activateSocketListeners();
     }
 
     getData(): unknown {
@@ -121,7 +120,7 @@ export class DuelOfWitsDialog extends Dialog {
                 if (game.user.isGM) {
                     game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
                 }
-                this.render(true);
+                if (this.rendered) { this.render(true); }
             }
         });
     }

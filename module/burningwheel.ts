@@ -48,6 +48,7 @@ Hooks.once("init", async () => {
         data
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
+    game.burningwheel.dow.activateSocketListeners();
 
 });
 

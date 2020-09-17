@@ -21,7 +21,9 @@ import { addNewItem } from "./dialogs/importItemDialog.js";
 import { BWCharacter } from "./character.js";
 
 export class BWCharacterSheet extends BWActorSheet {
-    actor: BWActor & BWCharacter;
+    get actor(): BWActor & BWCharacter {
+        return super.actor as BWActor & BWCharacter;
+    }
     
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;

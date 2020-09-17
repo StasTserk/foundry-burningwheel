@@ -2,6 +2,47 @@ import { BWActor } from "../bwactor.js";
 import { ItemType, BWItem } from "../items/item.js";
 import * as helpers from "../helpers.js";
 
+export class ImportItemDialog extends Dialog {
+    defaults: string[];
+    searchTerm = '';
+    sources: string[] = [];
+
+    activateListeners(html: JQuery): void {
+        super.activateListeners(html);
+        html.find('input.new-item-dialog-search').on('input', (e) => {
+            this.searchTerm = $(e.target).val() as string;
+            html.find('.search-grid > .search-entry').each((_, item) => {
+                if (this.sources.indexOf(item.dataset.itemSource as string) !== -1
+                    && (item.dataset.itemName || "").toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1) { 
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+        });
+        html.find('select[name="select-compendiums"]').select2({
+            multiple: true,
+            width: "97%"
+        }).on('change', (e) => {
+            this.sources = $(e.target).val() as string[];
+            html.find('.search-grid > .search-entry').each((_, item) => {
+                if (this.sources.indexOf(item.dataset.itemSource as string) !== -1
+                    && (item.dataset.itemName || "").toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1) { 
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+        });
+        html.find("option").each((_, o) => {
+            if ((this.sources && this.sources.length === 0) || this.sources.indexOf(o.value) !== -1) {
+                $(o).prop("selected", "selected");
+                console.log("selected an option");
+            }
+        }).parent().trigger("change");
+    }
+}
+
 export async function addNewItem(options: AddItemOptions): Promise<Application> {
     if (!options.itemType && !options.itemTypes) {
         throw Error("Must provide one or more item types when adding new items");
@@ -22,23 +63,24 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
         }));
 
         const html = await renderTemplate("systems/burningwheel/templates/dialogs/new-item-dialog.hbs", {
+            searchTitle: options.searchTitle,
             items: items.map((i) => ItemToRowData(i, options)),
             sources: sourceList,
         });
-        const dialog = new Dialog({
-            id: 'import-item',
+        const dialog = new ImportItemDialog({
             title: options.searchTitle,
             content: html,
             buttons: {
                 add: {
                     label: "Add",
-                    callback: (dialogHtml: JQuery) => {
+                    callback: async (dialogHtml: JQuery) => {
                         const newItems = dialogHtml.find('input:checked')
                             .map((_, element: HTMLInputElement) => {
                                 const itemRoot = (items.find((s: BWItem) => s._id === element.value) as BWItem).data;
                                 Object.assign(itemRoot.data, options.forcedData);
                                 return itemRoot;
                             }).toArray();
+                        actor.setFlag("burningwheel", "compendia", dialogHtml.find("select").val());
                         actor.createOwnedItem(newItems);
                     }
                 },
@@ -46,8 +88,9 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
                     label: "Cancel"
                 }
             }
-        } as DialogData & { id: string },
+        } as DialogData,
         { width: 530 });
+        dialog.sources = actor.getFlag("burningwheel", "compendia") || [] as string[];
         dialog.render(true);
     };
 
@@ -78,35 +121,6 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
     }, { 
         classes: ["dialog", "import-dialog"]
     }).render(true);
-}
-
-export function applyImportBindings(dialog: { data: { id: string; }; }, html: JQuery): void {
-    if (dialog.data.id && dialog.data.id === 'import-item') {
-        let searchTerm = '';
-        let source = [''];
-        html.find('input.new-item-dialog-search').on('input', (e) => {
-            searchTerm = $(e.target).val() as string;
-            html.find('.search-grid > .search-entry').each((_, item) => {
-                if (source.indexOf(item.dataset.itemSource as string) !== -1 && (item.dataset.skillName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
-                    $(item).show();
-                } else {
-                    $(item).hide();
-                }
-            });
-        });
-        html.find('select[name="select-compendiums"]').select2({
-            multiple: true
-        }).on('change', (e) => {
-            source = $(e.target).val() as string[];
-            html.find('.search-grid > .search-entry').each((_, item) => {
-                if (source.indexOf(item.dataset.itemSource as string) !== -1 && (item.dataset.skillName || "").toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) { 
-                    $(item).show();
-                } else {
-                    $(item).hide();
-                }
-            });
-        }).find("option").each((_, o) => { $(o).prop("selected", "selected"); console.log("selected an option"); }).parent().trigger("change");
-    }
 }
 
 function ItemToRowData(item: BWItem & { itemSource?: string }, options: AddItemOptions): ItemRowData {

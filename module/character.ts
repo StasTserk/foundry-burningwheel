@@ -1,8 +1,25 @@
 import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot } from "./bwactor.js";
-import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "./helpers.js";
+import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "./helpers.js";
+import { BWItemData } from "./items/item.js";
 
 export class BWCharacter extends Actor<BWCharacterData>{
     data: CharacterDataRoot;
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    async update(data: object, options?: object): Promise<this> {
+        const updateAptitude = this._statsHaveChanged(data as unknown as StringIndexedObject<string>);
+        const self = super.update(data, options);
+        if (updateAptitude) {
+            for (let i = 0; i < this.data.items.length; i ++) {
+                const item = this.data.items[i];
+                if (item.type === "skill" && item.data.learning) {
+                    await this.getOwnedItem((this.data.items[i] as BWItemData & { _id: string })._id)
+                    ?.update({ name: this.data.items[i].name }, { diff: false}); // force
+                }
+            }
+        }
+        return self;
+    }
 
     bindCharacterFunctions(): void {
         this.addStatTest = BWCharacter.prototype.addStatTest.bind(this);
@@ -13,6 +30,8 @@ export class BWCharacter extends Actor<BWCharacterData>{
         this.prepareTypeSpecificData = BWCharacter.prototype.prepareTypeSpecificData.bind(this);
         this.updatePtgs = BWCharacter.prototype.updatePtgs.bind(this);
         this._calculatePtgs = BWCharacter.prototype._calculatePtgs.bind(this);
+        this.update = BWCharacter.prototype.update.bind(this);
+        this._statsHaveChanged = BWCharacter.prototype._statsHaveChanged.bind(this);
     }
 
     prepareTypeSpecificData(): void {
@@ -228,6 +247,19 @@ export class BWCharacter extends Actor<BWCharacterData>{
                 }
                 break;
         }
+    }
+
+    private _statsHaveChanged(data: StringIndexedObject<string>): boolean {
+        return [
+            "data.forte.exp",
+            "data.will.exp",
+            "data.power.exp",
+            "data.perception.exp",
+            "data.speed.exp",
+            "data.agility.exp"
+        ].some(accessor => {
+            return getProperty(this.data, accessor) !== data[accessor];
+        });
     }
 
     taxResources(amount: number, maxFundLoss: number): void {

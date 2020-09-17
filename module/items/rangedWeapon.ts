@@ -47,7 +47,9 @@ export class RangedWeapon extends Item {
     }
 
     data: RangedWeaponRootData;
-    actor: BWActor | null;
+    get actor(): BWActor | null {
+        return super.actor as BWActor | null;
+    }
 }
 
 export interface RangedWeaponRootData extends ItemData<RangedWeaponData> {

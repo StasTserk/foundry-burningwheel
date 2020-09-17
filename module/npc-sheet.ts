@@ -8,7 +8,10 @@ import { handleNpcSkillRoll, handleNpcWeaponRoll, handleNpcSpellRoll } from "./r
 import { handleArmorRoll } from "./rolls/rollArmor.js";
 
 export class NpcSheet extends BWActorSheet {
-    actor: BWActor & Npc;
+    get actor(): BWActor & Npc {
+        return super.actor as BWActor & Npc;
+    }
+    
     getData(): ActorSheetData<unknown> {
         const data = super.getData() as NpcSheetData;
         const rollable = true; const open = true;

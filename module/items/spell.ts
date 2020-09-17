@@ -48,7 +48,9 @@ export class Spell extends Item<SpellData> {
     }
 
     data: SpellDataRoot;
-    actor: BWActor;
+    get actor(): BWActor | null {
+        return super.actor as BWActor | null;
+    }
 }
 
 export interface SpellDataRoot extends ItemData<SpellData>, BWItemData {

@@ -37,7 +37,9 @@ export class MeleeWeapon extends Item {
         return element.outerHTML;
     }
     
-    actor: BWActor | null;
+    get actor(): BWActor | null {
+        return super.actor as BWActor | null;
+    }
 
     data: MeleeWeaponRootData;
 }

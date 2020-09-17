@@ -4,7 +4,9 @@ import * as constants from "./constants.js";
 import * as helpers from "./helpers.js";
 
 export class BWActorSheet extends ActorSheet {
-    actor: BWActor;
+    get actor(): BWActor {
+        return super.actor as BWActor;
+    }
 
     get template(): string {
         const path = "systems/burningwheel/templates";

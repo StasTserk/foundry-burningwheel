@@ -23,7 +23,7 @@
     <button class="rollable {{armor.torso.data.torsoDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.torso._id}}" data-location="Torso">
         <i class="fas fa-dice"></i>
     </button>
-    <div class="armor-row">{{armor.torso.data.shade}}{{armor.torso.data.dice}}</div>
+    <div class="armor-row">{{armor.torso.data.shade}}{{plusone armor.torso.data.dice}}</div>
     <input type="number" class="armor-damage-input {{armor.torso.data.torsoDisplayClass}}" data-item-id="{{armor.torso._id}}" data-binding="data.damageTorso" value="{{armor.torso.data.damageTorso}}">
     {{else}}
     <button disabled><i class="fas fa-dice"></i></button>

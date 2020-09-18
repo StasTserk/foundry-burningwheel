@@ -106,8 +106,8 @@ function registerHelpers() {
         return "";
     });
 
-    Handlebars.registerHelper("plusone", (value: number) => {
-        return value + 1;
+    Handlebars.registerHelper("plusone", (value: string | number) => {
+        return parseInt(value.toString()) + 1;
     });
 
     Handlebars.registerHelper("disabled", (value: boolean) => {

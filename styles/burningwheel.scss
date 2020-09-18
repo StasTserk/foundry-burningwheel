@@ -35,17 +35,26 @@ button.rollable {
     height: 2.2em;
 }
 
-input.exponent {
-    width: 2.5em;
-    max-height: 28px;
+input {
+    &.exponent {
+        width: 2.5em;
+        max-height: 28px;
 
-    &.no-arrows {
-        @include no-number-arrows;
+        &.no-arrows {
+            @include no-number-arrows;
+        }
     }
-}
 
-input.hidden {
-    display: none;
+    &.hidden {
+        display: none;
+    }
+
+    &::selection {
+        background: rgba(#800, .25);
+    }
+    &::-moz-selection {
+        background: rgba(#800, .25);
+    }
 }
 
 .flex-row {

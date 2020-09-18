@@ -263,7 +263,7 @@
             height: min-content;
 
             & > .npc-weapon-name, & > .npc-spell-name {
-                width: calc(100% - 4em);
+                width: 100%;
             }
             select {
                 @include select-no-arrow;

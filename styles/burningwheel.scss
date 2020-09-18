@@ -43,6 +43,10 @@ input {
         &.no-arrows {
             @include no-number-arrows;
         }
+
+        &.wide {
+            width: 3em;
+        }
     }
 
     &.hidden {

@@ -83,6 +83,7 @@
                     width: 1.5em;
                     font-size: 1.5em;
                     text-align: center;
+                    @include no-number-arrows;
 
                     &:hover {
                         background-color: rgba(black, .15);

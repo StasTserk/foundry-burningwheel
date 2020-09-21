@@ -13,4 +13,11 @@ export function registerSystemSettings(): void {
         type: String,
         default: "{}"
     });
+    game.settings.register("burningwheel", "fight-data", {
+        name: "Serialized Fight! dialog data.",
+        scope: "world",
+        config: false,
+        type: String,
+        default: "{}"
+    });
 }

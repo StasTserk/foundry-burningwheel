@@ -12,6 +12,7 @@ import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { NpcSheet } from "./npc-sheet.js";
 import { DuelOfWitsDialog } from "./dialogs/duel-of-wits.js";
+import { FightDialog } from "./dialogs/fight.js";
 
 Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,9 +36,11 @@ Hooks.once("init", async () => {
     preloadHandlebarsTemplates();
     registerHelpers();
 
-    let data = {};
+    let dowData = {};
+    let fightData = {};
     try {
-        data = await JSON.parse(game.settings.get("burningwheel", "dow-data"));
+        dowData = await JSON.parse(game.settings.get("burningwheel", "dow-data"));
+        fightData = await JSON.parse(game.settings.get("burningwheel", "fight-data"));
     } catch (err) {
         console.log("Error parsing serialized duel of wits dat");
     }
@@ -45,11 +48,18 @@ Hooks.once("init", async () => {
     game.burningwheel.dow = new DuelOfWitsDialog({
         title: "Duel of Wits",
         buttons: {},
-        data
+        data: dowData
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
     game.burningwheel.dow.activateSocketListeners();
 
+    game.burningwheel.fight = new FightDialog({
+        title: "Fight!",
+        buttons: {},
+        data: fightData
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
+    game.burningwheel.fight.activateSocketListeners();
 });
 
 Hooks.once("ready", async() => {
@@ -59,6 +69,7 @@ Hooks.once("ready", async() => {
 Hooks.on("renderSidebarTab", async (_data, html: JQuery) => {
     if (html.prop("id") === "combat") { // this is the combat tab
         DuelOfWitsDialog.addSidebarControl(html);
+        FightDialog.addSidebarControl(html);
     }
 });
 

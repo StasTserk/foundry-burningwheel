@@ -1,3 +1,46 @@
 <form class="fight flex-row" autocomplete="off">
-    Here goes the fight stuff.
+    {{#if gmView}}
+    <div class="control-grid">
+        <button class="control-button" data-action="clearAll">Clear All</button>
+        <button class="control-button" data-action="resetRound">Reset Round</button>
+    </div>
+    {{/if}}
+    <div class="fighters-grid">
+        <div>
+            Participant
+        </div>
+        <div class="volley">
+            Volley 1
+        </div>
+        <div class="volley">
+            Volley 2
+        </div>
+        <div class="volley">
+            Volley 3
+        </div>
+        {{#each participants as |p i|}}
+        <div class="participantCard">
+            {{p.name}}
+        </div>
+        <div class="volley">
+            Volley 1
+        </div>
+        <div class="volley">
+            Volley 2
+        </div>
+        <div class="volley">
+            Volley 3
+        </div>
+        {{/each}}
+        {{#if gmView}}
+        <div class="newParticipant">
+            <select name="newParticipant">
+                <option value="">Add a new fighter.</option>
+                {{#each participantOptions}}
+                <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        {{/if}}
+    </div>
 </form>

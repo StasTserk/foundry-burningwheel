@@ -1,0 +1,26 @@
+@import "../mixins.scss";
+.fight {
+    .control-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 10px;
+        width: 100%;
+        height: min-content;
+        .control-button {
+            @include button-like(black);
+            border-radius: 3px;
+        }
+    }
+
+    .fighters-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        .newParticipant {
+            width: 100%;
+            select {
+                width: 100%;
+            }
+        }
+    }
+}

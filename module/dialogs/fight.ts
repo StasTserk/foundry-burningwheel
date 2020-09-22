@@ -1,13 +1,47 @@
+import { NpcDataRoot } from "module/npc.js";
+import { BWActor, CharacterDataRoot } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 
 export class FightDialog extends Dialog {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
+        this.data.data.participants = this.data.data.participants || [];
+        this.data.data.participantIds = this.data.data.participantIds || [];
+        this.data.actors = []; // replace this with actor lookups later -- this.data.data.participantIds
+    }
+
+    getData(): unknown {
+        const data = Object.assign(super.getData(), this.data.data ) as FightDialogData;
+        const actors = game.actors.entities;
+        data.gmView = game.user.isGM;
+        data.participantOptions = actors
+            .filter(_a => true)
+            .map(a => {
+            return { id: a._id, name: a.name };
+        });
+        return data;
+    }
+
+    activateListeners(html: JQuery): void {
+        super.activateListeners(html);
+        html.on('submit', (e) => { e.preventDefault(); });
+        html.find('select[name="newParticipant"]').on('change', (e: JQuery.ChangeEvent) => this._addNewParticipant(e.target));
+    }
+    private _addNewParticipant(target: HTMLSelectElement): void {
+        const id = target.value;
+        const actor = game.actors.get(id) as BWActor;
+        this.data.actors.push(actor);
+        this.data.data.participants.push({ ...toParticipantData(actor),
+            action1: '', action2: '', action3: '', action4: '', action5: '',
+            action6: '', action7: '', action8: '', action9: ''
+        } as ParticipantEntry);
+        this.render();
     }
 
     data: {
         data: FightDialogData;
         actionOptions: StringIndexedObject<string[]>;
+        actors: BWActor[];
     };
 
     get template(): string {
@@ -73,6 +107,38 @@ export class FightDialog extends Dialog {
     }
 }
 
+function toParticipantData(actor: BWActor): Partial<ParticipantEntry> {
+    const reflexesString = `${actor.data.data.reflexesShade}${
+        (actor.data.type === "character" ?
+        (actor.data as CharacterDataRoot).data.reflexesExp :
+        (actor.data as NpcDataRoot).data.reflexes)}`;
+    return {
+        name: actor.name,
+        id: actor._id,
+        imgSrc: actor.img,
+        reflexes: reflexesString,
+    };
+}
+
 export interface FightDialogData {
+    participantOptions: { id: string, name: string }[];
     participantIds: string[];
+    gmView: boolean;
+    participants: ParticipantEntry[];
+}
+
+interface ParticipantEntry {
+    id: string;
+    name: string;
+    reflexes: string;
+    imgSrc: string;
+    action1: string;
+    action2: string;
+    action3: string;
+    action4: string;
+    action5: string;
+    action6: string;
+    action7: string;
+    action8: string;
+    action9: string;
 }

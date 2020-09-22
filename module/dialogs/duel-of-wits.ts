@@ -42,7 +42,7 @@ export class DuelOfWitsDialog extends Dialog {
 
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
-
+        html.on('submit', (e) => { e.preventDefault(); });
         html.find("input, select, textarea").on('change', (e) => this._propagateChange(e));
         html.find("button[data-action='reset-round']").on('click', (_) => this.clearRound());
         html.find("button[data-action='reset-everything']").on('click', (_) => this.clearEverything());

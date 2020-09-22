@@ -11,6 +11,7 @@
 @import "./chat/roll.scss";
 @import "./dialog/character-burner.scss";
 @import "./dialog/duel-of-wits.scss";
+@import "./dialog/fight.scss";
 @import "./items/item.scss";
 @import "./items/armor.scss";
 @import "./items/relationship.scss";
@@ -215,4 +216,11 @@ textarea {
     }
     i { color: darkred; }
     animation: pulsing 5000ms infinite;
+}
+
+.fight-sidebar-button, .dow-sidebar-button {
+    background: linear-gradient(rgba(red, .15), rgba(red, 0.45));
+    color: gold;
+    border-color: gold;
+    width: 95%;
 }

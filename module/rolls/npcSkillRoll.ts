@@ -14,7 +14,7 @@ import {
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
-import { notifyError } from "../helpers.js";
+import { byName, notifyError } from "../helpers.js";
 
 export async function handleNpcWeaponRoll({ target, sheet }: NpcRollOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
@@ -57,7 +57,7 @@ export async function handleNpcSkillRoll({ target, sheet, extraInfo, dataPreset 
         skill: skill.data.data,
         needsToolkit: skill.data.data.tools,
         toolkits: actor.data.toolkits,
-        forkOptions: actor.getForkOptions(skill.data.name),
+        forkOptions: actor.getForkOptions(skill.data.name).sort(byName),
         wildForks: actor.getWildForks(skill.data.name),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)

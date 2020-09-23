@@ -216,3 +216,6 @@ const AbilityLookup = {
 export type TestString = "Routine" | "Difficult" | "Challenging" | "Routine/Difficult";
 export type ShadeString = "B" | "G" | "W";
 export type StringIndexedObject<T> = { [i: string]: T };
+
+/** For Sorting Items/Actors/Etc. by Name */
+export const byName = (a: { name: string }, b: { name: string }): number => a.name.localeCompare(b.name);

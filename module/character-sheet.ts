@@ -19,6 +19,7 @@ import { handleRollable } from "./rolls/rolls.js";
 import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
 import { addNewItem } from "./dialogs/importItemDialog.js";
 import { BWCharacter } from "./character.js";
+import { byName } from "./helpers.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     get actor(): BWActor & BWCharacter {
@@ -239,8 +240,6 @@ function weaponCompare(a: ItemData, b: ItemData): number {
     }
     return a.name.localeCompare(b.name);
 }
-
-const byName = (a: ItemData, b: ItemData) => a.name.localeCompare(b.name);
 
 interface CharacterSheetData extends ActorSheetData {
     reputations: ItemData[];

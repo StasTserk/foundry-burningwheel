@@ -236,7 +236,7 @@ export function extractRollData(html: JQuery): RollData {
 
     let penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
 
-    const toolkitPenalty = extractNumber(html, "toolPenalty") ? diff : 0;
+    const toolkitPenalty = extractCheckboxValue(html, "toolPenalty") ? diff : 0;
     if (toolkitPenalty) { penaltySources["No Toolkit"] = `+${toolkitPenalty}`; }
     const learningPenalty = extractNumber(html, "learning") ? diff + toolkitPenalty : 0;
     if (learningPenalty) { penaltySources["Beginner's Luck"] = `+${learningPenalty}`; }

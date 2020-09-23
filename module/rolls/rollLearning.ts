@@ -101,13 +101,6 @@ async function learningRollCallback(
     
     const rollData = extractRollData(dialogHtml);
     const stat = getProperty(sheet.actor.data.data, statName) as Ability;
-    if (skill.data.data.tools) {
-        const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = sheet.actor.getOwnedItem(toolkitId);
-        if (tools) {
-            maybeExpendTools(tools);
-        }
-    }
 
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
@@ -121,6 +114,20 @@ async function learningRollCallback(
             ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData
         };
     });
+
+    if (skill.data.data.tools) {
+        const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
+        const tools = sheet.actor.getOwnedItem(toolkitId);
+        if (tools) {
+            const { expended, text } = await maybeExpendTools(tools);
+            extraInfo = extraInfo ? `${extraInfo}${text}` : text;
+            if (expended) {
+                tools.update({
+                    "data.expended": true
+                }, {});
+            }
+        }
+    }
 
     const sendChatMessage = async (fr?: RerollData) => {
         const data: RollChatMessageData = {

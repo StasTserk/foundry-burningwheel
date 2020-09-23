@@ -43,7 +43,7 @@ export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, on
         needsToolkit: skill.data.data.tools,
         toolkits: actor.data.toolkits,
         forkOptions: actor.getForkOptions(skill.data.name).sort(helpers.byName),
-        wildForks: actor.getWildForks(skill.data.name),
+        wildForks: actor.getWildForks(skill.data.name).sort(helpers.byName),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     }, dataPreset);

@@ -108,6 +108,9 @@ export class BWCharacterSheet extends BWActorSheet {
                     default: traitLists.callon.push(trait); break;
                 }
             });
+            traitLists.callon.sort(byName);
+            traitLists.character.sort(byName);
+            traitLists.die.sort(byName);
         }
         data.traits = traitLists;
         data.systemVersion = game.system.data.version;

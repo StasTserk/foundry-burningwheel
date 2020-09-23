@@ -58,7 +58,7 @@ export async function handleNpcSkillRoll({ target, sheet, extraInfo, dataPreset 
         needsToolkit: skill.data.data.tools,
         toolkits: actor.data.toolkits,
         forkOptions: actor.getForkOptions(skill.data.name).sort(byName),
-        wildForks: actor.getWildForks(skill.data.name),
+        wildForks: actor.getWildForks(skill.data.name).sort(byName),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
     }, dataPreset);

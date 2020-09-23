@@ -194,16 +194,19 @@ export async function getNoDiceErrorDialog(numDice: number): Promise<Application
         `Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}`);
 }
 
-export async function maybeExpendTools(tools: Possession): Promise<unknown> {
+export async function maybeExpendTools(tools: Possession): Promise<{ expended: boolean, text: string }> {
     const roll = await rollDice(1, false, "B");
-    if (roll && roll.dice[0].rolls[0].roll === 1) {
-        return Dialog.confirm({
-            title: "Expend toolkit",
-            content: `<p>The die of fate result was a 1 and thus the toolkit used (${tools.name}) is expended.</p><hr><p>Update the toolkit?</p>`,
-            yes: () => { tools.update({"data.isExpended": true}, null); },
-            no: () => { return; }
-        });
+    const result = roll?.dice[0].rolls[0].roll;
+    if (roll && result === 1) {
+        return  {
+            expended: true,
+            text: `<p>The die of fate result for toolkit used (${tools.name}) was a <label class="roll-die" data-success="false">${result}</label> and thus the kit is expended.</p>`
+        };
     }
+    return {
+        expended: false,
+        text: `<p>The die of fate result for the toolkit used (${tools.name}) was a <label class="roll-die" data-success="true">${result}</label></p>`
+    };
 }
 
 function extractSourcedValue(html: JQuery, name: string):

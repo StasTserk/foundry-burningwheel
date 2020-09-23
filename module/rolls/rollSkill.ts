@@ -71,13 +71,6 @@ async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
     const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
 
-    if (skill.data.data.tools) {
-        const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = sheet.actor.getOwnedItem(toolkitId);
-        if (tools) {
-            maybeExpendTools(tools);
-        }
-    }
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
     const roll = await rollDice(diceTotal, skill.data.data.open, skill.data.data.shade);
@@ -86,6 +79,20 @@ async function skillRollCallback(
     const wildForkDie = await rollWildFork(wildForks, skill.data.data.shade);
     const wildForkBonus = wildForkDie?.total || 0;
     const wildForkDice = wildForkDie?.rolls || [];
+
+    if (skill.data.data.tools) {
+        const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
+        const tools = sheet.actor.getOwnedItem(toolkitId);
+        if (tools) {
+            const { expended, text } = await maybeExpendTools(tools);
+            extraInfo = extraInfo ? `${extraInfo}${text}` : text;
+            if (expended) {
+                tools.update({
+                    "data.expended": true
+                }, {});
+            }
+        }
+    }
 
     const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
     const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {

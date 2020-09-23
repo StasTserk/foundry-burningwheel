@@ -94,9 +94,9 @@ export class BWCharacterSheet extends BWActorSheet {
         data.melee = melee.sort(weaponCompare);
         data.armor = this.getArmorDictionary(armor);
         data.ranged = ranged.sort(weaponCompare);
-        data.reputations = reps;
-        data.affiliations = affs;
-        data.spells = spells;
+        data.reputations = reps.sort(byName);
+        data.affiliations = affs.sort(byName);
+        data.spells = spells.sort(byName);
 
         const traitLists: CharacterSheetTraits = { character: [], die: [], callon: [] };
 

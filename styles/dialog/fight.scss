@@ -16,6 +16,20 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
 
+        .participant-card {
+            .actor-name {
+                font-size: 1.125em;
+                font-weight: bold;
+            }
+            .portrait {
+                margin-left: auto;
+                margin-right: auto;
+                width: 80px; height: 80px;
+                border: 0;
+                object-fit: cover;
+            }
+        }
+
         .newParticipant {
             width: 100%;
             select {

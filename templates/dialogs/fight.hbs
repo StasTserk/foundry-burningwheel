@@ -19,17 +19,62 @@
             Volley 3
         </div>
         {{#each participants as |p i|}}
-        <div class="participantCard">
-            {{p.name}}
+        <div class="participant-card">
+            <div class="actor-name">{{p.name}}</div>
+            <img class="portrait" src="{{p.imgSrc}}" title="{{p.name}}" data-edit="img"/>
+            <div>
+                Engagement Bonus
+                <input type="number" class="exponent no-arrows">
+            </div>
+            <div>
+                Disadvantage Penalty
+                <input type="number" class="exponent no-arrows">
+            </div>
+            <div>
+                Active Skill
+                <select>
+                    <option>Sword</option>
+                    <option>Sword</option>
+                </select>
+            </div>
+            <button class="control-button">Test Speed</button>
+            <button class="control-button">Test Skill</button>
         </div>
         <div class="volley">
-            Volley 1
+            <div>Volley 1</div>
+            <select>
+                <option>Action 1</option>
+            </select>
+            <select>
+                <option>Action 2</option>
+            </select>
+            <select>
+                <option>Action 3</option>
+            </select>
         </div>
         <div class="volley">
-            Volley 2
+            <div>Volley 2</div>
+            <select>
+                <option>Action 1</option>
+            </select>
+            <select>
+                <option>Action 2</option>
+            </select>
+            <select>
+                <option>Action 3</option>
+            </select>
         </div>
         <div class="volley">
-            Volley 3
+            <div>Volley 3</div>
+            <select>
+                <option>Action 1</option>
+            </select>
+            <select>
+                <option>Action 2</option>
+            </select>
+            <select>
+                <option>Action 3</option>
+            </select>
         </div>
         {{/each}}
         {{#if gmView}}

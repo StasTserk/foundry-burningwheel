@@ -1,4 +1,5 @@
-import { NpcDataRoot } from "module/npc.js";
+import { BWItemData } from "../items/item.js";
+import { NpcDataRoot } from "../npc.js";
 import { BWActor, CharacterDataRoot } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 
@@ -8,6 +9,7 @@ export class FightDialog extends Dialog {
         this.data.data.participants = this.data.data.participants || [];
         this.data.data.participantIds = this.data.data.participantIds || [];
         this.data.actors = []; // replace this with actor lookups later -- this.data.data.participantIds
+        this.data.actionOptions = options;
     }
 
     getData(): unknown {
@@ -19,6 +21,14 @@ export class FightDialog extends Dialog {
             .map(a => {
             return { id: a._id, name: a.name };
         });
+
+        data.participants.forEach(p => {
+            const actor = this.data.actors.find(a => a.id === p.id) as BWActor;
+            p.weapons = actor.data.fightWeapons.map(s => {
+                return { id: (s as BWItemData & { id:string }).id, label: s.name };
+            });
+        });
+        data.actionOptions = this.data.actionOptions;
         return data;
     }
 
@@ -26,6 +36,13 @@ export class FightDialog extends Dialog {
         super.activateListeners(html);
         html.on('submit', (e) => { e.preventDefault(); });
         html.find('select[name="newParticipant"]').on('change', (e: JQuery.ChangeEvent) => this._addNewParticipant(e.target));
+        html.find('div[data-action="toggleHidden"').on('click', (e: JQuery.ClickEvent) => this._toggleHidden(e.target));
+    }
+    private _toggleHidden(target: HTMLDivElement): void {
+        const index = parseInt(target.dataset.index || "0") ;
+        const hidden = this.data.data.participants[index].showActions;
+        this.data.data.participants[index].showActions = !hidden;
+        this.render(true);
     }
     private _addNewParticipant(target: HTMLSelectElement): void {
         const id = target.value;
@@ -33,7 +50,7 @@ export class FightDialog extends Dialog {
         this.data.actors.push(actor);
         this.data.data.participants.push({ ...toParticipantData(actor),
             action1: '', action2: '', action3: '', action4: '', action5: '',
-            action6: '', action7: '', action8: '', action9: ''
+            action6: '', action7: '', action8: '', action9: '', showActions: true
         } as ParticipantEntry);
         this.render();
     }
@@ -49,7 +66,12 @@ export class FightDialog extends Dialog {
     }
 
     static get defaultOptions(): FormApplicationOptions {
-        return mergeObject(super.defaultOptions, { width: 1000, height: 600, resizable: true }, { overwrite: true });
+        return mergeObject(super.defaultOptions, {
+            width: 1000,
+            height: 600,
+            resizable: true,
+            classes: [ "fight" ]
+        }, { overwrite: true });
     }
 
     _getHeaderButtons(): { label: string, icon: string, class: string, onclick: (e: JQuery.ClickEvent) => void; }[] {
@@ -121,6 +143,7 @@ function toParticipantData(actor: BWActor): Partial<ParticipantEntry> {
 }
 
 export interface FightDialogData {
+    actionOptions: StringIndexedObject<string[]>;
     participantOptions: { id: string, name: string }[];
     participantIds: string[];
     gmView: boolean;
@@ -131,6 +154,7 @@ interface ParticipantEntry {
     id: string;
     name: string;
     reflexes: string;
+    showActions: boolean;
     imgSrc: string;
     action1: string;
     action2: string;
@@ -141,4 +165,29 @@ interface ParticipantEntry {
     action7: string;
     action8: string;
     action9: string;
+    weapons?: { id: string, label: string }[];
 }
+
+const options = {
+    "Attack Actions": [
+        "Strike", "Great Strike", "Block and Strike", "Lock and Strike"
+    ],
+    "Defense Actions": [
+        "Avoid", "Block", "Counterstrike"
+    ],
+    "Basic Actions": [
+        "Assess", "Change Stance", "Charge/Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up", "Disarm", "Feint", "Throw Person"
+    ],
+    "Shooting Actions": [
+        "Throw Object/Weapon", "Aim", "Nock and Draw", "Reload", "Fire", "Release Bow", "Snapshot"
+    ],
+    "Magic Actions": [
+        "Cast a Spell", "Drop Spell", "Command Spirit"
+    ],
+    "Social Actions": [
+        "Command", "Intimidate"
+    ],
+    "Hesitation Actions": [
+        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
+    ]
+};

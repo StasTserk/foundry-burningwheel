@@ -1,5 +1,16 @@
 @import "../mixins.scss";
 .fight {
+    .window-content {
+        background: none;
+        color: white;
+        & select {
+            color: white;
+            & optgroup, & option {
+                background-color: #222;
+            }
+        }
+    }
+
     .control-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -7,7 +18,8 @@
         width: 100%;
         height: min-content;
         .control-button {
-            @include button-like(black);
+            @include button-like(white);
+            color: white;
             border-radius: 3px;
         }
     }
@@ -15,18 +27,59 @@
     .fighters-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+        height: min-content;
+
+        .participant-card, .volley {
+            border: 2px groove #aaaaaa;
+            background: linear-gradient(#444, #000);
+            padding: 4px;
+        }
 
         .participant-card {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            .control-button {
+                width: 49%;
+                height: min-content;
+                @include button-like(white);
+                color: white;
+                border-radius: 3px;
+            }
+
+            .remove-fighter-button {
+                width: 1.5em;
+                height: 1.5em;
+                padding: 1px;
+                line-height: 1.3em;
+                color: red;
+            }
+
             .actor-name {
                 font-size: 1.125em;
                 font-weight: bold;
+                width: calc(100% - 1.5em);
+                &:hover {
+                    color: red;
+                }
             }
             .portrait {
-                margin-left: auto;
-                margin-right: auto;
                 width: 80px; height: 80px;
                 border: 0;
                 object-fit: cover;
+            }
+            .details {
+                width: calc(95% - 80px);
+                margin-left: 2%;
+                select {
+                    width: 100%;
+                }
+            }
+        }
+        .volley {
+            label {
+                display: block;
             }
         }
 

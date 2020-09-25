@@ -125,6 +125,7 @@ export class BWActor extends Actor {
         this.data.martialSkills = [];
         this.data.sorcerousSkills = [];
         this.data.toolkits = [];
+        this.data.fightWeapons = [];
         if (this.data.items) {
             this.data.items.forEach((i) => {
                 switch (i.type) {
@@ -177,6 +178,12 @@ export class BWActor extends Actor {
                         if ((i as PossessionRootData).data.isToolkit) {
                             this.data.toolkits.push(i);
                         }
+                        break;
+                    case "spell":
+                    case "melee weapon":
+                    case "ranged weapon":
+                        this.data.fightWeapons.push(i);
+                        break;
                 }
             });
         }
@@ -380,6 +387,8 @@ export interface BWActorDataRoot extends ActorData<BWCharacterData | NpcData> {
     rollModifiers: { [rollName:string]: RollModifier[]; };
     callOns: { [rollName:string]: string[] };
     successOnlyRolls: string[];
+
+    fightWeapons: BWItemData[];
 
     type: "character" | "npc";
 }

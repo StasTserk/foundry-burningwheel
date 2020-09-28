@@ -1,6 +1,7 @@
-import { StringIndexedObject } from "module/helpers";
+import { StringIndexedObject } from "../helpers.js";
+import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 
-export class DuelOfWitsDialog extends Dialog {
+export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
         
@@ -10,14 +11,16 @@ export class DuelOfWitsDialog extends Dialog {
         this.data.data.showV3 = this.data.data.showV3 || false;
         this.data.data.blindS1 = this.data.data.blindS1 || false;
         this.data.data.blindS2 = this.data.data.blindS2 || false;
+
+        this.data.topic = "duel";
+        this.data.settingName = "dow-data";
     }
 
     get template(): string {
         return "systems/burningwheel/templates/dialogs/duel-of-wits.hbs";
     }
 
-    data: {
-        data: DuelOfWitsData;
+    data: ExtendedTestData<DuelOfWitsData> & {
         actionOptions: StringIndexedObject<string[]>;
     };
 
@@ -25,25 +28,9 @@ export class DuelOfWitsDialog extends Dialog {
         return mergeObject(super.defaultOptions, { width: 600, height: 600, resizable: true }, { overwrite: true });
     }
 
-    _getHeaderButtons(): { label: string, icon: string, class: string, onclick: (e: JQuery.ClickEvent) => void; }[] {
-        let buttons = super._getHeaderButtons();
-        if (game.user.isGM) {
-            buttons = [{
-                label: "Show",
-                icon: "fas fa-eye",
-                class: "force-show-dow",
-                onclick: (_) => {
-                    game.socket.emit("system.burningwheel", { type: "showDuel" });
-                }
-            }].concat(buttons);
-        }
-        return buttons;
-    }
-
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
-        html.on('submit', (e) => { e.preventDefault(); });
-        html.find("input, select, textarea").on('change', (e) => this._propagateChange(e));
+        html.find("input, select, textarea").on('change', (e) => this.propagateChange(e));
         html.find("button[data-action='reset-round']").on('click', (_) => this.clearRound());
         html.find("button[data-action='reset-everything']").on('click', (_) => this.clearEverything());
     }
@@ -77,22 +64,6 @@ export class DuelOfWitsDialog extends Dialog {
         return data;
     }
 
-    private _propagateChange(e: JQuery.ChangeEvent): void {
-        const newValue = e.target.type ==="checkbox" ? e.target.checked : e.target.value;
-        const dataPath = e.target.name;
-        
-        const data = {};
-        data[dataPath] = newValue;
-
-        mergeObject(this.data.data, data);
-        if (game.user.isGM) {
-            game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
-        }
-        game.socket.emit("system.burningwheel", { type: "updateDuel", data });
-        this.render(true);
-        e.target.focus();
-    }
-
     async clearEverything(): Promise<void> {
         await this.clearRound();
         const data = this.data.data;
@@ -107,8 +78,8 @@ export class DuelOfWitsDialog extends Dialog {
         data.statement1 = "";
         data.statement2 = "";
 
-        await game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
-        game.socket.emit("system.burningwheel", { type: "updateDuel", data});
+        await game.settings.set("burningwheel", this.data.settingName, JSON.stringify(this.data.data));
+        this.syncData(this.data.data);
         this.render(true);
     }
 
@@ -125,22 +96,8 @@ export class DuelOfWitsDialog extends Dialog {
         data.showV2 = false;
         data.showV3 = false;
         await game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
-        game.socket.emit("system.burningwheel", { type: "updateDuel", data});
+        this.syncData(this.data.data);
         this.render(true);
-    }
-
-    activateSocketListeners(): void {
-        game.socket.on("system.burningwheel", ({type, data}) => {
-            if (type === "updateDuel") {
-                mergeObject(this.data.data, data);
-                if (game.user.isGM) {
-                    game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
-                }
-                if (this.rendered) { this.render(true); }
-            } else if (type === "showDuel") {
-                this.render(true);
-            }
-        });
     }
 
     static addSidebarControl(html: JQuery): void {

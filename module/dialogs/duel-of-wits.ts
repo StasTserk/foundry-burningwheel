@@ -203,6 +203,9 @@ const options = {
     "Verbal Defense": [
         "Avoid", "Obfuscate", "Rebuttal"
     ],
+    "Verbal Special": [
+        "Feint", "Incite"
+    ],
     "Magic": [
         "Cast Spell", "Command Spirit", "Drop Spell", "Sing, Howl, Pray"
     ],

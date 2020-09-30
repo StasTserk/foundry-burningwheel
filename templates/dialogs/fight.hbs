@@ -22,7 +22,7 @@
         {{#each participants as |p i|}}
         <div class="participant-card">
             {{#if ../gmView}}
-            <button data-action="removeFighter" class="remove-fighter-button"><i class="fas fa-times-circle"></i></button>
+            <button data-action="removeFighter" data-index="{{i}}" class="remove-fighter-button"><i class="fas fa-times-circle"></i></button>
             {{/if}}
             <div class="actor-name" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
             {{#if p.showActions}}
@@ -33,32 +33,35 @@
                 </div>
                 <div>
                     Engagement Bonus
-                    <input type="number" class="exponent no-arrows">
+                    <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent no-arrows" value="{{p.engagementBonus}}">
                 </div>
                 <div>
                     Position Penalty
-                    <input type="number" class="exponent no-arrows">
+                    <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent no-arrows" value="{{p.positionPenalty}}">
                 </div>
                 <div>
                     Active Weapon
-                    <select>
+                    <select data-index="{{i}}" name="weaponId">
+                        {{#select p.weaponId}}
                         <option value="">Pick a Weapon</option>
                         {{#each p.weapons as |s|}}
                         <option value="{{s.id}}">{{s.label}}</option>
                         {{/each}}
+                        {{/select}}
                     </select>
                 </div>
             </div>
-            <button class="control-button">Test Speed</button>
-            <button class="control-button">Test Power</button>
-            <button class="control-button">Test Agility</button>
-            <button class="control-button">Test Skill</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Test Speed</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollPower">Test Power</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollAgility">Test Agility</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollSkill">Test Skill</button>
             {{/if}}
         </div>
         <div class="volley">
             {{#if p.showActions}}
             <label>Action 1
                 <select name="action1" data-index="{{i}}">
+                    {{#select p.action1}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -67,10 +70,13 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{#if p.showAction2}}
             <label>Action 2
                 <select name="action2" data-index="{{i}}">
+                    {{#select p.action2}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -79,10 +85,14 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{/if}}
+            {{#if p.showAction3}}
             <label>Action 3
                 <select name="action3" data-index="{{i}}">
+                    {{#select p.action3}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -91,14 +101,17 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{/if}}
             {{/if}}
         </div>
         <div class="volley">
             {{#if p.showActions}}
             <label>Action 1
                 <select name="action4" data-index="{{i}}">
+                    {{#select p.action4}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -107,10 +120,13 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{#if p.showAction5}}
             <label>Action 2
                 <select name="action5" data-index="{{i}}">
+                    {{#select p.action5}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -119,10 +135,14 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{/if}}
+            {{#if p.showAction6}}
             <label>Action 3
                 <select name="action6" data-index="{{i}}">
+                    {{#select p.action6}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -131,14 +151,17 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{/if}}
             {{/if}}
         </div>
         <div class="volley">
             {{#if p.showActions}}
             <label>Action 1
                 <select name="action7" data-index="{{i}}">
+                    {{#select p.action7}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -147,10 +170,13 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{#if p.showAction8}}
             <label>Action 2
                 <select name="action8" data-index="{{i}}">
+                    {{#select p.action8}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -159,10 +185,14 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{/if}}
+            {{#if p.showAction9}}
             <label>Action 3
                 <select name="action9" data-index="{{i}}">
+                    {{#select p.action9}}
                     <option value="">Do Nothing</option>
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
@@ -171,8 +201,10 @@
                         {{/each}}
                     </optgroup>
                     {{/each}}
+                    {{/select}}
                 </select>
             </label>
+            {{/if}}
             {{/if}}
         </div>
         {{/each}}

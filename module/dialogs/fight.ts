@@ -55,6 +55,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.on('submit', (e) => { e.preventDefault(); });
+        html.find('input[name="showV1"], input[name="showV2"], input[name="showV3"]').on('change', (e: JQuery.ChangeEvent) => this.propagateChange(e));
         html.find('select[name="newParticipant"]').on('change', (e: JQuery.ChangeEvent) => this._addNewParticipant(e.target));
         html.find('button[data-action="removeFighter"]').on('click', (e: JQuery.ClickEvent) => this._removeParticipant(e.target));
         html.find('div[data-action="toggleHidden"').on('click', (e: JQuery.ClickEvent) => this._toggleHidden(e.target));
@@ -169,6 +170,9 @@ export interface FightDialogData {
     participantIds: string[];
     gmView: boolean;
     participants: ParticipantEntry[];
+    showV1: boolean;
+    showV2: boolean;
+    showV3: boolean;
 }
 
 interface ParticipantEntry {
@@ -208,13 +212,13 @@ const options = {
         "Strike", "Great Strike", "Block and Strike", "Lock and Strike"
     ],
     "Defense Actions": [
-        "Avoid", "Block", "Counterstrike"
+        "Avoid", "Block", "Counter&shy;strike"
     ],
     "Basic Actions": [
-        "Assess", "Change Stance", "Charge/Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up", "Disarm", "Feint", "Throw Person"
+        "Assess", "Change Stance", "Charge/&shy;Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up", "Disarm", "Feint", "Throw Person"
     ],
     "Shooting Actions": [
-        "Throw Object/Weapon", "Aim", "Nock and Draw", "Reload", "Fire", "Release Bow", "Snapshot"
+        "Throw Object/&shy;Weapon", "Aim", "Nock and Draw", "Reload", "Fire", "Release Bow", "Snapshot"
     ],
     "Magic Actions": [
         "Cast a Spell", "Drop Spell", "Command Spirit"

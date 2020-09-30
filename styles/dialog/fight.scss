@@ -24,10 +24,35 @@
         }
     }
 
+    .volley-description {
+        display: grid;
+        width: 100%;
+        height: min-content;
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 1em;
+
+        & > div {
+            border: 2px groove #aaaaaa;
+            min-height: 1.5em;
+            margin: 0;
+
+            .attack-action {
+                width: 33%;
+                padding: 1px 3px;
+                -webkit-hyphens: auto;
+                -ms-hyphens: auto;
+                hyphens: auto;
+                max-width: 33%;
+                text-align: center;
+            }
+        }
+    }
+
     .fighters-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         height: min-content;
+        width: 100%;
 
         .participant-card, .volley {
             border: 2px groove #aaaaaa;

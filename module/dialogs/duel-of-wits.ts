@@ -12,7 +12,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         this.data.data.blindS1 = this.data.data.blindS1 || false;
         this.data.data.blindS2 = this.data.data.blindS2 || false;
 
-        this.data.topic = "duel";
+        this.data.topic = "Duel";
         this.data.settingName = "dow-data";
     }
 
@@ -35,8 +35,8 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         html.find("button[data-action='reset-everything']").on('click', (_) => this.clearEverything());
     }
 
-    getData(): unknown {
-        const data = Object.assign(super.getData(), this.data.data ) as DuelOfWitsData;
+    getData(): DuelOfWitsData {
+        const data = super.getData();
         const actors = game.actors.entities;
         data.actionOptions = this.data.actionOptions;
 

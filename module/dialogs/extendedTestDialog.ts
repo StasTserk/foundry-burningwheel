@@ -7,6 +7,11 @@ export class ExtendedTestDialog<T> extends Dialog {
 
     data: ExtendedTestData<T>;
 
+    getData(): T {
+        const data = Object.assign(super.getData(), this.data.data ) as T;
+        return data;
+    }
+
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.on('submit', (e) => { e.preventDefault(); });

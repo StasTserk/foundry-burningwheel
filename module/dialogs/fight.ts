@@ -25,7 +25,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         const actors = game.actors.entities;
         data.gmView = game.user.isGM;
         data.participantOptions = actors
-            .filter(_a => true)
+            .filter(a => !this.data.data.participantIds.includes(a._id))
             .map(a => {
             return { id: a._id, name: a.name };
         });
@@ -55,11 +55,43 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.on('submit', (e) => { e.preventDefault(); });
+
+        html.find('button[data-action="clearAll"]').on('click', e => {
+            e.preventDefault();
+            this.data.data.participants = [];
+            this.data.data.participantIds = [];
+            this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+            this.syncData(this.data.data);
+            this.persistState(this.data.data);
+            this.render();
+        });
+
+        html.find('button[data-action="resetRound"]').on('click', e => {
+            e.preventDefault();
+            this.data.data.participants.forEach(p => {
+                p.action1 = p.action2 = p.action3 = p.action4 = p.action5
+                = p.action6 = p.action7 = p.action8 = p.action9 = "";
+            });
+            this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+            this.syncData(this.data.data);
+            this.persistState(this.data.data);
+            this.render();
+        });
+
         html.find('input[name="showV1"], input[name="showV2"], input[name="showV3"]').on('change', (e: JQuery.ChangeEvent) => this.propagateChange(e));
         html.find('select[name="newParticipant"]').on('change', (e: JQuery.ChangeEvent) => this._addNewParticipant(e.target));
-        html.find('button[data-action="removeFighter"]').on('click', (e: JQuery.ClickEvent) => this._removeParticipant(e.target));
-        html.find('div[data-action="toggleHidden"').on('click', (e: JQuery.ClickEvent) => this._toggleHidden(e.target));
-        html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => this._updateGridData(e));
+        html.find('button[data-action="removeFighter"]').on('click', (e: JQuery.ClickEvent) => {
+            e.preventDefault();
+            this._removeParticipant(e.target);
+        });
+        html.find('div[data-action="toggleHidden"').on('click', (e: JQuery.ClickEvent) => {
+            e.preventDefault();
+            this._toggleHidden(e.target);
+        });
+        html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => {
+            e.preventDefault();
+            this._updateGridData(e);
+        });
     }
 
     private _updateGridData(e: JQuery.ChangeEvent): void {

@@ -28,26 +28,26 @@
         <div>{{p.name}}</div>
         <div class="flex-row" lang="en">
             {{#if ../showV1}}
-            <div class="attack-action">{{#if p.action1}}{{{p.action1}}}{{else}}Does Nothing{{/if}}</div>
-            {{#if p.action2}}<div class="attack-action">{{{p.action2}}}</div>{{/if}}
-            {{#if p.action3}}<div class="attack-action">{{{p.action3}}}</div>{{/if}}
-            {{else}}?
+            <div class="attack-action action-card">{{#if p.action1}}{{{p.action1}}}{{else}}Does Nothing{{/if}}</div>
+            {{#if p.action2}}<div class="attack-action action-card">{{{p.action2}}}</div>{{/if}}
+            {{#if p.action3}}<div class="attack-action action-card">{{{p.action3}}}</div>{{/if}}
+            {{else}}<div class="attack-action card-back"><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
         <div class="flex-row" lang="en">
             {{#if ../showV2}}
-            <div class="attack-action">{{#if p.action4}}{{{p.action4}}}{{else}}Does Nothing{{/if}}</div>
-            {{#if p.action5}}<div class="attack-action">{{{p.action5}}}</div>{{/if}}
-            {{#if p.action6}}<div class="attack-action">{{{p.action6}}}</div>{{/if}}
-            {{else}}?
+            <div class="attack-action action-card">{{#if p.action4}}{{{p.action4}}}{{else}}Does Nothing{{/if}}</div>
+            {{#if p.action5}}<div class="attack-action action-card">{{{p.action5}}}</div>{{/if}}
+            {{#if p.action6}}<div class="attack-action action-card">{{{p.action6}}}</div>{{/if}}
+            {{else}}<div class="attack-action card-back"><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
         <div class="flex-row" lang="en">
             {{#if ../showV3}}
-            <div class="attack-action">{{#if p.action7}}{{{p.action7}}}{{else}}Does Nothing{{/if}}</div>
-            {{#if p.action8}}<div class="attack-action">{{{p.action8}}}</div>{{/if}}
-            {{#if p.action9}}<div class="attack-action">{{{p.action9}}}</div>{{/if}}
-            {{else}}?
+            <div class="attack-action action-card">{{#if p.action7}}{{{p.action7}}}{{else}}Does Nothing{{/if}}</div>
+            {{#if p.action8}}<div class="attack-action action-card">{{{p.action8}}}</div>{{/if}}
+            {{#if p.action9}}<div class="attack-action action-card">{{{p.action9}}}</div>{{/if}}
+            {{else}}<div class="attack-action card-back"><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
         {{/each}}

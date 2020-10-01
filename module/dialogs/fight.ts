@@ -80,17 +80,22 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
 
         html.find('input[name="showV1"], input[name="showV2"], input[name="showV3"]').on('change', (e: JQuery.ChangeEvent) => this.propagateChange(e));
         html.find('select[name="newParticipant"]').on('change', (e: JQuery.ChangeEvent) => this._addNewParticipant(e.target));
-        html.find('button[data-action="removeFighter"]').on('click', (e: JQuery.ClickEvent) => {
+        html.find('*[data-action="removeFighter"]').on('click', (e: JQuery.ClickEvent) => {
             e.preventDefault();
             this._removeParticipant(e.target);
         });
-        html.find('div[data-action="toggleHidden"').on('click', (e: JQuery.ClickEvent) => {
+        html.find('*[data-action="toggleHidden"').on('click', (e: JQuery.ClickEvent) => {
             e.preventDefault();
             this._toggleHidden(e.target);
         });
         html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => {
             e.preventDefault();
             this._updateGridData(e);
+        });
+
+        html.find('img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {
+            const id = e.target.dataset.actorId || "";
+            game.actors.find(a => a._id === id).sheet.render(true);
         });
     }
 

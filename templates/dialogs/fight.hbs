@@ -1,5 +1,4 @@
 <form class="flex-row" autocomplete="off">
-    {{log this}}
     {{#if gmView}}
     <div class="control-grid">
         <button class="control-button" data-action="clearAll">Clear All</button>
@@ -68,7 +67,7 @@
         {{#each participants as |p i|}}
         <div class="participant-card">
             {{#if ../gmView}}
-            <button data-action="removeFighter" data-index="{{i}}" class="remove-fighter-button"><i class="fas fa-times-circle"></i></button>
+            <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
             {{/if}}
             <div class="actor-name" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
             {{#if p.showActions}}

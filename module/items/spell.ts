@@ -83,6 +83,7 @@ export interface SpellData extends HasPointCost {
     extremeRange: number;
     maxRange: string;
     collapsed: boolean;
+    skillId: string;
 
     //derived values
     incidental?: number;

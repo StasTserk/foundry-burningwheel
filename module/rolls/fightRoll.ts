@@ -1,10 +1,13 @@
-import { BWItem } from "../items/item.js";
+import { BWItem, Skill, Spell } from "../items/item.js";
 import { Ability, BWActor } from "../bwactor.js";
 import { handleStatRoll } from "./rollStat.js";
 import { ShadeString } from "../helpers.js";
 import { handleNpcStatRoll } from "./npcStatRoll.js";
 import { Npc } from "../npc.js";
 import { RollDialogData } from "./rolls.js";
+import { handleSpellRoll } from "./rollSpell.js";
+import { BWCharacter } from "module/character.js";
+import { handleNpcSpellRoll } from "./npcSkillRoll.js";
 
 export async function handleFightRoll({actor, type, itemId, attackIndex, positionPenalty, engagementBonus }: FightRollOptions): Promise<unknown> {
     const dataPreset: Partial<RollDialogData> = {
@@ -34,8 +37,14 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 // handle ranged attack
                 return;
             case "spell":
-                // handle spell attack
-                return;
+                const spell = actor.getOwnedItem(itemId) as Spell;
+                const skill = actor.getOwnedItem(spell?.data.data.skillId) as Skill;
+                if (actor.data.type === "character") {
+                    return handleSpellRoll({ actor: (actor as BWActor & BWCharacter), spell, skill});
+                }
+                return handleNpcSpellRoll({
+                    actor: actor as BWActor & Npc, spell, skill
+                });
             default:
                 throw Error(`Unexpected item type (${item.type}) passed to fight attack roll action`);
         }

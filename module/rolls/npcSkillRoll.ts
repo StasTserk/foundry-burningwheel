@@ -36,10 +36,18 @@ export async function handleNpcSpellRollEvent({ target, sheet }: NpcRollEventOpt
     if (!skillId) {
         return notifyError("No Sorcerous Skill", "No Casting Skill Chosen. Set the sheet into edit mode and pick a Sorcerous skill to use with this weapon.");
     }
+    const skill = sheet.actor.getOwnedItem(skillId) as Skill;
     const spell = sheet.actor.getOwnedItem(itemId) as Spell;
+    return handleNpcSpellRoll({ actor: sheet.actor, spell, skill });
+}
+
+export async function handleNpcSpellRoll({ actor, spell, skill}: NpcRollOptions): Promise<unknown> {
+    if (!spell) {
+        return notifyError("Missing Spell", "The spell that is being cast appears to be missing from the character sheet.");
+    }
     const dataPreset = spell.data.data.variableObstacle ? { difficulty: 3 } : { difficulty: spell.data.data.obstacle };
     const extraInfo = Spell.GetSpellMessageData(spell);
-    return handleNpcSkillRollEvent({target, sheet, extraInfo, dataPreset});
+    return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 
 export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPreset }: NpcRollEventOptions): Promise<unknown> {
@@ -146,4 +154,5 @@ interface NpcRollEventOptions extends EventHandlerOptions {
 interface NpcRollOptions extends RollOptions {
     actor: Npc & BWActor;
     skill: Skill;
+    spell?: Spell;
 }

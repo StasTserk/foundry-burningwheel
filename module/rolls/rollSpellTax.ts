@@ -19,14 +19,13 @@ export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWAct
     if (!obstacle && !spellName) {
         return helpers.notifyError("Missing Spell Data", "Tried to roll a tax test with no obstacle or spell name set.");
     }
-    else return showSpellTaxDialog(obstacle, spellName, sheet);
+    else return showSpellTaxDialog(obstacle, spellName, sheet.actor);
 }
 
-export async function showSpellTaxDialog(obstacle: number, spellName: string, sheet: BWActorSheet): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, "data.forte") as Ability;
-    const actor = sheet.actor as BWActor;
+export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWActor): Promise<unknown> {
+    const stat = getProperty(actor.data, "data.forte") as Ability;
     
-    const rollModifiers = sheet.actor.getRollModifiers("forte");
+    const rollModifiers = actor.getRollModifiers("forte");
     const tax = actor.data.data.forteTax;
     
     const data: StatDialogData = {
@@ -51,7 +50,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, sh
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        taxTestCallback(dialogHtml, stat, sheet, tax, spellName)
+                        taxTestCallback(dialogHtml, stat, actor, tax, spellName)
                 }
             }
         }).render(true)
@@ -61,7 +60,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, sh
 async function taxTestCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWActorSheet,
+        actor: BWActor,
         tax: number,
         spellName: string) {
     const { diceTotal, difficultyTotal, difficultyGroup, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
@@ -70,9 +69,9 @@ async function taxTestCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
-    const fateReroll = buildRerollData(sheet.actor, roll, "data.forte");
-    const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, "data.forte") as RerollData };
+    const fateReroll = buildRerollData(actor, roll, "data.forte");
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData(actor, roll, "data.forte") as RerollData };
     });
 
     const data: RollChatMessageData = {
@@ -90,8 +89,8 @@ async function taxTestCallback(
         callons
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
-    if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
+    if (actor.data.type === "character") {
+        (actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
     }
 
     if (!isSuccessful) {
@@ -109,7 +108,7 @@ async function taxTestCallback(
                     yes: {
                         label: "Ouch! Okay.",
                         callback: () => {
-                            sheet.actor.update({ data: { forteTax: forteExp }});
+                            actor.update({ data: { forteTax: forteExp }});
                         }
                     },
                     no: {
@@ -128,7 +127,7 @@ async function taxTestCallback(
                     yes: {
                         label: "Ok",
                         callback: () => {
-                            sheet.actor.update({ data: { forteTax: tax + margin }});
+                            actor.update({ data: { forteTax: tax + margin }});
                         }
                     },
                     no: {
@@ -144,7 +143,7 @@ async function taxTestCallback(
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({actor: actor})
     });
 }
 

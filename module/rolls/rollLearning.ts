@@ -1,5 +1,4 @@
 import { BWActor, TracksTests, Ability, BWCharacter } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
 import { Skill, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
@@ -13,12 +12,17 @@ import {
     maybeExpendTools,
     RollDialogData,
     extractRollData,
-    EventHandlerOptions
+    EventHandlerOptions, RollOptions, mergeDialogData
 } from "./rolls.js";
 
-export async function handleLearningRollEvent(rollOptions: LearningRollOptions): Promise<unknown> {
+export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
+    const actor = rollOptions.sheet.actor as BWActor & BWCharacter;
     const skillId = rollOptions.target.dataset.skillId || "";
     const skill = (rollOptions.sheet.actor.getOwnedItem(skillId) as Skill);
+    return handleLearningRoll({ actor, skill, ...rollOptions});
+}
+
+export function handleLearningRoll({ actor, skill, extraInfo, dataPreset, onRollCallback}: LearningRollOptions): Promise<unknown> | Application{
     if (skill.data.data.root2) {
         return new Dialog({
             title: "Pick Root Stat",
@@ -27,32 +31,31 @@ export async function handleLearningRollEvent(rollOptions: LearningRollOptions):
                 root1: {
                     label: skill.data.data.root1.titleCase(),
                     callback: () => {
-                        return buildLearningDialog({ skill, statName: skill.data.data.root1, ...rollOptions });
+                        return buildLearningDialog({ actor, skill, statName: skill.data.data.root1, extraInfo, dataPreset, onRollCallback });
                     }
                 },
                 root2: {
                     label: skill.data.data.root2.titleCase(),
                     callback: () => {
-                        return buildLearningDialog({ skill, statName: skill.data.data.root2,  ...rollOptions });
+                        return buildLearningDialog({ actor, skill, statName: skill.data.data.root2, extraInfo, dataPreset, onRollCallback });
                     }
                 }
             }
         }).render(true);
     }
-    return buildLearningDialog({ skill, statName: skill.data.data.root1,...rollOptions });
+    return buildLearningDialog({ actor, skill, statName: skill.data.data.root1, extraInfo, dataPreset, onRollCallback });
 
 }
 
-async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPreset, onRollCallback }: LearningRollDialogSettings) {
-    const rollModifiers = sheet.actor.getRollModifiers(skill.name);
-    const actor = sheet.actor as BWActor;
+async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPreset, onRollCallback }: LearningRollDialogSettings): Promise<unknown> {
+    const rollModifiers = actor.getRollModifiers(skill.name);
     const stat = getProperty(actor.data.data, statName);
 
     let tax = 0;
     if (statName.toLowerCase() === "will") {
-        tax = sheet.actor.data.data.willTax;
+        tax = actor.data.data.willTax;
     } else if (statName.toLowerCase() === "forte") {
-        tax = sheet.actor.data.data.forteTax;
+        tax = actor.data.data.forteTax;
     }
 
     if (dataPreset) {
@@ -64,7 +67,7 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
         }
     }
 
-    const data: LearningDialogData = Object.assign({
+    const data: LearningDialogData = mergeDialogData<LearningDialogData>({
         name: `Beginner's Luck ${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -89,7 +92,7 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        learningRollCallback(dialogHtml, skill, statName, sheet, extraInfo, onRollCallback)
+                        learningRollCallback(dialogHtml, skill, statName, actor, extraInfo, onRollCallback)
                 }
             }
         }).render(true)
@@ -97,27 +100,27 @@ async function buildLearningDialog({ skill, statName, sheet, extraInfo, dataPres
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery, skill: Skill, statName: string, sheet: BWActorSheet, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, statName: string, actor: BWActor, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
     
     const rollData = extractRollData(dialogHtml);
-    const stat = getProperty(sheet.actor.data.data, statName) as Ability;
+    const stat = getProperty(actor.data.data, statName) as Ability;
 
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= rollData.difficultyTotal;
-    const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
+    const fateReroll = buildRerollData(actor, roll, undefined, skill._id);
     if (fateReroll) { fateReroll.type = "learning"; }
-    const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
+    const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
         return {
             label: s,
             type: "learning",
-            ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData
+            ...buildRerollData(actor, roll, undefined, skill._id) as RerollData
         };
     });
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = sheet.actor.getOwnedItem(toolkitId);
+        const tools = actor.getOwnedItem(toolkitId);
         if (tools) {
             const { expended, text } = await maybeExpendTools(tools);
             extraInfo = extraInfo ? `${extraInfo}${text}` : text;
@@ -149,11 +152,11 @@ async function learningRollCallback(
         if (onRollCallback) { onRollCallback(); }
         return ChatMessage.create({
             content: messageHtml,
-            speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+            speaker: ChatMessage.getSpeaker({actor})
         });
     };
 
-    return advanceLearning(skill, statName, sheet.actor, rollData.difficultyGroup, isSuccessful, fateReroll, sendChatMessage);
+    return advanceLearning(skill, statName, actor, rollData.difficultyGroup, isSuccessful, fateReroll, sendChatMessage);
 }
 
 async function advanceLearning(
@@ -251,13 +254,21 @@ export interface LearningDialogData extends RollDialogData {
     skill: TracksTests;
     needsToolkit: boolean;
     toolkits: PossessionRootData[];
+    tax?: number;
+    learning: number;
 }
 
-export interface LearningRollOptions extends EventHandlerOptions {
+export interface LearningRollEventOptions extends EventHandlerOptions {
     dataPreset?: Partial<LearningDialogData>
 }
 
-interface LearningRollDialogSettings extends EventHandlerOptions {
+interface LearningRollOptions extends RollOptions {
+    actor: BWCharacter & BWActor;
+    skill: Skill;
+}
+
+interface LearningRollDialogSettings extends RollOptions {
+    actor: BWCharacter & BWActor;
     skill: Skill;
     statName: string;
 }

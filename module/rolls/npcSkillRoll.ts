@@ -10,7 +10,9 @@ import {
     templates,
     extractRollData,
     rollWildFork,
-    EventHandlerOptions, RollOptions, mergeDialogData
+    EventHandlerOptions,
+    RollOptions,
+    mergeDialogData
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
@@ -23,11 +25,26 @@ export async function handleNpcWeaponRollEvent({ target, sheet }: NpcRollEventOp
     if (!skillId) {
         return notifyError("No Weapon Skill", "No Weapon Skill Chosen. Set the sheet into edit mode and pick a Martial skill to use with this weapon.");
     }
+    const skill = sheet.actor.getOwnedItem(skillId) as Skill;
     const weapon = sheet.actor.getOwnedItem(itemId) as MeleeWeapon | RangedWeapon;
+    const attackIndex = parseInt(target.dataset.attackIndex as string);
+    return handleNpcWeaponRoll({
+        actor: sheet.actor as BWActor & Npc,
+        weapon,
+        skill,
+        attackIndex
+    });
+
+}
+
+export async function handleNpcWeaponRoll({actor, weapon, skill, attackIndex, dataPreset}: NpcRollOptions): Promise<unknown> {
+    if (!weapon) {
+        return notifyError("Missing Weapon", "The weapon that is being cast appears to be missing from the character sheet.");
+    }
     const extraInfo = weapon.type === "melee weapon" ? 
-        MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, parseInt(target.dataset.attackIndex as string)) :
+        MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, attackIndex || 0) :
         RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
-    return handleNpcSkillRollEvent({target, sheet, extraInfo});
+    return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 
 export async function handleNpcSpellRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
@@ -155,4 +172,6 @@ interface NpcRollOptions extends RollOptions {
     actor: Npc & BWActor;
     skill: Skill;
     spell?: Spell;
+    weapon?: MeleeWeapon | RangedWeapon;
+    attackIndex?: number;
 }

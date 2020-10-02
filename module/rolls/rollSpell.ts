@@ -3,7 +3,7 @@ import { BWCharacter } from "module/character.js";
 import * as helpers from "../helpers.js";
 import { Skill, Spell } from "../items/item.js";
 import { handleLearningRoll } from "./rollLearning.js";
-import { EventHandlerOptions } from "./rolls.js";
+import { EventHandlerOptions, RollOptions } from "./rolls.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import { showSpellTaxDialog } from "./rollSpellTax.js";
 
@@ -20,10 +20,10 @@ export async function handleSpellRollEvent({ target, sheet }: EventHandlerOption
         throw Error("Malformed spell roll button. Must specify spell Id");
     }
     const spell = sheet.actor.getOwnedItem(spellId) as Spell;
-    return handleSpellRoll({ actor, spell, skill});
+    return handleSpellRoll({ actor, spell, skill });
 }
 
-export async function handleSpellRoll({ actor, spell, skill }: SpellRollOptions): Promise<unknown> {
+export async function handleSpellRoll({ actor, spell, skill, dataPreset }: SpellRollOptions): Promise<unknown> {
     if (!spell) {
         return helpers.notifyError("Missing Spell",
             "The spell being cast seems to be missing from the character sheet.");
@@ -32,17 +32,21 @@ export async function handleSpellRoll({ actor, spell, skill }: SpellRollOptions)
 
     if (skill) {
         const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
+        if (dataPreset) {
+            dataPreset.difficulty = obstacle;
+        } else {
+            dataPreset = { difficulty: obstacle };
+        }
         return skill.data.data.learning ? 
-            handleLearningRoll({ actor, skill, extraInfo: spellData,
-                dataPreset: { difficulty: obstacle },
+            handleLearningRoll({ actor, skill, extraInfo: spellData, dataPreset,
                 onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, actor) }) :
-            handleSkillRoll({ actor, skill, extraInfo: spellData, dataPreset: { difficulty: obstacle },
+            handleSkillRoll({ actor, skill, extraInfo: spellData, dataPreset,
                 onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, actor) });
     }
     throw Error("The designated skill no longer exists on the character");
 }
 
-interface SpellRollOptions {
+interface SpellRollOptions extends RollOptions {
     spell: Spell,
     skill: Skill,
     actor: BWActor & BWCharacter;

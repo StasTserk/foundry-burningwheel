@@ -1,5 +1,5 @@
-import { Ability, BWActor, BWCharacter } from "module/bwactor.js";
-import { BWActorSheet } from "module/bwactor-sheet.js";
+import { Ability, BWActor, BWCharacter } from "../bwactor.js";
+import { BWActorSheet } from "../bwactor-sheet.js";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -8,11 +8,11 @@ import {
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions,
     extractRollData,
+    EventHandlerOptions
 } from "./rolls.js";
 
-export async function handleResourcesRoll({ sheet }: RollOptions): Promise<unknown> {
+export async function handleResourcesRollEvent({ sheet }: EventHandlerOptions): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;
     const actor = sheet.actor as BWActor;
     const rollModifiers = sheet.actor.getRollModifiers("resources");

@@ -8,11 +8,11 @@ import {
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions,
-    extractRollData
+    extractRollData,
+    EventHandlerOptions
 } from "./rolls.js";
 
-export async function handleAttrRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export async function handleAttrRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";

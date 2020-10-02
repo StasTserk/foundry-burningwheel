@@ -1,11 +1,11 @@
 import { BWActorSheet } from "../bwactor-sheet.js";
 import { Armor, AssignDamage } from "../items/item.js";
-import { rollDice, RollDialogData, templates, RollChatMessageData, extractNumber, getRollNameClass, buildRerollData, extractBaseData, buildDiceSourceObject, RollOptions } from "./rolls.js";
+import { rollDice, RollDialogData, templates, RollChatMessageData, extractNumber, getRollNameClass, buildRerollData, extractBaseData, buildDiceSourceObject, EventHandlerOptions } from "./rolls.js";
 import { BWActor } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import * as helpers from "../helpers.js";
 
-export async function handleArmorRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export async function handleArmorRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
     const armorId = target.dataset.itemId || "";
     const armorItem = actor.getOwnedItem(armorId) as Armor;

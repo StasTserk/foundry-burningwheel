@@ -1,10 +1,10 @@
-import { handleLearningRoll } from "./rollLearning.js";
-import { handleSkillRoll } from "./rollSkill.js";
+import { handleLearningRollEvent } from "./rollLearning.js";
+import { handleSkillRollEvent } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
 import { Skill, MeleeWeapon, RangedWeapon } from "../items/item.js";
-import { RollOptions, RollDialogData } from "./rolls.js";
+import { RollDialogData, EventHandlerOptions } from "./rolls.js";
 
-export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export function handleWeaponRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     const weaponId = target.dataset.weaponId;
     if (!weaponId) {
         throw Error("Malformed weapon roll button. Weapon ID must be specified");
@@ -39,8 +39,8 @@ export function handleWeaponRoll({ target, sheet }: RollOptions): Promise<unknow
     const skill: Skill | null = sheet.actor.getOwnedItem(skillId) as Skill;
     if (skill) {
         return skill.data.data.learning ? 
-            handleLearningRoll({ target, sheet, extraInfo: weaponExtraData, dataPreset }) :
-            handleSkillRoll({ target, sheet, extraInfo: weaponExtraData, dataPreset });
+            handleLearningRollEvent({ target, sheet, extraInfo: weaponExtraData, dataPreset }) :
+            handleSkillRollEvent({ target, sheet, extraInfo: weaponExtraData, dataPreset });
     }
     throw Error("Provided skillID did not correspond to an owned skill.");
 }

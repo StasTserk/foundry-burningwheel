@@ -1,4 +1,4 @@
-import { TracksTests } from "../bwactor.js";
+import { BWActor, TracksTests } from "../bwactor.js";
 
 import {
     buildRerollData,
@@ -8,15 +8,16 @@ import {
     RollDialogData,
     rollDice,
     templates,
-    RollOptions,
     extractRollData,
-    rollWildFork
+    rollWildFork,
+    EventHandlerOptions, RollOptions, mergeDialogData
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
 import { byName, notifyError } from "../helpers.js";
+import { Npc } from "../npc.js";
 
-export async function handleNpcWeaponRoll({ target, sheet }: NpcRollOptions): Promise<unknown> {
+export async function handleNpcWeaponRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const itemId = target.dataset.weaponId || "";
     if (!skillId) {
@@ -26,10 +27,10 @@ export async function handleNpcWeaponRoll({ target, sheet }: NpcRollOptions): Pr
     const extraInfo = weapon.type === "melee weapon" ? 
         MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, parseInt(target.dataset.attackIndex as string)) :
         RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
-    return handleNpcSkillRoll({target, sheet, extraInfo});
+    return handleNpcSkillRollEvent({target, sheet, extraInfo});
 }
 
-export async function handleNpcSpellRoll({ target, sheet }: NpcRollOptions): Promise<unknown> {
+export async function handleNpcSpellRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const itemId = target.dataset.spellId || "";
     if (!skillId) {
@@ -38,16 +39,20 @@ export async function handleNpcSpellRoll({ target, sheet }: NpcRollOptions): Pro
     const spell = sheet.actor.getOwnedItem(itemId) as Spell;
     const dataPreset = spell.data.data.variableObstacle ? { difficulty: 3 } : { difficulty: spell.data.data.obstacle };
     const extraInfo = Spell.GetSpellMessageData(spell);
-    return handleNpcSkillRoll({target, sheet, extraInfo, dataPreset});
+    return handleNpcSkillRollEvent({target, sheet, extraInfo, dataPreset});
 }
 
-export async function handleNpcSkillRoll({ target, sheet, extraInfo, dataPreset }: NpcRollOptions): Promise<unknown> {
+export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPreset }: NpcRollEventOptions): Promise<unknown> {
     const actor = sheet.actor;
     const skill = actor.getOwnedItem(target.dataset.skillId || "") as Skill;
-    
-    const rollModifiers = sheet.actor.getRollModifiers(skill.name);
+    return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
+}
 
-    const data: NpcSkillDialogData = Object.assign({
+export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}: NpcRollOptions): Promise<unknown>  {
+    
+    const rollModifiers = actor.getRollModifiers(skill.name);
+
+    const data: NpcSkillDialogData = mergeDialogData<NpcSkillDialogData>({
         name: `${skill.name} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -72,7 +77,7 @@ export async function handleNpcSkillRoll({ target, sheet, extraInfo, dataPreset 
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        skillRollCallback(dialogHtml, sheet, skill, extraInfo)
+                        skillRollCallback(dialogHtml, actor, skill, extraInfo)
                 }
             }
         }).render(true)
@@ -81,7 +86,7 @@ export async function handleNpcSkillRoll({ target, sheet, extraInfo, dataPreset 
 
 async function skillRollCallback(
         dialogHtml: JQuery,
-        sheet: NpcSheet,
+        actor: BWActor & Npc,
         skill: Skill,
         extraInfo?: string) {
     const rollData = extractRollData(dialogHtml);
@@ -97,9 +102,9 @@ async function skillRollCallback(
 
     const isSuccessful = parseInt(roll.result) + wildForkBonus >= rollData.difficultyTotal;
 
-    const fateReroll = buildRerollData(sheet.actor, roll, accessor);
-    const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
+    const fateReroll = buildRerollData(actor, roll, accessor);
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData(actor, roll, undefined, skill._id) as RerollData };
     });
     
     const data: RollChatMessageData = {
@@ -122,7 +127,7 @@ async function skillRollCallback(
     const messageHtml = await renderTemplate(templates.npcMessage, data);
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({ actor })
     });
 }
 
@@ -134,6 +139,11 @@ interface NpcSkillDialogData extends RollDialogData {
     wildForks: {name: string; amount: number}[];
 }
 
-interface NpcRollOptions extends RollOptions {
+interface NpcRollEventOptions extends EventHandlerOptions {
     sheet: NpcSheet;
+}
+
+interface NpcRollOptions extends RollOptions {
+    actor: Npc & BWActor;
+    skill: Skill;
 }

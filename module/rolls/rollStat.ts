@@ -1,5 +1,4 @@
 import { Ability, TracksTests, BWCharacter, BWActor } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
 import {
     buildRerollData,
     getRollNameClass,
@@ -9,21 +8,26 @@ import {
     rollDice,
     templates,
     RollOptions,
-    extractRollData
+    extractRollData, EventHandlerOptions, mergeDialogData
 } from "./rolls.js";
 
-export async function handleStatRoll({ target, sheet }: RollOptions): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
-    const actor = sheet.actor as BWActor & BWCharacter;
-    const statName = target.dataset.rollableName || "Unknown Stat";
-    const rollModifiers = sheet.actor.getRollModifiers(statName);
+export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
+    const accessor = options.target.dataset.accessor || "";
+    const stat = getProperty(options.sheet.actor.data, accessor) as Ability;
+    const actor = options.sheet.actor as BWActor & BWCharacter;
+    const statName = options.target.dataset.rollableName || "Unknown Stat";
+    return handleStatRoll({ actor, statName, stat, accessor, ...options });
+}
+
+export async function handleStatRoll({ actor, statName, stat, accessor, dataPreset }: StatRollOptions): Promise<unknown> {
+    const rollModifiers = actor.getRollModifiers(statName);
     let tax = 0;
-    if (target.dataset.rollableName?.toLowerCase() === "will") {
+    if (statName.toLowerCase() === "will") {
         tax = actor.data.data.willTax;
-    } else if (target.dataset.rollableName?.toLowerCase() === "forte") {
+    } else if (statName.toLowerCase() === "forte") {
         tax = actor.data.data.forteTax;
     }
-    const data: StatDialogData = {
+    const data = mergeDialogData<StatDialogData>({
         name: `${statName} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -34,7 +38,7 @@ export async function handleStatRoll({ target, sheet }: RollOptions): Promise<un
         tax,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.statDialog, data);
     return new Promise(_resolve =>
@@ -45,7 +49,7 @@ export async function handleStatRoll({ target, sheet }: RollOptions): Promise<un
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        statRollCallback(dialogHtml, stat, sheet, statName, target.dataset.accessor || "")
+                        statRollCallback(dialogHtml, stat, actor, statName, accessor)
                 }
             }
         }).render(true)
@@ -55,7 +59,7 @@ export async function handleStatRoll({ target, sheet }: RollOptions): Promise<un
 async function statRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWActorSheet,
+        actor: BWActor,
         name: string,
         accessor: string) {
     const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources } = extractRollData(dialogHtml);
@@ -66,9 +70,9 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
-    const fateReroll = buildRerollData(sheet.actor, roll, accessor);
-    const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, accessor) as RerollData };
+    const fateReroll = buildRerollData(actor, roll, accessor);
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData(actor, roll, accessor) as RerollData };
     });
 
     const data: RollChatMessageData = {
@@ -85,18 +89,25 @@ async function statRollCallback(
         fateReroll,
         callons
     };
-    if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
+    if (actor.data.type === "character") {
+        (actor as BWActor & BWCharacter).addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
     }
 
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({ actor })
     });
 }
 
 interface StatDialogData extends RollDialogData {
     tax?: number;
     stat: TracksTests;
+}
+
+export interface StatRollOptions extends RollOptions {
+    actor: BWActor;
+    statName: string;
+    stat: Ability;
+    accessor: string;
 }

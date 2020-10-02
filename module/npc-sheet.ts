@@ -3,9 +3,9 @@ import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
 import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData } from "./items/item.js";
 import { Npc } from "./npc.js";
-import { handleNpcStatRoll } from "./rolls/npcStatRoll.js";
-import { handleNpcSkillRoll, handleNpcWeaponRoll, handleNpcSpellRoll } from "./rolls/npcSkillRoll.js";
-import { handleArmorRoll } from "./rolls/rollArmor.js";
+import { handleNpcStatRollEvent } from "./rolls/npcStatRoll.js";
+import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "./rolls/npcSkillRoll.js";
+import { handleArmorRollEvent } from "./rolls/rollArmor.js";
 
 export class NpcSheet extends BWActorSheet {
     get actor(): BWActor & Npc {
@@ -98,11 +98,11 @@ export class NpcSheet extends BWActorSheet {
         html.find("div[data-action='edit']").on('click', (e) => this._editSheetItem(e));
         html.find("i[data-action='delete']").on('click', (e) => this._deleteSheetItem(e));
         html.find("i[data-action='add']").on('click', (e) => this._addSheetItem(e));
-        html.find("div[data-action='rollStat'], div[data-action='rollStatOpen']").on('click', (e) => handleNpcStatRoll({ target: e.target, sheet: this}));
-        html.find("div[data-action='rollSkill']").on('click', (e) => handleNpcSkillRoll({ target: e.target, sheet: this}));
-        html.find("div[data-action='rollWeapon']").on('click', (e) => handleNpcWeaponRoll({ target: e.target, sheet: this}));
-        html.find("div[data-action='rollSpell']").on('click', (e) => handleNpcSpellRoll({ target: e.target, sheet: this}));
-        html.find("div[data-action='rollArmor']").on('click', (e) => handleArmorRoll({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollStat'], div[data-action='rollStatOpen']").on('click', (e) => handleNpcStatRollEvent({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollSkill']").on('click', (e) => handleNpcSkillRollEvent({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollWeapon']").on('click', (e) => handleNpcWeaponRollEvent({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollSpell']").on('click', (e) => handleNpcSpellRollEvent({ target: e.target, sheet: this}));
+        html.find("div[data-action='rollArmor']").on('click', (e) => handleArmorRollEvent({ target: e.target, sheet: this}));
     }
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;

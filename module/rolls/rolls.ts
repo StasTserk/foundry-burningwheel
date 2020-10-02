@@ -314,6 +314,32 @@ export function mergeDialogData<T extends RollDialogData>(target: T, source?: Pa
     if (source.optionalObModifiers) {
         source.optionalObModifiers.concat(...target.optionalObModifiers || []);
     }
+    if (source.diceModifiers) {
+        source.diceModifiers.concat(...target.diceModifiers || []);
+    }
+    if (source.obModifiers) {
+        source.obModifiers.concat(...target.obModifiers || []);
+    }
+    return Object.assign(target, source);
+}
+
+export function mergePartials<T extends RollDialogData>(target: Partial<T>, source?: Partial<T>): Partial<T> {
+    if (!source) {
+        return target;
+    }
+    if (source.optionalDiceModifiers && target.optionalDiceModifiers) {
+        source.optionalDiceModifiers.concat(...target.optionalDiceModifiers as RollModifier[]);
+    }
+    if (source.optionalObModifiers && target.optionalDiceModifiers) {
+        source.optionalObModifiers.concat(...target.optionalObModifiers as RollModifier[]);
+    }
+    if (source.diceModifiers && target.diceModifiers) {
+        source.diceModifiers.concat(...target.diceModifiers as RollModifier[]);
+    }
+    if (source.obModifiers && target.obModifiers) {
+        source.obModifiers.concat(...target.obModifiers as RollModifier[]);
+    }
+
     return Object.assign(target, source);
 }
 

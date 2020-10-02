@@ -22,7 +22,7 @@ export async function handleLearningRollEvent(rollOptions: LearningRollEventOpti
     return handleLearningRoll({ actor, skill, ...rollOptions});
 }
 
-export function handleLearningRoll({ actor, skill, extraInfo, dataPreset, onRollCallback}: LearningRollOptions): Promise<unknown> | Application{
+export function handleLearningRoll({ actor, skill, extraInfo, dataPreset, onRollCallback}: LearningRollOptions): Promise<unknown> | Application {
     if (skill.data.data.root2) {
         return new Dialog({
             title: "Pick Root Stat",

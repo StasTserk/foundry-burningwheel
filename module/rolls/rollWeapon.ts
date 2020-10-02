@@ -1,46 +1,71 @@
-import { handleLearningRollEvent } from "./rollLearning.js";
-import { handleSkillRollEvent } from "./rollSkill.js";
+import { handleLearningRoll } from "./rollLearning.js";
+import { handleSkillRoll } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
 import { Skill, MeleeWeapon, RangedWeapon } from "../items/item.js";
-import { RollDialogData, EventHandlerOptions } from "./rolls.js";
+import { EventHandlerOptions, mergePartials, RollDialogData, RollOptions } from "./rolls.js";
+import { BWActor } from "module/bwactor.js";
+import { BWCharacter } from "module/character.js";
 
-export function handleWeaponRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
+export function handleWeaponRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> | Application {
+    const actor = sheet.actor as BWActor & BWCharacter;
     const weaponId = target.dataset.weaponId;
     if (!weaponId) {
         throw Error("Malformed weapon roll button. Weapon ID must be specified");
     }
-    const weapon = sheet.actor.getOwnedItem(weaponId);
+    const weapon = sheet.actor.getOwnedItem(weaponId) as MeleeWeapon | RangedWeapon;
     if (!weapon) {
         return helpers.notifyError("No Matching Weapon",
             "The weapon used to roll this attack appears to no longer be present on the character.");
     }
 
-    let weaponExtraData: string | undefined;
-    if (weapon.type === "melee weapon") {
-        const index = parseInt(target.dataset.attackIndex as string);
-        weaponExtraData = MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, index);
-    } else {
-        weaponExtraData = RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
-    }
     
-    const quality = (weapon as MeleeWeapon | RangedWeapon).data.data.quality;
-    let dataPreset: Partial<RollDialogData> | undefined;
-    if (quality === "superior") {
-        dataPreset = { diceModifiers: [ { dice: 1, label: "Superior Quality", optional: false }]};
-    } else if (quality === "poor") {
-        dataPreset = { obModifiers: [ { obstacle: 1, label: "Poor Quality", optional: false }]};
-    }
 
     const skillId = target.dataset.skillId;
     if (!skillId) {
         return helpers.notifyError("No Skill Specified",
             "A skill must be specified in order for the weapon attack to be rolled. Please pick from a list of martial skills of the character.");
     }
-    const skill: Skill | null = sheet.actor.getOwnedItem(skillId) as Skill;
-    if (skill) {
-        return skill.data.data.learning ? 
-            handleLearningRollEvent({ target, sheet, extraInfo: weaponExtraData, dataPreset }) :
-            handleSkillRollEvent({ target, sheet, extraInfo: weaponExtraData, dataPreset });
+    const skill: Skill = sheet.actor.getOwnedItem(skillId) as Skill;
+    if (!skill) {
+        throw Error("Provided skillID did not correspond to an owned skill.");
     }
-    throw Error("Provided skillID did not correspond to an owned skill.");
+    return handleWeaponRoll({
+        actor,
+        weapon,
+        attackIndex: parseInt(target.dataset.attackIndex || "0"),
+        skill
+    });
+
+}
+
+export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset}: WeaponRollOptions): Promise<unknown> | Application {
+    const quality = (weapon as MeleeWeapon | RangedWeapon).data.data.quality;
+
+    let weaponPreset: Partial<RollDialogData> = {};
+    if (quality === "superior") {
+        weaponPreset = { diceModifiers: [ { dice: 1, label: "Superior Quality", optional: false }]};
+    } else if (quality === "poor") {
+        weaponPreset = { obModifiers: [ { obstacle: 1, label: "Poor Quality", optional: false }]};
+    }
+
+    dataPreset = mergePartials(weaponPreset, dataPreset);
+    
+    let weaponExtraData: string | undefined;
+    if (weapon.type === "melee weapon") {
+        weaponExtraData = MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, attackIndex || 0);
+    } else {
+        weaponExtraData = RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
+    }
+
+    return skill.data.data.learning ? 
+        handleLearningRoll({ actor, skill, extraInfo: weaponExtraData, dataPreset }) :
+        handleSkillRoll({ actor, skill, extraInfo: weaponExtraData, dataPreset });
+    
+}
+
+interface WeaponRollOptions extends RollOptions {
+    actor: BWActor & BWCharacter;
+    skill: Skill;
+    weapon: MeleeWeapon | RangedWeapon;
+    attackIndex?: number;
 }

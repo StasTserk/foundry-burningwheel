@@ -41,6 +41,18 @@
             <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
         </div>
     </div>
+    {{#if offerSplitPool}}
+    <hr>
+    <div class="flex-row">
+        <div class="flex-row dialog-row">
+            <label>Secondary Pool</label>
+            <input type="number" class="exponent no-arrows" name="splitPool" value="0">
+        </div>
+        <div class="dialog-row">
+            Split some dice into a secondary pool. These are subtracted from the total rolled.
+        </div>
+    </div>
+    {{/if}}
     {{#if forkOptions}}
     <hr>
     <h2>FoRKs</h2>

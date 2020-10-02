@@ -8,7 +8,7 @@ import {
     rollDice,
     templates,
     RollOptions,
-    extractRollData, EventHandlerOptions, mergeDialogData
+    extractRollData, EventHandlerOptions, mergeDialogData, getSplitPoolText
 } from "./rolls.js";
 
 export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
@@ -62,7 +62,7 @@ async function statRollCallback(
         actor: BWActor,
         name: string,
         accessor: string) {
-    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal,
         stat.open,
@@ -74,6 +74,11 @@ async function statRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData(actor, roll, accessor) as RerollData };
     });
+
+    let extraInfo: string | undefined;
+    if (splitPool) {
+        extraInfo = await getSplitPoolText(splitPool, stat.open, stat.shade);
+    }
 
     const data: RollChatMessageData = {
         name: `${name}`,
@@ -87,7 +92,8 @@ async function statRollCallback(
         penaltySources: obSources,
         dieSources,
         fateReroll,
-        callons
+        callons,
+        extraInfo
     };
     if (actor.data.type === "character") {
         (actor as BWActor & BWCharacter).addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);

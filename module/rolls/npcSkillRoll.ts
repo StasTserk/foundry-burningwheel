@@ -12,7 +12,7 @@ import {
     rollWildFork,
     EventHandlerOptions,
     RollOptions,
-    mergeDialogData
+    mergeDialogData, getSplitPoolText
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
@@ -58,11 +58,16 @@ export async function handleNpcSpellRollEvent({ target, sheet }: NpcRollEventOpt
     return handleNpcSpellRoll({ actor: sheet.actor, spell, skill });
 }
 
-export async function handleNpcSpellRoll({ actor, spell, skill}: NpcRollOptions): Promise<unknown> {
+export async function handleNpcSpellRoll({ actor, spell, skill, dataPreset}: NpcRollOptions): Promise<unknown> {
     if (!spell) {
         return notifyError("Missing Spell", "The spell that is being cast appears to be missing from the character sheet.");
     }
-    const dataPreset = spell.data.data.variableObstacle ? { difficulty: 3 } : { difficulty: spell.data.data.obstacle };
+    const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
+    if (dataPreset) {
+        dataPreset.difficulty = obstacle;
+    } else {
+        dataPreset = { difficulty: obstacle };
+    }
     const extraInfo = Spell.GetSpellMessageData(spell);
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
@@ -131,6 +136,12 @@ async function skillRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData(actor, roll, undefined, skill._id) as RerollData };
     });
+
+    let splitPoolString: string | undefined;
+    if (rollData.splitPool) {
+        splitPoolString = await getSplitPoolText(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+    }
+    extraInfo = extraInfo ? splitPoolString + extraInfo : splitPoolString;
     
     const data: RollChatMessageData = {
         name: `${skill.name}`,

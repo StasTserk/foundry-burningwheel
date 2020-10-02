@@ -230,6 +230,7 @@ export function extractRollData(html: JQuery): RollData {
     const obPenalty = extractNumber(html, "obPenalty") || 0;
     const cashDice = extractSelectNumber(html, "cashDice") || 0;
     const fundDice = extractSelectNumber(html, "fundDice") || 0;
+    const splitPool = extractNumber(html, "splitPool");
     
     const miscDice = extractMiscDice(html);
     const miscObs = extractMiscObs(html);
@@ -243,6 +244,7 @@ export function extractRollData(html: JQuery): RollData {
     if (toolkitPenalty) { penaltySources["No Toolkit"] = `+${toolkitPenalty}`; }
     const learningPenalty = extractNumber(html, "learning") ? diff + toolkitPenalty : 0;
     if (learningPenalty) { penaltySources["Beginner's Luck"] = `+${learningPenalty}`; }
+    
 
     penaltySources = {...penaltySources, ...miscObs.entries, ...circlesMalus.entries};
 
@@ -264,9 +266,10 @@ export function extractRollData(html: JQuery): RollData {
     if (cashDice) { dieSources.Cash = `+${cashDice}`; }
     if (fundDice) { dieSources.Funds = `+${fundDice}`; }
     if (miscDice) { dieSources = { ...dieSources, ...miscDice.entries }; }
+    if (splitPool) { dieSources["Secondary Pool"] = `-${splitPool}`; }
 
-    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks - tax + circlesBonus.sum + cashDice + fundDice;
-    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice - tax + circlesBonus.sum + cashDice + fundDice;
+    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
+    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
 
     return { 
         baseDifficulty: diff,
@@ -281,7 +284,8 @@ export function extractRollData(html: JQuery): RollData {
         wildForks: wildForks,
         difficultyGroup: helpers.difficultyGroup(difficultyDice, obstacleTotal),
         cashDice,
-        fundDice
+        fundDice,
+        splitPool
     };
 }
 
@@ -302,6 +306,30 @@ export async function rollWildFork(numDice: number, shade: helpers.ShadeString =
             blind: false});
     }
     return new Promise(r => r(die));
+}
+
+export async function getSplitPoolText(numDice: number, open: boolean, shade: helpers.ShadeString): Promise<string> {
+    if (numDice <= 0 ) return "";
+    
+    const roll = await rollDice(numDice, open, shade);
+    if (roll) {
+        const parentDiv = document.createElement('div');
+
+        const textDiv = helpers.DivOfText("Secondary Successes", );
+        const resultDiv = helpers.DivOfText(`${roll.result}`, "secondary-pool");
+        const diceDiv = document.createElement('div');
+        diceDiv.className = "secondary-dice";
+        roll.dice[0].rolls.forEach(r => {
+            const diceResult = helpers.DivOfText(r.roll, "roll-die");
+            diceResult.dataset.success = r.success;
+            diceDiv.appendChild(diceResult);
+        });
+        parentDiv.appendChild(textDiv);
+        parentDiv.appendChild(resultDiv);
+        parentDiv.appendChild(diceDiv);
+        return parentDiv.innerHTML; 
+    }
+    return "";
 }
 
 export function mergeDialogData<T extends RollDialogData>(target: T, source?: Partial<T>): T {
@@ -376,6 +404,8 @@ export interface RollData {
     cashDice: number;
     /** Number of fund dice spent for test */
     fundDice: number;
+    /** Number of dice split to a secondary pool */
+    splitPool: number;
 }
 
 /* ============ Constants =============== */
@@ -417,6 +447,7 @@ export interface RollDialogData {
     obModifiers?: RollModifier[];
     optionalDiceModifiers?: RollModifier[];
     optionalObModifiers?: RollModifier[];
+    offerSplitPool?: boolean;
 }
 
 export interface RollChatMessageData {

@@ -17,7 +17,8 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         }],
         optionalObModifiers: [ {
             obstacle: positionPenalty, optional: true, label: "Weapon Disadvantage"
-        }]
+        }],
+        offerSplitPool: true
     };
     if (type === "skill") {
         if (!itemId) {

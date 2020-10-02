@@ -13,7 +13,9 @@ import {
     maybeExpendTools,
     rollWildFork,
     extractRollData,
-    EventHandlerOptions, RollOptions
+    EventHandlerOptions,
+    RollOptions,
+    mergeDialogData
 } from "./rolls.js";
 import { BWCharacter } from "module/character.js";
 
@@ -26,16 +28,8 @@ export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInf
 
 export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onRollCallback }: SkillRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(skill.name);
-    if (dataPreset) {
-        if (dataPreset.optionalDiceModifiers) {
-            dataPreset.optionalDiceModifiers.concat(...rollModifiers.filter(r => r.optional && r.dice));
-        }
-        if (dataPreset.optionalObModifiers) {
-            dataPreset.optionalObModifiers.concat(...rollModifiers.filter(r => r.optional && r.obstacle));
-        }
-    }
 
-    const templateData: SkillDialogData = Object.assign({
+    const templateData = mergeDialogData({
         name: skill.data.name,
         difficulty: 3,
         bonusDice: 0,

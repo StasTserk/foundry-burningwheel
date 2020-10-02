@@ -175,6 +175,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         const index = parseInt(target.dataset.index || "0");
         this.data.data.participantIds.splice(index, 1);
         this.data.data.participants.splice(index, 1);
+        this.data.actors.splice(index, 1);
         this.persistState(this.data.data);
         this.syncData(this.data.data);
         this._syncActors();

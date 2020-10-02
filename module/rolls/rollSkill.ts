@@ -15,7 +15,7 @@ import {
     extractRollData,
     EventHandlerOptions,
     RollOptions,
-    mergeDialogData
+    mergeDialogData, getSplitPoolText
 } from "./rolls.js";
 import { BWCharacter } from "module/character.js";
 
@@ -66,7 +66,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
 
 async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
-    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
@@ -76,6 +76,12 @@ async function skillRollCallback(
     const wildForkDie = await rollWildFork(wildForks, skill.data.data.shade);
     const wildForkBonus = wildForkDie?.total || 0;
     const wildForkDice = wildForkDie?.rolls || [];
+    
+    let splitPoolString: string | undefined;
+    if (splitPool) {
+        splitPoolString = await getSplitPoolText(splitPool, skill.data.data.open, skill.data.data.shade);
+    }
+    extraInfo = extraInfo ? splitPoolString + extraInfo : splitPoolString;
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';

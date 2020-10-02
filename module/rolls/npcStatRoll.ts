@@ -10,7 +10,7 @@ import {
     rollDice,
     templates,
     extractRollData,
-    EventHandlerOptions, RollOptions, mergeDialogData
+    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Npc } from "module/npc.js";
@@ -79,6 +79,12 @@ async function statRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData(actor, roll, accessor) as RerollData };
     });
+
+    let splitPoolString: string | undefined;
+    if (rollData.splitPool) {
+        splitPoolString = await getSplitPoolText(rollData.splitPool, open, shade);
+    }
+    extraInfo = extraInfo ? splitPoolString + extraInfo : splitPoolString;
     
     const data: RollChatMessageData = {
         name: `${name.titleCase()}`,

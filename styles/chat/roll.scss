@@ -65,8 +65,15 @@
         }
     }
 
-    .roll-dice {
+    .roll-dice, .secondary-dice {
         justify-content: center;
+    }
+
+    .secondary-pool {
+        border-bottom: 1px solid black;
+    }
+    .secondary-dice {
+        padding: 5px;
     }
     .roll-die {
         &[data-success="true"]{

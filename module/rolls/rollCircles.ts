@@ -10,11 +10,11 @@ import {
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions,
-    extractRollData
+    extractRollData,
+    EventHandlerOptions
 } from "./rolls.js";
 
-export async function handleCirclesRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export async function handleCirclesRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {

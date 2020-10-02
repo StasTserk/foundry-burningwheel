@@ -2,18 +2,18 @@ import { BWActor, RollModifier, TracksTests } from "../bwactor.js";
 import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Possession } from "../items/item.js";
-import { handleAttrRoll } from "./rollAttribute.js";
-import { handleCirclesRoll } from "./rollCircles.js";
-import { handleLearningRoll } from "./rollLearning.js";
-import { handleGritRoll, handleShrugRoll } from "./rollPtgs.js";
-import { handleResourcesRoll } from "./rollResources.js";
-import { handleSkillRoll } from "./rollSkill.js";
-import { handleStatRoll } from "./rollStat.js";
-import { handleArmorRoll } from "./rollArmor.js";
-import { handleWeaponRoll } from "./rollWeapon.js";
-import { handleSpellRoll } from "./rollSpell.js";
+import { handleAttrRollEvent } from "./rollAttribute.js";
+import { handleCirclesRollEvent } from "./rollCircles.js";
+import { handleLearningRollEvent } from "./rollLearning.js";
+import { handleGritRollEvent, handleShrugRollEvent } from "./rollPtgs.js";
+import { handleResourcesRollEvent } from "./rollResources.js";
+import { handleSkillRollEvent } from "./rollSkill.js";
+import { handleStatRollEvent } from "./rollStat.js";
+import { handleArmorRollEvent } from "./rollArmor.js";
+import { handleWeaponRollEvent } from "./rollWeapon.js";
+import { handleSpellRollEvent } from "./rollSpell.js";
 import { handleSpellTaxRoll } from "./rollSpellTax.js";
-import { BWCharacterSheet } from "module/character-sheet.js";
+import { BWCharacterSheet } from "../character-sheet.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
@@ -22,33 +22,33 @@ export async function handleRollable(
 
     switch(rollType) {
         case "skill":
-            return handleSkillRoll({ target, sheet });
+            return handleSkillRollEvent({ target, sheet });
         case "stat":
-            return handleStatRoll({ target, sheet });
+            return handleStatRollEvent({ target, sheet });
         case "circles":
-            return handleCirclesRoll({ target, sheet });
+            return handleCirclesRollEvent({ target, sheet });
         case "attribute":
-            return handleAttrRoll({ target, sheet });
+            return handleAttrRollEvent({ target, sheet });
         case "resources":
-            return handleResourcesRoll({ target, sheet });
+            return handleResourcesRollEvent({ target, sheet });
         case "learning":
-            return handleLearningRoll({ target, sheet });
+            return handleLearningRollEvent({ target, sheet });
         case "shrug":
             if ((sheet as BWCharacterSheet).actor.data.data.ptgs.shrugging) {
                 return sheet.actor.update({ "data.ptgs.shrugging": false });
             }
-            return handleShrugRoll({ target, sheet });
+            return handleShrugRollEvent({ target, sheet });
         case "grit":
             if ((sheet as BWCharacterSheet).actor.data.data.ptgs.gritting) {
                 return sheet.actor.update({ "data.ptgs.gritting": false });
             }
-            return handleGritRoll({ target, sheet });
+            return handleGritRollEvent({ target, sheet });
         case "weapon":
-            return handleWeaponRoll({ target, sheet });
+            return handleWeaponRollEvent({ target, sheet });
         case "spell":
-            return handleSpellRoll({ target, sheet });
+            return handleSpellRollEvent({ target, sheet });
         case "armor":
-            return handleArmorRoll({ target, sheet });
+            return handleArmorRollEvent({ target, sheet });
         case "spellTax":
             return handleSpellTaxRoll(target, sheet);
     }
@@ -304,6 +304,19 @@ export async function rollWildFork(numDice: number, shade: helpers.ShadeString =
     return new Promise(r => r(die));
 }
 
+export function mergeDialogData<T extends RollDialogData>(target: T, source?: Partial<T>): T {
+    if (!source) {
+        return target;
+    }
+    if (source.optionalDiceModifiers) {
+        source.optionalDiceModifiers.concat(...target.optionalDiceModifiers || []);
+    }
+    if (source.optionalObModifiers) {
+        source.optionalObModifiers.concat(...target.optionalObModifiers || []);
+    }
+    return Object.assign(target, source);
+}
+
 export class AstrologyDie extends Die {
     get results(): number[] {
         return this.rolls.filter(r => !r.rerolled && !r.discarded).map(r => {
@@ -435,9 +448,15 @@ interface BaseDataObject {
     obstacleTotal: number
 }
 
-export interface RollOptions {
+export interface EventHandlerOptions {
     target: HTMLElement;
     sheet: BWActorSheet;
+    extraInfo?: string;
+    dataPreset?: Partial<RollDialogData>;
+    onRollCallback?: () => Promise<unknown>;
+}
+
+export interface RollOptions {
     extraInfo?: string;
     dataPreset?: Partial<RollDialogData>;
     onRollCallback?: () => Promise<unknown>;

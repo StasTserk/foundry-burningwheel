@@ -1,8 +1,9 @@
-import { BWItemData } from "../items/item.js";
+import { BWItemData, MeleeWeaponRootData } from "../items/item.js";
 import { NpcDataRoot } from "../npc.js";
 import { BWActor, CharacterDataRoot } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
+import { handleFightRoll } from "../rolls/fightRoll.js";
 
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
@@ -33,9 +34,21 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         data.participants.forEach(p => {
             const actor = this.data.actors.find(a => a.id === p.id) as BWActor;
             if (!actor) { return; }
-            p.weapons = actor.data.fightWeapons.map(s => {
-                return { id: (s as BWItemData & { _id:string })._id, label: s.name };
-            });
+            p.weapons = actor.data.fightWeapons.map(w => {
+                if (w.type === "melee weapon") {
+                    const mw = w as MeleeWeaponRootData;
+                    return Object.values(mw.data.attacks).map((atk, index) => { 
+                        return {
+                            id: `${(mw as BWItemData & { _id:string })._id}_${index}`,
+                            label: `${mw.name} ${atk.attackName}`
+                        };
+                    });
+                }
+                return [{
+                    id: (w as BWItemData & { _id:string })._id,
+                    label: w.name
+                }];
+            }).flat(1);
 
             p.showAction2 = !!p.action1;
             p.showAction3 = !!p.action2;
@@ -93,10 +106,32 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             this._updateGridData(e);
         });
 
+        html.find('button[data-action="rollSpeed"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "speed"); });
+        html.find('button[data-action="rollPower"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "power"); });
+        html.find('button[data-action="rollAgility"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "agility"); });
+        html.find('button[data-action="rollSkill"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "skill"); });
+
         html.find('img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {
             const id = e.target.dataset.actorId || "";
             game.actors.find(a => a._id === id).sheet.render(true);
         });
+    }
+    private _handleRoll(e: JQuery.ClickEvent, type: "speed" | "agility" | "power" | "skill") {
+        e.preventDefault();
+        const index = parseInt(e.target.dataset.index || "0");
+        const actor = this.data.actors[index];
+        const engagementBonus = parseInt(this.data.data.participants[index].engagementBonus.toString());
+        const positionPenalty = parseInt(this.data.data.participants[index].positionPenalty.toString());
+        if (type === "skill") {
+            let itemIdString = this.data.data.participants[index].weaponId;
+            let attackIndex: number | undefined;
+            if (itemIdString.indexOf('_') !== -1) {
+                attackIndex = parseInt(itemIdString.substr(itemIdString.indexOf('_')+1));
+                itemIdString = itemIdString.substr(0, itemIdString.indexOf('_'));
+            }
+            return handleFightRoll({ actor, type, itemId: itemIdString, attackIndex, engagementBonus, positionPenalty });
+        }
+        return handleFightRoll({ actor, type, engagementBonus, positionPenalty });
     }
 
     private _updateGridData(e: JQuery.ChangeEvent): void {

@@ -8,14 +8,13 @@ import {
     RollChatMessageData,
     rollDice,
     templates,
-    RollOptions,
-    extractRollData
+    extractRollData, EventHandlerOptions
 } from "./rolls.js";
 
-export async function handleShrugRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export async function handleShrugRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     return handlePtgsRoll({ target, sheet, shrugging: true });
 }
-export async function handleGritRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export async function handleGritRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     return handlePtgsRoll({ target, sheet, shrugging: false });
 }
 
@@ -129,6 +128,6 @@ async function ptgsRollCallback(
     });
 }
 
-export interface PtgsRollOptions extends RollOptions {
+export interface PtgsRollOptions extends EventHandlerOptions {
     shrugging: boolean;
 }

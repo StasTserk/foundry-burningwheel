@@ -12,11 +12,11 @@ import {
     extractSelectString,
     maybeExpendTools,
     RollDialogData,
-    RollOptions,
-    extractRollData
+    extractRollData,
+    EventHandlerOptions
 } from "./rolls.js";
 
-export async function handleLearningRoll(rollOptions: LearningRollOptions): Promise<unknown> {
+export async function handleLearningRollEvent(rollOptions: LearningRollOptions): Promise<unknown> {
     const skillId = rollOptions.target.dataset.skillId || "";
     const skill = (rollOptions.sheet.actor.getOwnedItem(skillId) as Skill);
     if (skill.data.data.root2) {
@@ -253,11 +253,11 @@ export interface LearningDialogData extends RollDialogData {
     toolkits: PossessionRootData[];
 }
 
-export interface LearningRollOptions extends RollOptions {
+export interface LearningRollOptions extends EventHandlerOptions {
     dataPreset?: Partial<LearningDialogData>
 }
 
-interface LearningRollDialogSettings extends RollOptions {
+interface LearningRollDialogSettings extends EventHandlerOptions {
     skill: Skill;
     statName: string;
 }

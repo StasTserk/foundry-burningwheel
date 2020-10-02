@@ -1,11 +1,11 @@
 import * as helpers from "../helpers.js";
 import { Skill, Spell } from "../items/item.js";
-import { handleLearningRoll } from "./rollLearning.js";
-import { handleSkillRoll } from "./rollSkill.js";
-import { RollOptions } from "./rolls.js";
+import { handleLearningRollEvent } from "./rollLearning.js";
+import { handleSkillRollEvent } from "./rollSkill.js";
+import { EventHandlerOptions } from "./rolls.js";
 import { showSpellTaxDialog } from "./rollSpellTax.js";
 
-export async function handleSpellRoll({ target, sheet }: RollOptions): Promise<unknown> {
+export async function handleSpellRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
     const sorcerySkillId = target.dataset.skillId;
     if (!sorcerySkillId) {
         return helpers.notifyError("No Skill Specified",
@@ -26,10 +26,10 @@ export async function handleSpellRoll({ target, sheet }: RollOptions): Promise<u
     if (sorcerySkill) {
         const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
         return sorcerySkill.data.data.learning ? 
-            handleLearningRoll({ target, sheet, extraInfo: spellData,
+            handleLearningRollEvent({ target, sheet, extraInfo: spellData,
                 dataPreset: { difficulty: obstacle },
                 onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, sheet) }) :
-            handleSkillRoll({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle },
+            handleSkillRollEvent({ target, sheet, extraInfo: spellData, dataPreset: { difficulty: obstacle },
                 onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, sheet) });
     }
     throw Error("The designated skill no longer exists on the character");

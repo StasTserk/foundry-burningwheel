@@ -7,7 +7,7 @@ import {
     AffiliationData, AffiliationDataRoot,
     RelationshipData, RelationshipDataRoot,
     BWItem, BWItemData, ItemType } from "../items/item.js";
-import { CharacterSettings } from "module/bwactor.js";
+import { CharacterSettings } from "../bwactor.js";
 
 export function extractRelationshipData(parent: JQuery): BurnerRelationshipData {
     return {

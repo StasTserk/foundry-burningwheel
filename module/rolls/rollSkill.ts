@@ -1,5 +1,4 @@
 import { BWActor, TracksTests } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Skill, PossessionRootData } from "../items/item.js";
 import {
@@ -12,17 +11,21 @@ import {
     templates,
     extractSelectString,
     maybeExpendTools,
-    RollOptions,
     rollWildFork,
     extractRollData,
+    EventHandlerOptions, RollOptions
 } from "./rolls.js";
+import { BWCharacter } from "module/character.js";
 
-export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollOptions ): Promise<unknown> {
+export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollEventOptions ): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
-    const rollModifiers = sheet.actor.getRollModifiers(skill.name);
     const actor = sheet.actor as BWActor;
+    return handleSkillRoll({ actor: (actor as BWActor & BWCharacter), skill, dataPreset, extraInfo, onRollCallback});
+}
 
+export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onRollCallback }: SkillRollOptions): Promise<unknown> {
+    const rollModifiers = actor.getRollModifiers(skill.name);
     if (dataPreset) {
         if (dataPreset.optionalDiceModifiers) {
             dataPreset.optionalDiceModifiers.concat(...rollModifiers.filter(r => r.optional && r.dice));
@@ -56,7 +59,7 @@ export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, on
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) => {
-                        skillRollCallback(dialogHtml, skill, sheet, extraInfo);
+                        skillRollCallback(dialogHtml, skill, actor, extraInfo);
                         if (onRollCallback) {
                             onRollCallback();
                         }
@@ -68,7 +71,7 @@ export async function handleSkillRoll({ target, sheet, dataPreset, extraInfo, on
 }
 
 async function skillRollCallback(
-    dialogHtml: JQuery, skill: Skill, sheet: BWActorSheet, extraInfo?: string): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
     const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
@@ -82,7 +85,7 @@ async function skillRollCallback(
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = sheet.actor.getOwnedItem(toolkitId);
+        const tools = actor.getOwnedItem(toolkitId);
         if (tools) {
             const { expended, text } = await maybeExpendTools(tools);
             extraInfo = extraInfo ? `${extraInfo}${text}` : text;
@@ -94,9 +97,9 @@ async function skillRollCallback(
         }
     }
 
-    const fateReroll = buildRerollData(sheet.actor, roll, undefined, skill._id);
-    const callons: RerollData[] = sheet.actor.getCallons(skill.name).map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, undefined, skill._id) as RerollData };
+    const fateReroll = buildRerollData(actor, roll, undefined, skill._id);
+    const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
+        return { label: s, ...buildRerollData(actor, roll, undefined, skill._id) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
 
@@ -116,9 +119,9 @@ async function skillRollCallback(
         callons,
         extraInfo
     };
-    if (success || sheet.actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
+    if (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
         await helpers.addTestToSkill(skill, dg);
-        skill = sheet.actor.getOwnedItem(skill._id) as Skill; // update skill with new data
+        skill = actor.getOwnedItem(skill._id) as Skill; // update skill with new data
     }
     if (helpers.canAdvance(skill.data.data)) {
         Dialog.confirm({
@@ -134,7 +137,7 @@ async function skillRollCallback(
     const messageHtml = await renderTemplate(templates.skillMessage, data);
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({actor})
     });
 }
 
@@ -148,7 +151,14 @@ interface SkillDialogData extends RollDialogData {
 
 
 
+export interface SkillRollEventOptions extends EventHandlerOptions {
+    dataPreset?: Partial<SkillDialogData>;
+    extraInfo?: string;
+}
+
 export interface SkillRollOptions extends RollOptions {
+    skill: Skill,
+    actor: BWActor & BWCharacter;
     dataPreset?: Partial<SkillDialogData>;
     extraInfo?: string;
 }

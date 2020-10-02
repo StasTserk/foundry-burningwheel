@@ -1,4 +1,4 @@
-import { TracksTests } from "../bwactor.js";
+import { BWActor, TracksTests } from "../bwactor.js";
 
 import * as helpers from "../helpers.js";
 import {
@@ -9,12 +9,13 @@ import {
     RollDialogData,
     rollDice,
     templates,
-    RollOptions,
-    extractRollData
+    extractRollData,
+    EventHandlerOptions, RollOptions, mergeDialogData
 } from "./rolls.js";
-import { NpcSheet } from "module/npc-sheet.js";
+import { NpcSheet } from "../npc-sheet.js";
+import { Npc } from "module/npc.js";
 
-export async function handleNpcStatRoll({ target, sheet }: NpcRollOptions): Promise<unknown> {
+export async function handleNpcStatRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
     const actor = sheet.actor;
 
     const dice = getProperty(actor.data, target.dataset.stat || "") as number;
@@ -22,9 +23,13 @@ export async function handleNpcStatRoll({ target, sheet }: NpcRollOptions): Prom
     const open = target.dataset.action === "rollStatOpen";
     
     const statName = target.dataset.rollableName || "Unknown Stat";
-    const rollModifiers = sheet.actor.getRollModifiers(statName);
+    return handleNpcStatRoll({ dice, shade, open, statName, actor });
+}
 
-    const data: NpcStatDialogData = {
+export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo, dataPreset, actor }: NpcStatRollOptions): Promise<unknown> {
+    const rollModifiers = actor.getRollModifiers(statName);
+
+    const data = mergeDialogData<NpcStatDialogData>({
         name: `${statName.titleCase()} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -37,7 +42,7 @@ export async function handleNpcStatRoll({ target, sheet }: NpcRollOptions): Prom
         tax: 0,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
@@ -48,7 +53,7 @@ export async function handleNpcStatRoll({ target, sheet }: NpcRollOptions): Prom
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        statRollCallback(dialogHtml, sheet, statName, shade, open)
+                        statRollCallback(dialogHtml, actor, statName, shade, open, extraInfo)
                 }
             }
         }).render(true)
@@ -57,10 +62,11 @@ export async function handleNpcStatRoll({ target, sheet }: NpcRollOptions): Prom
 
 async function statRollCallback(
         dialogHtml: JQuery,
-        sheet: NpcSheet,
+        actor: BWActor & Npc,
         name: string,
         shade: helpers.ShadeString,
-        open: boolean) {
+        open: boolean,
+        extraInfo?: string) {
     const rollData = extractRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
     const accessor = `data.${name}`;
@@ -69,9 +75,9 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= rollData.difficultyTotal;
 
-    const fateReroll = buildRerollData(sheet.actor, roll, accessor);
-    const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, accessor) as RerollData };
+    const fateReroll = buildRerollData(actor, roll, accessor);
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData(actor, roll, accessor) as RerollData };
     });
     
     const data: RollChatMessageData = {
@@ -86,13 +92,14 @@ async function statRollCallback(
         penaltySources: rollData.obSources,
         dieSources: rollData.dieSources,
         fateReroll,
-        callons
+        callons,
+        extraInfo
     };
 
     const messageHtml = await renderTemplate(templates.npcMessage, data);
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({actor})
     });
 }
 
@@ -103,6 +110,14 @@ interface NpcStatDialogData extends RollDialogData {
     circlesMalus?: {name: string, amount: number}[];
 }
 
-interface NpcRollOptions extends RollOptions {
+interface NpcRollEventOptions extends EventHandlerOptions {
     sheet: NpcSheet;
+}
+
+interface NpcStatRollOptions extends RollOptions {
+    actor: BWActor & Npc;
+    dice: number;
+    shade: helpers.ShadeString;
+    open: boolean;
+    statName: string;
 }

@@ -190,6 +190,16 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
                 this.render();
             }
         });
+        Hooks.on("updateActor", (actor: BWActor) => {
+            if (this.data.actors.includes(actor)) {
+                const index = this.data.actors.indexOf(actor);
+                this.data.data.participants[index] = Object.assign(
+                    this.data.data.participants[index],
+                    toParticipantData(actor)
+                );
+                this.render();
+            }
+        });
     }
 
     private _syncActors() {

@@ -227,7 +227,7 @@ Item:
     influence: ''
     enmity: false
     building: true
-    buildingProgress: [0]
+    buildingProgress: 0
   possession:
     templates:
       - pointCost

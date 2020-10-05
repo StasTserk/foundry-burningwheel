@@ -141,7 +141,7 @@ async function skillRollCallback(
     if (rollData.splitPool) {
         splitPoolString = await getSplitPoolText(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
     }
-    extraInfo = extraInfo ? splitPoolString + extraInfo : splitPoolString;
+    extraInfo = splitPoolString ? splitPoolString + extraInfo : extraInfo;
     
     const data: RollChatMessageData = {
         name: `${skill.name}`,

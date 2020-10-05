@@ -37,7 +37,6 @@ export class ImportItemDialog extends Dialog {
         html.find("option").each((_, o) => {
             if ((this.sources && this.sources.length === 0) || this.sources.indexOf(o.value) !== -1) {
                 $(o).prop("selected", "selected");
-                console.log("selected an option");
             }
         }).parent().trigger("change");
     }

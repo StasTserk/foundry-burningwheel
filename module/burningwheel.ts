@@ -42,7 +42,8 @@ Hooks.once("init", async () => {
         dowData = await JSON.parse(game.settings.get("burningwheel", "dow-data"));
         fightData = await JSON.parse(game.settings.get("burningwheel", "fight-data"));
     } catch (err) {
-        console.log("Error parsing serialized duel of wits dat");
+        console.log("Error parsing serialized duel of wits / fight data");
+        console.log(err);
     }
     
     game.burningwheel.dow = new DuelOfWitsDialog({

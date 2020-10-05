@@ -46,15 +46,7 @@ export class CharacterBurnerDialog extends Dialog {
         return compendiumSelect.render(true);
     }
     private constructor(parent: BWActor & BWCharacter) {
-        super({
-            title: "Character Burner",
-            buttons: {
-                apply: {
-                    label: "Apply",
-                    callback: () => console.log(`Applying burner state to ${this._parent.name}.`)
-                }
-            }
-        });
+        super({ title: "Character Burner", buttons: {} });
 
         this._parent = parent;
     }

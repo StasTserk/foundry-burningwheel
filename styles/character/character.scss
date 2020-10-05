@@ -240,12 +240,9 @@
     .stats {
         .stats-footer {
             grid-column: 1 / 4;
+            justify-content: flex-end;
 
             label {
-                &:first-child {
-                    margin-left: calc(100% - 21em);
-                }
-
                 width: 8em;
                 font-size: 1.125em;
                 margin-right: .5em;

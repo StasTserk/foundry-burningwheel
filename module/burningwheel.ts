@@ -89,17 +89,17 @@ function registerHelpers() {
             const rgx = new RegExp(' value="' + testsAllowed + '"');
             html = html.replace(rgx, "$& disabled=\"disabled\"");
         }
-        if (!selected) {
-            selected = [ 0 ];
-        } else if (!(selected instanceof Array)) {
-            selected = [ selected ];
+        if (!(selected instanceof Array)) {
+            if (Number.isNaN(selected)) {
+                selected = [ 0 ];
+            } else {
+                selected = [ selected ];
+            }
         }
         selected.forEach((selectedValue: string) => {
-            if (selectedValue) {
-                const escapedValue = Handlebars.escapeExpression(selectedValue);
-                const rgx = new RegExp(' value="' + escapedValue + '"');
-                html = html.replace(rgx, "$& checked=\"checked\"");
-            }
+            const escapedValue = Handlebars.escapeExpression(selectedValue);
+            const rgx = new RegExp(' value="' + escapedValue + '"');
+            html = html.replace(rgx, "$& checked=\"checked\"");
         });
         return html;
     });

@@ -66,13 +66,20 @@
             <label for="{{item._id}}-select-shade">Shade</label>
         </div>
         <div>
+            <input id="{{item._id}}-optimal-range" type="number" data-dtype="Number" name="data.optimalRange" value="{{data.optimalRange}}">
+            <label for="{{item._id}}-optimal-range">Optimal Range</label>
+        </div>
+                <div>
+            <input id="{{item._id}}-extreme-range" type="number" data-dtype="Number" name="data.extremeRange" value="{{data.extremeRange}}">
+            <label for="{{item._id}}-extreme-range">Extreme Range</label>
+        </div>
+        <div>
             <input id="{{item._id}}-number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
             <label for="{{item._id}}-number-range">Max Range</label>
         </div>
-
         <div>
-            <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
             <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+            <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
         </div>
     </div>
     <hr/>

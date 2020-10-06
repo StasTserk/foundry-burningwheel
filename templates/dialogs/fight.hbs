@@ -23,8 +23,16 @@
         {{else}}
         <div>Fighters</div><div>Volley 1</div><div>Volley 2</div><div>Volley 3</div>
         {{/if}}
-        {{#each participants as |p|}}
-        <div>{{p.name}}</div>
+        {{#each participants as |p i|}}
+        <div class="volley-buttons flex-row">
+            <div class="participant">{{p.name}}</div>
+            {{#if p.showActions}}
+            <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Test Speed</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollPower">Test Power</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollAgility">Test Agility</button>
+            <button class="control-button" data-index="{{i}}" data-action="rollSkill">Test Skill</button>
+            {{/if}}
+        </div>
         <div class="flex-row" lang="en">
             {{#if ../showV1}}
             <div class="attack-action action-card">{{#if p.action1}}{{{p.action1}}}{{else}}Does Nothing{{/if}}</div>
@@ -96,10 +104,6 @@
                     </select>
                 </div>
             </div>
-            <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Test Speed</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollPower">Test Power</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollAgility">Test Agility</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollSkill">Test Skill</button>
             {{/if}}
         </div>
         <div class="volley">

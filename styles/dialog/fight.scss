@@ -34,6 +34,23 @@
         grid-template-columns: repeat(4, 1fr);
         margin: 1em 0 1em 0;
 
+        .pill-toggle > label {
+            border-radius: 0;
+        }
+
+        .volley-buttons {
+            .participant {
+                width: 100%;
+                font-size: 1.125em;
+                font-weight: bold;
+                padding-left: 5px;
+            }
+            .control-button {
+                width: 49%;
+                height: min-content;
+            }
+        }
+
         & > div {
             border: 2px groove #aaaaaa;
             background: linear-gradient(rgba(#444, .25), rgba(#000, .05));

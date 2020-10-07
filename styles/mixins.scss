@@ -1,13 +1,16 @@
 $hover-color: rgba(0,0,0,0.1);
 
-@mixin progress-ticks {
+@mixin progress-ticks($size: 15px) {
     display: flex;
 
     label.progress-clear {
         display: block;
         color: transparent;
-        width: 15px;
+        width: $size;
+        height: $size;
+        font-size: $size;
         text-align: center;
+        margin-left: calc(#{$size}/5);
     }
 
     label.progress-clear:hover {
@@ -38,10 +41,10 @@ $hover-color: rgba(0,0,0,0.1);
         display: block;
         background-color: #333333;
         border: 1px solid black;
-        border-radius: 7px;
-        width: 15px;
-        height: 15px;
-        margin-left: 3px;
+        border-radius: calc(#{$size}/2);
+        width: $size;
+        height: $size;
+        margin-left: calc(#{$size}/5);
         margin-top: 1px;
     }
 }

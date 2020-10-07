@@ -10,8 +10,7 @@ export class Spell extends Item<SpellData> {
                 this.data.data.variableObstacleDescription :
                 this.data.data.obstacle}${this.data.data.upSpell?
                 '^':''}`;
-        if (this.data.data.isWeapon && this.owner && this.actor) {
-            this.data.hasOwner = true;
+        if (this.data.data.isWeapon && this.data.hasOwner && this.actor) {
             const willScore = parseInt(this.actor.data.data.will.exp);
             if (this.data.data.halfWill) {
                 this.data.data.mark = Math.floor(willScore / 2.0) + this.data.data.willDamageBonus;
@@ -23,6 +22,10 @@ export class Spell extends Item<SpellData> {
             this.data.data.superb = Math.floor(this.data.data.mark * 1.5);
         }
         this.data.spellLengths = weaponLengthSelect;
+
+        if (this.data.hasOwner) {
+            this.data.data.aptitude = 10 - parseInt(this.actor?.data.data.perception.exp || "1");
+        }
     }
 
     static GetSpellMessageData(spell: Spell): string {
@@ -61,7 +64,6 @@ export class Spell extends Item<SpellData> {
 export interface SpellDataRoot extends ItemData<SpellData>, BWItemData {
     spellLengths: StringIndexedObject<string>;
     obstacleLabel: string;
-    hasOwner: boolean;
     type: "spell"
     data: SpellData
 }
@@ -95,4 +97,5 @@ export interface SpellData extends HasPointCost {
     incidental?: number;
     superb?: number;
     mark?: number;
+    aptitude?: number;
 }

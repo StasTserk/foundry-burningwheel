@@ -78,6 +78,12 @@
             value="{{data.duration}}">
         <label for="{{item._id}}-point-cost" class="spell-setting-label">Resource Point Cost</label>
         <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" onfocus="this.select();" value="{{data.pointCost}}" data-dtype="Number">
+        {{#if item.hasOwner}}
+        <div class="pill-toggle">
+            <input id="{{item._id}}-in-practicals" type="checkbox" name="data.inPracticals" {{checked data.inPracticals}}>
+            <label for="{{item._id}}-in-practicals">In Practicals</label>
+        </div>
+        {{/if}}
     </div>
     <div class="spell-weapon-toggle">
         <div class="pill-toggle">

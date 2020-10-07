@@ -344,3 +344,5 @@ Item:
     maxRange: '10 Paces'
     collapsed: false
     skillId: ''
+    inPracticals: false
+    learningProgress: 0

@@ -52,10 +52,10 @@ export * from "./trait.js";
 export class BWItem extends Item {
     prepareData(): void {
         super.prepareData();
+        this.data.hasOwner = !!this.actor;
         if (prototypeList[this.type]) {
             prototypeList[this.type].prototype.prepareData.bind(this)();
         }
-        this.data.hasOwner = !!this.actor;
     }
 
     data: BWItemData;

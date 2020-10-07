@@ -96,6 +96,20 @@
                 text-align: center;
             }
         }
+
+        .practicals-label {
+            width: 50%;
+            font-weight: bold;
+        }
+
+        .test-tracking {
+            & > label.progress-clear {
+                margin-left: -12px !important;
+            }
+            width: 50%;
+            flex-wrap: wrap;
+            @include progress-ticks(12px);
+        }
     }
 }
 

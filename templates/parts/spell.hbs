@@ -16,6 +16,12 @@
             {{/each}}
             {{/select}}
         </select>
+        {{#if spell.data.inPracticals}}
+        <div class="practicals-label">
+            Practicals
+        </div>
+        {{{itemProgressTicks spell._id spell.data.learningProgress "data.learningProgress" "spell-practicals" spell.data.aptitude 0}}}
+        {{/if}}
         <label class="spell-details-label">Obstacle</label><div class="spell-details-data">{{spell.obstacleLabel}}</div>
         <label class="spell-details-label">Actions</label><div class="spell-details-data">{{spell.data.actions}}</div>
         {{#if spell.data.isWeapon}}

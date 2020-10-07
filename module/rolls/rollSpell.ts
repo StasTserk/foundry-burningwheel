@@ -3,7 +3,7 @@ import { BWCharacter } from "module/character.js";
 import * as helpers from "../helpers.js";
 import { Skill, Spell } from "../items/item.js";
 import { handleLearningRoll } from "./rollLearning.js";
-import { EventHandlerOptions, RollOptions } from "./rolls.js";
+import { EventHandlerOptions, RollDialogData, RollOptions } from "./rolls.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import { showSpellTaxDialog } from "./rollSpellTax.js";
 
@@ -31,17 +31,36 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
     const spellData = Spell.GetSpellMessageData(spell);
 
     if (skill) {
+        
         const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
+        let practicalsPenalty = 0;
+        const spellPreset: Partial<RollDialogData> = { difficulty: obstacle };
+        if (spell.data.data.inPracticals) {
+            practicalsPenalty = (spell.data.data.aptitude || 9) - spell.data.data.learningProgress || 0;
+            spellPreset.obModifiers = [
+                { label: "In Practicals", obstacle: practicalsPenalty, optional: false }
+            ];
+        }
+
         if (dataPreset) {
             dataPreset.difficulty = obstacle;
+            dataPreset.obModifiers = (dataPreset.obModifiers || []).concat(...(spellPreset.obModifiers || []));
         } else {
-            dataPreset = { difficulty: obstacle };
+            dataPreset = spellPreset;
         }
+
+        const onRollCallback = async () => {
+            showSpellTaxDialog(obstacle, spell.name, actor);
+            if (spell.data.data.inPracticals) {
+                const amount = spell.data.data.learningProgress;
+                const aptitude = spell.data.data.aptitude || 9;
+                console.log(`Spell practicals rolled at ${amount}/${aptitude}`);
+            }
+        };
+
         return skill.data.data.learning ? 
-            handleLearningRoll({ actor, skill, extraInfo: spellData, dataPreset,
-                onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, actor) }) :
-            handleSkillRoll({ actor, skill, extraInfo: spellData, dataPreset,
-                onRollCallback: () => showSpellTaxDialog(obstacle, spell.name, actor) });
+            handleLearningRoll({ actor, skill, extraInfo: spellData, dataPreset, onRollCallback }) :
+            handleSkillRoll({ actor, skill, extraInfo: spellData, dataPreset, onRollCallback });
     }
     throw Error("The designated skill no longer exists on the character");
 }

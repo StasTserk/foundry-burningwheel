@@ -82,6 +82,10 @@ export interface SpellData extends HasPointCost {
     impetus: string;
     duration: string;
     rpCost: number;
+
+    inPracticals: boolean;
+    learningProgress: 0
+
     isWeapon: boolean;
     halfWill: boolean;
     willDamageBonus: number;

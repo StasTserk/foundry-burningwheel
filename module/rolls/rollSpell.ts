@@ -36,7 +36,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         let practicalsPenalty = 0;
         const spellPreset: Partial<RollDialogData> = { difficulty: obstacle };
         if (spell.data.data.inPracticals) {
-            practicalsPenalty = (spell.data.data.aptitude || 9) - spell.data.data.learningProgress || 0;
+            practicalsPenalty = (spell.data.data.aptitude || 9) - parseInt(spell.data.data.learningProgress || "0");
             spellPreset.obModifiers = [
                 { label: "In Practicals", obstacle: practicalsPenalty, optional: false }
             ];
@@ -52,9 +52,19 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         const onRollCallback = async () => {
             showSpellTaxDialog(obstacle, spell.name, actor);
             if (spell.data.data.inPracticals) {
-                const amount = spell.data.data.learningProgress;
+                const amount = parseInt(spell.data.data.learningProgress || "0");
                 const aptitude = spell.data.data.aptitude || 9;
-                console.log(`Spell practicals rolled at ${amount}/${aptitude}`);
+                spell.update({ "data.learningProgress": amount + 1 }, {});
+                if (amount + 1 >= aptitude) {
+                    return Dialog.confirm({
+                        title: "Spell Practicals Complete!",
+                        content: "<p>The spell practicals process is complete. Time for a second reading.</p><p>Set the spell as no longer in practicals?</p>",
+                        yes: () => {
+                            spell.update({ "data.inPracticals": false, "data.learningProgress": 0 }, {});
+                        },
+                        no: () => void 0
+                    });
+                }
             }
         };
 

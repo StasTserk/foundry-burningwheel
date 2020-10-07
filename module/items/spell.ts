@@ -84,7 +84,7 @@ export interface SpellData extends HasPointCost {
     rpCost: number;
 
     inPracticals: boolean;
-    learningProgress: 0
+    learningProgress: string;
 
     isWeapon: boolean;
     halfWill: boolean;

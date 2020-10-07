@@ -129,6 +129,7 @@ export class BWCharacterSheet extends BWActorSheet {
             'i[data-action="addTrait"]',
             '*[data-action="addSkill"]',
             '*[data-action="addSpell"]',
+            '*[data-action="learnSpell"]',
             '*[data-action="addGear"]',
         ];
         html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
@@ -207,7 +208,19 @@ export class BWCharacterSheet extends BWActorSheet {
                     itemType: "spell",
                     itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
                     itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
-                    baseData: { traittype: id }
+                    baseData: { }
+                });
+            case "learnSpell":
+                return addNewItem({
+                    actor: this.actor,
+                    searchTitle: "Learn New Spell",
+                    itemType: "spell",
+                    itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
+                    baseData: { inPracticals: true },
+                    forcedData: {
+                        inPracticals: true
+                    }
                 });
             case "addGear":
                 return addNewItem({

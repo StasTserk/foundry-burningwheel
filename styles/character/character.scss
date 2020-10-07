@@ -305,9 +305,16 @@
         }
     }
 
-    .right-floating-add-button {
-        @include button-like(green);
+
+    .right-floating {
         grid-column: -2;
-        height: min-content;
+        &:hover {
+            background-color: unset;
+        }
+
+        & > .add-button {
+            @include button-like(green);        
+            height: min-content;
+        }
     }
 }

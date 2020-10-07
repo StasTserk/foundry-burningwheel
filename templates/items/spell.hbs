@@ -140,6 +140,10 @@
                 <span>{{data.incidental}}</span> / <span>{{data.mark}}</span> / <span>{{data.superb}}</span>
             </div>
             {{/if}}
+            <div class="pill-toggle">
+                <input id="{{item._id}}-half-will" type="checkbox" name="data.halfWill" {{checked data.halfWill}}>
+                <label for="{{item._id}}-half-will" title="This spell's damage is base off of half the will exponent, rather than the full one.">Half Will</label>
+            </div>
         </div>
         {{/if}}
     </div>

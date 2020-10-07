@@ -335,6 +335,7 @@ Item:
     duration: ''
     rpCost: 0
     isWeapon: false
+    halfWill: false
     willDamageBonus: 0
     va: 0
     weaponLength: shortest

@@ -13,7 +13,12 @@ export class Spell extends Item<SpellData> {
         if (this.data.data.isWeapon && this.owner && this.actor) {
             this.data.hasOwner = true;
             const willScore = parseInt(this.actor.data.data.will.exp);
-            this.data.data.mark = willScore + this.data.data.willDamageBonus;
+            if (this.data.data.halfWill) {
+                this.data.data.mark = Math.floor(willScore / 2.0) + this.data.data.willDamageBonus;
+            } else {
+                this.data.data.mark = willScore + this.data.data.willDamageBonus;
+            }
+            
             this.data.data.incidental = Math.ceil(this.data.data.mark / 2.0);
             this.data.data.superb = Math.floor(this.data.data.mark * 1.5);
         }
@@ -76,6 +81,7 @@ export interface SpellData extends HasPointCost {
     duration: string;
     rpCost: number;
     isWeapon: boolean;
+    halfWill: boolean;
     willDamageBonus: number;
     va: number;
     weaponLength: string;

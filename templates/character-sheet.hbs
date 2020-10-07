@@ -273,7 +273,9 @@
             <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{e._id}}"></i>
         </div>
         {{/each}}
-        <div class="right-floating-add-button" data-action="addGear"><i class="fas fa-plus"></i> Add New Gear</div>
+        <div class="right-floating">
+            <div class="add-button" data-action="addGear"><i class="fas fa-plus"></i> Add New Gear</div>
+        </div>
     </div>
 
     <input type="checkbox" id="{{actor._id}}-collapse-spells" name="data.collapseSpells" class="section-collapse spells-collapse" {{ checked data.collapseSpells }}>
@@ -319,7 +321,10 @@
         {{#each spells as |spell|}}
         {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.sorcerousSkills}}
         {{/each}}
-        <div class="right-floating-add-button" data-action="addSpell"><i class="fas fa-plus"></i> Add New Spell</div>
+        <div class="right-floating">
+            <div class="add-button" data-action="addSpell"><i class="fas fa-plus"></i> Add New Spell</div>
+            <div class="add-button" data-action="learnSpell"><i class="fas fa-plus"></i> Learn New Spell</div>
+        </div>
     </div>
 
     <input type="checkbox" id="{{actor._id}}-collapseMisc" name="data.collapseMisc" class="section-collapse misc-collapse" {{ checked data.collapseMisc }}>
@@ -340,7 +345,9 @@
         {{#each skills as |skill|}}
             {{> "systems/burningwheel/templates/parts/rollable-skill.hbs" skill=skill }}
         {{/each}}
-        <div class="right-floating-add-button" data-action="addSkill"><i class="fas fa-plus"></i> Add New Skill</div>
+        <div class="right-floating">
+            <div class="add-button" data-action="addSkill"><i class="fas fa-plus"></i> Add New Skill</div>
+        </div>
     </div>
 
     <input type="checkbox" id="{{actor._id}}-collapseLearning" name="data.collapseLearning" class="section-collapse learning-collapse" {{ checked data.collapseLearning }}>

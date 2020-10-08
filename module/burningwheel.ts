@@ -105,47 +105,17 @@ function registerHelpers() {
     });
 
     Handlebars.registerHelper("itemProgressTicks", (id: string, value: string, path: string, idLabel: string, numActive: number, numInactive: number) => {
-        const containerDiv = document.createElement("div");
-        containerDiv.className = "test-tracking";
-        const clearButton = document.createElement("input");
-        clearButton.type = "radio";
-        clearButton.dataset.itemId = id;
-        clearButton.value = "0";
-        clearButton.dataset.binding = path;
-        clearButton.name = `${id}-${idLabel}`;
-        clearButton.id = `${id}-${idLabel}-0`;
-        clearButton.checked = true;
-        const clearLabel = document.createElement("label");
-        clearLabel.htmlFor = `${id}-${idLabel}-0`;
-        clearLabel.className = "progress-clear";
-        const labelIcon = document.createElement("i");
-        labelIcon.className = "fas fa-times-circle";
-        clearLabel.appendChild(labelIcon);
-        containerDiv.appendChild(clearButton);
-        containerDiv.appendChild(clearLabel);
-
+        const progressHtml: string[] = [];
+        progressHtml.push(`<div class="test-tracking">`);
+        progressHtml.push(`<input type="radio" data-item-id="${id}" value="0" name="${id}-${idLabel}" id="${id}-${idLabel}-0" data-binding="${path}" ${Number.isNaN(parseInt(value)) || value === "0" ? "checked" : ""}>`);
+        progressHtml.push(`<label for="${id}-${idLabel}-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>`);
+        
         for (let i = 1; i <= numActive + numInactive; i ++) {
-            const button = document.createElement("input");
-            button.type = "radio";
-            button.dataset.itemId = id;
-            button.value = "" + i;
-            button.dataset.binding = path;
-            button.name = `${id}-${idLabel}`;
-            button.id = `${id}-${idLabel}-${i}`;
-            button.disabled = i > numActive;
-            const label = document.createElement("label");
-            label.htmlFor = `${id}-${idLabel}-${i}`;
-            label.className = "progress-tick";
-            containerDiv.appendChild(button);
-            containerDiv.appendChild(label);
+            progressHtml.push(`<input type="radio" data-item-id="${id}" value="${i}" name="${id}-${idLabel}" id="${id}-${idLabel}-${i}" data-binding="${path}"${value === i.toString() ? " checked" : ""}${i > numActive ? " disabled" : ""}>`);
+            progressHtml.push(`<label for="${id}-${idLabel}-${i}" class="progress-tick"></label>`);
         }
-        if (Number.isNaN(parseInt(value))) {
-            value = "0";
-        }
-        let html = containerDiv.outerHTML;
-        const rgx = new RegExp(' value="' + value + '"');
-        html = html.replace(rgx, "$& checked=\"checked\"");
-        return html;
+        progressHtml.push("</div>");
+        return progressHtml.join('\n');
     });
 
     Handlebars.registerHelper("disabled", (value: boolean) => {

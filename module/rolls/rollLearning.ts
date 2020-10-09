@@ -12,7 +12,7 @@ import {
     maybeExpendTools,
     RollDialogData,
     extractRollData,
-    EventHandlerOptions, RollOptions, mergeDialogData
+    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText
 } from "./rolls.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
@@ -117,6 +117,12 @@ async function learningRollCallback(
             ...buildRerollData(actor, roll, undefined, skill._id) as RerollData
         };
     });
+
+    let splitPoolString: string | undefined;
+    if (rollData.splitPool) {
+        splitPoolString = await getSplitPoolText(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+    }
+    extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';

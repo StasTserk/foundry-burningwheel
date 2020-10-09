@@ -91,6 +91,23 @@
                 </div>
             </div>
         </div>
+        <div class="trait-effect-section flex-row">
+            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-apt" name="data.hasAptitudeModifier" {{checked data.hasAptitudeModifier}}>
+            <div class="trait-effect-selection flex-column">
+                <input type="checkbox" class="hidden trait-effect-checkbox" {{checked data.hasAptitudeModifier}}>
+                <label for="{{item._id}}-checkbox-apt" class="trait-effect-label">Changes Aptitude</label>
+            </div>
+            <div class="trait-effect-details input-grid">
+                <div class="trait-input-double">
+                    <input id="{{item._id}}-aptitude-target" type="text" name="data.aptitudeTarget" value="{{data.aptitudeTarget}}">
+                    <label for="{{item._id}}-aptitude-target">Aptitude Target</label>
+                </div>
+                <div>
+                    <input id="{{item._id}}-aptitude-amount" type="number" name="data.aptitudeModifier" value="{{data.aptitudeModifier}}" placeholder="0" data-dtype="Number">
+                    <label for="{{item._id}}-aptitude-amount">Amount</label>
+                </div>
+            </div>
+        </div>
     </div>
     {{/if}}
     {{#if item.isCallonTrait}}

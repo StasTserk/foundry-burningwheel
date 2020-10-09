@@ -110,11 +110,25 @@ export class BWActor extends Actor {
         return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(this.data.rollModifiers.all || []);
     }
 
+    private _addAptitudeModifier(name: string, modifier: number) {
+        name = name.toLowerCase();
+        if (Number.isInteger(this.data.aptitudeModifiers[name])) {
+            this.data.aptitudeModifiers[name] += modifier;
+        } else {
+            this.data.aptitudeModifiers[name] = modifier;
+        }
+    }
+
+    getAptitudeModifiers(name = ""): number {
+        return this.data.aptitudeModifiers[name.toLowerCase()] || 0;
+    }
+
     prepareTypeSpecificData(): void { return; }
 
     private _prepareActorData() {
         this.data.rollModifiers = {};
         this.data.callOns = {};
+        this.data.aptitudeModifiers = {};
         
         this._calculateClumsyWeight();
 
@@ -126,6 +140,7 @@ export class BWActor extends Actor {
         this.data.sorcerousSkills = [];
         this.data.toolkits = [];
         this.data.fightWeapons = [];
+        
         if (this.data.items) {
             this.data.items.forEach((i) => {
                 switch (i.type) {
@@ -172,6 +187,10 @@ export class BWActor extends Actor {
                             if (t.data.callonTarget) {
                                 this._addCallon(t.data.callonTarget, t.name);
                             }
+                        }
+                        if (t.data.hasAptitudeModifier) {
+                            t.data.aptitudeTarget.split(',').forEach((target) =>
+                                this._addAptitudeModifier(target.trim(), t.data.aptitudeModifier));
                         }
                         break;
                     case "possession":
@@ -375,6 +394,7 @@ export interface Common {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface BWActorDataRoot extends ActorData<BWCharacterData | NpcData> {
+    aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
     sorcerousSkills: SkillDataRoot[];

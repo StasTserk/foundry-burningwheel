@@ -180,6 +180,9 @@ Item:
     traittype: character
     text: ''
     collapsed: true
+    hasAptitudeModifier: false
+    aptitudeModifier: 0
+    aptitudeTarget: ''
     hasDieModifier: false
     dieModifier: 0
     dieModifierTarget: ''

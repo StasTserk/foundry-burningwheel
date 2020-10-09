@@ -1,4 +1,4 @@
-import { Ability, TracksTests } from "../bwactor.js";
+import { Ability, BWActor, TracksTests } from "../bwactor.js";
 import { ShadeString, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, ItemType, BWItemData } from "./item.js";
 
@@ -11,11 +11,21 @@ export class Skill extends Item<SkillData> {
 
     static calculateAptitude(this: Skill): void {
         if (!this.actor) { return; }
+        let aptitudeMod = this.actor.getAptitudeModifiers(this.name) + this.actor.getAptitudeModifiers(this.data.data.skilltype);
+
+        aptitudeMod += this.actor.getAptitudeModifiers(this.data.data.root1);
+        
+        if (this.data.data.root2) {
+            aptitudeMod += this.actor.getAptitudeModifiers(`${this.data.data.root1}/${this.data.data.root2}`)
+                + this.actor.getAptitudeModifiers(`${this.data.data.root2}/${this.data.data.root1}`);
+                + this.actor.getAptitudeModifiers(this.data.data.root2);
+        }
+        
         const player = this.actor;
         const root1exp = (player.data.data[this.data.data.root1] as Ability).exp;
         const root2exp = this.data.data.root2 ? (player.data.data[this.data.data.root2] as Ability).exp : root1exp;
         const rootAvg = Math.floor((parseInt(root1exp, 10) + parseInt(root2exp, 10)) / 2);
-        this.data.data.aptitude = 10 - rootAvg;
+        this.data.data.aptitude = 10 - rootAvg + aptitudeMod;
     }
 
     static disableIfWounded(this: SkillDataRoot, woundDice: number): void {
@@ -24,6 +34,9 @@ export class Skill extends Item<SkillData> {
         }
     }
     data: SkillDataRoot;
+    get actor(): BWActor {
+        return super.actor as BWActor;
+    }
 
     get type(): ItemType {
         return super.type as ItemType;

@@ -137,6 +137,7 @@ export class BWActor extends Actor {
         this.data.circlesBonus = [];
         this.data.circlesMalus = [];
         this.data.martialSkills = [];
+        this.data.socialSkills = [];
         this.data.sorcerousSkills = [];
         this.data.toolkits = [];
         this.data.fightWeapons = [];
@@ -158,6 +159,8 @@ export class BWActor extends Actor {
                             this.data.martialSkills.push(i);
                         } else if ((i as SkillDataRoot).data.skilltype === "sorcerous") {
                             this.data.sorcerousSkills.push(i);
+                        } else if ((i as SkillDataRoot).data.skilltype === "social") {
+                            this.data.socialSkills.push(i);
                         }
                         break;
                     case "reputation":
@@ -397,6 +400,7 @@ export interface BWActorDataRoot extends ActorData<BWCharacterData | NpcData> {
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
+    socialSkills: SkillDataRoot[];
     sorcerousSkills: SkillDataRoot[];
     wildForks: SkillDataRoot[];
 

@@ -46,6 +46,17 @@
             <div>Body of Argument:</div>
             <input type="number" {{disabled side1ReadOnly}} name="boa1" value="{{boa1}}">/
             <input type="number" {{disabled side1ReadOnly}} name="boa1Max" value="{{boa1Max}}">
+            {{#if (eq side1ReadOnly false)}}
+            <select name="actor1Skill">
+                {{#select actor1Skill}}
+                <option value="">Pick a social skill</option>
+                {{#each actor1Skills}}
+                <option value="{{this.id}}">{{this.label}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor1._id}}" data-skill-id="{{actor1Skill}}"><i class="fas fa-dice"></i></button>
+            {{/if}}
             {{#if gmView}}
             <div class="pill-toggle">
                 <input type="checkbox" name="blindS1" id="blindS1" {{checked blindS1}}>
@@ -144,6 +155,17 @@
             <div>Body of Argument:</div>
             <input type="number" {{disabled side2ReadOnly}} name="boa2" value="{{boa2}}">/
             <input type="number" {{disabled side2ReadOnly}} name="boa2Max" value="{{boa2Max}}">
+            {{#if (eq side2ReadOnly false)}}
+            <select name="actor2Skill">
+                {{#select actor2Skill}}
+                <option value="">Pick a social skill</option>
+                {{#each actor2Skills}}
+                <option value="{{this.id}}">{{this.label}}</option>
+                {{/each}}
+                {{/select}}
+            </select>
+            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor2._id}}" data-skill-id="{{actor2Skill}}"><i class="fas fa-dice"></i></button>
+            {{/if}}
             {{#if gmView}}
             <div class="pill-toggle">
                 <input type="checkbox" name="blindS2" id="blindS2" {{checked blindS2}}>

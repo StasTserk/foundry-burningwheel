@@ -81,7 +81,7 @@ async function skillRollCallback(
     if (splitPool) {
         splitPoolString = await getSplitPoolText(splitPool, skill.data.data.open, skill.data.data.shade);
     }
-    extraInfo = splitPoolString ? splitPoolString + extraInfo : extraInfo;
+    extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';

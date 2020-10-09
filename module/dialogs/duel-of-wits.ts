@@ -1,5 +1,12 @@
+import { Skill, SkillDataRoot } from "../items/item.js";
+import { BWActor } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
+import { handleLearningRoll } from "../rolls/rollLearning.js";
+import { BWCharacter } from "../character.js";
+import { handleSkillRoll } from "../rolls/rollSkill.js";
+import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
+import { Npc } from "../npc.js";
 
 export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
@@ -33,6 +40,50 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         html.find("input, select, textarea").on('change', (e) => this.propagateChange(e));
         html.find("button[data-action='reset-round']").on('click', (_) => this.clearRound());
         html.find("button[data-action='reset-everything']").on('click', (_) => this.clearEverything());
+        html.find("button[data-action='roll-dow']").on('click', (e) => this._handleRoll(e));
+    }
+
+    private _handleRoll(e: JQuery.ClickEvent) {
+        e.preventDefault();
+        const target = e.currentTarget as HTMLButtonElement;
+        if (target.dataset.actorId === "") {
+            return;
+        }
+
+        if (target.dataset.skillId === "") {
+            return;
+        }
+        const actor = game.actors.entities.find(a => a._id === target.dataset.actorId) as BWActor;
+        const skill = actor?.getOwnedItem(target.dataset.skillId || "") as Skill | undefined;
+        if (!skill) {
+            return;
+        }
+        if (actor?.data.type === "character") {
+            if (skill.data.data.learning) {
+                handleLearningRoll({
+                    actor: (actor as BWActor & BWCharacter),
+                    skill,
+                    dataPreset: {
+                        offerSplitPool: true
+                }});
+            } else {
+                handleSkillRoll({
+                    actor: (actor as BWActor & BWCharacter),
+                    skill,
+                    dataPreset: {
+                        offerSplitPool: true
+                }});
+            }
+        } else {
+            // handle roll as npc
+            handleNpcSkillRoll({
+                actor: (actor as BWActor & Npc),
+                skill,
+                dataPreset: {
+                    offerSplitPool: true
+                }
+            });
+        }
     }
 
     getData(): DuelOfWitsData {
@@ -43,8 +94,10 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.side1Options = actors.filter(a => a._id !== data.side2ActorId);
         data.side2Options = actors.filter(a => a._id !== data.side1ActorId);
 
-        data.actor1 = actors.find(a => a._id === data.side1ActorId);
-        data.actor2 = actors.find(a => a._id === data.side2ActorId);
+        data.actor1 = actors.find(a => a._id === data.side1ActorId) as BWActor | undefined;
+        data.actor1Skills = (data.actor1?.data.socialSkills || []).map((s: SkillDataRoot & { _id: string }) => { return { id: s._id, label: s.name };});
+        data.actor2 = actors.find(a => a._id === data.side2ActorId) as BWActor | undefined;
+        data.actor2Skills = (data.actor2?.data.socialSkills || []).map((s: SkillDataRoot & { _id: string }) => { return { id: s._id, label: s.name };});
 
         data.side1ReadOnly = !data.actor1 || !data.actor1.owner;
         data.side2ReadOnly = !data.actor2 || !data.actor2.owner;
@@ -77,6 +130,8 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.side2ActorId = "";
         data.statement1 = "";
         data.statement2 = "";
+        data.actor1Skill = "";
+        data.actor2Skill = "";
 
         await game.settings.set("burningwheel", this.data.settingName, JSON.stringify(this.data.data));
         this.syncData(this.data.data);
@@ -111,6 +166,10 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
 }
 
 interface DuelOfWitsData {
+    actor1Skills: { id: string; label: string; }[];
+    actor2Skills: { id: string; label: string; }[];
+    actor1Skill: string;
+    actor2Skill: string;
     side1ActorId: string;
     side2ActorId: string;
     boa1: number;
@@ -119,8 +178,8 @@ interface DuelOfWitsData {
     boa2Max: number;
     statement1: string;
     statement2: string;
-    actor1?: Actor;
-    actor2?: Actor;
+    actor1?: BWActor;
+    actor2?: BWActor;
 
     side1Options: Actor[];
     side2Options: Actor[];

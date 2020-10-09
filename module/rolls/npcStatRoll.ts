@@ -84,7 +84,7 @@ async function statRollCallback(
     if (rollData.splitPool) {
         splitPoolString = await getSplitPoolText(rollData.splitPool, open, shade);
     }
-    extraInfo = splitPoolString ? splitPoolString + extraInfo : extraInfo;
+    extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
     
     const data: RollChatMessageData = {
         name: `${name.titleCase()}`,

@@ -56,5 +56,9 @@ export interface TraitData extends HasPointCost {
     affiliationName: string;
     affiliationDice: string; // as number
 
+    hasAptitudeModifier: boolean;
+    aptitudeTarget: string;
+    aptitudeModifier: number;
+
     callonTarget: string;
 }

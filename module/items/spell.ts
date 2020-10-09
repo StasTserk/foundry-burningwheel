@@ -23,8 +23,10 @@ export class Spell extends Item<SpellData> {
         }
         this.data.spellLengths = weaponLengthSelect;
 
-        if (this.data.hasOwner) {
-            this.data.data.aptitude = 10 - parseInt(this.actor?.data.data.perception.exp || "1");
+        if (this.data.hasOwner && this.actor) {
+            this.data.data.aptitude = 10 - parseInt(this.actor.data.data.perception.exp || "1")
+                + this.actor.getAptitudeModifiers("perception")
+                + this.actor.getAptitudeModifiers("spells");
         }
     }
 

@@ -74,8 +74,10 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             this.data.data.participants = [];
             this.data.data.participantIds = [];
             this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+            this.data.actors = [];
             this.syncData(this.data.data);
             this.persistState(this.data.data);
+            this._syncActors();
             this.render();
         });
 

@@ -77,7 +77,7 @@ export function buildDiceSourceObject(
 export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, itemId?: string):
         RerollData {
     const coreData: RerollData = {
-        dice: roll.dice[0].rolls.map(r => r.roll).join(","),
+        dice: roll.dice[0].results.map(r => r.result).join(","),
         actorId: actor._id,
     };
     if (accessor) {
@@ -165,7 +165,7 @@ export async function rollDice(numDice: number, open = false, shade: helpers.Sha
         return;
     } else {
         const tgt = shade === 'B' ? '3' : (shade === 'G' ? '2' : '1');
-        const roll = new Roll(`${numDice}d6${open?'x':''}cs>${tgt}`).roll();
+        const roll = new Roll(`${numDice}d6${open?'x6':''}cs>${tgt}`).roll();
         if (game.dice3d) {
             return game.dice3d.showForRoll(roll, game.user, true, null, false)
                 .then(_ => helpers.sleep(500))
@@ -294,16 +294,24 @@ export async function rollWildFork(numDice: number, shade: helpers.ShadeString =
         return;
     }
     const tgt = shade === 'B' ? 3 : (shade === 'G' ? 2 : 1);
-    const die = new AstrologyDie(6);
-    die.roll(numDice);
-    die.explode([6,1]);
-    die.countSuccess(tgt, ">");
+    const die = new AstrologyDie({ diceNumber: numDice, target: tgt });
+    die.evaluate();
+    // die.explode([6,1]);
+    // die.countSuccess(tgt, ">");
     if (game.dice3d) {
         game.dice3d.show({
-            formula: `${die.results.length}d6`,
-            results: die.rolls.map(r => r.roll),
-            whisper: null,
-            blind: false});
+            throws: {
+                dice: die.results.map(r => {
+                    return {
+                        result: r.result,
+                        resultLabel: r.result,
+                        type: "d6",
+                        vectors: [],
+                        options: {}
+                    };
+                })
+            }
+        });
     }
     return new Promise(r => r(die));
 }
@@ -319,9 +327,9 @@ export async function getSplitPoolText(numDice: number, open: boolean, shade: he
         const resultDiv = helpers.DivOfText(`${roll.result}`, "secondary-pool");
         const diceDiv = document.createElement('div');
         diceDiv.className = "secondary-dice";
-        roll.dice[0].rolls.forEach(r => {
-            const diceResult = helpers.DivOfText(r.roll, "roll-die");
-            diceResult.dataset.success = r.success;
+        roll.dice[0].results.forEach(r => {
+            const diceResult = helpers.DivOfText(r.result, "roll-die");
+            diceResult.dataset.success = r.success? "true" : "false";
             diceDiv.appendChild(diceResult);
         });
         parentDiv.appendChild(textDiv);
@@ -372,12 +380,30 @@ export function mergePartials<T extends RollDialogData>(target: Partial<T>, sour
 }
 
 export class AstrologyDie extends Die {
-    get results(): number[] {
-        return this.rolls.filter(r => !r.rerolled && !r.discarded).map(r => {
-            if ( r.success === true ) return 1;
-            else if (r.roll === 1) return -1;
-            else return 0;
-          });
+    constructor({ diceNumber, target }: { diceNumber: number, target: number}) {
+        super({ 
+            number: diceNumber,
+            faces: 6,
+            modifiers: [
+                "x",
+                `cs>=${target}`,
+                "df"
+            ],
+            options: {}
+        });
+    }
+    explode(_modifier: string): void {
+        let checked = 0;
+        while ( checked < this.results.length ) {
+            const r = this.results[checked];
+            checked++;
+            if (!r.active) continue;
+      
+            if (r.result === 1 || r.result === 6) {
+                r.exploded = true;
+                this.roll();
+            }
+        }
     }
 }
 
@@ -456,7 +482,8 @@ export interface RollChatMessageData {
     difficulty: number;
     specialPenalty?: { name: string, amount: number };
     success: boolean;
-    rolls: {success: boolean, roll: number}[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rolls: any[]; //{success: boolean, roll: number}[];
     difficultyGroup: string;
     nameClass: string;
     obstacleTotal: number;

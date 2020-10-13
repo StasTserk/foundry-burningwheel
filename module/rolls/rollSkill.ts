@@ -75,7 +75,7 @@ async function skillRollCallback(
 
     const wildForkDie = await rollWildFork(wildForks, skill.data.data.shade);
     const wildForkBonus = wildForkDie?.total || 0;
-    const wildForkDice = wildForkDie?.rolls || [];
+    const wildForkDice = wildForkDie?.results || [];
     
     let splitPoolString: string | undefined;
     if (splitPool) {
@@ -110,8 +110,9 @@ async function skillRollCallback(
         obstacleTotal: difficultyTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success,
-        rolls: roll.dice[0].rolls,
-        wildRolls: wildForkDice,
+        rolls: roll.dice[0].results,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        wildRolls: wildForkDice as any[],
         difficultyGroup: dg,
         penaltySources: obSources,
         dieSources,

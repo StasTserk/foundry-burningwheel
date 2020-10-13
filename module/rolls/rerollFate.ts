@@ -106,7 +106,9 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     const data: RerollMessageData = {
         title: "Fate Reroll",
         rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
-        rerolls: reroll.dice[0].rolls,
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        rerolls: reroll.dice[0].results as any[],
         successes,
         obstacleTotal,
         newSuccesses,

@@ -61,7 +61,7 @@ export class BWActor extends Actor {
     }
 
     prepareData(): void {
-        super.prepareData();
+        
         if (this.data.type === "character") {
             BWCharacter.prototype.bindCharacterFunctions.call(this);
         } else {
@@ -70,6 +70,8 @@ export class BWActor extends Actor {
 
         this._prepareActorData();
         this.prepareTypeSpecificData();
+
+        super.prepareData();
     }
 
     getForkOptions(skillName: string): { name: string, amount: number }[] {

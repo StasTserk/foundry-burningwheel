@@ -20,7 +20,7 @@ export class Armor extends Item {
 }
 
 export async function AssignDamage(armor: Armor, roll: Roll, location: string): Promise<number> {
-    const num1s = roll.dice[0].rolls.filter(r => r.roll === 1).length;
+    const num1s = roll.dice[0].results.filter(r => r.result === 1).length;
     if (num1s === 0) { return new Promise(r => r(0)); }
 
     const locationAccessor = `data.damage${location}`;
@@ -35,7 +35,7 @@ export async function AssignDamage(armor: Armor, roll: Roll, location: string): 
             return new Promise(r => r(1));
         case "superior":
             const reroll = await rollDice(num1s, false, "B");
-            if (reroll && reroll.dice[0].rolls.filter(r => r.roll === 1).length) {
+            if (reroll && reroll.dice[0].results.filter(r => r.result === 1).length) {
                 newDamage = Math.min(parseInt(armor.data.data.dice), damage + 1);                
                 updateData[locationAccessor] = newDamage;
                 await armor.update(updateData, null);

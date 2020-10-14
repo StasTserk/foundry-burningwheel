@@ -128,7 +128,7 @@ async function skillRollCallback(
 
     const wildForkDie = await rollWildFork(rollData.wildForks, skill.data.data.shade);
     const wildForkBonus = wildForkDie?.total || 0;
-    const wildForkDice = wildForkDie?.rolls || [];
+    const wildForkDice = wildForkDie?.results || [];
 
     const isSuccessful = parseInt(roll.result) + wildForkBonus >= rollData.difficultyTotal;
 
@@ -150,7 +150,7 @@ async function skillRollCallback(
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success: isSuccessful,
-        rolls: roll.dice[0].rolls,
+        rolls: roll.dice[0].results,
         wildRolls: wildForkDice,
         difficultyGroup: dg,
         penaltySources: rollData.obSources,

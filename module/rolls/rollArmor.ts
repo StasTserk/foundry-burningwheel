@@ -54,14 +54,14 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const roll = await rollDice(numDice, false, armorItem.data.data.shade || "B");
     if (!roll) { return; }
     const damageAssigned = await AssignDamage(armorItem, roll, location);
-    const isSuccess = roll.total >= 1 + va;
+    const isSuccess = (roll.total || 0) >= 1 + va;
     const rerollData = buildRerollData(actor, roll, undefined, armorItem._id);
     rerollData.type = "armor";
     const messageData: RollChatMessageData = {
         name: "Armor",
         successes: "" + roll.dice[0].total,
         success: isSuccess,
-        rolls: roll.dice[0].rolls,
+        rolls: roll.dice[0].results,
         difficulty: 1 + va,
         nameClass: getRollNameClass(false, armorItem.data.data.shade || "B"),
         difficultyGroup: "N/A",

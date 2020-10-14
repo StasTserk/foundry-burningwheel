@@ -105,7 +105,7 @@ async function ptgsRollCallback(
         nameClass: getRollNameClass(stat.open, stat.shade),
         obstacleTotal: difficultyTotal,
         success: isSuccessful,
-        rolls: roll.dice[0].rolls,
+        rolls: roll.dice[0].results,
         difficultyGroup,
         dieSources,
         penaltySources: obSources,

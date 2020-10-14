@@ -258,7 +258,7 @@ export class BWCharacter extends Actor<BWCharacterData>{
             "data.speed.exp",
             "data.agility.exp"
         ].some(accessor => {
-            return getProperty(this.data, accessor) !== data[accessor];
+            return data[accessor] && getProperty(this.data, accessor) !== data[accessor];
         });
     }
 

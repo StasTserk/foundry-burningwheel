@@ -16,8 +16,8 @@
         "lib/select2/select2.min.css"
     ],
     "packs": [],
-    "minimumCoreVersion": "0.6.0",
-    "compatibleCoreVersion": "0.6.6",
+    "minimumCoreVersion": "0.7.1",
+    "compatibleCoreVersion": "0.7.4",
     "socket": true,
     "initiative": "1d20",
     "gridDistance": 10,

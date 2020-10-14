@@ -107,11 +107,11 @@ function registerHelpers() {
     Handlebars.registerHelper("itemProgressTicks", (id: string, value: string, path: string, idLabel: string, numActive: number, numInactive: number) => {
         const progressHtml: string[] = [];
         progressHtml.push(`<div class="test-tracking">`);
-        progressHtml.push(`<input type="radio" data-item-id="${id}" value="0" name="${id}-${idLabel}" id="${id}-${idLabel}-0" data-binding="${path}" ${Number.isNaN(parseInt(value)) || value.toString() === "0" ? "checked" : ""}>`);
+        progressHtml.push(`<input type="radio" data-item-id="${id}" value="0" id="${id}-${idLabel}-0" data-binding="${path}" ${Number.isNaN(parseInt(value)) || value.toString() === "0" ? "checked" : ""}>`);
         progressHtml.push(`<label for="${id}-${idLabel}-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>`);
         
         for (let i = 1; i <= numActive + numInactive; i ++) {
-            progressHtml.push(`<input type="radio" data-item-id="${id}" value="${i}" name="${id}-${idLabel}" id="${id}-${idLabel}-${i}" data-binding="${path}"${value.toString() === i.toString() ? " checked" : ""}${i > numActive ? " disabled" : ""}>`);
+            progressHtml.push(`<input type="radio" data-item-id="${id}" value="${i}" id="${id}-${idLabel}-${i}" data-binding="${path}"${value.toString() === i.toString() ? " checked" : ""}${i > numActive ? " disabled" : ""}>`);
             progressHtml.push(`<label for="${id}-${idLabel}-${i}" class="progress-tick"></label>`);
         }
         progressHtml.push("</div>");

@@ -404,6 +404,13 @@ export class AstrologyDie extends Die {
             }
         }
     }
+    countFailures(_modifier: string): void {
+        for (const r of this.results) {
+            if (r.result === 1) {
+                r.count = -1;
+            }
+        }
+    }
 }
 
 export interface RollData {

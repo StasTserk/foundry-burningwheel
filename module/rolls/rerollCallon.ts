@@ -76,7 +76,7 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
     const data: RerollMessageData = {
         title: "Call-on Reroll",
         rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
-        rerolls: reroll.dice[0].rolls,
+        rerolls: reroll.dice[0].results.map(r => { return { roll: r.result, success: r.success || false }; }),
         successes,
         obstacleTotal,
         newSuccesses,

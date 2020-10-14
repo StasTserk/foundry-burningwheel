@@ -93,7 +93,7 @@ async function statRollCallback(
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(open, shade),
         success: isSuccessful,
-        rolls: roll.dice[0].rolls,
+        rolls: roll.dice[0].results,
         difficultyGroup: dg,
         penaltySources: rollData.obSources,
         dieSources: rollData.dieSources,

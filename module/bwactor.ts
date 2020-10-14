@@ -68,10 +68,12 @@ export class BWActor extends Actor {
             Npc.prototype.bindNpcFunctions.call(this);
         }
 
-        this._prepareActorData();
-        this.prepareTypeSpecificData();
-
         super.prepareData();
+        this.prepareTypeSpecificData();
+    }
+
+    prepareBaseData(): void {
+        this._prepareActorData();
     }
 
     getForkOptions(skillName: string): { name: string, amount: number }[] {

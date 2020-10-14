@@ -24,7 +24,7 @@ export class RangedWeapon extends Item {
 
     static GetWeaponMessageData(weapon: RangedWeapon): string {
         const element = document.createElement("div");
-        const roll = new Roll("1d6").roll().dice[0].rolls[0].roll as number;
+        const roll = new Roll("1d6").roll().dice[0].results[0].result as number;
         const incidental = roll <= (weapon.data.data.incidentalRoll || 0);
         const mark = !incidental && roll <= (weapon.data.data.markRoll || 0);
 

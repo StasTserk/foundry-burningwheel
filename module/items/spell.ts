@@ -35,7 +35,7 @@ export class Spell extends Item<SpellData> {
         element.className = "spell-extra-info";
         element.appendChild(DivOfText(spell.name, "spell-title"));
         if (spell.data.data.isWeapon) {
-            const roll = new Roll("1d6").roll().dice[0].rolls[0].roll as number;
+            const roll = new Roll("1d6").roll().dice[0].results[0].result;
             element.appendChild(DivOfText("I", "ims-header"));
             element.appendChild(DivOfText("M", "ims-header"));
             element.appendChild(DivOfText("S", "ims-header"));

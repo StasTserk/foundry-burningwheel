@@ -81,7 +81,7 @@ async function circlesRollCallback(
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(stat.open, stat.shade),
         success: parseInt(roll.result) >= rollData.difficultyTotal,
-        rolls: roll.dice[0].rolls,
+        rolls: roll.dice[0].results,
         difficultyGroup: rollData.difficultyGroup,
         dieSources: rollData.dieSources,
         penaltySources: rollData.obSources,

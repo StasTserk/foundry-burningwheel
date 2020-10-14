@@ -196,7 +196,7 @@ export async function getNoDiceErrorDialog(numDice: number): Promise<Application
 
 export async function maybeExpendTools(tools: Possession): Promise<{ expended: boolean, text: string }> {
     const roll = await rollDice(1, false, "B");
-    const result = roll?.dice[0].rolls[0].roll;
+    const result = roll?.dice[0].results[0].result;
     if (roll && result === 1) {
         return  {
             expended: true,
@@ -484,7 +484,7 @@ export interface RollDialogData {
 
 export interface RollChatMessageData {
     name: string;
-    successes: string;
+    successes: string | null;
     difficulty: number;
     specialPenalty?: { name: string, amount: number };
     success: boolean;

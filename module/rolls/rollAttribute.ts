@@ -69,7 +69,7 @@ async function attrRollCallback(
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(stat.open, stat.shade),
         success: isSuccessful,
-        rolls: roll.dice[0].rolls,
+        rolls: roll.dice[0].results,
         difficultyGroup: rollData.difficultyGroup,
         penaltySources: rollData.obSources,
         dieSources: { ...rollData.dieSources },

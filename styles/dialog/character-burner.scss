@@ -63,9 +63,10 @@
         color: rgba(black, 0.5);
     }
 
-    .burner-inline-total {
+    input[type="number"].burner-inline-total {
         display: inline-block;
         width: 2em;
+        height: 1.5em;
     }
 
     .burner-right-third {
@@ -130,6 +131,7 @@
         &[type="number"] {
             @include no-number-arrows;
             text-align: center;
+            height: 100%;
         }
     }
     h2 {
@@ -277,12 +279,10 @@
 
             .burner-rel-aff {
                 @include button-like(orange);
-                line-height: 1.4em;
             }
             .burner-rel-rep {
                 display: none;
                 @include button-like(blue);
-                line-height: 1.4em;
             }
             .burner-rel-checkbox:checked {
                 & ~ .burner-rel-aff {
@@ -343,7 +343,7 @@
             }
 
             &.select2-selection--single {
-                height: 25px;
+                height: 26px;
                 background: rgba(0, 0, 0, 0.05);
                 border-bottom: 1px solid black;
                 border-radius: 0px;
@@ -351,9 +351,9 @@
                 text-overflow: ellipsis;
 
                 .select2-selection__rendered {
-                    height: 25px;
+                    height: 26px;
                     padding-right: 0px;
-                    line-height: 25px;
+                    line-height: 26px;
 
                     &:focus {
                         border: 0;

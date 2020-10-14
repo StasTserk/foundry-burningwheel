@@ -111,8 +111,7 @@ async function skillRollCallback(
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
         success,
         rolls: roll.dice[0].results,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        wildRolls: wildForkDice as any[],
+        wildRolls: wildForkDice,
         difficultyGroup: dg,
         penaltySources: obSources,
         dieSources,

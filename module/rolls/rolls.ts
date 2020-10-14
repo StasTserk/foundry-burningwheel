@@ -296,11 +296,10 @@ export async function rollWildFork(numDice: number, shade: helpers.ShadeString =
     const tgt = shade === 'B' ? 3 : (shade === 'G' ? 2 : 1);
     const die = new AstrologyDie({ diceNumber: numDice, target: tgt });
     die.evaluate();
-    // die.explode([6,1]);
-    // die.countSuccess(tgt, ">");
+
     if (game.dice3d) {
         game.dice3d.show({
-            throws: {
+            throws: [ {
                 dice: die.results.map(r => {
                     return {
                         result: r.result,
@@ -310,7 +309,7 @@ export async function rollWildFork(numDice: number, shade: helpers.ShadeString =
                         options: {}
                     };
                 })
-            }
+            }]
         });
     }
     return new Promise(r => r(die));
@@ -386,8 +385,8 @@ export class AstrologyDie extends Die {
             faces: 6,
             modifiers: [
                 "x",
-                `cs>=${target}`,
-                "df"
+                `cs>${target}`,
+                "cf1"
             ],
             options: {}
         });
@@ -482,13 +481,12 @@ export interface RollChatMessageData {
     difficulty: number;
     specialPenalty?: { name: string, amount: number };
     success: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rolls: any[]; //{success: boolean, roll: number}[];
+    rolls: RollResult[];
     difficultyGroup: string;
     nameClass: string;
     obstacleTotal: number;
 
-    wildRolls?: {success: boolean, roll: number}[];
+    wildRolls?: RollResult[];
     dieSources?: { [i: string]: string };
     penaltySources?: { [i: string]: string };
     fateReroll?: RerollData;

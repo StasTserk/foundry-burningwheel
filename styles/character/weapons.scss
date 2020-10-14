@@ -152,6 +152,8 @@
             text-align: center;
             border-bottom: 1px solid black;
             margin: 0 2px;
+            height: min-content;
+            min-height: 21px;
         }
 
         .armor-damage-input {
@@ -159,6 +161,9 @@
             text-align: center;
             border: 0;
             border-bottom: 1px solid black;
+            height: 100%;
+            max-height: 21px;
+            border-radius: 0;
             @include no-number-arrows;
         }
 

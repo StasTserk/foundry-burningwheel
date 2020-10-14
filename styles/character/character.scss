@@ -123,7 +123,7 @@
 
             button {
                 width: 2.25em;
-                height: calc(2em - 1px);
+                height: 2em;
                 box-sizing: border-box;
                 padding: 0;
                 line-height: calc(2em - 3px);
@@ -136,20 +136,22 @@
                 border: 0;
                 border-bottom: 1px solid black;
                 text-align: center;
-                width: 2em;
+                flex: 0 0 2em;
                 height: 2em;
                 margin-left: 2px;
                 font-weight: bold;
+                font-size: 14px;
             }
 
             select.shade {
                 @include select-no-arrow;
                 height: 2em;
-                width: 2em;
+                flex: 0 0 2em;
                 border: 1px solid black;
                 border-radius: 0;
                 text-align-last: center;
                 font-weight: bold;
+                font-size: 14px;
             }
         }
 
@@ -161,7 +163,7 @@
             font-weight: bold;
         }
         .rollable-name {
-            width: calc(100% - 8em);
+            flex: 1 1;
             margin: 0 1em 0 0;
             font-size: 1.125em;
             line-height: 1.75em;
@@ -198,6 +200,7 @@
             margin-right: 5px;
             height: 1.75em;
             padding-top: 5px;
+            flex: 0 0 15px;
         }
 
         .collapse-checkbox:checked + .collapse-label > i {

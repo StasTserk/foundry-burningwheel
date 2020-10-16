@@ -121,7 +121,6 @@ async function skillRollCallback(
         extraInfo?: string) {
     const rollData = extractRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
-    const accessor = `data.${name}`;
 
     const roll = await rollDice(rollData.diceTotal, skill.data.data.open, skill.data.data.shade);
     if (!roll) { return; }
@@ -132,9 +131,9 @@ async function skillRollCallback(
 
     const isSuccessful = parseInt(roll.result) + wildForkBonus >= rollData.difficultyTotal;
 
-    const fateReroll = buildRerollData(actor, roll, accessor);
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill.id });
     const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(actor, roll, undefined, skill._id) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id }) as RerollData };
     });
 
     let splitPoolString: string | undefined;

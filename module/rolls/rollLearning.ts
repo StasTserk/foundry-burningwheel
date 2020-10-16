@@ -108,13 +108,13 @@ async function learningRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= rollData.difficultyTotal;
-    const fateReroll = buildRerollData(actor, roll, undefined, skill._id);
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id });
     if (fateReroll) { fateReroll.type = "learning"; }
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
         return {
             label: s,
             type: "learning",
-            ...buildRerollData(actor, roll, undefined, skill._id) as RerollData
+            ...buildRerollData({ actor, roll, itemId: skill._id }) as RerollData
         };
     });
 

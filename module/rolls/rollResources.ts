@@ -59,10 +59,10 @@ async function resourcesRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData(sheet.actor, roll, "data.resources");
+    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor: "data.resources" });
     const isSuccess = parseInt(roll.result) >= rollData.difficultyTotal;
     const callons: RerollData[] = sheet.actor.getCallons("resources").map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, "data.resources") as RerollData };
+        return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor: "data.resources" }) as RerollData };
     });
 
     const data: RollChatMessageData = {

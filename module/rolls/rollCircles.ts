@@ -69,9 +69,9 @@ async function circlesRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData(sheet.actor, roll, "data.circles");
+    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor: "data.circles" });
     const callons: RerollData[] = sheet.actor.getCallons("circles").map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, "data.circles") as RerollData };
+        return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor: "data.circles" }) as RerollData };
     });
 
     const data: RollChatMessageData = {

@@ -97,9 +97,9 @@ async function skillRollCallback(
         }
     }
 
-    const fateReroll = buildRerollData(actor, roll, undefined, skill._id);
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id });
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
-        return { label: s, ...buildRerollData(actor, roll, undefined, skill._id) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
 

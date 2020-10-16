@@ -69,9 +69,9 @@ async function taxTestCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
-    const fateReroll = buildRerollData(actor, roll, "data.forte");
+    const fateReroll = buildRerollData({ actor, roll, accessor: "data.forte" });
     const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(actor, roll, "data.forte") as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, accessor: "data.forte" }) as RerollData };
     });
 
     const data: RollChatMessageData = {

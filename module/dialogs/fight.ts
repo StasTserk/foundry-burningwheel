@@ -127,7 +127,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         const positionPenalty = parseInt(this.data.data.participants[index].positionPenalty.toString());
         if (type === "skill") {
             let itemIdString = this.data.data.participants[index].weaponId;
-            if (itemIdString === "") {
+            if (!itemIdString) {
                 return notifyError("No weapon selected", "A weapon (or bare fists) must be selected to determine which skill to use for the roll.");
             }
             let attackIndex: number | undefined;

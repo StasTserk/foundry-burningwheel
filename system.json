@@ -2,7 +2,7 @@
     "name": "burningwheel",
     "title": "The Burning Wheel",
     "description": "Community Foundry implementation of The Burning Wheel",
-    "version": "0.4.5",
+    "version": "0.5.0",
     "templateVersion": 13,
     "author": "Stas Tserkovny",
     "esmodules": [
@@ -17,7 +17,7 @@
     ],
     "packs": [],
     "minimumCoreVersion": "0.7.1",
-    "compatibleCoreVersion": "0.7.4",
+    "compatibleCoreVersion": "0.7.5",
     "socket": true,
     "initiative": "1d20",
     "gridDistance": 10,

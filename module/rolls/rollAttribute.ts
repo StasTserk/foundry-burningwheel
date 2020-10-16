@@ -58,9 +58,9 @@ async function attrRollCallback(
 
     const isSuccessful = parseInt(roll.result) >= (rollData.difficultyTotal);
 
-    const fateReroll = buildRerollData(sheet.actor, roll, accessor);
+    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor });
     const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(sheet.actor, roll, accessor) as RerollData };
+        return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor }) as RerollData };
     });
     const data: RollChatMessageData = {
         name: `${name}`,

@@ -74,7 +74,13 @@ export function buildDiceSourceObject(
     return dieSources;
 }
 
-export function buildRerollData(actor: BWActor, roll: Roll, accessor?: string, itemId?: string):
+export interface BuildRerollOptions {
+    actor: BWActor;
+    roll: Roll;
+    accessor?: string;
+    itemId?: string;
+}
+export function buildRerollData({ actor, roll, accessor, itemId }: BuildRerollOptions):
         RerollData {
     const coreData: RerollData = {
         dice: roll.dice[0].results.map(r => r.result).join(","),

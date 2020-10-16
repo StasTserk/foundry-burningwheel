@@ -22,7 +22,7 @@ export async function handleNpcStatRollEvent({ target, sheet }: NpcRollEventOpti
     const shade = getProperty(actor.data, target.dataset.shade || "") as helpers.ShadeString;
     const open = target.dataset.action === "rollStatOpen";
     
-    const statName = target.dataset.rollableName || "Unknown Stat";
+    const statName = (target.dataset.rollableName || "Unknown Stat") as NpcStatName;
     return handleNpcStatRoll({ dice, shade, open, statName, actor });
 }
 
@@ -75,9 +75,9 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= rollData.difficultyTotal;
 
-    const fateReroll = buildRerollData(actor, roll, accessor);
+    const fateReroll = buildRerollData({ actor, roll, accessor });
     const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(actor, roll, accessor) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, accessor }) as RerollData };
     });
 
     let splitPoolString: string | undefined;
@@ -125,5 +125,7 @@ interface NpcStatRollOptions extends RollOptions {
     dice: number;
     shade: helpers.ShadeString;
     open: boolean;
-    statName: string;
+    statName: NpcStatName;
 }
+
+declare type NpcStatName = "speed" | "agility" | "power" | "forte" | "perception" | "health" | "will" | "circles" | "steel" | "resources";

@@ -80,7 +80,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
             dice,
             shade,
             open: false,
-            statName: type.titleCase(),
+            statName: type,
             actor: (actor as BWActor & Npc),
             dataPreset
         });

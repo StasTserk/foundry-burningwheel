@@ -70,9 +70,9 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
-    const fateReroll = buildRerollData(actor, roll, accessor);
+    const fateReroll = buildRerollData({ actor, roll, accessor });
     const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData(actor, roll, accessor) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, accessor }) as RerollData };
     });
 
     let extraInfo: string | undefined;

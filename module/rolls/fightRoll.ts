@@ -1,7 +1,7 @@
 import { BWItem, MeleeWeapon, RangedWeapon, Skill, Spell } from "../items/item.js";
 import { Ability, BWActor } from "../bwactor.js";
 import { handleStatRoll } from "./rollStat.js";
-import { ShadeString } from "../helpers.js";
+import { notifyError, ShadeString } from "../helpers.js";
 import { handleNpcStatRoll } from "./npcStatRoll.js";
 import { Npc } from "../npc.js";
 import { RollDialogData } from "./rolls.js";
@@ -22,11 +22,11 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
     };
     if (type === "skill") {
         if (!itemId) {
-            throw Error("Item id must be specified when rolling an attack with a weapon or spell");
+            return notifyError("No Item Specified", "Item id must be specified when rolling an attack with a weapon or spell");
         }
         const item = actor.getOwnedItem(itemId) as BWItem;
         if (!item) {
-            throw Error("Item linked appears not to exist on the player's sheet");
+            return notifyError("Missing Item", `Item linked  - id ${itemId} - appears not to exist on the actor's sheet.`);
         }
         switch (item.type) {
             case "melee weapon": case "ranged weapon":
@@ -36,6 +36,11 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 // handle melee attack at the given index.
                 const weapon = item as MeleeWeapon | RangedWeapon;
                 const weaponSkill = actor.getOwnedItem(item.data.data.skillId) as Skill;
+
+                if (!weaponSkill) {
+                    return notifyError("No Associated Skill", "In order for a skill test to be rolled, a weapon or spell has to be associated with a skill. Check the Actor's sheet to make sure the selected weapon has a chosen skill.");
+                }
+
                 if (actor.data.type === "character") { 
                     return handleWeaponRoll({
                         actor: (actor as BWActor & BWCharacter),

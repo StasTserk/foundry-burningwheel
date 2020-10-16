@@ -18,8 +18,6 @@ export function handleWeaponRollEvent({ target, sheet }: EventHandlerOptions): P
             "The weapon used to roll this attack appears to no longer be present on the character.");
     }
 
-    
-
     const skillId = target.dataset.skillId;
     if (!skillId) {
         return helpers.notifyError("No Skill Specified",

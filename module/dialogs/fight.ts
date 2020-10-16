@@ -1,7 +1,7 @@
 import { BWItemData, MeleeWeaponRootData } from "../items/item.js";
 import { NpcDataRoot } from "../npc.js";
 import { BWActor, CharacterDataRoot } from "../bwactor.js";
-import { StringIndexedObject } from "../helpers.js";
+import { notifyError, StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
 
@@ -120,12 +120,16 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
     private _handleRoll(e: JQuery.ClickEvent, type: "speed" | "agility" | "power" | "skill") {
         e.preventDefault();
+        console.log(this.data.actors);
         const index = parseInt(e.target.dataset.index || "0");
         const actor = this.data.actors[index];
         const engagementBonus = parseInt(this.data.data.participants[index].engagementBonus.toString());
         const positionPenalty = parseInt(this.data.data.participants[index].positionPenalty.toString());
         if (type === "skill") {
             let itemIdString = this.data.data.participants[index].weaponId;
+            if (itemIdString === "") {
+                return notifyError("No weapon selected", "A weapon (or bare fists) must be selected to determine which skill to use for the roll.");
+            }
             let attackIndex: number | undefined;
             if (itemIdString.indexOf('_') !== -1) {
                 attackIndex = parseInt(itemIdString.substr(itemIdString.indexOf('_')+1));

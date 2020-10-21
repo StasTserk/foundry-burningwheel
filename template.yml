@@ -205,7 +205,7 @@ Item:
     routine: 0
     difficult: 0
     challenging: 0
-    root1: ''
+    root1: 'perception'
     root2: ''
     learning: false
     learningProgress: 0

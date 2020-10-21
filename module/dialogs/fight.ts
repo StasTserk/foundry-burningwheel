@@ -304,7 +304,10 @@ const options = {
         "Avoid", "Block", "Counter&shy;strike"
     ],
     "Basic Actions": [
-        "Assess", "Change Stance", "Charge/&shy;Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up", "Disarm", "Feint", "Throw Person"
+        "Assess", "Change Stance", "Charge/&shy;Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up",
+    ],
+    "Special Actions": [
+        "Beat", "Disarm", "Feint", "Throw Person"
     ],
     "Shooting Actions": [
         "Throw Object/&shy;Weapon", "Aim", "Nock and Draw", "Reload", "Fire", "Release Bow", "Snapshot"

@@ -5,6 +5,11 @@
         height: min-content;
         margin-bottom: 5px;
     }
+
+    input {
+        border-radius: 0;
+    }
+
     .portrait {
         width: 150px;
         height: 150px;
@@ -110,14 +115,20 @@
             text-align: center;
             input {
                 display: inline-block;
-                width: 2em;
                 @include no-number-arrows;
                 text-align: center;
+                width: 1.5em;
+                font-size: 16px;
+                border: 0;
+                border-bottom: 1px solid black;
             }
             select {
                 display: inline-block;
                 @include select-no-arrow;
                 text-align-last: center;
+                width: 1.5em;
+                border: 1px solid black;
+                border-radius: 0;
             }
 
             &.stat-rollable:hover {
@@ -206,7 +217,13 @@
         width: 100%;
 
         & > .npc-section-label {
-            grid-row: 1 / 5;
+            grid-column: 1;
+        }
+        & > .bits-name {
+            grid-column: 2;
+        }
+        & > input {
+            grid-column: 3;
         }
     }
 

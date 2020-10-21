@@ -240,24 +240,30 @@
         <div class="item-entry" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}} [{{s.data.shade}}{{s.data.exp}}]</div>
         {{/each}}
     </div>
+    {{#if affiliations}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Affiliations</div>
         {{#each affiliations as |a|}}
         <div class="item-entry" data-id="{{a._id}}" data-action="edit">{{a.data.dice}}D {{a.name}}</div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if relationships}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Relationships</div>
         {{#each relationships as |r|}}
         <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.name}}</div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if reputations}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Reputations</div>
         {{#each reputations as |r|}}
         <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.data.dice}}D {{r.name}}</div>
         {{/each}}
     </div>
+    {{/if}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Gear</div>
         {{#each gear as |g|}}
@@ -310,11 +316,13 @@
         {{/if}}
     </div>
     {{/if}}
+    {{#if spells}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Spells</div>
         {{#each spells as |s|}}
         <div class="item-entry" data-action="rollSpell" data-skill-id="{{s.data.skillId}}" data-spell-id="{{s._id}}">{{s.name}}</div>
         {{/each}}
     </div>
+    {{/if}}
     {{/if}}
 </form>

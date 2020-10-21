@@ -3,7 +3,7 @@
     "title": "The Burning Wheel",
     "description": "Community Foundry implementation of The Burning Wheel",
     "version": "0.5.0",
-    "templateVersion": 13,
+    "templateVersion": 12,
     "author": "Stas Tserkovny",
     "esmodules": [
         "module/burningwheel.js"
@@ -16,7 +16,7 @@
         "lib/select2/select2.min.css"
     ],
     "packs": [],
-    "minimumCoreVersion": "0.7.1",
+    "minimumCoreVersion": "0.7.5",
     "compatibleCoreVersion": "0.7.5",
     "socket": true,
     "initiative": "1d20",

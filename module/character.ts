@@ -155,6 +155,9 @@ export class BWCharacter extends Actor<BWCharacterData>{
             woundDice --;
         }
 
+        woundDice = Math.max(0,
+            woundDice - (this.data.data.ptgs.woundRecovery1 || 0) - (this.data.data.ptgs.woundRecovery2 || 0) - (this.data.data.ptgs.woundRecovery3 || 0));
+
         this.data.data.ptgs.woundDice = woundDice;
     }
 
@@ -372,6 +375,9 @@ export interface Ptgs {
         woundNotes1: string,
         woundNotes2: string,
         woundNotes3: string,
+        woundRecovery1: number,
+        woundRecovery2: number,
+        woundRecovery3: number,
         shrugging: boolean, // shrug it off is active
         gritting: boolean, // grit your teeth is active
 

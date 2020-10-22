@@ -105,6 +105,20 @@
             text-align: center;
         }
 
+        input {
+            width: 35%;
+            height: 1.75em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .recovery-label {
+            width: 60%;
+            text-align: center;
+            line-height: 2em;
+            font-weight: bolder;
+        }
+
         textarea {
             resize: none;
             border: 0;

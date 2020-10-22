@@ -26,6 +26,9 @@ Actor:
         woundNotes1: ''
         woundNotes2: ''
         woundNotes3: ''
+        woundRecovery1: 0
+        woundRecovery2: 0
+        woundRecovery3: 0
         shrugging: false
         gritting: false
     displayProps:

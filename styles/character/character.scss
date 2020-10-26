@@ -3,6 +3,8 @@
 .character {
     h2 {
         &.section-header {
+            display: flex;
+
             &:hover {
                 background-color: rgba(0,0,0,0.15);
             }
@@ -11,9 +13,22 @@
             margin-bottom: 0;
             background-color: rgba(0,0,0,0.05);
 
+            & > label {
+                flex: 1 1 100px;
+            }
+
+            & > i {
+                flex: 0 0 1em;
+                margin: 2px 0 0 5px;
+            }
+
+            input.section-collapse:checked + i {
+                transform: rotate(-90deg);
+            }
+
             .settings-gear {
                 font-size: .75em;
-                float: right;
+                flex: 0 0 1em;
                 margin: 5px 5px 0 0;
                 color: grey;
                 &:hover {

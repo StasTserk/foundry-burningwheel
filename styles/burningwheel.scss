@@ -36,6 +36,10 @@ button.rollable {
     height: 2.2em;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 input {
     &.exponent {
         width: 2.5em;

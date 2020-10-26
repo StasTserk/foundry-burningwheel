@@ -9,8 +9,8 @@
         <div class="section-index item-grid col-2">
             <h2 class="section-header"><label>Character Index</label>
                 <input id="{{actor._id}}-settings-checkbox" type="checkbox" class="hidden settings-checkbox" name="data.settings.showSettings" {{checked data.settings.showSettings}}>
-                <label class="settings-gear" for="{{actor._id}}-settings-checkbox"><i class="fas fa-cogs"></i></label>
-                {{#if data.settings.showBurner}}<label class="settings-gear character-burner-icon"><i class="fas fa-fire-alt"></i></label>{{/if}}
+                {{#if data.settings.showBurner}}<label class="settings-gear character-burner-icon clickable"><i class="fas fa-fire-alt"></i></label>{{/if}}
+                <label class="settings-gear clickable" for="{{actor._id}}-settings-checkbox"><i class="fas fa-cogs"></i></label>
             </h2>
             <div>
                 <label for="{{actor._id}}-character-name">Name</label>
@@ -61,7 +61,7 @@
     <h2 class="section-header">
         <input type="checkbox" id="{{actor._id}}-collapseBeliefs" name="data.collapseBeliefs" class="section-collapse" {{ checked data.collapseBeliefs }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseBeliefs" class="section-collapse-label">Beliefs</label>
+        <label for="{{actor._id}}-collapseBeliefs" class="section-collapse-label clickable">Beliefs</label>
     </h2>
     {{#if data.collapseBeliefs}}{{else}}
     <div class="beliefs">
@@ -81,9 +81,9 @@
 
     {{!-- Instincts Sheet Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseInstincts" name="data.collapseInstincts" class="section-collapse instincts-collapse" {{ checked data.collapseInstincts }}>
+        <input type="checkbox" id="{{actor._id}}-collapseInstincts" name="data.collapseInstincts" class="section-collapse" {{ checked data.collapseInstincts }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseInstincts" class="section-collapse-label">Instincts</label>
+        <label for="{{actor._id}}-collapseInstincts" class="section-collapse-label clickable">Instincts</label>
     </h2>
     {{#if data.collapseInstincts}}{{else}}
     <div class="instincts">
@@ -103,9 +103,9 @@
 
     {{!-- Traits Sheet Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseTraits" name="data.collapseTraits" class="section-collapse traits-collapse" {{ checked data.collapseTraits }}>
+        <input type="checkbox" id="{{actor._id}}-collapseTraits" name="data.collapseTraits" class="section-collapse" {{ checked data.collapseTraits }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseTraits" class="section-collapse-label">Traits</label>
+        <label for="{{actor._id}}-collapseTraits" class="section-collapse-label clickable">Traits</label>
     </h2>
     {{#if data.collapseTraits}}{{else}}
     <div class="traits flex-row">
@@ -164,9 +164,9 @@
 
     {{!-- Stats Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseStats" name="data.collapseStats" class="section-collapse stats-collapse" {{ checked data.collapseStats }}>
+        <input type="checkbox" id="{{actor._id}}-collapseStats" name="data.collapseStats" class="section-collapse" {{ checked data.collapseStats }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseStats" class="section-collapse-label">Stats</label>
+        <label for="{{actor._id}}-collapseStats" class="section-collapse-label clickable">Stats</label>
     </h2>
     {{#if data.collapseStats}}{{else}}
     <div class="stats">
@@ -185,9 +185,9 @@
 
     {{!-- Attributes Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse attributes-collapse" {{ checked data.collapseAttributes }}>
+        <input type="checkbox" id="{{actor._id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse" {{ checked data.collapseAttributes }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseAttributes" class="section-collapse-label">Attributes</label>
+        <label for="{{actor._id}}-collapseAttributes" class="section-collapse-label clickable">Attributes</label>
     </h2>
     {{#if data.collapseAttributes}}{{else}}
     <div class="attributes">
@@ -242,9 +242,9 @@
     {{/if}}
     
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseRelationships" name="data.collapseRelationships" class="section-collapse relationships-collapse" {{ checked data.collapseRelationships }}>
+        <input type="checkbox" id="{{actor._id}}-collapseRelationships" name="data.collapseRelationships" class="section-collapse" {{ checked data.collapseRelationships }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseRelationships" class="section-collapse-label">Relationships & Reputations</label>
+        <label for="{{actor._id}}-collapseRelationships" class="section-collapse-label clickable">Relationships & Reputations</label>
     </h2>
     {{#if data.collapseRelationships}}{{else}}
     <div class="relationship-section flex-row">
@@ -284,9 +284,9 @@
 
     {{!-- Gear section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseGear" name="data.collapseGear" class="section-collapse gear-collapse" {{ checked data.collapseGear }}>
+        <input type="checkbox" id="{{actor._id}}-collapseGear" name="data.collapseGear" class="section-collapse" {{ checked data.collapseGear }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseGear" class="section-collapse-label">Gear, Possessions, and Property</label>
+        <label for="{{actor._id}}-collapseGear" class="section-collapse-label clickable">Gear, Possessions, and Property</label>
     </h2>
     {{#if data.collapseGear}}{{else}}
     <div class="gear item-grid col-4">
@@ -305,9 +305,9 @@
 
     {{!-- Spells Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapse-spells" name="data.collapseSpells" class="section-collapse spells-collapse" {{ checked data.collapseSpells }}>
+        <input type="checkbox" id="{{actor._id}}-collapse-spells" name="data.collapseSpells" class="section-collapse" {{ checked data.collapseSpells }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapse-spells" class="section-collapse-label">Spells</label>
+        <label for="{{actor._id}}-collapse-spells" class="section-collapse-label clickable">Spells</label>
     </h2>
     {{#if data.collapseSpells}}{{else}}
     <div class="spell-section item-grid col-3">
@@ -363,9 +363,9 @@
 
     {{!-- Misc Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseMisc" name="data.collapseMisc" class="section-collapse misc-collapse" {{ checked data.collapseMisc }}>
+        <input type="checkbox" id="{{actor._id}}-collapseMisc" name="data.collapseMisc" class="section-collapse" {{ checked data.collapseMisc }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseMisc" class="section-collapse-label">Notes and Other Miscellanea</label>
+        <label for="{{actor._id}}-collapseMisc" class="section-collapse-label clickable">Notes and Other Miscellanea</label>
     </h2>
     {{#if data.collapseMisc}}{{else}}
     <div class="misc-section item-grid col-3">
@@ -377,9 +377,9 @@
 
     {{!-- Skills Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
+        <input type="checkbox" id="{{actor._id}}-collapseSkills" name="data.collapseSkills" class="section-collapse" {{ checked data.collapseSkills }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseSkills" class="section-collapse-label">Skills</label>
+        <label for="{{actor._id}}-collapseSkills" class="section-collapse-label clickable">Skills</label>
     </h2>
     {{#if data.collapseSkills}}{{else}}
     <div class="skills">
@@ -394,9 +394,9 @@
 
     {{!-- Learning Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseLearning" name="data.collapseLearning" class="section-collapse learning-collapse" {{ checked data.collapseLearning }}>
+        <input type="checkbox" id="{{actor._id}}-collapseLearning" name="data.collapseLearning" class="section-collapse" {{ checked data.collapseLearning }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseLearning" class="section-collapse-label">Learning and Practice</label>
+        <label for="{{actor._id}}-collapseLearning" class="section-collapse-label clickable">Learning and Practice</label>
     </h2>
     {{#if data.collapseLearning}}{{else}}
     <div class="learning-practice flex-row">
@@ -415,9 +415,9 @@
 
     {{!-- PTGS section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapsePtgs" name="data.collapsePtgs" class="section-collapse ptgs-collapse" {{ checked data.collapsePtgs }}>
+        <input type="checkbox" id="{{actor._id}}-collapsePtgs" name="data.collapsePtgs" class="section-collapse" {{ checked data.collapsePtgs }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapsePtgs" class="section-collapse-label">Injury and Recovery</label>
+        <label for="{{actor._id}}-collapsePtgs" class="section-collapse-label clickable">Injury and Recovery</label>
     </h2>
     {{#if data.collapsePtgs}}{{else}}
     <div class="ptgs">
@@ -427,9 +427,9 @@
 
     {{!-- Weapons and Armor Section --}}
     <h2 class="section-header">
-        <input type="checkbox" id="{{actor._id}}-collapseCombat" name="data.collapseCombat" class="section-collapse combat-collapse" {{ checked data.collapseCombat }}>
+        <input type="checkbox" id="{{actor._id}}-collapseCombat" name="data.collapseCombat" class="section-collapse" {{ checked data.collapseCombat }}>
         <i class="fas fa-chevron-down"></i>
-        <label for="{{actor._id}}-collapseCombat" class="section-collapse-label">Weapons and Armor</label>
+        <label for="{{actor._id}}-collapseCombat" class="section-collapse-label clickable">Weapons and Armor</label>
     </h2>
     {{#if data.collapseCombat}}{{else}}
     <div class="combat-section flex-row">

@@ -100,15 +100,6 @@ input.section-collapse {
     display: none;
 }
 
-input.section-collapse:checked + label.section-collapse-label > h2 > i {
-    transform: rotate(-90deg);
-}
-
-label.section-collapse-label > h2 > i {
-    margin-left: 10px;
-    float: left;
-}
-
 div.pill-toggle {
     @include pill-toggle;
 

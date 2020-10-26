@@ -57,10 +57,12 @@
         </div>
     </div>
 
+    {{!-- Beliefs Sheet Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseBeliefs" name="data.collapseBeliefs" class="section-collapse beliefs-collapse" {{ checked data.collapseBeliefs }}>
     <label for="{{actor._id}}-collapseBeliefs" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Beliefs</h2>
-    </label>      
+    </label>
+    {{#if data.collapseBeliefs}}{{else}}
     <div class="beliefs">
         {{#each beliefs as |belief iid|}}
             <div class="bits-item flex-row">
@@ -74,11 +76,14 @@
             </div>
         {{/each}}
     </div>
+    {{/if}}
 
+    {{!-- Instincts Sheet Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseInstincts" name="data.collapseInstincts" class="section-collapse instincts-collapse" {{ checked data.collapseInstincts }}>
     <label for="{{actor._id}}-collapseInstincts" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Instincts</h2>
     </label>
+    {{#if data.collapseInstincts}}{{else}}
     <div class="instincts">
         {{#each instincts as |instinct|}}
             <div class="bits-item flex-row">
@@ -92,11 +97,14 @@
             </div>
         {{/each}}
     </div>
+    {{/if}}
 
+    {{!-- Traits Sheet Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseTraits" name="data.collapseTraits" class="section-collapse traits-collapse" {{ checked data.collapseTraits }}>
     <label for="{{actor._id}}-collapseTraits" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Traits</h2>
     </label>
+    {{#if data.collapseTraits}}{{else}}
     <div class="traits flex-row">
         <div class="trait-category">
             <h2>Character Traits
@@ -149,11 +157,14 @@
             {{/each}}
         </div>
     </div>
+    {{/if}}
 
+    {{!-- Stats Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseStats" name="data.collapseStats" class="section-collapse stats-collapse" {{ checked data.collapseStats }}>
     <label for="{{actor._id}}-collapseStats" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Stats</h2>
     </label>
+    {{#if data.collapseStats}}{{else}}
     <div class="stats">
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=data.will namePrefix="data.will" taxName="data.willTax" taxValue=data.willTax type="stat" taxDisabled=true}}
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Power" stat=data.power namePrefix="data.power" type="stat"}}
@@ -166,11 +177,14 @@
             <label>Mounted Stride</label><input type="number" placeholder="0" name="data.mountedStride" value="{{data.mountedStride}}">
         </div>
     </div>
+    {{/if}}
 
+    {{!-- Attributes Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse attributes-collapse" {{ checked data.collapseAttributes }}>
     <label for="{{actor._id}}-collapseAttributes" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Attributes</h2>
     </label>
+    {{#if data.collapseAttributes}}{{else}}
     <div class="attributes">
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Health" stat=data.health namePrefix="data.health" routine=true type="attribute"}}
         {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Steel" stat=data.steel namePrefix="data.steel" routine=true type="attribute"}}
@@ -220,6 +234,7 @@
         </div>
         <div class="attributes-debts"></div>
     </div>
+    {{/if}}
     
     <input type="checkbox" id="{{actor._id}}-collapseRelationships" name="data.collapseRelationships" class="section-collapse relationships-collapse" {{ checked data.collapseRelationships }}>
     <label for="{{actor._id}}-collapseRelationships" class="section-collapse-label">
@@ -227,6 +242,7 @@
             <i class="fas fa-chevron-down"></i>Relationships & Reputations
         </h2>
     </label>
+    {{#if data.collapseRelationships}}{{else}}
     <div class="relationship-section flex-row">
         <div class="relationships">
             <h2>Relationships  <i data-action="addRelationship" class="fas fa-plus"></i></h2>
@@ -260,11 +276,14 @@
         </div>
         <hr>
     </div>
+    {{/if}}
 
+    {{!-- Gear section --}}
     <input type="checkbox" id="{{actor._id}}-collapseGear" name="data.collapseGear" class="section-collapse gear-collapse" {{ checked data.collapseGear }}>
     <label for="{{actor._id}}-collapseGear" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Gear, Possessions, and Property</h2>
     </label>
+    {{#if data.collapseGear}}{{else}}
     <div class="gear item-grid col-4">
         {{#each equipment as |e|}}
         <div class="{{e.data.cssClass}}">
@@ -277,11 +296,14 @@
             <div class="add-button" data-action="addGear"><i class="fas fa-plus"></i> Add New Gear</div>
         </div>
     </div>
+    {{/if}}
 
+    {{!-- Spells Section --}}
     <input type="checkbox" id="{{actor._id}}-collapse-spells" name="data.collapseSpells" class="section-collapse spells-collapse" {{ checked data.collapseSpells }}>
     <label for="{{actor._id}}-collapse-spells" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Spells</h2>
     </label>
+    {{#if data.collapseSpells}}{{else}}
     <div class="spell-section item-grid col-3">
         <div class="spell-sustained-info">
             <div>
@@ -326,21 +348,27 @@
             <div class="add-button" data-action="learnSpell"><i class="fas fa-plus"></i> Learn New Spell</div>
         </div>
     </div>
+    {{/if}}
 
+    {{!-- Misc Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseMisc" name="data.collapseMisc" class="section-collapse misc-collapse" {{ checked data.collapseMisc }}>
     <label for="{{actor._id}}-collapseMisc" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Notes and Other Miscellanea</h2>
     </label>
+    {{#if data.collapseMisc}}{{else}}
     <div class="misc-section item-grid col-3">
         <textarea name="data.miscNotes1" class="note-box" rows="4">{{data.miscNotes1}}</textarea>
         <textarea name="data.miscNotes2" class="note-box" rows="4">{{data.miscNotes2}}</textarea>
         <textarea name="data.miscNotes3" class="note-box" rows="4">{{data.miscNotes3}}</textarea>
     </div>
+    {{/if}}
 
+    {{!-- Skills Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseSkills" name="data.collapseSkills" class="section-collapse skills-collapse" {{ checked data.collapseSkills }}>
     <label for="{{actor._id}}-collapseSkills" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Skills</i></h2>
     </label>
+    {{#if data.collapseSkills}}{{else}}
     <div class="skills">
         {{#each skills as |skill|}}
             {{> "systems/burningwheel/templates/parts/rollable-skill.hbs" skill=skill }}
@@ -349,11 +377,14 @@
             <div class="add-button" data-action="addSkill"><i class="fas fa-plus"></i> Add New Skill</div>
         </div>
     </div>
+    {{/if}}
 
+    {{!-- Learning Section --}}
     <input type="checkbox" id="{{actor._id}}-collapseLearning" name="data.collapseLearning" class="section-collapse learning-collapse" {{ checked data.collapseLearning }}>
     <label for="{{actor._id}}-collapseLearning" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Learning and Practice</h2>
     </label>
+    {{#if data.collapseLearning}}{{else}}
     <div class="learning-practice flex-row">
         <div class="flex-row learning-section">
             {{#each learning as |skill|}}
@@ -366,19 +397,25 @@
             <textarea name="data.practiceLog">{{data.practiceLog}}</textarea>
         </div>
     </div>
+    {{/if}}
 
+    {{!-- PTGS section --}}
     <input type="checkbox" id="{{actor._id}}-collapsePtgs" name="data.collapsePtgs" class="section-collapse ptgs-collapse" {{ checked data.collapsePtgs }}>
     <label for="{{actor._id}}-collapsePtgs" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Injury and Recovery</h2>
     </label>
+    {{#if data.collapsePtgs}}{{else}}
     <div class="ptgs">
         {{> "systems/burningwheel/templates/parts/ptgs.hbs" ptgs=data.ptgs id=actor._id }}
     </div>
-    <input type="checkbox" id="{{actor._id}}-collapseCombat" name="data.collapseCombat" class="section-collapse combat-collapse" {{ checked data.collapseCombat }}>
+    {{/if}}
 
+    {{!-- Weapons and Armor Section --}}
+    <input type="checkbox" id="{{actor._id}}-collapseCombat" name="data.collapseCombat" class="section-collapse combat-collapse" {{ checked data.collapseCombat }}>
     <label for="{{actor._id}}-collapseCombat" class="section-collapse-label">
         <h2 class="section-header"><i class="fas fa-chevron-down"></i>Weapons and Armor</h2>
     </label>
+    {{#if data.collapseCombat}}{{else}}
     <div class="combat-section flex-row">
         <div class="weapons">
             {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=actor.martialSkills}}
@@ -457,6 +494,7 @@
             {{> "systems/burningwheel/templates/parts/armor.hbs" armor=armor }}
         </div>
     </div>
+    {{/if}}
     <hr>
     <div class="footer">
         <span class="footer-left"><a href="https://github.com/StasTserk/foundry-burningwheel/issues/">Report Problem</a></span>

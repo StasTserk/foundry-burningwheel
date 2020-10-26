@@ -117,22 +117,6 @@ div.pill-toggle {
     }
 }
 
-input.attributes-collapse:checked ~ .attributes,
-input.beliefs-collapse:checked ~ .beliefs,
-input.instincts-collapse:checked ~ .instincts,
-input.traits-collapse:checked ~ .traits,
-input.stats-collapse:checked ~ .stats,
-input.relationships-collapse:checked ~ .relationship-section,
-input.gear-collapse:checked ~ .gear,
-input.misc-collapse:checked ~ .misc-section,
-input.skills-collapse:checked ~ .skills,
-input.learning-collapse:checked ~ .learning-practice,
-input.ptgs-collapse:checked ~ .ptgs,
-input.combat-collapse:checked ~ .combat-section,
-input.spells-collapse:checked ~ .spell-section {
-    display: none;
-}
-
 .checkbox-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, 24px 120px);

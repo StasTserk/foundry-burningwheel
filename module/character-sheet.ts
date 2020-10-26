@@ -232,7 +232,13 @@ export class BWCharacterSheet extends BWActorSheet {
                     baseData: { traittype: id }
                 });
             case "delItem":
-                return this.actor.deleteOwnedItem(id);
+                return Dialog.confirm({
+                    title: "Confirm Deletion",
+                    content: "<p>You are about to delete an item from the actor's sheet. Are you sure?</p>",
+                    yes: () => this.actor.deleteOwnedItem(id),
+                    no: () => void 0
+                });
+                
             case "editItem":
                 return this.actor.getOwnedItem(id)?.sheet.render(true);
         }

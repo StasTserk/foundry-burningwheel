@@ -138,6 +138,7 @@ $hover-color: rgba(0,0,0,0.1);
         margin-left: -20px;
         display: block;
         width: 100%;
+        cursor: pointer;
         @include button-like(black);
     }
 

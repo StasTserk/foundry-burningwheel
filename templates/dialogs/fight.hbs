@@ -77,9 +77,9 @@
             {{#if ../gmView}}
             <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
             {{/if}}
-            <div class="actor-name" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+            <div class="actor-name clickable" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
             {{#if p.showActions}}
-            <img class="portrait" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
+            <img class="portrait clickable" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
             <div class="details">
                 <div>
                     Reflexes: {{p.reflexes}}

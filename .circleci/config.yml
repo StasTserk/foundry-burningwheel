@@ -1,18 +1,18 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@4.1.0
 jobs:
   build-and-test:
     executor:
       name: node/default
+      tag: '14.14.0'
     steps:
       - checkout
-      - node/with-cache:
+      - node/install-packages:
           cache-version: v3
-          steps:
-            - run: npm install
-            - run: sudo npm install -g gulp
-            - run: gulp build
+          override-ci-command: npm install
+      - run: sudo npm install -g gulp
+      - run: gulp build
       - run: mkdir ./artifacts
       - persist_to_workspace:
           root: ./

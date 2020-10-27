@@ -234,6 +234,9 @@ export class BWActor extends Actor {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     _onCreate(data: any, options: any, userId: string, context: any): void {
         super._onCreate(data, options, userId, context);
+        if (this.data.items.length) {
+            return; // this is most likely a duplicate of an existing actor. we don't need to add default items.
+        }
         this.createOwnedItem([
             { name: "Instinct 1", type: "instinct", data: {}},
             { name: "Instinct 2", type: "instinct", data: {}},
@@ -246,7 +249,7 @@ export class BWActor extends Actor {
         ]);
         this.createOwnedItem(constants.bareFistData);
 
-        if (this.data.type === "character") {
+        if (this.data.type === "character" && this.permission === CONST.ENTITY_PERMISSIONS.OWNER) {
             const character = this as unknown as BWCharacter & BWActor;
             setTimeout(() => {
                 if (character.data.data.settings.showBurner) {

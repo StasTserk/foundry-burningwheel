@@ -1,13 +1,30 @@
 <form class="dialog">
     <h2>{{name}}</h2>
     <div class="flex-row">
-        <div class="flex-row dialog-row">
-            <label>Exponent</label>
-            <input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">
-        </div>
+        <hr class="dialog-section-before"><div class="dialog-section-text">Obstacle</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
             <label>Difficulty</label>
             <input type="number" class="exponent" name="difficulty" value="{{difficulty}}">
+        </div>
+        {{#if obPenalty}}
+        <div class="flex-row dialog-row">
+            <label>Wound Penalty</label>
+            <input type="number" class="exponent" disabled name="obPenalty" value="{{obPenalty}}">
+        </div>
+        {{/if}}
+        {{#each obModifiers as |mod|}}
+        <div class="flex-row dialog-row">
+            <label>{{mod.label}}</label>
+            <input type="checkbox" class="hidden" name="miscObs" checked value="{{mod.obstacle}}" data-name="{{mod.label}}">
+            <input type="number" class="exponent" disabled value="{{mod.obstacle}}">
+        </div>
+        {{/each}}
+    </div>
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Dice</div><hr class="dialog-section-after">
+        <div class="flex-row dialog-row">
+            <label>Exponent</label>
+            <input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">
         </div>
         {{#if woundDice}}
         <div class="flex-row dialog-row">
@@ -15,24 +32,11 @@
             <input type="number" class="exponent" disabled name="woundDice" value="{{woundDice}}">
         </div>
         {{/if}}
-        {{#if obPenalty}}
-        <div class="flex-row dialog-row">
-            <label>Ob Penalty</label>
-            <input type="number" class="exponent" disabled name="obPenalty" value="{{obPenalty}}">
-        </div>
-        {{/if}}
         {{#each diceModifiers as |mod|}}
         <div class="flex-row dialog-row">
             <label>{{mod.label}}</label>
             <input type="checkbox" class="hidden" name="miscDice" checked value="{{mod.dice}}" data-name="{{mod.label}}">
             <input type="number" class="exponent" disabled value="{{mod.dice}}">
-        </div>
-        {{/each}}
-        {{#each obModifiers as |mod|}}
-        <div class="flex-row dialog-row">
-            <label>{{mod.label}}</label>
-            <input type="checkbox" class="hidden" name="miscObs" checked value="{{mod.obstacle}}" data-name="{{mod.label}}">
-            <input type="number" class="exponent" disabled value="{{mod.obstacle}}">
         </div>
         {{/each}}
         <div class="flex-row dialog-row">
@@ -45,8 +49,8 @@
         </div>
     </div>
     {{#if offerSplitPool}}
-    <hr>
     <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Secondary Pool</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
             <label>Secondary Pool</label>
             <input type="number" class="exponent no-arrows" name="splitPool" value="0">
@@ -57,62 +61,68 @@
     </div>
     {{/if}}
     {{#if forkOptions}}
-    <hr>
-    <h2>FoRKs</h2>
-    <div class="checkbox-grid">
-        {{#each forkOptions as |skill|}}
-            <input id="checkbox-fork-{{@key}}" type="checkbox" name="forkOptions" value="{{skill.amount}}">
-            <label for="checkbox-fork-{{@key}}">{{skill.name}}</label>
-        {{/each}}
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">FoRKs</div><hr class="dialog-section-after">
+        <div class="checkbox-grid">
+            {{#each forkOptions as |skill|}}
+                <input id="checkbox-fork-{{@key}}" type="checkbox" name="forkOptions" value="{{skill.amount}}">
+                <label for="checkbox-fork-{{@key}}">{{skill.name}}</label>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
     {{#if needsToolkit}}
-    <hr>
-    <h2>Tools</h2>
-    <div class="item-grid col-2">
-        <div class="checkbox-grid">
-            <input id="checkbox-tool-penalty" type="checkbox" name="toolPenalty" value="1">
-            <label for="checkbox-tool-penalty">No Tools Penalty</label>
-        </div>
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Tools</div><hr class="dialog-section-after">
         <div class="flex-row">
-            <label for="select-toolkit" name="toolkit">Expend Toolkit?</label>
-            <select id="select-toolkit" name="toolkitId">
-                <option value="">None</option>
-                {{#each toolkits as |t|}}
-                <option value="{{t._id}}">{{t.name}}{{#if t.data.isExpended}} (Expended){{/if}}</option>
-                {{/each}}
-            </select>
+            <div class="checkbox-grid half-width">
+                <input id="checkbox-tool-penalty" type="checkbox" name="toolPenalty" value="1">
+                <label for="checkbox-tool-penalty">No Tools Penalty</label>
+            </div>
+            <div class="flex-row dialog-row">
+                <label for="select-toolkit" name="toolkit">Expend Toolkit?</label>
+                <select id="select-toolkit" name="toolkitId">
+                    <option value="">None</option>
+                    {{#each toolkits as |t|}}
+                    <option value="{{t._id}}">{{t.name}}{{#if t.data.isExpended}} (Expended){{/if}}</option>
+                    {{/each}}
+                </select>
+            </div>
         </div>
     </div>
     {{/if}}
     {{#if wildForks}}
-    <hr>
-    <h2>Wild FoRKs</h2>
-    <div class="checkbox-grid">
-        {{#each wildForks as |skill|}}
-            <input id="checkbox-wild-{{@key}}" type="checkbox" name="wildForks" value="{{skill.amount}}">
-            <label for="checkbox-wild-{{@key}}">{{skill.name}}</label>
-        {{/each}}
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Wild FoRKs</div><hr class="dialog-section-after">
+        <div class="checkbox-grid">
+            {{#each wildForks as |skill|}}
+                <input id="checkbox-wild-{{@key}}" type="checkbox" name="wildForks" value="{{skill.amount}}">
+                <label for="checkbox-wild-{{@key}}">{{skill.name}}</label>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
     {{#if optionalDiceModifiers}}
-    <hr>
-    <h2>Other Dice Modifiers</h2>
-    <div class="checkbox-grid">
-        {{#each optionalDiceModifiers as |mod|}}
-        <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
-        <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
-        {{/each}}
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Dice Modifiers</div><hr class="dialog-section-after">
+        <div class="checkbox-grid">
+            {{#each optionalDiceModifiers as |mod|}}
+            <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
+            <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
     {{#if optionalObModifiers}}
-    <hr>
-    <h2>Other Obstacle Modifiers</h2>
-    <div class="checkbox-grid">
-        {{#each optionalObModifiers as |mod|}}
-        <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
-        <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
-        {{/each}}
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Obstacle Modifiers</div><hr class="dialog-section-after">
+        <div class="checkbox-grid">
+            {{#each optionalObModifiers as |mod|}}
+            <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
+            <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
+    <hr>
 </form>

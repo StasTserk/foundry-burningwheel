@@ -1,14 +1,7 @@
 <form class="dialog">
     <h2>{{name}}</h2>
     <div class="flex-row">
-        <div class="flex-row dialog-row">
-            <label>Dice</label>
-            <input type="number" class="exponent" disabled name="armor" value="{{armor}}">
-        </div>
-        <div class="flex-row dialog-row">
-            <label>Damage</label>
-            <input type="number" class="exponent" disabled name="damage" value="{{damage}}">
-        </div>
+        <hr class="dialog-section-before"><div class="dialog-section-text">Difficulty</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
             <label>Difficulty</label>
             <input type="number" class="exponent" disabled name="difficulty" value="{{difficulty}}">
@@ -16,6 +9,17 @@
         <div class="flex-row dialog-row">
             <label>Weapon Vs Armor</label>
             <input type="number" class="exponent" name="vsArmor" value="0">
+        </div>
+    </div>
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Dice</div><hr class="dialog-section-after">
+        <div class="flex-row dialog-row">
+            <label>Armor Dice</label>
+            <input type="number" class="exponent" disabled name="armor" value="{{armor}}">
+        </div>
+        <div class="flex-row dialog-row">
+            <label>Damage</label>
+            <input type="number" class="exponent" disabled name="damage" value="{{damage}}">
         </div>
         <div class="flex-row dialog-row">
             <label>Bonus Dice</label>
@@ -27,23 +31,26 @@
         </div>
     </div>
     {{#if optionalDiceModifiers}}
-    <hr>
-    <h2>Other Dice Modifiers</h2>
-    <div class="checkbox-grid">
-        {{#each optionalDiceModifiers as |mod|}}
-        <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
-        <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
-        {{/each}}
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Dice Modifiers</div><hr class="dialog-section-after">
+        <div class="checkbox-grid">
+            {{#each optionalDiceModifiers as |mod|}}
+            <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
+            <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
     {{#if optionalObModifiers}}
-    <hr>
-    <h2>Other Obstacle Modifiers</h2>
-    <div class="checkbox-grid">
-        {{#each optionalObModifiers as |mod|}}
-        <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
-        <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
-        {{/each}}
+    <div class="flex-row">
+        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Obstacle Modifiers</div><hr class="dialog-section-after">
+        <div class="checkbox-grid">
+            {{#each optionalObModifiers as |mod|}}
+            <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
+            <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
+            {{/each}}
+        </div>
     </div>
     {{/if}}
+    <hr>
 </form>

@@ -1,19 +1,79 @@
 @import "../mixins.scss";
 
 .dialog {
+    margin-bottom: 5px;
+
     .checkbox-grid { 
-        grid-template-columns: repeat(auto-fit, 24px 104px);
+        grid-template-columns: repeat(auto-fit, 23px 100px);
     }
 
     .dialog-row:hover {
         background-color: $hover-color;
     }
 
+    &>.flex-row {
+        padding: 3px 5px 0 5px;
+        border: 2px outset #b4b4b4;
+        border-top: 0;
+        border-radius: 5px;
+        margin-top: 10px;
+
+        .checkbox-grid {
+            margin-top: -10px;
+            margin-bottom: 3px;
+            width: 100%;
+
+            &.half-width {
+                width: 50%;
+            }
+        }
+    }
+
+    .dialog-section-before {
+        flex: 0 0 10px;
+        margin-top: -3px;
+        margin-bottom: 17px;
+        margin-left: -4px;
+        border: 1px solid #b4b4b4
+    }
+
+    .dialog-section-text {
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: .9em;
+        font-weight: bold;
+        margin-top: -10px;
+    }
+
+    .dialog-section-after {
+        flex: 1 1 50%;
+        margin-top: -3px;
+        margin-bottom: 17px;
+        margin-right: -4px;
+        border: 1px solid #b4b4b4
+    }
+
     .dialog-row {
-        width: 50%;
+        flex-basis: 50%;
+        margin-top: -10px;
+        margin-bottom: 10px;
 
         label {
-            width: 75%;
+            flex: 1 1 50%;
+            line-height: 1.5em;
+        }
+        input {
+            flex: 0 0 2.5em;
+            margin-right: 5px;
+            text-align: center;
+        }
+
+        select {
+            flex: 0 0 2.6em;
+            margin-right: 5px;
+            @include  select-no-arrow;
+            text-align-last: center;
+            border: 1px solid grey;
         }
     }
 }

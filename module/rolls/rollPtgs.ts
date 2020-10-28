@@ -20,10 +20,10 @@ export async function handleGritRollEvent({ target, sheet }: EventHandlerOptions
 
 async function handlePtgsRoll({ sheet, shrugging }: PtgsRollOptions): Promise<unknown> {
     const actor = sheet.actor as BWActor;
-    const stat = getProperty(actor.data, "data.health" || "") as Ability;
+    const stat = getProperty(actor.data, "data.health") as Ability;
     const rollModifiers = sheet.actor.getRollModifiers("health");
     const data: AttributeDialogData = {
-        name: shrugging ? "Shrug It Off" : "Grit Your Teeth",
+        name: shrugging ? "Shrug It Off Health" : "Grit Your Teeth Health",
         difficulty: shrugging ? 2 : 4,
         bonusDice: 0,
         arthaDice: 0,

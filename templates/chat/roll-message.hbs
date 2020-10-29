@@ -73,6 +73,7 @@
                 data-actor-id="{{c.actorId}}"
                 data-reroll-type="{{c.type}}"
                 data-dice="{{c.dice}}"
+                {{#if c.splitDice}}data-split-dice="{{c.splitDice}}"{{/if}}
                 data-roll-name="{{../name}}"
                 {{#if c.itemId}} data-item-id="{{c.itemId}}" {{/if}}
                 {{#if c.accessor}} data-accessor="{{c.accessor}}" {{/if}}
@@ -80,6 +81,7 @@
                 {{#if c.ptgsAction}} data-ptgs-action="{{c.ptgsAction}}" {{/if}}
                 data-difficulty="{{../obstacleTotal}}"
                 data-successes="{{../successes}}"
+                data-split-successes="{{splitSuccesses}}"
                 data-difficulty-group="{{../difficultyGroup}}">Call-on: {{c.label}}</button>
         </div>
         {{/each}}
@@ -89,6 +91,7 @@
                 data-actor-id="{{fateReroll.actorId}}"
                 data-reroll-type="{{fateReroll.type}}"
                 data-dice="{{fateReroll.dice}}"
+                {{#if fateReroll.splitDice}}data-split-dice="{{fateReroll.splitDice}}"{{/if}}
                 data-roll-name="{{name}}"
                 {{#if fateReroll.itemId}} data-item-id="{{fateReroll.itemId}}" {{/if}}
                 {{#if fateReroll.accessor}} data-accessor="{{fateReroll.accessor}}" {{/if}}
@@ -96,6 +99,7 @@
                 {{#if fateReroll.ptgsAction}} data-ptgs-action="{{fateReroll.ptgsAction}}" {{/if}}
                 data-difficulty="{{obstacleTotal}}"
                 data-successes="{{successes}}"
+                data-split-successes="{{splitSuccesses}}"
                 data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>
         </div>
         {{/if}}

@@ -77,13 +77,15 @@ export function buildDiceSourceObject(
 export interface BuildRerollOptions {
     actor: BWActor;
     roll: Roll;
+    splitPoolRoll?: Roll;
     accessor?: string;
     itemId?: string;
 }
-export function buildRerollData({ actor, roll, accessor, itemId }: BuildRerollOptions):
+export function buildRerollData({ actor, roll, accessor, splitPoolRoll, itemId }: BuildRerollOptions):
         RerollData {
     const coreData: RerollData = {
         dice: roll.dice[0].results.map(r => r.result).join(","),
+        splitDice: splitPoolRoll?.dice[0].results.map(r => r.result).join(",") || undefined,
         actorId: actor._id,
     };
     if (accessor) {
@@ -321,28 +323,31 @@ export async function rollWildFork(numDice: number, shade: helpers.ShadeString =
     return new Promise(r => r(die));
 }
 
-export async function getSplitPoolText(numDice: number, open: boolean, shade: helpers.ShadeString): Promise<string> {
-    if (numDice <= 0 ) return "";
+export async function getSplitPoolRoll(numDice: number, open: boolean, shade: helpers.ShadeString): Promise<Roll|undefined> {
+    if (numDice <= 0 ) return undefined;
     
-    const roll = await rollDice(numDice, open, shade);
-    if (roll) {
-        const parentDiv = document.createElement('div');
+    return rollDice(numDice, open, shade);
+}
 
-        const textDiv = helpers.DivOfText("Secondary Successes", );
-        const resultDiv = helpers.DivOfText(`${roll.result}`, "secondary-pool");
-        const diceDiv = document.createElement('div');
-        diceDiv.className = "secondary-dice";
-        roll.dice[0].results.forEach(r => {
-            const diceResult = helpers.DivOfText(r.result, "roll-die");
-            diceResult.dataset.success = r.success? "true" : "false";
-            diceDiv.appendChild(diceResult);
-        });
-        parentDiv.appendChild(textDiv);
-        parentDiv.appendChild(resultDiv);
-        parentDiv.appendChild(diceDiv);
-        return parentDiv.innerHTML; 
+export function getSplitPoolText(roll: Roll | undefined): string {
+    if (!roll) {
+        return "";
     }
-    return "";
+    const parentDiv = document.createElement('div');
+
+    const textDiv = helpers.DivOfText("Secondary Successes", );
+    const resultDiv = helpers.DivOfText(`${roll.result}`, "secondary-pool");
+    const diceDiv = document.createElement('div');
+    diceDiv.className = "secondary-dice";
+    roll.dice[0].results.forEach(r => {
+        const diceResult = helpers.DivOfText(r.result, "roll-die");
+        diceResult.dataset.success = r.success? "true" : "false";
+        diceDiv.appendChild(diceResult);
+    });
+    parentDiv.appendChild(textDiv);
+    parentDiv.appendChild(resultDiv);
+    parentDiv.appendChild(diceDiv);
+    return parentDiv.innerHTML; 
 }
 
 export function mergeDialogData<T extends RollDialogData>(target: T, source?: Partial<T>): T {
@@ -491,6 +496,7 @@ export interface RollDialogData {
 export interface RollChatMessageData {
     name: string;
     successes: string | null;
+    splitSuccesses?: string;
     difficulty: number;
     specialPenalty?: { name: string, amount: number };
     success: boolean;
@@ -509,6 +515,7 @@ export interface RollChatMessageData {
 
 export interface RerollData {
     dice: string;
+    splitDice?: string;
     actorId: string;
     type?: "stat" | "skill" | "learning" | "armor";
     learningTarget?: string; // for reroll, which attribute to apply the fate to.

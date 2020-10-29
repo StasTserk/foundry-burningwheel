@@ -15,7 +15,7 @@ import {
     extractRollData,
     EventHandlerOptions,
     RollOptions,
-    mergeDialogData, getSplitPoolText
+    mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
 import { BWCharacter } from "module/character.js";
 
@@ -78,8 +78,10 @@ async function skillRollCallback(
     const wildForkDice = wildForkDie?.results || [];
     
     let splitPoolString: string | undefined;
+    let splitPoolRoll: Roll | undefined;
     if (splitPool) {
-        splitPoolString = await getSplitPoolText(splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolRoll = await getSplitPoolRoll(splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolString = getSplitPoolText(splitPoolRoll);
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
@@ -97,15 +99,16 @@ async function skillRollCallback(
         }
     }
 
-    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id });
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll });
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id }) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,
         successes: '' + (parseInt(roll.result) + wildForkBonus),
+        splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: baseDifficulty,
         obstacleTotal: difficultyTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),

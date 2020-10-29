@@ -8,7 +8,7 @@ import {
     rollDice,
     templates,
     RollOptions,
-    extractRollData, EventHandlerOptions, mergeDialogData, getSplitPoolText
+    extractRollData, EventHandlerOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
 
 export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
@@ -70,19 +70,22 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
-    const fateReroll = buildRerollData({ actor, roll, accessor });
-    const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, accessor }) as RerollData };
-    });
-
     let extraInfo: string | undefined;
+    let splitPoolRoll: Roll | undefined;
     if (splitPool) {
-        extraInfo = await getSplitPoolText(splitPool, stat.open, stat.shade);
+        splitPoolRoll = await getSplitPoolRoll(splitPool, stat.open, stat.shade);
+        extraInfo = getSplitPoolText(splitPoolRoll);
     }
+
+    const fateReroll = buildRerollData({ actor, roll, accessor, splitPoolRoll });
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
+    });
 
     const data: RollChatMessageData = {
         name: `${name}`,
         successes: roll.result,
+        splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: baseDifficulty,
         obstacleTotal: difficultyTotal,
         nameClass: getRollNameClass(stat.open, stat.shade),

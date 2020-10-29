@@ -2,7 +2,7 @@ import { TestString } from "../helpers.js";
 import { Ability, TracksTests, BWCharacter } from "../bwactor.js";
 import * as helpers from "../helpers.js";
 import { Skill, SkillData } from "../items/item.js";
-import { rollDice, templates } from "./rolls.js";
+import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
 
 export async function handleCallonReroll(target: HTMLButtonElement): Promise<unknown> {
     const actor = game.actors.get(target.dataset.actorId || "") as BWCharacter;
@@ -33,7 +33,7 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
     let newSuccesses = 0;
     let success = false;
 
-    if (!numDice && !numSplitDice) { return; }
+    if (!numDice && !numSplitDice) { return getNoDiceErrorDialog(0); }
     if (reroll) {
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
@@ -106,19 +106,4 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
         content: html,
         speaker: ChatMessage.getSpeaker({actor})
     });
-}
-
-
-export interface RerollMessageData {
-    title: string;
-    rolls: { roll: number, success: boolean }[];
-    splitRolls: { roll: number, success: boolean }[];
-    rerolls: { roll: number, success: boolean }[];
-    splitRerolls: { roll: number, success: boolean }[];
-    success: boolean;
-    successes: number;
-    newSuccesses: number;
-    splitSuccesses: number;
-    newSplitSuccesses: number;
-    obstacleTotal: number;
 }

@@ -12,7 +12,7 @@ import {
     maybeExpendTools,
     RollDialogData,
     extractRollData,
-    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText
+    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
@@ -108,21 +108,24 @@ async function learningRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= rollData.difficultyTotal;
-    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id });
+
+    let splitPoolString: string | undefined;
+    let splitPoolRoll: Roll | undefined;
+    if (rollData.splitPool) {
+        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolString = getSplitPoolText(splitPoolRoll);
+    }
+    extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
+
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll });
     if (fateReroll) { fateReroll.type = "learning"; }
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
         return {
             label: s,
             type: "learning",
-            ...buildRerollData({ actor, roll, itemId: skill._id }) as RerollData
+            ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData
         };
     });
-
-    let splitPoolString: string | undefined;
-    if (rollData.splitPool) {
-        splitPoolString = await getSplitPoolText(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
-    }
-    extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
@@ -142,6 +145,7 @@ async function learningRollCallback(
         const data: RollChatMessageData = {
             name: `Beginner's Luck ${skill.data.name}`,
             successes: roll.result,
+            splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
             difficulty: rollData.baseDifficulty,
             obstacleTotal: rollData.difficultyTotal,
             nameClass: getRollNameClass(stat.open, stat.shade),

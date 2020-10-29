@@ -10,7 +10,7 @@ import {
     rollDice,
     templates,
     extractRollData,
-    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText
+    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Npc } from "module/npc.js";
@@ -75,20 +75,25 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= rollData.difficultyTotal;
 
-    const fateReroll = buildRerollData({ actor, roll, accessor });
-    const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, accessor }) as RerollData };
-    });
+
 
     let splitPoolString: string | undefined;
+    let splitPoolRoll: Roll | undefined;
     if (rollData.splitPool) {
-        splitPoolString = await getSplitPoolText(rollData.splitPool, open, shade);
+        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, open, shade);
+        splitPoolString = getSplitPoolText(splitPoolRoll);
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
+
+    const fateReroll = buildRerollData({ actor, roll, splitPoolRoll, accessor });
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
+    });
     
     const data: RollChatMessageData = {
         name: `${name.titleCase()}`,
         successes: roll.result,
+        splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(open, shade),

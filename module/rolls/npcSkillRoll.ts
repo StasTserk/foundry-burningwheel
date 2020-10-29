@@ -12,7 +12,7 @@ import {
     rollWildFork,
     EventHandlerOptions,
     RollOptions,
-    mergeDialogData, getSplitPoolText
+    mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
 import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
@@ -131,20 +131,23 @@ async function skillRollCallback(
 
     const isSuccessful = parseInt(roll.result) + wildForkBonus >= rollData.difficultyTotal;
 
-    const fateReroll = buildRerollData({ actor, roll, itemId: skill.id });
-    const callons: RerollData[] = actor.getCallons(name).map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id }) as RerollData };
-    });
-
     let splitPoolString: string | undefined;
+    let splitPoolRoll: Roll | undefined;
     if (rollData.splitPool) {
-        splitPoolString = await getSplitPoolText(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolString = getSplitPoolText(splitPoolRoll);
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
+
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill.id });
+    const callons: RerollData[] = actor.getCallons(name).map(s => {
+        return { label: s, ...buildRerollData({ actor, roll, splitPoolRoll, itemId: skill._id }) as RerollData };
+    });
     
     const data: RollChatMessageData = {
         name: `${skill.name}`,
         successes: '' + (parseInt(roll.result) + wildForkBonus),
+        splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,
         nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),

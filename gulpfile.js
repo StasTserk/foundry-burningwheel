@@ -4,7 +4,7 @@ const yaml = require("gulp-yaml");
 const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
 const sass = require("gulp-sass");
-sass.compiler = require("node-sass");
+sass.compiler = require("sass");
 const jsonModify = require("gulp-json-modify");
 
 const fs = require("fs");

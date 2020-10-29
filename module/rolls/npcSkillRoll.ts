@@ -139,7 +139,7 @@ async function skillRollCallback(
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
-    const fateReroll = buildRerollData({ actor, roll, itemId: skill.id });
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill.id, splitPoolRoll });
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, splitPoolRoll, itemId: skill._id }) as RerollData };
     });

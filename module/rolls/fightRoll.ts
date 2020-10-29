@@ -75,7 +75,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
     if (actor.data.type === "npc") {
         // npc specific code
         const dice = parseInt(getProperty(actor, `data.data.${type}.exp`));
-        const shade = getProperty(actor, `data.data.${type}.exp`) as ShadeString;
+        const shade = getProperty(actor, `data.data.${type}.shade`) as ShadeString;
         return handleNpcStatRoll({
             dice,
             shade,

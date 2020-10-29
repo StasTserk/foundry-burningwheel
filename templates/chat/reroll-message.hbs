@@ -2,6 +2,7 @@
     <div class="roll-full-width message-title">
         {{title}}
     </div>
+    {{#if rerolls}}
     <div class="roll-half-width">
         <label>Successes</label>
         <div>{{ successes }} + {{ newSuccesses }} </div>
@@ -30,6 +31,26 @@
     {{else}}
     <div class="roll-result roll-full-width roll-failure">
         Failure!
+    </div>
+    {{/if}}
+    {{/if}}
+    {{#if splitRerolls}}
+    <div class="roll-full-width roll-extra-info">
+        <div>Secondary Successes</div>
+        <div class="secondary-pool">{{splitSuccesses}} + {{newSplitSuccesses}}</div>
+    </div>
+    <div class="roll-full-width flex-row roll-dice">
+        {{#each splitRolls as |r|}}
+        <div class="roll-die" data-success="{{r.success}}">
+            {{r.roll}}
+        </div>
+        {{/each}}
+        <div class="vertical-divider"></div>
+        {{#each splitRerolls as |r|}}
+        <div class="roll-die" data-success="{{r.success}}">
+            {{r.roll}}
+        </div>
+    {{/each}}
     </div>
     {{/if}}
 </div>

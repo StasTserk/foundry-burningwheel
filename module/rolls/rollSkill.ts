@@ -131,7 +131,6 @@ async function skillRollCallback(
             title: `Advance ${skill.name}?`,
             content: `<p>${skill.name} is ready to advance. Go ahead?</p>`,
             yes: () => helpers.advanceSkill(skill),
-            // tslint:disable-next-line: no-empty
             no: () => { return; },
             defaultYes: true
         });

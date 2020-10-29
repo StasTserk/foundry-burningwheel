@@ -66,6 +66,10 @@
             flex: 0 0 2.5em;
             margin-right: 5px;
             text-align: center;
+
+            &:enabled {
+                background-color: white;
+            }
         }
 
         select {

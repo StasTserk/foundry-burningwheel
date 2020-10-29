@@ -528,10 +528,14 @@ export interface RerollData {
 export interface RerollMessageData {
     title: string;
     rolls: { roll: number, success: boolean }[];
+    splitRolls: { roll: number, success: boolean }[];
     rerolls: { roll: number, success: boolean }[];
+    splitRerolls: { roll: number, success: boolean }[];
     success: boolean;
     successes: number;
     newSuccesses: number;
+    splitSuccesses: number;
+    newSplitSuccesses: number;
     obstacleTotal: number;
 }
 

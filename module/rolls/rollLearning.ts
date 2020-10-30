@@ -77,7 +77,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
         obPenalty: actor.data.data.ptgs.obPenalty,
         toolkits: actor.data.toolkits,
         needsToolkit: skill.data.data.tools,
-        learning: 1,
+        learning: true,
         skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
@@ -265,7 +265,7 @@ export interface LearningDialogData extends RollDialogData {
     needsToolkit: boolean;
     toolkits: PossessionRootData[];
     tax?: number;
-    learning: number;
+    learning: boolean;
 }
 
 export interface LearningRollEventOptions extends EventHandlerOptions {

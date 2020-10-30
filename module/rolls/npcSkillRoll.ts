@@ -1,4 +1,4 @@
-import { BWActor, TracksTests } from "../bwactor.js";
+import { Ability, BWActor, TracksTests } from "../bwactor.js";
 
 import {
     buildRerollData,
@@ -18,6 +18,7 @@ import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
 import { byName, notifyError } from "../helpers.js";
 import { Npc } from "../npc.js";
+import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
 
 export async function handleNpcWeaponRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
@@ -80,6 +81,50 @@ export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPr
 
 export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}: NpcRollOptions): Promise<unknown>  {
     
+    if (skill.data.data.learning) {
+        const accessor = `data.${skill.data.data.root1}`;
+        if (dataPreset) {
+            dataPreset.learning = true;
+        } else {
+            dataPreset = { learning: true };
+        }
+        const stat = getProperty(actor.data, accessor) as Ability;
+        const rollData: NpcStatRollOptions = {
+            dice: parseInt(stat.exp),
+            shade: stat.shade,
+            open: stat.open,
+            statName: skill.data.data.root1 as NpcStatName,
+            actor,
+            extraInfo,
+            dataPreset
+        };
+        if (skill.data.data.root2) {
+            // learning skill that requires a stat choice for rolling
+            return new Dialog({
+                title: "Pick which base stat to use",
+                content: "<p>The listed skill uses one of two possible roots. Pick one to roll.</p>",
+                buttons: {
+                    root1: {
+                        label: skill.data.data.root1.titleCase(),
+                        callback: () => handleNpcStatRoll(rollData)
+                    },
+                    root2: {
+                        label: skill.data.data.root2.titleCase(),
+                        callback: () => {
+                            const stat2 = getProperty(actor.data, `data.${skill.data.data.root2}`) as Ability;
+                            rollData.dice = parseInt(stat2.exp);
+                            rollData.shade = stat2.shade;
+                            rollData.open = stat2.open;
+                            rollData.statName = skill.data.data.root2 as NpcStatName;
+                            return handleNpcStatRoll(rollData);
+                        }
+                    }
+                }
+            }).render(true);
+        }
+        return handleNpcStatRoll(rollData);
+    }
+
     const rollModifiers = actor.getRollModifiers(skill.name);
 
     const data: NpcSkillDialogData = mergeDialogData<NpcSkillDialogData>({

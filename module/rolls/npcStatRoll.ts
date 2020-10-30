@@ -125,7 +125,7 @@ interface NpcRollEventOptions extends EventHandlerOptions {
     sheet: NpcSheet;
 }
 
-interface NpcStatRollOptions extends RollOptions {
+export interface NpcStatRollOptions extends RollOptions {
     actor: BWActor & Npc;
     dice: number;
     shade: helpers.ShadeString;
@@ -133,4 +133,4 @@ interface NpcStatRollOptions extends RollOptions {
     statName: NpcStatName;
 }
 
-declare type NpcStatName = "speed" | "agility" | "power" | "forte" | "perception" | "health" | "will" | "circles" | "steel" | "resources";
+export type NpcStatName = "speed" | "agility" | "power" | "forte" | "perception" | "health" | "will" | "circles" | "steel" | "resources";

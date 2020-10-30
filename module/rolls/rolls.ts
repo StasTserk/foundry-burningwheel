@@ -491,6 +491,7 @@ export interface RollDialogData {
     optionalDiceModifiers?: RollModifier[];
     optionalObModifiers?: RollModifier[];
     offerSplitPool?: boolean;
+    learning?: boolean;
 }
 
 export interface RollChatMessageData {

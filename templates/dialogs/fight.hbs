@@ -111,7 +111,7 @@
             <label>Action 1
                 <select name="action1" data-index="{{i}}">
                     {{#select p.action1}}
-                    <option value="">Do Nothing</option>
+                    {{#if p.action2}}{{else}}<option value="">Do Nothing</option>{{/if}}
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
                         {{#each ao as |o|}}
@@ -126,7 +126,7 @@
             <label>Action 2
                 <select name="action2" data-index="{{i}}">
                     {{#select p.action2}}
-                    <option value="">Do Nothing</option>
+                    {{#if p.action3}}{{else}}<option value="">Do Nothing</option>{{/if}}
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
                         {{#each ao as |o|}}
@@ -161,7 +161,7 @@
             <label>Action 1
                 <select name="action4" data-index="{{i}}">
                     {{#select p.action4}}
-                    <option value="">Do Nothing</option>
+                    {{#if p.action5}}{{else}}<option value="">Do Nothing</option>{{/if}}
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
                         {{#each ao as |o|}}
@@ -176,7 +176,7 @@
             <label>Action 2
                 <select name="action5" data-index="{{i}}">
                     {{#select p.action5}}
-                    <option value="">Do Nothing</option>
+                    {{#if p.action6}}{{else}}<option value="">Do Nothing</option>{{/if}}
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
                         {{#each ao as |o|}}
@@ -211,7 +211,7 @@
             <label>Action 1
                 <select name="action7" data-index="{{i}}">
                     {{#select p.action7}}
-                    <option value="">Do Nothing</option>
+                    {{#if p.action8}}{{else}}<option value="">Do Nothing</option>{{/if}}
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
                         {{#each ao as |o|}}
@@ -226,7 +226,7 @@
             <label>Action 2
                 <select name="action8" data-index="{{i}}">
                     {{#select p.action8}}
-                    <option value="">Do Nothing</option>
+                    {{#if p.action9}}{{else}}<option value="">Do Nothing</option>{{/if}}
                     {{#each ../actionOptions as |ao|}}
                     <optgroup label="{{@key}}">
                         {{#each ao as |o|}}

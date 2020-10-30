@@ -36,6 +36,7 @@ export class NpcSheet extends BWActorSheet {
         data.beliefs = [];
         data.traits = [];
         data.instincts = [];
+        data.untrained = [];
         data.skills = [];
         data.weapons = [];
         data.affiliations = [];
@@ -53,7 +54,12 @@ export class NpcSheet extends BWActorSheet {
                 case "instinct":
                     data.instincts.push(i); break;
                 case "skill":
-                    data.skills.push(i as SkillDataRoot); break;
+                    if ((i as SkillDataRoot).data.learning) {
+                        data.untrained.push(i as SkillDataRoot);
+                    } else {
+                        data.skills.push(i as SkillDataRoot);
+                    }
+                    break;
                 case "melee weapon":
                     if (i.name !== "Bare Fist") {
                         data.gear.push(i);
@@ -82,6 +88,7 @@ export class NpcSheet extends BWActorSheet {
         data.traits.sort(byName);
         data.instincts.sort(byName);
         data.skills.sort(byName);
+        data.untrained.sort(byName);
         data.weapons.sort(byName);
         data.ranged.sort(byName);
         data.affiliations.sort(byName);
@@ -127,6 +134,7 @@ function byName(a: ItemData, b: ItemData): number {
 }
 
 export interface NpcSheetData extends ActorSheetData {
+    untrained: SkillDataRoot[];
     armor: { [key: string]: ItemData<ArmorData> | null; };
     statRow: NPCStatEntry[];
     beliefs: ItemData[];

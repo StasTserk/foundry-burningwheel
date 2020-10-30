@@ -151,6 +151,14 @@
         {{> "systems/burningwheel/templates/parts/npc-skill.hbs" skill=s}}
         {{/each}}
     </div>
+    <div class="skill-section">
+        <div class="npc-section-label">
+            Untrained
+        </div>
+        {{#each untrained as |s|}}
+        {{> "systems/burningwheel/templates/parts/npc-skill.hbs" skill=s}}
+        {{/each}}
+    </div>
     <div class="editable-section">
         <div class="npc-section-label">
             Affiliations
@@ -240,6 +248,14 @@
         <div class="item-entry" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}} [{{s.data.shade}}{{s.data.exp}}]</div>
         {{/each}}
     </div>
+    {{#if untrained}}
+    <div class="indented-section flex-row">
+        <div class="npc-section-label">Untrained Tests</div>
+        {{#each untrained as |s|}}
+        <div class="item-entry" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}}</div>
+        {{/each}}
+    </div>
+    {{/if}}
     {{#if affiliations}}
     <div class="indented-section flex-row">
         <div class="npc-section-label">Affiliations</div>

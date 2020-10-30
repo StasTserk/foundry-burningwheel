@@ -18,13 +18,14 @@ If you like this system, please support the developers at [burningwheel.com](htt
 - Character burner
 - Support for GM created compendiums in play and character burning.
 - Specialized dialog for Duel of Wits.
+- Specialized dialog for Fight!
 
 ## Near future plans
 - Advanced artha tracking
-- Sheet layout support and other customization options
+- Sheet layout support and other customization options (perhaps a tabbed version?)
 - Compendium use improvements
 - More automation
-- Range and Cover, and Fight support.
+- Range and Cover support.
 
 ## Distant plans
 - Lifepath item type for character burning

@@ -134,7 +134,7 @@ export class BWCharacter extends Actor<BWCharacterData>{
         this.data.data.ptgs.obPenalty = 0;
         Object.entries(this.data.data.ptgs).forEach(([_key, value]) => {
             const w = value as Wound;
-            const a = w.amount && parseInt(w.amount[0], 10);
+            const a = w && w.amount && parseInt(w.amount[0], 10);
             if ((w && a)) {
                 switch (w.threshold) {
                     case "superficial": suCount += a; break;

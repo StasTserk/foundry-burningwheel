@@ -99,6 +99,8 @@ function watch() {
     gulp.watch("styles/**/**.scss", sassTask);
     gulp.watch("templates/**/*.html", htmlTask);
     gulp.watch("templates/**/*.hbs", htmlTask);
+    gulp.watch("**/*.yml", gulp.series(buildYml, deploy));
+    gulp.watch("system.json", deploy)
 }
 
 exports.default = build;
@@ -111,5 +113,5 @@ exports.css = buildCss;
 exports.yml = buildYml;
 exports.deploy = deploy;
 
-exports.watch = watch;
+exports.watch = gulp.series(build, watch);
 exports.uv = version;

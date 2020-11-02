@@ -36,6 +36,7 @@
             @include colored-item(black);
             textarea {
                 background-color: transparent;
+                min-height: 8em;
             }
         }
 

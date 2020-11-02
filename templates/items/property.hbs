@@ -1,8 +1,5 @@
-<form autocomplete="off">
+<form autocomplete="off" class="flex-column">
     <input type="text" name="name" class="item-sheet-name" value="{{item.name}}">
-    <div class="item-form-group">
-
-    </div>
     <div class="item-form-group">
         <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
         <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
@@ -11,7 +8,6 @@
             <label for="{{item._id}}-checkbox-isWorkshop" class="item-setting-toggle">Workshop</label>
         </div>
     </div>
-    
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>
 </form>

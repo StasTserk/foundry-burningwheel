@@ -76,6 +76,9 @@ input {
 .flex-column {
     display: flex;
     flex-direction: column;
+    &>hr {
+        width: 100%;
+    }
 }
 
 .item-grid {
@@ -183,7 +186,7 @@ input.circle-input {
 textarea {
     font-family: unset;
     resize: vertical;
-    height: 8em;
+    flex: 1 8em;
 }
 
 .character-burner-icon {

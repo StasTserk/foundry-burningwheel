@@ -17,6 +17,7 @@ input.item-sheet-name {
     row-gap: 5px;
     margin-bottom: 5px;
     width: 100%;
+    height: min-content;
 
     .item-setting-label {
         font-weight: bold;

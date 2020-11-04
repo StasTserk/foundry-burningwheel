@@ -1,7 +1,7 @@
 import { BWActor } from "../bwactor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList } from "../helpers.js";
 import { Skill, Trait, BWItem, Property, HasPointCost } from "../items/item.js";
-import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burner-data-helpers.js";
+import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
 import { BWCharacter } from "../character.js";
 
 export class CharacterBurnerDialog extends Dialog {

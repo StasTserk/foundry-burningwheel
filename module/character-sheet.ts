@@ -16,7 +16,7 @@ import {
     Spell,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
-import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
+import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 import { addNewItem } from "./dialogs/importItemDialog.js";
 import { BWCharacter } from "./character.js";
 import { byName } from "./helpers.js";

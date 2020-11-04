@@ -11,7 +11,7 @@ import { migrateData } from "./migration.js";
 import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { NpcSheet } from "./npc-sheet.js";
-import { DuelOfWitsDialog } from "./dialogs/duel-of-wits.js";
+import { DuelOfWitsDialog } from "./dialogs/duelOfWits.js";
 import { FightDialog } from "./dialogs/fight.js";
 import { DifficultyDialog } from "./dialogs/difficultyDialog.js";
 

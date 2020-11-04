@@ -2,7 +2,7 @@ import { ShadeString, StringIndexedObject } from "./helpers.js";
 import { ArmorRootData, DisplayClass, ItemType, Trait, TraitDataRoot, ReputationDataRoot, PossessionRootData, BWItemData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
 import * as constants from "./constants.js";
-import { CharacterBurnerDialog } from "./dialogs/character-burner.js";
+import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 
 export class BWActor extends Actor {
     data!: BWActorDataRoot;

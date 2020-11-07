@@ -1,6 +1,6 @@
 {
   "name": "burningwheel",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Foundry VTT Implementation for The Burning Wheel",
   "main": "index.js",
   "scripts": {

@@ -28,10 +28,15 @@ export class BWActorSheet extends ActorSheet {
         const t = e.currentTarget as EventTarget;
         let value: string | boolean | undefined | number | string[];
 
-        if ($(t).prop("type") === "checkbox") {
-            value = $(t).prop("checked") as boolean;
-        } else {
-            value = $(t).val();
+        switch ($(t).prop("type")) {
+            case "checkbox":
+                value = $(t).prop("checked") as boolean;
+                break;
+            case "number": case "radio":
+                value = parseInt($(t).val() as string);
+                break;
+            default:
+                value = $(t).val();
         }
 
         const id = $(t).data("item-id");
@@ -39,6 +44,7 @@ export class BWActorSheet extends ActorSheet {
 
         const item = this.actor.getOwnedItem(id);
         const updateParams = {};
+
         updateParams[binding] = value;
         if (item) { item.update(updateParams, {}); }
     }

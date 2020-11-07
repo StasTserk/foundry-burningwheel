@@ -70,7 +70,6 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
 
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
-        html.on('submit', (e) => { e.preventDefault(); });
 
         html.find('button[data-action="clearAll"]').on('click', e => {
             e.preventDefault();

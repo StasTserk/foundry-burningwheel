@@ -245,7 +245,7 @@
     <div class="indented-section flex-row">
         <div class="npc-section-label">Skills</div>
         {{#each skills as |s|}}
-        <div class="item-entry" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}} [{{s.data.shade}}{{s.data.exp}}]</div>
+        <div class="item-entry {{s.data.cssClass}}" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}}{{#if (eq s.data.exp "0")}}{{else}} [{{s.data.shade}}{{s.data.exp}}]{{/if}}</div>
         {{/each}}
     </div>
     {{#if untrained}}

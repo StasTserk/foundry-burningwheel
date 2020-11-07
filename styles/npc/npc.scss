@@ -203,6 +203,12 @@
             &.wide {
                 min-width: 80%;
             }
+
+            &.wound-disabled {
+                color: rgba(80,0,0,.8);
+                pointer-events: none;
+                font-style: italic;
+            }
         }
         span.item-entry {
             display: inline;
@@ -246,6 +252,10 @@
 
             & > .npc-skill-name {
                 flex: 1 1;
+            }
+
+            &.wound-disabled > .npc-skill-name {
+                color: #800;
             }
 
             input[type="number"] {

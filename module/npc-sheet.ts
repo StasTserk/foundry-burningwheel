@@ -1,7 +1,7 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
-import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData } from "./items/item.js";
+import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData, Skill } from "./items/item.js";
 import { Npc } from "./npc.js";
 import { handleNpcStatRollEvent } from "./rolls/npcStatRoll.js";
 import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "./rolls/npcSkillRoll.js";
@@ -33,6 +33,7 @@ export class NpcSheet extends BWActorSheet {
             { label: "Str", value: actor.data.data.stride, valuePath: "stride" },
         ];
         const armor: BWItemData[] = [];
+        const woundDice = actor.data.data.ptgs.woundDice || 0;
         data.beliefs = [];
         data.traits = [];
         data.instincts = [];
@@ -57,6 +58,7 @@ export class NpcSheet extends BWActorSheet {
                     if ((i as SkillDataRoot).data.learning) {
                         data.untrained.push(i as SkillDataRoot);
                     } else {
+                        Skill.disableIfWounded.call(i, woundDice);
                         data.skills.push(i as SkillDataRoot);
                     }
                     break;

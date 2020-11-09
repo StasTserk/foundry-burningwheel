@@ -21,6 +21,9 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
 
         if (!this.data.actors.length) {
             this.data.actors = game.actors.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || [];
+            this.data.actors.sort((a, b) => {
+                return this.data.data.participantIds.indexOf(a.id) > this.data.data.participantIds.indexOf(b.id) ? 1 : -1;
+            });
         }
 
         const actors = game.actors.entities;
@@ -120,7 +123,6 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
     private _handleRoll(e: JQuery.ClickEvent, type: "speed" | "agility" | "power" | "skill") {
         e.preventDefault();
-        console.log(this.data.actors);
         const index = parseInt(e.target.dataset.index || "0");
         const actor = this.data.actors[index];
         const engagementBonus = parseInt(this.data.data.participants[index].engagementBonus.toString());
@@ -193,6 +195,9 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         game.socket.on("system.burningwheel", ({type}) => {
             if (type === `syncActors${this.data.topic}`) {
                 this.data.actors = game.actors.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || [];
+                this.data.actors.sort((a, b) => {
+                    return this.data.data.participantIds.indexOf(a.id) > this.data.data.participantIds.indexOf(b.id) ? 1 : -1;
+                });
                 this.render();
             }
         });

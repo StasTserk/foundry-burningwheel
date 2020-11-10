@@ -231,7 +231,13 @@ function extractSourcedValue(html: JQuery, name: string):
 
 export function extractRollData(html: JQuery): RollData {
     const exponent = extractNumber(html, "stat.exp") + extractNumber(html, "skill.exp");
-    const diff = extractNumber(html, "difficulty");
+    let diff = 0;
+    if (game.burningwheel.useGmDifficulty) {
+        diff = game.burningwheel.gmDifficulty.difficulty;
+    } else {
+        diff = extractNumber(html, "difficulty");
+    }
+    
     const aDice = extractNumber(html, "arthaDice");
     const bDice = extractNumber(html, "bonusDice");
     const woundDice = extractNumber(html, "woundDice") || 0;

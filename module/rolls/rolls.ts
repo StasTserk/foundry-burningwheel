@@ -232,7 +232,7 @@ function extractSourcedValue(html: JQuery, name: string):
 export function extractRollData(html: JQuery): RollData {
     const exponent = extractNumber(html, "stat.exp") + extractNumber(html, "skill.exp");
     let diff = 0;
-    if (game.burningwheel.useGmDifficulty) {
+    if (game.burningwheel.useGmDifficulty && !extractNumber(html, "forceCustomDifficulty")) {
         diff = game.burningwheel.gmDifficulty.difficulty;
     } else {
         diff = extractNumber(html, "difficulty");
@@ -500,6 +500,7 @@ export interface RollDialogData {
     learning?: boolean;
     showDifficulty: boolean;
     showObstacles: boolean;
+    useCustomDifficulty?: boolean;
 }
 
 export interface RollChatMessageData {

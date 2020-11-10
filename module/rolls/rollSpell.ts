@@ -49,6 +49,10 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
             dataPreset = spellPreset;
         }
 
+        dataPreset.showDifficulty = true;
+        dataPreset.showObstacles = true;
+        dataPreset.useCustomDifficulty = true;
+
         const onRollCallback = async () => {
             showSpellTaxDialog(obstacle, spell.name, actor);
             if (spell.data.data.inPracticals) {

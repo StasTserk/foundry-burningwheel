@@ -40,7 +40,8 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: true,
-        showObstacles: true
+        showObstacles: true,
+        useCustomDifficulty: true
     };
 
     const html = await renderTemplate(templates.statDialog, data);

@@ -21,6 +21,7 @@ export class DifficultyDialog extends Application {
         html.find("input.difficultyInput").on("change", (e) => {
             const input = e.currentTarget;
             const difficulty = parseInt($(input).val() as string);
+            this.difficulty = difficulty;
             game.settings.set("burningwheel", "gmDifficulty", difficulty);
             game.socket.emit("system.burningwheel", { type: "difficulty", difficulty });
         });

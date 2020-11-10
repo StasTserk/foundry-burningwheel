@@ -69,6 +69,7 @@ export async function handleNpcSpellRoll({ actor, spell, skill, dataPreset}: Npc
     } else {
         dataPreset = { difficulty: obstacle };
     }
+    dataPreset.useCustomDifficulty = dataPreset.showObstacles = dataPreset.showDifficulty = true;
     const extraInfo = Spell.GetSpellMessageData(spell);
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }

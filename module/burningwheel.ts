@@ -13,6 +13,7 @@ import { preloadHandlebarsTemplates } from "./templates.js";
 import { NpcSheet } from "./npc-sheet.js";
 import { DuelOfWitsDialog } from "./dialogs/duel-of-wits.js";
 import { FightDialog } from "./dialogs/fight.js";
+import { DifficultyDialog } from "./dialogs/difficultyDialog.js";
 
 Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,6 +66,9 @@ Hooks.once("init", async () => {
 
 Hooks.once("ready", async() => {
     migrateData();
+    const difficulty = await game.settings.get("burningwheel", "gmDifficulty");
+    game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty);
+    game.burningwheel.gmDifficulty.render(true);
 });
 
 Hooks.on("renderSidebarTab", async (_data, html: JQuery) => {

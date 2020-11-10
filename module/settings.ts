@@ -20,4 +20,20 @@ export function registerSystemSettings(): void {
         type: String,
         default: "{}"
     });
+
+    game.settings.register("burningwheel", "useGmDifficulty", {
+        name: "Use GM set difficulty for tests.",
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: true
+    });
+
+    game.settings.register("burningwheel", "gmDifficulty", {
+        name: "Persisted GM difficulty value",
+        scope: "world",
+        config: false,
+        type: Number,
+        default: 3
+    });
 }

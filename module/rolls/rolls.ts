@@ -498,6 +498,8 @@ export interface RollDialogData {
     optionalObModifiers?: RollModifier[];
     offerSplitPool?: boolean;
     learning?: boolean;
+    showDifficulty: boolean;
+    showObstacles: boolean;
 }
 
 export interface RollChatMessageData {

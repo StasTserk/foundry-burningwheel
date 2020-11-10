@@ -26,7 +26,9 @@ export async function handleResourcesRollEvent({ sheet }: EventHandlerOptions): 
         cashDieOptions: Array.from(Array(parseInt(actor.data.data.cash, 10) || 0).keys()),
         fundDieOptions: Array.from(Array(parseInt(actor.data.data.funds, 10) || 0).keys()),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty
     };
 
     const html = await renderTemplate(templates.resourcesDialog, data);

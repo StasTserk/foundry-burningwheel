@@ -37,7 +37,9 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
         stat,
         tax,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty || !!actor.data.data.ptgs.obPenalty
     }, dataPreset);
 
     const html = await renderTemplate(templates.statDialog, data);

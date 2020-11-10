@@ -41,7 +41,11 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
         stat: { exp: dice.toString() } as TracksTests,
         tax: 0,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty
+            || !!actor.data.data.ptgs.obPenalty
+            || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
 
     const html = await renderTemplate(templates.npcRollDialog, data);

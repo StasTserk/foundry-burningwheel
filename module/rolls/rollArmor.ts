@@ -19,7 +19,9 @@ export async function handleArmorRollEvent({ target, sheet }: EventHandlerOption
         arthaDice: 0,
         bonusDice: 0,
         armor: parseInt(armorItem.data.data.dice) + chestBonus,
-        damage
+        damage,
+        showObstacles: true,
+        showDifficulty: true
     };
     const html = await renderTemplate(templates.armorDialog, dialogData);
 

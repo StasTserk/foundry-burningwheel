@@ -29,7 +29,9 @@ async function handlePtgsRoll({ sheet, shrugging }: PtgsRollOptions): Promise<un
         arthaDice: 0,
         stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty
     };
 
     const buttons: Record<string, DialogButton> = {};

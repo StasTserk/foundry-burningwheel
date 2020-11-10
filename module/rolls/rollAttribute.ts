@@ -26,7 +26,9 @@ export async function handleAttrRollEvent({ target, sheet }: EventHandlerOptions
         obPenalty: actor.data.data.ptgs.obPenalty,
         stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: (!game.burningwheel.useGmDifficulty) || !!actor.data.data.ptgs.obPenalty
     };
 
     const html = await renderTemplate(templates.attrDialog, data);

@@ -42,7 +42,11 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
         forkOptions: actor.getForkOptions(skill.data.name).sort(helpers.byName),
         wildForks: actor.getWildForks(skill.data.name).sort(helpers.byName),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty
+            || !!actor.data.data.ptgs.obPenalty
+            || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
     const html = await renderTemplate(templates.skillDialog, templateData);
     return new Promise(_resolve =>

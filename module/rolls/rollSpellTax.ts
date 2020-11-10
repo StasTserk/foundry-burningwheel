@@ -38,7 +38,9 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
         stat,
         tax,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: true,
+        showObstacles: true
     };
 
     const html = await renderTemplate(templates.statDialog, data);

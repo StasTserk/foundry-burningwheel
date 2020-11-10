@@ -33,7 +33,9 @@ export async function handleCirclesRollEvent({ target, sheet }: EventHandlerOpti
         circlesMalus: actor.data.circlesMalus,
         circlesContact,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty
     };
 
     const html = await renderTemplate(templates.circlesDialog, data);

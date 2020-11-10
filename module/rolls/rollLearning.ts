@@ -80,7 +80,11 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
         learning: true,
         skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
-        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle)
+        optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
+        showDifficulty: !game.burningwheel.useGmDifficulty,
+        showObstacles: !game.burningwheel.useGmDifficulty
+            || !!actor.data.data.ptgs.obPenalty
+            || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
 
     const html = await renderTemplate(templates.learnDialog, data);

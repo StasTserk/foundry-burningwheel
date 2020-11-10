@@ -4,12 +4,6 @@ export class DifficultyDialog extends Application {
     constructor(defaultDifficulty: number) {
         super({
             template: "systems/burningwheel/templates/dialogs/gmDifficulty.hbs",
-            width: 150,
-            height: 150,
-            // left: window.innerWidth - 500,
-            top: 600, //top: window.innerHeight - 150,
-            resizable: false,
-            minimizable: false,
             classes: ["gm-difficulty"],
             popOut: false
         });
@@ -18,7 +12,7 @@ export class DifficultyDialog extends Application {
     }
 
     activateListeners(html: JQuery): void {
-        html.find("input.difficultyInput").on("change", (e) => {
+        html.find("input.difficultyInput").on("input", (e) => {
             const input = e.currentTarget;
             const difficulty = parseInt($(input).val() as string);
             this.difficulty = difficulty;

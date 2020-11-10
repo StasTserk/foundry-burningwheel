@@ -66,9 +66,12 @@ Hooks.once("init", async () => {
 
 Hooks.once("ready", async() => {
     migrateData();
-    const difficulty = await game.settings.get("burningwheel", "gmDifficulty");
-    game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty);
-    game.burningwheel.gmDifficulty.render(true);
+    game.burningwheel.useGmDifficulty = await game.settings.get("burningwheel", "useGmDifficulty");
+    if (game.burningwheel.useGmDifficulty) {
+        const difficulty = await game.settings.get("burningwheel", "gmDifficulty");
+        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty);
+        game.burningwheel.gmDifficulty.render(true);
+    }
 });
 
 Hooks.on("renderSidebarTab", async (_data, html: JQuery) => {

@@ -1,0 +1,12 @@
+<div class="gm-difficulty">
+    <div class="difficulty-dialog">
+        <div class="label">Obstacle</div>
+        {{#if editable}}
+        <input class="difficultyInput" value="{{difficulty}}" type="number">
+        {{else}}
+        <div class="number">
+            {{difficulty}}
+        </div>
+        {{/if}}
+    </div>
+</div>

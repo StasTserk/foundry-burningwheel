@@ -291,12 +291,12 @@
         {{#each weapons as |w|}}
         {{#each w.data.attacks as |a|}}
         <div class="item-entry wide" data-action="rollWeapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}">
-            {{../name}} {{a.attackName}}— I:{{../data.shade}}{{a.incidental}} M:{{../data.shade}}{{a.mark}} S: {{../data.shade}}{{a.superb}}, Add {{a.add}}, VA {{a.vsArmor}}, WS {{a.weaponSpeed}}, {{a.weaponLength}}</div>
+            {{../name}} {{a.attackName}}— I:{{clampWound ../data.shade a.incidental}} M:{{clampWound ../data.shade a.mark}} S: {{clampWound ../data.shade a.superb}}, Add {{a.add}}, VA {{a.vsArmor}}, WS {{a.weaponSpeed}}, {{a.weaponLength}}</div>
         {{/each}}
         {{/each}}
         {{#each ranged as |w|}}
         <div class="item-entry wide" data-action="rollWeapon" data-skill-id="{{w.data.skillId}}" data-weapon-id="{{w._id}}">
-            {{w.name}} — I:{{w.data.shade}}{{w.data.incidental}} M:{{w.data.shade}}{{w.data.mark}} S: {{w.data.shade}}{{w.data.superb}}, VA {{w.data.vsArmor}}, Opt: {{w.data.optimalRange}}D, Extr: {{w.data.extremeRange}}D</div>
+            {{w.name}} — I:{{clampWound w.data.shade w.data.incidental}} M:{{clampWound w.data.shade w.data.mark}} S: {{clampWound w.data.shade w.data.superb}}, VA {{w.data.vsArmor}}, Opt: {{w.data.optimalRange}}D, Extr: {{w.data.extremeRange}}D</div>
         {{/each}}
     </div>
     {{#if (or armor.head armor.torso armor.leftArm armor.rightArm (or armor.leftLeg armor.rightLeg armor.shield))}}

@@ -52,46 +52,76 @@
         <div class="ptgs-category">
             Su:
             {{#if data.editMode}}
-            {{data.ptgs.woundShade}}
+            <select name="data.ptgs.suShade">
+                {{#select data.ptgs.suShade}}
+                <option value="B">B</option>
+                <option value="G">G</option>
+                <option value="W">W</option>
+                {{/select}}
+            </select>
             <input type="number" data-dtype="Number" name="data.ptgs.suThresh" value="{{data.ptgs.suThresh}}">
             {{else}}
-            {{data.ptgs.woundShade}}{{data.ptgs.suThresh}}
+            {{data.ptgs.suShade}}{{data.ptgs.suThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Li:
             {{#if data.editMode}}
-            {{data.ptgs.woundShade}}
+            <select name="data.ptgs.liShade">
+                {{#select data.ptgs.liShade}}
+                <option value="B">B</option>
+                <option value="G">G</option>
+                <option value="W">W</option>
+                {{/select}}
+            </select>
             <input type="number" data-dtype="Number" name="data.ptgs.liThresh" value="{{data.ptgs.liThresh}}">
             {{else}}
-            {{data.ptgs.woundShade}}{{data.ptgs.liThresh}}
+            {{data.ptgs.liShade}}{{data.ptgs.liThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Mi:
             {{#if data.editMode}}
-            {{data.ptgs.woundShade}}
+            <select name="data.ptgs.miShade">
+                {{#select data.ptgs.miShade}}
+                <option value="B">B</option>
+                <option value="G">G</option>
+                <option value="W">W</option>
+                {{/select}}
+            </select>
             <input type="number" data-dtype="Number" name="data.ptgs.miThresh" value="{{data.ptgs.miThresh}}">
             {{else}}
-            {{data.ptgs.woundShade}}{{data.ptgs.miThresh}}
+            {{data.ptgs.miShade}}{{data.ptgs.miThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Se:
             {{#if data.editMode}}
-            {{data.ptgs.woundShade}}
+            <select name="data.ptgs.seShade">
+                {{#select data.ptgs.seShade}}
+                <option value="B">B</option>
+                <option value="G">G</option>
+                <option value="W">W</option>
+                {{/select}}
+            </select>
             <input type="number" data-dtype="Number" name="data.ptgs.seThresh" value="{{data.ptgs.seThresh}}">
             {{else}}
-            {{data.ptgs.woundShade}}{{data.ptgs.seThresh}}
+            {{data.ptgs.seShade}}{{data.ptgs.seThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Tr:
             {{#if data.editMode}}
-            {{data.ptgs.woundShade}}
+            <select name="data.ptgs.trShade">
+                {{#select data.ptgs.trShade}}
+                <option value="B">B</option>
+                <option value="G">G</option>
+                <option value="W">W</option>
+                {{/select}}
+            </select>
             <input type="number" data-dtype="Number" name="data.ptgs.trThresh" value="{{data.ptgs.trThresh}}">
             {{else}}
-            {{data.ptgs.woundShade}}{{data.ptgs.trThresh}}
+            {{data.ptgs.trShade}}{{data.ptgs.trThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">

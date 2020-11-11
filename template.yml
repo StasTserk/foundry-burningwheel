@@ -133,19 +133,24 @@ Actor:
     reflexes: 1
     reflexesShade: 'B'
     ptgs:
-      woundShade: 'B'
       suThresh: 3
       suTaken: 0
+      suShade: 'B'
       liThresh: 5
       liTaken: 0
+      liShade: 'B'
       miThresh: 7
       miTaken: 0
+      miShade: 'B'
       seThresh: 8
       seTaken: 0
+      seShade: 'B'
       trThresh: 9
       trTaken: 0
+      trShade: 'B'
       moTaken: 0
       moThresh: 10
+      woundShade: 'B'
 Item:
   types:
     - belief

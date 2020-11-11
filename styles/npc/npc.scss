@@ -143,12 +143,12 @@
         grid-template-columns: repeat(7, 1fr);
         input[type='number'] {
             width: 1.25em;
+            height: 30px;
             background-color: transparent;
             font-size: 1em;
             text-align: center;
             border: 0;
             border-bottom: 1px solid black;
-            margin-top: 5px;
             @include no-number-arrows;
         }
         .ptgs-header {
@@ -166,6 +166,19 @@
         .ptgs-category {
             font-size: 1.5em;
             background-color: rgba(black, .1);
+
+            select {
+                display: inline-block;
+                @include select-no-arrow;
+                text-align-last: center;
+                width: 2em;
+                border: 1px solid black;
+                border-radius: 0;
+            }
+
+            select {
+                height: 26px;
+            }
         }
 
         .ptgs-input > input[type="number"] {

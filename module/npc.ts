@@ -37,19 +37,25 @@ export interface NpcData extends Common {
     reflexes: number;
     reflexesShade: ShadeString;
     ptgs: {
-        woundShade: ShadeString;
+        
         suThresh: number;
         suTaken: number;
+        suShade: ShadeString;
         liThresh: number;
         liTaken: number;
+        liShade: ShadeString;
         miThresh: number;
         miTaken: number;
+        miShade: ShadeString;
         seThresh: number;
         seTaken: number;
+        seShade: ShadeString;
         trThresh: number;
         trTaken: number;
+        trShade: ShadeString;
         moTaken: number;
         moThresh: number;
+        woundShade: ShadeString;
 
         woundDice?: number;
         obPenalty?: number;

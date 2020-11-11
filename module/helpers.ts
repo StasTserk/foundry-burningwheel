@@ -201,6 +201,25 @@ export function DivOfText(text: string | number, cssClass?: string): HTMLDivElem
     return element;
 }
 
+export function translateWoundValue(shade: ShadeString, value: number | string): string {
+    value = parseInt(value.toString());
+    if (value < 17) {
+        return shade + value;
+    }
+    if (shade === "B") {
+        value -= 16;
+        shade = "G";
+        if (value < 17) {
+            return shade + value;
+        }
+    }
+    if (shade === "G") {
+        value -= 16;
+        shade = "W";
+    }
+    return shade + value;
+}
+
 const AbilityLookup = {
     "1": { r: 1, d: 1, c: 1},
     "2": { r: 2, d: 1, c: 1},

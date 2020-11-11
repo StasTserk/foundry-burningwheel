@@ -2,11 +2,18 @@ import { BWActor } from "../bwactor.js";
 import { DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
+import { translateWoundValue } from "../helpers.js";
 
 export class MeleeWeapon extends Item {
     prepareData(): void {
         if (this.actor) {
-            const power = parseInt(this.actor.data.data.power.exp);
+            let power = parseInt(this.actor.data.data.power.exp);
+            if (this.actor.data.data.power.shade === "G") {
+                power += 2;
+            }
+            if (this.actor.data.data.power.shade === "W") {
+                power += 3;
+            }
             Object.values(this.data.data.attacks || []).forEach(ad => {
                 const baseDmg = power + ad.power;
                 ad.incidental = Math.ceil(baseDmg / 2);
@@ -28,9 +35,9 @@ export class MeleeWeapon extends Item {
         element.appendChild(helpers.DivOfText("Va", "ims-header"));
         element.appendChild(helpers.DivOfText("Length", "ims-header"));
     
-        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.attacks[attackIndex].incidental));
-        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.attacks[attackIndex].mark));
-        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.attacks[attackIndex].superb));
+        element.appendChild(helpers.DivOfText(translateWoundValue(weapon.data.data.shade, weapon.data.data.attacks[attackIndex].incidental || 1)));
+        element.appendChild(helpers.DivOfText(translateWoundValue(weapon.data.data.shade, weapon.data.data.attacks[attackIndex].mark || 1)));
+        element.appendChild(helpers.DivOfText(translateWoundValue(weapon.data.data.shade, weapon.data.data.attacks[attackIndex].superb || 1)));
         element.appendChild(helpers.DivOfText(weapon.data.data.attacks[attackIndex].add));
         element.appendChild(helpers.DivOfText(weapon.data.data.attacks[attackIndex].vsArmor));
         element.appendChild(helpers.DivOfText(weapon.data.data.attacks[attackIndex].weaponLength.titleCase()));

@@ -14,9 +14,9 @@
     {{#each melee as |m|}}
         {{#each m.data.attacks as |a|}}
         <div class="weapon-row">{{../name}}{{#if a.attackName}} {{a.attackName}}{{/if}}</div>
-        <div class="weapon-row">{{../data.shade}}{{a.incidental}}</div>
-        <div class="weapon-row">{{../data.shade}}{{a.mark}}</div>
-        <div class="weapon-row">{{../data.shade}}{{a.superb}}</div>
+        <div class="weapon-row">{{clampWound ../data.shade a.incidental}}</div>
+        <div class="weapon-row">{{clampWound ../data.shade a.mark}}</div>
+        <div class="weapon-row">{{clampWound ../data.shade a.superb}}</div>
         <div class="weapon-row">{{a.power}}</div>
         <div class="weapon-row">{{a.add}}</div>
         <div class="weapon-row">{{a.vsArmor}}</div>
@@ -53,9 +53,9 @@
     <div class="weapon-header">~</div>
     {{#each ranged as |r|}}
     <div class="weapon-row">{{r.name}}</div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{r.data.shade}}{{r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div></div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{r.data.shade}}{{r.data.mark}}</div><label class="weapon-dof">{{r.data.markLabel}}</label></div></div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{r.data.shade}}{{r.data.superb}}</div><label class="weapon-dof">{{r.data.superbLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.mark}}</div><label class="weapon-dof">{{r.data.markLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.superb}}</div><label class="weapon-dof">{{r.data.superbLabel}}</label></div></div>
     <div class="weapon-row">{{r.data.optimalRange}}D</div>
     <div class="weapon-row">{{r.data.extremeRange}}D</div>
     <div class="weapon-row">{{titlecase r.data.maxRange}}</div>

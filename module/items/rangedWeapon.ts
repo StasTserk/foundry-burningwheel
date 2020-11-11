@@ -6,8 +6,14 @@ import { QualityString } from "../constants.js";
 export class RangedWeapon extends Item {
     prepareData(): void {
         if (this.actor && this.data.data.usePower) {
-            const baseDmg = parseInt(this.actor.data.data.power.exp, 10)
+            let baseDmg = parseInt(this.actor.data.data.power.exp, 10)
                 + parseInt(this.data.data.powerBonus, 10);
+            if (this.actor.data.data.power.shade === "G") {
+                baseDmg += 2;
+            }
+            if (this.actor.data.data.power.shade === "W") {
+                baseDmg += 3;
+            }
             this.data.data.incidental = Math.ceil(baseDmg / 2).toString();
             this.data.data.mark = baseDmg.toString();
             this.data.data.superb = Math.floor(baseDmg * 1.5).toString();
@@ -37,9 +43,9 @@ export class RangedWeapon extends Item {
         element.appendChild(helpers.DivOfText("DoF Ranges", "ims-header"));
         element.appendChild(helpers.DivOfText("Die", "ims-header"));
     
-        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.incidental, incidental ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.mark, mark ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText(weapon.data.data.shade + weapon.data.data.superb, !incidental && !mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(weapon.data.data.shade, weapon.data.data.incidental), incidental ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(weapon.data.data.shade, weapon.data.data.mark), mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(weapon.data.data.shade, weapon.data.data.superb), !incidental && !mark ? "highlight" : undefined));
         element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
         element.appendChild(helpers.DivOfText(`${weapon.data.data.incidentalLabel}/${weapon.data.data.markLabel}/${weapon.data.data.superbLabel}`));
         element.appendChild(helpers.DivOfText("" + roll, "roll-die"));

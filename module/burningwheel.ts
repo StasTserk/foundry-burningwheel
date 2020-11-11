@@ -6,7 +6,7 @@ import {
 } from "./items/item.js";
 
 import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
-import { slugify } from "./helpers.js";
+import { ShadeString, slugify, translateWoundValue } from "./helpers.js";
 import { migrateData } from "./migration.js";
 import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
@@ -165,6 +165,10 @@ function registerHelpers() {
 
     Handlebars.registerHelper("sub", (a: string, b: string): number => {
         return parseInt(a) - parseInt(b);
+    });
+
+    Handlebars.registerHelper("clampWound", (shade: ShadeString, value: string | number): string => {
+        return translateWoundValue(shade, value);
     });
 }
 

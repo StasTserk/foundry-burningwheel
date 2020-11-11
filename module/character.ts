@@ -92,6 +92,12 @@ export class BWCharacter extends Actor<BWCharacterData>{
         this.data.data.mortalWoundShade = getWorstShadeString(this.data.data.power.shade, this.data.data.forte.shade);
 
         this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
+        if (this.data.data.will.shade === "G") {
+            this.data.data.hesitation -= 2;
+        }
+        if (this.data.data.will.shade === "W") {
+            this.data.data.hesitation -= 3;
+        }
 
         this.data.successOnlyRolls = (this.data.data.settings.onlySuccessesCount || '')
             .split(',')

@@ -2,19 +2,19 @@
 
 .character {
     &.ctrl-modified {
-        button:enabled {
+        button:enabled.modifiable {
             background-color: rgba(darkblue, 0.25);
         }
     }
     
     &.alt-modified {
-        button:enabled {
+        button:enabled.modifiable {
             background-color: rgba(#800, 0.25);
         }
     }
     
     &.shift-modified {
-        button:enabled {
+        button:enabled.modifiable {
             background-color: rgba(darkgreen, 0.25);
         }
     }

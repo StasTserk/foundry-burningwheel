@@ -337,19 +337,19 @@
             <div class="grid-header">Test</div>
             <input type="text" name="data.sustainedSpell1" value="{{data.sustainedSpell1}}">
             <input type="number" data-dtype="Number" name="data.sustainedSpell1Ob" value="{{data.sustainedSpell1Ob}}">
-            <button class="rollable" data-rollable-name="{{data.sustainedSpell1}}" data-obstacle="{{data.sustainedSpell1Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+            <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell1}}" data-obstacle="{{data.sustainedSpell1Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
 
             <input type="text" name="data.sustainedSpell2" value="{{data.sustainedSpell2}}">
             <input type="number" data-dtype="Number" name="data.sustainedSpell2Ob" value="{{data.sustainedSpell2Ob}}">
-            <button class="rollable" data-rollable-name="{{data.sustainedSpell2}}" data-obstacle="{{data.sustainedSpell2Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+            <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell2}}" data-obstacle="{{data.sustainedSpell2Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
 
             <input type="text" name="data.sustainedSpell3" value="{{data.sustainedSpell3}}">
             <input type="number" data-dtype="Number" name="data.sustainedSpell3Ob" value="{{data.sustainedSpell3Ob}}">
-            <button class="rollable" data-rollable-name="{{data.sustainedSpell3}}" data-obstacle="{{data.sustainedSpell3Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+            <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell3}}" data-obstacle="{{data.sustainedSpell3Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
 
             <input type="text" name="data.sustainedSpell4" value="{{data.sustainedSpell4}}">
             <input type="number" data-dtype="Number" name="data.sustainedSpell4Ob" value="{{data.sustainedSpell4Ob}}">
-            <button class="rollable" data-rollable-name="{{data.sustainedSpell4}}" data-obstacle="{{data.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+            <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell4}}" data-obstacle="{{data.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
         </div>
         {{#each spells as |spell|}}
         {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.sorcerousSkills}}

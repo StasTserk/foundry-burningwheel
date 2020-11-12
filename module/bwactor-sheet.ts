@@ -4,6 +4,8 @@ import * as constants from "./constants.js";
 import * as helpers from "./helpers.js";
 
 export class BWActorSheet extends ActorSheet {
+    private _keyDownHandler = this._handleKeyPress.bind(this);
+    private _keyUpHandler = this._handleKeyUp.bind(this);
     get actor(): BWActor {
         return super.actor as BWActor;
     }
@@ -21,6 +23,31 @@ export class BWActorSheet extends ActorSheet {
         super.activateListeners(html);
         html.find("input[data-item-id], select[data-item-id], textarea[data-item-id]")
             .on("change", (e) => this._updateItemField(e));
+        $(document).off("keydown", this._keyDownHandler).on("keydown", this._keyDownHandler);
+        $(document).off("keyup", this._keyUpHandler).on("keyup", this._keyUpHandler);
+    }
+
+    async close(): Promise<void> {
+        $(document).off("keydown", this._keyDownHandler);
+        $(document).off("keyup", this._keyUpHandler);
+        return super.close();
+    }
+
+    private _handleKeyPress(e: JQuery.KeyDownEvent): void {
+        if (e.ctrlKey || e.metaKey) {
+            $("form.character").addClass("ctrl-modified");
+        } else if (e.altKey) {
+            $("form.character").addClass("alt-modified");
+        }
+    }
+
+    private _handleKeyUp(e: JQuery.KeyUpEvent): void {
+        if (e.key === "Control" || e.key === "Meta") {
+            $("form.character").removeClass("ctrl-modified");
+        }
+        else if (e.key === "Alt") {
+            $("form.character").removeClass("alt-modified");
+        }
     }
 
     private _updateItemField(e: JQuery.ChangeEvent): void {

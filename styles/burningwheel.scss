@@ -41,6 +41,18 @@ button.rollable {
     cursor: pointer;
 }
 
+.ctrl-modified {
+    button:enabled {
+        background-color: rgba(darkblue, 0.25);
+    }
+}
+
+.alt-modified {
+    button:enabled {
+        background-color: rgba(darkgreen, 0.25);
+    }
+}
+
 input {
     &.exponent {
         width: 2.5em;

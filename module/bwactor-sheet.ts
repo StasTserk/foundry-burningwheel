@@ -38,6 +38,8 @@ export class BWActorSheet extends ActorSheet {
             $("form.character").addClass("ctrl-modified");
         } else if (e.altKey) {
             $("form.character").addClass("alt-modified");
+        } else if (e.shiftKey) {
+            $("form.character").addClass("shift-modified");
         }
     }
 
@@ -47,6 +49,8 @@ export class BWActorSheet extends ActorSheet {
         }
         else if (e.key === "Alt") {
             $("form.character").removeClass("alt-modified");
+        } else if (e.key === "Shift") {
+            $("form.character").removeClass("shift-modified");
         }
     }
 

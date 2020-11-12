@@ -20,7 +20,7 @@ import { byName, notifyError } from "../helpers.js";
 import { Npc } from "../npc.js";
 import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
 
-export async function handleNpcWeaponRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: NpcRollEventOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const itemId = target.dataset.weaponId || "";
     if (!skillId) {
@@ -33,7 +33,8 @@ export async function handleNpcWeaponRollEvent({ target, sheet }: NpcRollEventOp
         actor: sheet.actor as BWActor & Npc,
         weapon,
         skill,
-        attackIndex
+        attackIndex,
+        dataPreset
     });
 
 }
@@ -48,7 +49,7 @@ export async function handleNpcWeaponRoll({actor, weapon, skill, attackIndex, da
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 
-export async function handleNpcSpellRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcSpellRollEvent({ target, sheet, dataPreset }: NpcRollEventOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const itemId = target.dataset.spellId || "";
     if (!skillId) {
@@ -56,7 +57,7 @@ export async function handleNpcSpellRollEvent({ target, sheet }: NpcRollEventOpt
     }
     const skill = sheet.actor.getOwnedItem(skillId) as Skill;
     const spell = sheet.actor.getOwnedItem(itemId) as Spell;
-    return handleNpcSpellRoll({ actor: sheet.actor, spell, skill });
+    return handleNpcSpellRoll({ actor: sheet.actor, spell, skill, dataPreset });
 }
 
 export async function handleNpcSpellRoll({ actor, spell, skill, dataPreset}: NpcRollOptions): Promise<unknown> {

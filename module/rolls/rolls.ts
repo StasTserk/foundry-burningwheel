@@ -19,18 +19,7 @@ export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
-    const dataPreset: Partial<RollDialogData> = {};
-    if (e.shiftKey) {
-        dataPreset.showObstacles = true;
-        dataPreset.showDifficulty = true;
-        dataPreset.useCustomDifficulty = true;
-    }
-    if (e.ctrlKey || e.metaKey) {
-        dataPreset.offerSplitPool = true;
-    }
-    if (e.shiftKey) {
-        dataPreset.skipAdvancement = true;
-    }
+    const dataPreset = getKeypressModifierPreset(e);
 
     switch(rollType) {
         case "skill":
@@ -64,6 +53,22 @@ export async function handleRollable(
         case "spellTax":
             return handleSpellTaxRoll(target, sheet);
     }
+}
+
+export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogData> {
+    const dataPreset: Partial<RollDialogData> = {};
+    if (e.shiftKey) {
+        dataPreset.showObstacles = true;
+        dataPreset.showDifficulty = true;
+        dataPreset.useCustomDifficulty = true;
+    }
+    if (e.ctrlKey || e.metaKey) {
+        dataPreset.offerSplitPool = true;
+    }
+    if (e.shiftKey) {
+        dataPreset.skipAdvancement = true;
+    }
+    return dataPreset;
 }
 
 /* ================================================= */

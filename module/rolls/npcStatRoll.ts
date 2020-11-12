@@ -15,7 +15,7 @@ import {
 import { NpcSheet } from "../npc-sheet.js";
 import { Npc } from "module/npc.js";
 
-export async function handleNpcStatRollEvent({ target, sheet }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcRollEventOptions): Promise<unknown> {
     const actor = sheet.actor;
 
     const dice = getProperty(actor.data, target.dataset.stat || "") as number;
@@ -23,7 +23,7 @@ export async function handleNpcStatRollEvent({ target, sheet }: NpcRollEventOpti
     const open = target.dataset.action === "rollStatOpen";
     
     const statName = (target.dataset.rollableName || "Unknown Stat") as NpcStatName;
-    return handleNpcStatRoll({ dice, shade, open, statName, actor });
+    return handleNpcStatRoll({ dice, shade, open, statName, actor, dataPreset });
 }
 
 export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo, dataPreset, actor }: NpcStatRollOptions): Promise<unknown> {

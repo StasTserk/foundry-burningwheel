@@ -19,34 +19,46 @@ export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
+    const dataPreset: Partial<RollDialogData> = {};
+    if (e.shiftKey) {
+        dataPreset.showObstacles = true;
+        dataPreset.showDifficulty = true;
+        dataPreset.useCustomDifficulty = true;
+    }
+    if (e.ctrlKey || e.metaKey) {
+        dataPreset.offerSplitPool = true;
+    }
+    if (e.shiftKey) {
+        dataPreset.skipAdvancement = true;
+    }
 
     switch(rollType) {
         case "skill":
-            return handleSkillRollEvent({ target, sheet });
+            return handleSkillRollEvent({ target, sheet, dataPreset });
         case "stat":
-            return handleStatRollEvent({ target, sheet });
+            return handleStatRollEvent({ target, sheet, dataPreset });
         case "circles":
-            return handleCirclesRollEvent({ target, sheet });
+            return handleCirclesRollEvent({ target, sheet, dataPreset });
         case "attribute":
-            return handleAttrRollEvent({ target, sheet });
+            return handleAttrRollEvent({ target, sheet, dataPreset });
         case "resources":
-            return handleResourcesRollEvent({ target, sheet });
+            return handleResourcesRollEvent({ target, sheet, dataPreset });
         case "learning":
-            return handleLearningRollEvent({ target, sheet });
+            return handleLearningRollEvent({ target, sheet, dataPreset });
         case "shrug":
             if ((sheet as BWCharacterSheet).actor.data.data.ptgs.shrugging) {
                 return sheet.actor.update({ "data.ptgs.shrugging": false });
             }
-            return handleShrugRollEvent({ target, sheet });
+            return handleShrugRollEvent({ target, sheet, dataPreset });
         case "grit":
             if ((sheet as BWCharacterSheet).actor.data.data.ptgs.gritting) {
                 return sheet.actor.update({ "data.ptgs.gritting": false });
             }
-            return handleGritRollEvent({ target, sheet });
+            return handleGritRollEvent({ target, sheet, dataPreset });
         case "weapon":
-            return handleWeaponRollEvent({ target, sheet });
+            return handleWeaponRollEvent({ target, sheet, dataPreset });
         case "spell":
-            return handleSpellRollEvent({ target, sheet });
+            return handleSpellRollEvent({ target, sheet, dataPreset });
         case "armor":
             return handleArmorRollEvent({ target, sheet });
         case "spellTax":
@@ -501,6 +513,7 @@ export interface RollDialogData {
     showDifficulty: boolean;
     showObstacles: boolean;
     useCustomDifficulty?: boolean;
+    skipAdvancement?: boolean;
 }
 
 export interface RollChatMessageData {

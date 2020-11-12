@@ -9,15 +9,23 @@ import {
     rollDice,
     templates,
     extractRollData,
-    EventHandlerOptions
+    EventHandlerOptions,
+    mergeDialogData
 } from "./rolls.js";
 
-export async function handleAttrRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
+export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
     const rollModifiers = sheet.actor.getRollModifiers(attrName);
-    const data: AttributeDialogData = {
+    if (attrName.toLowerCase() === "steel") {
+        dataPreset = dataPreset || {};
+        dataPreset.useCustomDifficulty = true;
+        dataPreset.showDifficulty = true;
+        dataPreset.showObstacles = true;
+        dataPreset.difficulty = actor.data.data.hesitation || 3;
+    }
+    const data: AttributeDialogData =  mergeDialogData<AttributeDialogData>({
         name: `${attrName} Test`,
         difficulty: 3,
         bonusDice: 0,
@@ -29,7 +37,7 @@ export async function handleAttrRollEvent({ target, sheet }: EventHandlerOptions
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: (!game.burningwheel.useGmDifficulty) || !!actor.data.data.ptgs.obPenalty
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.attrDialog, data);
     return new Promise(_resolve =>

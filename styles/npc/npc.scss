@@ -1,5 +1,17 @@
 @import "../mixins.scss";
 .npc {
+    &.ctrl-modified {
+        .modifiable {
+            background-color: rgba(darkblue, 0.25);
+            box-shadow: 0 0 5px rgba(darkblue, 0.25);
+        }
+    }
+    &.shift-modified {
+        .modifiable {
+            background-color: rgba(darkgreen, 0.25);
+            box-shadow: 0 0 5px rgba(darkgreen, 0.25);
+        }
+    }
     align-content: flex-start;
     & > div {
         height: min-content;

@@ -35,22 +35,22 @@ export class BWActorSheet extends ActorSheet {
 
     private _handleKeyPress(e: JQuery.KeyDownEvent): void {
         if (e.ctrlKey || e.metaKey) {
-            $("form.character").addClass("ctrl-modified");
+            $("form.character, form.npc").addClass("ctrl-modified");
         } else if (e.altKey) {
             $("form.character").addClass("alt-modified");
         } else if (e.shiftKey) {
-            $("form.character").addClass("shift-modified");
+            $("form.character, form.npc").addClass("shift-modified");
         }
     }
 
     private _handleKeyUp(e: JQuery.KeyUpEvent): void {
         if (e.key === "Control" || e.key === "Meta") {
-            $("form.character").removeClass("ctrl-modified");
+            $("form.character, form.npc").removeClass("ctrl-modified");
         }
         else if (e.key === "Alt") {
             $("form.character").removeClass("alt-modified");
         } else if (e.key === "Shift") {
-            $("form.character").removeClass("shift-modified");
+            $("form.character, form.npc").removeClass("shift-modified");
         }
     }
 

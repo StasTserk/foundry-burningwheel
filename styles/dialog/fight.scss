@@ -1,14 +1,6 @@
 @import "../mixins.scss";
 .fight {
     .window-content {
-        // background: none;
-        // color: white;
-        // & select {
-        //     color: white;
-        //     & optgroup, & option {
-        //         background-color: #222;
-        //     }
-        // }
         & > form {
             flex: unset;
         }

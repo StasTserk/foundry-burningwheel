@@ -46,7 +46,10 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         this.data.data.teams.push({
             members: [{ id, name: actor.name } ],
             range: "Optimal",
-            hideActions: false
+            hideActions: false,
+            action1: "Do Nothing",
+            action2: "Do Nothing",
+            action3: "Do Nothing"
         });
         if (actor.data.type === "character") {
             // ensure only one character can be added at once.
@@ -153,6 +156,9 @@ interface RnCTeam {
     showAction1?: boolean;
     showAction2?: boolean;
     showAction3?: boolean;
+    action1: string;
+    action2: string;
+    action3: string;
 }
 
 const options = {

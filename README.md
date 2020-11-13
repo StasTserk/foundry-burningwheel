@@ -19,13 +19,15 @@ If you like this system, please support the developers at [burningwheel.com](htt
 - Support for GM created compendiums in play and character burning.
 - Specialized dialog for Duel of Wits.
 - Specialized dialog for Fight!
+- Specialized dialog for Range and Cover.
+- Alternate roll modes -- Hold Alt, Ctrl/Cmd, or Shift when pressing one of the roll buttons to use an alternate rolling mode.
+- Global GM set difficulty (possible to disable in system settings)
 
 ## Near future plans
 - Advanced artha tracking
 - Sheet layout support and other customization options (perhaps a tabbed version?)
 - Compendium use improvements
 - More automation
-- Range and Cover support.
 
 ## Distant plans
 - Lifepath item type for character burning

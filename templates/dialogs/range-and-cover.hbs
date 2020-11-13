@@ -36,6 +36,7 @@
             {{/if}}
             <div class="team-name">Team {{add i 1}}</div>
             <div class="team-label">Range</div>
+            {{#if t.editable}}
             <select name="range" data-index="{{i}}">
                 {{#select t.range}}
                 <option value="Optimal">Optimal</option>
@@ -43,10 +44,16 @@
                 <option value="Out of Range">Out of Range</option>
                 {{/select}}
             </select>
+            {{else}}
+            {{t.range}}
+            {{/if}}
             <div class="team-label">Members</div>
             <ul>
                 {{#each t.members as |m idx|}}
-                <li><span>{{m.name}}</span><i class="fas fa-trash" data-action="delete-member" data-index="{{i}}" data-member-index="{{idx}}"></i></li>
+                <li>
+                    <span>{{m.name}}</span>
+                    {{#if ../../gmView}}<i class="fas fa-trash" data-action="delete-member" data-index="{{i}}" data-member-index="{{idx}}"></i>{{/if}}
+                </li>
                 {{/each}}
             </ul>
             {{#if ../gmView}}
@@ -61,7 +68,7 @@
         <div class="team-action">
             {{#if t.editable}}
             <select name="action1" data-index="{{i}}">
-                <option value="">Do Nothing.</option>
+                <option value="Do Nothing">Do Nothing</option>
                 {{#select t.action1}}
                 {{#each ../actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
@@ -82,7 +89,7 @@
         <div class="team-action">
             {{#if t.editable}}
             <select name="action2" data-index="{{i}}">
-                <option value="">Do Nothing.</option>
+                <option value="Do Nothing">Do Nothing</option>
                 {{#select t.action2}}
                 {{#each ../actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
@@ -103,7 +110,7 @@
         <div class="team-action">
             {{#if t.editable}}
             <select name="action3" data-index="{{i}}">
-                <option value="">Do Nothing.</option>
+                <option value="Do Nothing">Do Nothing</option>
                 {{#select t.action3}}
                 {{#each ../actionOptions as |ao|}}
                 <optgroup label="{{@key}}">

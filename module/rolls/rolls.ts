@@ -51,7 +51,7 @@ export async function handleRollable(
         case "armor":
             return handleArmorRollEvent({ target, sheet });
         case "spellTax":
-            return handleSpellTaxRoll(target, sheet);
+            return handleSpellTaxRoll(target, sheet, dataPreset);
     }
 }
 
@@ -65,7 +65,7 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
     if (e.ctrlKey || e.metaKey) {
         dataPreset.offerSplitPool = true;
     }
-    if (e.shiftKey) {
+    if (e.altKey) {
         dataPreset.skipAdvancement = true;
     }
     return dataPreset;
@@ -254,7 +254,7 @@ export function extractRollData(html: JQuery): RollData {
     } else {
         diff = extractNumber(html, "difficulty");
     }
-    
+    const skipAdvancement = extractNumber(html, "skipAdvancement") === 1;
     const aDice = extractNumber(html, "arthaDice");
     const bDice = extractNumber(html, "bonusDice");
     const woundDice = extractNumber(html, "woundDice") || 0;
@@ -316,7 +316,8 @@ export function extractRollData(html: JQuery): RollData {
         difficultyGroup: helpers.difficultyGroup(difficultyDice, obstacleTotal),
         cashDice,
         fundDice,
-        splitPool
+        splitPool,
+        skipAdvancement
     };
 }
 
@@ -472,6 +473,8 @@ export interface RollData {
     fundDice: number;
     /** Number of dice split to a secondary pool */
     splitPool: number;
+    /** Is advancement to be tracked for this test? */
+    skipAdvancement: boolean;
 }
 
 /* ============ Constants =============== */

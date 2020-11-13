@@ -6,7 +6,7 @@ import { EventHandlerOptions, mergePartials, RollDialogData, RollOptions } from 
 import { BWActor } from "module/bwactor.js";
 import { BWCharacter } from "module/character.js";
 
-export function handleWeaponRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> | Application {
+export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> | Application {
     const actor = sheet.actor as BWActor & BWCharacter;
     const weaponId = target.dataset.weaponId;
     if (!weaponId) {
@@ -31,7 +31,8 @@ export function handleWeaponRollEvent({ target, sheet }: EventHandlerOptions): P
         actor,
         weapon,
         attackIndex: parseInt(target.dataset.attackIndex || "0"),
-        skill
+        skill,
+        dataPreset
     });
 
 }

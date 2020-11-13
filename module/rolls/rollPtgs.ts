@@ -89,7 +89,7 @@ async function ptgsRollCallback(
         stat: Ability,
         sheet: BWActorSheet,
         shrugging: boolean) {
-    const { diceTotal, baseDifficulty, difficultyTotal, difficultyGroup, dieSources, obSources } = extractRollData(dialogHtml);
+    const { diceTotal, baseDifficulty, difficultyTotal, difficultyGroup, dieSources, obSources, skipAdvancement } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
@@ -121,7 +121,7 @@ async function ptgsRollCallback(
         updateData[accessor] = true;
         sheet.actor.update(updateData);
     }
-    if (sheet.actor.data.type === "character") {
+    if (sheet.actor.data.type === "character" && !skipAdvancement) {
         (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.attrMessage, data);

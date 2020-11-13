@@ -86,7 +86,7 @@ async function attrRollCallback(
         fateReroll,
         callons
     };
-    if (sheet.actor.data.type === "character") {
+    if (sheet.actor.data.type === "character" && !rollData.skipAdvancement) {
         (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.attrMessage, data);

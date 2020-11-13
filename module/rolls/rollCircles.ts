@@ -11,10 +11,11 @@ import {
     rollDice,
     templates,
     extractRollData,
-    EventHandlerOptions
+    EventHandlerOptions,
+    mergeDialogData
 } from "./rolls.js";
 
-export async function handleCirclesRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
+export async function handleCirclesRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {
@@ -22,7 +23,7 @@ export async function handleCirclesRollEvent({ target, sheet }: EventHandlerOpti
     }
     const actor = sheet.actor as BWActor;
     const rollModifiers = sheet.actor.getRollModifiers("circles");
-    const data: CirclesDialogData = {
+    const data: CirclesDialogData = mergeDialogData<CirclesDialogData>({
         name: target.dataset.rollableName || "Circles Test",
         difficulty: 3,
         bonusDice: 0,
@@ -36,7 +37,7 @@ export async function handleCirclesRollEvent({ target, sheet }: EventHandlerOpti
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: !game.burningwheel.useGmDifficulty
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.circlesDialog, data);
     return new Promise(_resolve =>
@@ -92,21 +93,23 @@ async function circlesRollCallback(
     };
     const messageHtml = await renderTemplate(templates.circlesMessage, data);
 
-    // increment relationship tracking values...
-    if (contact && contact.data.data.building) {
-        const progress = (parseInt(contact.data.data.buildingProgress, 10) || 0) + 1;
-        contact.update({"data.buildingProgress": progress }, null);
-        if (progress >= 10 - (contact.data.data.aptitude || 10)) {
-            Dialog.confirm({
-                title: "Relationship Building Complete",
-                content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
-                yes: () => { contact.update({"data.building": false}, null); },
-                no: () => { return; }
-            });
+    if (!rollData.skipAdvancement) {
+        // increment relationship tracking values...
+        if (contact && contact.data.data.building) {
+            const progress = (parseInt(contact.data.data.buildingProgress, 10) || 0) + 1;
+            contact.update({"data.buildingProgress": progress }, null);
+            if (progress >= 10 - (contact.data.data.aptitude || 10)) {
+                Dialog.confirm({
+                    title: "Relationship Building Complete",
+                    content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
+                    yes: () => { contact.update({"data.building": false}, null); },
+                    no: () => { return; }
+                });
+            }
         }
-    }
-    if (sheet.actor.data.type === "character") {
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
+        if (sheet.actor.data.type === "character") {
+            (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
+        }
     }
 
     return ChatMessage.create({

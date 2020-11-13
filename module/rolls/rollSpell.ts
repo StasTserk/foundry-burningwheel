@@ -7,7 +7,7 @@ import { EventHandlerOptions, RollDialogData, RollOptions } from "./rolls.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import { showSpellTaxDialog } from "./rollSpellTax.js";
 
-export async function handleSpellRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
+export async function handleSpellRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor as BWActor & BWCharacter;
     const sorcerySkillId = target.dataset.skillId;
     if (!sorcerySkillId) {
@@ -20,7 +20,7 @@ export async function handleSpellRollEvent({ target, sheet }: EventHandlerOption
         throw Error("Malformed spell roll button. Must specify spell Id");
     }
     const spell = sheet.actor.getOwnedItem(spellId) as Spell;
-    return handleSpellRoll({ actor, spell, skill });
+    return handleSpellRoll({ actor, spell, skill, dataPreset });
 }
 
 export async function handleSpellRoll({ actor, spell, skill, dataPreset }: SpellRollOptions): Promise<unknown> {
@@ -31,7 +31,6 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
     const spellData = Spell.GetSpellMessageData(spell);
 
     if (skill) {
-        
         const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
         let practicalsPenalty = 0;
         const spellPreset: Partial<RollDialogData> = { difficulty: obstacle };
@@ -54,8 +53,8 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         dataPreset.useCustomDifficulty = true;
 
         const onRollCallback = async () => {
-            showSpellTaxDialog(obstacle, spell.name, actor);
-            if (spell.data.data.inPracticals) {
+            showSpellTaxDialog(obstacle, spell.name, actor, dataPreset?.skipAdvancement);
+            if (spell.data.data.inPracticals && !dataPreset?.skipAdvancement) {
                 const amount = parseInt(spell.data.data.learningProgress || "0");
                 const aptitude = spell.data.data.aptitude || 9;
                 spell.update({ "data.learningProgress": amount + 1 }, {});

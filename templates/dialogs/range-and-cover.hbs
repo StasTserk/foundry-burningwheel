@@ -59,7 +59,8 @@
             {{/if}}
         </div>
         <div class="team-action">
-            <select name="action2" data-index="{{i}}">
+            {{#if t.editable}}
+            <select name="action1" data-index="{{i}}">
                 <option value="">Do Nothing.</option>
                 {{#select t.action1}}
                 {{#each ../actionOptions as |ao|}}
@@ -71,8 +72,15 @@
                 {{/each}}
                 {{/select}}
             </select>
+            {{/if}}
+            {{#if t.showAction1}}
+            <div class="action-card">{{t.action1}}</div>
+            {{else}}
+            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+            {{/if}}
         </div>
         <div class="team-action">
+            {{#if t.editable}}
             <select name="action2" data-index="{{i}}">
                 <option value="">Do Nothing.</option>
                 {{#select t.action2}}
@@ -85,8 +93,15 @@
                 {{/each}}
                 {{/select}}
             </select>
+            {{/if}}
+            {{#if t.showAction2}}
+            <div class="action-card">{{t.action2}}</div>
+            {{else}}
+            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+            {{/if}}
         </div>
         <div class="team-action">
+            {{#if t.editable}}
             <select name="action3" data-index="{{i}}">
                 <option value="">Do Nothing.</option>
                 {{#select t.action3}}
@@ -99,6 +114,12 @@
                 {{/each}}
                 {{/select}}
             </select>
+            {{/if}}
+            {{#if t.showAction3}}
+            <div class="action-card">{{t.action3}}</div>
+            {{else}}
+            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+            {{/if}}
         </div>
         {{/each}}
     </div>

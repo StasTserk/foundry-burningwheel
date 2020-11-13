@@ -105,10 +105,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             e.preventDefault();
             this._toggleHidden(e.target);
         });
-        html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => {
-            e.preventDefault();
-            this._updateGridData(e);
-        });
+        html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.participants));
 
         html.find('button[data-action="rollSpeed"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "speed"); });
         html.find('button[data-action="rollPower"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "power"); });
@@ -139,18 +136,6 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             return handleFightRoll({ actor, type, itemId: itemIdString, attackIndex, engagementBonus, positionPenalty });
         }
         return handleFightRoll({ actor, type, engagementBonus, positionPenalty });
-    }
-
-    private _updateGridData(e: JQuery.ChangeEvent): void {
-        const index = parseInt(e.target.dataset.index || "0");
-        const newValue = e.target.type ==="checkbox" ? e.target.checked : e.target.value;
-        const dataPath = e.target.name;
-
-        this.data.data.participants[index][dataPath] = newValue;
-
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
     
     private _toggleHidden(target: HTMLDivElement): void {

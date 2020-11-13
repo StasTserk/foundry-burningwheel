@@ -14,7 +14,7 @@ import { NpcSheet } from "./npc-sheet.js";
 import { DuelOfWitsDialog } from "./dialogs/duelOfWits.js";
 import { FightDialog } from "./dialogs/fight.js";
 import { DifficultyDialog } from "./dialogs/difficultyDialog.js";
-import { RandAndCoverDialog } from "./dialogs/rangeAndCover.js";
+import { RangeAndCoverDialog } from "./dialogs/rangeAndCover.js";
 
 Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -76,7 +76,7 @@ Hooks.once("init", async () => {
     } as any);
     game.burningwheel.fight.activateSocketListeners();
 
-    game.burningwheel.rangeAndCover = new FightDialog({
+    game.burningwheel.rangeAndCover = new RangeAndCoverDialog({
         title: "Fight!",
         buttons: {},
         data: rncData
@@ -99,7 +99,7 @@ Hooks.on("renderSidebarTab", async (_data, html: JQuery) => {
     if (html.prop("id") === "combat") { // this is the combat tab
         DuelOfWitsDialog.addSidebarControl(html);
         FightDialog.addSidebarControl(html);
-        RandAndCoverDialog.addSidebarControl(html);
+        RangeAndCoverDialog.addSidebarControl(html);
     }
 });
 

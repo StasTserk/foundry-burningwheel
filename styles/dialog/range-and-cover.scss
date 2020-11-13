@@ -1,0 +1,76 @@
+@import "../mixins.scss";
+.rnc {
+    .window-content {
+        & > form {
+            flex: unset;
+        }
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        width: 100%;
+        margin-top: 5px;
+
+        &>div {
+            border: 2px groove #aaaaaa;
+            background: linear-gradient(rgba(#444, .25), rgba(#000, .05));
+            min-height: 1.5em;
+            margin: 0;
+            padding: 0 3px;
+        }
+        
+        .team-header {
+            font-size: 1.125em;
+        }
+
+        .team-card {
+            .hide-actions {
+                border-bottom: 2px groove #800;
+                padding-top: 3px;
+                padding-right: 3px;
+                &>i {
+                    height: 1.25em;
+                    line-height: 1.25em;
+                    flex: 0 1.25em;
+                    &:hover {
+                        color: #800;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+
+            .team-name {
+                font-weight: bold;
+                font-size: 1.25em;
+                flex: 1 1;
+                border-bottom: 2px groove #800
+            }
+
+            .team-label {
+                width: 100%;
+                font-weight: bold;
+            }
+
+            ul {
+                list-style-type: none;
+                width: 100%;
+                margin-top: 0;
+                & > li {
+                    display: flex;
+                    & > span {
+                        flex: 1 1;
+                    }
+                    & > i {
+                        flex: 0 15px;
+                    }
+                }
+            }
+
+            select {
+                width: 100%;
+            }
+        }
+    }
+}

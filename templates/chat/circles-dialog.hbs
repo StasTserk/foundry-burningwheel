@@ -74,4 +74,11 @@
         </div>
     </div>
     {{/if}}
+    {{#if useCustomDifficulty}}<input type="hidden" name="forceCustomDifficulty" value="1">{{/if}}
+    {{#if skipAdvancement}}
+    <div class="roll-warning">
+        Advancement for this roll will not be tracked.
+        <input type="hidden" name="skipAdvancement" value="1">
+    </div>
+    {{/if}}
 </form>

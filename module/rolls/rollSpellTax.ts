@@ -12,17 +12,17 @@ import {
     extractRollData
 } from "./rolls.js";
 
-export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWActorSheet): Promise<unknown> {
+export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWActorSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {
     const obstacle = parseInt(target.dataset.obstacle || "0");
     const spellName = target.dataset.rollableName || "Unknown Spell";
 
     if (!obstacle && !spellName) {
         return helpers.notifyError("Missing Spell Data", "Tried to roll a tax test with no obstacle or spell name set.");
     }
-    else return showSpellTaxDialog(obstacle, spellName, sheet.actor);
+    else return showSpellTaxDialog(obstacle, spellName, sheet.actor, dataPreset.skipAdvancement);
 }
 
-export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWActor): Promise<unknown> {
+export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWActor, skipAdvancement = false): Promise<unknown> {
     const stat = getProperty(actor.data, "data.forte") as Ability;
     
     const rollModifiers = actor.getRollModifiers("forte");
@@ -41,7 +41,8 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: true,
         showObstacles: true,
-        useCustomDifficulty: true
+        useCustomDifficulty: true,
+        skipAdvancement
     };
 
     const html = await renderTemplate(templates.statDialog, data);
@@ -53,7 +54,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        taxTestCallback(dialogHtml, stat, actor, tax, spellName)
+                        taxTestCallback(dialogHtml, stat, actor, tax, spellName, skipAdvancement)
                 }
             }
         }).render(true)
@@ -65,7 +66,8 @@ async function taxTestCallback(
         stat: Ability,
         actor: BWActor,
         tax: number,
-        spellName: string) {
+        spellName: string,
+        skipAdvancement: boolean) {
     const { diceTotal, difficultyTotal, difficultyGroup, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal, stat.open, stat.shade);
@@ -92,7 +94,7 @@ async function taxTestCallback(
         callons
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
-    if (actor.data.type === "character") {
+    if (actor.data.type === "character" && !skipAdvancement) {
         (actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
     }
 

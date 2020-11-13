@@ -70,7 +70,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
 
 async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
-    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, skipAdvancement } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
@@ -126,7 +126,7 @@ async function skillRollCallback(
         callons,
         extraInfo
     };
-    if (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
+    if (!skipAdvancement && (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1)) {
         await helpers.addTestToSkill(skill, dg);
         skill = actor.getOwnedItem(skill._id) as Skill; // update skill with new data
     }

@@ -9,14 +9,15 @@ import {
     rollDice,
     templates,
     extractRollData,
-    EventHandlerOptions
+    EventHandlerOptions,
+    mergeDialogData
 } from "./rolls.js";
 
-export async function handleResourcesRollEvent({ sheet }: EventHandlerOptions): Promise<unknown> {
+export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;
     const actor = sheet.actor as BWActor;
     const rollModifiers = sheet.actor.getRollModifiers("resources");
-    const data: ResourcesDialogData = {
+    const data: ResourcesDialogData = mergeDialogData<ResourcesDialogData>({
         name: "Resources Test",
         difficulty: 3,
         bonusDice: 0,
@@ -29,7 +30,7 @@ export async function handleResourcesRollEvent({ sheet }: EventHandlerOptions): 
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: !game.burningwheel.useGmDifficulty
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.resourcesDialog, data);
     return new Promise(_resolve =>
@@ -105,7 +106,9 @@ async function resourcesRollCallback(
             });
             taxMessage.render(true);
         }
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
+        if (!rollData.skipAdvancement) {
+            (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
+        }
     }
 
     return ChatMessage.create({

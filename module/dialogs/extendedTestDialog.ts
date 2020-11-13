@@ -31,6 +31,19 @@ export class ExtendedTestDialog<T> extends Dialog {
         e.target.focus();
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updateCollection(e: JQuery.ChangeEvent, collection: any[]) : void {
+        const index = parseInt(e.target.dataset.index || "0");
+        const newValue = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+        const dataPath = e.target.name;
+
+        collection[index][dataPath] = newValue;
+
+        this.persistState(this.data.data);
+        this.syncData(this.data.data);
+        this.render();
+    }
+
     activateSocketListeners(): void {
         game.socket.on("system.burningwheel", ({type, data}) => {
             if (type === `update${this.data.topic}`) {

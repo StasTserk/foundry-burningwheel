@@ -27,6 +27,27 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         html.find('*[data-action="delete-member"]').on('click', (e: JQuery.ClickEvent) => this._deleteMember(e.target));
         html.find('*[data-action="toggle-hidden"]').on('click', (e: JQuery.ClickEvent) => this._toggleHidden(e.target));
         html.find('.team-grid select, .team-grid input').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.teams));
+        html.find('*[data-action="resetRound"]').on('click', (e) => this._resetRound(e));
+        html.find('*[data-action="clearAll"]').on('click', (e) => this._clearAll(e));
+    }
+    private _clearAll(e: JQuery.ClickEvent): void {
+        e.preventDefault();
+        this.data.data.actors = [];
+        this.data.data.teams = [];
+        this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+        this.persistState(this.data.data);
+        this.syncData(this.data.data);
+        this.render();
+    }
+    private _resetRound(e: JQuery.ClickEvent): void {
+        e.preventDefault();
+        this.data.data.teams.forEach(t => {
+            t.action1 = t.action2 = t.action3 = "Do Nothing";
+        });
+        this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+        this.persistState(this.data.data);
+        this.syncData(this.data.data);
+        this.render();
     }
 
     private _toggleHidden(target: HTMLElement): void {

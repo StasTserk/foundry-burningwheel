@@ -24,17 +24,19 @@
         <div class="team-header">Volley 3</div>
         {{/if}}
         {{#each teams as |t i|}}
-        <div class="team-card flex-row">
-            {{#if ../gmView}}
-            <div class="hide-actions">
-                {{#if t.hideActions}}
-                <i data-index="{{i}}" class="fas fa-eye-slash" data-action="toggle-hidden"></i>
-                {{else}}
-                <i data-index="{{i}}" class="fas fa-eye" data-action="toggle-hidden"></i>
+        <div class="team-card flex-column">
+            <div class="flex-row">
+                {{#if ../gmView}}
+                <div class="hide-actions">
+                    {{#if t.hideActions}}
+                    <i data-index="{{i}}" class="fas fa-eye-slash" data-action="toggle-hidden"></i>
+                    {{else}}
+                    <i data-index="{{i}}" class="fas fa-eye" data-action="toggle-hidden"></i>
+                    {{/if}}
+                </div>
                 {{/if}}
+                <div class="team-name">Team {{add i 1}}</div>
             </div>
-            {{/if}}
-            <div class="team-name">Team {{add i 1}}</div>
             <div class="team-label">Range</div>
             {{#if t.editable}}
             <select name="range" data-index="{{i}}">

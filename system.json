@@ -17,7 +17,7 @@
     ],
     "packs": [],
     "minimumCoreVersion": "0.7.5",
-    "compatibleCoreVersion": "0.7.6",
+    "compatibleCoreVersion": "0.7.7",
     "socket": true,
     "initiative": "1d20",
     "gridDistance": 10,

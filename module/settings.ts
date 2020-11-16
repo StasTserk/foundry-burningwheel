@@ -26,7 +26,8 @@ export function registerSystemSettings(): void {
         scope: "world",
         config: true,
         type: Boolean,
-        default: true
+        default: true,
+        onChange: () => location.reload()
     });
 
     game.settings.register("burningwheel", "gmDifficulty", {

@@ -139,7 +139,7 @@ async function learningRollCallback(
             extraInfo = extraInfo ? `${extraInfo}${text}` : text;
             if (expended) {
                 tools.update({
-                    "data.expended": true
+                    "data.isExpended": true
                 }, {});
             }
         }

@@ -49,6 +49,17 @@
             {{else}}
             {{t.range}}
             {{/if}}
+            <div class="team-label">Maneuver Dice</div>
+            <div class="maneuver-grid">
+                <div>Stride</div>
+                <div>Weapon</div>
+                <div>Position</div>
+                <div>Misc.</div>
+                <input type="number" data-index="{{i}}" name="strideDice" value="{{t.strideDice}}">
+                <input type="number" data-index="{{i}}" name="positionDice" value="{{t.positionDice}}">
+                <input type="number" data-index="{{i}}" name="weaponDice" value="{{t.weaponDice}}">
+                <input type="number" data-index="{{i}}" name="miscDice" value="{{t.miscDice}}">
+            </div>
             <div class="team-label">Members</div>
             <ul>
                 {{#each t.members as |m idx|}}
@@ -132,10 +143,12 @@
         </div>
         {{/each}}
     </div>
+    {{#if gmView}}
     <select name="newTeam">
         <option value="">Add a new team.</option>
         {{#each actors as |a|}}
         <option value="{{a.id}}">{{a.name}}</option>
         {{/each}}
     </select>
+    {{/if}}
 </form>

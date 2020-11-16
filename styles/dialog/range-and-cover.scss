@@ -6,6 +6,19 @@
         }
     }
 
+    .control-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 10px;
+        width: 100%;
+        height: min-content;
+        .control-button {
+            @include button-like(black);
+            color: black;
+            border-radius: 3px;
+        }
+    }
+
     .team-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -40,7 +53,6 @@
                 }
             }
 
-
             .team-name {
                 font-weight: bold;
                 font-size: 1.25em;
@@ -51,6 +63,12 @@
             .team-label {
                 width: 100%;
                 font-weight: bold;
+            }
+
+            .maneuver-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                
             }
 
             ul {

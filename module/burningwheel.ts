@@ -77,7 +77,7 @@ Hooks.once("init", async () => {
     game.burningwheel.fight.activateSocketListeners();
 
     game.burningwheel.rangeAndCover = new RangeAndCoverDialog({
-        title: "Fight!",
+        title: "Range and Cover",
         buttons: {},
         data: rncData
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

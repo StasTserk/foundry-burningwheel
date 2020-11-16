@@ -3,7 +3,7 @@ export class DifficultyDialog extends Application {
     editable: boolean;
     constructor(defaultDifficulty: number) {
         super({
-            template: "systems/burningwheel/templates/dialogs/gmDifficulty.hbs",
+            template: "systems/burningwheel/templates/dialogs/gm-difficulty.hbs",
             classes: ["gm-difficulty"],
             popOut: false
         });

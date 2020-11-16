@@ -18,28 +18,30 @@ export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHa
     const actor = sheet.actor as BWActor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
     const rollModifiers = sheet.actor.getRollModifiers(attrName);
+    dataPreset = dataPreset || {};
+    const woundDice = attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined;
+    const obPenalty = attrName === "Steel" ? actor.data.data.ptgs.obPenalty : undefined;
     if (attrName.toLowerCase() === "steel") {
-        dataPreset = dataPreset || {};
         dataPreset.useCustomDifficulty = true;
         dataPreset.showDifficulty = true;
         dataPreset.showObstacles = true;
-        dataPreset.difficulty = actor.data.data.hesitation || 3;
+        dataPreset.difficulty = actor.data.data.hesitation || 0;
     }
     const data: AttributeDialogData =  mergeDialogData<AttributeDialogData>({
         name: `${attrName} Test`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined,
-        obPenalty: actor.data.data.ptgs.obPenalty,
+        woundDice,
+        obPenalty,
         stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
-        showObstacles: (!game.burningwheel.useGmDifficulty) || !!actor.data.data.ptgs.obPenalty
+        showObstacles: (!game.burningwheel.useGmDifficulty) || !!obPenalty
     }, dataPreset);
 
-    const html = await renderTemplate(templates.attrDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `${target.dataset.rollableName} Test`,
@@ -89,7 +91,7 @@ async function attrRollCallback(
     if (sheet.actor.data.type === "character" && !rollData.skipAdvancement) {
         (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
     }
-    const messageHtml = await renderTemplate(templates.attrMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})

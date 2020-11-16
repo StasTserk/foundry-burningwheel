@@ -32,7 +32,7 @@ export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandl
         showObstacles: !game.burningwheel.useGmDifficulty
     }, dataPreset);
 
-    const html = await renderTemplate(templates.resourcesDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `Resources Test`,
@@ -82,7 +82,7 @@ async function resourcesRollCallback(
         fateReroll,
         callons
     };
-    const messageHtml = await renderTemplate(templates.resourcesMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     if (sheet.actor.data.type === "character") {
         if (!isSuccess) {
             const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :

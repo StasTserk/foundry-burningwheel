@@ -45,7 +45,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
         skipAdvancement
     };
 
-    const html = await renderTemplate(templates.statDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `${spellName} Tax Test`,
@@ -145,7 +145,7 @@ async function taxTestCallback(
 
     }
 
-    const messageHtml = await renderTemplate(templates.skillMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: actor})

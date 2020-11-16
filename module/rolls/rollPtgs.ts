@@ -74,7 +74,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
         };
     }
 
-    const html = await renderTemplate(templates.attrDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `${data.name} Test`,
@@ -124,7 +124,7 @@ async function ptgsRollCallback(
     if (sheet.actor.data.type === "character" && !skipAdvancement) {
         (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
     }
-    const messageHtml = await renderTemplate(templates.attrMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor: sheet.actor})

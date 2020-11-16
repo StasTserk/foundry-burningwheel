@@ -55,10 +55,14 @@
                 <div>Weapon</div>
                 <div>Position</div>
                 <div>Misc.</div>
+                {{#if t.editable}}
                 <input type="number" data-index="{{i}}" name="strideDice" value="{{t.strideDice}}">
                 <input type="number" data-index="{{i}}" name="positionDice" value="{{t.positionDice}}">
                 <input type="number" data-index="{{i}}" name="weaponDice" value="{{t.weaponDice}}">
                 <input type="number" data-index="{{i}}" name="miscDice" value="{{t.miscDice}}">
+                {{else}}
+                <div>{{t.strideDice}}</div><div>{{t.positionDice}}</div><div>{{t.weaponDice}}</div><div>{{t.miscDice}}</div>
+                {{/if}}
             </div>
             <div class="team-label">Members</div>
             <ul>

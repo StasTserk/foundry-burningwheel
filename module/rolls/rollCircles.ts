@@ -39,7 +39,7 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
         showObstacles: !game.burningwheel.useGmDifficulty
     }, dataPreset);
 
-    const html = await renderTemplate(templates.circlesDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `Circles Test`,
@@ -91,7 +91,7 @@ async function circlesRollCallback(
         fateReroll,
         callons
     };
-    const messageHtml = await renderTemplate(templates.circlesMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
 
     if (!rollData.skipAdvancement) {
         // increment relationship tracking values...

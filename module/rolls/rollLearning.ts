@@ -87,7 +87,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
             || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
 
-    const html = await renderTemplate(templates.learnDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `${skill.name}`,
@@ -162,7 +162,7 @@ async function learningRollCallback(
             callons,
             extraInfo
         };
-        const messageHtml = await renderTemplate(templates.learnMessage, data);
+        const messageHtml = await renderTemplate(templates.pcRollMessage, data);
         if (onRollCallback) { onRollCallback(); }
         return ChatMessage.create({
             content: messageHtml,

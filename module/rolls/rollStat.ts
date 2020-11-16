@@ -42,7 +42,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
         showObstacles: !game.burningwheel.useGmDifficulty || !!actor.data.data.ptgs.obPenalty
     }, dataPreset);
 
-    const html = await renderTemplate(templates.statDialog, data);
+    const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
             title: `${statName} Test`,
@@ -104,7 +104,7 @@ async function statRollCallback(
         (actor as BWActor & BWCharacter).addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
     }
 
-    const messageHtml = await renderTemplate(templates.skillMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({ actor })

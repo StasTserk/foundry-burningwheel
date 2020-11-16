@@ -481,19 +481,9 @@ export interface RollData {
 export const templates = {
     armorDialog: "systems/burningwheel/templates/chat/armor-dialog.hbs",
     armorMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    attrDialog: "systems/burningwheel/templates/chat/roll-dialog.hbs",
-    attrMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    circlesDialog: "systems/burningwheel/templates/chat/circles-dialog.hbs",
-    circlesMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    learnDialog: "systems/burningwheel/templates/chat/roll-dialog.hbs",
-    learnMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    skillDialog: "systems/burningwheel/templates/chat/skill-dialog.hbs",
-    skillMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    statDialog: "systems/burningwheel/templates/chat/roll-dialog.hbs",
-    statMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
     rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.hbs",
-    resourcesDialog: "systems/burningwheel/templates/chat/resources-dialog.hbs",
-    resourcesMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
+    pcRollDialog: "systems/burningwheel/templates/dialogs/roll-dialog.hbs",
+    pcRollMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
     npcRollDialog: "systems/burningwheel/templates/dialogs/npc-roll-dialog.hbs",
     npcMessage: "systems/burningwheel/templates/chat/roll-message.hbs"
 };

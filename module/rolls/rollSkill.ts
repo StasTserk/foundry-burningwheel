@@ -48,7 +48,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
             || !!actor.data.data.ptgs.obPenalty
             || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
-    const html = await renderTemplate(templates.skillDialog, templateData);
+    const html = await renderTemplate(templates.pcRollDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
             title: `${skill.data.name} Test`,
@@ -140,7 +140,7 @@ async function skillRollCallback(
         });
     }
 
-    const messageHtml = await renderTemplate(templates.skillMessage, data);
+    const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({
         content: messageHtml,
         speaker: ChatMessage.getSpeaker({actor})

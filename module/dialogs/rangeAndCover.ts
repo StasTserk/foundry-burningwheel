@@ -26,7 +26,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         html.find('select[name="newMember"]').on('change', (e: JQuery.ChangeEvent) => this._addNewMember(e.target));
         html.find('*[data-action="delete-member"]').on('click', (e: JQuery.ClickEvent) => this._deleteMember(e.target));
         html.find('*[data-action="toggle-hidden"]').on('click', (e: JQuery.ClickEvent) => this._toggleHidden(e.target));
-        html.find('.team-grid select, .team-grid input').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.teams));
+        html.find('.team-grid select, .team-card input').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.teams));
         html.find('*[data-action="resetRound"]').on('click', (e) => this._resetRound(e));
         html.find('*[data-action="clearAll"]').on('click', (e) => this._clearAll(e));
     }
@@ -35,6 +35,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         this.data.data.actors = [];
         this.data.data.teams = [];
         this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+        this.data.data.memberIds = [];
         this.persistState(this.data.data);
         this.syncData(this.data.data);
         this.render();
@@ -70,7 +71,11 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
             hideActions: false,
             action1: "Do Nothing",
             action2: "Do Nothing",
-            action3: "Do Nothing"
+            action3: "Do Nothing",
+            strideDice: 0,
+            positionDice: 0,
+            weaponDice: 0,
+            miscDice: 0
         });
         if (actor.data.type === "character") {
             // ensure only one character can be added at once.
@@ -119,7 +124,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
             width: 1000,
             height: 600,
             resizable: true,
-            classes: [ "fight" ]
+            classes: [ "rnc" ]
         }, { overwrite: true });
     }
 
@@ -180,6 +185,11 @@ interface RnCTeam {
     action1: string;
     action2: string;
     action3: string;
+
+    strideDice: number;
+    positionDice: number;
+    weaponDice: number;
+    miscDice: number;
 }
 
 const options = {

@@ -56,7 +56,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
 
-        if (actor.data.data.fate !== "0" && actor.data.type === "character") {
+        if (actor.data.data.fate !== 0 && actor.data.type === "character") {
             if (target.dataset.rerollType === "stat") {
                 const fateSpent = parseInt(getProperty(actor, `data.${accessor}.fate`) || "0", 10);
                 const updateData = {};
@@ -116,7 +116,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 }
             }
 
-            const actorFateCount = parseInt(actor.data.data.fate, 10);
+            const actorFateCount = actor.data.data.fate;
             actor.update({ 'data.fate': actorFateCount -1 });
         }
     }

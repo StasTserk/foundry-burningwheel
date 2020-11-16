@@ -24,8 +24,8 @@ export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandl
         arthaDice: 0,
         tax: parseInt(actor.data.data.resourcesTax, 10),
         stat,
-        cashDieOptions: Array.from(Array(parseInt(actor.data.data.cash, 10) || 0).keys()),
-        fundDieOptions: Array.from(Array(parseInt(actor.data.data.funds, 10) || 0).keys()),
+        cashDieOptions: Array.from(Array(actor.data.data.cash || 0).keys()),
+        fundDieOptions: Array.from(Array(actor.data.data.funds || 0).keys()),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
@@ -55,7 +55,7 @@ async function resourcesRollCallback(
     const rollData = extractRollData(dialogHtml);
 
     if (rollData.cashDice) {
-        const currentCash = parseInt(sheet.actor.data.data.cash) || 0;
+        const currentCash = sheet.actor.data.data.cash || 0;
         sheet.actor.update({"data.cash": currentCash - rollData.cashDice});
     }
 

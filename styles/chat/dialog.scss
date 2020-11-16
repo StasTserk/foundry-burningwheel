@@ -24,6 +24,7 @@
             width: 100%;
 
             &.half-width {
+                grid-template-columns: 23px 1fr;
                 width: 50%;
             }
         }

@@ -49,25 +49,25 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
         callback: async (_: JQuery) => actor.update(updateData)
     };
 
-    if (!shrugging && parseInt(actor.data.data.persona, 10)) {
+    if (!shrugging && actor.data.data.persona) {
         // we're gritting our teeth and have persona points. give option
         // to spend persona.
         buttons.withPersona = {
             label: "Spend Persona",
             callback: async (_: JQuery) => {
-                updateData["data.persona"] = parseInt(actor.data.data.persona, 10) - 1;
+                updateData["data.persona"] = actor.data.data.persona - 1;
                 updateData["data.health.persona"] = (parseInt(actor.data.data.health.persona, 10) || 0) + 1;
                 return actor.update(updateData);
             }
         };
     }
-    if (shrugging && parseInt(actor.data.data.fate, 10)) {
+    if (shrugging && actor.data.data.fate) {
         // we're shrugging it off and have fate points. give option
         // to spend fate.
         buttons.withFate = {
             label: "Spend Fate",
             callback: async (_: JQuery) => {
-                updateData["data.fate"] = parseInt(actor.data.data.fate, 10) - 1;
+                updateData["data.fate"] = actor.data.data.fate - 1;
                 updateData["data.health.fate"] = (parseInt(actor.data.data.health.fate, 10) || 0) + 1;
                 return actor.update(updateData);
             }

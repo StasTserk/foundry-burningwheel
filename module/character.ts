@@ -275,7 +275,7 @@ export class BWCharacter extends Actor<BWCharacterData>{
         const updateData = {};
         let resourcesTax = parseInt(this.data.data.resourcesTax, 10) || 0;
         const resourceExp = parseInt(this.data.data.resources.exp, 10) || 0;
-        const fundDice = parseInt(this.data.data.funds, 10) || 0;
+        const fundDice = this.data.data.funds || 0;
         if (amount <= maxFundLoss) {
             updateData["data.funds"] = fundDice - amount;
         } else {

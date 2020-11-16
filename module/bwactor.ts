@@ -387,8 +387,8 @@ export interface Common {
     custom2: Ability & { name: string };
     stride: number;
     mountedStride: number;
-    cash: string;
-    funds: string;
+    cash: number;
+    funds: number;
     property: string;
     loans: string;
     debt: string;
@@ -397,9 +397,9 @@ export interface Common {
     forteTax: number;
 
     resourcesTax: string;
-    fate: string;
-    persona: string;
-    deeds: string;
+    fate: number;
+    persona: number;
+    deeds: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

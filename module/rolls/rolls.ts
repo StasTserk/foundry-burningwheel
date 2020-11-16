@@ -20,6 +20,10 @@ export async function handleRollable(
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
     const dataPreset = getKeypressModifierPreset(e);
+    dataPreset.deedsPoint = sheet.actor.data.data.deeds !== 0;
+    if (sheet.actor.data.data.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(sheet.actor.data.data.persona, 3)).keys());
+    }
 
     switch(rollType) {
         case "skill":
@@ -255,7 +259,7 @@ export function extractRollData(html: JQuery): RollData {
         diff = extractNumber(html, "difficulty");
     }
     const skipAdvancement = extractNumber(html, "skipAdvancement") === 1;
-    const aDice = extractNumber(html, "arthaDice");
+    const aDice = extractNumber(html, "arthaDice") + extractSelectNumber(html, "personaDice") + extractCheckboxValue(html, "deedsDice");
     const bDice = extractNumber(html, "bonusDice");
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = extractNumber(html, "obPenalty") || 0;
@@ -512,6 +516,9 @@ export interface RollDialogData {
     showObstacles: boolean;
     useCustomDifficulty?: boolean;
     skipAdvancement?: boolean;
+
+    deedsPoint?: boolean;
+    personaOptions?: number[];
 }
 
 export interface RollChatMessageData {

@@ -115,9 +115,6 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                     actor.update(updateData);
                 }
             }
-
-            const actorFateCount = actor.data.data.fate;
-            actor.update({ 'data.fate': actorFateCount -1 });
         }
     }
 
@@ -125,6 +122,9 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     if (splitReroll) {
         newSplitSuccesses = splitReroll.total || 0;
     }
+
+    const actorFateCount = actor.data.data.fate;
+    actor.update({ 'data.fate': actorFateCount -1 });
 
     const data: RerollMessageData = {
         title: "Fate Reroll",

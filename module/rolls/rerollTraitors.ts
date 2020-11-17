@@ -37,7 +37,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
 
     let newSuccesses = 0;
     let success = false;
-    
+
     if (!numDice && !numSplitDice) { return getNoDiceErrorDialog(0); }
     const updateData = {};
     updateData["data.deeds"] = isDeeds ? actor.data.data.deeds -1 : undefined;
@@ -51,7 +51,6 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                 if (successes <= obstacleTotal && success) {
                     // we turned a failure into a success. we might need to retroactively award xp.
                     if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.
-                        
                         updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
                         actor.update(updateData);
                     }
@@ -74,9 +73,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         }
                     }
                 }
-                if (isDeeds) {
-                    updateData[`${accessor}.deeds`] = parseInt(getProperty(actor, `${accessor}.deeds`) || "0") + 1;
-                }
+                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `data.${accessor}.deeds`) || "0") + 1 : undefined;
 
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';

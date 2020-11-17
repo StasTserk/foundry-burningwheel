@@ -75,7 +75,7 @@ async function attrRollCallback(
         return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor }) as RerollData };
     });
 
-    sheet.actor.updateArthaForStat(name.toLowerCase(), rollData.persona, rollData.deeds);
+    sheet.actor.updateArthaForStat(accessor, rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
         name: `${name}`,

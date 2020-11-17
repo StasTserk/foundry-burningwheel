@@ -226,14 +226,14 @@ export class BWCharacter extends Actor<BWCharacterData>{
         }, {});
     }
 
-    public updateArthaForStat(statName: string, persona: number, deeds: number): void {
-        const stat = this.data.data[statName.toLowerCase()] as Ability;
+    public updateArthaForStat(accessor: string, persona: number, deeds: number): void {
+        const stat = getProperty(this.data, accessor) as Ability;
         const updateData = {
             "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
             "data.persona": this.data.data.persona - persona,
         };
-        updateData[`data.${statName.toLocaleLowerCase()}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
-        updateData[`data.${statName.toLocaleLowerCase()}.persona`] = (stat.persona || 0) + persona;
+        updateData[`${accessor}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
+        updateData[`${accessor}.persona`] = (stat.persona || 0) + persona;
         this.update(updateData);
     }
 

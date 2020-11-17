@@ -77,7 +77,7 @@ async function circlesRollCallback(
         return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor: "data.circles" }) as RerollData };
     });
 
-    sheet.actor.updateArthaForStat("circles", rollData.persona, rollData.deeds);
+    sheet.actor.updateArthaForStat("data.circles", rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
         name: `Circles`,

@@ -85,7 +85,7 @@ async function resourcesRollCallback(
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     if (sheet.actor.data.type === "character") {
         const actor = sheet.actor as BWActor & BWCharacter;
-        actor.updateArthaForStat("resources", rollData.persona, rollData.deeds);
+        actor.updateArthaForStat("data.resources", rollData.persona, rollData.deeds);
         if (!isSuccess) {
             const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
                 (rollData.difficultyGroup === "Difficult" ? 2 : 1);

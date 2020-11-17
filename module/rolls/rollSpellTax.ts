@@ -79,7 +79,7 @@ async function taxTestCallback(
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.forte" }) as RerollData };
     });
 
-    actor.updateArthaForStat("forte", persona, deeds);
+    actor.updateArthaForStat("data.forte", persona, deeds);
 
     const data: RollChatMessageData = {
         name: `${spellName} Tax`,

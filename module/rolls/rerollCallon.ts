@@ -4,7 +4,8 @@ import * as helpers from "../helpers.js";
 import { Skill, SkillData } from "../items/item.js";
 import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
 
-export async function handleCallonReroll(target: HTMLButtonElement): Promise<unknown> {
+export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = false): Promise<unknown> {
+    
     const actor = game.actors.get(target.dataset.actorId || "") as BWCharacter;
     const accessor = target.dataset.accessor || '';
     const name = target.dataset.rollName || '';
@@ -15,8 +16,12 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
     const obstacleTotal = parseInt(target.dataset.difficulty || "0");
     const splitSuccesses = parseInt(target.dataset.splitSuccesses || "0");
 
+    if (isDeeds && actor.data.data.deeds == 0) {
+        return helpers.notifyError("No Deeds Available", "The character must have a deeds point available in order to reroll all traitors.");
+    }
+
     let rollStat: Ability | SkillData;
-    if (target.dataset.rerollType === "stat") {
+    if (["stat", "learning"].includes(target.dataset.rerollType || "")) {
         rollStat = getProperty(actor, `data.${accessor}`);
     } else {
         rollStat = (actor.getOwnedItem(itemId) as Skill).data.data;
@@ -32,8 +37,10 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
 
     let newSuccesses = 0;
     let success = false;
-
+    
     if (!numDice && !numSplitDice) { return getNoDiceErrorDialog(0); }
+    const updateData = {};
+    updateData["data.deeds"] = isDeeds ? actor.data.data.deeds -1 : undefined;
     if (reroll) {
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
@@ -44,7 +51,7 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
                 if (successes <= obstacleTotal && success) {
                     // we turned a failure into a success. we might need to retroactively award xp.
                     if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.
-                        const updateData = {};
+                        
                         updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
                         actor.update(updateData);
                     }
@@ -67,18 +74,25 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
                         }
                     }
                 }
+                if (isDeeds) {
+                    updateData[`${accessor}.deeds`] = parseInt(getProperty(actor, `${accessor}.deeds`) || "0") + 1;
+                }
 
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
-                if (learningTarget === 'perception' && successes <= obstacleTotal && success) {
+                if (actor.data.successOnlyRolls.includes(learningTarget) && successes <= obstacleTotal && success) {
                     // we need to give perception a success that was not counted
                     actor.addStatTest(
-                        getProperty(actor, "data.data.perception") as TracksTests,
-                        "Perception",
-                        "data.perception",
+                        getProperty(actor, `data.data.${learningTarget}`) as TracksTests,
+                        learningTarget.titleCase(),
+                        accessor,
                         target.dataset.difficultyGroup as TestString,
                         true);
                 }
+                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `data.${accessor}.deeds`) || "0") + 1 : undefined;
+            } else if (target.dataset.rerollType === "skill" && isDeeds) {
+                const skill = actor.getOwnedItem(itemId) as Skill;
+                await skill.update({ "data.deeds": skill.data.data.deeds + 1 }, {});
             }
         }
     }
@@ -88,8 +102,10 @@ export async function handleCallonReroll(target: HTMLButtonElement): Promise<unk
         newSplitSuccesses = splitReroll.total || 0;
     }
 
+    actor.update(updateData);
+
     const data: RerollMessageData = {
-        title: "Call-on Reroll",
+        title: isDeeds? "Saving Grace Reroll" : "Call-on Reroll",
         rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         splitRolls: splitRollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         rerolls: reroll?.dice[0].results.map(r => { return { roll: r.result, success: r.success || false }; }) || [],

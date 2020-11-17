@@ -84,7 +84,7 @@ async function statRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
     });
 
-    actor.updateArthaForStat(name.toLocaleLowerCase(), persona, deeds);
+    actor.updateArthaForStat(accessor, persona, deeds);
 
     const data: RollChatMessageData = {
         name: `${name}`,

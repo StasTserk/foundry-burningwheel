@@ -371,14 +371,14 @@ export class BWActor extends Actor {
             true);
     }
 
-    public updateArthaForSkill(skillId: string, persona: number, deeds: number): void {
+    public updateArthaForSkill(_skillId: string, persona: number, deeds: number): void {
         this.update({
             "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
             "data.persona": this.data.data.persona - persona,
         });
     }
 
-    public updateArthaForStat(statName: string, persona: number, deeds: number): void {
+    public updateArthaForStat(_accessor: string, persona: number, deeds: number): void {
         this.update({
             "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
             "data.persona": this.data.data.persona - persona,

@@ -33,7 +33,7 @@
     {{#if optionalDiceModifiers}}
     <div class="flex-row">
         <hr class="dialog-section-before"><div class="dialog-section-text">Optional Dice Modifiers</div><hr class="dialog-section-after">
-        <div class="checkbox-grid">
+        <div class="checkbox-grid col-2">
             {{#each optionalDiceModifiers as |mod|}}
             <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
             <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
@@ -44,7 +44,7 @@
     {{#if optionalObModifiers}}
     <div class="flex-row">
         <hr class="dialog-section-before"><div class="dialog-section-text">Optional Obstacle Modifiers</div><hr class="dialog-section-after">
-        <div class="checkbox-grid">
+        <div class="checkbox-grid col-2">
             {{#each optionalObModifiers as |mod|}}
             <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
             <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>

@@ -4,7 +4,11 @@
     margin-bottom: 5px;
 
     .checkbox-grid { 
-        grid-template-columns: repeat(auto-fit, 23px 100px);
+        grid-template-columns: repeat(3, 23px 1fr);
+
+        &.col-2 {
+            grid-template-columns: repeat(2, 23px 1fr)
+        }
     }
 
     .dialog-row:hover {

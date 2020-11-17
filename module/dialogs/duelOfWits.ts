@@ -7,6 +7,7 @@ import { BWCharacter } from "../character.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
 import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
 import { Npc } from "../npc.js";
+import { getKeypressModifierPreset } from "../rolls/rolls.js";
 
 export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
@@ -45,6 +46,9 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
 
     private _handleRoll(e: JQuery.ClickEvent) {
         e.preventDefault();
+        const dataPreset = getKeypressModifierPreset(e);
+        dataPreset.offerSplitPool = true;
+
         const target = e.currentTarget as HTMLButtonElement;
         if (target.dataset.actorId === "") {
             return;
@@ -55,6 +59,12 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         }
         const actor = game.actors.entities.find(a => a._id === target.dataset.actorId) as BWActor;
         const skill = actor?.getOwnedItem(target.dataset.skillId || "") as Skill | undefined;
+
+        dataPreset.deedsPoint = actor.data.data.deeds !== 0;
+        if (actor.data.data.persona) {
+            dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+        }
+
         if (!skill) {
             return;
         }
@@ -63,25 +73,21 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
                 handleLearningRoll({
                     actor: (actor as BWActor & BWCharacter),
                     skill,
-                    dataPreset: {
-                        offerSplitPool: true
-                }});
+                    dataPreset
+                });
             } else {
                 handleSkillRoll({
                     actor: (actor as BWActor & BWCharacter),
                     skill,
-                    dataPreset: {
-                        offerSplitPool: true
-                }});
+                    dataPreset
+                });
             }
         } else {
             // handle roll as npc
             handleNpcSkillRoll({
                 actor: (actor as BWActor & Npc),
                 skill,
-                dataPreset: {
-                    offerSplitPool: true
-                }
+                dataPreset
             });
         }
     }

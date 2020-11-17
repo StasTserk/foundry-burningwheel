@@ -36,7 +36,6 @@ export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: Np
         attackIndex,
         dataPreset
     });
-
 }
 
 export async function handleNpcWeaponRoll({actor, weapon, skill, attackIndex, dataPreset}: NpcRollOptions): Promise<unknown> {
@@ -82,6 +81,11 @@ export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPr
 }
 
 export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}: NpcRollOptions): Promise<unknown>  {
+    dataPreset = dataPreset || {};
+    dataPreset.deedsPoint = actor.data.data.deeds !== 0;
+    if (actor.data.data.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+    }
     
     if (skill.data.data.learning) {
         const accessor = `data.${skill.data.data.root1}`;
@@ -194,6 +198,10 @@ async function skillRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, splitPoolRoll, itemId: skill._id }) as RerollData };
     });
+
+    // because artha isn't tracked individually, it doesn't matter what gets updated.
+    // both cases here end up just subtracting the artha spent.
+    actor.updateArthaForStat("", rollData.persona, rollData.deeds);
     
     const data: RollChatMessageData = {
         name: `${skill.name}`,

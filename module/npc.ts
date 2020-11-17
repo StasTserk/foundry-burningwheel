@@ -23,7 +23,6 @@ export class Npc extends Actor<NpcData> {
     prepareTypeSpecificData(): void {
         this.calculateWounds();
     }
-
 }
 
 export interface NpcDataRoot extends BWActorDataRoot {

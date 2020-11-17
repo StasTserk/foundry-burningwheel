@@ -116,6 +116,14 @@
     .reroll-buttons {
         .chat-reroll > button {
             line-height: 1.5em;
+
+            &.chat-fate-button, &.chat-deeds-button {
+                flex: 1 1 45%;
+            }
+
+            &.chat-deeds-button {
+                margin-right: -1px;
+            }
         }
     }
 }

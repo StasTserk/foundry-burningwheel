@@ -2,7 +2,7 @@
  * Chat message helpers
  */
 
-import { handleCallonReroll } from "./rolls/rerollCallon.js";
+import { handleTraitorReroll } from "./rolls/rerollCallon.js";
 import { handleFateReroll } from "./rolls/rerollFate.js";
 
 /**
@@ -11,7 +11,8 @@ import { handleFateReroll } from "./rolls/rerollFate.js";
  */
 export function onChatLogRender(html: JQuery): void {
     html.on('click', 'button.chat-fate-button', (e) => handleFateReroll(e.target));
-    html.on('click', 'button.chat-callon-button', (e) => handleCallonReroll(e.target));
+    html.on('click', 'button.chat-deeds-button', (e) => handleTraitorReroll(e.target, true));
+    html.on('click', 'button.chat-callon-button', (e) => handleTraitorReroll(e.target));
 }
 
 

@@ -86,7 +86,7 @@
         </div>
         {{/each}}
         {{#if fateReroll}}
-        <div class="chat-reroll">
+        <div class="chat-reroll flex-row">
             <button class="chat-fate-button"
                 data-actor-id="{{fateReroll.actorId}}"
                 data-reroll-type="{{fateReroll.type}}"
@@ -101,6 +101,20 @@
                 data-successes="{{successes}}"
                 data-split-successes="{{splitSuccesses}}"
                 data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>
+            <button class="chat-deeds-button"
+                data-actor-id="{{fateReroll.actorId}}"
+                data-reroll-type="{{fateReroll.type}}"
+                data-dice="{{fateReroll.dice}}"
+                {{#if fateReroll.splitDice}}data-split-dice="{{fateReroll.splitDice}}"{{/if}}
+                data-roll-name="{{name}}"
+                {{#if fateReroll.itemId}} data-item-id="{{fateReroll.itemId}}" {{/if}}
+                {{#if fateReroll.accessor}} data-accessor="{{fateReroll.accessor}}" {{/if}}
+                {{#if fateReroll.learningTarget}} data-learning-target="{{fateReroll.learningTarget}}" {{/if}}
+                {{#if fateReroll.ptgsAction}} data-ptgs-action="{{fateReroll.ptgsAction}}" {{/if}}
+                data-difficulty="{{obstacleTotal}}"
+                data-successes="{{successes}}"
+                data-split-successes="{{splitSuccesses}}"
+                data-difficulty-group="{{difficultyGroup}}">Reroll with Deeds</button>
         </div>
         {{/if}}
     </div>

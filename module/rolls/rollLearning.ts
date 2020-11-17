@@ -121,13 +121,18 @@ async function learningRollCallback(
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
-    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll });
-    if (fateReroll) { fateReroll.type = "learning"; }
+    const fateReroll = buildRerollData({ actor, roll, accessor: `data.${statName}`, splitPoolRoll });
+    
+    if (fateReroll) {
+        fateReroll.type = "learning";
+        fateReroll.learningTarget = statName;
+    }
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
         return {
             label: s,
             type: "learning",
-            ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData
+            learningTarget: statName,
+            ...buildRerollData({ actor, roll, accessor: `data.${statName}`, splitPoolRoll }) as RerollData
         };
     });
 
@@ -145,7 +150,7 @@ async function learningRollCallback(
         }
     }
 
-    actor.updateArthaForStat(statName.toLocaleLowerCase(), rollData.persona, rollData.deeds);
+    actor.updateArthaForStat(`data.${statName}`, rollData.persona, rollData.deeds);
 
     const sendChatMessage = async (fr?: RerollData) => {
         const data: RollChatMessageData = {
@@ -212,7 +217,7 @@ async function advanceLearning(
 }
 
 async function advanceBaseStat(
-        skill: Skill,
+        _skill: Skill,
         owner: BWActor,
         statName: string,
         difficultyGroup: helpers.TestString,
@@ -223,7 +228,6 @@ async function advanceBaseStat(
     const accessor = `data.${statName.toLowerCase()}`;
     const rootStat = getProperty(owner, `data.${accessor}`);
     await (owner as BWActor & BWCharacter).addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
-    if (fr) { fr.learningTarget = skill.data.data.root1; }
     return cb(fr);
 }
 
@@ -262,9 +266,6 @@ async function advanceLearningProgress(
             no: () => { return; },
             defaultYes: true
         });
-    }
-    if (fr) {
-        fr.learningTarget = "skill";
     }
     return cb(fr);
 }

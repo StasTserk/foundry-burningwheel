@@ -15,8 +15,12 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     const splitRollArray = target.dataset.splitDice?.split(',').map(r => parseInt(r)) || [];
     const splitSuccesses = parseInt(target.dataset.splitSuccesses || "0");
 
+    if (actor.data.data.fate === 0) {
+        return helpers.notifyError("No Fate Points", "The character does not have any fate points left with which to reroll.");
+    }
+
     let rollStat: { shade: helpers.ShadeString, open: boolean };
-    if (target.dataset.rerollType === "stat") {
+    if (["stat", "learning"].includes(target.dataset.rerollType || "")) {
         rollStat = getProperty(actor, `data.${accessor}`);
     } else if (target.dataset.rerollType === "armor") {
         const armorItem = actor.getOwnedItem(itemId) as Armor;
@@ -99,11 +103,11 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                     skill.update({'data.fate': fateSpent + 1 }, {});
                 } else {
                     if (successes <= obstacleTotal && success) {
-                        if (learningTarget === "perception") {
+                        if (actor.data.successOnlyRolls.includes(learningTarget)) {
                             (actor as BWActor & BWCharacter).addStatTest(
-                                getProperty(actor, "data.data.perception") as TracksTests,
-                                "Perception",
-                                "data.perception",
+                                getProperty(actor, `data.data.${learningTarget}`) as TracksTests,
+                                learningTarget.titleCase(),
+                                `data.${learningTarget}`,
                                 target.dataset.difficultyGroup as TestString,
                                 true);
                         }

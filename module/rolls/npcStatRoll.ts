@@ -28,6 +28,11 @@ export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcR
 
 export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo, dataPreset, actor }: NpcStatRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(statName);
+    dataPreset = dataPreset || {};
+    dataPreset.deedsPoint = actor.data.data.deeds !== 0;
+    if (actor.data.data.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+    }
 
     const data = mergeDialogData<NpcStatDialogData>({
         name: `${statName.titleCase()} Test`,
@@ -93,6 +98,10 @@ async function statRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
     });
+
+    // because artha isn't tracked individually, it doesn't matter what gets updated.
+    // both cases here end up just subtracting the artha spent.
+    actor.updateArthaForStat("", rollData.persona, rollData.deeds);
     
     const data: RollChatMessageData = {
         name: `${name.titleCase()}`,

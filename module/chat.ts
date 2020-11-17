@@ -2,7 +2,7 @@
  * Chat message helpers
  */
 
-import { handleTraitorReroll } from "./rolls/rerollCallon.js";
+import { handleTraitorReroll } from "./rolls/rerollTraitors.js";
 import { handleFateReroll } from "./rolls/rerollFate.js";
 
 /**

@@ -64,7 +64,7 @@ async function statRollCallback(
         actor: BWActor,
         name: string,
         accessor: string) {
-    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, skipAdvancement } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, skipAdvancement, persona, deeds } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal,
         stat.open,
@@ -83,6 +83,8 @@ async function statRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
     });
+
+    actor.updateArthaForStat(name.toLocaleLowerCase(), persona, deeds);
 
     const data: RollChatMessageData = {
         name: `${name}`,

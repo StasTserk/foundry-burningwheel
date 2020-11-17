@@ -1,6 +1,6 @@
-import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot } from "./bwactor.js";
+import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability } from "./bwactor.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "./helpers.js";
-import { BWItemData } from "./items/item.js";
+import { BWItemData, Skill } from "./items/item.js";
 
 export class BWCharacter extends Actor<BWCharacterData>{
     data: CharacterDataRoot;
@@ -32,6 +32,8 @@ export class BWCharacter extends Actor<BWCharacterData>{
         this._calculatePtgs = BWCharacter.prototype._calculatePtgs.bind(this);
         this.update = BWCharacter.prototype.update.bind(this);
         this._statsHaveChanged = BWCharacter.prototype._statsHaveChanged.bind(this);
+        this.updateArthaForSkill = BWCharacter.prototype.updateArthaForSkill.bind(this);
+        this.updateArthaForStat = BWCharacter.prototype.updateArthaForStat.bind(this);
     }
 
     prepareTypeSpecificData(): void {
@@ -210,6 +212,29 @@ export class BWCharacter extends Actor<BWCharacterData>{
             difficultyGroup: TestString,
             isSuccessful: boolean): Promise<void>  {
         return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
+    }
+
+    public updateArthaForSkill(skillId: string, persona: number, deeds: number): void {
+        this.update({
+            "data.deeds": this.data.data.deeds - deeds,
+            "data.persona": this.data.data.persona - persona,
+        });
+        const skill = this.getOwnedItem(skillId) as Skill;
+        skill.update({
+            "data.deeds": deeds ? (skill.data.data.deeds || 0) + 1 : undefined,
+            "data.persona": skill.data.data.persona + persona
+        }, {});
+    }
+
+    public updateArthaForStat(statName: string, persona: number, deeds: number): void {
+        const stat = this.data.data[statName.toLowerCase()] as Ability;
+        const updateData = {
+            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
+            "data.persona": this.data.data.persona - persona,
+        };
+        updateData[`data.${statName.toLocaleLowerCase()}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
+        updateData[`data.${statName.toLocaleLowerCase()}.persona`] = (stat.persona || 0) + persona;
+        this.update(updateData);
     }
 
     private async _addTestToStat(stat: TracksTests, accessor: string, difficultyGroup: TestString) {

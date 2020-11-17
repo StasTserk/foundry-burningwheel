@@ -84,6 +84,8 @@ async function resourcesRollCallback(
     };
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     if (sheet.actor.data.type === "character") {
+        const actor = sheet.actor as BWActor & BWCharacter;
+        actor.updateArthaForStat("resources", rollData.persona, rollData.deeds);
         if (!isSuccess) {
             const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
                 (rollData.difficultyGroup === "Difficult" ? 2 : 1);
@@ -93,11 +95,11 @@ async function resourcesRollCallback(
                 buttons: {
                     full: {
                         label: `Full Tax (${taxAmount} tax)`,
-                        callback: () => (sheet.actor as BWActor &  BWCharacter).taxResources(taxAmount, rollData.fundDice)
+                        callback: () => actor.taxResources(taxAmount, rollData.fundDice)
                     },
                     cut: {
                         label: "Cut your losses. (1 tax)",
-                        callback: () => (sheet.actor as BWActor &  BWCharacter).taxResources(1, rollData.fundDice)
+                        callback: () => actor.taxResources(1, rollData.fundDice)
                     },
                     skip: {
                         label: "Skip for now"

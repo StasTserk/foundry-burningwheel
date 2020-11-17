@@ -74,6 +74,9 @@ async function attrRollCallback(
     const callons: RerollData[] = sheet.actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor }) as RerollData };
     });
+
+    sheet.actor.updateArthaForStat(name.toLowerCase(), rollData.persona, rollData.deeds);
+
     const data: RollChatMessageData = {
         name: `${name}`,
         successes: roll.result,

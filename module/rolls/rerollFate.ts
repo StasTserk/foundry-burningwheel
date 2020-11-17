@@ -88,14 +88,14 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 actor.update(updateData);
             } else if (target.dataset.rerollType === "skill") {
                 const skill = actor.getOwnedItem(itemId) as Skill;
-                const fateSpent = parseInt(skill.data.data.fate, 10) || 0;
+                const fateSpent = skill.data.data.fate || 0;
                 skill.update({ 'data.fate': fateSpent + 1 }, {});
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
                 const skill = actor.getOwnedItem(itemId) as Skill;
                 if (learningTarget === 'skill') {
                     // learning roll went to the root skill
-                    const fateSpent = parseInt(skill.data.data.fate, 10) || 0;
+                    const fateSpent = skill.data.data.fate || 0;
                     skill.update({'data.fate': fateSpent + 1 }, {});
                 } else {
                     if (successes <= obstacleTotal && success) {

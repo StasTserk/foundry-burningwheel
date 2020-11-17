@@ -18,7 +18,9 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         optionalObModifiers: [ {
             obstacle: positionPenalty, optional: true, label: "Weapon Disadvantage"
         }],
-        offerSplitPool: true
+        offerSplitPool: true,
+        deedsPoint: actor.data.data.deeds !== 0,
+        personaOptions: actor.data.data.persona ? Array.from(Array(Math.min(actor.data.data.persona, 3)).keys()) : undefined
     };
     if (type === "skill") {
         if (!itemId) {

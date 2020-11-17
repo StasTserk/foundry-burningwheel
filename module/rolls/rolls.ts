@@ -496,7 +496,7 @@ export const templates = {
     rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.hbs",
     pcRollDialog: "systems/burningwheel/templates/dialogs/roll-dialog.hbs",
     pcRollMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    npcRollDialog: "systems/burningwheel/templates/dialogs/npc-roll-dialog.hbs",
+    npcRollDialog: "systems/burningwheel/templates/dialogs/roll-dialog.hbs",
     npcMessage: "systems/burningwheel/templates/chat/roll-message.hbs"
 };
 

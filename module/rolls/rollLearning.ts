@@ -145,6 +145,8 @@ async function learningRollCallback(
         }
     }
 
+    actor.updateArthaForStat(statName.toLocaleLowerCase(), rollData.persona, rollData.deeds);
+
     const sendChatMessage = async (fr?: RerollData) => {
         const data: RollChatMessageData = {
             name: `Beginner's Luck ${skill.data.name}`,

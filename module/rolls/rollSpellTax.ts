@@ -9,7 +9,8 @@ import {
     RollDialogData,
     rollDice,
     templates,
-    extractRollData
+    extractRollData,
+    mergeDialogData
 } from "./rolls.js";
 
 export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWActorSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {
@@ -19,16 +20,16 @@ export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWAct
     if (!obstacle && !spellName) {
         return helpers.notifyError("Missing Spell Data", "Tried to roll a tax test with no obstacle or spell name set.");
     }
-    else return showSpellTaxDialog(obstacle, spellName, sheet.actor, dataPreset.skipAdvancement);
+    else return showSpellTaxDialog(obstacle, spellName, sheet.actor, dataPreset);
 }
 
-export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWActor, skipAdvancement = false): Promise<unknown> {
+export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWActor, dataPreset: Partial<RollDialogData>): Promise<unknown> {
     const stat = getProperty(actor.data, "data.forte") as Ability;
     
     const rollModifiers = actor.getRollModifiers("forte");
     const tax = actor.data.data.forteTax;
     
-    const data: StatDialogData = {
+    const data: StatDialogData = mergeDialogData<StatDialogData>({
         name: `${spellName} Tax Test`,
         difficulty: obstacle,
         bonusDice: 0,
@@ -42,8 +43,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
         showDifficulty: true,
         showObstacles: true,
         useCustomDifficulty: true,
-        skipAdvancement
-    };
+    }, dataPreset);
 
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
@@ -54,7 +54,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        taxTestCallback(dialogHtml, stat, actor, tax, spellName, skipAdvancement)
+                        taxTestCallback(dialogHtml, stat, actor, tax, spellName, dataPreset.skipAdvancement || false)
                 }
             }
         }).render(true)
@@ -68,7 +68,7 @@ async function taxTestCallback(
         tax: number,
         spellName: string,
         skipAdvancement: boolean) {
-    const { diceTotal, difficultyTotal, difficultyGroup, baseDifficulty, obSources, dieSources } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyTotal, difficultyGroup, baseDifficulty, obSources, dieSources, persona, deeds } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
@@ -78,6 +78,8 @@ async function taxTestCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.forte" }) as RerollData };
     });
+
+    actor.updateArthaForStat("forte", persona, deeds);
 
     const data: RollChatMessageData = {
         name: `${spellName} Tax`,

@@ -70,7 +70,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
 
 async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
-    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, skipAdvancement } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, skipAdvancement, persona, deeds } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
@@ -108,6 +108,8 @@ async function skillRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
+
+    actor.updateArthaForSkill(skill.id, persona, deeds);
 
     const data: RollChatMessageData = {
         name: `${skill.name}`,

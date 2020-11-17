@@ -259,7 +259,9 @@ export function extractRollData(html: JQuery): RollData {
         diff = extractNumber(html, "difficulty");
     }
     const skipAdvancement = extractNumber(html, "skipAdvancement") === 1;
-    const aDice = extractNumber(html, "arthaDice") + extractSelectNumber(html, "personaDice") + extractCheckboxValue(html, "deedsDice");
+    const persona = extractSelectNumber(html, "personaDice");
+    const deeds = extractCheckboxValue(html, "deedsDice");
+    const aDice = extractNumber(html, "arthaDice") + persona + deeds;
     const bDice = extractNumber(html, "bonusDice");
     const woundDice = extractNumber(html, "woundDice") || 0;
     const obPenalty = extractNumber(html, "obPenalty") || 0;
@@ -321,7 +323,9 @@ export function extractRollData(html: JQuery): RollData {
         cashDice,
         fundDice,
         splitPool,
-        skipAdvancement
+        skipAdvancement,
+        persona,
+        deeds
     };
 }
 
@@ -479,6 +483,10 @@ export interface RollData {
     splitPool: number;
     /** Is advancement to be tracked for this test? */
     skipAdvancement: boolean;
+    /** Persona points spent */
+    persona: number;
+    /** Deeds dice granted */
+    deeds: number;
 }
 
 /* ============ Constants =============== */

@@ -370,6 +370,20 @@ export class BWActor extends Actor {
             { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
             true);
     }
+
+    public updateArthaForSkill(skillId: string, persona: number, deeds: number): void {
+        this.update({
+            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
+            "data.persona": this.data.data.persona - persona,
+        });
+    }
+
+    public updateArthaForStat(statName: string, persona: number, deeds: number): void {
+        this.update({
+            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
+            "data.persona": this.data.data.persona - persona,
+        });
+    }
 }
 
 export interface Common {
@@ -434,9 +448,9 @@ export interface TracksTests {
     routine: string;
     difficult: string;
     challenging: string;
-    persona: string;
-    fate: string;
-    deeds: string;
+    persona: number;
+    fate: number;
+    deeds: number;
 
     // derived values
     routineNeeded?: number;

@@ -56,7 +56,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
             label: "Spend Persona",
             callback: async (_: JQuery) => {
                 updateData["data.persona"] = actor.data.data.persona - 1;
-                updateData["data.health.persona"] = (parseInt(actor.data.data.health.persona, 10) || 0) + 1;
+                updateData["data.health.persona"] = (actor.data.data.health.persona || 0) + 1;
                 return actor.update(updateData);
             }
         };
@@ -68,7 +68,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
             label: "Spend Fate",
             callback: async (_: JQuery) => {
                 updateData["data.fate"] = actor.data.data.fate - 1;
-                updateData["data.health.fate"] = (parseInt(actor.data.data.health.fate, 10) || 0) + 1;
+                updateData["data.health.fate"] = (actor.data.data.health.fate || 0) + 1;
                 return actor.update(updateData);
             }
         };
@@ -89,7 +89,7 @@ async function ptgsRollCallback(
         stat: Ability,
         sheet: BWActorSheet,
         shrugging: boolean) {
-    const { diceTotal, baseDifficulty, difficultyTotal, difficultyGroup, dieSources, obSources, skipAdvancement } = extractRollData(dialogHtml);
+    const { diceTotal, baseDifficulty, difficultyTotal, difficultyGroup, dieSources, obSources, skipAdvancement, persona, deeds } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
@@ -115,6 +115,7 @@ async function ptgsRollCallback(
         fateReroll,
         callons
     };
+    sheet.actor.updateArthaForStat("resources", persona, deeds);
     if (isSuccessful) {
         const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
         const updateData = {};

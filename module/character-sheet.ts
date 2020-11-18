@@ -53,7 +53,7 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "trait": traits.push(i); break;
                 case "skill":
                     (i as SkillDataRoot).data.learning ? learning.push(i as SkillDataRoot) : (
-                        (i as SkillDataRoot).data.training ? training.push(i as SkillDataRoot) : skills.push(i as SkillDataRoot));
+                        (i as SkillDataRoot).data.training && (i as SkillDataRoot).data.skilltype === "martial" ? training.push(i as SkillDataRoot) : skills.push(i as SkillDataRoot));
                     Skill.disableIfWounded.call(i, woundDice);
                     break;
                 case "relationship": relationships.push(i as ItemData<RelationshipData>); break;

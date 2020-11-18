@@ -6,11 +6,11 @@ export class Skill extends BWItem {
     prepareData(): void {
         super.prepareData();
         updateTestsNeeded(this.data.data);
-        Skill.calculateAptitude.bind(this)();
+        this.calculateAptitude();
         this.data.data.safeId = this._id;
     }
 
-    static calculateAptitude(this: Skill): void {
+    calculateAptitude(this: Skill): void {
         if (!this.actor) { return; }
         let aptitudeMod = this.actor.getAptitudeModifiers(this.name) + this.actor.getAptitudeModifiers(this.data.data.skilltype);
 

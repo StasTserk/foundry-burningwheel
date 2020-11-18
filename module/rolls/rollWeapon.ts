@@ -53,9 +53,9 @@ export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset
     
     let weaponExtraData: string | undefined;
     if (weapon.type === "melee weapon") {
-        weaponExtraData = MeleeWeapon.GetWeaponMessageData(weapon as MeleeWeapon, attackIndex || 0);
+        weaponExtraData = (weapon as MeleeWeapon).getWeaponMessageData(attackIndex || 0);
     } else {
-        weaponExtraData = RangedWeapon.GetWeaponMessageData(weapon as RangedWeapon);
+        weaponExtraData = (weapon as RangedWeapon).getWeaponMessageData();
     }
 
     return skill.data.data.learning ? 

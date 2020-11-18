@@ -29,14 +29,14 @@ export class RangedWeapon extends BWItem {
         this.data.data.cssClass = "equipment-weapon";
     }
 
-    static GetWeaponMessageData(weapon: RangedWeapon): string {
+    getWeaponMessageData(): string {
         const element = document.createElement("div");
         const roll = new Roll("1d6").roll().dice[0].results[0].result as number;
-        const incidental = roll <= (weapon.data.data.incidentalRoll || 0);
-        const mark = !incidental && roll <= (weapon.data.data.markRoll || 0);
+        const incidental = roll <= (this.data.data.incidentalRoll || 0);
+        const mark = !incidental && roll <= (this.data.data.markRoll || 0);
 
         element.className = "ranged-extra-info";
-        element.appendChild(helpers.DivOfText(weapon.name, "ims-title shade-black"));
+        element.appendChild(helpers.DivOfText(this.name, "ims-title shade-black"));
         element.appendChild(helpers.DivOfText("I", "ims-header"));
         element.appendChild(helpers.DivOfText("M", "ims-header"));
         element.appendChild(helpers.DivOfText("S", "ims-header"));
@@ -44,11 +44,11 @@ export class RangedWeapon extends BWItem {
         element.appendChild(helpers.DivOfText("DoF Ranges", "ims-header"));
         element.appendChild(helpers.DivOfText("Die", "ims-header"));
     
-        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(weapon.data.data.shade, weapon.data.data.incidental), incidental ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(weapon.data.data.shade, weapon.data.data.mark), mark ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(weapon.data.data.shade, weapon.data.data.superb), !incidental && !mark ? "highlight" : undefined));
-        element.appendChild(helpers.DivOfText(weapon.data.data.vsArmor));
-        element.appendChild(helpers.DivOfText(`${weapon.data.data.incidentalLabel}/${weapon.data.data.markLabel}/${weapon.data.data.superbLabel}`));
+        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(this.data.data.shade, this.data.data.incidental), incidental ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(this.data.data.shade, this.data.data.mark), mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(helpers.translateWoundValue(this.data.data.shade, this.data.data.superb), !incidental && !mark ? "highlight" : undefined));
+        element.appendChild(helpers.DivOfText(this.data.data.vsArmor));
+        element.appendChild(helpers.DivOfText(`${this.data.data.incidentalLabel}/${this.data.data.markLabel}/${this.data.data.superbLabel}`));
         element.appendChild(helpers.DivOfText("" + roll, "roll-die"));
         return element.outerHTML;
     }

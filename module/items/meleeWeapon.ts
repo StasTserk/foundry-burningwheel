@@ -25,10 +25,10 @@ export class MeleeWeapon extends BWItem {
         this.data.data.cssClass = "equipment-weapon";
     }
 
-    static GetWeaponMessageData(weapon: MeleeWeapon, attackIndex: number): string {
+    getWeaponMessageData(attackIndex: number): string {
         const element = document.createElement("div");
         element.className = "weapon-extra-info";
-        element.appendChild(helpers.DivOfText(`${weapon.name} ${weapon.data.data.attacks[attackIndex].attackName}`, "ims-title shade-black"));
+        element.appendChild(helpers.DivOfText(`${this.name} ${this.data.data.attacks[attackIndex].attackName}`, "ims-title shade-black"));
         element.appendChild(helpers.DivOfText("I", "ims-header"));
         element.appendChild(helpers.DivOfText("M", "ims-header"));
         element.appendChild(helpers.DivOfText("S", "ims-header"));
@@ -36,12 +36,12 @@ export class MeleeWeapon extends BWItem {
         element.appendChild(helpers.DivOfText("Va", "ims-header"));
         element.appendChild(helpers.DivOfText("Length", "ims-header"));
     
-        element.appendChild(helpers.DivOfText(translateWoundValue(weapon.data.data.shade, weapon.data.data.attacks[attackIndex].incidental || 1)));
-        element.appendChild(helpers.DivOfText(translateWoundValue(weapon.data.data.shade, weapon.data.data.attacks[attackIndex].mark || 1)));
-        element.appendChild(helpers.DivOfText(translateWoundValue(weapon.data.data.shade, weapon.data.data.attacks[attackIndex].superb || 1)));
-        element.appendChild(helpers.DivOfText(weapon.data.data.attacks[attackIndex].add));
-        element.appendChild(helpers.DivOfText(weapon.data.data.attacks[attackIndex].vsArmor));
-        element.appendChild(helpers.DivOfText(weapon.data.data.attacks[attackIndex].weaponLength.titleCase()));
+        element.appendChild(helpers.DivOfText(translateWoundValue(this.data.data.shade, this.data.data.attacks[attackIndex].incidental || 1)));
+        element.appendChild(helpers.DivOfText(translateWoundValue(this.data.data.shade, this.data.data.attacks[attackIndex].mark || 1)));
+        element.appendChild(helpers.DivOfText(translateWoundValue(this.data.data.shade, this.data.data.attacks[attackIndex].superb || 1)));
+        element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].add));
+        element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].vsArmor));
+        element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].weaponLength.titleCase()));
         return element.outerHTML;
     }
     

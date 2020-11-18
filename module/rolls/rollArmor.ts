@@ -15,7 +15,7 @@ import { StringIndexedObject } from "../helpers.js";
 import * as helpers from "../helpers.js";
 import { BWCharacterSheet } from "../character-sheet.js";
 import { NpcSheet } from "../npc-sheet.js";
-import { Armor, AssignDamage } from "../items/armor.js";
+import { Armor } from "../items/armor.js";
 
 export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
@@ -30,7 +30,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
         name: "Armor",
         arthaDice: 0,
         bonusDice: 0,
-        armor: parseInt(armorItem.data.data.dice) + chestBonus,
+        armor: armorItem.data.data.dice + chestBonus,
         damage,
         showObstacles: true,
         showDifficulty: true,
@@ -67,7 +67,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const numDice = dice - damage;
     const roll = await rollDice(numDice, false, armorItem.data.data.shade || "B");
     if (!roll) { return; }
-    const damageAssigned = await AssignDamage(armorItem, roll, location);
+    const damageAssigned = await armorItem.assignDamage(roll, location);
     const isSuccess = (roll.total || 0) >= 1 + va;
     const rerollData = buildRerollData({ actor, roll, itemId: armorItem._id });
     rerollData.type = "armor";

@@ -300,27 +300,27 @@ export class BWActor extends Actor<Common> {
             .forEach(i => {
             const a = i as unknown as ArmorRootData;
             if (a.data.hasHelm) {
-                    clumsyWeight.helmetObPenalty = parseInt(a.data.perceptionObservationPenalty, 10) || 0;
+                    clumsyWeight.helmetObPenalty = a.data.perceptionObservationPenalty || 0;
             }
             if (a.data.hasTorso) {
                 clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
-                    parseInt(a.data.healthFortePenalty, 10) || 0);
+                    a.data.healthFortePenalty || 0);
                 clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
-                    parseInt(a.data.stealthyPenalty, 10) || 0);
+                    a.data.stealthyPenalty || 0);
             }
             if (a.data.hasLeftArm || a.data.hasRightArm) {
                 clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
-                    parseInt(a.data.agilityPenalty, 10) || 0);
+                    a.data.agilityPenalty || 0);
                 clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
-                    parseInt(a.data.throwingShootingPenalty, 10) || 0);
+                    a.data.throwingShootingPenalty || 0);
             }
             if (a.data.hasLeftLeg || a.data.hasRightLeg) {
                 clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
-                    parseInt(a.data.speedDiePenalty, 10) || 0);
+                    a.data.speedDiePenalty || 0);
                 clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
-                    parseInt(a.data.speedObPenalty, 10) || 0);
+                    a.data.speedObPenalty || 0);
                 clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
-                    parseInt(a.data.climbingPenalty, 10) || 0);
+                    a.data.climbingPenalty || 0);
             }
 
 

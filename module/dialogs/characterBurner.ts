@@ -183,19 +183,20 @@ export class CharacterBurnerDialog extends Dialog {
             }),
             html.find("input[name='skillPtsSpent'], input[name='combinedSkillPts']").on('change', _ =>
                 this._storeDiff(html, "skillPtsLeft", "combinedSkillPts", "skillPtsSpent")),
-            html.find("select[name='skillName']").on('input', (e: JQueryInputEventObject) => this._tryLoadSkill(e)),
+            html.find("select[name='skillName']").on('input', (e) => this._tryLoadSkill(e)),
             html.find("input[name='skillAdvances'], input[name='skillOpened'], input[name='skillTraining'], select[name='skillShade']").on('change', (e: JQuery.ChangeEvent) =>
                 this._calculateSkillWorth(e)),
             html.find("input[name='skillPtsWorth']").on('change', _ => this._storeSum(html, "skillPtsSpent", "skillPtsWorth")),
 
             html.find("*[name='powerSpent'], *[name='powerShadeSpent'], *[name='forteSpent'], *[name='forteShadeSpent'], " +
                 "*[name='agilitySpent'], *[name='agilityShadeSpent'], *[name='speedSpent'], *[name='speedShadeSpent'], " + 
-                "*[name='willSpent'], *[name='willShadeSpent'], *[name='perceptionSpent'], *[name='perceptionShadeSpent']").on('change', e => 
+                "*[name='willSpent'], *[name='willShadeSpent'], *[name='perceptionSpent'], *[name='perceptionShadeSpent']," + 
+                "*[name='custom1Spent'], *[name='custom1Shade'], *[name='custom2Spent'], *[name='custom2Shade']").on('change', e => 
                 this._calculateAllSkillExponents(e, html)),
             html.find("input[name='skillOpened'], input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e.currentTarget, html)),
 
             // trait points spent
-            html.find("select[name='traitName']").on('input', (e: JQueryInputEventObject) => this._tryLoadTrait(e)),
+            html.find("select[name='traitName']").on('input', (e) => this._tryLoadTrait(e)),
             html.find("input[name='traitCost'], input[name='traitTaken']").on('change', _ => this._calculateSpentTraits(html)),
             html.find("input[name='traitPtsSpent'], input[name='traitPtsTotal']").on('change', _ => this._storeDiff(html, "traitPtsLeft", "traitPtsTotal", "traitPtsSpent")),
 
@@ -215,10 +216,10 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("input[name='relationshipCost']").on('change', _e => this._storeSum(html, "relationshipsSpent", "relationshipCost")),
 
             // property
-            html.find("select[name='propertyName']").on('input', (e: JQueryInputEventObject) => this._tryLoadProperty(e)),
+            html.find("select[name='propertyName']").on('input', (e: JQuery.TriggeredEvent) => this._tryLoadProperty(e)),
             html.find("input[name='propertyCost']").on('change', _ => this._storeSum(html, "propertySpent", "propertyCost")),
             // gear
-            html.find("select[name='itemName']").on('input', (e: JQueryInputEventObject) => this._tryLoadGear(e)),
+            html.find("select[name='itemName']").on('input', (e: JQuery.TriggeredEvent) => this._tryLoadGear(e)),
             html.find("input[name='itemCost']").on('change', _ => this._storeSum(html, "gearSpent", "itemCost")),
 
             // extra rules totals
@@ -323,7 +324,7 @@ export class CharacterBurnerDialog extends Dialog {
         parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + refund).change();
     }
 
-    _tryLoadTrait(e: JQueryInputEventObject): void {
+    _tryLoadTrait(e: JQuery.TriggeredEvent): void {
         const inputTarget = $(e.currentTarget);
         const traitName = inputTarget.val() as string;
         if (!traitName) {
@@ -347,7 +348,7 @@ export class CharacterBurnerDialog extends Dialog {
         }
     }
 
-    private _tryLoadSkill(e: JQueryInputEventObject): void {
+    private _tryLoadSkill(e: JQuery.TriggeredEvent): void {
         const inputTarget = $(e.currentTarget);
         const skillName = inputTarget.val() as string;
         if (!skillName) {
@@ -369,7 +370,7 @@ export class CharacterBurnerDialog extends Dialog {
         }
     }
 
-    private _tryLoadProperty(e: JQueryInputEventObject): void {
+    private _tryLoadProperty(e: JQuery.TriggeredEvent): void {
         const inputTarget = $(e.currentTarget);
         const propertyName = inputTarget.val() as string;
         if (!propertyName) {
@@ -390,7 +391,7 @@ export class CharacterBurnerDialog extends Dialog {
         }
     }
 
-    private _tryLoadGear(e: JQueryInputEventObject): void {
+    private _tryLoadGear(e: JQuery.TriggeredEvent): void {
         const inputTarget = $(e.currentTarget);
         const gearName = inputTarget.val() as string;
         if (!gearName) {

@@ -87,11 +87,11 @@ export function extractBaseCharacterData(html: JQuery<HTMLElement>): StringIndex
 
     baseData.custom1 = {
         name: extractNamedString(html, "custom1Name"),
-        ...getAttrData(html, "custom1")
+        ...getStatData(html, "custom1")
     };
     baseData.custom2 = {
         name: extractNamedString(html, "custom2Name"),
-        ...getAttrData(html, "custom2")
+        ...getStatData(html, "custom2")
     };
 
     const settings: Partial<CharacterSettings> = {

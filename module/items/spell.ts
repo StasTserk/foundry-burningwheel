@@ -31,11 +31,11 @@ export class Spell extends BWItem {
         }
     }
 
-    static GetSpellMessageData(spell: Spell): string {
+    getSpellMessageData(): string {
         const element = document.createElement("div");
         element.className = "spell-extra-info";
-        element.appendChild(DivOfText(spell.name, "spell-title"));
-        if (spell.data.data.isWeapon) {
+        element.appendChild(DivOfText(this.name, "spell-title"));
+        if (this.data.data.isWeapon) {
             const roll = new Roll("1d6").roll().dice[0].results[0].result;
             element.appendChild(DivOfText("I", "ims-header"));
             element.appendChild(DivOfText("M", "ims-header"));
@@ -45,16 +45,14 @@ export class Spell extends BWItem {
             element.appendChild(DivOfText("DoF", "ims-header"));
             element.appendChild(DivOfText("Length", "ims-header"));
         
-            element.appendChild(DivOfText("B " + spell.data.data.incidental, roll < 3 ? "highlight" : undefined));
-            element.appendChild(DivOfText("B " + spell.data.data.mark, [3,4].includes(roll) ? "highlight" : undefined));
-            element.appendChild(DivOfText("B " + spell.data.data.superb, roll > 4 ? "highlight" : undefined));
-            element.appendChild(DivOfText("" + spell.data.data.va));
-            element.appendChild(DivOfText("" + spell.data.data.actions));
+            element.appendChild(DivOfText("B " + this.data.data.incidental, roll < 3 ? "highlight" : undefined));
+            element.appendChild(DivOfText("B " + this.data.data.mark, [3,4].includes(roll) ? "highlight" : undefined));
+            element.appendChild(DivOfText("B " + this.data.data.superb, roll > 4 ? "highlight" : undefined));
+            element.appendChild(DivOfText("" + this.data.data.va));
+            element.appendChild(DivOfText("" + this.data.data.actions));
             element.appendChild(DivOfText(`${roll}`, "roll-die"));
-            element.appendChild(DivOfText(spell.data.data.weaponLength));
+            element.appendChild(DivOfText(this.data.data.weaponLength));
         }
-        
-
         return element.outerHTML;
     }
 

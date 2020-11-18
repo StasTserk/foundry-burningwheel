@@ -1,6 +1,5 @@
 import { BWActor, RollModifier, TracksTests } from "../bwactor.js";
 import * as helpers from "../helpers.js";
-import { Possession } from "../items/item.js";
 import { handleAttrRollEvent } from "./rollAttribute.js";
 import { handleCirclesRollEvent } from "./rollCircles.js";
 import { handleLearningRollEvent } from "./rollLearning.js";
@@ -13,7 +12,8 @@ import { handleWeaponRollEvent } from "./rollWeapon.js";
 import { handleSpellRollEvent } from "./rollSpell.js";
 import { handleSpellTaxRoll } from "./rollSpellTax.js";
 import { BWCharacterSheet } from "../character-sheet.js";
-import { NpcSheet } from "module/npc-sheet.js";
+import { NpcSheet } from "../npc-sheet.js";
+import { Possession } from "../items/possession.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {

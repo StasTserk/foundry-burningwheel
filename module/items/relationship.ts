@@ -1,8 +1,9 @@
 import { BWActor } from "../bwactor.js";
-import { DisplayClass } from "./item.js";
+import { BWItemData, DisplayClass } from "./item.js";
 
-export class Relationship extends Item<RelationshipData> {
+export class Relationship extends Item {
     prepareData(): void {
+        super.prepareData();
         this.data.data.safeId = this._id;
         if (this.actor) {
             this.data.data.aptitude = parseInt(this.actor.data.data.circles.exp, 10) || 0;
@@ -24,7 +25,7 @@ export class Relationship extends Item<RelationshipData> {
     data: RelationshipDataRoot;
 }
 
-export interface RelationshipDataRoot extends ItemData<RelationshipData> {
+export interface RelationshipDataRoot extends BWItemData {
     data: RelationshipData;
 }
 

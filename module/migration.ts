@@ -1,4 +1,5 @@
-import { BWItem, AttackData } from "./items/item.js";
+import { BWItem } from "./items/item.js";
+import { AttackData } from "./items/meleeWeapon.js";
 
 export async function migrateData(): Promise<void> {
     if (!game.user.isGM) {

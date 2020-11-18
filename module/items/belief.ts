@@ -1,7 +1,7 @@
-import { ArthaEarner } from "./item.js";
+import { ArthaEarner, BWItemData } from "./item.js";
 
 export class Belief extends Item<BeliefData> {
-    data: ItemData<BeliefData>;
+    data: BWItemData & { data: BeliefData };
 }
 
 interface BeliefData extends ArthaEarner {

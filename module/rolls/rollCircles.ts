@@ -1,5 +1,4 @@
 import { Ability } from "../bwactor.js";
-import { Relationship } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
     AttributeDialogData,
@@ -14,6 +13,7 @@ import {
     mergeDialogData
 } from "./rolls.js";
 import { BWCharacterSheet } from "../character-sheet.js";
+import { Relationship } from "../items/relationship.js";
 
 export async function handleCirclesRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;

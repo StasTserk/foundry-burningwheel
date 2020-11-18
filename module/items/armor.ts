@@ -1,9 +1,10 @@
-import { DisplayClass, HasPointCost } from "./item.js";
+import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
 import { rollDice } from "../rolls/rolls.js";
 import { ShadeString } from "../helpers.js";
 
-export class Armor extends Item {
+export class Armor extends BWItem {
     prepareData(): void {
+        super.prepareData();
         this.data.data.cssClass = "equipment-armor";
 
         const dice = parseInt(this.data.data.dice);
@@ -58,7 +59,7 @@ function calculateDisplayClass(dice: number, locationDice: string): string {
     return "";
 }
 
-export interface ArmorRootData extends ItemData<ArmorData> {
+export interface ArmorRootData extends BWItemData {
     data: ArmorData;
 }
 

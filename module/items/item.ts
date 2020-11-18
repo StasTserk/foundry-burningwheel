@@ -1,10 +1,3 @@
-import { Armor } from "./armor.js";
-import { MeleeWeapon } from "./meleeWeapon.js";
-import { Possession } from "./possession.js";
-import { Property } from "./property.js";
-import { RangedWeapon } from "./rangedWeapon.js";
-import { Relationship } from "./relationship.js";
-import { Reputation } from "./reputation.js";
 import { AffiliationSheet } from "./sheets/affiliation-sheet.js";
 import { ArmorSheet } from "./sheets/armor-sheet.js";
 import { BeliefSheet } from "./sheets/belief-sheet.js";
@@ -17,21 +10,8 @@ import { RelationshipSheet } from "./sheets/relationship-sheet.js";
 import { ReputationSheet } from "./sheets/reputation-sheet.js";
 import { SkillSheet } from "./sheets/skill-sheet.js";
 import { TraitSheet } from "./sheets/trait-sheet.js";
-import { Skill } from "./skill.js";
-import { Trait } from "./trait.js";
 import { SpellSheet } from "./sheets/spell-sheet.js";
-import { Spell } from "./spell.js";
 
-export * from "./affiliation.js";
-export * from "./armor.js";
-export * from "./belief.js";
-export * from "./instinct.js";
-export * from "./meleeWeapon.js";
-export * from "./possession.js";
-export * from "./property.js";
-export * from "./rangedWeapon.js";
-export * from "./relationship.js";
-export * from "./reputation.js";
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
 export * from "./sheets/belief-sheet.js";
@@ -45,18 +25,10 @@ export * from "./sheets/reputation-sheet.js";
 export * from "./sheets/skill-sheet.js";
 export * from "./sheets/trait-sheet.js";
 export * from "./sheets/spell-sheet.js";
-export * from "./spell.js";
-export * from "./skill.js";
-export * from "./trait.js";
 
-export class BWItem extends Item {
+export class BWItem extends Item<BWItemData> {
     prepareData(): void {
-        
         this.data.hasOwner = !!this.actor;
-        if (prototypeList[this.type]) {
-            prototypeList[this.type].prototype.prepareData.bind(this)();
-        }
-
         super.prepareData();
     }
 
@@ -151,20 +123,6 @@ export function RegisterItemSheets(): void {
         makeDefault: true
     });
 }
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const prototypeList: { [i: string]: typeof Item} = {
-    "trait": Trait as any,
-    "skill": Skill as any,
-    "relationship": Relationship as any,
-    "melee weapon":  MeleeWeapon as any,
-    "ranged weapon":  RangedWeapon as any,
-    "armor": Armor as any,
-    "possession":  Possession as any,
-    "property":  Property as any,
-    "reputation":  Reputation as any,
-    "spell": Spell as any
-};
 
 export type ItemType =
     "belief" | "instinct" | "trait" |

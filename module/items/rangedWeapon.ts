@@ -1,10 +1,11 @@
 import { BWActor } from "../bwactor.js";
-import { DisplayClass, HasPointCost } from "./item.js";
+import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
 
-export class RangedWeapon extends Item {
+export class RangedWeapon extends BWItem {
     prepareData(): void {
+        super.prepareData();
         if (this.actor && this.data.data.usePower) {
             let baseDmg = parseInt(this.actor.data.data.power.exp, 10)
                 + parseInt(this.data.data.powerBonus, 10);
@@ -58,7 +59,7 @@ export class RangedWeapon extends Item {
     }
 }
 
-export interface RangedWeaponRootData extends ItemData<RangedWeaponData> {
+export interface RangedWeaponRootData extends BWItemData {
     data: RangedWeaponData;
 }
 

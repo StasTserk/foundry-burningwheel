@@ -1,12 +1,12 @@
+import { AffiliationDataRoot, AffiliationData } from "../items/affiliation.js";
+import { Property, PropertyRootData, PropertyData } from "../items/property.js";
+import { RelationshipDataRoot, RelationshipData } from "../items/relationship.js";
+import { ReputationDataRoot, ReputationData } from "../items/reputation.js";
+import { Skill, SkillDataRoot, SkillData } from "../items/skill.js";
+import { Trait, TraitDataRoot, TraitData } from "../items/trait.js";
 import { CharacterSettings } from "../character.js";
 import { StringIndexedObject, ShadeString } from "../helpers.js";
 import {
-    Skill, SkillDataRoot, SkillData,
-    Trait, TraitDataRoot, TraitData,
-    PropertyRootData, PropertyData, Property,
-    ReputationDataRoot, ReputationData,
-    AffiliationData, AffiliationDataRoot,
-    RelationshipData, RelationshipDataRoot,
     BWItem, BWItemData, ItemType
 } from "../items/item.js";
 

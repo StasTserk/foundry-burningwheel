@@ -1,5 +1,4 @@
 import { BWActor, TracksTests, Ability} from "../bwactor.js";
-import { Skill, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -19,6 +18,8 @@ import {
     getSplitPoolRoll
 } from "./rolls.js";
 import { BWCharacter } from "../character.js";
+import { Skill } from "../items/skill.js";
+import { Possession, PossessionRootData } from "../items/possession.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
     const actor = rollOptions.sheet.actor;
@@ -143,7 +144,7 @@ async function learningRollCallback(
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = actor.getOwnedItem(toolkitId);
+        const tools = actor.getOwnedItem(toolkitId) as Possession;
         if (tools) {
             const { expended, text } = await maybeExpendTools(tools);
             extraInfo = extraInfo ? `${extraInfo}${text}` : text;

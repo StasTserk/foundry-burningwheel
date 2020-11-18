@@ -1,7 +1,8 @@
-import { BWActor } from "module/bwactor.js";
-import { BWCharacter } from "module/character.js";
+import { BWActor } from "../bwactor.js";
+import { BWCharacter } from "../character.js";
+import { Skill } from "../items/skill.js";
+import { Spell } from "../items/spell.js";
 import * as helpers from "../helpers.js";
-import { Skill, Spell } from "../items/item.js";
 import { handleLearningRoll } from "./rollLearning.js";
 import { EventHandlerOptions, RollDialogData, RollOptions } from "./rolls.js";
 import { handleSkillRoll } from "./rollSkill.js";

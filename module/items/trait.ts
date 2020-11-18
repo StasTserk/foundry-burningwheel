@@ -1,8 +1,9 @@
 import { RollModifier } from "../bwactor.js";
-import { ItemType, HasPointCost, BWItemData } from "./item.js";
+import { ItemType, HasPointCost, BWItemData, BWItem } from "./item.js";
 
-export class Trait extends Item<TraitData> {
+export class Trait extends BWItem {
     prepareData(): void {
+        super.prepareData();
         this.data.isCallonTrait = this.data.data.traittype === "call-on";
         this.data.isDieTrait = this.data.data.traittype === "die";
     }
@@ -27,7 +28,7 @@ export class Trait extends Item<TraitData> {
     data: TraitDataRoot;
 }
 
-export interface TraitDataRoot extends ItemData<TraitData>, BWItemData {
+export interface TraitDataRoot extends BWItemData {
     type: ItemType;
     isDieTrait: boolean;
     isCallonTrait: boolean;

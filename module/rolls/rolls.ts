@@ -591,10 +591,6 @@ interface BaseDataObject {
 }
 
 export interface EventHandlerOptions extends CommonEventHandlerOptions {
-    target: HTMLElement;
-    extraInfo?: string;
-    dataPreset?: Partial<RollDialogData>;
-    onRollCallback?: () => Promise<unknown>;
     sheet: BWCharacterSheet;
 }
 

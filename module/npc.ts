@@ -4,9 +4,9 @@ import { ShadeString } from "./helpers.js";
 export class Npc extends BWActor {
     data: NpcDataRoot;
 
-    bindNpcFunctions(): void {
-        this.calculateWounds = Npc.prototype.calculateWounds.bind(this);
-        this.prepareTypeSpecificData = Npc.prototype.prepareTypeSpecificData.bind(this);
+    prepareData(): void {
+        super.prepareData();
+        this.calculateWounds();
     }
 
     calculateWounds(): void {
@@ -18,10 +18,6 @@ export class Npc extends BWActor {
             (this.data.data.ptgs.trTaken * 4);
         this.data.data.ptgs.obPenalty =
             (this.data.data.ptgs.suTaken > 0 && this.data.data.ptgs.suTaken < 3) ? 1 : 0;
-    }
-
-    prepareTypeSpecificData(): void {
-        this.calculateWounds();
     }
 }
 

@@ -22,22 +22,8 @@ export class BWCharacter extends BWActor{
         return self;
     }
 
-    bindCharacterFunctions(): void {
-        this.addStatTest = BWCharacter.prototype.addStatTest.bind(this);
-        this.addAttributeTest = BWCharacter.prototype.addAttributeTest.bind(this);
-        this._addTestToStat = BWCharacter.prototype._addTestToStat.bind(this);
-        this.taxResources = BWCharacter.prototype.taxResources.bind(this);
-        this._advanceStat = BWCharacter.prototype._advanceStat.bind(this);
-        this.prepareTypeSpecificData = BWCharacter.prototype.prepareTypeSpecificData.bind(this);
-        this.updatePtgs = BWCharacter.prototype.updatePtgs.bind(this);
-        this._calculatePtgs = BWCharacter.prototype._calculatePtgs.bind(this);
-        this.update = BWCharacter.prototype.update.bind(this);
-        this._statsHaveChanged = BWCharacter.prototype._statsHaveChanged.bind(this);
-        this.updateArthaForSkill = BWCharacter.prototype.updateArthaForSkill.bind(this);
-        this.updateArthaForStat = BWCharacter.prototype.updateArthaForStat.bind(this);
-    }
-
-    prepareTypeSpecificData(): void {
+    prepareData(): void {
+        super.prepareData();
         if (!this.data.data.settings) {
             this.data.data.settings = {
                 onlySuccessesCount: 'Faith, Resources, Perception',

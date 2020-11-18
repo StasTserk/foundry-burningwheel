@@ -1,5 +1,16 @@
 import { BWCharacter } from "./character.js";
-import { Armor, Belief, Instinct, MeleeWeapon, Possession, Property, RangedWeapon, Relationship, Reputation, Skill, Spell, Trait } from "./items/item.js";
+import { Armor } from "./items/armor.js";
+import { Belief } from "./items/belief.js";
+import { Instinct } from "./items/instinct.js";
+import { MeleeWeapon } from "./items/meleeWeapon.js";
+import { Possession } from "./items/possession.js";
+import { Property } from "./items/property.js";
+import { RangedWeapon } from "./items/rangedWeapon.js";
+import { Relationship } from "./items/relationship.js";
+import { Reputation } from "./items/reputation.js";
+import { Skill } from "./items/skill.js";
+import { Spell } from "./items/spell.js";
+import { Trait } from "./items/trait.js";
 import { Npc } from "./npc.js";
 
 function factory(entities: Record<string, typeof Entity>, baseClass: typeof Entity): unknown {

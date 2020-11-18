@@ -13,6 +13,7 @@ import {
 } from "./rolls.js";
 import { BWCharacterSheet } from "../character-sheet.js";
 import { BWCharacter } from "../character.js";
+import { translateWoundValue } from "../helpers.js";
 
 export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCharacterSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {
     const obstacle = parseInt(target.dataset.obstacle || "0");
@@ -107,11 +108,11 @@ async function taxTestCallback(
         if (forteExp < margin + tax ) {
             // overtax.
             const baseWound = (margin + tax - forteExp) * difficultyTotal;
-            data.extraInfo += ` Tax test failed by ${margin}. The caster maxes out their Forte tax and risks a B${baseWound} wound.`;
+            data.extraInfo += ` Tax test failed by ${margin}. The caster maxes out their Forte tax and risks a ${translateWoundValue("B", baseWound)} wound.`;
             new Dialog({
                 title: "Overtaxed!",
                 content: `<p>Failing your tax test by ${margin} when you have ${forteExp - tax} untaxed Forte dice has resulted in overtax.</p>
-                <p>Your forte will be maxed out automatically as your character falls unconscious. Also apply a B${baseWound} wound to your character.</p>`,
+                <p>Your forte will be maxed out automatically as your character falls unconscious. Also apply a ${translateWoundValue("B", baseWound)} wound to your character.</p>`,
                 buttons: {
                     yes: {
                         label: "Ouch! Okay.",

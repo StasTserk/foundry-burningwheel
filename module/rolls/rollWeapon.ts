@@ -1,10 +1,12 @@
 import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
-import { Skill, MeleeWeapon, RangedWeapon } from "../items/item.js";
 import { EventHandlerOptions, mergePartials, RollDialogData, RollOptions } from "./rolls.js";
-import { BWActor } from "module/bwactor.js";
-import { BWCharacter } from "module/character.js";
+import { BWActor } from "../bwactor.js";
+import { BWCharacter } from "../character.js";
+import { RangedWeapon } from "../items/rangedWeapon.js";
+import { MeleeWeapon } from "../items/meleeWeapon.js";
+import { Skill } from "../items/skill.js";
 
 export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> | Application {
     const actor = sheet.actor as BWActor & BWCharacter;

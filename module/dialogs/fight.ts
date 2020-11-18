@@ -1,10 +1,11 @@
-import { BWItemData, MeleeWeaponRootData } from "../items/item.js";
+import { BWItemData } from "../items/item.js";
 import { NpcDataRoot } from "../npc.js";
 import { BWActor } from "../bwactor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
 import { CharacterDataRoot } from "../character.js";
+import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
 
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: DialogData, o?: ApplicationOptions) {

@@ -16,10 +16,14 @@ import {
     getSplitPoolRoll,
     NpcEventHandlerOptions
 } from "./rolls.js";
-import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
 import { byName, notifyError } from "../helpers.js";
 import { Npc } from "../npc.js";
 import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
+import { Skill } from "../items/skill.js";
+import { MeleeWeapon } from "../items/meleeWeapon.js";
+import { PossessionRootData } from "../items/possession.js";
+import { RangedWeapon } from "../items/rangedWeapon.js";
+import { Spell } from "../items/spell.js";
 
 export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";

@@ -1,4 +1,3 @@
-import { Skill, SkillDataRoot } from "../items/item.js";
 import { BWActor } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
@@ -8,6 +7,7 @@ import { handleSkillRoll } from "../rolls/rollSkill.js";
 import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
 import { Npc } from "../npc.js";
 import { getKeypressModifierPreset } from "../rolls/rolls.js";
+import { Skill, SkillDataRoot } from "../items/skill.js";
 
 export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: DialogData, o?: ApplicationOptions) {

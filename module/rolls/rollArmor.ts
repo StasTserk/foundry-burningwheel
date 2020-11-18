@@ -1,4 +1,3 @@
-import { Armor, AssignDamage } from "../items/item.js";
 import {
     rollDice,
     RollDialogData,
@@ -14,8 +13,9 @@ import {
 import { BWActor } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import * as helpers from "../helpers.js";
-import { BWCharacterSheet } from "module/character-sheet.js";
-import { NpcSheet } from "module/npc-sheet.js";
+import { BWCharacterSheet } from "../character-sheet.js";
+import { NpcSheet } from "../npc-sheet.js";
+import { Armor, AssignDamage } from "../items/armor.js";
 
 export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;

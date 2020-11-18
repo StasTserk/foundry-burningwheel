@@ -1,12 +1,15 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
-import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData, Skill, ItemType } from "./items/item.js";
+import { BWItemData, ItemType } from "./items/item.js";
 import { Npc } from "./npc.js";
 import { handleNpcStatRollEvent } from "./rolls/npcStatRoll.js";
 import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "./rolls/npcSkillRoll.js";
 import { handleArmorRollEvent } from "./rolls/rollArmor.js";
 import { getKeypressModifierPreset } from "./rolls/rolls.js";
+import { ArmorData } from "./items/armor.js";
+import { SkillDataRoot, Skill } from "./items/skill.js";
+import { TraitDataRoot } from "./items/trait.js";
 
 export class NpcSheet extends BWActorSheet {
     get actor(): BWActor & Npc {

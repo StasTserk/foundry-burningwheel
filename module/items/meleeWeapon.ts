@@ -1,11 +1,12 @@
 import { BWActor } from "../bwactor.js";
-import { DisplayClass, HasPointCost } from "./item.js";
+import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
 import { translateWoundValue } from "../helpers.js";
 
-export class MeleeWeapon extends Item {
+export class MeleeWeapon extends BWItem {
     prepareData(): void {
+        super.prepareData();
         if (this.actor) {
             let power = parseInt(this.actor.data.data.power.exp);
             if (this.actor.data.data.power.shade === "G") {
@@ -51,7 +52,7 @@ export class MeleeWeapon extends Item {
     data: MeleeWeaponRootData;
 }
 
-export interface MeleeWeaponRootData extends ItemData<MeleeWeaponData> {
+export interface MeleeWeaponRootData extends BWItemData {
     data: MeleeWeaponData;
 }
 

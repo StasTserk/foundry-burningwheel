@@ -1,5 +1,7 @@
 import { TracksTests } from "./bwactor.js";
-import { ArmorRootData, BWItem, DisplayClass, ItemType, Skill } from "./items/item.js";
+import { ArmorRootData } from "./items/armor.js";
+import { BWItem, DisplayClass, ItemType } from "./items/item.js";
+import { Skill } from "./items/skill.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0):void {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};

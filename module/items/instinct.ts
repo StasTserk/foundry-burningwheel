@@ -1,7 +1,7 @@
-import { ArthaEarner } from "./item.js";
+import { ArthaEarner, BWItem, BWItemData } from "./item.js";
 
-export class Instinct extends Item {
-    data: ItemData<InstinctData>;
+export class Instinct extends BWItem {
+    data: BWItemData & { data: InstinctData };
 }
 
 interface InstinctData extends ArthaEarner {

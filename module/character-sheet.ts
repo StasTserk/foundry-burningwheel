@@ -2,24 +2,21 @@ import { BWActor, NewItemData } from "./bwactor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "./constants.js";
 import {
-    ArmorRootData,
-    MeleeWeaponData,
-    Skill,
-    SkillDataRoot,
-    TraitDataRoot,
-    ReputationDataRoot,
-    RelationshipData,
-    MeleeWeaponRootData,
-    RangedWeaponRootData,
-    SpellDataRoot,
-    Trait,
-    Spell,
+    BWItemData,
 } from "./items/item.js";
 import { handleRollable } from "./rolls/rolls.js";
 import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 import { addNewItem } from "./dialogs/importItemDialog.js";
 import { BWCharacter } from "./character.js";
 import { byName } from "./helpers.js";
+import { ArmorRootData } from "./items/armor.js";
+import { MeleeWeaponRootData, MeleeWeaponData } from "./items/meleeWeapon.js";
+import { RangedWeaponRootData } from "./items/rangedWeapon.js";
+import { RelationshipData } from "./items/relationship.js";
+import { ReputationDataRoot } from "./items/reputation.js";
+import { SkillDataRoot, Skill } from "./items/skill.js";
+import { SpellDataRoot, Spell } from "./items/spell.js";
+import { TraitDataRoot, Trait } from "./items/trait.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     get actor(): BWCharacter {
@@ -29,7 +26,7 @@ export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
         const woundDice = this.actor.data.data.ptgs.woundDice;
-        const items = Array.from(data.items.values()) as unknown as ItemData[];
+        const items = Array.from(data.items.values()) as unknown as BWItemData[];
 
         const beliefs: ItemData[] = [];
         const instincts: ItemData[] = [];

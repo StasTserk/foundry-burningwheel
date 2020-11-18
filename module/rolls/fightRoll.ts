@@ -1,4 +1,4 @@
-import { BWItem, MeleeWeapon, RangedWeapon, Skill, Spell } from "../items/item.js";
+import { BWItem } from "../items/item.js";
 import { Ability, BWActor } from "../bwactor.js";
 import { handleStatRoll } from "./rollStat.js";
 import { notifyError, ShadeString } from "../helpers.js";
@@ -6,9 +6,13 @@ import { handleNpcStatRoll } from "./npcStatRoll.js";
 import { Npc } from "../npc.js";
 import { RollDialogData } from "./rolls.js";
 import { handleSpellRoll } from "./rollSpell.js";
-import { BWCharacter } from "module/character.js";
+import { BWCharacter } from "../character.js";
 import { handleNpcSpellRoll, handleNpcWeaponRoll } from "./npcSkillRoll.js";
 import { handleWeaponRoll } from "./rollWeapon.js";
+import { MeleeWeapon } from "../items/meleeWeapon.js";
+import { RangedWeapon } from "../items/rangedWeapon.js";
+import { Skill } from "../items/skill.js";
+import { Spell } from "../items/spell.js";
 
 export async function handleFightRoll({actor, type, itemId, attackIndex, positionPenalty, engagementBonus }: FightRollOptions): Promise<unknown> {
     const dataPreset: Partial<RollDialogData> = {

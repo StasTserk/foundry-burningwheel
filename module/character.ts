@@ -1,6 +1,7 @@
 import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./bwactor.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "./helpers.js";
-import { BWItemData, Skill } from "./items/item.js";
+import { BWItemData } from "./items/item.js";
+import { Skill } from "./items/skill.js";
 
 export class BWCharacter extends BWActor{
     data: CharacterDataRoot;

@@ -233,7 +233,13 @@ async function advanceBaseStat(
 
     const accessor = `data.${statName.toLowerCase()}`;
     const rootStat = getProperty(owner, `data.${accessor}`);
-    await owner.addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    if (statName === "custom1" || statName === "custom2") {
+        statName = owner.data.data[statName].name.titleCase();
+        await owner.addAttributeTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    } else {
+        await owner.addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    }
+    
     return cb(fr);
 }
 

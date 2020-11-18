@@ -1,4 +1,5 @@
-import { skillRootSelect, skillTypeSelect } from "../../constants.js";
+import { skillTypeSelect } from "../../constants.js";
+import { Skill } from "../skill.js";
 
 export class SkillSheet extends ItemSheet {
     static get defaultOptions(): FormApplicationOptions {
@@ -11,8 +12,10 @@ export class SkillSheet extends ItemSheet {
 
     getData(): SkillSheetData {
         const data = super.getData() as SkillSheetData;
+
         data.skillTypes = skillTypeSelect;
-        data.skillRoots = skillRootSelect;
+        data.skillRoots = {};
+        Object.assign(data.skillRoots, (this.item as Skill).getRootSelect());
         return data;
     }
 }

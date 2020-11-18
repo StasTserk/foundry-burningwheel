@@ -1,8 +1,25 @@
+import { skillRootSelect } from "../constants.js";
 import { Ability, BWActor, TracksTests } from "../bwactor.js";
-import { ShadeString, updateTestsNeeded } from "../helpers.js";
+import { ShadeString, StringIndexedObject, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, ItemType, BWItemData, BWItem } from "./item.js";
 
 export class Skill extends BWItem {
+    getRootSelect(): StringIndexedObject<string> {
+        const roots = {};
+        Object.assign(roots, skillRootSelect);
+        if (this.data.hasOwner && this.actor.data.type === "character") {
+            if (this.actor.data.data.custom1.name) {
+                roots["custom1"] = this.actor.data.data.custom1.name;
+            }
+            if (this.actor.data.data.custom2.name) {
+                roots["custom2"] = this.actor.data.data.custom2.name;
+            }
+        } else {
+            roots["custom1"] = "Custom Attribute 1";
+            roots["custom2"] = "Custom Attribute 2";
+        }
+        return roots;
+    }
     prepareData(): void {
         super.prepareData();
         updateTestsNeeded(this.data.data);

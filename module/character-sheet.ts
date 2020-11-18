@@ -22,8 +22,8 @@ import { BWCharacter } from "./character.js";
 import { byName } from "./helpers.js";
 
 export class BWCharacterSheet extends BWActorSheet {
-    get actor(): BWActor & BWCharacter {
-        return super.actor as BWActor & BWCharacter;
+    get actor(): BWCharacter {
+        return super.actor as BWCharacter;
     }
     
     getData(): CharacterSheetData {

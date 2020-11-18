@@ -83,14 +83,14 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
             shade,
             open: false,
             statName: type,
-            actor: (actor as BWActor & Npc),
+            actor: (actor as Npc),
             dataPreset
         });
     }
     const accessor = `data.${type}`;
     const stat = getProperty(actor, `data.${accessor}`) as Ability;
     return handleStatRoll({
-        actor,
+        actor: actor as BWCharacter,
         statName: type.titleCase(),
         stat,
         accessor,

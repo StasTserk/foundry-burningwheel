@@ -1,7 +1,7 @@
-import { Common, BWActorDataRoot } from "./bwactor.js";
+import { Common, BWActorDataRoot, BWActor } from "./bwactor.js";
 import { ShadeString } from "./helpers.js";
 
-export class Npc extends Actor<NpcData> {
+export class Npc extends BWActor {
     data: NpcDataRoot;
 
     bindNpcFunctions(): void {
@@ -36,7 +36,6 @@ export interface NpcData extends Common {
     reflexes: number;
     reflexesShade: ShadeString;
     ptgs: {
-        
         suThresh: number;
         suTaken: number;
         suShade: ShadeString;

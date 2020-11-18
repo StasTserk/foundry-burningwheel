@@ -1,4 +1,5 @@
-import { Ability, TracksTests, BWCharacter, BWActor } from "../bwactor.js";
+import { BWCharacter } from "../character.js";
+import { Ability, TracksTests } from "../bwactor.js";
 import {
     buildRerollData,
     getRollNameClass,
@@ -14,7 +15,7 @@ import {
 export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
     const accessor = options.target.dataset.accessor || "";
     const stat = getProperty(options.sheet.actor.data, accessor) as Ability;
-    const actor = options.sheet.actor as BWActor & BWCharacter;
+    const actor = options.sheet.actor;
     const statName = options.target.dataset.rollableName || "Unknown Stat";
     return handleStatRoll({ actor, statName, stat, accessor, ...options });
 }
@@ -61,7 +62,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
 async function statRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        actor: BWActor,
+        actor: BWCharacter,
         name: string,
         accessor: string) {
     const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, skipAdvancement, persona, deeds } = extractRollData(dialogHtml);
@@ -103,7 +104,7 @@ async function statRollCallback(
         extraInfo
     };
     if (actor.data.type === "character" && !skipAdvancement) {
-        (actor as BWActor & BWCharacter).addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
+        actor.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
     }
 
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
@@ -119,7 +120,7 @@ interface StatDialogData extends RollDialogData {
 }
 
 export interface StatRollOptions extends RollOptions {
-    actor: BWActor;
+    actor: BWCharacter;
     statName: string;
     stat: Ability;
     accessor: string;

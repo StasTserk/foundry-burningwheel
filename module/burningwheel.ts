@@ -1,7 +1,6 @@
 import { BWActor } from "./bwactor.js";
 import { BWCharacterSheet } from "./character-sheet.js";
 import {
-    BWItem,
     RegisterItemSheets
 } from "./items/item.js";
 
@@ -15,11 +14,12 @@ import { DuelOfWitsDialog } from "./dialogs/duelOfWits.js";
 import { FightDialog } from "./dialogs/fight.js";
 import { DifficultyDialog } from "./dialogs/difficultyDialog.js";
 import { RangeAndCoverDialog } from "./dialogs/rangeAndCover.js";
+import { actorConstructor, itemConstructor } from "./factory.js";
 
 Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    CONFIG.Actor.entityClass = BWActor as any;
-    CONFIG.Item.entityClass = BWItem;
+    CONFIG.Actor.entityClass = actorConstructor;
+    CONFIG.Item.entityClass = itemConstructor;
     game.burningwheel = {};
 
     Actors.unregisterSheet("core", ActorSheet);

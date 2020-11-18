@@ -1,5 +1,4 @@
-import { Ability, BWActor, BWCharacter } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
+import { Ability } from "../bwactor.js";
 import { Relationship } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
@@ -14,6 +13,7 @@ import {
     EventHandlerOptions,
     mergeDialogData
 } from "./rolls.js";
+import { BWCharacterSheet } from "../character-sheet.js";
 
 export async function handleCirclesRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
@@ -21,7 +21,7 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
     if (target.dataset.relationshipId) {
         circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
     }
-    const actor = sheet.actor as BWActor;
+    const actor = sheet.actor;
     const rollModifiers = sheet.actor.getRollModifiers("circles");
     const data: CirclesDialogData = mergeDialogData<CirclesDialogData>({
         name: target.dataset.rollableName || "Circles Test",
@@ -58,7 +58,7 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
 async function circlesRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWActorSheet,
+        sheet: BWCharacterSheet,
         contact?: Relationship) {
     const rollData = extractRollData(dialogHtml);
 
@@ -110,7 +110,7 @@ async function circlesRollCallback(
             }
         }
         if (sheet.actor.data.type === "character") {
-            (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
+            sheet.actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
         }
     }
 

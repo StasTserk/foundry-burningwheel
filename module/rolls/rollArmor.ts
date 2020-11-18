@@ -1,11 +1,23 @@
-import { BWActorSheet } from "../bwactor-sheet.js";
 import { Armor, AssignDamage } from "../items/item.js";
-import { rollDice, RollDialogData, templates, RollChatMessageData, extractNumber, getRollNameClass, buildRerollData, extractBaseData, buildDiceSourceObject, EventHandlerOptions } from "./rolls.js";
+import {
+    rollDice,
+    RollDialogData,
+    templates,
+    RollChatMessageData,
+    extractNumber,
+    getRollNameClass,
+    buildRerollData,
+    extractBaseData,
+    buildDiceSourceObject,
+    ArmorEventHandlerOptions
+} from "./rolls.js";
 import { BWActor } from "../bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import * as helpers from "../helpers.js";
+import { BWCharacterSheet } from "module/character-sheet.js";
+import { NpcSheet } from "module/npc-sheet.js";
 
-export async function handleArmorRollEvent({ target, sheet }: EventHandlerOptions): Promise<unknown> {
+export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
     const armorId = target.dataset.itemId || "";
     const armorItem = actor.getOwnedItem(armorId) as Armor;
@@ -39,7 +51,7 @@ export async function handleArmorRollEvent({ target, sheet }: EventHandlerOption
 
 }
 
-export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: BWActorSheet, location: string): Promise<unknown> {   
+export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: BWCharacterSheet | NpcSheet, location: string): Promise<unknown> {   
     const dice = extractNumber(html, "armor");
     const damage = parseInt(armorItem.data.data[`damage${location}`]);
     const va = extractNumber(html, "vsArmor");

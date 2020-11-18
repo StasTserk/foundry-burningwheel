@@ -1,7 +1,7 @@
 import { BWActorSheet } from "./bwactor-sheet.js";
 import { ShadeString } from "./helpers.js";
 import { BWActor } from "./bwactor.js";
-import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData, Skill } from "./items/item.js";
+import { TraitDataRoot, SkillDataRoot, BWItemData, ArmorData, Skill, ItemType } from "./items/item.js";
 import { Npc } from "./npc.js";
 import { handleNpcStatRollEvent } from "./rolls/npcStatRoll.js";
 import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "./rolls/npcSkillRoll.js";
@@ -127,7 +127,7 @@ export class NpcSheet extends BWActorSheet {
         const itemType = $(e.target).data("type") as string;
         this.actor.createOwnedItem({
             name: `New ${itemType}`,
-            type: itemType
+            type: itemType as ItemType
         }).then(i => this.actor.getOwnedItem(i._id)?.sheet.render(true));
     }
 }

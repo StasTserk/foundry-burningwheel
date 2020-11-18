@@ -1,4 +1,4 @@
-import { BWActor, TracksTests, Ability, BWCharacter } from "../bwactor.js";
+import { BWActor, TracksTests, Ability} from "../bwactor.js";
 import { Skill, PossessionRootData } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import {
@@ -12,11 +12,16 @@ import {
     maybeExpendTools,
     RollDialogData,
     extractRollData,
-    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
+    EventHandlerOptions,
+    RollOptions,
+    mergeDialogData,
+    getSplitPoolText,
+    getSplitPoolRoll
 } from "./rolls.js";
+import { BWCharacter } from "../character.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
-    const actor = rollOptions.sheet.actor as BWActor & BWCharacter;
+    const actor = rollOptions.sheet.actor;
     const skillId = rollOptions.target.dataset.skillId || "";
     const skill = (rollOptions.sheet.actor.getOwnedItem(skillId) as Skill);
     return handleLearningRoll({ actor, skill, ...rollOptions});
@@ -104,7 +109,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
 }
 
 async function learningRollCallback(
-    dialogHtml: JQuery, skill: Skill, statName: string, actor: BWActor, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, statName: string, actor: BWCharacter, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
     
     const rollData = extractRollData(dialogHtml);
     const stat = getProperty(actor.data.data, statName) as Ability;
@@ -186,7 +191,7 @@ async function learningRollCallback(
 async function advanceLearning(
         skill: Skill,
         statName: string,
-        owner: BWActor,
+        owner: BWCharacter,
         difficultyGroup: helpers.TestString,
         isSuccessful: boolean,
         fr: RerollData | undefined,
@@ -218,7 +223,7 @@ async function advanceLearning(
 
 async function advanceBaseStat(
         _skill: Skill,
-        owner: BWActor,
+        owner: BWCharacter,
         statName: string,
         difficultyGroup: helpers.TestString,
         isSuccessful: boolean,
@@ -227,7 +232,7 @@ async function advanceBaseStat(
 
     const accessor = `data.${statName.toLowerCase()}`;
     const rootStat = getProperty(owner, `data.${accessor}`);
-    await (owner as BWActor & BWCharacter).addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
+    await owner.addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
     return cb(fr);
 }
 

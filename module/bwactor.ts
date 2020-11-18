@@ -4,7 +4,7 @@ import { SkillDataRoot } from "./items/skill.js";
 import * as constants from "./constants.js";
 import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 
-export class BWActor extends Actor {
+export class BWActor extends Actor<Common> {
     data!: BWActorDataRoot;
 
     readonly batchAdd = {
@@ -62,11 +62,11 @@ export class BWActor extends Actor {
 
     prepareData(): void {
         
-        if (this.data.type === "character") {
-            BWCharacter.prototype.bindCharacterFunctions.call(this);
-        } else {
-            Npc.prototype.bindNpcFunctions.call(this);
-        }
+        // if (this.data.type === "character") {
+        //     BWCharacter.prototype.bindCharacterFunctions.call(this);
+        // } else {
+        //     Npc.prototype.bindNpcFunctions.call(this);
+        // }
 
         super.prepareData();
         this.prepareTypeSpecificData();
@@ -79,7 +79,8 @@ export class BWActor extends Actor {
     getForkOptions(skillName: string): { name: string, amount: number }[] {
         return this.data.forks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > (this.data.data.ptgs.woundDice || 0))
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > ((this.data.data as any).ptgs.woundDice || 0))
             .map( s => {
                 const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
                 // skills at 7+ exp provide 2 dice in forks.
@@ -90,7 +91,8 @@ export class BWActor extends Actor {
     getWildForks(skillName: string): { name: string, amount: number }[] {
         return this.data.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && parseInt((s as unknown as SkillDataRoot).data.exp) > (this.data.data.ptgs.woundDice || 0))
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            && parseInt((s as unknown as SkillDataRoot).data.exp) > ((this.data.data as any).ptgs.woundDice || 0))
             .map( s => {
                 const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
                 // skills at 7+ exp provide 2 dice in forks.
@@ -250,7 +252,9 @@ export class BWActor extends Actor {
         this.createOwnedItem(constants.bareFistData);
 
         if (this.data.type === "character" && this.permission === CONST.ENTITY_PERMISSIONS.OWNER) {
-            const character = this as unknown as BWCharacter & BWActor;
+            // todo: move this to character class
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const character = this as any;
             setTimeout(() => {
                 if (character.data.data.settings.showBurner) {
                     new Dialog({
@@ -295,7 +299,8 @@ export class BWActor extends Actor {
             untrainedAll: 0
         };
 
-        const asCharacter = this.data.type === "character" ? this as unknown as BWActor & BWCharacter : undefined;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const asCharacter = this.data.type === "character" ? this as any : undefined;
 
         this.data.items.filter(i => i.type === "armor" && (i as unknown as ArmorRootData).data.equipped)
             .forEach(i => {
@@ -417,7 +422,7 @@ export interface Common {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface BWActorDataRoot extends ActorData<BWCharacterData | NpcData> {
+export interface BWActorDataRoot extends ActorData<Common> {
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
@@ -500,8 +505,3 @@ export interface NewItemData extends StringIndexedObject<any> {
     name: string;
     type: ItemType;
 }
-
-// ====================== Character Class ===============================
-import { BWCharacter, BWCharacterData } from "./character.js";
-import { Npc, NpcData } from "./npc.js";
-export * from "./character.js";

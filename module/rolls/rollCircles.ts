@@ -98,7 +98,7 @@ async function circlesRollCallback(
     if (!rollData.skipAdvancement) {
         // increment relationship tracking values...
         if (contact && contact.data.data.building) {
-            const progress = (parseInt(contact.data.data.buildingProgress, 10) || 0) + 1;
+            const progress = (contact.data.data.buildingProgress || 0) + 1;
             contact.update({"data.buildingProgress": progress }, null);
             if (progress >= 10 - (contact.data.data.aptitude || 10)) {
                 Dialog.confirm({

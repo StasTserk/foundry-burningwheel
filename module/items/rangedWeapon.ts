@@ -7,21 +7,20 @@ export class RangedWeapon extends BWItem {
     prepareData(): void {
         super.prepareData();
         if (this.actor && this.data.data.usePower) {
-            let baseDmg = parseInt(this.actor.data.data.power.exp, 10)
-                + parseInt(this.data.data.powerBonus, 10);
+            let baseDmg = parseInt(this.actor.data.data.power.exp) + this.data.data.powerBonus;
             if (this.actor.data.data.power.shade === "G") {
                 baseDmg += 2;
             }
             if (this.actor.data.data.power.shade === "W") {
                 baseDmg += 3;
             }
-            this.data.data.incidental = Math.ceil(baseDmg / 2).toString();
-            this.data.data.mark = baseDmg.toString();
-            this.data.data.superb = Math.floor(baseDmg * 1.5).toString();
+            this.data.data.incidental = Math.ceil(baseDmg / 2);
+            this.data.data.mark = baseDmg;
+            this.data.data.superb = Math.floor(baseDmg * 1.5);
         }
 
-        const incidentalRange = parseInt(this.data.data.incidentalRoll, 10);
-        const markRange = parseInt(this.data.data.markRoll, 10);
+        const incidentalRange = this.data.data.incidentalRoll;
+        const markRange = this.data.data.markRoll;
         this.data.data.incidentalLabel = `1-${incidentalRange}`;
         this.data.data.markLabel = (markRange - 1 === incidentalRange) ? `${markRange}` : `${incidentalRange + 1}-${markRange}`;
         this.data.data.superbLabel = (markRange === 5 ) ? `6` : `${markRange + 1}-6`;
@@ -67,15 +66,15 @@ export interface RangedWeaponData extends DisplayClass, HasPointCost {
     quality: QualityString;
     hasGunpowder: boolean;
     usePower: boolean;
-    powerBonus: string; // as number
-    incidental: string; // as number
-    incidentalRoll: string; // as number
-    mark: string; // as number
-    markRoll: string; // as number
-    superb: string; // as number
-    vsArmor: string; // as number
-    optimalRange: string; // as number
-    extremeRange: string; // as number
+    powerBonus: number;
+    incidental: number;
+    incidentalRoll: number;
+    mark: number;
+    markRoll: number;
+    superb: number;
+    vsArmor: number;
+    optimalRange: number;
+    extremeRange: number;
     maxRange: string;
     handedness: string;
     description: string;

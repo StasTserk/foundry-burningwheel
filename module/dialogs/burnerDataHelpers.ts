@@ -159,7 +159,7 @@ export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]):
             traits.push({
                 data: {
                     traittype: extractNamedChildString($(e), "traitType"),
-                    text: "Uknown trait created during character burning. Update data accordingly. If the trait adds a reputation or affiliation, those must be added in manually."
+                    text: "Unknown trait created during character burning. Update data accordingly. If the trait adds a reputation or affiliation, those must be added in manually."
                 } as TraitData,
                 type: "trait",
                 name: traitName
@@ -184,7 +184,7 @@ export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Pro
         } else {
             properties.push({
                 data: {
-                    description: "Uknown property created during character burning. Update data accordingly."
+                    description: "Unknown property created during character burning. Update data accordingly."
                 } as PropertyData,
                 type: "property",
                 name: propertyName
@@ -206,7 +206,7 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
             reputations.push({
                 data: {
                     dice: repDice,
-                    description: "Uknown affiliation created during character burning. Update data accordingly."
+                    description: "Unknown affiliation created during character burning. Update data accordingly."
                 } as AffiliationData,
                 type: "affiliation",
                 name: repName
@@ -216,7 +216,7 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
                 data: {
                     dice: repDice,
                     infamous: false,
-                    description: "Uknown reputation created during character burning. Update data accordingly."
+                    description: "Unknown reputation created during character burning. Update data accordingly."
                 } as ReputationData,
                 type: "reputation",
                 name: repName
@@ -237,7 +237,7 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
         relationships.push({
             data: {
                 forbidden: relData.forbidden,
-                description: "Relationship created during character burning. Fill in this decription accordinly.",
+                description: "Relationship created during character burning. Fill in this description accordingly.",
                 immediateFamily: relData.closeFamily,
                 otherFamily: relData.otherFamily,
                 romantic: relData.romantic,
@@ -245,7 +245,7 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
                 enmity: false,
                 influence: "~",
                 building: false,
-                buildingProgress: "0"
+                buildingProgress: 0
             } as RelationshipData,
             type: "relationship",
             name: relName

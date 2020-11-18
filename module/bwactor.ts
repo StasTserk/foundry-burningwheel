@@ -6,6 +6,9 @@ import { ArmorRootData } from "./items/armor.js";
 import { PossessionRootData } from "./items/possession.js";
 import { ReputationDataRoot } from "./items/reputation.js";
 import { TraitDataRoot, Trait } from "./items/trait.js";
+import { BWCharacterData } from "./character.js";
+import { NpcData } from "./npc.js";
+import { AffiliationDataRoot } from "./items/affiliation.js";
 
 export class BWActor extends Actor<Common> {
     data!: BWActorDataRoot;
@@ -74,8 +77,7 @@ export class BWActor extends Actor<Common> {
     getForkOptions(skillName: string): { name: string, amount: number }[] {
         return this.data.forks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > ((this.data.data as any).ptgs.woundDice || 0))
+            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
                 const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
                 // skills at 7+ exp provide 2 dice in forks.
@@ -86,8 +88,7 @@ export class BWActor extends Actor<Common> {
     getWildForks(skillName: string): { name: string, amount: number }[] {
         return this.data.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            && parseInt((s as unknown as SkillDataRoot).data.exp) > ((this.data.data as any).ptgs.woundDice || 0))
+            && parseInt((s as unknown as SkillDataRoot).data.exp) > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
                 const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
                 // skills at 7+ exp provide 2 dice in forks.
@@ -171,8 +172,7 @@ export class BWActor extends Actor<Common> {
                         }
                         break;
                     case "affiliation":
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as any).data.dice, 10) });
+                        this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as AffiliationDataRoot).data.dice, 10) });
                         break;
                     case "trait":
                         const t = i as TraitDataRoot;
@@ -264,8 +264,7 @@ export class BWActor extends Actor<Common> {
             untrainedAll: 0
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const asCharacter = this.data.type === "character" ? this as any : undefined;
+        const charData = this.data.type === "character" ? this.data.data as BWCharacterData : undefined;
 
         this.data.items.filter(i => i.type === "armor" && (i as unknown as ArmorRootData).data.equipped)
             .forEach(i => {
@@ -295,7 +294,7 @@ export class BWActor extends Actor<Common> {
             }
 
 
-            if (asCharacter && !asCharacter.data.data.settings.armorTrained &&
+            if (charData && !charData.settings.armorTrained &&
                 (a.data.hasHelm || a.data.hasLeftArm || a.data.hasRightArm || a.data.hasTorso || a.data.hasLeftLeg || a.data.hasRightLeg)) {
                 // if this is more than just a shield
                 if (a.data.untrainedPenalty === "plate") {
@@ -310,8 +309,8 @@ export class BWActor extends Actor<Common> {
             }
         });
 
-        if (asCharacter) { asCharacter.data.data.clumsyWeight = clumsyWeight; }
-        const baseModifier = { optional: true, label: "Clumsy Weight" };
+        if (charData) { charData.clumsyWeight = clumsyWeight; }
+        const baseModifier = { optional: true, label: "Armor Clumsy Weight" };
         this._addRollModifier("climbing", { obstacle: clumsyWeight.climbingPenalty, ...baseModifier }, true);
         this._addRollModifier("perception", { obstacle: clumsyWeight.helmetObPenalty,  ...baseModifier }, true);
         this._addRollModifier("observation", { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier }, true);
@@ -328,7 +327,7 @@ export class BWActor extends Actor<Common> {
         this._addRollModifier("swimming", { obstacle: clumsyWeight.swimmingPenalty, ...baseModifier }, true);
         this._addRollModifier(
             "all",
-            { obstacle: clumsyWeight.untrainedAll, label: "Untrained Armor", optional: true },
+            { obstacle: clumsyWeight.untrainedAll, label: "Untrained Armor Penalty", optional: true },
             true);
 
         this._addRollModifier(

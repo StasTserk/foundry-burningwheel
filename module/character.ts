@@ -1,8 +1,8 @@
-import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability } from "./bwactor.js";
+import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./bwactor.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "./helpers.js";
 import { BWItemData, Skill } from "./items/item.js";
 
-export class BWCharacter extends Actor<BWCharacterData>{
+export class BWCharacter extends BWActor{
     data: CharacterDataRoot;
 
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -347,7 +347,7 @@ export class BWCharacter extends Actor<BWCharacterData>{
     }
 }
 
-export interface CharacterDataRoot extends BWActorDataRoot, ActorData<BWCharacterData> {
+export interface CharacterDataRoot extends BWActorDataRoot {
     data: BWCharacterData;
     type: "character"
 }

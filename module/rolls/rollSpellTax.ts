@@ -1,5 +1,4 @@
-import { Ability, BWActor, TracksTests, BWCharacter } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
+import { Ability, BWActor, TracksTests } from "../bwactor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -12,8 +11,10 @@ import {
     extractRollData,
     mergeDialogData
 } from "./rolls.js";
+import { BWCharacterSheet } from "../character-sheet.js";
+import { BWCharacter } from "../character.js";
 
-export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWActorSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {
+export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCharacterSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {
     const obstacle = parseInt(target.dataset.obstacle || "0");
     const spellName = target.dataset.rollableName || "Unknown Spell";
 
@@ -23,7 +24,7 @@ export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWAct
     else return showSpellTaxDialog(obstacle, spellName, sheet.actor, dataPreset);
 }
 
-export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWActor, dataPreset: Partial<RollDialogData>): Promise<unknown> {
+export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWCharacter, dataPreset: Partial<RollDialogData>): Promise<unknown> {
     const stat = getProperty(actor.data, "data.forte") as Ability;
     
     const rollModifiers = actor.getRollModifiers("forte");

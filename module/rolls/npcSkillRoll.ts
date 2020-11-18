@@ -10,17 +10,18 @@ import {
     templates,
     extractRollData,
     rollWildFork,
-    EventHandlerOptions,
     RollOptions,
-    mergeDialogData, getSplitPoolText, getSplitPoolRoll
+    mergeDialogData,
+    getSplitPoolText,
+    getSplitPoolRoll,
+    NpcEventHandlerOptions
 } from "./rolls.js";
-import { NpcSheet } from "../npc-sheet.js";
 import { Skill, MeleeWeapon, RangedWeapon, Spell, PossessionRootData } from "../items/item.js";
 import { byName, notifyError } from "../helpers.js";
 import { Npc } from "../npc.js";
 import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
 
-export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const itemId = target.dataset.weaponId || "";
     if (!skillId) {
@@ -48,7 +49,7 @@ export async function handleNpcWeaponRoll({actor, weapon, skill, attackIndex, da
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 
-export async function handleNpcSpellRollEvent({ target, sheet, dataPreset }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcSpellRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const itemId = target.dataset.spellId || "";
     if (!skillId) {
@@ -74,7 +75,7 @@ export async function handleNpcSpellRoll({ actor, spell, skill, dataPreset}: Npc
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 
-export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPreset }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
     const skill = actor.getOwnedItem(target.dataset.skillId || "") as Skill;
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
@@ -234,10 +235,6 @@ interface NpcSkillDialogData extends RollDialogData {
     toolkits: PossessionRootData[];
     forkOptions: {name: string; amount: number}[];
     wildForks: {name: string; amount: number}[];
-}
-
-interface NpcRollEventOptions extends EventHandlerOptions {
-    sheet: NpcSheet;
 }
 
 interface NpcRollOptions extends RollOptions {

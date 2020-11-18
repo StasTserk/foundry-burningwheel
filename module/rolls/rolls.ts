@@ -1,5 +1,4 @@
 import { BWActor, RollModifier, TracksTests } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
 import * as helpers from "../helpers.js";
 import { Possession } from "../items/item.js";
 import { handleAttrRollEvent } from "./rollAttribute.js";
@@ -14,9 +13,10 @@ import { handleWeaponRollEvent } from "./rollWeapon.js";
 import { handleSpellRollEvent } from "./rollSpell.js";
 import { handleSpellTaxRoll } from "./rollSpellTax.js";
 import { BWCharacterSheet } from "../character-sheet.js";
+import { NpcSheet } from "module/npc-sheet.js";
 
 export async function handleRollable(
-    e: JQuery.ClickEvent<unknown, undefined>, sheet: BWActorSheet): Promise<unknown> {
+    e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
     const dataPreset = getKeypressModifierPreset(e);
@@ -124,7 +124,7 @@ export function buildRerollData({ actor, roll, accessor, splitPoolRoll, itemId }
     }
 }
 
-export function extractBaseData(html: JQuery, sheet: BWActorSheet ): BaseDataObject {
+export function extractBaseData(html: JQuery, sheet: BWCharacterSheet | NpcSheet ): BaseDataObject {
     const exponent = extractNumber(html, "stat.exp");
     const actorData = sheet.actor.data;
     const woundDice = extractNumber(html, "woundDice") || 0;
@@ -590,9 +590,24 @@ interface BaseDataObject {
     obstacleTotal: number
 }
 
-export interface EventHandlerOptions {
+export interface EventHandlerOptions extends CommonEventHandlerOptions {
     target: HTMLElement;
-    sheet: BWActorSheet;
+    extraInfo?: string;
+    dataPreset?: Partial<RollDialogData>;
+    onRollCallback?: () => Promise<unknown>;
+    sheet: BWCharacterSheet;
+}
+
+export interface ArmorEventHandlerOptions extends CommonEventHandlerOptions {
+    sheet: BWCharacterSheet | NpcSheet;
+}
+
+export interface NpcEventHandlerOptions extends CommonEventHandlerOptions {
+    sheet: NpcSheet;
+}
+
+interface CommonEventHandlerOptions {
+    target: HTMLElement;
     extraInfo?: string;
     dataPreset?: Partial<RollDialogData>;
     onRollCallback?: () => Promise<unknown>;

@@ -1,5 +1,4 @@
-import { Ability, BWActor, BWCharacter } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
+import { Ability, BWActor } from "../bwactor.js";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -10,6 +9,7 @@ import {
     templates,
     extractRollData, EventHandlerOptions, mergeDialogData
 } from "./rolls.js";
+import { BWCharacterSheet } from "../character-sheet.js";
 
 export async function handleShrugRollEvent({ target, sheet, dataPreset}: EventHandlerOptions): Promise<unknown> {
     return handlePtgsRoll({ target, sheet, shrugging: true, dataPreset  });
@@ -87,7 +87,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
 async function ptgsRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWActorSheet,
+        sheet: BWCharacterSheet,
         shrugging: boolean) {
     const { diceTotal, baseDifficulty, difficultyTotal, difficultyGroup, dieSources, obSources, skipAdvancement, persona, deeds } = extractRollData(dialogHtml);
 
@@ -123,7 +123,7 @@ async function ptgsRollCallback(
         sheet.actor.update(updateData);
     }
     if (sheet.actor.data.type === "character" && !skipAdvancement) {
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
+        sheet.actor.addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({

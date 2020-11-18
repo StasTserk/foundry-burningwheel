@@ -1,5 +1,4 @@
-import { Ability, BWActor, BWCharacter } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
+import { Ability, BWActor } from "../bwactor.js";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -12,6 +11,7 @@ import {
     EventHandlerOptions,
     mergeDialogData
 } from "./rolls.js";
+import { BWCharacterSheet } from "../character-sheet.js";
 
 export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;
@@ -51,7 +51,7 @@ export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandl
 async function resourcesRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWActorSheet) {
+        sheet: BWCharacterSheet) {
     const rollData = extractRollData(dialogHtml);
 
     if (rollData.cashDice) {
@@ -84,7 +84,7 @@ async function resourcesRollCallback(
     };
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     if (sheet.actor.data.type === "character") {
-        const actor = sheet.actor as BWActor & BWCharacter;
+        const actor = sheet.actor;
         actor.updateArthaForStat("data.resources", rollData.persona, rollData.deeds);
         if (!isSuccess) {
             const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
@@ -109,7 +109,7 @@ async function resourcesRollCallback(
             taxMessage.render(true);
         }
         if (!rollData.skipAdvancement) {
-            (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
+            sheet.actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
         }
     }
 

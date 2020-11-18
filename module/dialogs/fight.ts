@@ -1,9 +1,10 @@
 import { BWItemData, MeleeWeaponRootData } from "../items/item.js";
 import { NpcDataRoot } from "../npc.js";
-import { BWActor, CharacterDataRoot } from "../bwactor.js";
+import { BWActor } from "../bwactor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
+import { CharacterDataRoot } from "../character.js";
 
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
@@ -230,7 +231,8 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
 }
 
 function toParticipantData(actor: BWActor): Partial<ParticipantEntry> {
-    const reflexesString = `${actor.data.data.reflexesShade}${
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const reflexesString = `${(actor.data.data as any).reflexesShade}${
         (actor.data.type === "character" ?
         (actor.data as CharacterDataRoot).data.reflexesExp :
         (actor.data as NpcDataRoot).data.reflexes)}`;

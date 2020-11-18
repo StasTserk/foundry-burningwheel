@@ -1,8 +1,9 @@
 import { TestString } from "../helpers.js";
-import { BWActor, TracksTests, BWCharacter } from "../bwactor.js";
+import { BWActor, TracksTests } from "../bwactor.js";
 import * as helpers from "../helpers.js";
 import { Skill, Armor } from "../items/item.js";
 import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
+import { BWCharacter } from "../character.js";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
     const actor = game.actors.get(target.dataset.actorId || "") as BWActor;
@@ -61,6 +62,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         success = (newSuccesses + successes) >= obstacleTotal;
 
         if (actor.data.data.fate !== 0 && actor.data.type === "character") {
+            const char = actor as BWCharacter;
             if (target.dataset.rerollType === "stat") {
                 const fateSpent = parseInt(getProperty(actor, `data.${accessor}.fate`) || "0", 10);
                 const updateData = {};
@@ -72,7 +74,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                     }
                     if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
-                            (actor as BWActor & BWCharacter).addAttributeTest(
+                            char.addAttributeTest(
                                 getProperty(actor, `data.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
@@ -80,7 +82,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                                 true);
                         }
                         else {
-                            (actor as BWActor & BWCharacter).addStatTest(
+                            char.addStatTest(
                                 getProperty(actor, `data.${accessor}`) as TracksTests,
                                 name,
                                 accessor,

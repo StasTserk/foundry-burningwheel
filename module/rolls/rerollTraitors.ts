@@ -1,12 +1,13 @@
 import { TestString } from "../helpers.js";
-import { Ability, TracksTests, BWCharacter } from "../bwactor.js";
+import { Ability, BWActor, TracksTests } from "../bwactor.js";
 import * as helpers from "../helpers.js";
 import { Skill, SkillData } from "../items/item.js";
 import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
+import { BWCharacter } from "../character.js";
 
 export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = false): Promise<unknown> {
     
-    const actor = game.actors.get(target.dataset.actorId || "") as BWCharacter;
+    const actor = game.actors.get(target.dataset.actorId || "") as BWActor;
     const accessor = target.dataset.accessor || '';
     const name = target.dataset.rollName || '';
     const itemId = target.dataset.itemId || '';
@@ -45,6 +46,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
         if (actor.data.type === "character") {
+            const char = actor as BWCharacter;
             // only characters worry about turning failures into successes.
             // NPCs don't track things closely enough.
             if (target.dataset.rerollType === "stat") {
@@ -56,7 +58,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                     }
                     if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
-                            actor.addAttributeTest(
+                            char.addAttributeTest(
                                 getProperty(actor, `data.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
@@ -64,7 +66,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                                 true);
                         }
                         else {
-                            actor.addStatTest(
+                            char.addStatTest(
                                 getProperty(actor, `data.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
@@ -79,7 +81,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                 const learningTarget = target.dataset.learningTarget || 'skill';
                 if (actor.data.successOnlyRolls.includes(learningTarget) && successes <= obstacleTotal && success) {
                     // we need to give perception a success that was not counted
-                    actor.addStatTest(
+                    char.addStatTest(
                         getProperty(actor, `data.data.${learningTarget}`) as TracksTests,
                         learningTarget.titleCase(),
                         accessor,

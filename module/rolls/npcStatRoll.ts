@@ -10,12 +10,15 @@ import {
     rollDice,
     templates,
     extractRollData,
-    EventHandlerOptions, RollOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
+    RollOptions,
+    mergeDialogData,
+    getSplitPoolText,
+    getSplitPoolRoll,
+    NpcEventHandlerOptions
 } from "./rolls.js";
-import { NpcSheet } from "../npc-sheet.js";
 import { Npc } from "module/npc.js";
 
-export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcRollEventOptions): Promise<unknown> {
+export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
 
     const dice = getProperty(actor.data, target.dataset.stat || "") as number;
@@ -132,10 +135,6 @@ interface NpcStatDialogData extends RollDialogData {
     stat: TracksTests;
     circlesBonus?: {name: string, amount: number}[];
     circlesMalus?: {name: string, amount: number}[];
-}
-
-interface NpcRollEventOptions extends EventHandlerOptions {
-    sheet: NpcSheet;
 }
 
 export interface NpcStatRollOptions extends RollOptions {

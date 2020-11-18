@@ -1,5 +1,4 @@
-import { Ability, BWActor, BWCharacter } from "../bwactor.js";
-import { BWActorSheet } from "../bwactor-sheet.js";
+import { Ability } from "../bwactor.js";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -12,10 +11,11 @@ import {
     EventHandlerOptions,
     mergeDialogData
 } from "./rolls.js";
+import { BWCharacterSheet } from "../character-sheet.js";
 
 export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
-    const actor = sheet.actor as BWActor;
+    const actor = sheet.actor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
     const rollModifiers = sheet.actor.getRollModifiers(attrName);
     dataPreset = dataPreset || {};
@@ -60,7 +60,7 @@ export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHa
 async function attrRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWActorSheet,
+        sheet: BWCharacterSheet,
         name: string,
         accessor: string) {
     const rollData = extractRollData(dialogHtml);
@@ -92,7 +92,7 @@ async function attrRollCallback(
         callons
     };
     if (sheet.actor.data.type === "character" && !rollData.skipAdvancement) {
-        (sheet.actor as BWActor & BWCharacter).addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
+        sheet.actor.addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({

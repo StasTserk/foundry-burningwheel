@@ -1,3 +1,4 @@
+import { CharacterSettings } from "../character.js";
 import { StringIndexedObject, ShadeString } from "../helpers.js";
 import {
     Skill, SkillDataRoot, SkillData,
@@ -6,8 +7,8 @@ import {
     ReputationDataRoot, ReputationData,
     AffiliationData, AffiliationDataRoot,
     RelationshipData, RelationshipDataRoot,
-    BWItem, BWItemData, ItemType } from "../items/item.js";
-import { CharacterSettings } from "../bwactor.js";
+    BWItem, BWItemData, ItemType
+} from "../items/item.js";
 
 export function extractRelationshipData(parent: JQuery): BurnerRelationshipData {
     return {

@@ -41,11 +41,11 @@ export class BWCharacter extends BWActor{
         this._calculatePtgs();
 
         const woundDice = this.data.data.ptgs.woundDice || 0;
-        updateTestsNeeded(this.data.data.will, false, woundDice);
+        updateTestsNeeded(this.data.data.will, false, woundDice, this.data.data.willTax);
         updateTestsNeeded(this.data.data.power, false, woundDice);
         updateTestsNeeded(this.data.data.perception, false, woundDice);
         updateTestsNeeded(this.data.data.agility, false, woundDice);
-        updateTestsNeeded(this.data.data.forte, false, woundDice);
+        updateTestsNeeded(this.data.data.forte, false, woundDice, this.data.data.forteTax);
         updateTestsNeeded(this.data.data.speed, false, woundDice);
         updateTestsNeeded(this.data.data.health);
         updateTestsNeeded(this.data.data.steel, true, woundDice);

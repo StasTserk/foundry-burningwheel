@@ -39,7 +39,7 @@ export interface RelationshipData extends DisplayClass {
     enmity: boolean;
     influence: string;
     building: boolean;
-    buildingProgress: string; // as number
+    buildingProgress: number;
 
     safeId?: string;
     aptitude?: number;

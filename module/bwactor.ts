@@ -2,7 +2,6 @@ import { ShadeString, StringIndexedObject } from "./helpers.js";
 import { DisplayClass, ItemType, BWItemData } from "./items/item.js";
 import { SkillDataRoot } from "./items/skill.js";
 import * as constants from "./constants.js";
-import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 import { ArmorRootData } from "./items/armor.js";
 import { PossessionRootData } from "./items/possession.js";
 import { ReputationDataRoot } from "./items/reputation.js";
@@ -233,6 +232,10 @@ export class BWActor extends Actor<Common> {
         if (this.data.items.length) {
             return; // this is most likely a duplicate of an existing actor. we don't need to add default items.
         }
+        if (game.userId !== userId) {
+            // we aren't the person who created this actor
+            return;
+        }
         this.createOwnedItem([
             { name: "Instinct 1", type: "instinct", data: {}},
             { name: "Instinct 2", type: "instinct", data: {}},
@@ -241,41 +244,9 @@ export class BWActor extends Actor<Common> {
             { name: "Belief 1", type: "belief", data: {}},
             { name: "Belief 2", type: "belief", data: {}},
             { name: "Belief 3", type: "belief", data: {}},
-            { name: "Belief Special", type: "belief", data: {}}
+            { name: "Belief Special", type: "belief", data: {}},
+            constants.bareFistData
         ]);
-        this.createOwnedItem(constants.bareFistData);
-
-        if (this.data.type === "character" && this.permission === CONST.ENTITY_PERMISSIONS.OWNER) {
-            // todo: move this to character class
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const character = this as any;
-            setTimeout(() => {
-                if (character.data.data.settings.showBurner) {
-                    new Dialog({
-                        title: "Launch Burner?",
-                        content: "This is a new character. Would you like to launch the character burner?",
-                        buttons: {
-                            yes: {
-                                label: "Yes",
-                                callback: () => {
-                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                    CharacterBurnerDialog.Open(this as any);
-                                }
-                            },
-                            later: {
-                                label: "Later"
-                            },
-                            never: {
-                                label: "No",
-                                callback: () => {
-                                    this.update({ "data.settings.showBurner": false });
-                                }
-                            }
-                        }
-                    }).render(true);
-                }
-            }, 500);
-        }
     }
 
     private _calculateClumsyWeight() {

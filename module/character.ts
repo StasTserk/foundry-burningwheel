@@ -1,4 +1,5 @@
 import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./bwactor.js";
+import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "./helpers.js";
 import { BWItemData } from "./items/item.js";
 import { Skill } from "./items/skill.js";
@@ -331,6 +332,39 @@ export class BWCharacter extends BWActor{
         updateData[`${accessor}.challenging`] = 0;
         updateData[`${accessor}.exp`] = newExp;
         return this.update(updateData);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+    _onCreate(data: any, options: any, userId: string, context: any): void {
+        if (game.userId !== userId) {
+            return;
+        }
+        super._onCreate(data, options, userId, context);
+        setTimeout(() => {
+            if (this.data.data.settings.showBurner) {
+                new Dialog({
+                    title: "Launch Burner?",
+                    content: "This is a new character. Would you like to launch the character burner?",
+                    buttons: {
+                        yes: {
+                            label: "Yes",
+                            callback: () => {
+                                CharacterBurnerDialog.Open(this);
+                            }
+                        },
+                        later: {
+                            label: "Later"
+                        },
+                        never: {
+                            label: "No",
+                            callback: () => {
+                                this.update({ "data.settings.showBurner": false });
+                            }
+                        }
+                    }
+                }).render(true);
+            }
+        }, 500);
     }
 }
 

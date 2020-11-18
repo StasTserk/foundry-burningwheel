@@ -65,15 +65,7 @@ export class BWActor extends Actor<Common> {
     }
 
     prepareData(): void {
-        
-        // if (this.data.type === "character") {
-        //     BWCharacter.prototype.bindCharacterFunctions.call(this);
-        // } else {
-        //     Npc.prototype.bindNpcFunctions.call(this);
-        // }
-
         super.prepareData();
-        this.prepareTypeSpecificData();
     }
 
     prepareBaseData(): void {
@@ -132,8 +124,6 @@ export class BWActor extends Actor<Common> {
     getAptitudeModifiers(name = ""): number {
         return this.data.aptitudeModifiers[name.toLowerCase()] || 0;
     }
-
-    prepareTypeSpecificData(): void { return; }
 
     private _prepareActorData() {
         this.data.rollModifiers = {};
@@ -425,7 +415,6 @@ export interface Common {
     deeds: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface BWActorDataRoot extends ActorData<Common> {
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];

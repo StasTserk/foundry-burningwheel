@@ -17,7 +17,6 @@ import { RangeAndCoverDialog } from "./dialogs/rangeAndCover.js";
 import { actorConstructor, itemConstructor } from "./factory.js";
 
 Hooks.once("init", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     CONFIG.Actor.entityClass = actorConstructor;
     CONFIG.Item.entityClass = itemConstructor;
     game.burningwheel = {};

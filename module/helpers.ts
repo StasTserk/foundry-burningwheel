@@ -3,13 +3,13 @@ import { ArmorRootData } from "./items/armor.js";
 import { BWItem, DisplayClass, ItemType } from "./items/item.js";
 import { Skill } from "./items/skill.js";
 
-export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0):void {
+export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0, tax = 0):void {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
     ability.routineNeeded = values.r;
     ability.challengingNeeded = values.c;
     ability.difficultNeeded = values.d;
     ability.cssClass = canAdvance(ability, needRoutines) ? "can-advance" : "";
-    if (parseInt(ability.exp, 10) <= woundDice) {
+    if (parseInt(ability.exp) <= woundDice + tax) {
         ability.cssClass += " wound-disabled";
     }
 }

@@ -6,7 +6,7 @@ import {
 
 import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
 import { ShadeString, slugify, translateWoundValue } from "./helpers.js";
-import { migrateData } from "./migration.js";
+import { migrateData } from "./migration/migration.js";
 import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { NpcSheet } from "./npc-sheet.js";

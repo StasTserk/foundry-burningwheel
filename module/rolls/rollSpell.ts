@@ -36,7 +36,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         let practicalsPenalty = 0;
         const spellPreset: Partial<RollDialogData> = { difficulty: obstacle };
         if (spell.data.data.inPracticals) {
-            practicalsPenalty = (spell.data.data.aptitude || 9) - parseInt(spell.data.data.learningProgress || "0");
+            practicalsPenalty = (spell.data.data.aptitude || 9) - spell.data.data.learningProgress || 0;
             spellPreset.obModifiers = [
                 { label: "In Practicals", obstacle: practicalsPenalty, optional: false }
             ];
@@ -56,7 +56,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         const onRollCallback = async () => {
             showSpellTaxDialog(obstacle, spell.name, actor, dataPreset || {});
             if (spell.data.data.inPracticals && !dataPreset?.skipAdvancement) {
-                const amount = parseInt(spell.data.data.learningProgress || "0");
+                const amount = spell.data.data.learningProgress || 0;
                 const aptitude = spell.data.data.aptitude || 9;
                 spell.update({ "data.learningProgress": amount + 1 }, {});
                 if (amount + 1 >= aptitude) {

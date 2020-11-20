@@ -13,6 +13,6 @@ export interface AffiliationDataRoot extends BWItemData {
 }
 
 export interface AffiliationData {
-    dice: string;
+    dice: number;
     description: string;
 }

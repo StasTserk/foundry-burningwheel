@@ -2,7 +2,7 @@
     <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     <div class="item-form-group">
         <div class="item-setting-label">Dice</div>
-        <select name="data.dice" value="{{data.dice}}" >
+        <select name="data.dice" value="{{data.dice}}" data-dtype="Number">
             {{#select data.dice}}
             <option value="0">None</option>
             <option value="1">1D</option>

@@ -205,7 +205,7 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
         if (!extractNamedChildCheck($(e), "reputationType")) {
             reputations.push({
                 data: {
-                    dice: repDice,
+                    dice: parseInt(repDice),
                     description: "Unknown affiliation created during character burning. Update data accordingly."
                 } as AffiliationData,
                 type: "affiliation",
@@ -214,7 +214,7 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
         } else {
             reputations.push({
                 data: {
-                    dice: repDice,
+                    dice: parseInt(repDice),
                     infamous: false,
                     description: "Unknown reputation created during character burning. Update data accordingly."
                 } as ReputationData,

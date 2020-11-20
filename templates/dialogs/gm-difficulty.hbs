@@ -1,12 +1,28 @@
 <div class="gm-difficulty">
     <div class="difficulty-dialog">
-        <div class="label">Obstacle</div>
-        {{#if editable}}
-        <input class="difficultyInput" value="{{difficulty}}" type="number">
-        {{else}}
-        <div class="number">
-            {{difficulty}}
+        <div class="roll-mods">
+            <div class="pill-toggle s-pool">
+                <input type="checkbox" id="gm-diff-sp" name="splitPool" {{checked splitPool}}>
+                <label for="gm-diff-sp" title="Offer to split dice into a secondary pool">SP</label>
+            </div>
+            <div class="pill-toggle c-diff">
+                <input type="checkbox" id="gm-diff-custom" name="customDiff" {{checked customDiff}}>
+                <label for="gm-diff-custom" title="Force a player set custom difficulty">Cu</label>
+            </div>
+            <div class="pill-toggle n-track">
+                <input type="checkbox" id="gm-diff-track" name="noTrack" {{checked noTrack}}>
+                <label for="gm-diff-track" title="Skip difficulty tracking">NT</label>
+            </div>
         </div>
-        {{/if}}
+        <div class="obstacle">
+            <div class="label">Obstacle</div>
+            {{#if editable}}
+            <input class="difficultyInput" value="{{difficulty}}" type="number">
+            {{else}}
+            <div class="number">
+                {{difficulty}}
+            </div>
+            {{/if}}
+        </div>
     </div>
 </div>

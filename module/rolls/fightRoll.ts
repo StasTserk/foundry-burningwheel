@@ -1,9 +1,9 @@
 import { BWItem } from "../items/item.js";
-import { Ability, BWActor } from "../bwactor.js";
+import { Ability, BWActor } from "../actors/bwactor.js";
 import { handleStatRoll } from "./rollStat.js";
 import { notifyError, ShadeString } from "../helpers.js";
 import { handleNpcStatRoll } from "./npcStatRoll.js";
-import { Npc } from "../npc.js";
+import { Npc } from "../actors/npc.js";
 import { RollDialogData } from "./rolls.js";
 import { handleSpellRoll } from "./rollSpell.js";
 import { BWCharacter } from "../character.js";

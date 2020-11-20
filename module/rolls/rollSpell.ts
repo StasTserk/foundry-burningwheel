@@ -1,4 +1,4 @@
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../actors/bwactor.js";
 import { BWCharacter } from "../character.js";
 import { Skill } from "../items/skill.js";
 import { Spell } from "../items/spell.js";

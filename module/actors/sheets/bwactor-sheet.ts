@@ -1,7 +1,7 @@
-import { BWActor } from "./bwactor.js";
-import { ArmorRootData } from "./items/armor.js";
-import * as constants from "./constants.js";
-import * as helpers from "./helpers.js";
+import { BWActor } from "../bwactor.js";
+import { ArmorRootData } from "../../items/armor.js";
+import * as constants from "../../constants.js";
+import * as helpers from "../../helpers.js";
 
 export class BWActorSheet extends ActorSheet {
     private _keyDownHandler = this._handleKeyPress.bind(this);

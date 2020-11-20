@@ -2,7 +2,7 @@ import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
 import { EventHandlerOptions, mergePartials, RollDialogData, RollOptions } from "./rolls.js";
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../actors/bwactor.js";
 import { BWCharacter } from "../character.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";

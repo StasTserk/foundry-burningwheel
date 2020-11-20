@@ -1,4 +1,4 @@
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../actors/bwactor.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 
 export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {

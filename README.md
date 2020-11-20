@@ -14,7 +14,7 @@ If you like this system, please support the developers at [burningwheel.com](htt
   - Skills
   - Relationships, reputations and affiliations
   - Spells
-- Automation for tracking test advancement, calculating a number of derived attributes
+- Automation for tracking test advancement, artha, and calculating a number of derived attributes
 - Character burner
 - Support for GM created compendiums in play and character burning.
 - Specialized dialog for Duel of Wits.
@@ -24,7 +24,6 @@ If you like this system, please support the developers at [burningwheel.com](htt
 - Global GM set difficulty (possible to disable in system settings)
 
 ## Near future plans
-- Advanced artha tracking
 - Sheet layout support and other customization options (perhaps a tabbed version?)
 - Compendium use improvements
 - More automation

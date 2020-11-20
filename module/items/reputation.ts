@@ -14,7 +14,7 @@ export interface ReputationDataRoot extends BWItemData {
 }
 
 export interface ReputationData extends DisplayClass {
-    dice: string;
+    dice: number;
     infamous: boolean;
     description: string;
 }

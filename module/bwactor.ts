@@ -166,13 +166,13 @@ export class BWActor extends Actor<Common> {
                     case "reputation":
                         const rep = i as ReputationDataRoot;
                         if (rep.data.infamous) {
-                            this.data.circlesMalus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
+                            this.data.circlesMalus.push({ name: rep.name, amount: rep.data.dice });
                         } else {
-                            this.data.circlesBonus.push({ name: rep.name, amount: parseInt(rep.data.dice, 10) });
+                            this.data.circlesBonus.push({ name: rep.name, amount: rep.data.dice });
                         }
                         break;
                     case "affiliation":
-                        this.data.circlesBonus.push({ name: i.name, amount: parseInt((i as AffiliationDataRoot).data.dice, 10) });
+                        this.data.circlesBonus.push({ name: i.name, amount: (i as AffiliationDataRoot).data.dice });
                         break;
                     case "trait":
                         const t = i as TraitDataRoot;

@@ -77,9 +77,9 @@ export class BWActor extends Actor<Common> {
     getForkOptions(skillName: string): { name: string, amount: number }[] {
         return this.data.forks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && parseInt((s as unknown as SkillDataRoot).data.exp, 10) > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && (s as unknown as SkillDataRoot).data.exp > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
-                const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
+                const exp = (s as unknown as SkillDataRoot).data.exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
@@ -88,9 +88,9 @@ export class BWActor extends Actor<Common> {
     getWildForks(skillName: string): { name: string, amount: number }[] {
         return this.data.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && parseInt((s as unknown as SkillDataRoot).data.exp) > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && (s as unknown as SkillDataRoot).data.exp > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
-                const exp = parseInt((s as unknown as SkillDataRoot).data.exp, 10);
+                const exp = (s as unknown as SkillDataRoot).data.exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
@@ -412,10 +412,10 @@ export interface Ability extends TracksTests, DisplayClass {
 }
 
 export interface TracksTests {
-    exp: string;
-    routine: string;
-    difficult: string;
-    challenging: string;
+    exp: number;
+    routine: number;
+    difficult: number;
+    challenging: number;
     persona: number;
     fate: number;
     deeds: number;

@@ -9,7 +9,7 @@ export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRouti
     ability.challengingNeeded = values.c;
     ability.difficultNeeded = values.d;
     ability.cssClass = canAdvance(ability, needRoutines) ? "can-advance" : "";
-    if (parseInt(ability.exp) <= woundDice + tax) {
+    if (ability.exp <= woundDice + tax) {
         ability.cssClass += " wound-disabled";
     }
 }
@@ -25,15 +25,15 @@ export function toDictionary(list: string[]): StringIndexedObject<string> {
 }
 
 export function canAdvance(skill: TracksTests, needRoutines = true): boolean {
-    const enoughRoutine = (parseInt(skill.routine, 10) >= (skill.routineNeeded || 0 ));
-    const enoughDifficult = parseInt(skill.difficult, 10) >= (skill.difficultNeeded || 0);
-    const enoughChallenging = parseInt(skill.challenging, 10) >= (skill.challengingNeeded || 0);
+    const enoughRoutine = (skill.routine >= (skill.routineNeeded || 0 ));
+    const enoughDifficult = skill.difficult >= (skill.difficultNeeded || 0);
+    const enoughChallenging = skill.challenging >= (skill.challengingNeeded || 0);
 
-    if (parseInt(skill.exp, 10) === 0) {
+    if (skill.exp === 0) {
         return enoughRoutine || enoughDifficult || enoughChallenging;
     }
 
-    if (parseInt(skill.exp, 10) < 5 && needRoutines) {
+    if (skill.exp < 5 && needRoutines) {
         // need only enough difficult or routine, not both
         return enoughRoutine && (enoughDifficult || enoughChallenging);
     }
@@ -46,25 +46,25 @@ export function addTestToSkill(
         difficulty: TestString): Promise<unknown> | undefined {
     switch (difficulty) {
         case "Routine":
-            if (parseInt(skill.data.data.routine, 10) < (skill.data.data.routineNeeded || 0)) {
-                return skill.update({ "data.routine": parseInt(skill.data.data.routine, 10) + 1 }, {});
+            if (skill.data.data.routine < (skill.data.data.routineNeeded || 0)) {
+                return skill.update({ "data.routine": skill.data.data.routine + 1 }, {});
             }
             break;
         case "Difficult":
-            if (parseInt(skill.data.data.difficult, 10) < (skill.data.data.difficultNeeded || 0)) {
-                return skill.update({ "data.difficult": parseInt(skill.data.data.difficult, 10) + 1 }, {});
+            if (skill.data.data.difficult < (skill.data.data.difficultNeeded || 0)) {
+                return skill.update({ "data.difficult": skill.data.data.difficult + 1 }, {});
             }
             break;
         case "Challenging":
-            if (parseInt(skill.data.data.challenging, 10) < (skill.data.data.challengingNeeded || 0)) {
-                return skill.update({ "data.challenging": parseInt(skill.data.data.challenging, 10) + 1 }, {});
+            if (skill.data.data.challenging < (skill.data.data.challengingNeeded || 0)) {
+                return skill.update({ "data.challenging": skill.data.data.challenging + 1 }, {});
             }
             break;
         case "Routine/Difficult":
-            if (parseInt(skill.data.data.routine, 10) < (skill.data.data.routineNeeded || 0)) {
-                return skill.update({ "data.routine": parseInt(skill.data.data.routine, 10) + 1 }, {});
-            } else if (parseInt(skill.data.data.difficult, 10) < (skill.data.data.difficultNeeded || 0)) {
-                return skill.update({ "data.difficult": parseInt(skill.data.data.difficult, 10) + 1 }, {});
+            if (skill.data.data.routine < (skill.data.data.routineNeeded || 0)) {
+                return skill.update({ "data.routine": skill.data.data.routine + 1 }, {});
+            } else if (skill.data.data.difficult < (skill.data.data.difficultNeeded || 0)) {
+                return skill.update({ "data.difficult": skill.data.data.difficult + 1 }, {});
             }
             break;
     }
@@ -72,7 +72,7 @@ export function addTestToSkill(
 }
 
 export function advanceSkill(skill: Skill): Promise<Skill> {
-    const exp = parseInt(skill.data.data.exp, 10);
+    const exp = skill.data.data.exp;
     return skill.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
 }
 

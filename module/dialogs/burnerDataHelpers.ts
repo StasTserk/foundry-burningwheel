@@ -109,12 +109,12 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
     const skills: Partial<SkillDataRoot>[] = [];
     let skillId = "";
     let skillName = "";
-    let skillExp = "0";
+    let skillExp = 0;
     let skillData: Partial<SkillDataRoot> | undefined;
     html.find("div.skills-grid").each((_, e) => {
         skillName = extractNamedChildString($(e), "skillName");
-        skillExp = extractNamedChildString($(e), "skillExponent");
-        if (!skillName || skillExp === "0" || !extractNamedCheck($(e), "skillOpened")) { return; }
+        skillExp = extractNamedChildNumber($(e), "skillExponent");
+        if (!skillName || skillExp === 0 || !extractNamedCheck($(e), "skillOpened")) { return; }
         skillId = extractNamedChildString($(e), "skillId");
         if (skillId) {
             skillData = skillsList.find(s => s._id === skillId)?.data;

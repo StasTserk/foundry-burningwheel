@@ -54,13 +54,13 @@ export class BWCharacter extends BWActor{
         updateTestsNeeded(this.data.data.custom1);
         updateTestsNeeded(this.data.data.custom2);
 
-        this.data.data.maxSustained = parseInt(this.data.data.will.exp) - (this.data.data.ptgs.woundDice || 0) - 1;
-        this.data.data.maxObSustained = parseInt(this.data.data.forte.exp) - (this.data.data.ptgs.woundDice || 0) - this.data.data.forteTax - 1;
+        this.data.data.maxSustained = this.data.data.will.exp - (this.data.data.ptgs.woundDice || 0) - 1;
+        this.data.data.maxObSustained = this.data.data.forte.exp - (this.data.data.ptgs.woundDice || 0) - this.data.data.forteTax - 1;
 
         const unRoundedReflexes =
-            (parseInt(this.data.data.perception.exp, 10) +
-            parseInt(this.data.data.agility.exp, 10) +
-            parseInt(this.data.data.speed.exp, 10)) / 3.0;
+            (this.data.data.perception.exp +
+            this.data.data.agility.exp +
+            this.data.data.speed.exp) / 3.0;
         this.data.data.reflexesExp = (this.data.data.settings.roundUpReflexes ?
             Math.ceil(unRoundedReflexes) : Math.floor(unRoundedReflexes))
             - (this.data.data.ptgs.woundDice || 0);
@@ -73,7 +73,7 @@ export class BWCharacter extends BWActor{
         }
 
         const unRoundedMortalWound =
-            (parseInt(this.data.data.power.exp, 10) + parseInt(this.data.data.forte.exp, 10)) / 2 + 6;
+            (this.data.data.power.exp + this.data.data.forte.exp) / 2 + 6;
         this.data.data.mortalWound = this.data.data.settings.roundUpMortalWound ?
             Math.ceil(unRoundedMortalWound) : Math.floor(unRoundedMortalWound);
         if (this.data.data.power.shade !== this.data.data.forte.shade) {
@@ -81,7 +81,7 @@ export class BWCharacter extends BWActor{
         }
         this.data.data.mortalWoundShade = getWorstShadeString(this.data.data.power.shade, this.data.data.forte.shade);
 
-        this.data.data.hesitation = 10 - parseInt(this.data.data.will.exp, 10);
+        this.data.data.hesitation = 10 - this.data.data.will.exp;
         if (this.data.data.will.shade === "G") {
             this.data.data.hesitation -= 2;
         }
@@ -96,7 +96,7 @@ export class BWCharacter extends BWActor{
 
     async updatePtgs(): Promise<this> {
         const accessorBase = "data.ptgs.wound";
-        const forte = parseInt(this.data.data.forte.exp, 10) || 1;
+        const forte = this.data.data.forte.exp || 1;
         const mw = this.data.data.mortalWound || 15;
         const su = Math.floor(forte / 2) + 1;
 
@@ -186,7 +186,7 @@ export class BWCharacter extends BWActor{
             Dialog.confirm({
                 title: `Advance ${name}?`,
                 content: `<p>${name} is ready to advance. Go ahead?</p>`,
-                yes: () => this._advanceStat(accessor, parseInt(stat.exp, 10) + 1),
+                yes: () => this._advanceStat(accessor, stat.exp + 1),
                 no: () => { return; },
                 defaultYes: true
             });
@@ -230,40 +230,40 @@ export class BWCharacter extends BWActor{
         const updateData = {};
         switch (difficultyGroup) {
             case "Challenging":
-                testNumber = parseInt(stat.challenging, 10);
+                testNumber = stat.challenging;
                 if (testNumber < (stat.challengingNeeded || 0)) {
                     updateData[`${accessor}.challenging`] = testNumber +1;
-                    stat.challenging = `${testNumber+1}`;
+                    stat.challenging = testNumber+1;
                     return this.update(updateData, {});
                 }
                 break;
             case "Difficult":
-                testNumber = parseInt(stat.difficult, 10);
+                testNumber = stat.difficult;
                 if (testNumber < (stat.difficultNeeded || 0)) {
                     updateData[`${accessor}.difficult`] = testNumber +1;
-                    stat.difficult = `${testNumber+1}`;
+                    stat.difficult = testNumber+1;
                     return this.update(updateData, {});
                 }
                 break;
             case "Routine":
-                testNumber = parseInt(stat.routine, 10);
+                testNumber = stat.routine;
                 if (testNumber < (stat.routineNeeded || 0)) {
                     updateData[`${accessor}.routine`] = testNumber +1;
-                    stat.routine = `${testNumber+1}`;
+                    stat.routine = testNumber;
                     return this.update(updateData, {});
                 }
                 break;
             case "Routine/Difficult":
-                testNumber = parseInt(stat.difficult, 10);
+                testNumber = stat.difficult;
                 if (testNumber < (stat.difficultNeeded || 0)) {
                     updateData[`${accessor}.difficult`] = testNumber +1;
-                    stat.difficult = `${testNumber+1}`;
+                    stat.difficult = testNumber+1;
                     return this.update(updateData, {});
                 } else {
-                    testNumber = parseInt(stat.routine, 10);
+                    testNumber = stat.routine;
                     if (testNumber < (stat.routineNeeded || 0)) {
                         updateData[`${accessor}.routine`] = testNumber +1;
-                        stat.routine = `${testNumber+1}`;
+                        stat.routine = testNumber+1;
                         return this.update(updateData, {});
                     }
                 }
@@ -287,7 +287,7 @@ export class BWCharacter extends BWActor{
     taxResources(amount: number, maxFundLoss: number): void {
         const updateData = {};
         let resourcesTax = parseInt(this.data.data.resourcesTax, 10) || 0;
-        const resourceExp = parseInt(this.data.data.resources.exp, 10) || 0;
+        const resourceExp = this.data.data.resources.exp || 0;
         const fundDice = this.data.data.funds || 0;
         if (amount <= maxFundLoss) {
             updateData["data.funds"] = fundDice - amount;

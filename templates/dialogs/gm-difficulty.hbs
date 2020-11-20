@@ -3,15 +3,15 @@
         <div class="roll-mods">
             <div class="pill-toggle s-pool">
                 <input type="checkbox" id="gm-diff-sp" name="splitPool" {{checked splitPool}}>
-                <label for="gm-diff-sp" title="Offer to split dice into a secondary pool">SP</label>
+                <label for="gm-diff-sp" title="Offer to split dice into a secondary pool">S/P</label>
             </div>
             <div class="pill-toggle c-diff">
                 <input type="checkbox" id="gm-diff-custom" name="customDiff" {{checked customDiff}}>
-                <label for="gm-diff-custom" title="Force a player set custom difficulty">Cu</label>
+                <label for="gm-diff-custom" title="Force a player set custom difficulty">CST</label>
             </div>
             <div class="pill-toggle n-track">
                 <input type="checkbox" id="gm-diff-track" name="noTrack" {{checked noTrack}}>
-                <label for="gm-diff-track" title="Skip difficulty tracking">NT</label>
+                <label for="gm-diff-track" title="Skip difficulty tracking">TRK</label>
             </div>
         </div>
         <div class="obstacle">
@@ -26,7 +26,7 @@
         </div>
     </div>
     {{log this}}
-    {{#if (or editable modifiers)}}
+    {{#if (or editable modifiers.length)}}
     <div class="obstacle-mods">
         <div class="obstacle-title">Additional Modifiers</div>
         <hr>

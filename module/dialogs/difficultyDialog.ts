@@ -45,12 +45,45 @@ export class DifficultyDialog extends Application {
             this.render();
         });
 
+        html.find('input.mod-name').on('change', e => {
+            const target = $(e.target);
+            const name = target.val() as string;
+            const index = parseInt(e.target.dataset.index || "0");
+            if (name) {
+                this.mods[index].name = name;
+            } else {
+                this.mods.splice(index, 1);
+            }
+            this.persistMods();
+            this.render();
+        });
+
+        html.find('input.mod-amount').on('change', e => {
+            const target = $(e.target);
+            const amount = parseInt(target.val() as string) || 0;
+            const index = parseInt(e.target.dataset.index || "0");
+            this.mods[index].amount = amount;
+            this.persistMods();
+            this.render();
+        });
+
         game.socket.on("system.burningwheel", ({ type, difficulty }) => {
             if (type === "difficulty") {
                 this.difficulty = difficulty;
                 this.render(true);
             }
         });
+        game.socket.on("system.burningwheel", ({type, mods}) => {
+            if (type === "obstacleMods") {
+                this.mods = mods;
+                this.render(true);
+            }
+        });
+    }
+    
+    persistMods(): void {
+        game.settings.set("burningwheel", "obstacleList", JSON.stringify(this.mods));
+        game.socket.emit("system.burningwheel", { type: "obstacleMods", mods: this.mods });
     }
 
     getData(): DifficultyDialogData {

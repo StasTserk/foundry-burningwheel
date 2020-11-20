@@ -71,3 +71,32 @@
         flex: 0 0 1em;
     }
 }
+
+.obstacle-mods {
+    width: 12em;
+    position: fixed;
+    bottom: 10px;
+    right: calc(320px + 10em);
+
+    border: 2px solid gray;
+    border-radius: 5px;
+    background-image: url("/ui/denim075.png");
+    color: white;
+    padding: 3px;
+
+    input {
+        color: white;
+        font-size: 12px;
+    }
+
+    .mod-entry {
+        display: flex;
+        flex-direction: row;
+        .mod-name {
+            flex: 1 1;
+        }
+        .mod-amount {
+            flex: 0 0 2em;
+        }
+    }
+}

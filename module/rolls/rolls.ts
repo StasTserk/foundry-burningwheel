@@ -14,6 +14,7 @@ import { handleSpellTaxRoll } from "./rollSpellTax.js";
 import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
 import { NpcSheet } from "../actors/sheets/npc-sheet.js";
 import { Possession } from "../items/possession.js";
+import { DifficultyDialog } from "../dialogs/difficultyDialog.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {
@@ -71,6 +72,25 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
     }
     if (e.altKey) {
         dataPreset.skipAdvancement = true;
+    }
+
+    if (game.burningwheel.gmDifficulty) {
+        const dialog = game.burningwheel.gmDifficulty as DifficultyDialog;
+        if (dialog.splitPool) {
+            dataPreset.offerSplitPool = true;
+            dialog.splitPool = false;
+        }
+        if (dialog.customDiff) {
+            dataPreset.showObstacles = true;
+            dataPreset.showDifficulty = true;
+            dataPreset.useCustomDifficulty = true;
+            dialog.customDiff = false;
+        }
+        if (dialog.noTrack) {
+            dataPreset.skipAdvancement = true;
+            dialog.noTrack = false;
+        }
+        dialog.render();
     }
     return dataPreset;
 }

@@ -90,6 +90,9 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
             dataPreset.skipAdvancement = true;
             dialog.noTrack = false;
         }
+
+        dataPreset.optionalObModifiers = dialog.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
+
         dialog.render();
     }
     return dataPreset;

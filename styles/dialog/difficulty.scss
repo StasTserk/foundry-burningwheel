@@ -84,19 +84,34 @@
     color: white;
     padding: 3px;
 
+    .obstacle-title {
+        font-weight: bold;
+    }
+
+    hr {
+        margin: 3px -2px;
+    }
+
     input {
         color: white;
         font-size: 12px;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
     }
 
     .mod-entry {
+        padding-left: 5px;
         display: flex;
         flex-direction: row;
         .mod-name {
             flex: 1 1;
+            margin-right: 2px;
         }
         .mod-amount {
             flex: 0 0 2em;
+            text-align: center;
         }
     }
 }

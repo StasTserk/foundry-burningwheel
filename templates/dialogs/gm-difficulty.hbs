@@ -28,19 +28,21 @@
     {{log this}}
     {{#if (or editable modifiers)}}
     <div class="obstacle-mods">
+        <div class="obstacle-title">Additional Modifiers</div>
+        <hr>
         {{#each modifiers as |mod i|}}
         <div class="mod-entry">
             {{#if ../editable}}
-            <input class="mod-name" type="text" name="name" data-index="{{i}}" value="{{mod.name}}" autocomplete="off">
-            <input class="mod-amount" type="number" name="amount" data-index="{{i}}" value="{{mod.amount}}" autocomplete="off">
+            <input class="mod-name" type="text" name="name" data-index="{{i}}" value="{{mod.name}}" onfocus="this.select();" autocomplete="off">
+            <input class="mod-amount" type="number" name="amount" data-index="{{i}}" value="{{mod.amount}}" onfocus="this.select();" autocomplete="off">
             {{else}}
             <div class="mod-name" >{{mod.name}}</div>
-            <div class="mod-amount" >{{mod.number}}</div>
+            <div class="mod-amount" >{{#if (gt mod.amount 0)}}+{{/if}}{{mod.amount}}</div>
             {{/if}}
         </div>
         {{/each}}
         {{#if editable}}
-        <input type="text" name="newMod" placeholder="New Modifier" autocomplete="off">
+        <input type="text" name="newMod" placeholder="New Modifier" onfocus="this.select();" autocomplete="off">
         {{/if}}
     </div>
     {{/if}}

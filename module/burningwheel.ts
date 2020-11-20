@@ -89,7 +89,8 @@ Hooks.once("ready", async() => {
     game.burningwheel.useGmDifficulty = await game.settings.get("burningwheel", "useGmDifficulty");
     if (game.burningwheel.useGmDifficulty) {
         const difficulty = await game.settings.get("burningwheel", "gmDifficulty");
-        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty);
+        const mods = await JSON.parse(game.settings.get("burningwheel", "obstacleList"));
+        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, mods);
         game.burningwheel.gmDifficulty.render(true);
     }
 });

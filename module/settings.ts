@@ -38,6 +38,14 @@ export function registerSystemSettings(): void {
         default: 3
     });
 
+    game.settings.register("burningwheel", "obstacleList", {
+        name: "Persisted Obstacle Modifier List",
+        scope: "world",
+        config: false,
+        type: String,
+        default: "[]"
+    });
+
     game.settings.register("burningwheel", "rnc-data", {
         name: "Serialized Range and Cover dialog data.",
         scope: "world",

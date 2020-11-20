@@ -54,17 +54,16 @@ function updateToNumber(value: string | number | number[] | string[] | null, pat
     if (typeof value === "number") {
         return;
     }
-    if (value === null) {
-        value = 0;
-    }
-    if (typeof value === "object") {
+    if (value && typeof value === "object") {
         // this is an array
         value = value[0];
     }
     if (typeof value === "string") {
         value = parseInt(value);
     }
-    data[path] = value;
+    if (value !== null) {
+        data[path] = value;
+    }
 }
 
 function updateItem(item: BWItem, updateInfo: Record<string, number>): Record<string, number> {
@@ -160,6 +159,7 @@ function updateRanged(item: RangedWeapon): Record<string, number> {
     updateToNumber(item.data.data.vsArmor, "data.vsArmor", data);
     updateToNumber(item.data.data.optimalRange, "data.optimalRange", data);
     updateToNumber(item.data.data.extremeRange, "data.extremeRange", data);
+    updateToNumber(item.data.data.powerBonus, "data.powerBonus", data);
     return data;
 }
 

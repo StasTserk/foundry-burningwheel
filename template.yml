@@ -278,12 +278,12 @@ Item:
     hasGunpowder: false
     usePower: false
     powerBonus: 1
-    incidental: ''
+    incidental: 4
     incidentalRoll: 2
-    mark: ''
+    mark: 8
     markRoll: 4
-    superb: ''
-    vsArmor: ''
+    superb: 12
+    vsArmor: 2
     optimalRange: 1
     extremeRange: 3
     maxRange: 125 paces

@@ -7,7 +7,7 @@ export class RangedWeapon extends BWItem {
     prepareData(): void {
         super.prepareData();
         if (this.actor && this.data.data.usePower) {
-            let baseDmg = parseInt(this.actor.data.data.power.exp) + this.data.data.powerBonus;
+            let baseDmg = this.actor.data.data.power.exp + this.data.data.powerBonus;
             if (this.actor.data.data.power.shade === "G") {
                 baseDmg += 2;
             }

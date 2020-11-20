@@ -12,7 +12,7 @@ export class Spell extends BWItem {
                 this.data.data.obstacle}${this.data.data.upSpell?
                 '^':''}`;
         if (this.data.data.isWeapon && this.data.hasOwner && this.actor) {
-            const willScore = parseInt(this.actor.data.data.will.exp);
+            const willScore = this.actor.data.data.will.exp;
             if (this.data.data.halfWill) {
                 this.data.data.mark = Math.floor(willScore / 2.0) + this.data.data.willDamageBonus;
             } else {
@@ -25,7 +25,7 @@ export class Spell extends BWItem {
         this.data.spellLengths = weaponLengthSelect;
 
         if (this.data.hasOwner && this.actor) {
-            this.data.data.aptitude = 10 - parseInt(this.actor.data.data.perception.exp || "1")
+            this.data.data.aptitude = 10 - this.actor.data.data.perception.exp || 1
                 + this.actor.getAptitudeModifiers("perception")
                 + this.actor.getAptitudeModifiers("spells");
         }

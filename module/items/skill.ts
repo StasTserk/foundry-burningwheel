@@ -42,12 +42,12 @@ export class Skill extends BWItem {
         const player = this.actor;
         const root1exp = (player.data.data[this.data.data.root1] as Ability).exp;
         const root2exp = this.data.data.root2 ? (player.data.data[this.data.data.root2] as Ability).exp : root1exp;
-        const rootAvg = Math.floor((parseInt(root1exp, 10) + parseInt(root2exp, 10)) / 2);
+        const rootAvg = Math.floor((root1exp + root2exp) / 2);
         this.data.data.aptitude = 10 - rootAvg + aptitudeMod;
     }
 
     static disableIfWounded(this: SkillDataRoot, woundDice: number): void {
-        if (!this.data.learning && parseInt(this.data.exp, 10) <= woundDice) {
+        if (!this.data.learning && this.data.exp <= woundDice) {
             this.data.cssClass += " wound-disabled";
         }
     }

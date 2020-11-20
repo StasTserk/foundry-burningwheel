@@ -46,7 +46,7 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
         obPenalty: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.data.data.ptgs.obPenalty : 0,
         circlesBonus: statName === "circles" ? actor.data.circlesBonus : undefined,
         circlesMalus: statName === "circles" ? actor.data.circlesMalus : undefined,
-        stat: { exp: dice.toString() } as TracksTests,
+        stat: { exp: dice } as TracksTests,
         tax: 0,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),

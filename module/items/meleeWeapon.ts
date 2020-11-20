@@ -8,7 +8,7 @@ export class MeleeWeapon extends BWItem {
     prepareData(): void {
         super.prepareData();
         if (this.actor) {
-            let power = parseInt(this.actor.data.data.power.exp);
+            let power = this.actor.data.data.power.exp;
             if (this.actor.data.data.power.shade === "G") {
                 power += 2;
             }

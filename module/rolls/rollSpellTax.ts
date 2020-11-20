@@ -104,7 +104,7 @@ async function taxTestCallback(
 
     if (!isSuccessful) {
         const margin = difficultyTotal - parseInt(roll.result);
-        const forteExp = parseInt(stat.exp);
+        const forteExp = stat.exp;
         if (forteExp < margin + tax ) {
             // overtax.
             const baseWound = (margin + tax - forteExp) * difficultyTotal;

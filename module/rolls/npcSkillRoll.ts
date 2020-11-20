@@ -101,7 +101,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
         }
         const stat = getProperty(actor.data, accessor) as Ability;
         const rollData: NpcStatRollOptions = {
-            dice: parseInt(stat.exp),
+            dice: stat.exp,
             shade: stat.shade,
             open: stat.open,
             statName: skill.data.data.root1 as NpcStatName,
@@ -123,7 +123,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
                         label: skill.data.data.root2.titleCase(),
                         callback: () => {
                             const stat2 = getProperty(actor.data, `data.${skill.data.data.root2}`) as Ability;
-                            rollData.dice = parseInt(stat2.exp);
+                            rollData.dice = stat2.exp;
                             rollData.shade = stat2.shade;
                             rollData.open = stat2.open;
                             rollData.statName = skill.data.data.root2 as NpcStatName;

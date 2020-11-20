@@ -6,7 +6,7 @@ export class Relationship extends Item {
         super.prepareData();
         this.data.data.safeId = this._id;
         if (this.actor) {
-            this.data.data.aptitude = parseInt(this.actor.data.data.circles.exp, 10) || 0;
+            this.data.data.aptitude = this.actor.data.data.circles.exp || 0;
         }
 
         if (this.data.data.hateful || this.data.data.enmity) {

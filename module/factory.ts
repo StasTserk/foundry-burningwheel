@@ -11,7 +11,7 @@ import { Reputation } from "./items/reputation.js";
 import { Skill } from "./items/skill.js";
 import { Spell } from "./items/spell.js";
 import { Trait } from "./items/trait.js";
-import { Npc } from "./npc.js";
+import { Npc } from "./actors/npc.js";
 
 function factory(entities: Record<string, typeof Entity>, baseClass: typeof Entity): unknown {
     return new Proxy(baseClass, {

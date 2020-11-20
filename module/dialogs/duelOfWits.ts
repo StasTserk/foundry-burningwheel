@@ -1,11 +1,11 @@
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../actors/bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleLearningRoll } from "../rolls/rollLearning.js";
 import { BWCharacter } from "../character.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
 import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../npc.js";
+import { Npc } from "../actors/npc.js";
 import { getKeypressModifierPreset } from "../rolls/rolls.js";
 import { Skill, SkillDataRoot } from "../items/skill.js";
 

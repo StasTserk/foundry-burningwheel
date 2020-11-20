@@ -1,5 +1,5 @@
-import { BWActor } from "./bwactor.js";
-import { BWCharacterSheet } from "./character-sheet.js";
+import { BWActor } from "./actors/bwactor.js";
+import { BWCharacterSheet } from "./actors/sheets/character-sheet.js";
 import {
     RegisterItemSheets
 } from "./items/item.js";
@@ -9,7 +9,7 @@ import { ShadeString, slugify, translateWoundValue } from "./helpers.js";
 import { migrateData } from "./migration/migration.js";
 import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
-import { NpcSheet } from "./npc-sheet.js";
+import { NpcSheet } from "./actors/sheets/npc-sheet.js";
 import { DuelOfWitsDialog } from "./dialogs/duelOfWits.js";
 import { FightDialog } from "./dialogs/fight.js";
 import { DifficultyDialog } from "./dialogs/difficultyDialog.js";

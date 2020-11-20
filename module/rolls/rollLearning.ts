@@ -1,4 +1,4 @@
-import { BWActor, TracksTests, Ability} from "../bwactor.js";
+import { BWActor, TracksTests, Ability} from "../actors/bwactor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,

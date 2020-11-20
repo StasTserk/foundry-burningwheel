@@ -1,14 +1,14 @@
-import { ShadeString, StringIndexedObject } from "./helpers.js";
-import { DisplayClass, ItemType, BWItemData } from "./items/item.js";
-import { SkillDataRoot } from "./items/skill.js";
-import * as constants from "./constants.js";
-import { ArmorRootData } from "./items/armor.js";
-import { PossessionRootData } from "./items/possession.js";
-import { ReputationDataRoot } from "./items/reputation.js";
-import { TraitDataRoot, Trait } from "./items/trait.js";
-import { BWCharacterData } from "./character.js";
-import { NpcData } from "./npc.js";
-import { AffiliationDataRoot } from "./items/affiliation.js";
+import { ShadeString, StringIndexedObject } from "../helpers.js";
+import { DisplayClass, ItemType, BWItemData } from "../items/item.js";
+import { SkillDataRoot } from "../items/skill.js";
+import * as constants from "../constants.js";
+import { ArmorRootData } from "../items/armor.js";
+import { PossessionRootData } from "../items/possession.js";
+import { ReputationDataRoot } from "../items/reputation.js";
+import { TraitDataRoot, Trait } from "../items/trait.js";
+import { BWCharacterData } from "../character.js";
+import { NpcData } from "../actors/npc.js";
+import { AffiliationDataRoot } from "../items/affiliation.js";
 
 export class BWActor extends Actor<Common> {
     data!: BWActorDataRoot;

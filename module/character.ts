@@ -1,4 +1,4 @@
-import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./bwactor.js";
+import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./actors/bwactor.js";
 import { CharacterBurnerDialog } from "./dialogs/characterBurner.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "./helpers.js";
 import { BWItemData } from "./items/item.js";

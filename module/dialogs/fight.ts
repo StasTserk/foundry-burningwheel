@@ -1,6 +1,6 @@
 import { BWItemData } from "../items/item.js";
-import { NpcData, NpcDataRoot } from "../npc.js";
-import { BWActor } from "../bwactor.js";
+import { NpcData, NpcDataRoot } from "../actors/npc.js";
+import { BWActor } from "../actors/bwactor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";

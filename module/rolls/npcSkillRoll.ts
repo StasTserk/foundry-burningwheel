@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../bwactor.js";
+import { Ability, BWActor, TracksTests } from "../actors/bwactor.js";
 
 import {
     buildRerollData,
@@ -17,7 +17,7 @@ import {
     NpcEventHandlerOptions
 } from "./rolls.js";
 import { byName, notifyError } from "../helpers.js";
-import { Npc } from "../npc.js";
+import { Npc } from "../actors/npc.js";
 import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
 import { Skill } from "../items/skill.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";

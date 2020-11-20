@@ -10,11 +10,11 @@ import {
     buildDiceSourceObject,
     ArmorEventHandlerOptions
 } from "./rolls.js";
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../actors/bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import * as helpers from "../helpers.js";
-import { BWCharacterSheet } from "../character-sheet.js";
-import { NpcSheet } from "../npc-sheet.js";
+import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
+import { NpcSheet } from "../actors/sheets/npc-sheet.js";
 import { Armor } from "../items/armor.js";
 
 export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {

@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../bwactor.js";
+import { Ability, BWActor, TracksTests } from "../actors/bwactor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -11,7 +11,7 @@ import {
     extractRollData,
     mergeDialogData
 } from "./rolls.js";
-import { BWCharacterSheet } from "../character-sheet.js";
+import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
 import { BWCharacter } from "../character.js";
 import { translateWoundValue } from "../helpers.js";
 

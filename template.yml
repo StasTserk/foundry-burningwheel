@@ -258,12 +258,7 @@ Item:
     description: ''
     skillId: ''
     shade: 'B'
-    baseOb: 1	
-    power: 1	
-    add: 2	
-    vsArmor: 0	
-    weaponSpeed: X	
-    weaponLength: shortest
+    baseOb: 1
     attacks:
       - attackName: ""
         power: 1

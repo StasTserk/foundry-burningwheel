@@ -1,6 +1,26 @@
+@mixin difficulty-toggle($light, $normal, $dark) {
+    label {
+        background-color: black;
+        border-radius: 2px;
+        color: $normal;
+        border: 2px solid $dark;
+    }
+
+    input {
+        &:checked + label {
+            background: linear-gradient(rgba($normal, .25), rgba($normal, 0.75));
+            border: 2px solid $normal;
+            color: $light;
+        }
+        &:focus + label {
+            border-color: $normal;
+        }
+    }
+}
+
 .difficulty-dialog {
     width: 5em;
-    height: 5em;
+    height: 6em;
     position: fixed;
     bottom: 10px;
     right: 310px;
@@ -15,6 +35,31 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+
+    .roll-mods {
+        height: 1.5em;
+        font-size: 12px;
+        display: flex;
+        .pill-toggle {
+            flex: 1;
+
+            &.s-pool {
+                @include difficulty-toggle(lightblue, blue, #000077);
+            }
+            &.c-diff {
+                @include difficulty-toggle(lightgreen, green, #005500);
+            }
+            &.n-track {
+                @include difficulty-toggle(#FFFFaa, red, #880000);
+            }
+        }
+    }
+
+    .obstacle {
+        height: 4.5em;
+        display: flex;
+        flex-direction: column;
+    }
 
     input, .number {
         flex: 1;

@@ -56,6 +56,10 @@ export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset
         weaponExtraData = (weapon as MeleeWeapon).getWeaponMessageData(attackIndex || 0);
     } else {
         weaponExtraData = (weapon as RangedWeapon).getWeaponMessageData();
+        if (actor.data.data.clumsyWeight?.throwingShootingPenalty) {
+            dataPreset.optionalObModifiers = dataPreset.optionalObModifiers || [];
+            dataPreset.optionalObModifiers.push({ label: "Armor Penalty", obstacle: actor.data.data.clumsyWeight.throwingShootingPenalty, optional: true});
+        }
     }
 
     return skill.data.data.learning ? 
@@ -65,7 +69,7 @@ export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset
 }
 
 interface WeaponRollOptions extends RollOptions {
-    actor: BWActor & BWCharacter;
+    actor: BWCharacter;
     skill: Skill;
     weapon: MeleeWeapon | RangedWeapon;
     attackIndex?: number;

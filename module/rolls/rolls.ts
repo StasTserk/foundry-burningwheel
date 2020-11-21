@@ -410,16 +410,16 @@ export function mergeDialogData<T extends RollDialogData>(target: T, source?: Pa
         return target;
     }
     if (source.optionalDiceModifiers) {
-        source.optionalDiceModifiers.concat(...target.optionalDiceModifiers || []);
+        source.optionalDiceModifiers = source.optionalDiceModifiers.concat(...target.optionalDiceModifiers || []);
     }
     if (source.optionalObModifiers) {
-        source.optionalObModifiers.concat(...target.optionalObModifiers || []);
+        source.optionalObModifiers = source.optionalObModifiers.concat(...target.optionalObModifiers || []);
     }
     if (source.diceModifiers) {
-        source.diceModifiers.concat(...target.diceModifiers || []);
+        source.diceModifiers = source.diceModifiers.concat(...target.diceModifiers || []);
     }
     if (source.obModifiers) {
-        source.obModifiers.concat(...target.obModifiers || []);
+        source.obModifiers = source.obModifiers.concat(...target.obModifiers || []);
     }
     return Object.assign(target, source);
 }
@@ -429,16 +429,16 @@ export function mergePartials<T extends RollDialogData>(target: Partial<T>, sour
         return target;
     }
     if (source.optionalDiceModifiers && target.optionalDiceModifiers) {
-        source.optionalDiceModifiers.concat(...target.optionalDiceModifiers as RollModifier[]);
+        source.optionalDiceModifiers = source.optionalDiceModifiers.concat(...target.optionalDiceModifiers as RollModifier[]);
     }
     if (source.optionalObModifiers && target.optionalDiceModifiers) {
-        source.optionalObModifiers.concat(...target.optionalObModifiers as RollModifier[]);
+        source.optionalObModifiers = source.optionalObModifiers.concat(...target.optionalObModifiers as RollModifier[]);
     }
     if (source.diceModifiers && target.diceModifiers) {
-        source.diceModifiers.concat(...target.diceModifiers as RollModifier[]);
+        source.diceModifiers = source.diceModifiers.concat(...target.diceModifiers as RollModifier[]);
     }
     if (source.obModifiers && target.obModifiers) {
-        source.obModifiers.concat(...target.obModifiers as RollModifier[]);
+        source.obModifiers = source.obModifiers.concat(...target.obModifiers as RollModifier[]);
     }
 
     return Object.assign(target, source);

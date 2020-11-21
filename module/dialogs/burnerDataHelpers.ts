@@ -51,16 +51,16 @@ function costToString(cost: number): ShadeString {
     return "W";
 }
 
-function getStatData(html: JQuery<HTMLElement>, name: string): { exp: string, shade: ShadeString} {
+function getStatData(html: JQuery<HTMLElement>, name: string): { exp: number, shade: ShadeString} {
     return { 
-        exp: extractNamedString(html, `${name}Spent`),
+        exp: extractNamedNumber(html, `${name}Spent`),
         shade: costToString(extractNamedNumber(html, `${name}ShadeSpent`))
     };
 }
 
-function getAttrData(html: JQuery<HTMLElement>, name: string): { exp: string, shade: ShadeString} {
+function getAttrData(html: JQuery<HTMLElement>, name: string): { exp: number, shade: ShadeString} {
     return { 
-        exp: extractNamedString(html, `${name}Stat`),
+        exp: extractNamedNumber(html, `${name}Stat`),
         shade: extractNamedString(html, `${name}Shade`) as ShadeString
     };
 }
@@ -197,15 +197,15 @@ export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Pro
 export function extractReputationData(html: JQuery<HTMLElement>): Partial<ReputationDataRoot | AffiliationDataRoot>[] {
     const reputations: Partial<AffiliationDataRoot | ReputationDataRoot>[] = [];
     let repName = "";
-    let repDice = "0";
+    let repDice = 0;
     html.find(".burner-reputations").each((_, e) => {
         repName = extractNamedChildString($(e), "reputationName");
-        repDice = extractNamedChildString($(e), "reputationDice");
-        if (!repName || !extractNamedChildNumber($(e), "reputationCost") || repDice === "0") { return; }
+        repDice = extractNamedChildNumber($(e), "reputationDice");
+        if (!repName || !extractNamedChildNumber($(e), "reputationCost") || repDice === 0) { return; }
         if (!extractNamedChildCheck($(e), "reputationType")) {
             reputations.push({
                 data: {
-                    dice: parseInt(repDice),
+                    dice: repDice,
                     description: "Unknown affiliation created during character burning. Update data accordingly."
                 } as AffiliationData,
                 type: "affiliation",
@@ -214,7 +214,7 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
         } else {
             reputations.push({
                 data: {
-                    dice: parseInt(repDice),
+                    dice: repDice,
                     infamous: false,
                     description: "Unknown reputation created during character burning. Update data accordingly."
                 } as ReputationData,

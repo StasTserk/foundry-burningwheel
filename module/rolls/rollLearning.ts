@@ -17,7 +17,7 @@ import {
     getSplitPoolText,
     getSplitPoolRoll
 } from "./rolls.js";
-import { BWCharacter } from "../character.js";
+import { BWCharacter } from "../actors/character.js";
 import { Skill } from "../items/skill.js";
 import { Possession, PossessionRootData } from "../items/possession.js";
 

@@ -2,7 +2,7 @@ import { BWActor } from "../actors/bwactor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList } from "../helpers.js";
 import { BWItem, HasPointCost } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
-import { BWCharacter } from "../character.js";
+import { BWCharacter } from "../actors/character.js";
 import { Property } from "../items/property.js";
 import { Skill } from "../items/skill.js";
 import { Trait } from "../items/trait.js";

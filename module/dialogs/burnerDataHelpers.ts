@@ -4,7 +4,7 @@ import { RelationshipDataRoot, RelationshipData } from "../items/relationship.js
 import { ReputationDataRoot, ReputationData } from "../items/reputation.js";
 import { Skill, SkillDataRoot, SkillData } from "../items/skill.js";
 import { Trait, TraitDataRoot, TraitData } from "../items/trait.js";
-import { CharacterSettings } from "../character.js";
+import { CharacterSettings } from "../actors/character.js";
 import { StringIndexedObject, ShadeString } from "../helpers.js";
 import {
     BWItem, BWItemData, ItemType

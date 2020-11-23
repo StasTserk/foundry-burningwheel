@@ -6,7 +6,7 @@ import { handleNpcStatRoll } from "./npcStatRoll.js";
 import { Npc } from "../actors/npc.js";
 import { RollDialogData } from "./rolls.js";
 import { handleSpellRoll } from "./rollSpell.js";
-import { BWCharacter } from "../character.js";
+import { BWCharacter } from "../actors/character.js";
 import { handleNpcSpellRoll, handleNpcWeaponRoll } from "./npcSkillRoll.js";
 import { handleWeaponRoll } from "./rollWeapon.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";

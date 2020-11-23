@@ -2,7 +2,7 @@ import { BWActor } from "../actors/bwactor.js";
 import { StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleLearningRoll } from "../rolls/rollLearning.js";
-import { BWCharacter } from "../character.js";
+import { BWCharacter } from "../actors/character.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
 import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
 import { Npc } from "../actors/npc.js";

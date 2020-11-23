@@ -1,6 +1,7 @@
 import { gearQualitySelect } from "../../constants.js";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
-export class RangedWeaponSheet extends ItemSheet {
+export class RangedWeaponSheet extends BWItemSheet {
     get template(): string {
         return "systems/burningwheel/templates/items/rangedWeapon.hbs";
     }
@@ -12,6 +13,6 @@ export class RangedWeaponSheet extends ItemSheet {
     }
 }
 
-interface RangedSheetData extends ItemSheetData {
+interface RangedSheetData extends BWItemSheetData {
     weaponQualities: { [index: string]: string };
 }

@@ -1,4 +1,6 @@
-export class AffiliationSheet extends ItemSheet {
+import { BWItemSheet } from "./bwItemSheet.js";
+
+export class AffiliationSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }

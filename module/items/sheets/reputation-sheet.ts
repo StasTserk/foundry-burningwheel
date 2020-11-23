@@ -1,4 +1,6 @@
-export class ReputationSheet extends ItemSheet {
+import { BWItemSheet } from "./bwItemSheet.js";
+
+export class ReputationSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }

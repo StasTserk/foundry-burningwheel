@@ -29,7 +29,7 @@ export async function task061(): Promise<void> {
 
     const packs = Array.from(game.packs.values());
     for (const pack of packs) {
-        if (pack.cls === BWItem) {
+        if (pack.cls.prototype.constructor.entity === "Item") {
             const packItems = await pack.getContent();
             for (const item of Array.from(packItems.values()) as BWItem[]) {
                 const updateData = updateItem(item, updateInfo);

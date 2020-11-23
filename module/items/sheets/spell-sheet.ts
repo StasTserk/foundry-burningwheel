@@ -1,7 +1,8 @@
 import { weaponLengthSelect } from "../../constants.js";
 import { StringIndexedObject } from "../../helpers.js";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
-export class SpellSheet extends ItemSheet {
+export class SpellSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
@@ -17,6 +18,6 @@ export class SpellSheet extends ItemSheet {
     }
 }
 
-interface TraitSheetData extends ItemSheetData {
+interface TraitSheetData extends BWItemSheetData {
     spellLengths: StringIndexedObject<string>;
 }

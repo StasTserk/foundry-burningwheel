@@ -1,7 +1,8 @@
 import { gearQualitySelect, weaponLengthSelect } from "../../constants.js";
-import { MeleeWeapon, MeleeWeaponData } from "../meleeWeapon.js";
+import { MeleeWeapon } from "../meleeWeapon.js";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
-export class MeleeWeaponSheet extends ItemSheet<MeleeWeaponData> {
+export class MeleeWeaponSheet extends BWItemSheet {
     get item(): MeleeWeapon {
         return super.item as MeleeWeapon;
     }
@@ -41,7 +42,7 @@ export class MeleeWeaponSheet extends ItemSheet<MeleeWeaponData> {
     }
 }
 
-interface MeleeSheetData extends ItemSheetData {
+interface MeleeSheetData extends BWItemSheetData {
     weaponLengths: { [index: string]: string };
     weaponQualities: { [index: string]: string };
 }

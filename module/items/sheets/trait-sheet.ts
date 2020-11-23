@@ -1,6 +1,7 @@
 import { traitTypeSelect } from "../../constants.js";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
-export class TraitSheet extends ItemSheet {
+export class TraitSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
@@ -16,6 +17,6 @@ export class TraitSheet extends ItemSheet {
     }
 }
 
-interface TraitSheetData extends ItemSheetData {
+interface TraitSheetData extends BWItemSheetData {
     traitTypes: { [index: string]: string };
 }

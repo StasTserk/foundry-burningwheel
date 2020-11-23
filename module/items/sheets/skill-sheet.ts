@@ -1,7 +1,8 @@
 import { skillTypeSelect } from "../../constants.js";
 import { Skill } from "../skill.js";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
-export class SkillSheet extends ItemSheet {
+export class SkillSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
@@ -20,7 +21,7 @@ export class SkillSheet extends ItemSheet {
     }
 }
 
-interface SkillSheetData extends ItemSheetData {
+interface SkillSheetData extends BWItemSheetData {
     skillTypes: { [index: string]: string };
     skillRoots: { [index: string]: string };
 }

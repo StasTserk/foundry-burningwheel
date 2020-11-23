@@ -1,5 +1,10 @@
 <form autocomplete="off" class="melee-weapon-sheet flex-column">
-    <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
+    <div class="flex-row">
+        {{#if showImage}}
+        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        {{/if}}
+        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    </div>
     <h2>Stats</h2>
     <div class="item-form-group">
         <label for="{{item._id}}-select-shade" class="item-setting-label">Shade</label>

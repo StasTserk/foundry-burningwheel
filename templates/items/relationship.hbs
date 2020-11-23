@@ -1,5 +1,10 @@
 <form autocomplete="off" class="relationship-sheet flex-column">
-    <input id="{{item._id}}-name-input" type="text" value="{{item.name}}" name="name" class="item-sheet-name">
+    <div class="flex-row">
+        {{#if showImage}}
+        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        {{/if}}
+        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    </div>
     <div class="checkbox-grid">
         <input id="{{item._id}}-checkbox-forbidden" type="checkbox" name="data.forbidden" {{checked data.forbidden}}>
         <label for="{{item._id}}-checkbox-forbidden">Forbidden</label>

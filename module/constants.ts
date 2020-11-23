@@ -39,6 +39,12 @@ export const traitTypes = [
 ];
 export const traitTypeSelect = toDictionary(traitTypes);
 
+export type SkillTypeString = 
+    "academic" | "artisan" | "artist" | "craftsman" |
+    "forester" | "martial" | "medicinal" | "military" |
+    "musical" | "peasant" | "physical" | "schoolofthought" |
+    "seafaring" | "special" | "social" | "sorcerous" | "training";
+
 export const skillTypes = [
     "academic",
     "artisan",

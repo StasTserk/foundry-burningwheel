@@ -1,5 +1,10 @@
-    <form autocomplete="off" class="trait-sheet flex-column">
-    <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
+<form autocomplete="off" class="trait-sheet flex-column">
+    <div class="flex-row">
+        {{#if showImage}}
+        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        {{/if}}
+        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    </div>
     <div class="item-form-group">
         <label class="item-setting-label">Trait Type</label>
         <select name="data.traittype" value="{{data.traittype}}" >

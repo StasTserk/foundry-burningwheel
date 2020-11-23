@@ -1,5 +1,10 @@
 <form autocomplete="off" class="spell-sheet flex-column">
-    <input name="name" class="item-sheet-name" type="text" value="{{item.name}}">
+    <div class="flex-row">
+        {{#if showImage}}
+        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        {{/if}}
+        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    </div>
     {{#if data.variableObstacle}}
     <div class="spell-sheet-entry">
         <label for="{{item._id}}-var-obstacle-in" class="spell-setting-label">Obstacle</label>

@@ -1,4 +1,4 @@
-import { BWCharacter } from "../character.js";
+import { BWCharacter } from "../actors/character.js";
 import { Ability, TracksTests } from "../actors/bwactor.js";
 import {
     buildRerollData,

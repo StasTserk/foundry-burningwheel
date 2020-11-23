@@ -4,7 +4,7 @@ import { BWActor } from "../actors/bwactor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
 import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
-import { BWCharacterData, CharacterDataRoot } from "../character.js";
+import { BWCharacterData, CharacterDataRoot } from "../actors/character.js";
 import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
 
 import * as constants from "../constants.js";

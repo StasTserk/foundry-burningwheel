@@ -1,4 +1,4 @@
-import { BWCharacter } from "./character.js";
+import { BWCharacter } from "./actors/character.js";
 import { Armor } from "./items/armor.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";

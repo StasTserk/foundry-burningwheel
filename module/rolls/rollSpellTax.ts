@@ -12,7 +12,7 @@ import {
     mergeDialogData
 } from "./rolls.js";
 import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
-import { BWCharacter } from "../character.js";
+import { BWCharacter } from "../actors/character.js";
 import { translateWoundValue } from "../helpers.js";
 
 export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCharacterSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {

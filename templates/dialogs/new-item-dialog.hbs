@@ -2,18 +2,25 @@
 <div class="search-grid">
     {{#each items as |i|}}
     <div data-item-name="{{i.name}}" class="flex-row search-entry" data-item-source="{{i.itemSource}}">
-        <div class="item-select-header">
-            <input type="checkbox" id="{{i.id}}" value="{{i.id}}">
-            <label for="{{i.id}}">{{i.name}}</label>
+        {{#if ../showImages}}
+        <div class="item-select-image">
+            <img src="{{i.img}}">
         </div>
-        <div class="item-select-info">
-            {{i.itemDataLeft}}
-        </div>
-        <div class="item-select-info">
-            {{i.itemDataMid}}
-        </div>
-        <div class="item-select-info">
-            Src: {{i.itemSource}}
+        {{/if}}
+        <div class="item-select flex-row">
+            <div class="item-select-header">
+                <input type="checkbox" id="{{i.id}}" value="{{i.id}}">
+                <label for="{{i.id}}">{{i.name}}</label>
+            </div>
+            <div class="item-select-info">
+                {{i.itemDataLeft}}
+            </div>
+            <div class="item-select-info">
+                {{i.itemDataMid}}
+            </div>
+            <div class="item-select-info">
+                Src: {{i.itemSource}}
+            </div>
         </div>
     </div>
     {{/each}}

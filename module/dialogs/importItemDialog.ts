@@ -66,6 +66,7 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
             searchTitle: options.searchTitle,
             items: items.map((i) => ItemToRowData(i, options)),
             sources: sourceList,
+            showImages: game.settings.get(constants.systemName, constants.settings.itemImages)
         });
         const dialog = new ImportItemDialog({
             title: options.searchTitle,
@@ -129,7 +130,8 @@ function ItemToRowData(item: BWItem & { itemSource?: string }, options: AddItemO
         itemDataLeft: options.itemDataLeft(item),
         itemDataMid: options.itemDataMid(item),
         itemSource: item.itemSource || "World",
-        id: item.id
+        id: item.id,
+        img: item.img
     };
 }
 
@@ -151,4 +153,5 @@ interface ItemRowData {
     itemDataLeft: string;
     itemDataMid: string;
     itemSource?: string;
+    img: string;
 }

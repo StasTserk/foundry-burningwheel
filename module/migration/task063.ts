@@ -66,7 +66,8 @@ function updateItem(item: Skill | Trait, updateInfo: Record<string, number>): Re
 
 const skillImages = {
     "academic": "icons/sundries/documents/document-official-capital.webp",
-    "artisan": "icons/tools/hand/brush-paint-brown-white.webp",
+    "artist": "icons/tools/hand/brush-paint-brown-white.webp",
+    "artisan": "icons/tools/hand/chisel-steel-brown.webp",
     "craftsman": "icons/tools/hand/hammer-and-nail.webp",
     "forester": "icons/tools/navigation/map-simple-tree.webp",
     "martial": "icons/equipment/shield/heater-steel-sword-yellow-black.webp",

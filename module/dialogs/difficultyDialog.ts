@@ -81,6 +81,32 @@ export class DifficultyDialog extends Application {
                 this.render(true);
             }
         });
+
+        $(document).on("keydown", e => {
+            if (e.key === "Control" || e.key === "Meta") {
+                this.splitPool = true;
+                this.render();
+            } else if (e.key === "Alt") {
+                this.noTrack = true;
+                this.render(true);
+            } else if (e.key === "Shift") {
+                this.customDiff = true;
+                this.render(true);
+            }
+        });
+
+        $(document).on("keyup", e => {
+            if (e.key === "Control" || e.key === "Meta") {
+                this.splitPool = false;
+                this.render();
+            } else if (e.key === "Alt") {
+                this.noTrack = false;
+                this.render(true);
+            } else if (e.key === "Shift") {
+                this.customDiff = false;
+                this.render(true);
+            }
+        });
     }
     
     persistMods(): void {

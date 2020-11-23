@@ -1,5 +1,10 @@
 <form autocomplete="off" class="flex-column">
-    <input type="text" name="name" class="item-sheet-name" value="{{item.name}}">
+    <div class="flex-row">
+        {{#if showImage}}
+        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        {{/if}}
+        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    </div>
     <div class="item-form-group">
         <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
         <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">

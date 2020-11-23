@@ -1,4 +1,4 @@
-import { skillRootSelect } from "../constants.js";
+import { skillRootSelect, SkillTypeString } from "../constants.js";
 import { Ability, BWActor, TracksTests } from "../actors/bwactor.js";
 import { ShadeString, StringIndexedObject, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, ItemType, BWItemData, BWItem } from "./item.js";
@@ -72,7 +72,7 @@ export interface SkillData extends TracksTests, DisplayClass {
 
     root1: string;
     root2: string;
-    skilltype: string;
+    skilltype: SkillTypeString;
     description: string;
     restrictions: string;
 

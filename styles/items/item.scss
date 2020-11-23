@@ -8,6 +8,15 @@ input.item-sheet-name {
     height: 1.25em;
     border-bottom: 2px groove lightpink;
     margin-bottom: .5em;
+    flex: 1 1;
+}
+
+img.item-image {
+    flex: 0 0 3em;
+    height: 3em;
+    border: 0;
+    object-fit: cover;
+    margin-right: 5px;
 }
 
 .item-form-group {

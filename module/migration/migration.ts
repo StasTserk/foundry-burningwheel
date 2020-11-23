@@ -13,6 +13,7 @@ export async function migrateData(): Promise<void> {
     for (const version of patchVersions) {
         if (isNewerVersion(version, recentVersion)) {
             // we need to do some updates.
+            ui.notifications.notify(`Beginning ${version} data migration.`, 'info');
             await migrationRoutines[version]();
             ui.notifications.notify(`Applied ${version} data migration.`, 'info');
         }

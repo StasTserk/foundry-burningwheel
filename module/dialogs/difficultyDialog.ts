@@ -1,3 +1,5 @@
+import * as constants from "../constants.js";
+
 export class DifficultyDialog extends Application {
     difficulty: number;
     editable: boolean;
@@ -23,8 +25,8 @@ export class DifficultyDialog extends Application {
             const input = e.currentTarget;
             const difficulty = parseInt($(input).val() as string);
             this.difficulty = difficulty;
-            game.settings.set("burningwheel", "gmDifficulty", difficulty);
-            game.socket.emit("system.burningwheel", { type: "difficulty", difficulty });
+            game.settings.set(constants.systemName, constants.settings.gmDifficulty, difficulty);
+            game.socket.emit(constants.socketName, { type: "difficulty", difficulty });
         });
         
         html.find("#gm-diff-sp").on('change', e => {
@@ -67,13 +69,13 @@ export class DifficultyDialog extends Application {
             this.render();
         });
 
-        game.socket.on("system.burningwheel", ({ type, difficulty }) => {
+        game.socket.on(constants.socketName, ({ type, difficulty }) => {
             if (type === "difficulty") {
                 this.difficulty = difficulty;
                 this.render(true);
             }
         });
-        game.socket.on("system.burningwheel", ({type, mods}) => {
+        game.socket.on(constants.socketName, ({type, mods}) => {
             if (type === "obstacleMods") {
                 this.mods = mods;
                 this.render(true);
@@ -82,8 +84,8 @@ export class DifficultyDialog extends Application {
     }
     
     persistMods(): void {
-        game.settings.set("burningwheel", "obstacleList", JSON.stringify(this.mods));
-        game.socket.emit("system.burningwheel", { type: "obstacleMods", mods: this.mods });
+        game.settings.set(constants.systemName, constants.settings.obstacleList, JSON.stringify(this.mods));
+        game.socket.emit(constants.socketName, { type: "obstacleMods", mods: this.mods });
     }
 
     getData(): DifficultyDialogData {

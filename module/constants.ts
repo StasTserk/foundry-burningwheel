@@ -97,3 +97,16 @@ export const equipmentSheetOrder = {
     "possession": 3,
     "property": 4
 };
+
+export const systemName = "burningwheel";
+export const socketName = "system.burningwheel";
+export const settings = {
+    version: "version",
+    duelData: "dow-data",
+    fightData: "fight-data",
+    rangeData: "rnc-data",
+    useGmDifficulty: "useGmDifficulty",
+    gmDifficulty: "gmDifficulty",
+    obstacleList: "obstacleList",
+    itemImages: "itemImages"
+};

@@ -8,7 +8,6 @@ export async function task021(): Promise<void> {
     // characters so avoid re-initalizing them by setting the flag to true.
     const actors: Actor[] = Array.from(game.actors.values());
     for (const actor of actors) {
-        await actor.setFlag("burningwheel", "initialized", true);
         for (const ownedItem of Array.from(actor.items.values())) {
             // also, the typo in the item type 'possession' has been fixed
             // any existing items need to be updated to match the new type

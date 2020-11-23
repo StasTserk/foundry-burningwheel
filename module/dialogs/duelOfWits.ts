@@ -9,6 +9,8 @@ import { Npc } from "../actors/npc.js";
 import { getKeypressModifierPreset } from "../rolls/rolls.js";
 import { Skill, SkillDataRoot } from "../items/skill.js";
 
+import * as constants from "../constants.js";
+
 export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
@@ -21,7 +23,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         this.data.data.blindS2 = this.data.data.blindS2 || false;
 
         this.data.topic = "Duel";
-        this.data.settingName = "dow-data";
+        this.data.settingName = constants.settings.duelData;
     }
 
     get template(): string {
@@ -139,7 +141,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.actor1Skill = "";
         data.actor2Skill = "";
 
-        await game.settings.set("burningwheel", this.data.settingName, JSON.stringify(this.data.data));
+        await game.settings.set(constants.systemName, this.data.settingName, JSON.stringify(this.data.data));
         this.syncData(this.data.data);
         this.render(true);
     }
@@ -156,7 +158,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.showV1 = false;
         data.showV2 = false;
         data.showV3 = false;
-        await game.settings.set("burningwheel", "dow-data", JSON.stringify(this.data.data));
+        await game.settings.set(constants.systemName, constants.settings.duelData, JSON.stringify(this.data.data));
         this.syncData(this.data.data);
         this.render(true);
     }

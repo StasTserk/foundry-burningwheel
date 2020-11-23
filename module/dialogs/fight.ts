@@ -7,6 +7,8 @@ import { handleFightRoll } from "../rolls/fightRoll.js";
 import { BWCharacterData, CharacterDataRoot } from "../character.js";
 import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
 
+import * as constants from "../constants.js";
+
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
@@ -178,7 +180,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
 
     activateSocketListeners(): void {
         super.activateSocketListeners();
-        game.socket.on("system.burningwheel", ({type}) => {
+        game.socket.on(constants.socketName, ({type}) => {
             if (type === `syncActors${this.data.topic}`) {
                 this.data.actors = game.actors.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || [];
                 this.data.actors.sort((a, b) => {
@@ -200,7 +202,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
 
     private _syncActors() {
-        game.socket.emit("system.burningwheel", { type: `syncActors${this.data.topic}`});
+        game.socket.emit(constants.socketName, { type: `syncActors${this.data.topic}`});
     }
 
     data: ExtendedTestData<FightDialogData> & {

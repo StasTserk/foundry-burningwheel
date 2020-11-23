@@ -11,6 +11,7 @@ import { ReputationSheet } from "./sheets/reputation-sheet.js";
 import { SkillSheet } from "./sheets/skill-sheet.js";
 import { TraitSheet } from "./sheets/trait-sheet.js";
 import { SpellSheet } from "./sheets/spell-sheet.js";
+import * as constants from "../constants.js";
 
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
@@ -60,65 +61,65 @@ export interface DisplayClass {
 
 export function RegisterItemSheets(): void {
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("burningwheel", BeliefSheet, {
+    Items.registerSheet(constants.systemName, BeliefSheet, {
         types: ["belief"],
         makeDefault: true
     });
-    Items.registerSheet("burningwheel", InstinctSheet, {
+    Items.registerSheet(constants.systemName, InstinctSheet, {
         types: ["instinct"],
         makeDefault: true
     });
-    Items.registerSheet("burningwheel", TraitSheet, {
+    Items.registerSheet(constants.systemName, TraitSheet, {
         types: ["trait"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", SkillSheet, {
+    Items.registerSheet(constants.systemName, SkillSheet, {
         types: ["skill"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", RelationshipSheet, {
+    Items.registerSheet(constants.systemName, RelationshipSheet, {
         types: ["relationship"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", PossessionSheet, {
+    Items.registerSheet(constants.systemName, PossessionSheet, {
         types: ["possession"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", PropertySheet, {
+    Items.registerSheet(constants.systemName, PropertySheet, {
         types: ["property"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", MeleeWeaponSheet, {
+    Items.registerSheet(constants.systemName, MeleeWeaponSheet, {
         types: ["melee weapon"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", RangedWeaponSheet, {
+    Items.registerSheet(constants.systemName, RangedWeaponSheet, {
         types: ["ranged weapon"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", ArmorSheet, {
+    Items.registerSheet(constants.systemName, ArmorSheet, {
         types: ["armor"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", ReputationSheet, {
+    Items.registerSheet(constants.systemName, ReputationSheet, {
         types: ["reputation"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", AffiliationSheet, {
+    Items.registerSheet(constants.systemName, AffiliationSheet, {
         types: ["affiliation"],
         makeDefault: true
     });
 
-    Items.registerSheet("burningwheel", SpellSheet, {
+    Items.registerSheet(constants.systemName, SpellSheet, {
         types: ["spell"],
         makeDefault: true
     });

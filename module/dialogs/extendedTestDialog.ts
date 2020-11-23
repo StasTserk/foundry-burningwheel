@@ -1,3 +1,5 @@
+import * as constants from "../constants.js";
+
 export class ExtendedTestDialog<T> extends Dialog {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
@@ -45,7 +47,7 @@ export class ExtendedTestDialog<T> extends Dialog {
     }
 
     activateSocketListeners(): void {
-        game.socket.on("system.burningwheel", ({type, data}) => {
+        game.socket.on(constants.socketName, ({type, data}) => {
             if (type === `update${this.data.topic}`) {
                 mergeObject(this.data.data, data);
                 this.persistState(this.data.data);
@@ -64,7 +66,7 @@ export class ExtendedTestDialog<T> extends Dialog {
                 icon: "fas fa-eye",
                 class: "force-show-dow",
                 onclick: (_) => {
-                    game.socket.emit("system.burningwheel", { type: `show${this.data.topic}` });
+                    game.socket.emit(constants.socketName, { type: `show${this.data.topic}` });
                 }
             }].concat(buttons);
         }
@@ -72,12 +74,12 @@ export class ExtendedTestDialog<T> extends Dialog {
     }
 
     syncData(data: Partial<T>): void {
-        game.socket.emit("system.burningwheel", { type: `update${this.data.topic}`, data});
+        game.socket.emit(constants.socketName, { type: `update${this.data.topic}`, data});
     }
 
     async persistState(data: Partial<T>): Promise<void> {
         if (game.user.isGM) {
-            game.settings.set("burningwheel", this.data.settingName, JSON.stringify(data));
+            game.settings.set(constants.systemName, this.data.settingName, JSON.stringify(data));
         }
     }
 }

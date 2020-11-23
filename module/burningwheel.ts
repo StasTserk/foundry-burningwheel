@@ -16,17 +16,19 @@ import { DifficultyDialog } from "./dialogs/difficultyDialog.js";
 import { RangeAndCoverDialog } from "./dialogs/rangeAndCover.js";
 import { actorConstructor, itemConstructor } from "./factory.js";
 
+import * as constants from "./constants.js";
+
 Hooks.once("init", async () => {
     CONFIG.Actor.entityClass = actorConstructor;
     CONFIG.Item.entityClass = itemConstructor;
     game.burningwheel = {};
 
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("burningwheel", BWCharacterSheet, {
+    Actors.registerSheet(constants.systemName, BWCharacterSheet, {
         types: ["character"],
         makeDefault: true
     });
-    Actors.registerSheet("burningwheel", NpcSheet, {
+    Actors.registerSheet(constants.systemName, NpcSheet, {
         types: ["npc"],
         makeDefault: true
     });
@@ -41,19 +43,19 @@ Hooks.once("init", async () => {
     let fightData = {};
     let rncData = {};
     try {
-        dowData = await JSON.parse(game.settings.get("burningwheel", "dow-data"));
+        dowData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.duelData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Duel of Wits data");
         console.log(err);
     }
     try {
-        fightData = await JSON.parse(game.settings.get("burningwheel", "fight-data"));
+        fightData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.fightData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Fight data");
         console.log(err);
     }
     try {
-        rncData = await JSON.parse(game.settings.get("burningwheel", "rnc-data"));
+        rncData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.rangeData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Range and Cover data");
         console.log(err);
@@ -86,10 +88,10 @@ Hooks.once("init", async () => {
 
 Hooks.once("ready", async() => {
     migrateData();
-    game.burningwheel.useGmDifficulty = await game.settings.get("burningwheel", "useGmDifficulty");
+    game.burningwheel.useGmDifficulty = await game.settings.get(constants.systemName, constants.settings.useGmDifficulty);
     if (game.burningwheel.useGmDifficulty) {
-        const difficulty = await game.settings.get("burningwheel", "gmDifficulty");
-        const mods = await JSON.parse(game.settings.get("burningwheel", "obstacleList"));
+        const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty);
+        const mods = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
         game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, mods);
         game.burningwheel.gmDifficulty.render(true);
     }

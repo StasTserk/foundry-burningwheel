@@ -1,6 +1,7 @@
 import { BWActor } from "../actors/bwactor.js";
 import { ItemType, BWItem } from "../items/item.js";
 import * as helpers from "../helpers.js";
+import * as constants from "../constants.js";
 
 export class ImportItemDialog extends Dialog {
     defaults: string[];
@@ -79,7 +80,7 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
                                 Object.assign(itemRoot.data, options.forcedData);
                                 return itemRoot;
                             }).toArray();
-                        actor.setFlag("burningwheel", "compendia", dialogHtml.find("select").val());
+                        actor.setFlag(constants.systemName, "compendia", dialogHtml.find("select").val());
                         actor.createOwnedItem(newItems);
                     }
                 },
@@ -89,7 +90,7 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
             }
         } as DialogData,
         { width: 530 });
-        dialog.sources = actor.getFlag("burningwheel", "compendia") || [] as string[];
+        dialog.sources = actor.getFlag(constants.systemName, "compendia") || [] as string[];
         dialog.render(true);
     };
 

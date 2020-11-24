@@ -136,6 +136,20 @@ export class BWCharacterSheet extends BWActorSheet {
         html.find("i[data-action=\"refresh-ptgs\"]").on("click",_e => this.actor.updatePtgs());
         html.find('*[data-action="learn-skill"]').on("click",e => this.learnNewSkill(e, this.actor));
         html.find('label.character-burner-icon').on("click", _e => CharacterBurnerDialog.Open(this.actor));
+
+        html.find('.skills > .rollable').on('dragstart', (e) => {
+            const dragData = {};
+            const skill = this.actor.getOwnedItem(e.target.dataset.id || "");
+
+            dragData["actorId"] = this.actor.id;
+            dragData["type"] = "Item";
+            dragData["data"] = skill?.data;
+
+            if (e.originalEvent?.dataTransfer) {
+                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+            }
+        });
+
         super.activateListeners(html);
     }
 

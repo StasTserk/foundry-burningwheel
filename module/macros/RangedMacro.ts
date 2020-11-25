@@ -7,7 +7,7 @@ import { handleNpcWeaponRoll } from "../rolls/npcSkillRoll.js";
 import { Npc } from "../actors/npc.js";
 import { RollDialogData } from "../rolls/rolls.js";
 import { handleWeaponRoll } from "../rolls/rollWeapon.js";
-import { RangedWeapon } from "module/items/rangedWeapon.js";
+import { RangedWeapon } from "../items/rangedWeapon.js";
 
 export function CreateRangedRollMacro(data: RangedDragData): MacroData | null {
     if (!data.actorId) {
@@ -15,7 +15,7 @@ export function CreateRangedRollMacro(data: RangedDragData): MacroData | null {
     }
 
     return {
-        name: `Roll ${data.data.name}`,
+        name: `Attack with ${data.data.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollRanged("${data.actorId}", "${data.id}");`,
         img: data.data.img

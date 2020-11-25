@@ -15,7 +15,7 @@ export function CreateMeleeRollMacro(data: MeleeDragData): MacroData | null {
     }
 
     return {
-        name: `Roll ${data.data.name}`,
+        name: `Attack with ${data.data.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollMelee("${data.actorId}", "${data.id}", ${data.data.index});`,
         img: data.data.img

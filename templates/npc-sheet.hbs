@@ -266,66 +266,66 @@
         {{#if i.data.text}}<span class="item-entry">{{i.data.text}}</span>{{/if}}
         {{/each}}
     </div>
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Traits</div>
         {{#each traits as |t|}}
-        <div class="item-entry" data-id="{{t._id}}" data-action="edit">{{t.name}} [{{titlecase t.data.traittype}}]</div>
+        <div class="item-entry" data-id="{{t._id}}" data-action="edit" draggable="true">{{t.name}} [{{titlecase t.data.traittype}}]</div>
         {{/each}}
     </div>
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Skills</div>
         {{#each skills as |s|}}
-        <div class="item-entry {{s.data.cssClass}} modifiable" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}}{{#if (eq s.data.exp "0")}}{{else}} [{{s.data.shade}}{{s.data.exp}}]{{/if}}</div>
+        <div class="item-entry {{s.data.cssClass}} modifiable" data-skill-id="{{s._id}}" data-action="rollSkill" draggable="true" data-id="{{s._id}}">{{s.name}}{{#if (eq s.data.exp "0")}}{{else}} [{{s.data.shade}}{{s.data.exp}}]{{/if}}</div>
         {{/each}}
     </div>
     {{#if untrained}}
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Untrained Tests</div>
         {{#each untrained as |s|}}
-        <div class="item-entry modifiable" data-skill-id="{{s._id}}" data-action="rollSkill">{{s.name}}</div>
+        <div class="item-entry modifiable" data-skill-id="{{s._id}}" data-action="rollSkill" draggable="true" data-id="{{s._id}}">{{s.name}}</div>
         {{/each}}
     </div>
     {{/if}}
     {{#if affiliations}}
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Affiliations</div>
         {{#each affiliations as |a|}}
-        <div class="item-entry" data-id="{{a._id}}" data-action="edit">{{a.data.dice}}D {{a.name}}</div>
+        <div class="item-entry" data-id="{{a._id}}" data-action="edit" draggable="true">{{a.data.dice}}D {{a.name}}</div>
         {{/each}}
     </div>
     {{/if}}
     {{#if relationships}}
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Relationships</div>
         {{#each relationships as |r|}}
-        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.name}}</div>
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit" draggable="true">{{r.name}}</div>
         {{/each}}
     </div>
     {{/if}}
     {{#if reputations}}
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Reputations</div>
         {{#each reputations as |r|}}
-        <div class="item-entry" data-id="{{r._id}}" data-action="edit">{{r.data.dice}}D {{r.name}}</div>
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit" draggable="true">{{r.data.dice}}D {{r.name}}</div>
         {{/each}}
     </div>
     {{/if}}
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Gear</div>
         {{#each gear as |g|}}
-        <div class="item-entry" data-id="{{g._id}}" data-action="edit">{{g.name}}</div>
+        <div class="item-entry" data-id="{{g._id}}" data-action="edit" draggable="true">{{g.name}}</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row">
         <div class="npc-section-label">Weapons</div>
         {{#each weapons as |w|}}
         {{#each w.data.attacks as |a|}}
-        <div class="item-entry wide modifiable" data-action="rollWeapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}">
+        <div class="item-entry wide modifiable melee-draggable" data-action="rollWeapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" data-id="{{../_id}}" draggable="true">
             {{../name}} {{a.attackName}}— I:{{clampWound ../data.shade a.incidental}} M:{{clampWound ../data.shade a.mark}} S: {{clampWound ../data.shade a.superb}}, Add {{a.add}}, VA {{a.vsArmor}}, WS {{a.weaponSpeed}}, {{a.weaponLength}}</div>
         {{/each}}
         {{/each}}
         {{#each ranged as |w|}}
-        <div class="item-entry wide modifiable" data-action="rollWeapon" data-skill-id="{{w.data.skillId}}" data-weapon-id="{{w._id}}">
+        <div class="item-entry wide modifiable ranged-draggable" data-action="rollWeapon" data-skill-id="{{w.data.skillId}}" data-weapon-id="{{w._id}}" data-id="{{w._id}}" draggable="true">
             {{w.name}} — I:{{clampWound w.data.shade w.data.incidental}} M:{{clampWound w.data.shade w.data.mark}} S: {{clampWound w.data.shade w.data.superb}}, VA {{w.data.vsArmor}}, Opt: {{w.data.optimalRange}}D, Extr: {{w.data.extremeRange}}D</div>
         {{/each}}
     </div>
@@ -363,10 +363,10 @@
     </div>
     {{/if}}
     {{#if spells}}
-    <div class="indented-section flex-row">
+    <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Spells</div>
         {{#each spells as |s|}}
-        <div class="item-entry modifiable" data-action="rollSpell" data-skill-id="{{s.data.skillId}}" data-spell-id="{{s._id}}">{{s.name}}</div>
+        <div class="item-entry modifiable" data-action="rollSpell" data-skill-id="{{s.data.skillId}}" data-spell-id="{{s._id}}" data-id="{{s._id}}" draggable="true">{{s.name}}</div>
         {{/each}}
     </div>
     {{/if}}

@@ -18,7 +18,7 @@ export class BWActorSheet extends ActorSheet {
 
     options: ActorSheetOptions;
 
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): ActorSheetOptions {
         return mergeObject(super.defaultOptions, {});
     }
 

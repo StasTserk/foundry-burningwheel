@@ -1,4 +1,4 @@
-import { BWActorSheet } from "./bwactor-sheet.js";
+import { ActorSheetOptions, BWActorSheet } from "./bwactor-sheet.js";
 import { ShadeString } from "../../helpers.js";
 import { BWActor } from "../bwactor.js";
 import { BWItemData, ItemType } from "../../items/item.js";
@@ -14,6 +14,21 @@ import { TraitDataRoot } from "../../items/trait.js";
 export class NpcSheet extends BWActorSheet {
     get actor(): BWActor & Npc {
         return super.actor as BWActor & Npc;
+    }
+
+    static get defaultOptions(): ActorSheetOptions {
+        const options = super.defaultOptions;
+
+        options.draggableItemSelectors = [
+            '.indented-section.item-draggable > .item-entry',
+        ];
+        options.draggableMeleeSelectors = [
+            '.indented-section > .item-entry.melee-draggable',
+        ];
+        options.draggableRangedSelectors = [
+            '.indented-section > .item-entry.ranged-draggable',
+        ];        
+        return options;
     }
     
     getData(): ActorSheetData<unknown> {

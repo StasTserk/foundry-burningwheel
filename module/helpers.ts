@@ -243,7 +243,27 @@ export const byName = (a: { name: string }, b: { name: string }): number => a.na
 
 export interface DragData {
     type: string,
-    data?: BWItemData,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data?: any,
     actorId?: string,
     id?: string
+}
+
+export interface ItemDragData extends DragData {
+    data?: BWItemData;
+}
+
+export interface MeleeDragData extends DragData {
+    data: {
+        name: string;
+        index: number
+        img: string;
+    };
+}
+
+export interface RangedDragData extends DragData {
+    data: {
+        name: string;
+        img: string;
+    };
 }

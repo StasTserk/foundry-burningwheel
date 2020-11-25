@@ -2,13 +2,14 @@ import { BWActor, NewItemData } from "../bwactor.js";
 import { BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "../../constants.js";
 import {
+    BWItem,
     BWItemData,
 } from "../../items/item.js";
 import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/characterBurner.js";
 import { addNewItem } from "../../dialogs/importItemDialog.js";
 import { BWCharacter } from "../character.js";
-import { byName } from "../../helpers.js";
+import { byName, DragData } from "../../helpers.js";
 import { ArmorRootData } from "../../items/armor.js";
 import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
 import { RangedWeaponRootData } from "../../items/rangedWeapon.js";
@@ -138,12 +139,15 @@ export class BWCharacterSheet extends BWActorSheet {
         html.find('label.character-burner-icon').on("click", _e => CharacterBurnerDialog.Open(this.actor));
 
         html.find('.skills > .rollable').on('dragstart', (e) => {
-            const dragData = {};
-            const skill = this.actor.getOwnedItem(e.target.dataset.id || "");
+            const actor = this.actor;
+            const skill = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
+            const dragData: DragData = {
+                actorId: actor.id,
+                id: skill.id,
+                type: "Item",
+                data: skill.data
+            };
 
-            dragData["actorId"] = this.actor.id;
-            dragData["type"] = "Item";
-            dragData["data"] = skill?.data;
 
             if (e.originalEvent?.dataTransfer) {
                 e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));

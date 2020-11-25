@@ -117,3 +117,19 @@ export const settings = {
     obstacleList: "obstacleList",
     itemImages: "itemImages"
 };
+
+export const defaultImages = {
+    "belief": "",
+    "instinct": "",
+    "trait": "icons/commodities/treasure/token-gold-gem-purple.webp",
+    "skill": "icons/commodities/treasure/broach-lightning-gold.webp",
+    "armor": "icons/equipment/chest/breastplate-collared-steel-grey.webp",
+    "possession": "icons/equipment/feet/boots-collared-rounded-brown.webp",
+    "property": "icons/environment/settlement/house-two-stories-small.webp",
+    "relationship": "icons/environment/people/commoner.webp",
+    "melee weapon": "icons/weapons/swords/greatsword-crossguard-silver.webp",
+    "ranged weapon": "icons/weapons/bows/longbow-recurve-brown.webp",
+    "reputation": "icons/commodities/treasure/medal-ribbon-gold-red.webp",
+    "affiliation": "icons/commodities/treasure/crown-gold-laurel-wreath.webp",
+    "spell": "icons/weapons/staves/staff-ornate-blue-jewel.webp"
+};

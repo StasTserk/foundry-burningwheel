@@ -1,6 +1,6 @@
 import { Skill } from "../items/skill.js";
 import { RangedDragData } from "../helpers.js";
-import { getMacroRollPreset, MacroData } from "./Macro.js";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
 import { BWActor } from "../actors/bwactor.js";
 import { BWCharacter } from "../actors/character.js";
 import { handleNpcWeaponRoll } from "../rolls/npcSkillRoll.js";
@@ -18,7 +18,7 @@ export function CreateRangedRollMacro(data: RangedDragData): MacroData | null {
         name: `Attack with ${data.data.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollRanged("${data.actorId}", "${data.id}");`,
-        img: data.data.img
+        img: getImage(data.data.img, "ranged weapon")
     };
 }
 

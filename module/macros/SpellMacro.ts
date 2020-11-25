@@ -1,6 +1,6 @@
 import { Skill } from "../items/skill.js";
 import { ItemDragData } from "../helpers.js";
-import { getMacroRollPreset, MacroData } from "./Macro.js";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
 import { BWActor } from "../actors/bwactor.js";
 import { BWCharacter } from "../actors/character.js";
 import { handleNpcSpellRoll } from "../rolls/npcSkillRoll.js";
@@ -13,12 +13,12 @@ export function CreateSpellRollMacro(data: ItemDragData): MacroData | null {
     if (!data.actorId) {
         return null;
     }
-    const skillData = data.data as SpellDataRoot & { _id: string };
+    const spellData = data.data as SpellDataRoot & { _id: string };
     return {
-        name: `Cast ${skillData.name}`,
+        name: `Cast ${spellData.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollSpell("${data.actorId}", "${data.id}");`,
-        img: skillData.img
+        img: getImage(spellData.img, "spell")
     };
 }
 

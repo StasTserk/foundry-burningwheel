@@ -1,6 +1,6 @@
 import { Skill, SkillDataRoot } from "../items/skill.js";
 import { ItemDragData } from "../helpers.js";
-import { getMacroRollPreset, MacroData } from "./Macro.js";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
 import { BWActor } from "../actors/bwactor.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
 import { BWCharacter } from "../actors/character.js";
@@ -18,7 +18,7 @@ export function CreateSkillRollMacro(data: ItemDragData): MacroData | null {
         name: `Test ${skillData.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollSkill("${data.actorId}", "${data.id}");`,
-        img: skillData.img
+        img: getImage(skillData.img, "skill")
     };
 }
 

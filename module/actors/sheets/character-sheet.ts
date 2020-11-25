@@ -138,7 +138,7 @@ export class BWCharacterSheet extends BWActorSheet {
         html.find('*[data-action="learn-skill"]').on("click",e => this.learnNewSkill(e, this.actor));
         html.find('label.character-burner-icon').on("click", _e => CharacterBurnerDialog.Open(this.actor));
 
-        html.find('.skills > .rollable').on('dragstart', (e) => {
+        html.find('.skills > .rollable, .learning-section > .learning').on('dragstart', (e) => {
             const actor = this.actor;
             const skill = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
             const dragData: DragData = {
@@ -147,7 +147,6 @@ export class BWCharacterSheet extends BWActorSheet {
                 type: "Item",
                 data: skill.data
             };
-
 
             if (e.originalEvent?.dataTransfer) {
                 e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));

@@ -9,7 +9,7 @@ import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/characterBurner.js";
 import { addNewItem } from "../../dialogs/importItemDialog.js";
 import { BWCharacter } from "../character.js";
-import { byName, DragData } from "../../helpers.js";
+import { byName, ItemDragData, MeleeDragData, RangedDragData } from "../../helpers.js";
 import { ArmorRootData } from "../../items/armor.js";
 import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
 import { RangedWeaponRootData } from "../../items/rangedWeapon.js";
@@ -140,12 +140,53 @@ export class BWCharacterSheet extends BWActorSheet {
 
         html.find('.skills > .rollable, .learning-section > .learning').on('dragstart', (e) => {
             const actor = this.actor;
-            const skill = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
-            const dragData: DragData = {
+            const item = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
+            const dragData: ItemDragData = {
                 actorId: actor.id,
-                id: skill.id,
+                id: item.id,
                 type: "Item",
-                data: skill.data
+                data: item.data
+            };
+
+            if (e.originalEvent?.dataTransfer) {
+                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+            }
+        });
+
+        html.find('.weapon-grid .rollable, .weapon-grid > .weapon-name').on('dragstart', (e) => {
+            const actor = this.actor;
+            const itemId = e.target.dataset.weaponId || "";
+            const weapon = actor.getOwnedItem(itemId) as Item;
+
+            const dragData: MeleeDragData = {
+                actorId: actor.id,
+                id: itemId,
+                type: "Melee",
+                data: {
+                    index: parseInt(e.target.dataset.attackIndex || "0"),
+                    name: weapon.name,
+                    img: weapon.img
+                }
+            };
+
+            if (e.originalEvent?.dataTransfer) {
+                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+            }
+        });
+
+        html.find('.ranged-grid .rollable, .ranged-grid > .weapon-name').on('dragstart', (e) => {
+            const actor = this.actor;
+            const itemId = e.target.dataset.weaponId || "";
+            const weapon = actor.getOwnedItem(itemId) as Item;
+
+            const dragData: RangedDragData = {
+                actorId: actor.id,
+                id: itemId,
+                type: "Ranged",
+                data: {
+                    name: weapon.name,
+                    img: weapon.img
+                }
             };
 
             if (e.originalEvent?.dataTransfer) {

@@ -24,7 +24,8 @@ const fistData: MeleeWeaponData = {
         vsArmor: 0,
         weaponSpeed: "X",
     }],
-    pointCost: 0
+    pointCost: 0,
+    skillId: ""
 };
 export const bareFistData: NewItemData = {
     name: "Bare Fist",

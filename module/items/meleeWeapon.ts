@@ -63,7 +63,7 @@ export interface MeleeWeaponData extends DisplayClass, HasPointCost {
     description: string;
     shade: helpers.ShadeString;
     attacks: AttackData[];
-
+    skillId: string;
 }
 
 export interface AttackData {

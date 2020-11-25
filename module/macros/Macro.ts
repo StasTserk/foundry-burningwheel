@@ -4,6 +4,8 @@ import { CreateSkillRollMacro, RollSKillMacro } from "./SkillMacro.js";
 import * as constants from "../constants.js";
 import { DifficultyDialog } from "../dialogs/difficultyDialog.js";
 import { BWActor } from "module/actors/bwactor.js";
+import { CreateMeleeRollMacro, RollMeleeMacro } from "./MeleeMacro.js";
+import { CreateRangedRollMacro, RollRangedMacro } from "./RangedMacro.js";
 
 export async function CreateBurningWheelMacro(data: DragData, slot: number): Promise<boolean> {
     if (!handlers[data.type]) {
@@ -40,11 +42,15 @@ function CreateItemMacro(data: DragData): MacroData | null {
 export function RegisterMacros(): void {
     game.burningwheel.macros = game.burningwheel.macros || {};
     game.burningwheel.macros['rollSkill'] = RollSKillMacro;
+    game.burningwheel.macros['rollMelee'] = RollMeleeMacro;
+    game.burningwheel.macros['rollRanged'] = RollRangedMacro;
 }
 
 const handlers: Record<string, (data: DragData) => MacroData | null> = {
     "Item": CreateItemMacro,
-    "skill": CreateSkillRollMacro
+    "skill": CreateSkillRollMacro,
+    "Melee": CreateMeleeRollMacro,
+    "Ranged": CreateRangedRollMacro
 };
 
 export interface MacroData {

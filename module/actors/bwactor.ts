@@ -245,7 +245,7 @@ export class BWActor extends Actor<Common> {
             { name: "Belief 2", type: "belief", data: {}},
             { name: "Belief 3", type: "belief", data: {}},
             { name: "Belief Special", type: "belief", data: {}},
-            constants.bareFistData
+            { ...constants.bareFistData, img: "icons/equipment/hand/gauntlet-simple-leather-steel.webp" }
         ]);
     }
 
@@ -316,6 +316,7 @@ export class BWActor extends Actor<Common> {
         this._addRollModifier("observation", { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier }, true);
         this._addRollModifier("shooting", { obstacle: clumsyWeight.throwingShootingPenalty,  ...baseModifier }, true);
         this._addRollModifier("bow", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
+        this._addRollModifier("throwing", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
         this._addRollModifier("crossbow", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
         this._addRollModifier("firearms", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
         this._addRollModifier("agility", { obstacle: clumsyWeight.agilityPenalty, ...baseModifier }, true);

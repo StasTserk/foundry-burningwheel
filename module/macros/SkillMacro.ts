@@ -1,5 +1,5 @@
 import { Skill, SkillDataRoot } from "../items/skill.js";
-import { DragData } from "../helpers.js";
+import { ItemDragData } from "../helpers.js";
 import { getMacroRollPreset, MacroData } from "./Macro.js";
 import { BWActor } from "../actors/bwactor.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
@@ -9,7 +9,7 @@ import { Npc } from "../actors/npc.js";
 import { handleLearningRoll } from "../rolls/rollLearning.js";
 import { RollDialogData } from "../rolls/rolls.js";
 
-export function CreateSkillRollMacro(data: DragData): MacroData | null {
+export function CreateSkillRollMacro(data: ItemDragData): MacroData | null {
     if (!data.actorId) {
         return null;
     }

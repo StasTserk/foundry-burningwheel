@@ -84,4 +84,6 @@ export interface RangedWeaponData extends DisplayClass, HasPointCost {
     incidentalLabel?: string;
     markLabel?: string;
     superbLabel?: string;
+
+    skillId: string;
 }

@@ -24,7 +24,16 @@ export function CreateSkillRollMacro(data: ItemDragData): MacroData | null {
 
 export function RollSKillMacro(actorId: string, skillId: string): void {
     const actor = game.actors.find(a => a.id === actorId) as BWActor;
-    const skill = actor.getOwnedItem(skillId) as Skill;
+    if (!actor) {
+        ui.notifications.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
+        return;
+    }
+
+    const skill = actor.getOwnedItem(skillId) as Skill | null;
+    if (!skill) {
+        ui.notifications.notify("Unable to find skill linked in this macro. Was it deleted?", "error");
+        return;
+    }
 
     const dataPreset: Partial<RollDialogData> = getMacroRollPreset(actor);
     if (actor.data.type === "character") {

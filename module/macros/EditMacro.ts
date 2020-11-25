@@ -16,8 +16,17 @@ export function CreateEditMacro(data: ItemDragData): MacroData | null {
     };
 }
 
-export function RollEditMacro(actorId: string, skillId: string): void {
+export function RollEditMacro(actorId: string, itemId: string): void {
     const actor = game.actors.find(a => a.id === actorId) as BWActor;
-    const item = actor.getOwnedItem(skillId) as BWItem;
+    if (!actor) {
+        ui.notifications.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
+        return;
+    }
+
+    const item = actor.getOwnedItem(itemId) as BWItem | null;
+    if (!item) {
+        ui.notifications.notify("Unable to find item linked to this macro. Was it deleted?", "error");
+        return;
+    }
     item.sheet.render(true);
 }

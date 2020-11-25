@@ -1,6 +1,6 @@
 import { Skill } from "../items/skill.js";
 import { MeleeDragData } from "../helpers.js";
-import { getMacroRollPreset, MacroData } from "./Macro.js";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
 import { BWActor } from "../actors/bwactor.js";
 import { BWCharacter } from "../actors/character.js";
 import { handleNpcWeaponRoll } from "../rolls/npcSkillRoll.js";
@@ -18,7 +18,7 @@ export function CreateMeleeRollMacro(data: MeleeDragData): MacroData | null {
         name: `Attack with ${data.data.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollMelee("${data.actorId}", "${data.id}", ${data.data.index});`,
-        img: data.data.img
+        img: getImage(data.data.img, "melee weapon")
     };
 }
 

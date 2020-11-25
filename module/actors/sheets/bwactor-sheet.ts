@@ -2,6 +2,7 @@ import { BWActor } from "../bwactor.js";
 import { ArmorRootData } from "../../items/armor.js";
 import * as constants from "../../constants.js";
 import * as helpers from "../../helpers.js";
+import { BWItem } from "../../items/item.js";
 
 export class BWActorSheet extends ActorSheet {
     private _keyDownHandler = this._handleKeyPress.bind(this);
@@ -15,6 +16,8 @@ export class BWActorSheet extends ActorSheet {
         return `${path}/${this.actor.data.type}-sheet.hbs`;
     }
 
+    options: ActorSheetOptions;
+
     static get defaultOptions(): FormApplicationOptions {
         return mergeObject(super.defaultOptions, {});
     }
@@ -25,6 +28,67 @@ export class BWActorSheet extends ActorSheet {
             .on("change", (e) => this._updateItemField(e));
         $(document).off("keydown", this._keyDownHandler).on("keydown", this._keyDownHandler);
         $(document).off("keyup", this._keyUpHandler).on("keyup", this._keyUpHandler);
+
+        if (this.options.draggableItemSelectors) {
+            html.find(this.options.draggableItemSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
+                const actor = this.actor;
+                const item = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
+                const dragData: helpers.ItemDragData = {
+                    actorId: actor.id,
+                    id: item.id,
+                    type: "Item",
+                    data: item.data
+                };
+
+                if (e.originalEvent?.dataTransfer) {
+                    e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+                }
+            });
+        }
+        if (this.options.draggableMeleeSelectors) {
+            html.find(this.options.draggableMeleeSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
+                const actor = this.actor;
+                const itemId = e.target.dataset.weaponId || "";
+                const weapon = actor.getOwnedItem(itemId) as Item;
+
+                const dragData: helpers.MeleeDragData = {
+                    actorId: actor.id,
+                    id: itemId,
+                    type: "Melee",
+                    data: {
+                        index: parseInt(e.target.dataset.attackIndex || "0"),
+                        name: weapon.name,
+                        img: weapon.img
+                    }
+                };
+
+                if (e.originalEvent?.dataTransfer) {
+                    e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+                }
+            });
+        }
+        if (this.options.draggableRangedSelectors) {
+            html.find(this.options.draggableRangedSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
+                const actor = this.actor;
+                const itemId = e.target.dataset.weaponId || "";
+                const weapon = actor.getOwnedItem(itemId) as Item;
+
+                const dragData: helpers.RangedDragData = {
+                    actorId: actor.id,
+                    id: itemId,
+                    type: "Ranged",
+                    data: {
+                        name: weapon.name,
+                        img: weapon.img
+                    }
+                };
+
+                if (e.originalEvent?.dataTransfer) {
+                    e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+                }
+            });
+
+        }
     }
 
     async close(): Promise<void> {
@@ -116,4 +180,10 @@ export class BWActorSheet extends ActorSheet {
         );
         return armorLocs;
     }
+}
+
+export interface ActorSheetOptions extends FormApplicationOptions {
+    draggableItemSelectors?: string[];
+    draggableMeleeSelectors?: string[];
+    draggableRangedSelectors?: string[];
 }

@@ -1,15 +1,12 @@
 import { BWActor, NewItemData } from "../bwactor.js";
-import { BWActorSheet } from "./bwactor-sheet.js";
+import { ActorSheetOptions, BWActorSheet } from "./bwactor-sheet.js";
 import * as constants from "../../constants.js";
-import {
-    BWItem,
-    BWItemData,
-} from "../../items/item.js";
+import { BWItemData } from "../../items/item.js";
 import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/characterBurner.js";
 import { addNewItem } from "../../dialogs/importItemDialog.js";
 import { BWCharacter } from "../character.js";
-import { byName, ItemDragData, MeleeDragData, RangedDragData } from "../../helpers.js";
+import { byName, } from "../../helpers.js";
 import { ArmorRootData } from "../../items/armor.js";
 import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
 import { RangedWeaponRootData } from "../../items/rangedWeapon.js";
@@ -22,6 +19,29 @@ import { TraitDataRoot, Trait } from "../../items/trait.js";
 export class BWCharacterSheet extends BWActorSheet {
     get actor(): BWCharacter {
         return super.actor as BWCharacter;
+    }
+
+    static get defaultOptions(): ActorSheetOptions {
+        const options = super.defaultOptions as ActorSheetOptions;
+        options.draggableItemSelectors = [
+            '.skills > .rollable',
+            '.learning-section > .learning',
+            '.spell-section > .spell-section-item',
+            '.relationships > .relationship',
+            '.reputations > .reputation',
+            '.affiliations > .affiliation',
+            '.gear > div',
+            '.trait-category > .trait'
+        ];
+        options.draggableMeleeSelectors = [
+            '.weapon-grid .rollable',
+            '.weapon-grid > .weapon-name'
+        ];
+        options.draggableRangedSelectors = [
+            '.ranged-grid .rollable',
+            '.ranged-grid > .weapon-name'
+        ];
+        return options;
     }
     
     getData(): CharacterSheetData {
@@ -136,72 +156,6 @@ export class BWCharacterSheet extends BWActorSheet {
         html.find("i[data-action=\"refresh-ptgs\"]").on("click",_e => this.actor.updatePtgs());
         html.find('*[data-action="learn-skill"]').on("click",e => this.learnNewSkill(e, this.actor));
         html.find('label.character-burner-icon').on("click", _e => CharacterBurnerDialog.Open(this.actor));
-
-        const draggableItemSelectors = [
-            '.skills > .rollable',
-            '.learning-section > .learning',
-            '.spell-section > .spell-section-item',
-            '.relationships > .relationship',
-            '.reputations > .reputation',
-            '.affiliations > .affiliation',
-            '.gear > div[draggable="true"]',
-            '.trait-category > .trait'
-        ];
-        html.find(draggableItemSelectors.join(', ')).on('dragstart', (e) => {
-            const actor = this.actor;
-            const item = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
-            const dragData: ItemDragData = {
-                actorId: actor.id,
-                id: item.id,
-                type: "Item",
-                data: item.data
-            };
-
-            if (e.originalEvent?.dataTransfer) {
-                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
-            }
-        });
-
-        html.find('.weapon-grid .rollable, .weapon-grid > .weapon-name').on('dragstart', (e) => {
-            const actor = this.actor;
-            const itemId = e.target.dataset.weaponId || "";
-            const weapon = actor.getOwnedItem(itemId) as Item;
-
-            const dragData: MeleeDragData = {
-                actorId: actor.id,
-                id: itemId,
-                type: "Melee",
-                data: {
-                    index: parseInt(e.target.dataset.attackIndex || "0"),
-                    name: weapon.name,
-                    img: weapon.img
-                }
-            };
-
-            if (e.originalEvent?.dataTransfer) {
-                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
-            }
-        });
-
-        html.find('.ranged-grid .rollable, .ranged-grid > .weapon-name').on('dragstart', (e) => {
-            const actor = this.actor;
-            const itemId = e.target.dataset.weaponId || "";
-            const weapon = actor.getOwnedItem(itemId) as Item;
-
-            const dragData: RangedDragData = {
-                actorId: actor.id,
-                id: itemId,
-                type: "Ranged",
-                data: {
-                    name: weapon.name,
-                    img: weapon.img
-                }
-            };
-
-            if (e.originalEvent?.dataTransfer) {
-                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
-            }
-        });
 
         super.activateListeners(html);
     }

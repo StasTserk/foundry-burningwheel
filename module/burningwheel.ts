@@ -17,6 +17,7 @@ import { RangeAndCoverDialog } from "./dialogs/rangeAndCover.js";
 import { actorConstructor, itemConstructor } from "./factory.js";
 
 import * as constants from "./constants.js";
+import { CreateBurningWheelMacro, RegisterMacros } from "./macros/Macro.js";
 
 Hooks.once("init", async () => {
     CONFIG.Actor.entityClass = actorConstructor;
@@ -95,6 +96,7 @@ Hooks.once("ready", async() => {
         game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, mods);
         game.burningwheel.gmDifficulty.render(true);
     }
+    RegisterMacros();
 });
 
 Hooks.on("renderSidebarTab", async (_data, html: JQuery) => {
@@ -201,3 +203,4 @@ Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any, userId: string) => actor.processNewItem(item, userId));
+Hooks.on("hotbarDrop", (_bar, data, slot) => CreateBurningWheelMacro(data, slot));

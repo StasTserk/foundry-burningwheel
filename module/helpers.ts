@@ -1,6 +1,6 @@
 import { TracksTests } from "./actors/bwactor.js";
 import { ArmorRootData } from "./items/armor.js";
-import { BWItem, DisplayClass, ItemType } from "./items/item.js";
+import { BWItem, BWItemData, DisplayClass, ItemType } from "./items/item.js";
 import { Skill } from "./items/skill.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0, tax = 0):void {
@@ -240,3 +240,10 @@ export type StringIndexedObject<T> = { [i: string]: T };
 
 /** For Sorting Items/Actors/Etc. by Name */
 export const byName = (a: { name: string }, b: { name: string }): number => a.name.localeCompare(b.name);
+
+export interface DragData {
+    type: string,
+    data?: BWItemData,
+    actorId?: string,
+    id?: string
+}

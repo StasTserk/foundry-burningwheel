@@ -114,7 +114,7 @@
                 <i data-action="addTrait" data-id="character" class="fas fa-plus"></i>
             </h2>
             {{#each traits.character as |trait|}}
-                <div class="trait" data-item-id="{{trait._id}}">
+                <div class="trait" data-item-id="{{trait._id}}" draggable="true" data-id="{{trait._id}}">
                     <h3>
                         {{ trait.name }}
                         <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
@@ -129,7 +129,7 @@
             </h2>
             {{#each traits.die as |trait|}}
                 <input type="checkbox" id="{{trait._id}}-toggle" class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
-                <div class="trait" data-item-id="{{trait._id}}">
+                <div class="trait" data-item-id="{{trait._id}}" draggable="true" data-id="{{trait._id}}">
                     <label for="{{trait._id}}-toggle">
                         <h3>
                             {{ trait.name }}
@@ -147,7 +147,7 @@
             </h2>
             {{#each traits.callon as |trait|}}
             <input type="checkbox" id="{{trait._id}}-toggle" class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
-                <div class="trait" data-item-id="{{trait._id}}">
+                <div class="trait" data-item-id="{{trait._id}}" draggable="true" data-id="{{trait._id}}">
                     <label for="{{trait._id}}-toggle">
                         <h3>
                             {{ trait.name }}
@@ -257,7 +257,7 @@
         <div class="reputations">
             <h2>Reputations  <i data-action="addReputation" class="fas fa-plus"></i></h2>
             {{#each reputations as |r|}}
-            <div class="reputation flex-row {{r.data.cssClass}}">
+            <div class="reputation flex-row {{r.data.cssClass}}" draggable="true" data-id="{{r._id}}">
                 <div class="item-title">
                     {{r.data.dice}}D - {{ r.name }}
                 </div>
@@ -269,7 +269,7 @@
         <div class="affiliations">
             <h2>Affiliations  <i data-action="addAffiliation" class="fas fa-plus"></i></h2>
             {{#each affiliations as |a|}}
-            <div class="affiliation flex-row">
+            <div class="affiliation flex-row" draggable="true" data-id="{{a._id}}">
                 <div class="item-title">
                     {{a.data.dice}}D - {{ a.name }}
                 </div>
@@ -291,7 +291,7 @@
     {{#if data.collapseGear}}{{else}}
     <div class="gear item-grid col-4">
         {{#each equipment as |e|}}
-        <div class="{{e.data.cssClass}}">
+        <div class="{{e.data.cssClass}}" draggable="true" data-id="{{e._id}}">
             {{e.name}}
             <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e._id}}"></i>
             <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{e._id}}"></i>

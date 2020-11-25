@@ -7,6 +7,7 @@ import { BWActor } from "../actors/bwactor.js";
 import { CreateMeleeRollMacro, RollMeleeMacro } from "./MeleeMacro.js";
 import { CreateRangedRollMacro, RollRangedMacro } from "./RangedMacro.js";
 import { CreateSpellRollMacro, RollSpellMacro } from "./SpellMacro.js";
+import { CreateEditMacro, RollEditMacro } from "./EditMacro.js";
 
 export async function CreateBurningWheelMacro(data: DragData, slot: number): Promise<boolean> {
     if (!handlers[data.type]) {
@@ -46,7 +47,7 @@ export function RegisterMacros(): void {
     game.burningwheel.macros['rollMelee'] = RollMeleeMacro;
     game.burningwheel.macros['rollRanged'] = RollRangedMacro;
     game.burningwheel.macros['rollSpell'] = RollSpellMacro;
-    // game.burningwheel.macros['editItem'] = RollEditMacro;
+    game.burningwheel.macros['showOwnedItem'] = RollEditMacro;
 }
 
 const handlers: Record<string, (data: DragData) => MacroData | null> = {
@@ -54,7 +55,17 @@ const handlers: Record<string, (data: DragData) => MacroData | null> = {
     "skill": CreateSkillRollMacro,
     "spell": CreateSpellRollMacro,
     "Melee": CreateMeleeRollMacro,
-    "Ranged": CreateRangedRollMacro
+    "Ranged": CreateRangedRollMacro,
+
+    "possession": CreateEditMacro,
+    "property": CreateEditMacro,
+    "armor": CreateEditMacro,
+    "melee weapon": CreateEditMacro,
+    "ranged weapon": CreateEditMacro,
+    "trait": CreateEditMacro,
+    "relationship": CreateEditMacro,
+    "reputation": CreateEditMacro,
+    "affiliation": CreateEditMacro
 };
 
 export interface MacroData {

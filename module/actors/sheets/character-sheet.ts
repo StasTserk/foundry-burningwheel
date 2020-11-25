@@ -117,7 +117,6 @@ export class BWCharacterSheet extends BWActorSheet {
 
     activateListeners(html: JQuery): void {
         // add/delete buttons
-
         const selectors = [
             'i[data-action="editItem"]',
             'i[data-action="delItem"]',
@@ -141,7 +140,12 @@ export class BWCharacterSheet extends BWActorSheet {
         const draggableItemSelectors = [
             '.skills > .rollable',
             '.learning-section > .learning',
-            '.spell-section > .spell-section-item'
+            '.spell-section > .spell-section-item',
+            '.relationships > .relationship',
+            '.reputations > .reputation',
+            '.affiliations > .affiliation',
+            '.gear > div[draggable="true"]',
+            '.trait-category > .trait'
         ];
         html.find(draggableItemSelectors.join(', ')).on('dragstart', (e) => {
             const actor = this.actor;

@@ -131,5 +131,10 @@ export const defaultImages = {
     "ranged weapon": "icons/weapons/bows/longbow-recurve-brown.webp",
     "reputation": "icons/commodities/treasure/medal-ribbon-gold-red.webp",
     "affiliation": "icons/commodities/treasure/crown-gold-laurel-wreath.webp",
-    "spell": "icons/weapons/staves/staff-ornate-blue-jewel.webp"
+    "spell": "icons/weapons/staves/staff-ornate-blue-jewel.webp",
+
+    // trait images
+    "character": "icons/sundries/gaming/rune-card.webp",
+    "die": "icons/sundries/gaming/dice-runed-brown.webp",
+    "call-on": "icons/sundries/gaming/playing-cards.webp"
 };

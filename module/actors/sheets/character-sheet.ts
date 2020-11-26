@@ -176,11 +176,13 @@ export class BWCharacterSheet extends BWActorSheet {
             baseData: {
                 learning: true,
                 root1: "perception",
-                skilltype: "special"
+                skilltype: "special",
+                img: constants.defaultImages.skill
             },
             forcedData: {
                 learning: true
-            }
+            },
+            img: constants.defaultImages.skill
         });
     }
 
@@ -192,15 +194,15 @@ export class BWCharacterSheet extends BWActorSheet {
         let options: NewItemData;
         switch (action) {
             case "addRelationship":
-                options = { name: "New Relationship", type: "relationship", data: { building: true }};
+                options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
                 return this.actor.createOwnedItem(options).then(i =>
                     this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addReputation":
-                options = { name: "New Reputation", type: "reputation", data: {}};
+                options = { name: "New Reputation", type: "reputation", data: { }, img: constants.defaultImages.reputation };
                 return this.actor.createOwnedItem(options).then(i =>
                     this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addAffiliation":
-                options = { name: "New Affiliation", type: "affiliation", data: {}};
+                options = { name: "New Affiliation", type: "affiliation", data: { }, img: constants.defaultImages.affiliation };
                 return this.actor.createOwnedItem(options).then(i =>
                     this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addSkill": 
@@ -213,7 +215,8 @@ export class BWCharacterSheet extends BWActorSheet {
                     baseData: { root1: "perception", skilltype: "special" },
                     popupMessage: "Add a new skill to the character sheet.  "
                         + "Note this is different than learning a new skill via the beginner's luck rules.  "
-                        + "Check the learning section if you want to begin learning the skill."
+                        + "Check the learning section if you want to begin learning the skill.",
+                    img: constants.defaultImages.skill
                 });
             case "addTrait":
                 return addNewItem({
@@ -222,7 +225,8 @@ export class BWCharacterSheet extends BWActorSheet {
                     itemType: "trait",
                     itemDataLeft: (i: Trait) => i.data.data.restrictions.titleCase(),
                     itemDataMid: (i: Trait) => i.data.data.traittype.titleCase(),
-                    baseData: { traittype: id }
+                    baseData: { traittype: id },
+                    img: constants.defaultImages[id]
                 });
             case "addSpell":
                 return addNewItem({
@@ -231,7 +235,8 @@ export class BWCharacterSheet extends BWActorSheet {
                     itemType: "spell",
                     itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
                     itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
-                    baseData: { }
+                    baseData: { },
+                    img: constants.defaultImages.spell
                 });
             case "learnSpell":
                 return addNewItem({
@@ -243,7 +248,8 @@ export class BWCharacterSheet extends BWActorSheet {
                     baseData: { inPracticals: true },
                     forcedData: {
                         inPracticals: true
-                    }
+                    },
+                    img: constants.defaultImages.spell
                 });
             case "addGear":
                 return addNewItem({
@@ -252,7 +258,8 @@ export class BWCharacterSheet extends BWActorSheet {
                     itemTypes: ["melee weapon", "ranged weapon", "armor", "possession", "property" ],
                     itemDataLeft: (_: Item) => "",
                     itemDataMid: (i: Item) => `Type: ${i.type.titleCase()}`,
-                    baseData: { traittype: id }
+                    baseData: { traittype: id },
+                    img: constants.defaultImages[id]
                 });
             case "delItem":
                 return Dialog.confirm({

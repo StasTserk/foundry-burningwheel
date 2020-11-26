@@ -7,6 +7,8 @@ import { RollDialogData } from "../rolls/rolls.js";
 import { StatDragData } from "../helpers.js";
 import { getMacroRollPreset, MacroData } from "./Macro.js";
 import { handleCirclesRoll } from "../rolls/rollCircles.js";
+import { handleResourcesRoll } from "../rolls/rollResources.js";
+import { handleStatRoll } from "../rolls/rollStat.js";
 
 export function CreateStatMacro(data: StatDragData): MacroData | null {
     if (!data.actorId) {
@@ -40,6 +42,10 @@ export function RollStatMacro(actorId: string, statPath: string, statName: strin
         const char = actor as BWCharacter;
         if (statPath === "data.circles") {
             handleCirclesRoll({ actor: char, stat, dataPreset });
+        } else if (statPath === "data.resources") {
+            handleResourcesRoll({ actor: char, stat, dataPreset });
+        } else if (["power", "agility", "forte", "will", "perception", "speed"].some(s => statPath.indexOf(s) !== -1)) {
+            handleStatRoll({ actor: char, stat, statName, accessor: statPath, dataPreset });
         }
     } else {
         handleNpcStatRoll({ actor: actor as Npc, dice: stat.exp, shade: stat.shade, open: stat.open, statName: statName as NpcStatName, dataPreset });

@@ -9,6 +9,7 @@ import { StringIndexedObject, ShadeString } from "../helpers.js";
 import {
     BWItem, BWItemData, ItemType
 } from "../items/item.js";
+import * as constants from "../constants.js";
 
 export function extractRelationshipData(parent: JQuery): BurnerRelationshipData {
     return {
@@ -136,7 +137,8 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
                     description: "Unknown skill generated during character burning. Update any incorrect data.",
                 },
                 type: "skill",
-                name: skillName
+                name: skillName,
+                img: constants.defaultImages.skill
             } as SkillDataRoot);
         }
     });
@@ -162,7 +164,8 @@ export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]):
                     text: "Unknown trait created during character burning. Update data accordingly. If the trait adds a reputation or affiliation, those must be added in manually."
                 } as TraitData,
                 type: "trait",
-                name: traitName
+                name: traitName,
+                img: constants.defaultImages[extractNamedChildString($(e), "traitType")]
             });
         }
     });
@@ -187,7 +190,8 @@ export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Pro
                     description: "Unknown property created during character burning. Update data accordingly."
                 } as PropertyData,
                 type: "property",
-                name: propertyName
+                name: propertyName,
+                img: constants.defaultImages.property
             });
         }
     });
@@ -209,7 +213,8 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
                     description: "Unknown affiliation created during character burning. Update data accordingly."
                 } as AffiliationData,
                 type: "affiliation",
-                name: repName
+                name: repName,
+                img: constants.defaultImages.affiliation
             });
         } else {
             reputations.push({
@@ -219,7 +224,8 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
                     description: "Unknown reputation created during character burning. Update data accordingly."
                 } as ReputationData,
                 type: "reputation",
-                name: repName
+                name: repName,
+                img: constants.defaultImages.reputation
             });
         }
     });
@@ -248,7 +254,8 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
                 buildingProgress: 0
             } as RelationshipData,
             type: "relationship",
-            name: relName
+            name: relName,
+            img: constants.defaultImages.relationship
         });
     });
     return relationships;
@@ -273,7 +280,8 @@ export function extractGearData(html: JQuery<HTMLElement>, gearList: BWItem[]): 
             name: gearName,
             data: {
                 description: `Unknown ${gearType.titleCase()} created as part of character burning. Update with the appropriate data.`
-            }
+            },
+            img: constants.defaultImages[gearType]
         };
         gear.push(gearItem);
     });

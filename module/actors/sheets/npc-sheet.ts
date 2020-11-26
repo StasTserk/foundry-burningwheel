@@ -27,7 +27,10 @@ export class NpcSheet extends BWActorSheet {
         ];
         options.draggableRangedSelectors = [
             '.indented-section > .item-entry.ranged-draggable',
-        ];        
+        ];
+        options.draggableStatSelectors = [
+            '.npc-stats .stat-value'
+        ];
         return options;
     }
     
@@ -36,19 +39,55 @@ export class NpcSheet extends BWActorSheet {
         const rollable = true; const open = true;
         const actor = this.actor;
         data.statRow = [
-            { statName: "will", rollable, label: "Wi", value: actor.data.data.will.exp, valuePath: "will.exp", shade: actor.data.data.will.shade, shadePath: "will.shade" },
-            { statName: "perception", rollable, label: "Pe", value: actor.data.data.perception.exp, valuePath: "perception.exp", shade: actor.data.data.perception.shade, shadePath: "perception.shade" },
-            { statName: "agility", rollable, label: "Ag", value: actor.data.data.agility.exp, valuePath: "agility.exp", shade: actor.data.data.agility.shade, shadePath: "agility.shade" },
-            { statName: "speed", rollable, label: "Sp", value: actor.data.data.speed.exp, valuePath: "speed.exp", shade: actor.data.data.speed.shade, shadePath: "speed.shade" },
-            { statName: "power", rollable, label: "Po", value: actor.data.data.power.exp, valuePath: "power.exp", shade: actor.data.data.power.shade, shadePath: "power.shade" },
-            { statName: "forte", rollable, label: "Fo", value: actor.data.data.forte.exp, valuePath: "forte.exp", shade: actor.data.data.forte.shade, shadePath: "forte.shade" },
-            { statName: "health", rollable, label: "Hea", value: actor.data.data.health.exp, valuePath: "health.exp", shade: actor.data.data.health.shade, shadePath: "health.shade" },
-            { label: "Ref", value: actor.data.data.reflexes || 0, valuePath: "reflexes", shade: actor.data.data.reflexesShade, shadePath: "reflexesShade" },
-            { label: "MW", value: actor.data.data.ptgs.moThresh || 0, valuePath: "ptgs.moThresh", shade: actor.data.data.ptgs.woundShade, shadePath: "ptgs.woundShade" },
-            { statName: "steel", rollable, open, label: "Ste", value: actor.data.data.steel.exp, valuePath: "steel.exp", shade: actor.data.data.steel.shade, shadePath: "steel.shade" },
-            { label: "Hes", value: actor.data.data.hesitation || 0, valuePath: "hesitation" },
-            { statName: "resources", rollable, label: "Res", value: actor.data.data.resources.exp, valuePath: "resources.exp", shade: actor.data.data.resources.shade, shadePath: "resources.shade" },
-            { statName: "circles", rollable, label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp", shade: actor.data.data.circles.shade, shadePath: "circles.shade" },
+            {
+                statName: "will", rollable, label: "Wi", value: actor.data.data.will.exp,
+                valuePath: "will.exp", shade: actor.data.data.will.shade, shadePath: "will.shade",
+                draggable: true, accessor: "data.will"
+            }, {
+                statName: "perception", rollable, label: "Pe", value: actor.data.data.perception.exp, valuePath: "perception.exp",
+                shade: actor.data.data.perception.shade, shadePath: "perception.shade",
+                draggable: true, accessor: "data.perception"
+            }, {
+                statName: "agility", rollable, label: "Ag", value: actor.data.data.agility.exp, valuePath: "agility.exp",
+                shade: actor.data.data.agility.shade, shadePath: "agility.shade",
+                draggable: true, accessor: "data.agility"
+            }, {
+                statName: "speed", rollable, label: "Sp", value: actor.data.data.speed.exp, valuePath: "speed.exp",
+                shade: actor.data.data.speed.shade, shadePath: "speed.shade",
+                draggable: true, accessor: "data.speed"
+            }, {
+                statName: "power", rollable, label: "Po", value: actor.data.data.power.exp, valuePath: "power.exp",
+                shade: actor.data.data.power.shade, shadePath: "power.shade",
+                draggable: true, accessor: "data.power"
+            }, {
+                statName: "forte", rollable, label: "Fo", value: actor.data.data.forte.exp, valuePath: "forte.exp",
+                shade: actor.data.data.forte.shade, shadePath: "forte.shade",
+                draggable: true, accessor: "data.forte"
+            }, {
+                statName: "health", rollable, label: "Hea", value: actor.data.data.health.exp, valuePath: "health.exp",
+                shade: actor.data.data.health.shade, shadePath: "health.shade",
+                draggable: true, accessor: "data.health"
+            }, {
+                label: "Ref", value: actor.data.data.reflexes || 0, valuePath: "reflexes",
+                shade: actor.data.data.reflexesShade, shadePath: "reflexesShade"
+            }, {
+                label: "MW", value: actor.data.data.ptgs.moThresh || 0, valuePath: "ptgs.moThresh",
+                shade: actor.data.data.ptgs.woundShade, shadePath: "ptgs.woundShade"
+            }, {
+                statName: "steel", rollable, open, label: "Ste", value: actor.data.data.steel.exp, valuePath: "steel.exp",
+                shade: actor.data.data.steel.shade, shadePath: "steel.shade",
+                draggable: true, accessor: "data.steel"
+            }, {
+                label: "Hes", value: actor.data.data.hesitation || 0, valuePath: "hesitation"
+            }, {
+                statName: "resources", rollable, label: "Res", value: actor.data.data.resources.exp, valuePath: "resources.exp",
+                shade: actor.data.data.resources.shade, shadePath: "resources.shade",
+                draggable: true, accessor: "data.resources"
+            }, {
+                statName: "circles", rollable, label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp",
+                shade: actor.data.data.circles.shade, shadePath: "circles.shade",
+                draggable: true, accessor: "data.circles"
+            },
             { label: "Str", value: actor.data.data.stride, valuePath: "stride" },
         ];
         const armor: BWItemData[] = [];
@@ -181,4 +220,7 @@ interface NPCStatEntry {
     statName?: string;
     shade?: ShadeString;
     shadePath?: string;
+
+    draggable?: boolean;
+    accessor?: string;
 }

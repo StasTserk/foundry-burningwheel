@@ -116,7 +116,8 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
                 const item = await actor.createOwnedItem({
                     name: `New ${i}`,
                     type: i,
-                    data: options.baseData
+                    data: options.baseData,
+                    img: options.img
                 });
                 return actor.getOwnedItem(item._id)?.sheet.render(true);
             }
@@ -158,6 +159,7 @@ interface AddItemOptions {
     baseData: helpers.StringIndexedObject<string | number | boolean>;
     forcedData?: helpers.StringIndexedObject<string | number | boolean>;
     popupMessage?: string;
+    img: string;
 }
 
 interface ItemRowData {

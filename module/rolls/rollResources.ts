@@ -1,4 +1,4 @@
-import { Ability, BWActor } from "../actors/bwactor.js";
+import { Ability } from "../actors/bwactor.js";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -9,14 +9,19 @@ import {
     templates,
     extractRollData,
     EventHandlerOptions,
-    mergeDialogData
+    mergeDialogData,
+    RollOptions
 } from "./rolls.js";
-import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
+import { BWCharacter } from "module/actors/character.js";
 
 export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;
-    const actor = sheet.actor as BWActor;
-    const rollModifiers = sheet.actor.getRollModifiers("resources");
+    const actor = sheet.actor;
+    return handleResourcesRoll({ actor, stat, dataPreset });
+}
+
+export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRollOption): Promise<unknown> {
+    const rollModifiers = actor.getRollModifiers("resources");
     const data: ResourcesDialogData = mergeDialogData<ResourcesDialogData>({
         name: "Resources Test",
         difficulty: 3,
@@ -41,7 +46,7 @@ export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandl
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        resourcesRollCallback(dialogHtml, stat, sheet)
+                        resourcesRollCallback(dialogHtml, stat, actor)
                 }
             }
         }).render(true)
@@ -51,21 +56,21 @@ export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandl
 async function resourcesRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWCharacterSheet) {
+        actor: BWCharacter) {
     const rollData = extractRollData(dialogHtml);
 
     if (rollData.cashDice) {
-        const currentCash = sheet.actor.data.data.cash || 0;
-        sheet.actor.update({"data.cash": currentCash - rollData.cashDice});
+        const currentCash = actor.data.data.cash || 0;
+        actor.update({"data.cash": currentCash - rollData.cashDice});
     }
 
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor: "data.resources" });
+    const fateReroll = buildRerollData({ actor, roll, accessor: "data.resources" });
     const isSuccess = parseInt(roll.result) >= rollData.difficultyTotal;
-    const callons: RerollData[] = sheet.actor.getCallons("resources").map(s => {
-        return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor: "data.resources" }) as RerollData };
+    const callons: RerollData[] = actor.getCallons("resources").map(s => {
+        return { label: s, ...buildRerollData({ actor, roll, accessor: "data.resources" }) as RerollData };
     });
 
     const data: RollChatMessageData = {
@@ -83,8 +88,7 @@ async function resourcesRollCallback(
         callons
     };
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
-    if (sheet.actor.data.type === "character") {
-        const actor = sheet.actor;
+    if (actor.data.type === "character") {
         actor.updateArthaForStat("data.resources", rollData.persona, rollData.deeds);
         if (!isSuccess) {
             const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
@@ -109,17 +113,23 @@ async function resourcesRollCallback(
             taxMessage.render(true);
         }
         if (!rollData.skipAdvancement) {
-            sheet.actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
+            actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
         }
     }
 
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({actor})
     });
 }
 
 export interface ResourcesDialogData extends AttributeDialogData {
     cashDieOptions: number[];
     fundDieOptions: number[];
+}
+
+export interface ResourcesRollOption extends RollOptions {
+    dataPreset?: Partial<ResourcesDialogData>;
+    actor: BWCharacter;
+    stat: Ability;
 }

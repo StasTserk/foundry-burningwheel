@@ -20,7 +20,7 @@ export function CreateStatMacro(data: StatDragData): MacroData | null {
         name: `Test ${data.data.name}`,
         type: 'script',
         command: `game.burningwheel.macros.rollStat("${data.actorId}", "${data.data.path}", "${data.data.name}");`,
-        img: "icons/commodities/biological/organ-heart-red.webp"
+        img: defaultIcons[data.data.path] || "icons/commodities/biological/organ-heart-red.webp"
     };
 }
 
@@ -54,3 +54,18 @@ export function RollStatMacro(actorId: string, statPath: string, statName: strin
         handleNpcStatRoll({ actor: actor as Npc, dice: stat.exp, shade: stat.shade, open: stat.open, statName: statName as NpcStatName, dataPreset });
     }
 }
+
+const defaultIcons = {
+    "data.power": "icons/commodities/claws/claw-bear-brown.webp",
+    "data.forte": "icons/commodities/biological/organ-stomach.webp",
+    "data.perception": "icons/commodities/biological/eye-blue.webp",
+    "data.will": "icons/commodities/gems/gem-faceted-radiant-red.webp",
+    "data.speed": "icons/commodities/biological/wing-bird-white.webp",
+    "data.agility": "icons/environment/settlement/target.webp",
+    "data.health": "icons/commodities/biological/organ-heart-red.webp",
+    "data.steel": "icons/equipment/shield/heater-steel-worn.webp",
+    "data.circles": "icons/environment/people/group.webp",
+    "data.resources": "icons/commodities/currency/coins-plain-stack-gold-yellow.webp",
+    "data.custom1": "icons/environment/people/cleric-orange.webp",
+    "data.custom2": "icons/environment/people/cleric-orange.webp",
+};

@@ -40,6 +40,18 @@ export class ImportItemDialog extends Dialog {
                 $(o).prop("selected", "selected");
             }
         }).parent().trigger("change");
+
+        html.find('.search-grid > .search-entry').on('dragstart', (e) => {
+            const dragData = {
+                type: "Item",
+                id: e.target.dataset.id,
+                pack: e.target.dataset.source
+            };
+
+            if (e.originalEvent?.dataTransfer) {
+                e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+            }
+        });
     }
 }
 
@@ -131,7 +143,8 @@ function ItemToRowData(item: BWItem & { itemSource?: string }, options: AddItemO
         itemDataMid: options.itemDataMid(item),
         itemSource: item.itemSource || "World",
         id: item.id,
-        img: item.img
+        img: item.img,
+        source: item.compendium ? item.compendium.collection : undefined
     };
 }
 
@@ -154,4 +167,5 @@ interface ItemRowData {
     itemDataMid: string;
     itemSource?: string;
     img: string;
+    source?: string;
 }

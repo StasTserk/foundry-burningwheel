@@ -1,7 +1,7 @@
 <h2>{{searchTitle}}</h2>
 <div class="search-grid">
     {{#each items as |i|}}
-    <div data-item-name="{{i.name}}" class="flex-row search-entry" data-item-source="{{i.itemSource}}">
+    <div data-item-name="{{i.name}}" class="flex-row search-entry" data-item-source="{{i.itemSource}}" draggable="true" data-id="{{i.id}}" data-source="{{i.source}}">
         {{#if ../showImages}}
         <div class="item-select-image">
             <img src="{{i.img}}">

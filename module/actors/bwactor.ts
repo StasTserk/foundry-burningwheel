@@ -43,7 +43,8 @@ export class BWActor extends Actor<Common> {
             if (trait.data.addsReputation) {
                 const repData: NewItemData = {
                     name: trait.data.reputationName,
-                    type: "reputation"
+                    type: "reputation",
+                    img: constants.defaultImages.reputation
                 };
                 repData["data.dice"] = trait.data.reputationDice;
                 repData["data.infamous"] = trait.data.reputationInfamous;
@@ -53,7 +54,8 @@ export class BWActor extends Actor<Common> {
             if (trait.data.addsAffiliation) {
                 const repData: NewItemData = {
                     name: trait.data.affiliationName,
-                    type: "affiliation"
+                    type: "affiliation",
+                    img: constants.defaultImages.affiliation
                 };
                 repData["data.dice"] = trait.data.affiliationDice;
                 repData["data.description"] = trait.data.text;

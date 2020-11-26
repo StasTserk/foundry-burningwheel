@@ -87,7 +87,25 @@ export class BWActorSheet extends ActorSheet {
                     e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
                 }
             });
+        }
+        if (this.options.draggableStatSelectors) {
+            html.find(this.options.draggableStatSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
+                const actor = this.actor;
+                const statPath = e.target.dataset.accessor || "";
+                const statName = e.target.dataset.statName || "";
+                const dragData: helpers.StatDragData = {
+                    actorId: actor.id,
+                    type: "Stat",
+                    data: {
+                        name: statName,
+                        path: statPath
+                    }
+                };
 
+                if (e.originalEvent?.dataTransfer) {
+                    e.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+                }
+            });
         }
     }
 
@@ -186,4 +204,5 @@ export interface ActorSheetOptions extends FormApplicationOptions {
     draggableItemSelectors?: string[];
     draggableMeleeSelectors?: string[];
     draggableRangedSelectors?: string[];
+    draggableStatSelectors?: string[];
 }

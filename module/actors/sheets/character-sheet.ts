@@ -41,6 +41,11 @@ export class BWCharacterSheet extends BWActorSheet {
             '.ranged-grid .rollable',
             '.ranged-grid > .weapon-name'
         ];
+
+        options.draggableStatSelectors = [
+            '.stats > .rollable',
+            '.attributes > .rollable'
+        ];
         return options;
     }
     

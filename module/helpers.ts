@@ -267,3 +267,10 @@ export interface RangedDragData extends DragData {
         img: string;
     };
 }
+
+export interface StatDragData extends DragData {
+    data: {
+        name: string;
+        path: string;
+    }
+}

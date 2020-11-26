@@ -1,4 +1,4 @@
-<div class="rollable flex-row {{stat.cssClass}}">
+<div class="rollable flex-row {{stat.cssClass}}" draggable="true" data-accessor="{{namePrefix}}" {{#if customName}}data-stat-name="{{stat.name}}"{{else}}data-stat-name="{{statName}}"{{/if}}>
     <input id="{{actor._id}}-{{namePrefix}}-Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
     <label for="{{actor._id}}-{{namePrefix}}-Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
     {{#if customName }}

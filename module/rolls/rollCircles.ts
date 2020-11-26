@@ -12,8 +12,8 @@ import {
     EventHandlerOptions,
     mergeDialogData
 } from "./rolls.js";
-import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
 import { Relationship } from "../items/relationship.js";
+import { BWCharacter } from "module/actors/character.js";
 
 export async function handleCirclesRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
@@ -22,9 +22,14 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
         circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
     }
     const actor = sheet.actor;
-    const rollModifiers = sheet.actor.getRollModifiers("circles");
+
+    return handleCirclesRoll({ actor, dataPreset, circlesContact, stat });
+}
+
+export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContact }: CirclesRollOptions): Promise<unknown> {
+    const rollModifiers = actor.getRollModifiers("circles");
     const data: CirclesDialogData = mergeDialogData<CirclesDialogData>({
-        name: target.dataset.rollableName || "Circles Test",
+        name: "Circles Test",
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -48,7 +53,7 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        circlesRollCallback(dialogHtml, stat, sheet, circlesContact)
+                        circlesRollCallback(dialogHtml, stat, actor, circlesContact)
                 }
             }
         }).render(true)
@@ -58,7 +63,7 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
 async function circlesRollCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        sheet: BWCharacterSheet,
+        actor: BWCharacter,
         contact?: Relationship) {
     const rollData = extractRollData(dialogHtml);
 
@@ -72,12 +77,12 @@ async function circlesRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor: "data.circles" });
-    const callons: RerollData[] = sheet.actor.getCallons("circles").map(s => {
-        return { label: s, ...buildRerollData({ actor: sheet.actor, roll, accessor: "data.circles" }) as RerollData };
+    const fateReroll = buildRerollData({ actor, roll, accessor: "data.circles" });
+    const callons: RerollData[] = actor.getCallons("circles").map(s => {
+        return { label: s, ...buildRerollData({ actor, roll, accessor: "data.circles" }) as RerollData };
     });
 
-    sheet.actor.updateArthaForStat("data.circles", rollData.persona, rollData.deeds);
+    actor.updateArthaForStat("data.circles", rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
         name: `Circles`,
@@ -109,14 +114,14 @@ async function circlesRollCallback(
                 });
             }
         }
-        if (sheet.actor.data.type === "character") {
-            sheet.actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
+        if (actor.data.type === "character") {
+            actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
         }
     }
 
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: sheet.actor})
+        speaker: ChatMessage.getSpeaker({actor})
     });
 }
 
@@ -124,4 +129,11 @@ export interface CirclesDialogData extends AttributeDialogData {
     circlesBonus?: {name: string, amount: number}[];
     circlesMalus?: {name: string, amount: number}[];
     circlesContact?: Item;
+}
+
+export interface CirclesRollOptions {
+    actor: BWCharacter;
+    stat: Ability;
+    circlesContact?: Relationship
+    dataPreset?: Partial<CirclesDialogData>;
 }

@@ -9,6 +9,7 @@ import { CreateRangedRollMacro, RollRangedMacro } from "./RangedMacro.js";
 import { CreateSpellRollMacro, RollSpellMacro } from "./SpellMacro.js";
 import { CreateEditMacro, RollEditMacro } from "./EditMacro.js";
 import { ItemType } from "module/items/item.js";
+import { CreateStatMacro, RollStatMacro } from "./StatMacro.js";
 
 export async function CreateBurningWheelMacro(data: DragData, slot: number): Promise<boolean> {
     if (!handlers[data.type]) {
@@ -49,6 +50,7 @@ export function RegisterMacros(): void {
     game.burningwheel.macros['rollRanged'] = RollRangedMacro;
     game.burningwheel.macros['rollSpell'] = RollSpellMacro;
     game.burningwheel.macros['showOwnedItem'] = RollEditMacro;
+    game.burningwheel.macros['rollStat'] = RollStatMacro;
 }
 
 const handlers: Record<string, (data: DragData) => MacroData | null> = {
@@ -57,6 +59,7 @@ const handlers: Record<string, (data: DragData) => MacroData | null> = {
     "spell": CreateSpellRollMacro,
     "Melee": CreateMeleeRollMacro,
     "Ranged": CreateRangedRollMacro,
+    "Stat": CreateStatMacro,
 
     "possession": CreateEditMacro,
     "property": CreateEditMacro,

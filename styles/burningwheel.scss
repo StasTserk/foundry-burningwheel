@@ -14,15 +14,16 @@
 @import "./dialog/fight.scss";
 @import "./dialog/difficulty.scss";
 @import "./dialog/range-and-cover.scss";
-@import "./items/item.scss";
 @import "./items/armor.scss";
+@import "./items/item.scss";
+@import "./items/lifepath.scss";
 @import "./items/relationship.scss";
-@import "./items/spell.scss";
 @import "./items/skill.scss";
+@import "./items/spell.scss";
 @import "./items/trait.scss";
 @import "./items/weapon.scss";
-@import "./npc/npc.scss";
 @import "./mixins.scss";
+@import "./npc/npc.scss";
 
 .subheader,
 .header {

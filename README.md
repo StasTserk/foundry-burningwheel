@@ -24,12 +24,13 @@ If you like this system, please support the developers at [burningwheel.com](htt
 - Global GM set difficulty (possible to disable in system settings)
 
 ## Near future plans
+- Lifepath item type for character burning, settings for grouping lifepaths.
 - Sheet layout support and other customization options (perhaps a tabbed version?)
 - Compendium use improvements
 - More automation
 
 ## Distant plans
-- Lifepath item type for character burning
+- Localization support
 
 ## Installation
 To install and use The Burning Wheel for foundry, paste the following URL into the Install System dialog in the setup menu of the application.

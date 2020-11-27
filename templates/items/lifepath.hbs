@@ -1,0 +1,53 @@
+<form autocomplete="off" class="flex-column lifepath-sheet">
+    <div class="flex-row">
+        {{#if showImage}}
+        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+        {{/if}}
+        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+    </div>
+    <div class="item-form-group">
+        <label class="item-setting-label">
+            Time
+        </label>
+        <input type="number" name="data.time" value="{{data.time}}">
+        <label class="item-setting-label">
+            Resources
+        </label>
+        <input type="number" name="data.resources" value="{{data.resources}}">
+        <label class="item-setting-label">
+            Stat Boost
+        </label>
+        <select name="data.statBoost" value="{{data.statBoost}}" >
+            {{#select data.statBoost}}
+            <option value="none">None</option>
+            <option value="mental">Mental</option>
+            <option value="physical">Physical</option>
+            <option value="either">Either</option>
+            <option value="both">Both</option>
+            {{/select}}
+        </select>
+        <label class="item-setting-label">
+            Leads
+        </label>
+        <input type="text" name="data.leads" value="{{data.leads}}">
+        <label class="item-setting-label">
+            Skill Points
+        </label>
+        <input type="number" name="data.skillPoints" value="{{data.skillPoints}}">
+        <label class="item-setting-label">
+            General Points
+        </label>
+        <input type="number" name="data.generalPoints" value="{{data.generalPoints}}">
+    </div>
+    <label class="item-list-label">Skill List</label>
+    <textarea name="data.skillList">{{data.skillList}}</textarea>
+    <hr>
+    <div class="item-form-group">
+        <label class="item-setting-label">
+            Trait Points
+        </label>
+        <input type="number" name="data.traitPoints" value="{{data.traitPoints}}">
+    </div>
+    <label class="item-list-label">Trait List</label>
+    <textarea name="data.traitList">{{data.traitList}}</textarea>
+</form>

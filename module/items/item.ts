@@ -12,6 +12,7 @@ import { SkillSheet } from "./sheets/skill-sheet.js";
 import { TraitSheet } from "./sheets/trait-sheet.js";
 import { SpellSheet } from "./sheets/spell-sheet.js";
 import * as constants from "../constants.js";
+import { LifepathSheet } from "./sheets/lifepath-sheet.js";
 
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
@@ -123,6 +124,11 @@ export function RegisterItemSheets(): void {
         types: ["spell"],
         makeDefault: true
     });
+
+    Items.registerSheet(constants.systemName, LifepathSheet, {
+        types: ["lifepath"],
+        makeDefault: true
+    });
 }
 
 export type ItemType =
@@ -130,4 +136,4 @@ export type ItemType =
     "skill" | "armor" | "possession" |
     "property" | "relationship" | "melee weapon" |
     "ranged weapon" | "reputation" | "affiliation"
-    | "spell";
+    | "spell" | "lifepath";

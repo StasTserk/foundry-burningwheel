@@ -12,6 +12,7 @@ import { Skill } from "./items/skill.js";
 import { Spell } from "./items/spell.js";
 import { Trait } from "./items/trait.js";
 import { Npc } from "./actors/npc.js";
+import { Lifepath } from "./items/lifepath.js";
 
 function factory(entities: Record<string, typeof Entity>, baseClass: typeof Entity): unknown {
     return new Proxy(baseClass, {
@@ -75,4 +76,5 @@ itemTypes["ranged weapon"] = RangedWeapon as typeof Item;
 itemTypes["reputation"] = Reputation as typeof Item;
 itemTypes["affiliation"] = Relationship as typeof Item;
 itemTypes["spell"] = Spell as typeof Item;
+itemTypes["lifepath"] = Lifepath as typeof Item;
 export const itemConstructor = factory(itemTypes, Item) as typeof Item;

@@ -166,6 +166,7 @@ Item:
     - ranged weapon
     - armor
     - spell
+    - lifepath
   templates:
     arthaEarner:
       fate: false
@@ -352,3 +353,15 @@ Item:
     skillId: ''
     inPracticals: false
     learningProgress: 0
+  lifepath:
+    time: 5
+    resources: 5
+    statBoost: 'none'
+    leads: 'Any'
+    skillPoints: 0
+    generalPoints: 0
+    traitPoints: 0
+    skillList: ''
+    traitList: ''
+    requirements: ''
+    restrictions: ''

@@ -1,11 +1,13 @@
 import { BWActor } from "../actors/bwactor.js";
-import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList } from "../helpers.js";
+import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData } from "../helpers.js";
 import { BWItem, HasPointCost } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
 import { BWCharacter } from "../actors/character.js";
 import { Property } from "../items/property.js";
 import { Skill } from "../items/skill.js";
 import { Trait } from "../items/trait.js";
+import { AffiliationData } from "../items/affiliation.js";
+import { ReputationData } from "../items/reputation.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor & BWCharacter;
@@ -147,6 +149,8 @@ export class CharacterBurnerDialog extends Dialog {
             $(html.find("select[name='propertyName']")).select2(defaultSelectOptions),
             $(html.find("select[name='itemName']")).select2(defaultSelectOptions),
 
+            html.on('drop', e => { this._handleDrop(e); }),
+
             html.find("input:enabled").on('focus', e => $(e.target).select()),
             html.find("input[name='time']").on('change', _ => this._storeSum(html, "timeTotal", "time")),
             html.find("input[name='lead']").on('change', _ => this._storeSum(html, "leadTotal", "lead")),
@@ -183,7 +187,7 @@ export class CharacterBurnerDialog extends Dialog {
             }),
             html.find("input[name='skillPtsSpent'], input[name='combinedSkillPts']").on('change', _ =>
                 this._storeDiff(html, "skillPtsLeft", "combinedSkillPts", "skillPtsSpent")),
-            html.find("select[name='skillName']").on('input', (e) => this._tryLoadSkill(e)),
+            html.find("select[name='skillName']").on('change', (e) => this._tryLoadSkill(e)),
             html.find("input[name='skillAdvances'], input[name='skillOpened'], input[name='skillTraining'], select[name='skillShade']").on('change', (e: JQuery.ChangeEvent) =>
                 this._calculateSkillWorth(e)),
             html.find("input[name='skillPtsWorth']").on('change', _ => this._storeSum(html, "skillPtsSpent", "skillPtsWorth")),
@@ -196,7 +200,7 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("input[name='skillOpened'], input[name='skillAdvances'], select[name='skillRoot1'], select[name='skillRoot2']").on('change', (e: JQuery.ChangeEvent) => this._calculateSkillExponent(e.currentTarget, html)),
 
             // trait points spent
-            html.find("select[name='traitName']").on('input', (e) => this._tryLoadTrait(e)),
+            html.find("select[name='traitName']").on('change', (e) => this._tryLoadTrait(e)),
             html.find("input[name='traitCost'], input[name='traitTaken']").on('change', _ => this._calculateSpentTraits(html)),
             html.find("input[name='traitPtsSpent'], input[name='traitPtsTotal']").on('change', _ => this._storeDiff(html, "traitPtsLeft", "traitPtsTotal", "traitPtsSpent")),
 
@@ -216,10 +220,10 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("input[name='relationshipCost']").on('change', _e => this._storeSum(html, "relationshipsSpent", "relationshipCost")),
 
             // property
-            html.find("select[name='propertyName']").on('input', (e: JQuery.TriggeredEvent) => this._tryLoadProperty(e)),
+            html.find("select[name='propertyName']").on('change', (e: JQuery.TriggeredEvent) => this._tryLoadProperty(e)),
             html.find("input[name='propertyCost']").on('change', _ => this._storeSum(html, "propertySpent", "propertyCost")),
             // gear
-            html.find("select[name='itemName']").on('input', (e: JQuery.TriggeredEvent) => this._tryLoadGear(e)),
+            html.find("select[name='itemName']").on('change', (e: JQuery.TriggeredEvent) => this._tryLoadGear(e)),
             html.find("input[name='itemCost']").on('change', _ => this._storeSum(html, "gearSpent", "itemCost")),
 
             // extra rules totals
@@ -230,6 +234,121 @@ export class CharacterBurnerDialog extends Dialog {
         ];
         super.activateListeners(html);
     }
+    private async _handleDrop(e: JQuery.DropEvent) {
+        let data: DragData;
+        try {
+            data = JSON.parse(e.originalEvent?.dataTransfer?.getData('text/plain') || "");
+        }
+        catch (err) {
+            return false;
+        }
+        if (data.type === "Item" && data.id) {
+            let item: BWItem | undefined;
+            if (data.pack) {
+                item = await (game.packs.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;
+            } else if (data.actorId) {
+                item = (game.actors.find((a: BWActor) => a._id === data.actorId) as BWActor).getOwnedItem(data.id) as BWItem;
+            } else {
+                item = game.items.find((i: BWItem) => i.id === data.id) as BWItem;
+            }
+            if (item) {
+                this._insertItem(item);
+            }
+        }
+    }
+    private _insertItem(item: BWItem) {
+        this._ensureCached(item);
+        this._addEntry(item);
+    }
+
+    private _ensureCached(item: BWItem) {
+        switch (item.data.type) {
+            case "skill":
+                if (!this._skills.find(s => s.name === item.name)) {
+                    this._skills.push(item as Skill);
+                }
+                break;
+            case "trait":
+                if (!this._traits.find(t => t.name === item.name)) {
+                    this._traits.push(item as Trait);
+                }
+                break;
+            case "property":
+                if (!this._property.find(p => p.name === item.name)) {
+                    this._property.push(item as Property);
+                }
+                break;
+            default:
+                if (!this._gear.find(g => g.name === item.name)) {
+                    this._gear.push(item);
+                }
+        }
+    }
+
+    private _addEntry(item: BWItem) {
+        let element: JQuery;
+        switch (item.data.type) {
+            case "skill":
+                element = $(this.element).find('.skills-grid > select[name="skillName"]').filter((_, e) => !$(e).val()).first();
+                // Set the value, creating a new option if necessary
+                if (element.find("option[value='" + item.name + "']").length) {
+                    element.val(item.name).trigger('change');
+                } else { 
+                    // Create a DOM Option and pre-select by default
+                    const newOption = new Option(item.name, item.name, true, true);
+                    // Append it to the select
+                    element.append(newOption).val(item.name).trigger('change');
+                }
+                break;
+            case "trait":
+                element = $(this.element).find('select[name="traitName"]').filter((_, e) => !$(e).val()).first();
+                // Set the value, creating a new option if necessary
+                if (element.find("option[value='" + item.name + "']").length) {
+                    element.val(item.name).trigger('change');
+                } else { 
+                    // Create a DOM Option and pre-select by default
+                    const newOption = new Option(item.name, item.name, true, true);
+                    // Append it to the select
+                    element.append(newOption).val(item.name).trigger('change');
+                }
+                break;
+            case "property":
+                element = $(this.element).find('select[name="propertyName"]').filter((_, e) => !$(e).val()).first();
+                // Set the value, creating a new option if necessary
+                if (element.find("option[value='" + item.name + "']").length) {
+                    element.val(item.name).trigger('change');
+                } else { 
+                    // Create a DOM Option and pre-select by default
+                    const newOption = new Option(item.name, item.name, true, true);
+                    // Append it to the select
+                    element.append(newOption).val(item.name).trigger('change');
+                }
+                break;
+                break;
+            case "reputation": case "affiliation":
+                element = $(this.element).find('input[name="reputationName"]').filter((_, e) => !$(e).val()).first();
+                element.val(item.name).change();
+                element.nextAll('input[type="checkbox"]').first().prop('checked', item.type === "reputation").trigger('change');
+                element.nextAll('input[type="number"]').first().val((item.data.data as ReputationData | AffiliationData).dice).trigger('change');
+                break;
+            default:
+                // possessions, weapons, and spells
+                element = $(this.element).find('.burner-gear select[name="itemName"]').filter((_, e) => !$(e).val()).first();
+                // Set the value, creating a new option if necessary
+                if (element.find("option[value='" + item.name + "']").length) {
+                    element.val(item.name).trigger('change');
+                } else { 
+                    // Create a DOM Option and pre-select by default
+                    const newOption = new Option(item.name, item.name, true, true);
+                    // Append it to the select
+                    element.append(newOption).val(item.name).trigger('change');
+                }
+                break;
+
+        }
+        
+    }
+    
     _calculateSpentTraits(html: JQuery<HTMLElement>): void {
         // , "traitPtsSpent", "traitCost"
         let sum = 0;

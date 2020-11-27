@@ -5,24 +5,47 @@
         {{/if}}
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
-    <div class="checkbox-grid">
-        <input id="{{item._id}}-checkbox-forbidden" type="checkbox" name="data.forbidden" {{checked data.forbidden}}>
-        <label for="{{item._id}}-checkbox-forbidden">Forbidden</label>
-        <input id="{{item._id}}-checkbox-immediateFamily" type="checkbox" name="data.immediateFamily" {{checked data.immediateFamily}}>
-        <label for="{{item._id}}-checkbox-immediateFamily">Immediate Family</label>
-        <input id="{{item._id}}-checkbox-otherFamily" type="checkbox" name="data.otherFamily" {{checked data.otherFamily}}>
-        <label for="{{item._id}}-checkbox-otherFamily">Other Family</label>
-        <input id="{{item._id}}-checkbox-romantic" type="checkbox" name="data.romantic" {{checked data.romantic}}>
-        <label for="{{item._id}}-checkbox-romantic">Romantic</label>
-        <input id="{{item._id}}-checkbox-hateful" type="checkbox" name="data.hateful" {{checked data.hateful}}>
-        <label for="{{item._id}}-checkbox-hateful">Hateful/Rival</label>
+    <div class="item-form-group">
+        <div class="item-setting-label">Influence</div>
+        <select name="data.influence" value="{{data.influence}}">
+            {{#select data.influence}}
+            <option value="minor">Minor</option>
+            <option value="significant">Significant</option>
+            <option value="powerful">Powerful</option>
+            {{/select}}
+        </select>
+        <div></div><div></div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-forbidden" type="checkbox" name="data.forbidden" {{checked data.forbidden}}>
+            <label for="{{item._id}}-checkbox-forbidden">Forbidden</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-immediateFamily" type="checkbox" name="data.immediateFamily" {{checked data.immediateFamily}}>
+            <label for="{{item._id}}-checkbox-immediateFamily">Close Family</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-otherFamily" type="checkbox" name="data.otherFamily" {{checked data.otherFamily}}>
+            <label for="{{item._id}}-checkbox-otherFamily">Other Family</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-romantic" type="checkbox" name="data.romantic" {{checked data.romantic}}>
+            <label for="{{item._id}}-checkbox-romantic">Romantic</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-hateful" type="checkbox" name="data.hateful" {{checked data.hateful}}>
+            <label for="{{item._id}}-checkbox-hateful">Hateful/Rival</label>
+        </div>
     </div>
     <hr/>
-    <div class="checkbox-grid">
-        <input id="{{item._id}}-checkbox-building" type="checkbox" name="data.building" {{checked data.building}}>
-        <label for="{{item._id}}-checkbox-building" title="Relationship being built through multiple circles tests.">Building</label>
-        <input id="{{item._id}}-checkbox-enmity" type="checkbox" name="data.enmity" {{checked data.enmity}}>
-        <label for="{{item._id}}-checkbox-enmity">Enmity Clause</label>
+    <div class="item-form-group">
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-building" type="checkbox" name="data.building" {{checked data.building}}>
+            <label for="{{item._id}}-checkbox-building" title="Relationship being built through multiple circles tests.">Building</label>
+        </div>
+        <div class="pill-toggle">
+            <input id="{{item._id}}-checkbox-enmity" type="checkbox" name="data.enmity" {{checked data.enmity}}>
+            <label for="{{item._id}}-checkbox-enmity">Enmity Clause</label>
+        </div>
     </div>
     <hr/>
     <textarea name="data.description">{{data.description}}</textarea>

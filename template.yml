@@ -235,7 +235,7 @@ Item:
     otherFamily: false
     romantic: false
     hateful: false
-    influence: ''
+    influence: 'minor'
     enmity: false
     building: true
     buildingProgress: 0

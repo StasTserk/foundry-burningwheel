@@ -249,7 +249,7 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
                 romantic: relData.romantic,
                 hateful: relData.hateful,
                 enmity: false,
-                influence: "~",
+                influence: relData.power === 5 ? "minor" : (relData.power === 10 ? "significant" : "powerful"),
                 building: false,
                 buildingProgress: 0
             } as RelationshipData,

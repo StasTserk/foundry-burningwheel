@@ -338,6 +338,11 @@ export class CharacterBurnerDialog extends Dialog {
             case "relationship":
                 const rel = item as Relationship;
                 element = $(this.element).find('input[name="relationshipName"]').filter((_, e) => !$(e).val()).first();
+                if (rel.data.data.influence === "significant") {
+                    element.nextAll('select[name="relPow"]').val(10);
+                } else if (rel.data.data.influence === "powerful") {
+                    element.nextAll('select[name="relPow"]').val(15);
+                }
                 if (rel.data.data.immediateFamily) {
                     element.nextAll('select[name="relFam"]').val(-2);
                 } else if (rel.data.data.otherFamily) {

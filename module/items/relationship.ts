@@ -37,7 +37,7 @@ export interface RelationshipData extends DisplayClass {
     romantic: boolean;
     hateful: boolean;
     enmity: boolean;
-    influence: string;
+    influence: "minor" | "significant" | "powerful";
     building: boolean;
     buildingProgress: number;
 

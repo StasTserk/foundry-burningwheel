@@ -246,7 +246,8 @@ export interface DragData {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any,
     actorId?: string,
-    id?: string
+    id?: string,
+    pack?: string,
 }
 
 export interface ItemDragData extends DragData {

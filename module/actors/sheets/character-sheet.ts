@@ -6,7 +6,7 @@ import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/characterBurner.js";
 import { addNewItem } from "../../dialogs/importItemDialog.js";
 import { BWCharacter } from "../character.js";
-import { byName, } from "../../helpers.js";
+import { byName } from "../../helpers.js";
 import { ArmorRootData } from "../../items/armor.js";
 import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
 import { RangedWeaponRootData } from "../../items/rangedWeapon.js";

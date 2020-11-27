@@ -20,7 +20,6 @@ export class LifepathSheet extends BWItemSheet {
 
     
     protected async _onDrop(event: DragEvent): Promise<void> {
-        super._onDrop(event);
         let data: DragData;
         try {
             data = JSON.parse(event.dataTransfer?.getData('text/plain') || "");

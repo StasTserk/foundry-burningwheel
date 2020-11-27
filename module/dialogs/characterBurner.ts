@@ -8,6 +8,7 @@ import { Skill } from "../items/skill.js";
 import { Trait } from "../items/trait.js";
 import { AffiliationData } from "../items/affiliation.js";
 import { ReputationData } from "../items/reputation.js";
+import { Relationship } from "../items/relationship.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor & BWCharacter;
@@ -278,10 +279,13 @@ export class CharacterBurnerDialog extends Dialog {
                     this._property.push(item as Property);
                 }
                 break;
-            default:
+            case "possession": case "melee weapon": case "ranged weapon": case "spell":
                 if (!this._gear.find(g => g.name === item.name)) {
                     this._gear.push(item);
                 }
+                break;
+            default:
+                break;
         }
     }
 
@@ -327,9 +331,30 @@ export class CharacterBurnerDialog extends Dialog {
                 break;
             case "reputation": case "affiliation":
                 element = $(this.element).find('input[name="reputationName"]').filter((_, e) => !$(e).val()).first();
-                element.val(item.name).change();
+                element.val(item.name).trigger('change');
                 element.nextAll('input[type="checkbox"]').first().prop('checked', item.type === "reputation").trigger('change');
                 element.nextAll('input[type="number"]').first().val((item.data.data as ReputationData | AffiliationData).dice).trigger('change');
+                break;
+            case "relationship":
+                const rel = item as Relationship;
+                element = $(this.element).find('input[name="relationshipName"]').filter((_, e) => !$(e).val()).first();
+                if (rel.data.data.immediateFamily) {
+                    element.nextAll('select[name="relFam"]').val(-2);
+                } else if (rel.data.data.otherFamily) {
+                    element.nextAll('select[name="relFam"]').val(-1);
+                }
+
+                if (rel.data.data.romantic) {
+                    element.nextAll('input[name="relRom"]').prop('checked', true);
+                }
+                if (rel.data.data.forbidden) {
+                    element.nextAll('input[name="relFor"]').prop('checked', true);
+                }
+                if (rel.data.data.hateful) {
+                    element.nextAll('input[name="relHat"]').prop('checked', true);
+                }
+
+                element.val(item.name).trigger('change');
                 break;
             default:
                 // possessions, weapons, and spells

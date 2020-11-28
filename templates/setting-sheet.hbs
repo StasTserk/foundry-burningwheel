@@ -1,0 +1,24 @@
+<form autocomplete="off" class="setting-sheet">
+    <div class="header flex-row">
+        <div class="portrait">
+            <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+        </div>
+        <input type="text" value="{{actor.name}}" name="name">
+    </div>
+    <hr>
+    <div class="lifepath-list">
+        <div class="lifepath">
+            <div class="header">
+                <div class="title">Name</div>
+                <div class="years">Time</div>
+                <div class="resources">Res</div>
+                <div class="stat-boost">Stat</div>
+                <div class="leads">Leads</div>
+                <div class="fas"></div>
+            </div>
+        </div>
+        {{#each lifepaths as |lp|}}
+        {{> "systems/burningwheel/templates/parts/lifepath.hbs" }}
+        {{/each}}
+    </div>
+</form>

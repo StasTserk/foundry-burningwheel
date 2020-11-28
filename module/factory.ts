@@ -13,6 +13,7 @@ import { Spell } from "./items/spell.js";
 import { Trait } from "./items/trait.js";
 import { Npc } from "./actors/npc.js";
 import { Lifepath } from "./items/lifepath.js";
+import { BWSetting } from "./actors/BWSetting.js";
 
 function factory(entities: Record<string, typeof Entity>, baseClass: typeof Entity): unknown {
     return new Proxy(baseClass, {
@@ -59,6 +60,7 @@ function factory(entities: Record<string, typeof Entity>, baseClass: typeof Enti
 const actorTypes: Record<string, typeof Actor> = {};
 actorTypes["character"] = BWCharacter as typeof Actor;
 actorTypes["npc"] = Npc as typeof Actor;
+actorTypes["setting"] = BWSetting as typeof Actor;
 export const actorConstructor = factory(actorTypes, Actor) as typeof Actor;
 
 const itemTypes: Record<string, typeof Item> = {};

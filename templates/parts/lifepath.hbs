@@ -1,0 +1,40 @@
+<div class="lifepath">
+    <div class="header">
+        <div class="title">
+            {{this.name}}
+        </div>
+        <div class="years">
+            {{this.data.time}}
+        </div>
+        <div class="resources">
+            {{this.data.resources}}
+        </div>
+        <div class="stat-boost">
+            {{{this.data.statString}}}
+        </div>
+        <div class="leads">
+            {{this.data.leads}}
+        </div>
+        <i class="fas fa-times"></i>
+    </div>
+    <div class="lifepath-detail">
+        <label>Skills:</label>
+        {{#if this.data.skillList}}{{this.data.skillPoints}} Pts: {{this.data.skillList}}{{/if}}{{#if this.data.generalPoints}} {{this.data.generalPoints}} Pts: General{{/if}}
+    </div>
+    <div class="lifepath-detail">
+        <label>Traits:</label>
+        {{this.data.traitPoints}} Pts: {{#if this.data.traitList}}{{this.data.traitList}}{{else}}&mdash;{{/if}}
+    </div>
+    {{#if this.data.restrictions}}
+    <div class="lifepath-detail">
+        <label>Restrictions:</label>
+        {{this.data.restrictions}}
+    </div>
+    {{/if}}
+    {{#if this.data.requirements}}
+    <div class="lifepath-detail">
+        <label>Requirements:</label>
+        {{this.data.requirements}}
+    </div>
+    {{/if}}
+</div>

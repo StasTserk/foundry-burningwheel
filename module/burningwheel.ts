@@ -18,6 +18,7 @@ import { actorConstructor, itemConstructor } from "./factory.js";
 
 import * as constants from "./constants.js";
 import { CreateBurningWheelMacro, RegisterMacros } from "./macros/Macro.js";
+import { BWSettingSheet } from "./actors/sheets/BWSettingSheet.js";
 
 Hooks.once("init", async () => {
     CONFIG.Actor.entityClass = actorConstructor;
@@ -31,6 +32,10 @@ Hooks.once("init", async () => {
     });
     Actors.registerSheet(constants.systemName, NpcSheet, {
         types: ["npc"],
+        makeDefault: true
+    });
+    Actors.registerSheet(constants.systemName, BWSettingSheet, {
+        types: ["setting"],
         makeDefault: true
     });
     
@@ -202,5 +207,7 @@ function registerHelpers() {
 Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any, userId: string) => actor.processNewItem(item, userId));
+Hooks.on("createOwnedItem", (actor: BWActor, item: ItemData, _options: any, userId: string) => {
+    if (actor.data.type !== "setting") { actor.processNewItem(item, userId); }
+});
 Hooks.on("hotbarDrop", (_bar, data, slot) => CreateBurningWheelMacro(data, slot));

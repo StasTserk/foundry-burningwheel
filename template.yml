@@ -2,6 +2,7 @@ Actor:
   types: 
     - character
     - npc
+    - setting
   templates:
     ptgs:
       ptgs:
@@ -151,6 +152,8 @@ Actor:
       moTaken: 0
       moThresh: 10
       woundShade: 'B'
+  setting:
+    stock: ''
 Item:
   types:
     - belief

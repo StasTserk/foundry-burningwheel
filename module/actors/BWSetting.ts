@@ -1,5 +1,5 @@
 import { BWItem } from "../items/item.js";
-import { NewItemData } from "./bwactor.js";
+import { NewItemData } from "./BWActor.js";
 
 export class BWSetting extends Actor<SettingData> {
     async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {

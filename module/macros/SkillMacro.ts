@@ -1,11 +1,11 @@
 import { Skill, SkillDataRoot } from "../items/skill.js";
 import { ItemDragData } from "../helpers.js";
 import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/bwactor.js";
+import { BWActor } from "../actors/BWActor.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/npc.js";
+import { Npc } from "../actors/Npc.js";
 import { handleLearningRoll } from "../rolls/rollLearning.js";
 import { RollDialogData } from "../rolls/rolls.js";
 

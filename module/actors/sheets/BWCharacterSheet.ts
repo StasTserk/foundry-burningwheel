@@ -1,11 +1,11 @@
-import { BWActor, NewItemData } from "../bwactor.js";
-import { ActorSheetOptions, BWActorSheet } from "./bwactor-sheet.js";
+import { BWActor, NewItemData } from "../BWActor.js";
+import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
 import * as constants from "../../constants.js";
 import { BWItemData } from "../../items/item.js";
 import { handleRollable } from "../../rolls/rolls.js";
-import { CharacterBurnerDialog } from "../../dialogs/characterBurner.js";
-import { addNewItem } from "../../dialogs/importItemDialog.js";
-import { BWCharacter } from "../character.js";
+import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
+import { addNewItem } from "../../dialogs/ImportItemDialog.js";
+import { BWCharacter } from "../BWCharacter.js";
 import { byName } from "../../helpers.js";
 import { ArmorRootData } from "../../items/armor.js";
 import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";

@@ -1,5 +1,5 @@
-import { BWActor } from "../actors/bwactor.js";
-import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
+import { BWActor } from "../actors/BWActor.js";
+import { ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 
 export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     constructor(d: DialogData, o?: ApplicationOptions) {

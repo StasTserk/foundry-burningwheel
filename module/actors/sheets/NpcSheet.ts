@@ -1,8 +1,8 @@
-import { ActorSheetOptions, BWActorSheet } from "./bwactor-sheet.js";
+import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
 import { ShadeString } from "../../helpers.js";
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../BWActor.js";
 import { BWItemData, ItemType } from "../../items/item.js";
-import { Npc } from "../npc.js";
+import { Npc } from "../Npc.js";
 import { handleNpcStatRollEvent } from "../../rolls/npcStatRoll.js";
 import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "../../rolls/npcSkillRoll.js";
 import { handleArmorRollEvent } from "../../rolls/rollArmor.js";

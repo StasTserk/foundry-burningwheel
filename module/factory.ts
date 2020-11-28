@@ -1,4 +1,4 @@
-import { BWCharacter } from "./actors/character.js";
+import { BWCharacter } from "./actors/BWCharacter.js";
 import { Armor } from "./items/armor.js";
 import { Belief } from "./items/belief.js";
 import { Instinct } from "./items/instinct.js";
@@ -11,7 +11,7 @@ import { Reputation } from "./items/reputation.js";
 import { Skill } from "./items/skill.js";
 import { Spell } from "./items/spell.js";
 import { Trait } from "./items/trait.js";
-import { Npc } from "./actors/npc.js";
+import { Npc } from "./actors/Npc.js";
 import { Lifepath } from "./items/lifepath.js";
 import { BWSetting } from "./actors/BWSetting.js";
 

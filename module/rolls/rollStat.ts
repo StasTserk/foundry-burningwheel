@@ -1,5 +1,5 @@
-import { BWCharacter } from "../actors/character.js";
-import { Ability, TracksTests } from "../actors/bwactor.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
+import { Ability, TracksTests } from "../actors/BWActor.js";
 import {
     buildRerollData,
     getRollNameClass,

@@ -1,4 +1,4 @@
-import { BWActor, TracksTests } from "../actors/bwactor.js";
+import { BWActor, TracksTests } from "../actors/BWActor.js";
 
 import * as helpers from "../helpers.js";
 import {
@@ -16,7 +16,7 @@ import {
     getSplitPoolRoll,
     NpcEventHandlerOptions
 } from "./rolls.js";
-import { Npc } from "../actors/npc.js";
+import { Npc } from "../actors/Npc.js";
 
 export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;

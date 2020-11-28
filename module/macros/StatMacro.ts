@@ -1,6 +1,6 @@
-import { BWCharacter } from "../actors/character.js";
-import { Npc } from "../actors/npc.js";
-import { Ability, BWActor } from "../actors/bwactor.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
+import { Npc } from "../actors/Npc.js";
+import { Ability, BWActor } from "../actors/BWActor.js";
 
 import { handleNpcStatRoll, NpcStatName } from "../rolls/npcStatRoll.js";
 import { RollDialogData } from "../rolls/rolls.js";

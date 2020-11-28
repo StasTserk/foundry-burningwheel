@@ -1,4 +1,4 @@
-import { RollModifier } from "../actors/bwactor.js";
+import { RollModifier } from "../actors/BWActor.js";
 import { ItemType, HasPointCost, BWItemData, BWItem } from "./item.js";
 
 export class Trait extends BWItem {

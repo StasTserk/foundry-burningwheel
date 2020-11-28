@@ -1,4 +1,4 @@
-import { Common, BWActorDataRoot, BWActor, NewItemData } from "./bwactor.js";
+import { Common, BWActorDataRoot, BWActor, NewItemData } from "./BWActor.js";
 import { ShadeString } from "../helpers.js";
 import { BWItem } from "../items/item.js";
 

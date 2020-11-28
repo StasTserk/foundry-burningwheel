@@ -1,10 +1,10 @@
 import { BWItemData } from "../items/item.js";
-import { NpcData, NpcDataRoot } from "../actors/npc.js";
-import { BWActor } from "../actors/bwactor.js";
+import { NpcData, NpcDataRoot } from "../actors/Npc.js";
+import { BWActor } from "../actors/BWActor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
-import { ExtendedTestData, ExtendedTestDialog } from "./extendedTestDialog.js";
+import { ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
-import { BWCharacterData, CharacterDataRoot } from "../actors/character.js";
+import { BWCharacterData, CharacterDataRoot } from "../actors/BWCharacter.js";
 import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
 
 import * as constants from "../constants.js";

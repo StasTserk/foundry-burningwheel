@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../actors/bwactor.js";
+import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -11,8 +11,8 @@ import {
     extractRollData,
     mergeDialogData
 } from "./rolls.js";
-import { BWCharacterSheet } from "../actors/sheets/character-sheet.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { translateWoundValue } from "../helpers.js";
 
 export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCharacterSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {

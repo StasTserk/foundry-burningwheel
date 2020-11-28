@@ -29,6 +29,8 @@ export interface LifepathData {
     traitList: string;
     requirements: string;
     restrictions: string;
+    
+    order: number; // hidden property  for sorting in the setting sheet
 
     statString?: string;
 }

@@ -368,3 +368,4 @@ Item:
     traitList: ''
     requirements: ''
     restrictions: ''
+    order: 0

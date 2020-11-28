@@ -18,6 +18,9 @@ export class BWSetting extends Actor<SettingData> {
     async createEmbeddedEntity(entityType: string, data: NewItemData, options?: any): Promise<this> {
         // we only add lifepaths to setting actors. They are not meant to hold other actor data.
         if (data.type === 'lifepath') {
+            if (data.data) {
+                data.data.order = Array.from(this.items.values()).length;
+            }
             return super.createEmbeddedEntity(entityType, data, options);
         }
         return this;

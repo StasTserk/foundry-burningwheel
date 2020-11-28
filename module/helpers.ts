@@ -1,4 +1,4 @@
-import { TracksTests } from "./actors/bwactor.js";
+import { TracksTests } from "./actors/BWActor.js";
 import { ArmorRootData } from "./items/armor.js";
 import { BWItem, BWItemData, DisplayClass, ItemType } from "./items/item.js";
 import { Skill } from "./items/skill.js";

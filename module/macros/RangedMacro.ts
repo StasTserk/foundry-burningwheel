@@ -1,10 +1,10 @@
 import { Skill } from "../items/skill.js";
 import { RangedDragData } from "../helpers.js";
 import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/bwactor.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWActor } from "../actors/BWActor.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { handleNpcWeaponRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/npc.js";
+import { Npc } from "../actors/Npc.js";
 import { RollDialogData } from "../rolls/rolls.js";
 import { handleWeaponRoll } from "../rolls/rollWeapon.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";

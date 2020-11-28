@@ -1,5 +1,5 @@
-import { BWActor } from "./actors/bwactor.js";
-import { BWCharacterSheet } from "./actors/sheets/character-sheet.js";
+import { BWActor } from "./actors/BWActor.js";
+import { BWCharacterSheet } from "./actors/sheets/BWCharacterSheet.js";
 import {
     RegisterItemSheets
 } from "./items/item.js";
@@ -9,11 +9,11 @@ import { ShadeString, slugify, translateWoundValue } from "./helpers.js";
 import { migrateData } from "./migration/migration.js";
 import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
-import { NpcSheet } from "./actors/sheets/npc-sheet.js";
-import { DuelOfWitsDialog } from "./dialogs/duelOfWits.js";
-import { FightDialog } from "./dialogs/fight.js";
-import { DifficultyDialog } from "./dialogs/difficultyDialog.js";
-import { RangeAndCoverDialog } from "./dialogs/rangeAndCover.js";
+import { NpcSheet } from "./actors/sheets/NpcSheet.js";
+import { DuelOfWitsDialog } from "./dialogs/DuelOfWitsDialog.js";
+import { FightDialog } from "./dialogs/FightDialog.js";
+import { DifficultyDialog } from "./dialogs/DifficultyDialog.js";
+import { RangeAndCoverDialog } from "./dialogs/RangeAndCoverDialog.js";
 import { actorConstructor, itemConstructor } from "./factory.js";
 
 import * as constants from "./constants.js";

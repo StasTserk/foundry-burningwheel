@@ -1,10 +1,10 @@
 import { Skill } from "../items/skill.js";
 import { ItemDragData } from "../helpers.js";
 import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/bwactor.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWActor } from "../actors/BWActor.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { handleNpcSpellRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/npc.js";
+import { Npc } from "../actors/Npc.js";
 import { RollDialogData } from "../rolls/rolls.js";
 import { Spell, SpellDataRoot } from "../items/spell.js";
 import { handleSpellRoll } from "../rolls/rollSpell.js";

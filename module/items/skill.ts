@@ -1,5 +1,5 @@
 import { skillRootSelect, SkillTypeString } from "../constants.js";
-import { Ability, BWActor, TracksTests } from "../actors/bwactor.js";
+import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, ItemType, BWItemData, BWItem } from "./item.js";
 

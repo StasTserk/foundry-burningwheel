@@ -1,8 +1,8 @@
 import { TestString } from "../helpers.js";
-import { BWActor, TracksTests } from "../actors/bwactor.js";
+import { BWActor, TracksTests } from "../actors/BWActor.js";
 import * as helpers from "../helpers.js";
 import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { Armor } from "../items/armor.js";
 import { Skill } from "../items/skill.js";
 

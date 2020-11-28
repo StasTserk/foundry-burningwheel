@@ -1,4 +1,4 @@
-import { BWActor } from "../actors/bwactor.js";
+import { BWActor } from "../actors/BWActor.js";
 import { BWItemData, DisplayClass } from "./item.js";
 
 export class Relationship extends Item {

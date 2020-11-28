@@ -1,4 +1,4 @@
-import { BWActor, TracksTests, Ability} from "../actors/bwactor.js";
+import { BWActor, TracksTests, Ability} from "../actors/BWActor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -17,7 +17,7 @@ import {
     getSplitPoolText,
     getSplitPoolRoll
 } from "./rolls.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
 import { Possession, PossessionRootData } from "../items/possession.js";
 

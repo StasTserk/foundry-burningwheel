@@ -1,4 +1,4 @@
-import { BWActor } from "../actors/bwactor.js";
+import { BWActor } from "../actors/BWActor.js";
 import { ItemType, BWItem } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import * as constants from "../constants.js";

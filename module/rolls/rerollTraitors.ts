@@ -1,8 +1,8 @@
 import { TestString } from "../helpers.js";
-import { Ability, BWActor, TracksTests } from "../actors/bwactor.js";
+import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
 import * as helpers from "../helpers.js";
 import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
-import { BWCharacter } from "../actors/character.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill, SkillData } from "../items/skill.js";
 
 export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = false): Promise<unknown> {

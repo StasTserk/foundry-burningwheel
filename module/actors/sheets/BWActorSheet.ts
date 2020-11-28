@@ -1,4 +1,4 @@
-import { BWActor } from "../bwactor.js";
+import { BWActor } from "../BWActor.js";
 import { ArmorRootData } from "../../items/armor.js";
 import * as constants from "../../constants.js";
 import * as helpers from "../../helpers.js";

@@ -1,4 +1,4 @@
-import { BWActor } from "../../actors/bwactor.js";
+import { BWActor } from "../../actors/BWActor.js";
 import { DragData } from "../../helpers.js";
 import { BWItem } from "../item.js";
 import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";

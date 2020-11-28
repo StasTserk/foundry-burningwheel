@@ -6,8 +6,8 @@ import { ArmorRootData } from "../items/armor.js";
 import { PossessionRootData } from "../items/possession.js";
 import { ReputationDataRoot } from "../items/reputation.js";
 import { TraitDataRoot, Trait } from "../items/trait.js";
-import { BWCharacterData } from "./character.js";
-import { NpcData } from "../actors/npc.js";
+import { BWCharacterData } from "./BWCharacter.js";
+import { NpcData } from "./Npc.js";
 import { AffiliationDataRoot } from "../items/affiliation.js";
 
 export class BWActor extends Actor<Common> {

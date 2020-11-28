@@ -16,7 +16,7 @@
         <div class="burner-section-header">Gen.</div>
         <div class="burner-section-header">Trait</div>
         {{#each data.lifepaths as |lp key|}}
-            <input type="text" class="lifepath-input" value="{{lp.name}}" name="lifepathName">
+            <input type="text" class="lifepath-input" value="{{lp.name}}" name="lifepathName" {{#if (eq key 0)}}placeholder="Born..."{{/if}}>
             <input type="number" class="lifepath-input" name="time" value="{{lp.time}}">
             <input type="number" class="lifepath-input" name="lead" value="{{lp.lead}}">
             <input type="number" class="lifepath-input" name="resources" value="{{lp.resources}}">

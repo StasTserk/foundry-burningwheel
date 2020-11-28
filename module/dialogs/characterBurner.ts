@@ -1,6 +1,6 @@
 import { BWActor } from "../actors/bwactor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData } from "../helpers.js";
-import { BWItem, HasPointCost } from "../items/item.js";
+import { BWItem, HasPointCost, ItemType } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
 import { BWCharacter } from "../actors/character.js";
 import { Property } from "../items/property.js";
@@ -8,7 +8,8 @@ import { Skill } from "../items/skill.js";
 import { Trait } from "../items/trait.js";
 import { AffiliationData } from "../items/affiliation.js";
 import { ReputationData } from "../items/reputation.js";
-import { Relationship } from "../items/relationship.js";
+import { RelationshipData } from "../items/relationship.js";
+import { Lifepath, LifepathData } from "../items/lifepath.js";
 
 export class CharacterBurnerDialog extends Dialog {
     private readonly _parent: BWActor & BWCharacter;
@@ -95,7 +96,6 @@ export class CharacterBurnerDialog extends Dialog {
             data.data.relationships.push({});
             data.data.reputations.push({});
         }
-        data.data.lifepaths[0].name = "Born ...";
 
         data.data.skillNames = this._skills.map(s => s.name);
         data.data.traitNames = {
@@ -258,8 +258,87 @@ export class CharacterBurnerDialog extends Dialog {
         }
     }
     private _insertItem(item: BWItem) {
-        this._ensureCached(item);
-        this._addEntry(item);
+        if (item.type === "lifepath") {
+            this._addLifepath(item as Lifepath);
+        } else {
+            this._ensureCached(item);
+            this._addEntry(item.name, item.data.type, false, item.data.data);
+        }
+    }
+    private _addLifepath(lp: Lifepath) {
+        const pathData = duplicate(lp.data.data) as LifepathData;
+        const numDuplicates = $(this.element).find('input[name="lifepathName"]').filter((_, e) => $(e).val() === lp.name).length;
+        const emptyLifepath = $(this.element).find('.lifepath-grid > input[name="lifepathName"]').filter((_, e) => !$(e).val()).first();
+
+        const skillList = pathData.skillList.split(',').map(i => i.trim());
+        const traitList = pathData.traitList.split(',').map(i => i.trim());
+
+        switch (numDuplicates) {
+            case 0:
+                break;
+            case 1:
+                if (traitList.length <= 1) {
+                    pathData.traitPoints = Math.max(pathData.traitPoints -1, 0);
+                }
+                break;
+            case 2:
+                pathData.statBoost = "none";
+                pathData.traitPoints = 0;
+                pathData.resources = Math.floor(pathData.resources / 2);
+                pathData.skillPoints = Math.floor(pathData.skillPoints / 2);
+                pathData.generalPoints = Math.floor(pathData.generalPoints / 2);
+                break;
+            default:
+                pathData.resources = Math.floor(pathData.resources / 2);
+                pathData.statBoost = "none";
+                pathData.traitPoints = 0;
+                pathData.skillPoints = 0;
+                pathData.generalPoints = 0;
+        }
+
+        emptyLifepath.val(lp.name);
+        emptyLifepath.next().val(pathData.time).trigger('change')
+            .next().val(0)
+            .next().val(pathData.resources).trigger('change')
+            .nextAll('input[name="skillPts"]').first().val(pathData.skillPoints).trigger('change')
+            .next().val(pathData.generalPoints).trigger('change')
+            .next().val(pathData.traitPoints).trigger('change');
+        
+        const mentalPoints = emptyLifepath.nextAll('.inline-text').first().children('input[name="mentalStat"]').first();
+        const physicalPoints = emptyLifepath.nextAll('.inline-text').first().next().children('input[name="physicalStat"]').first();
+
+        switch (pathData.statBoost) {
+            case "both":
+                mentalPoints.val(1).trigger('change');
+                physicalPoints.val(1).trigger('change');
+                break;
+            case "mental":
+                mentalPoints.val(1).trigger('change');
+                break;
+            case "physical":
+                physicalPoints.val(1).trigger('change');
+                break;
+            case "either":
+                new Dialog({
+                    title: "Bonus Stat Point Choice",
+                    content: "<p>This lifepath allows a stat point to be assigned to either the mental or physical pools</p>",
+                    buttons: {
+                        mental: {
+                            label: "Assign to Mental",
+                            callback: () => { mentalPoints.val(1).trigger('change'); }
+                        },
+                        physical: {
+                            label: "Assign to Physical",
+                            callback: () => { physicalPoints.val(1).trigger('change'); }
+                        }
+                    }
+                }).render(true);
+                break;
+        }
+
+        const requiredIndex = numDuplicates;
+        skillList.forEach((s, i) => this._addEntry(s, "skill", requiredIndex === i));
+        traitList.forEach((t, i) => this._addEntry(t, "trait", requiredIndex === i));
     }
 
     private _ensureCached(item: BWItem) {
@@ -289,92 +368,125 @@ export class CharacterBurnerDialog extends Dialog {
         }
     }
 
-    private _addEntry(item: BWItem) {
+    private _addEntry(itemName: string, itemType: ItemType, required?: boolean, itemData?: unknown) {
         let element: JQuery;
-        switch (item.data.type) {
+        switch (itemType) {
             case "skill":
                 element = $(this.element).find('.skills-grid > select[name="skillName"]').filter((_, e) => !$(e).val()).first();
-                // Set the value, creating a new option if necessary
-                if (element.find("option[value='" + item.name + "']").length) {
-                    element.val(item.name).trigger('change');
-                } else { 
-                    // Create a DOM Option and pre-select by default
-                    const newOption = new Option(item.name, item.name, true, true);
-                    // Append it to the select
-                    element.append(newOption).val(item.name).trigger('change');
+
+                // if a skill is already included don't double include it
+                if (!$(this.element).find(`select[name="skillName"]`).filter((_, element) => $(element).val() === itemName).length) {
+                    // Set the value, creating a new option if necessary
+                    if (element.find("option[value='" + itemName + "']").length) {
+                        element.val(itemName).trigger('change');
+                    } else {
+                        // Create a DOM Option and pre-select by default
+                        const newOption = new Option(itemName, itemName, true, true);
+                        // Append it to the select
+                        element.append(newOption).val(itemName).trigger('change');
+                    }
+                    if (required) {
+                        element.nextAll("input[type='checkbox']").first().prop('checked', true);
+                    }
+                } else {
+                    if (required) {
+                        element = $(this.element)
+                            .find(`select[name="skillName"]`)
+                            .filter((_, element) => $(element).val() === itemName)
+                            .first()
+                            .nextAll("input[type='checkbox']")
+                            .first()
+                            .prop('checked', true);
+                    }
                 }
                 break;
             case "trait":
                 element = $(this.element).find('select[name="traitName"]').filter((_, e) => !$(e).val()).first();
-                // Set the value, creating a new option if necessary
-                if (element.find("option[value='" + item.name + "']").length) {
-                    element.val(item.name).trigger('change');
-                } else { 
-                    // Create a DOM Option and pre-select by default
-                    const newOption = new Option(item.name, item.name, true, true);
-                    // Append it to the select
-                    element.append(newOption).val(item.name).trigger('change');
+                // if a skill is already included don't double include it
+                if (!$(this.element).find(`select[name="traitName"]`).filter((_, element) => $(element).val() === itemName).length) {
+                    // Set the value, creating a new option if necessary
+                    if (element.find("option[value='" + itemName + "']").length) {
+                        element.val(itemName).trigger('change');
+                    } else { 
+                        // Create a DOM Option and pre-select by default
+                        const newOption = new Option(itemName, itemName, true, true);
+                        // Append it to the select
+                        element.append(newOption).val(itemName).trigger('change');
+                    }
+                    if (required) {
+                        element.nextAll("input[type='checkbox']").first().prop('checked', true);
+                    }
+                } else {
+                    if (required) {
+                        element = $(this.element)
+                            .find(`select[name="traitName"]`)
+                            .filter((_, element) => $(element).val() === itemName)
+                            .first()
+                            .nextAll("input[type='checkbox']")
+                            .first()
+                            .prop('checked', true);
+                    }
                 }
+
                 break;
             case "property":
                 element = $(this.element).find('select[name="propertyName"]').filter((_, e) => !$(e).val()).first();
                 // Set the value, creating a new option if necessary
-                if (element.find("option[value='" + item.name + "']").length) {
-                    element.val(item.name).trigger('change');
+                if (element.find("option[value='" + itemName + "']").length) {
+                    element.val(itemName).trigger('change');
                 } else { 
                     // Create a DOM Option and pre-select by default
-                    const newOption = new Option(item.name, item.name, true, true);
+                    const newOption = new Option(itemName, itemName, true, true);
                     // Append it to the select
-                    element.append(newOption).val(item.name).trigger('change');
+                    element.append(newOption).val(itemName).trigger('change');
                 }
                 break;
                 break;
             case "reputation": case "affiliation":
                 element = $(this.element).find('input[name="reputationName"]').filter((_, e) => !$(e).val()).first();
-                element.val(item.name).trigger('change');
-                element.nextAll('input[type="checkbox"]').first().prop('checked', item.type === "reputation").trigger('change');
-                element.nextAll('input[type="number"]').first().val((item.data.data as ReputationData | AffiliationData).dice).trigger('change');
+                element.val(itemName).trigger('change');
+                element.nextAll('input[type="checkbox"]').first().prop('checked', itemName === "reputation").trigger('change');
+                element.nextAll('input[type="number"]').first().val((itemData as ReputationData | AffiliationData).dice).trigger('change');
                 break;
             case "relationship":
-                const rel = item as Relationship;
+                const rel = itemData as RelationshipData;
                 element = $(this.element).find('input[name="relationshipName"]').filter((_, e) => !$(e).val()).first();
-                if (rel.data.data.influence === "significant") {
+                if (rel.influence === "significant") {
                     element.nextAll('select[name="relPow"]').val(10);
-                } else if (rel.data.data.influence === "powerful") {
+                } else if (rel.influence === "powerful") {
                     element.nextAll('select[name="relPow"]').val(15);
                 }
-                if (rel.data.data.immediateFamily) {
+                if (rel.immediateFamily) {
                     element.nextAll('select[name="relFam"]').val(-2);
-                } else if (rel.data.data.otherFamily) {
+                } else if (rel.otherFamily) {
                     element.nextAll('select[name="relFam"]').val(-1);
                 }
 
-                if (rel.data.data.romantic) {
+                if (rel.romantic) {
                     element.nextAll('input[name="relRom"]').prop('checked', true);
                 }
-                if (rel.data.data.forbidden) {
+                if (rel.forbidden) {
                     element.nextAll('input[name="relFor"]').prop('checked', true);
                 }
-                if (rel.data.data.hateful) {
+                if (rel.hateful) {
                     element.nextAll('input[name="relHat"]').prop('checked', true);
                 }
 
-                element.val(item.name).trigger('change');
+                element.val(itemName).trigger('change');
                 break;
             default:
                 // possessions, weapons, and spells
                 element = $(this.element).find('.burner-gear select[name="itemName"]').filter((_, e) => !$(e).val()).first();
                 // Set the value, creating a new option if necessary
-                if (element.find("option[value='" + item.name + "']").length) {
-                    element.val(item.name).trigger('change');
+                if (element.find("option[value='" + itemName + "']").length) {
+                    element.val(itemName).trigger('change');
                 } else { 
                     // Create a DOM Option and pre-select by default
-                    const newOption = new Option(item.name, item.name, true, true);
+                    const newOption = new Option(itemName, itemName, true, true);
                     // Append it to the select
-                    element.append(newOption).val(item.name).trigger('change');
+                    element.append(newOption).val(itemName).trigger('change');
                 }
                 break;
-
         }
         
     }

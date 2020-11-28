@@ -1,0 +1,48 @@
+.setting-sheet {
+    &>.header {
+        .portrait {
+            height: 100px;
+            flex: 0 0 100px;
+        }
+        input {
+            flex: 1;
+            // width: unset;
+        }
+    }
+    & > .lifepath-list {
+        .lifepath {
+            .header {
+                width: 100%;
+                background-color: darkgrey;
+                font-size: 1.125em;
+                font-weight: bold;
+                padding: 3px 10px;
+
+                .title {
+                    flex: 1 1 100px;
+                }
+
+                .years, .resources, .stat-boost {
+                    flex: 0 0 3em;
+                }
+
+                .leads {
+                    flex: 3;
+                }
+
+                .fas {
+                    flex: 0 0 20px;
+                }
+            }
+
+            .lifepath-detail {
+                margin-left: 20px;
+                font-size: 1.125em;
+
+                label {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

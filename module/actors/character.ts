@@ -371,12 +371,12 @@ export class BWCharacter extends BWActor{
         // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for the character burner
         if (Array.isArray(itemData)) {
             itemData = itemData.filter(id => id.type !== "lifepath");
-            return this.createOwnedItem(itemData, options);
+            return super.createOwnedItem(itemData, options);
         }
         if (itemData.type !== "lifepath") {
-            return this.createOwnedItem(itemData);
+            return super.createOwnedItem(itemData);
         }
-        return this.createOwnedItem([], options);
+        return super.createOwnedItem([], options);
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any

@@ -1,5 +1,5 @@
 import { ShadeString, StringIndexedObject } from "../helpers.js";
-import { DisplayClass, ItemType, BWItemData } from "../items/item.js";
+import { DisplayClass, ItemType, BWItemData, BWItem } from "../items/item.js";
 import { SkillDataRoot } from "../items/skill.js";
 import * as constants from "../constants.js";
 import { ArmorRootData } from "../items/armor.js";
@@ -64,8 +64,8 @@ export class BWActor extends Actor<Common> {
         }
     }
 
-    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<Item> {
-        return super.createOwnedItem(itemData, options);
+    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
+        return super.createOwnedItem(itemData, options) as Promise<BWItem>;
     }
 
     prepareData(): void {
@@ -406,7 +406,7 @@ export interface BWActorDataRoot extends ActorData<Common> {
 
     fightWeapons: BWItemData[];
 
-    type: "character" | "npc";
+    type: "character" | "npc" | "setting";
 }
 
 export interface Ability extends TracksTests, DisplayClass {

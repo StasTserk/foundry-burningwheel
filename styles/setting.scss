@@ -11,23 +11,33 @@
     }
     & > .lifepath-list {
         .lifepath {
+            margin-bottom: 3px;
             .header {
                 width: 100%;
                 background-color: darkgrey;
                 font-size: 1.125em;
-                font-weight: bold;
                 padding: 3px 10px;
+
+                &.section-header {
+                    background-color: unset;
+                    font-size: 1.25em;
+                    border-bottom: 2px solid black;
+                    padding: 0 10px;
+                }
 
                 .title {
                     flex: 1 1 100px;
+                    font-weight: bold;
                 }
 
                 .years, .resources, .stat-boost {
-                    flex: 0 0 3em;
+                    flex: 0 0 60px;
+                    text-align: center;
                 }
 
                 .leads {
-                    flex: 3;
+                    flex: 4;
+                    font-style: italic;
                 }
 
                 .fas {
@@ -38,9 +48,11 @@
             .lifepath-detail {
                 margin-left: 20px;
                 font-size: 1.125em;
-
+                text-align: justify;
                 label {
+                    margin-left: -5px;
                     font-weight: bold;
+                    font-style: italic;
                 }
             }
         }

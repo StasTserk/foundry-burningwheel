@@ -37,7 +37,8 @@ export class BWActorSheet extends ActorSheet {
                     actorId: actor.id,
                     id: item.id,
                     type: "Item",
-                    data: item.data
+                    data: item.data,
+                    pack: actor.compendium ? actor.compendium.collection : undefined
                 };
 
                 if (e.originalEvent?.dataTransfer) {

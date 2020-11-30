@@ -3,7 +3,16 @@
         <div class="portrait">
             <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
         </div>
-        <input type="text" value="{{actor.name}}" name="name">
+        <div class="details">
+            <input type="text" value="{{actor.name}}" name="name">
+            {{#if editable}}
+            <textarea name="description">{{actor.description}}</textarea>
+            {{else}}
+            <div class="description flex-column">
+                {{actor.description}}
+            </div>
+            {{/if}}
+        </div>
     </div>
     <hr>
     <div class="lifepath-list">

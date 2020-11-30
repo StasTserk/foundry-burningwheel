@@ -153,7 +153,7 @@ Actor:
       moThresh: 10
       woundShade: 'B'
   setting:
-    stock: ''
+    description: ''
 Item:
   types:
     - belief

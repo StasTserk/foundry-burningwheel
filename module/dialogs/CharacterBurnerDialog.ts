@@ -276,8 +276,8 @@ export class CharacterBurnerDialog extends Dialog {
         const numDuplicates = $(this.element).find('input[name="lifepathName"]').filter((_, e) => $(e).val() === lp.name).length;
         const emptyLifepath = $(this.element).find('.lifepath-grid > input[name="lifepathName"]').filter((_, e) => !$(e).val()).first();
 
-        const skillList = pathData.skillList.split(',').map(i => i.trim());
-        const traitList = pathData.traitList.split(',').map(i => i.trim());
+        const skillList = pathData.skillList.split(',').map(i => i.trim()).filter(i => i);
+        const traitList = pathData.traitList.split(',').map(i => i.trim()).filter(i => i);
 
         switch (numDuplicates) {
             case 0:

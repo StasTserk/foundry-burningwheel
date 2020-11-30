@@ -3,21 +3,21 @@
         <div class="portrait">
             <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
         </div>
-        <div class="details">
+        <div class="details flex-column">
             <input type="text" value="{{actor.name}}" name="name">
             {{#if editable}}
-            <textarea name="description">{{actor.description}}</textarea>
+            <textarea name="data.description">{{data.description}}</textarea>
             {{else}}
-            <div class="description flex-column">
-                {{actor.description}}
+            <div class="description">
+                {{data.description}}
             </div>
             {{/if}}
         </div>
     </div>
     <hr>
     <div class="lifepath-list">
-        <div class="lifepath">
-            <div class="header section-header">
+        <div class="section-header">
+            <div class="header">
                 <div class="title">Lifepath</div>
                 <div class="years">Time</div>
                 <div class="resources">Res</div>

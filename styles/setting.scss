@@ -3,14 +3,18 @@
         .portrait {
             height: 100px;
             flex: 0 0 100px;
+            img {
+                border: 0;
+            }
         }
         .details {
+            padding: 0 5px;
             flex: 1;
             input {
                 font-size: 2em;
                 border: 0;
                 border-bottom: 2px groove #800;
-                margin-bottom: 2px;
+                margin-bottom: 4px;
                 border-radius: 0;
                 height: 1.25em;
             }
@@ -21,20 +25,47 @@
         }
     }
     & > .lifepath-list {
+        .section-header {
+            background-color: unset;
+            font-size: 1.25em;
+            border-bottom: 2px solid black;
+            padding: 0 10px;
+            font-weight: bold;
+
+            .title {
+                flex: 1 1 100px;
+                font-weight: bold;
+            }
+
+            .years, .resources, .stat-boost {
+                flex: 0 0 60px;
+                text-align: center;
+            }
+
+            .leads {
+                flex: 4;
+            }
+
+            .fas {
+                flex: 0 0 20px;
+            }
+        }
+
         .lifepath {
             margin-bottom: 3px;
+            cursor: pointer;
+            border: 2px solid transparent;
+
+            &:hover {
+                background-color: rgba(black, 0.1);
+                border: 2px groove #aaa;
+            }
+
             .header {
                 width: 100%;
                 background-color: darkgrey;
                 font-size: 1.125em;
                 padding: 3px 10px;
-
-                &.section-header {
-                    background-color: unset;
-                    font-size: 1.25em;
-                    border-bottom: 2px solid black;
-                    padding: 0 10px;
-                }
 
                 .title {
                     flex: 1 1 100px;
@@ -53,6 +84,12 @@
 
                 .fas {
                     flex: 0 0 20px;
+                    line-height: 20px;
+                    text-align: center;
+                    margin-right: -5px;
+                    &:hover {
+                        color: #800;
+                    }
                 }
             }
 

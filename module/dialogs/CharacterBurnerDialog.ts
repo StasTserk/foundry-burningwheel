@@ -19,7 +19,7 @@ export class CharacterBurnerDialog extends Dialog {
     private _gear: BWItem[];
     private _property: Property[];
 
-    static async Open(parent: BWActor & BWCharacter): Promise<Application> {
+    static async Open(parent: BWCharacter): Promise<Application> {
         const html = await renderTemplate("systems/burningwheel/templates/dialogs/compendium-select.hbs", { compendiums: getCompendiumList() });
         const compendiumSelect = new Dialog({
             title: "Pick Compendiums",
@@ -52,7 +52,7 @@ export class CharacterBurnerDialog extends Dialog {
         });
         return compendiumSelect.render(true);
     }
-    private constructor(parent: BWActor & BWCharacter) {
+    private constructor(parent: BWCharacter) {
         super({ title: "Character Burner", buttons: {} });
 
         this._parent = parent;
@@ -231,9 +231,23 @@ export class CharacterBurnerDialog extends Dialog {
             html.find("input[name='reputationSpent'], input[name='propertySpent']").on('change', _ => this._storeSum(html, "resourceExponentAmount", "reputationSpent", "propertySpent")),
             html.find("input[name='relationshipsSpent'], input[name='propertySpent']").on('change', _ => this._storeSum(html, "circlesExponentBonus", "relationshipsSpent", "propertySpent")),
 
-            html.find("button.submit-burner-button").on('click', e => this._finishBurning(e, html))
+            html.find("button.submit-burner-button").on('click', e => this._finishBurning(e, html)),
+
+            html.find(".skills-grid .fa-check-circle").on('click', e => this._openItemSheet(e, '.skills-grid', 'input[name="skillId"]', this._skills)),
+            html.find(".burner-traits-grid .fa-check-circle").on('click', e => this._openItemSheet(e, '.burner-traits-grid', 'input[name="traitId"]', this._traits)),
+            html.find(".burner-property .fa-check-circle").on('click', e => this._openItemSheet(e, '.burner-property', 'input[name="propertyId"]', this._property)),
+            html.find(".burner-gear .fa-check-circle").on('click', e => this._openItemSheet(e, '.burner-gear', 'input[name="gearId"]', this._gear)),
         ];
         super.activateListeners(html);
+    }
+    private _openItemSheet(e: JQuery.ClickEvent, parentSelector: string, idSelector: string, items: BWItem[]): void {
+        const idElement = $(e.currentTarget).closest(parentSelector).find(idSelector);
+        if (idElement.val()) {
+            const item = items.find(i => i.id === idElement.val());
+            if (item) {
+                item.sheet.render(true);
+            }
+        }
     }
     private async _handleDrop(e: JQuery.DropEvent) {
         let data: DragData;

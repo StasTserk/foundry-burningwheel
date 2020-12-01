@@ -19,7 +19,7 @@
     </div>
     <div class="lifepath-detail">
         <label>Skills:</label>
-        {{#if this.data.skillList}}{{this.data.skillPoints}} Pts: {{this.data.skillList}}{{/if}}{{#if this.data.generalPoints}} {{this.data.generalPoints}} Pts: General{{/if}}
+        {{#if this.data.skillList}}{{this.data.skillPoints}} Pts: {{this.data.skillList}}{{/if}}{{#if this.data.generalPoints}}{{#if this.data.skillList}};{{/if}} {{this.data.generalPoints}} Pts: General{{/if}}
     </div>
     <div class="lifepath-detail">
         <label>Traits:</label>
@@ -33,7 +33,7 @@
     {{/if}}
     {{#if this.data.requirements}}
     <div class="lifepath-detail">
-        <label>Requirements:</label>
+        <label>Requires:</label>
         {{this.data.requirements}}
     </div>
     {{/if}}

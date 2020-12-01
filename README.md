@@ -22,9 +22,9 @@ If you like this system, please support the developers at [burningwheel.com](htt
 - Specialized dialog for Range and Cover.
 - Alternate roll modes -- Hold Alt, Ctrl/Cmd, or Shift when pressing one of the roll buttons to use an alternate rolling mode.
 - Global GM set difficulty (possible to disable in system settings)
+- Lifepath item type for character burning, settings for grouping lifepaths.
 
 ## Near future plans
-- Lifepath item type for character burning, settings for grouping lifepaths.
 - Sheet layout support and other customization options (perhaps a tabbed version?)
 - Compendium use improvements
 - More automation

@@ -10,6 +10,11 @@ export class BWSettingSheet extends ActorSheet {
     get actor(): BWSetting {
         return super.actor as BWSetting;
     }
+    static get defaultOptions(): FormApplicationOptions {
+        return mergeObject(super.defaultOptions, {
+            width: 600
+        });
+    }
 
     getData(): BWSettingData {
         const data = super.getData() as BWSettingData;

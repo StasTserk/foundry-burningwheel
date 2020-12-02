@@ -63,4 +63,12 @@ export function registerSystemSettings(): void {
         type: Boolean,
         default: false
     });
+
+    game.settings.register(constants.systemName, constants.settings.extendedTestData, {
+        name: "Serialized extended test data.",
+        scope: "world",
+        config: false,
+        type: String,
+        default: "{}"
+    });
 }

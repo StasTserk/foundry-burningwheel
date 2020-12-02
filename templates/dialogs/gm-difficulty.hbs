@@ -1,6 +1,10 @@
 <div class="gm-difficulty">
     <div class="difficulty-dialog">
         <div class="roll-mods">
+            <div class="pill-toggle ext-test">
+                <input type="checkbox" id="gm-ext-test" name="extendedTest" {{checked extendedTest}}>
+                <label for="gm-ext-test" title="Change to extended test mode.">Extended Test</label>
+            </div>
             <div class="pill-toggle s-pool">
                 <input type="checkbox" id="gm-diff-sp" name="splitPool" {{checked splitPool}}>
                 <label for="gm-diff-sp" title="Offer to split dice into a secondary pool">S/P</label>
@@ -45,7 +49,7 @@
         {{/if}}
     </div>
     {{/if}}
-    {{!--#if extendedTest --}}
+    {{#if extendedTest}}
     <div class="extended-test">
         <button class="full-width" data-action="clear">Clear</button>
         {{#each actorGroups as |ah|}}
@@ -73,5 +77,5 @@
         </div>
         {{/each}}
     </div>
-    {{!--/if --}}
+    {{/if}}
 </div>

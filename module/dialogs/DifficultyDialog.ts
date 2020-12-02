@@ -6,7 +6,12 @@ export class DifficultyDialog extends Application {
     splitPool: boolean;
     customDiff: boolean;
     noTrack: boolean;
+
     mods: {name: string, amount: number }[];
+
+    extendedTest: boolean;
+    actorGroups: ActorTestGroup[];
+
     constructor(defaultDifficulty: number, mods?: {name: string, amount: number}[] ) {
         super({
             template: "systems/burningwheel/templates/dialogs/gm-difficulty.hbs",
@@ -37,6 +42,11 @@ export class DifficultyDialog extends Application {
         });
         html.find("#gm-diff-track").on('change', e => {
             this.noTrack = $(e.target).prop("checked") as boolean;
+        });
+        html.find("#gm-ext-test").on('change', e => {
+            this.extendedTest = $(e.target).prop("checked") as boolean;
+            this.persistExtendedTestData();
+            this.render(true);
         });
 
         html.find('input[name="newMod"]').on('change', e => {
@@ -81,6 +91,13 @@ export class DifficultyDialog extends Application {
                 this.render(true);
             }
         });
+        game.socket.on(constants.socketName, ({type, data}: {type: string, data: { extendedTest: boolean, actorGroups: ActorTestGroup[] } }) => {
+            if (type === "extendedTest") {
+                this.extendedTest = data.extendedTest;
+                this.actorGroups = data.actorGroups;
+                this.render(true);
+            }
+        });
 
         $(document).on("keydown", e => {
             if (e.key === "Control" || e.key === "Meta") {
@@ -114,6 +131,12 @@ export class DifficultyDialog extends Application {
         game.socket.emit(constants.socketName, { type: "obstacleMods", mods: this.mods });
     }
 
+    persistExtendedTestData(): void {
+        const data = { extendedTest: this.extendedTest, actorGroups: this.actorGroups };
+        game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
+        game.socket.emit(constants.socketName, { type: "extendedTest", data });
+    }
+
     getData(): DifficultyDialogData {
         const data = super.getData() as DifficultyDialogData;
         data.difficulty = this.difficulty;
@@ -122,6 +145,7 @@ export class DifficultyDialog extends Application {
         data.noTrack = this.noTrack;
         data.customDiff = this.customDiff;
         data.modifiers = this.mods;
+        data.extendedTest = this.extendedTest;
 
         data.actorGroups = [{
             id: "testId",
@@ -150,6 +174,7 @@ export class DifficultyDialog extends Application {
 }
 
 interface DifficultyDialogData {
+    extendedTest: boolean;
     modifiers: { name: string; amount: number; }[];
     customDiff: boolean;
     noTrack: boolean;

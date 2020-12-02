@@ -20,7 +20,7 @@
 
 .difficulty-dialog {
     width: 5em;
-    height: 6em;
+    height: 6.5em;
     position: fixed;
     bottom: 10px;
     right: 310px;
@@ -37,11 +37,13 @@
     padding: 10px;
 
     .roll-mods {
-        height: 1.5em;
+        height: 3em;
         font-size: 12px;
         display: flex;
+        flex-wrap: wrap;
         .pill-toggle {
             flex: 1;
+            height: 1.5em;
 
             &.s-pool {
                 @include difficulty-toggle(lightblue, blue, #000077);
@@ -50,6 +52,11 @@
                 @include difficulty-toggle(lightgreen, green, #005500);
             }
             &.n-track {
+                @include difficulty-toggle(#FFFFaa, red, #880000);
+            }
+
+            &.ext-test {
+                flex: 0 0 100%;
                 @include difficulty-toggle(#FFFFaa, red, #880000);
             }
         }

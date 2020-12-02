@@ -115,7 +115,8 @@ export const settings = {
     useGmDifficulty: "useGmDifficulty",
     gmDifficulty: "gmDifficulty",
     obstacleList: "obstacleList",
-    itemImages: "itemImages"
+    itemImages: "itemImages",
+    extendedTestData: "extendedTestData"
 };
 
 export const defaultImages = {

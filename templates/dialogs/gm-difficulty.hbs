@@ -45,4 +45,33 @@
         {{/if}}
     </div>
     {{/if}}
+    {{!--#if extendedTest --}}
+    <div class="extended-test">
+        <button class="full-width" data-action="clear">Clear</button>
+        {{#each actorGroups as |ah|}}
+        <div class="advancement">
+            <div class="group-header">
+                {{ah.name}}
+            </div>
+            {{#each ah.advancements as |a idx|}}
+            <div class="entry flex-row">
+                {{#if ../../editable}}
+                {{#if a.skillId}}
+                <div class="title" data-action="grant" data-actor-id="{{../id}}" data-skill-id="{{a.skillId}}">{{a.title}}</div>
+                {{else}}
+                <div class="title" data-action="grant" data-actor-id="{{../id}}" data-path="{{a.path}}">{{a.title}}</div>
+                {{/if}}
+                {{else}}
+                <div class="title">{{a.title}}</div>
+                {{/if}}
+                <div class="difficulty">{{a.difficulty}}</div>
+                {{#if ../../editable}}
+                <button class="action" data-action="clear" data-actor-id="{{../id}}" data-index="{{idx}}"><i class="fas fa-times"></i></button>
+                {{/if}}
+            </div>
+            {{/each}}
+        </div>
+        {{/each}}
+    </div>
+    {{!--/if --}}
 </div>

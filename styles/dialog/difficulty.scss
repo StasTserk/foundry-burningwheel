@@ -115,3 +115,58 @@
         }
     }
 }
+
+.extended-test {
+    width: 12em;
+    position: fixed;
+    top: 10px;
+    right: 320px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    background-image: url("/ui/denim075.png");
+    color: white;
+    padding: 3px;
+
+    button {
+        height: 15px;
+        line-height: 12px;
+        font-size: 12px;
+        padding: 2px;
+        background-color: rgba(#880000, .25);
+        border: 1px solid #FFFFaa;
+        color: #FFFFaa;
+        transition: background-color .25s;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #880000;
+        }
+    }
+
+    .advancement {
+        .group-header {
+            font-weight: bold;
+            border-bottom: 1px solid white;
+        }
+
+        .entry {
+            .title {
+                flex: 1;
+
+                transition: background-color .25s;
+                &:hover {
+                    background-color: rgba(#880000, .25);
+                    cursor: pointer;
+                }
+            }
+            .difficulty {
+                flex: 0 0 12px;
+            }
+            button.action {
+                flex: 0 0 15px;
+                width: 15px;
+                border: 0;
+            }
+        }
+    }
+}

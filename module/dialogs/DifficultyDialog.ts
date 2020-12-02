@@ -122,6 +122,29 @@ export class DifficultyDialog extends Application {
         data.noTrack = this.noTrack;
         data.customDiff = this.customDiff;
         data.modifiers = this.mods;
+
+        data.actorGroups = [{
+            id: "testId",
+            name: "An Actor",
+            advancements: [
+                { title: "Power Test", path: "data.power", difficulty: "R" },
+                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" },
+                { title: "Power Test", path: "data.power", difficulty: "R" },
+                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" },
+                { title: "Power Test", path: "data.power", difficulty: "R" },
+                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" },
+                { title: "Power Test", path: "data.power", difficulty: "R" },
+                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" }
+            ],
+            
+        }, {
+            id: "testId2",
+            name: "Another Actor",
+            advancements: [
+                { title: "Faith Test", path: "data.faith", difficulty: "R" },
+            ],
+        }
+        ];
         return data;
     }
 }
@@ -133,4 +156,18 @@ interface DifficultyDialogData {
     splitPool: boolean;
     difficulty: number;
     editable: boolean;
+    actorGroups: ActorTestGroup[];
+}
+
+interface ActorTestGroup {
+    id: string;
+    name: string;
+    advancements: ActorTestRecord[];
+}
+
+interface ActorTestRecord {
+    title: string;
+    path?: string;
+    skillId?: string;
+    difficulty: "R" | "D" | "C";
 }

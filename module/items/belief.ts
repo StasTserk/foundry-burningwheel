@@ -1,6 +1,6 @@
-import { ArthaEarner, BWItemData } from "./item.js";
+import { ArthaEarner, BWItem, BWItemData } from "./item.js";
 
-export class Belief extends Item<BeliefData> {
+export class Belief extends BWItem {
     data: BWItemData & { data: BeliefData };
 }
 

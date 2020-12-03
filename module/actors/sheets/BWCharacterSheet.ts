@@ -154,6 +154,7 @@ export class BWCharacterSheet extends BWActorSheet {
             '*[data-action="addSpell"]',
             '*[data-action="learnSpell"]',
             '*[data-action="addGear"]',
+            '*[data-action="broadcast"]'
         ];
         html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
 
@@ -194,6 +195,12 @@ export class BWCharacterSheet extends BWActorSheet {
         const id = $(t).data("id") as string;
         let options: NewItemData;
         switch (action) {
+            case "broadcast": 
+                const item = this.actor.getOwnedItem(id);
+                if (item) {
+                    return item.generateChatMessage(this.actor);
+                }
+                break;
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
                 return this.actor.createOwnedItem(options).then(i =>

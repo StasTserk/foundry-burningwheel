@@ -2,8 +2,8 @@
 
 .beliefs, .instincts {
     .bits-item {
-        & > div {
-            width: 13%;
+        & > .bits-artha {
+            flex: 0 0 100px;
             border-right: 1px solid black;
             margin-bottom: 2px;
 
@@ -21,8 +21,24 @@
                 margin: 0;
             }
         }
+        & > .bits-buttons {
+            flex: 0 20px;
+            border-right: 1px solid black;
+
+            i {
+                width: 20px;
+                text-align: center;
+                color: gray;
+                margin-top: 3px;
+                cursor: pointer;
+                
+                &:hover {
+                    color: #800;
+                }
+            }
+        }
         & > textarea {
-            width: 87%;
+            flex: 1 1 200px;
             resize: vertical;
             border: 0;
             min-height: 3em;

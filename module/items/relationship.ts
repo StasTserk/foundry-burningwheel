@@ -1,7 +1,7 @@
 import { BWActor } from "../actors/BWActor.js";
-import { BWItemData, DisplayClass } from "./item.js";
+import { BWItem, BWItemData, DisplayClass } from "./item.js";
 
-export class Relationship extends Item {
+export class Relationship extends BWItem {
     prepareData(): void {
         super.prepareData();
         this.data.data.safeId = this._id;

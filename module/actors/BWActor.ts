@@ -33,6 +33,10 @@ export class BWActor extends Actor<Common> {
         this.batchAdd.items.push(item);
     }
 
+    getOwnedItem(id: string): BWItem | null {
+        return super.getOwnedItem(id) as BWItem | null;
+    }
+
     async processNewItem(item: ItemData, userId: string): Promise<unknown> {
         if (game.userId !== userId) {
             // this item has been added by someone else.

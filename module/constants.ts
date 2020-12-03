@@ -119,8 +119,8 @@ export const settings = {
 };
 
 export const defaultImages = {
-    "belief": "",
-    "instinct": "",
+    "belief": "icons/sundries/flags/banner-green.webp",
+    "instinct": "icons/sundries/flags/banner-yellow.webp",
     "trait": "icons/commodities/treasure/token-gold-gem-purple.webp",
     "skill": "icons/commodities/treasure/broach-lightning-gold.webp",
     "armor": "icons/equipment/chest/breastplate-collared-steel-grey.webp",

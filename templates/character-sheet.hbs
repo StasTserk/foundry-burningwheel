@@ -62,6 +62,7 @@
         <input type="checkbox" id="{{actor._id}}-collapseBeliefs" name="data.collapseBeliefs" class="section-collapse" {{ checked data.collapseBeliefs }}>
         <i class="fas fa-chevron-down"></i>
         <label for="{{actor._id}}-collapseBeliefs" class="section-collapse-label clickable">Beliefs</label>
+        <i data-action="addBelief" class="fas fa-plus clickable"></i>
     </h2>
     {{#if data.collapseBeliefs}}{{else}}
     <div class="beliefs">
@@ -88,6 +89,7 @@
         <input type="checkbox" id="{{actor._id}}-collapseInstincts" name="data.collapseInstincts" class="section-collapse" {{ checked data.collapseInstincts }}>
         <i class="fas fa-chevron-down"></i>
         <label for="{{actor._id}}-collapseInstincts" class="section-collapse-label clickable">Instincts</label>
+        <i data-action="instinct" class="fas fa-plus clickable"></i>
     </h2>
     {{#if data.collapseInstincts}}{{else}}
     <div class="instincts">

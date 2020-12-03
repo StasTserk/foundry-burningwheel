@@ -149,6 +149,8 @@ export class BWCharacterSheet extends BWActorSheet {
             'i[data-action="addAffiliation"]',
             'i[data-action="addRelationship"]',
             'i[data-action="addReputation"]',
+            'i[data-action="addBelief"]',
+            'i[data-action="addInstinct"]',
             'i[data-action="addTrait"]',
             '*[data-action="addSkill"]',
             '*[data-action="addSpell"]',
@@ -201,6 +203,14 @@ export class BWCharacterSheet extends BWActorSheet {
                     return item.generateChatMessage(this.actor);
                 }
                 break;
+            case "addBelief":
+                options = { name: "New Belief", type: "belief", data: { }, img: constants.defaultImages.belief };
+                return this.actor.createOwnedItem(options).then(i =>
+                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+            case "addInstinct":
+                options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
+                return this.actor.createOwnedItem(options).then(i =>
+                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
                 return this.actor.createOwnedItem(options).then(i =>

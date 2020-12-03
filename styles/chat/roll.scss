@@ -63,6 +63,16 @@
         &.roll-extra-info {
             padding: 0;
         }
+
+        &.whitespace-pre {
+            white-space: pre-wrap;
+        }
+
+        &.roll-title {
+            background-color: rgba(black, .75);
+            color: white;
+            font-weight: bold;
+        }
     }
 
     .roll-dice, .secondary-dice {

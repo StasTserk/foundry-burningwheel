@@ -1,0 +1,12 @@
+<div class="chat-message flex-row">
+    <div class="roll-full-width message-title shade-black">
+        {{title}}
+    </div>
+    <div class="roll-full-width whitespace-pre">{{mainText}}</div>
+    {{#each extraData as |d|}}
+    {{#if d.title}}
+    <div class="roll-full-width roll-title">{{{d.title}}}</div>
+    {{/if}}
+    <div class="roll-full-width roll-extra-info">{{{d.text}}}</div>
+    {{/each}}
+</div>

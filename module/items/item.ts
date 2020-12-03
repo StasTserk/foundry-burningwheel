@@ -30,7 +30,7 @@ export * from "./sheets/trait-sheet.js";
 export * from "./sheets/spell-sheet.js";
 
 export class BWItem extends Item<BWItemData> {
-    generateChatMessage(speaker: BWActor): Promise<Entity> {
+    async generateChatMessage(speaker: BWActor): Promise<Entity> {
         return ChatMessage.create({
             content: `${this.name}`,
             speaker: ChatMessage.getSpeaker({ actor: speaker })

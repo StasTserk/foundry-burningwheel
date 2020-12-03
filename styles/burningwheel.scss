@@ -161,6 +161,13 @@ i.item-action-icon {
     }
 }
 
+i.fas.clickable {
+    cursor: pointer;
+    &:hover {
+        color: red;
+    }
+}
+
 textarea.note-box {
     border: 0;
     resize: vertical;

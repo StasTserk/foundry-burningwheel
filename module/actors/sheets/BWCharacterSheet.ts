@@ -31,7 +31,8 @@ export class BWCharacterSheet extends BWActorSheet {
             '.reputations > .reputation',
             '.affiliations > .affiliation',
             '.gear > div',
-            '.trait-category > .trait'
+            '.trait-category > .trait',
+            '.bits-artha'
         ];
         options.draggableMeleeSelectors = [
             '.weapon-grid .rollable',

@@ -243,14 +243,14 @@ export class BWActor extends Actor<Common> {
             return;
         }
         this.createOwnedItem([
-            { name: "Instinct 1", type: "instinct", data: {}},
-            { name: "Instinct 2", type: "instinct", data: {}},
-            { name: "Instinct 3", type: "instinct", data: {}},
-            { name: "Instinct Special", type: "instinct", data: {}},
-            { name: "Belief 1", type: "belief", data: {}},
-            { name: "Belief 2", type: "belief", data: {}},
-            { name: "Belief 3", type: "belief", data: {}},
-            { name: "Belief Special", type: "belief", data: {}},
+            { name: "Instinct 1", type: "instinct", data: {}, img: constants.defaultImages.instinct},
+            { name: "Instinct 2", type: "instinct", data: {}, img: constants.defaultImages.instinct},
+            { name: "Instinct 3", type: "instinct", data: {}, img: constants.defaultImages.instinct},
+            { name: "Instinct Special", type: "instinct", data: {}, img: constants.defaultImages.instinct},
+            { name: "Belief 1", type: "belief", data: {}, img: constants.defaultImages.belief},
+            { name: "Belief 2", type: "belief", data: {}, img: constants.defaultImages.belief},
+            { name: "Belief 3", type: "belief", data: {}, img: constants.defaultImages.belief},
+            { name: "Belief Special", type: "belief", data: {}, img: constants.defaultImages.belief},
             { ...constants.bareFistData, img: "icons/equipment/hand/gauntlet-simple-leather-steel.webp" }
         ]);
     }

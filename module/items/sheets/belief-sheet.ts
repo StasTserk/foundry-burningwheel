@@ -5,4 +5,8 @@ export class BeliefSheet extends BWItemSheet {
         const data = super.getData();
         return data;
     }
+
+    get template(): string {
+        return "systems/burningwheel/templates/items/belief.hbs";
+    }
 }

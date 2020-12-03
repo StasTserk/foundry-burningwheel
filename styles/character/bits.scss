@@ -8,7 +8,11 @@
             margin-bottom: 2px;
 
             .bits-item-name {
+                cursor: pointer;
                 width: 100%;
+                &:hover {
+                    color: #800;
+                }
             }
 
             input[type="checkbox"] {

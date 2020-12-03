@@ -143,6 +143,7 @@ export class BWCharacterSheet extends BWActorSheet {
     activateListeners(html: JQuery): void {
         // add/delete buttons
         const selectors = [
+            '.bits-item .bits-item-name[data-action="editItem"]',
             'i[data-action="editItem"]',
             'i[data-action="delItem"]',
             'i[data-action="addAffiliation"]',

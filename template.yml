@@ -175,6 +175,9 @@ Item:
       fate: false
       persona: false
       deeds: false
+      fateSpent: 0
+      personaSpent: 0
+      deedsSpent: 0
     pointCost:
       pointCost: 1
   belief:

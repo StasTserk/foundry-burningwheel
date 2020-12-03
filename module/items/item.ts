@@ -50,6 +50,9 @@ export interface ArthaEarner {
     fate: boolean;
     persona: boolean;
     deeds: boolean;
+    fateSpent: number;
+    personaSpent: number;
+    deedsSpent: number;
 }
 
 export interface HasPointCost {

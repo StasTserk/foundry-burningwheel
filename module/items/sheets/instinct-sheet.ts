@@ -5,4 +5,9 @@ export class InstinctSheet extends BWItemSheet {
         const data = super.getData();
         return data;
     }
+
+
+    get template(): string {
+        return "systems/burningwheel/templates/items/instinct.hbs";
+    }
 }

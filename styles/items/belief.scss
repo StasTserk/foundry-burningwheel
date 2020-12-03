@@ -1,0 +1,26 @@
+@import "../mixins.scss";
+
+.artha-spent {
+    label {
+        line-height: 2em;
+        vertical-align: middle;
+        font-weight: bold;
+        margin-left: 20px;
+        margin-right: 10px;
+    }
+    input {
+        border: 2px inset black;
+        border-bottom-color: grey;
+        border-right-color: grey;
+        border-radius: .75em;
+        height: 1.5em;
+        width: 1.5em;
+        font-size: 1.5em;
+        text-align: center;
+        @include no-number-arrows;
+
+        &:hover {
+            background-color: rgba(black, .15);
+        }
+    }
+}

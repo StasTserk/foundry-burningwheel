@@ -68,7 +68,7 @@
         {{#each beliefs as |belief iid|}}
             <div class="bits-item flex-row">
                 <div>
-                    <div class="bits-item-name">{{belief.name}}</div>
+                    <div class="bits-item-name" data-action="editItem" data-id="{{belief._id}}">{{belief.name}}</div>
                     F:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.fate" {{ checked belief.data.fate }}>
                     P:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.persona"  {{ checked belief.data.persona }}>
                     D:<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.deeds" {{ checked belief.data.deeds }}>
@@ -90,7 +90,7 @@
         {{#each instincts as |instinct|}}
             <div class="bits-item flex-row">
                 <div>
-                <div class="bits-item-name">{{instinct.name}}</div>
+                    <div class="bits-item-name" data-action="editItem" data-id="{{instinct._id}}">{{instinct.name}}</div>
                     F:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.fate" {{ checked instinct.data.fate }}>
                     P:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.persona"  {{ checked instinct.data.persona }}>
                     D:<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.deeds" {{ checked instinct.data.deeds }}>

@@ -133,6 +133,9 @@
     background-image: url("/ui/denim075.png");
     color: white;
     padding: 3px;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     button {
         height: 15px;
@@ -159,7 +162,7 @@
         .entry {
             .title {
                 flex: 1;
-
+                margin-left: 5px;
                 transition: background-color .25s;
                 &:hover {
                     background-color: rgba(#880000, .25);

@@ -87,11 +87,12 @@ export class Skill extends BWItem {
     async addTest(difficulty: TestString, force = false): Promise<void> {
         // if we're doing deferred tracking, register the test then skip tracking for now
         const difficultyDialog = game.burningwheel.gmDifficulty as (DifficultyDialog | undefined);
-        if (!force || !(difficultyDialog?.extendedTest)) {
+        if (!force && (difficultyDialog?.extendedTest)) {
             difficultyDialog?.addDeferredTest({
                 actor: this.actor,
                 skill: this,
-                difficulty
+                difficulty,
+                name: this.name
             });
             return;
         }

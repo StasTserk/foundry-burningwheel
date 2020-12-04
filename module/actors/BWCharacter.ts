@@ -187,11 +187,12 @@ export class BWCharacter extends BWActor{
 
         // if the test should be tracked but we're doing deferred tracking do that now.
         const difficultyDialog = game.burningwheel.gmDifficulty as DifficultyDialog | undefined;
-        if (!force || difficultyDialog?.extendedTest) {
+        if (!force && difficultyDialog?.extendedTest) {
             difficultyDialog?.addDeferredTest({
                 actor: this,
                 path: accessor,
-                difficulty: difficultyGroup
+                difficulty: difficultyGroup,
+                name
             });
             return;
         }

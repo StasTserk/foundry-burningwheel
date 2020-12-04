@@ -80,13 +80,26 @@ export class DifficultyDialog extends Application {
         html.find('*[data-action="grant"]').on('click', e => { 
             const skillId = e.target.dataset.skillId;
             const path = e.target.dataset.path;
-            const actor = game.actors.get(e.target.dataset.actorId || '');
-            const difficulty = e.target.dataset.difficulty;
+            const actor = game.actors.get(e.target.dataset.actorId || '') as BWCharacter;
+            const difficulty = e.target.dataset.difficulty as "R" | "C" | "D";
+            const title = e.target.dataset.title || "";
             if (actor) {
                 if (skillId) {
                     console.log(`Granting ${difficulty} test to ${actor} with skill ${skillId}`);
+                    this.assignDeferredTest({
+                        actor,
+                        diff: difficulty,
+                        skillId,
+                        title
+                    });
                 } else {
                     console.log(`Granting ${difficulty} test to ${actor} to ${path}`);
+                    this.assignDeferredTest({
+                        actor,
+                        diff: difficulty,
+                        path,
+                        title
+                    });
                 }
             }
         });
@@ -158,11 +171,46 @@ export class DifficultyDialog extends Application {
         game.socket.emit(constants.socketName, { type: "extendedTest", data });
     }
 
-    addDeferredTest({actor, path, skill, difficulty}: AddDeferredTestOptions): void {
+    addDeferredTest({actor, path, name, skill, difficulty}: AddDeferredTestOptions): void {
         console.log(`Adding entry for ${actor.name} and ${path || skill?.name} at ${difficulty}`);
+        const existingGroup = this.actorGroups.find(ag => ag.id === actor.id);
+        const entries: ActorTestRecord[] = [];
+        switch(difficulty) {
+            case "Routine":
+                entries.push({ title: name.titleCase(), path, skillId: skill?.id, difficulty: "R" });
+                break;
+            case "Difficult":
+                entries.push({ title: name.titleCase(), path, skillId: skill?.id, difficulty: "D" });
+                break;
+            case "Challenging":
+                entries.push({ title: name.titleCase(), path, skillId: skill?.id, difficulty: "C" });
+                break;
+            case "Routine/Difficult":
+                entries.push({ title: name.titleCase(), path, skillId: skill?.id, difficulty: "R" });
+                entries.push({ title: name.titleCase(), path, skillId: skill?.id, difficulty: "D" });
+                break;
+        }
+        if (!existingGroup) {
+            // there's no entry for this actor yet
+            this.actorGroups.push( {
+                name: actor.name,
+                id: actor.id,
+                advancements: entries
+            });
+            this.persistExtendedTestData();
+            this.render();
+        } else {
+            // merge entries without duplication
+            existingGroup.advancements = existingGroup.advancements.concat(entries.filter(e => !existingGroup.advancements.find(a => a.title === e.title && a.difficulty === e.difficulty)));
+            existingGroup.advancements.sort((a, b) => {
+                return a.title.localeCompare(b.title) === 0 ? a.difficulty.localeCompare(b.difficulty) : a.title.localeCompare(b.title);
+            });
+            this.persistExtendedTestData();
+            this.render();
+        }
     }
 
-    assignDeferredTest({ actor, diff, skillId, path }: AssignTestOptions): void {
+    assignDeferredTest({ actor, diff, skillId, path, title }: AssignTestOptions): void {
         if (actor) {
             const difficulty: TestString = diff === "R" ? "Routine" : (diff === "C" ? "Challenging" : "Difficult");
             if (skillId) {
@@ -172,16 +220,20 @@ export class DifficultyDialog extends Application {
                 }
             } else if (path) {
                 const stat = getProperty(actor.data, path) as Ability & { name?: string };
-                let statName = path.substr(path.indexOf('.'));
-                if (statName === 'custom1' || statName === 'custom2') {
-                    statName = stat.name || "";
-                }
                 if (["data.power", "data.will", "data.perception", "data.agility", "data.forte", "data.speed" ].includes(path)) {
-                    actor.addStatTest(stat, name, path, difficulty, true, false, true);
+                    actor.addStatTest(stat, title, path, difficulty, true, false, true);
                 } else {
-                    actor.addAttributeTest(stat, name, path, difficulty, true, true);
+                    actor.addAttributeTest(stat, title, path, difficulty, true, true);
                 }
             }
+
+            const group = this.actorGroups.find(ag => ag.id === actor.id) as ActorTestGroup;
+            group.advancements = group.advancements.filter(a => a.title !== title);
+            if (!group.advancements.length) {
+                this.actorGroups.splice(this.actorGroups.indexOf(group));
+            }
+            this.persistExtendedTestData();
+            this.render();
         }
     }
 
@@ -227,6 +279,7 @@ interface ActorTestRecord {
 
 export interface AddDeferredTestOptions {
     actor: BWActor,
+    name: string,
     path?: string;
     skill?: Skill,
     difficulty: TestString
@@ -234,6 +287,7 @@ export interface AddDeferredTestOptions {
 
 interface AssignTestOptions {
     actor: BWCharacter | null,
+    title: string,
     path?: string,
     skillId?: string,
     diff: "R" | "C" | "D"

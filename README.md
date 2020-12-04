@@ -15,14 +15,18 @@ If you like this system, please support the developers at [burningwheel.com](htt
   - Relationships, reputations and affiliations
   - Spells
 - Automation for tracking test advancement, artha, and calculating a number of derived attributes
-- Character burner
+- Character burner:
+  - Ability to include world and compendium content when configuring the character burner
+  - Support for dragging and dropping most items directly into the compendium
+  - Ability to define lifepaths and group them into settings for further drag and drop functionality
 - Support for GM created compendiums in play and character burning.
-- Specialized dialog for Duel of Wits.
-- Specialized dialog for Fight!
-- Specialized dialog for Range and Cover.
+- Specialized dialogs for extended tests:
+  - Specialized dialog for Duel of Wits.
+  - Specialized dialog for Fight!
+  - Specialized dialog for Range and Cover.
+  - Extended test mode where advancement is deferred until later.
 - Alternate roll modes -- Hold Alt, Ctrl/Cmd, or Shift when pressing one of the roll buttons to use an alternate rolling mode.
 - Global GM set difficulty (possible to disable in system settings)
-- Lifepath item type for character burning, settings for grouping lifepaths.
 
 ## Near future plans
 - Sheet layout support and other customization options (perhaps a tabbed version?)

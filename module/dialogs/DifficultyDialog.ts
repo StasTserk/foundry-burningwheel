@@ -119,6 +119,18 @@ export class DifficultyDialog extends Application {
             this.render();
         });
 
+        html.find('button[data-action="clearEntry"]').on('click', e => {
+            const id = e.currentTarget.dataset.actorId || "";
+            const index = parseInt(e.currentTarget.dataset.index || "0");
+            const group = this.actorGroups.find(ag => ag.id === id);
+            group?.advancements.splice(index, 1);
+            if (group && !group.advancements.length) {
+                this.actorGroups.splice(this.actorGroups.indexOf(group), 1);
+            }
+            this.persistExtendedTestData();
+            this.render();
+        });
+
         game.socket.on(constants.socketName, ({ type, difficulty }) => {
             if (type === "difficulty") {
                 this.difficulty = difficulty;
@@ -236,7 +248,7 @@ export class DifficultyDialog extends Application {
             const group = this.actorGroups.find(ag => ag.id === actor.id) as ActorTestGroup;
             group.advancements = group.advancements.filter(a => a.title !== title);
             if (!group.advancements.length) {
-                this.actorGroups.splice(this.actorGroups.indexOf(group));
+                this.actorGroups.splice(this.actorGroups.indexOf(group), 1);
             }
             this.persistExtendedTestData();
             this.render();

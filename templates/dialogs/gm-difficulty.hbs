@@ -2,7 +2,7 @@
     <div class="difficulty-dialog">
         <div class="roll-mods">
             <div class="pill-toggle ext-test">
-                <input type="checkbox" id="gm-ext-test" name="extendedTest" {{checked extendedTest}}>
+                <input type="checkbox" id="gm-ext-test" name="extendedTest" {{checked extendedTest}} {{#if editable}}{{else}} disabled {{/if}}>
                 <label for="gm-ext-test" title="Change to extended test mode.">Extended Test</label>
             </div>
             <div class="pill-toggle s-pool">
@@ -51,7 +51,9 @@
     {{/if}}
     {{#if extendedTest}}
     <div class="extended-test">
+        {{#if editable}}
         <button class="full-width" data-action="clear">Clear</button>
+        {{/if}}
         {{#each actorGroups as |ah|}}
         <div class="advancement">
             <div class="group-header">

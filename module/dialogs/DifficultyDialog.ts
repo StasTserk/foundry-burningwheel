@@ -70,6 +70,20 @@ export class DifficultyDialog extends Application {
             this.render();
         });
 
+        html.find('*[data-action="grant"]').on('click', e => { 
+            const skillId = e.target.dataset.skillId;
+            const path = e.target.dataset.path;
+            const actor = game.actors.get(e.target.dataset.actorId || '');
+            const difficulty = e.target.dataset.difficulty;
+            if (actor) {
+                if (skillId) {
+                    console.log(`Granting ${difficulty} test to ${actor} with skill ${skillId}`);
+                } else {
+                    console.log(`Granting ${difficulty} test to ${actor} to ${path}`);
+                }
+            }
+        });
+
         html.find('input.mod-amount').on('change', e => {
             const target = $(e.target);
             const amount = parseInt(target.val() as string) || 0;

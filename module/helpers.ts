@@ -1,7 +1,6 @@
 import { TracksTests } from "./actors/BWActor.js";
 import { ArmorRootData } from "./items/armor.js";
 import { BWItem, BWItemData, DisplayClass, ItemType } from "./items/item.js";
-import { Skill } from "./items/skill.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0, tax = 0):void {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
@@ -39,41 +38,6 @@ export function canAdvance(skill: TracksTests, needRoutines = true): boolean {
     }
     // otherwise, need both routine and difficult tests to advance, don't need routine anymore
     return enoughDifficult && enoughChallenging;
-}
-
-export function addTestToSkill(
-        skill: Skill,
-        difficulty: TestString): Promise<unknown> | undefined {
-    switch (difficulty) {
-        case "Routine":
-            if (skill.data.data.routine < (skill.data.data.routineNeeded || 0)) {
-                return skill.update({ "data.routine": skill.data.data.routine + 1 }, {});
-            }
-            break;
-        case "Difficult":
-            if (skill.data.data.difficult < (skill.data.data.difficultNeeded || 0)) {
-                return skill.update({ "data.difficult": skill.data.data.difficult + 1 }, {});
-            }
-            break;
-        case "Challenging":
-            if (skill.data.data.challenging < (skill.data.data.challengingNeeded || 0)) {
-                return skill.update({ "data.challenging": skill.data.data.challenging + 1 }, {});
-            }
-            break;
-        case "Routine/Difficult":
-            if (skill.data.data.routine < (skill.data.data.routineNeeded || 0)) {
-                return skill.update({ "data.routine": skill.data.data.routine + 1 }, {});
-            } else if (skill.data.data.difficult < (skill.data.data.difficultNeeded || 0)) {
-                return skill.update({ "data.difficult": skill.data.data.difficult + 1 }, {});
-            }
-            break;
-    }
-    return;
-}
-
-export function advanceSkill(skill: Skill): Promise<Skill> {
-    const exp = skill.data.data.exp;
-    return skill.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
 }
 
 export function difficultyGroup(dice: number, difficulty: number): TestString {

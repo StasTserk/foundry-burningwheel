@@ -3,6 +3,7 @@ import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "../helpers.js";
 import { BWItem, BWItemData } from "../items/item.js";
 import { Skill } from "../items/skill.js";
+import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 
 export class BWCharacter extends BWActor{
     data: CharacterDataRoot;
@@ -174,7 +175,14 @@ export class BWCharacter extends BWActor{
             accessor: string,
             difficultyGroup: TestString,
             isSuccessful: boolean,
-            routinesNeeded = false): Promise<void> {
+            routinesNeeded = false,
+            force = false): Promise<void> {
+        const difficultyDialog = game.burningwheel.difficultyDialog as DifficultyDialog | undefined;
+        if (!force || difficultyDialog?.extendedTest) {
+            console.log("Deferring tracking.");
+            return;
+        }
+
         name = name.toLowerCase();
         const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
         if (onlySuccessCounts && !isSuccessful) {

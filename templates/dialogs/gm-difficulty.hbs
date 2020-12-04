@@ -61,9 +61,9 @@
             <div class="entry flex-row">
                 {{#if ../../editable}}
                 {{#if a.skillId}}
-                <div class="title" data-action="grant" data-actor-id="{{../id}}" data-skill-id="{{a.skillId}}">{{a.title}}</div>
+                <div class="title" data-action="grant" data-actor-id="{{../id}}" data-skill-id="{{a.skillId}}" data-difficulty="{{a.difficulty}}">{{a.title}}</div>
                 {{else}}
-                <div class="title" data-action="grant" data-actor-id="{{../id}}" data-path="{{a.path}}">{{a.title}}</div>
+                <div class="title" data-action="grant" data-actor-id="{{../id}}" data-path="{{a.path}}" data-difficulty="{{a.difficulty}}">{{a.title}}</div>
                 {{/if}}
                 {{else}}
                 <div class="title">{{a.title}}</div>

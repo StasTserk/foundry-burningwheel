@@ -247,38 +247,7 @@ async function advanceLearningProgress(
         skill: Skill,
         fr: RerollData | undefined,
         cb: (fr?: RerollData) => Promise<Entity>) {
-    const progress = parseInt(skill.data.data.learningProgress, 10);
-    let requiredTests = skill.data.data.aptitude || 10;
-    let shade = getProperty(skill.actor || {}, `data.data.${skill.data.data.root1.toLowerCase()}`).shade;
-
-    skill.update({"data.learningProgress": progress + 1 }, {});
-    if (progress + 1 >= requiredTests) {
-        if (skill.data.data.root2 && skill.actor) {
-            const root2Shade = getProperty(skill.actor, `data.data.${skill.data.data.root2.toLowerCase()}`).shade;
-            if (shade != root2Shade) {
-                requiredTests -= 2;
-            }
-            shade = helpers.getWorstShadeString(shade, root2Shade);
-        }
-
-        Dialog.confirm({
-            title: `Finish Training ${skill.name}?`,
-            content: `<p>${skill.name} is ready to become a full skill. Go ahead?</p>`,
-            yes: () => {
-                const updateData = {};
-                updateData["data.learning"] = false;
-                updateData["data.learningProgress"] = 0;
-                updateData["data.routine"] = 0;
-                updateData["data.difficult"] = 0;
-                updateData["data.challenging"] = 0;
-                updateData["data.shade"] = shade;
-                updateData["data.exp"] = Math.floor((10 - requiredTests) / 2);
-                skill.update(updateData, {});
-            },
-            no: () => { return; },
-            defaultYes: true
-        });
-    }
+    skill.addTest("Routine");
     return cb(fr);
 }
 

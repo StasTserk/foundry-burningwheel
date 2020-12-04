@@ -113,6 +113,12 @@ export class DifficultyDialog extends Application {
             this.render();
         });
 
+        html.find('button[data-action="clear"]').on('click', _ => {
+            this.actorGroups = [];
+            this.persistExtendedTestData();
+            this.render();
+        });
+
         game.socket.on(constants.socketName, ({ type, difficulty }) => {
             if (type === "difficulty") {
                 this.difficulty = difficulty;

@@ -53,27 +53,32 @@
         margin: 5px;
 
         .trait {
+
             @include colored-item(black);
             textarea {
                 background-color: transparent;
                 min-height: 8em;
             }
-        }
 
-        i {
-            float: right;
-            font-size: 12px;
-            margin-top: 6px;
-            margin-left: 5px;
-            color: transparentize($color: black, $amount: 0.25)
-        }
+            h3 {
+                margin-bottom: 0;
+            }
 
-        i:hover {
-            color: #FF0000;
-        }
-    }
+            label {
+                flex: 1 100px;
+            }
 
-    .trait-checkbox:checked + div > textarea {
-        display: none;
+            i {
+                flex: 0 12px;
+                font-size: 12px;
+                margin-top: 6px;
+                margin-left: 5px;
+                color: transparentize($color: black, $amount: 0.25)
+            }
+    
+            i:hover {
+                color: #FF0000;
+            }
+        }
     }
 }

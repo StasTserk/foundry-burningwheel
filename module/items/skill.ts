@@ -85,13 +85,19 @@ export class Skill extends BWItem {
     }
 
     async addTest(difficulty: TestString, force = false): Promise<void> {
-        const difficultyDialog = game.burningwheel.difficultyDialog as (DifficultyDialog | undefined);
-        if (force || !(difficultyDialog?.extendedTest)) {
-            console.log("Defer test");
+        // if we're doing deferred tracking, register the test then skip tracking for now
+        const difficultyDialog = game.burningwheel.gmDifficulty as (DifficultyDialog | undefined);
+        if (!force || !(difficultyDialog?.extendedTest)) {
+            difficultyDialog?.addDeferredTest({
+                actor: this.actor,
+                skill: this,
+                difficulty
+            });
             return;
         }
 
-        if (this.data.data.learning && difficulty === "Routine") {
+        // if we're ready to assign the test, do that now.
+        if (this.data.data.learning) {
             const progress = this.data.data.learningProgress;
             let requiredTests = this.data.data.aptitude || 10;
             let shade = getProperty(this.actor || {}, `data.data.${this.data.data.root1.toLowerCase()}`).shade;

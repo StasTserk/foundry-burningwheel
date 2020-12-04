@@ -98,7 +98,8 @@ Hooks.once("ready", async() => {
     if (game.burningwheel.useGmDifficulty) {
         const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty);
         const mods = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
-        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, mods);
+        const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData));
+        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, mods, testData);
         game.burningwheel.gmDifficulty.render(true);
     }
     RegisterMacros();

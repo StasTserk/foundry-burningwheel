@@ -1,4 +1,8 @@
+import { Ability, BWActor } from "../actors/BWActor.js";
+import { TestString } from "../helpers.js";
+import { Skill } from "../items/skill.js";
 import * as constants from "../constants.js";
+import { BWCharacter } from "module/actors/BWCharacter.js";
 
 export class DifficultyDialog extends Application {
     difficulty: number;
@@ -12,7 +16,7 @@ export class DifficultyDialog extends Application {
     extendedTest: boolean;
     actorGroups: ActorTestGroup[];
 
-    constructor(defaultDifficulty: number, mods?: {name: string, amount: number}[] ) {
+    constructor(defaultDifficulty: number, mods?: {name: string, amount: number}[], extendedData?: { extendedTest?: boolean, actorGroups?: ActorTestGroup[] } ) {
         super({
             template: "systems/burningwheel/templates/dialogs/gm-difficulty.hbs",
             classes: ["gm-difficulty"],
@@ -23,6 +27,9 @@ export class DifficultyDialog extends Application {
 
         this.splitPool = this.customDiff = this.noTrack = false;
         this.mods = mods || [];
+
+        this.extendedTest = extendedData?.extendedTest || false;
+        this.actorGroups = extendedData?.actorGroups || [];
     }
 
     activateListeners(html: JQuery): void {
@@ -151,6 +158,33 @@ export class DifficultyDialog extends Application {
         game.socket.emit(constants.socketName, { type: "extendedTest", data });
     }
 
+    addDeferredTest({actor, path, skill, difficulty}: AddDeferredTestOptions): void {
+        console.log(`Adding entry for ${actor.name} and ${path || skill?.name} at ${difficulty}`);
+    }
+
+    assignDeferredTest({ actor, diff, skillId, path }: AssignTestOptions): void {
+        if (actor) {
+            const difficulty: TestString = diff === "R" ? "Routine" : (diff === "C" ? "Challenging" : "Difficult");
+            if (skillId) {
+                const skill = actor.getOwnedItem(skillId) as Skill | null;
+                if (skill) {
+                    skill.addTest(difficulty, true);
+                }
+            } else if (path) {
+                const stat = getProperty(actor.data, path) as Ability & { name?: string };
+                let statName = path.substr(path.indexOf('.'));
+                if (statName === 'custom1' || statName === 'custom2') {
+                    statName = stat.name || "";
+                }
+                if (["data.power", "data.will", "data.perception", "data.agility", "data.forte", "data.speed" ].includes(path)) {
+                    actor.addStatTest(stat, name, path, difficulty, true, false, true);
+                } else {
+                    actor.addAttributeTest(stat, name, path, difficulty, true, true);
+                }
+            }
+        }
+    }
+
     getData(): DifficultyDialogData {
         const data = super.getData() as DifficultyDialogData;
         data.difficulty = this.difficulty;
@@ -159,30 +193,10 @@ export class DifficultyDialog extends Application {
         data.noTrack = this.noTrack;
         data.customDiff = this.customDiff;
         data.modifiers = this.mods;
+        
         data.extendedTest = this.extendedTest;
+        data.actorGroups = this.actorGroups;
 
-        data.actorGroups = [{
-            id: "testId",
-            name: "An Actor",
-            advancements: [
-                { title: "Power Test", path: "data.power", difficulty: "R" },
-                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" },
-                { title: "Power Test", path: "data.power", difficulty: "R" },
-                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" },
-                { title: "Power Test", path: "data.power", difficulty: "R" },
-                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" },
-                { title: "Power Test", path: "data.power", difficulty: "R" },
-                { title: "Horse-wise Test", skillId: "skillId", difficulty: "R" }
-            ],
-            
-        }, {
-            id: "testId2",
-            name: "Another Actor",
-            advancements: [
-                { title: "Faith Test", path: "data.faith", difficulty: "R" },
-            ],
-        }
-        ];
         return data;
     }
 }
@@ -209,4 +223,18 @@ interface ActorTestRecord {
     path?: string;
     skillId?: string;
     difficulty: "R" | "D" | "C";
+}
+
+export interface AddDeferredTestOptions {
+    actor: BWActor,
+    path?: string;
+    skill?: Skill,
+    difficulty: TestString
+}
+
+interface AssignTestOptions {
+    actor: BWCharacter | null,
+    path?: string,
+    skillId?: string,
+    diff: "R" | "C" | "D"
 }

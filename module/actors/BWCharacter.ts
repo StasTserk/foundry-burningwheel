@@ -177,18 +177,26 @@ export class BWCharacter extends BWActor{
             isSuccessful: boolean,
             routinesNeeded = false,
             force = false): Promise<void> {
-        const difficultyDialog = game.burningwheel.difficultyDialog as DifficultyDialog | undefined;
-        if (!force || difficultyDialog?.extendedTest) {
-            console.log("Deferring tracking.");
-            return;
-        }
 
+        // if the stat should not advance on failure, back out immediately.
         name = name.toLowerCase();
         const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
         if (onlySuccessCounts && !isSuccessful) {
             return;
         }
 
+        // if the test should be tracked but we're doing deferred tracking do that now.
+        const difficultyDialog = game.burningwheel.gmDifficulty as DifficultyDialog | undefined;
+        if (!force || difficultyDialog?.extendedTest) {
+            difficultyDialog?.addDeferredTest({
+                actor: this,
+                path: accessor,
+                difficulty: difficultyGroup
+            });
+            return;
+        }
+
+        // if the test should be tracked and we're not deferring track the test.
         this._addTestToStat(stat, accessor, difficultyGroup);
         if (canAdvance(stat, routinesNeeded)) {
             Dialog.confirm({
@@ -206,8 +214,9 @@ export class BWCharacter extends BWActor{
             name: string,
             accessor: string,
             difficultyGroup: TestString,
-            isSuccessful: boolean): Promise<void>  {
-        return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true);
+            isSuccessful: boolean,
+            force = false): Promise<void>  {
+        return this.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful, true, force);
     }
 
     public updateArthaForSkill(skillId: string, persona: number, deeds: number): void {

@@ -4,6 +4,7 @@
 
 import { handleTraitorReroll } from "./rolls/rerollTraitors.js";
 import { handleFateReroll } from "./rolls/rerollFate.js";
+import { BWActor } from "./actors/BWActor.js";
 
 /**
  * Binds buttons in chat log to perform actions
@@ -26,4 +27,18 @@ export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data:
         }
         message.find('div.reroll-buttons').each((i, b) => { b.style.display = "none"; });
     }
+}
+
+
+export async function simpleBroadcast(data: SimpleBroadcastMessageData, actor: BWActor): Promise<Entity> {
+    const html = await renderTemplate("systems/burningwheel/templates/chat/simple-broadcast.hbs", data);
+    return ChatMessage.create({
+        content: html,
+        speaker: ChatMessage.getSpeaker({ actor })
+    });
+}
+export interface SimpleBroadcastMessageData {
+    title: string;
+    mainText: string;
+    extraData?: { title?: string, text: string }[]
 }

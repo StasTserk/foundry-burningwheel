@@ -13,7 +13,8 @@ import { TraitSheet } from "./sheets/trait-sheet.js";
 import { SpellSheet } from "./sheets/spell-sheet.js";
 import * as constants from "../constants.js";
 import { LifepathSheet } from "./sheets/lifepath-sheet.js";
-import { BWActor } from "module/actors/BWActor.js";
+import { BWActor } from "../actors/BWActor.js";
+import { simpleBroadcast } from "../chat.js";
 
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
@@ -31,10 +32,7 @@ export * from "./sheets/spell-sheet.js";
 
 export class BWItem extends Item<BWItemData> {
     async generateChatMessage(speaker: BWActor): Promise<Entity> {
-        return ChatMessage.create({
-            content: `${this.name}`,
-            speaker: ChatMessage.getSpeaker({ actor: speaker })
-        });
+        return simpleBroadcast({ title: this.name, mainText: `Type - ${this.data.type}` }, speaker);
     }
     prepareData(): void {
         this.data.hasOwner = !!this.actor;

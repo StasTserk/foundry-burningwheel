@@ -1,3 +1,4 @@
+import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat.js";
 import { BWActor } from "../actors/BWActor.js";
 import { ArthaEarner, BWItem, BWItemData } from "./item.js";
 
@@ -5,7 +6,7 @@ export class Instinct extends BWItem {
     data: BWItemData & { data: InstinctData };
 
     async generateChatMessage(actor: BWActor): Promise<Entity> {
-        const data = {
+        const data: SimpleBroadcastMessageData = {
             title: this.name,
             mainText: this.data.data.text,
             extraData: [
@@ -15,11 +16,7 @@ export class Instinct extends BWItem {
                 }
             ]
         };
-        const html = await renderTemplate("systems/burningwheel/templates/chat/simple-broadcast.hbs", data);
-        return ChatMessage.create({
-            content: html,
-            speaker: ChatMessage.getSpeaker({actor})
-        });
+        return simpleBroadcast(data, actor);
     }
 }
 

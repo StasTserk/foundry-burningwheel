@@ -130,17 +130,7 @@ async function skillRollCallback(
         extraInfo
     };
     if (!skipAdvancement && (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1)) {
-        await helpers.addTestToSkill(skill, dg);
-        skill = actor.getOwnedItem(skill._id) as Skill; // update skill with new data
-    }
-    if (helpers.canAdvance(skill.data.data)) {
-        Dialog.confirm({
-            title: `Advance ${skill.name}?`,
-            content: `<p>${skill.name} is ready to advance. Go ahead?</p>`,
-            yes: () => helpers.advanceSkill(skill),
-            no: () => { return; },
-            defaultYes: true
-        });
+        await skill.addTest(dg);
     }
 
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);

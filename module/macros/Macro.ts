@@ -69,7 +69,9 @@ const handlers: Record<string, (data: DragData) => MacroData | null> = {
     "trait": CreateEditMacro,
     "relationship": CreateEditMacro,
     "reputation": CreateEditMacro,
-    "affiliation": CreateEditMacro
+    "affiliation": CreateEditMacro,
+    "belief": CreateEditMacro,
+    "instinct": CreateEditMacro,
 };
 
 export interface MacroData {

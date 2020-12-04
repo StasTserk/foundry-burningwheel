@@ -85,7 +85,6 @@ export class DifficultyDialog extends Application {
             const title = e.target.dataset.title || "";
             if (actor) {
                 if (skillId) {
-                    console.log(`Granting ${difficulty} test to ${actor} with skill ${skillId}`);
                     this.assignDeferredTest({
                         actor,
                         diff: difficulty,
@@ -93,7 +92,6 @@ export class DifficultyDialog extends Application {
                         title
                     });
                 } else {
-                    console.log(`Granting ${difficulty} test to ${actor} to ${path}`);
                     this.assignDeferredTest({
                         actor,
                         diff: difficulty,
@@ -190,7 +188,6 @@ export class DifficultyDialog extends Application {
     }
 
     addDeferredTest({actor, path, name, skill, difficulty}: AddDeferredTestOptions): void {
-        console.log(`Adding entry for ${actor.name} and ${path || skill?.name} at ${difficulty}`);
         const existingGroup = this.actorGroups.find(ag => ag.id === actor.id);
         const entries: ActorTestRecord[] = [];
         switch(difficulty) {

@@ -40,5 +40,5 @@ export async function simpleBroadcast(data: SimpleBroadcastMessageData, actor: B
 export interface SimpleBroadcastMessageData {
     title: string;
     mainText: string;
-    extraData?: { title?: string, text: string }[]
+    extraData?: { title?: string, text?: string }[]
 }

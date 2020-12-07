@@ -19,7 +19,7 @@ import { actorConstructor, itemConstructor } from "./factory.js";
 import * as constants from "./constants.js";
 import { CreateBurningWheelMacro, RegisterMacros } from "./macros/Macro.js";
 import { BWSettingSheet } from "./actors/sheets/BWSettingSheet.js";
-import { ModifierDialog } from "./dialogs/ModifierDialot.js";
+import { ModifierDialog } from "./dialogs/ModifierDialog.js";
 
 Hooks.once("init", async () => {
     CONFIG.Actor.entityClass = actorConstructor;

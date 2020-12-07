@@ -88,7 +88,7 @@ interface HelpRecord {
     title: string;
     path?: string;
     skillId?: string;
-    difficulty: "R" | "D" | "C";
+    difficulty: TestString;
     dice: number;
 }
 

@@ -10,7 +10,7 @@ import { CreateSpellRollMacro, RollSpellMacro } from "./SpellMacro.js";
 import { CreateEditMacro, RollEditMacro } from "./EditMacro.js";
 import { ItemType } from "module/items/item.js";
 import { CreateStatMacro, RollStatMacro } from "./StatMacro.js";
-import { ModifierDialog } from "module/dialogs/ModifierDialot.js";
+import { ModifierDialog } from "module/dialogs/ModifierDialog.js";
 
 export async function CreateBurningWheelMacro(data: DragData, slot: number): Promise<boolean> {
     if (!handlers[data.type]) {
@@ -89,7 +89,7 @@ export function getMacroRollPreset(actor: BWActor): Partial<RollDialogData> {
     if (game.settings.get(constants.systemName, constants.settings.useGmDifficulty)) {
         const difficultyDialog: DifficultyDialog = game.burningwheel.gmDifficulty;
         const helpDialog: ModifierDialog = game.burningwheel.modifiers;
-        
+
         if (difficultyDialog.splitPool) {
             dataPreset.offerSplitPool = true;
         }

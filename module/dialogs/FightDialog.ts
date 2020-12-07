@@ -8,6 +8,7 @@ import { BWCharacterData, CharacterDataRoot } from "../actors/BWCharacter.js";
 import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
 
 import * as constants from "../constants.js";
+import { getKeypressModifierPreset } from "../rolls/rolls.js";
 
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
@@ -123,6 +124,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
     private _handleRoll(e: JQuery.ClickEvent, type: "speed" | "agility" | "power" | "skill") {
         e.preventDefault();
+        const dataPreset = getKeypressModifierPreset(e);
         const index = parseInt(e.target.dataset.index || "0");
         const actor = this.data.actors[index];
         const engagementBonus = parseInt(this.data.data.participants[index].engagementBonus.toString());
@@ -137,9 +139,9 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
                 attackIndex = parseInt(itemIdString.substr(itemIdString.indexOf('_')+1));
                 itemIdString = itemIdString.substr(0, itemIdString.indexOf('_'));
             }
-            return handleFightRoll({ actor, type, itemId: itemIdString, attackIndex, engagementBonus, positionPenalty });
+            return handleFightRoll({ actor, type, itemId: itemIdString, attackIndex, engagementBonus, positionPenalty, dataPreset });
         }
-        return handleFightRoll({ actor, type, engagementBonus, positionPenalty });
+        return handleFightRoll({ actor, type, engagementBonus, positionPenalty, dataPreset });
     }
     
     private _toggleHidden(target: HTMLDivElement): void {

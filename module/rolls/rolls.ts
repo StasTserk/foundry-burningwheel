@@ -15,6 +15,7 @@ import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
 import { NpcSheet } from "../actors/sheets/NpcSheet.js";
 import { Possession } from "../items/possession.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
+import { ModifierDialog } from "module/dialogs/ModifierDialot.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {
@@ -76,6 +77,7 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
 
     if (game.burningwheel.gmDifficulty) {
         const dialog = game.burningwheel.gmDifficulty as DifficultyDialog;
+        const mods = game.burningwheel.modifiers as ModifierDialog;
         if (dialog.splitPool) {
             dataPreset.offerSplitPool = true;
             dialog.splitPool = false;
@@ -91,7 +93,7 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
             dialog.noTrack = false;
         }
 
-        dataPreset.optionalObModifiers = dialog.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
+        dataPreset.optionalObModifiers = mods.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
 
         dialog.render();
     }

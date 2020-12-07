@@ -19,6 +19,7 @@ import { actorConstructor, itemConstructor } from "./factory.js";
 import * as constants from "./constants.js";
 import { CreateBurningWheelMacro, RegisterMacros } from "./macros/Macro.js";
 import { BWSettingSheet } from "./actors/sheets/BWSettingSheet.js";
+import { ModifierDialog } from "./dialogs/ModifierDialot.js";
 
 Hooks.once("init", async () => {
     CONFIG.Actor.entityClass = actorConstructor;
@@ -97,10 +98,12 @@ Hooks.once("ready", async() => {
     game.burningwheel.useGmDifficulty = await game.settings.get(constants.systemName, constants.settings.useGmDifficulty);
     if (game.burningwheel.useGmDifficulty) {
         const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty);
-        const mods = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
+        const modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
         const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData));
-        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, mods, testData);
+        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, testData);
+        game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.gmDifficulty, modData.mods, modData.help);
         game.burningwheel.gmDifficulty.render(true);
+        game.burningwheel.modifiers.render(true);
     }
     RegisterMacros();
 });

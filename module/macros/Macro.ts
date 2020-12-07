@@ -10,6 +10,7 @@ import { CreateSpellRollMacro, RollSpellMacro } from "./SpellMacro.js";
 import { CreateEditMacro, RollEditMacro } from "./EditMacro.js";
 import { ItemType } from "module/items/item.js";
 import { CreateStatMacro, RollStatMacro } from "./StatMacro.js";
+import { ModifierDialog } from "module/dialogs/ModifierDialot.js";
 
 export async function CreateBurningWheelMacro(data: DragData, slot: number): Promise<boolean> {
     if (!handlers[data.type]) {
@@ -87,6 +88,8 @@ export function getMacroRollPreset(actor: BWActor): Partial<RollDialogData> {
     const dataPreset: Partial<RollDialogData> = {};
     if (game.settings.get(constants.systemName, constants.settings.useGmDifficulty)) {
         const difficultyDialog: DifficultyDialog = game.burningwheel.gmDifficulty;
+        const helpDialog: ModifierDialog = game.burningwheel.modifiers;
+        
         if (difficultyDialog.splitPool) {
             dataPreset.offerSplitPool = true;
         }
@@ -97,7 +100,7 @@ export function getMacroRollPreset(actor: BWActor): Partial<RollDialogData> {
         if (difficultyDialog.noTrack) {
             dataPreset.skipAdvancement = true;
         }
-        dataPreset.optionalObModifiers = difficultyDialog.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
+        dataPreset.optionalObModifiers = helpDialog.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
     }
     dataPreset.deedsPoint = actor.data.data.deeds !== 0;
     if (actor.data.data.persona) {

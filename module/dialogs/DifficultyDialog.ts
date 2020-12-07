@@ -145,6 +145,9 @@ export class DifficultyDialog extends Application {
             if (type === "extendedTest") {
                 this.extendedTest = data.extendedTest;
                 this.actorGroups = data.actorGroups;
+                if (game.user.isGM) {
+                    game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
+                }
                 this.render(true);
             }
         });
@@ -183,7 +186,9 @@ export class DifficultyDialog extends Application {
 
     persistExtendedTestData(): void {
         const data = { extendedTest: this.extendedTest, actorGroups: this.actorGroups };
-        game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
+        if (game.user.isGM) {
+            game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
+        }
         game.socket.emit(constants.socketName, { type: "extendedTest", data });
     }
 

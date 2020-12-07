@@ -79,46 +79,53 @@
     }
 }
 
-.obstacle-mods {
-    width: 12em;
+.mods-and-help {
     position: fixed;
     bottom: 10px;
     right: calc(320px + 10em);
+    display: flex;
+    flex-direction: column;
 
-    border: 2px solid gray;
-    border-radius: 5px;
-    background-image: url("/ui/denim075.png");
-    color: white;
-    padding: 3px;
-
-    .obstacle-title {
-        font-weight: bold;
-    }
-
-    hr {
-        margin: 3px -2px;
-    }
-
-    input {
+    & > div {
+        width: 12em;      
+        border: 2px solid gray;
+        border-radius: 5px;
+        background-image: url("/ui/denim075.png");
         color: white;
-        font-size: 12px;
-        border-top: 0;
-        border-left: 0;
-        border-right: 0;
-        border-radius: 0;
+        padding: 3px;
+        margin-top: 5px;
     }
 
-    .mod-entry {
-        padding-left: 5px;
-        display: flex;
-        flex-direction: row;
-        .mod-name {
-            flex: 1 1;
-            margin-right: 2px;
+    .obstacle-mods {
+        .obstacle-title {
+            font-weight: bold;
         }
-        .mod-amount {
-            flex: 0 0 2em;
-            text-align: center;
+
+        hr {
+            margin: 3px -2px;
+        }
+
+        input {
+            color: white;
+            font-size: 12px;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+        }
+
+        .mod-entry {
+            padding-left: 5px;
+            display: flex;
+            flex-direction: row;
+            .mod-name {
+                flex: 1 1;
+                margin-right: 2px;
+            }
+            .mod-amount {
+                flex: 0 0 2em;
+                text-align: center;
+            }
         }
     }
 }

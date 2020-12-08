@@ -45,8 +45,12 @@ export class ModifierDialog extends Application {
             if (entry.path) {
                 const actor = game.actors.get(entry.actorId) as BWActor;
                 name = entry.path.substr(entry.path.indexOf('.') + 1).titleCase();
-                const ability = getProperty(actor.data, entry.path) as Ability;
+                const ability = getProperty(actor.data, entry.path) as Ability & { name?: string };
                 diff = difficultyGroup(ability.exp, obstacle);
+                if (name === "Custom1" || name === "Custom2") {
+                    name = ability.name || name;
+                }
+
                 if (actor.data.type === "character") {
                     (actor as BWCharacter).addStatTest(ability, name, entry.path, diff, success);
                 }

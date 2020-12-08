@@ -1,13 +1,12 @@
 import { extractCheckboxValue, extractMiscObs, extractNumber } from "../rolls/rolls.js";
-import { BWActor, RollModifier } from "../actors/BWActor.js";
+import { BWActor } from "../actors/BWActor.js";
 import { difficultyGroup } from "../helpers.js";
 import { DifficultyDialog } from "./DifficultyDialog.js";
 import { ModifierDialog } from "./ModifierDialog.js";
 
-export async function buildHelpDialog({ exponent, path, skillId, actor, useCustomDifficulty }: HelpDialogData): Promise<unknown> {
+export async function buildHelpDialog({ exponent, path, skillId, actor,  }: HelpDialogData): Promise<unknown> {
     const data = {
-        exponent,
-        useCustomDifficulty,
+        exponent
     };
     const content = await renderTemplate("systems/burningwheel/templates/dialogs/help-dialog.hbs", data);
     return new Dialog({
@@ -49,8 +48,6 @@ export interface HelpDialogData {
     path?: string;
     skillId?: string;
     actor: BWActor;
-    rollModifiers?: RollModifier[];
-    useCustomDifficulty: boolean;
 }
 
 interface HelpEntryData {

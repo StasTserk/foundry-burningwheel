@@ -24,6 +24,7 @@ import { MeleeWeapon } from "../items/meleeWeapon.js";
 import { PossessionRootData } from "../items/possession.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 import { Spell } from "../items/spell.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
@@ -88,6 +89,16 @@ export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPr
 export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}: NpcRollOptions): Promise<unknown>  {
     dataPreset = dataPreset || {};
     dataPreset.deedsPoint = actor.data.data.deeds !== 0;
+
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: skill.data.data.exp,
+            skillId: skill.id,
+            actor
+        });
+    }
+
     if (actor.data.data.persona) {
         dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
     }
@@ -208,6 +219,10 @@ async function skillRollCallback(
     // both cases here end up just subtracting the artha spent.
     actor.updateArthaForStat("", rollData.persona, rollData.deeds);
     
+    if (rollData.addHelp) {
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+    }
+
     const data: RollChatMessageData = {
         name: `${skill.name}`,
         successes: '' + (parseInt(roll.result) + wildForkBonus),

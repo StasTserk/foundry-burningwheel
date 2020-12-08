@@ -38,6 +38,14 @@ export class ModifierDialog extends Application {
     }
 
     grantTests(obstacle: number, success: boolean): void {
+        if (game.user.isGM) {
+            this._grantTests(obstacle, success);
+        } else {
+            game.socket.emit(constants.socketName, { type: "grantHelpTests", obstacle, success });
+        }
+    }
+
+    private _grantTests(obstacle: number, success: boolean): void {
         const testListing: { title?: string, text?: string }[] = [];
         this.help.forEach((entry) => {
             let name = "";
@@ -116,19 +124,27 @@ export class ModifierDialog extends Application {
             this.render();
         });
 
-        game.socket.on(constants.socketName, ({type, mods}) => {
-            if (type === "obstacleMods") {
+        html.find('i[data-action="delete"]').on('click', e => {
+            const target = e.currentTarget;
+            const index = parseInt(target.dataset.index || "0");
+            this.help.splice(index, 1);
+            this.persistData();
+            this.syncData();
+            this.render();
+        });
+
+        game.socket.on(constants.socketName, ({type, mods, help}) => {
+            if (type === "modifierData") {
                 this.mods = mods;
+                this.help = help;
+                this.persistData();
                 this.render(true);
             }
         });
 
-        game.socket.on(constants.socketName, ({type, help}) => {
-            if (type === "helpDice") {
-                this.help = help;
-                this.syncData();
-                this.persistData();
-                this.render(true);
+        game.socket.on(constants.socketName, ({type, obstacle, success}) => {
+            if (type === "grantHelpTests") {
+                this._grantTests(obstacle, success);
             }
         });
     }
@@ -137,11 +153,10 @@ export class ModifierDialog extends Application {
         if (game.user.isGM) {
             game.settings.set(constants.systemName, constants.settings.obstacleList, JSON.stringify({ mods: this.mods, help: this.help }));
         }
-        
     }
 
     syncData(): void {
-        game.socket.emit(constants.socketName, { type: "obstacleMods", mods: this.mods });
+        game.socket.emit(constants.socketName, { type: "modifierData", mods: this.mods, help: this.help });
     }
 
     getData(): DifficultyDialogData {

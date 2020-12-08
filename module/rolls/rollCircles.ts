@@ -100,23 +100,21 @@ async function circlesRollCallback(
     };
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
 
-    if (!rollData.skipAdvancement) {
-        // increment relationship tracking values...
-        if (contact && contact.data.data.building) {
-            const progress = (contact.data.data.buildingProgress || 0) + 1;
-            contact.update({"data.buildingProgress": progress }, null);
-            if (progress >= 10 - (contact.data.data.aptitude || 10)) {
-                Dialog.confirm({
-                    title: "Relationship Building Complete",
-                    content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
-                    yes: () => { contact.update({"data.building": false}, null); },
-                    no: () => { return; }
-                });
-            }
+    // increment relationship tracking values...
+    if (contact && contact.data.data.building) {
+        const progress = (contact.data.data.buildingProgress || 0) + 1;
+        contact.update({"data.buildingProgress": progress }, null);
+        if (progress >= 10 - (contact.data.data.aptitude || 10)) {
+            Dialog.confirm({
+                title: "Relationship Building Complete",
+                content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
+                yes: () => { contact.update({"data.building": false}, null); },
+                no: () => { return; }
+            });
         }
-        if (actor.data.type === "character") {
-            actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
-        }
+    }
+    if (actor.data.type === "character") {
+        actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
     }
 
     return ChatMessage.create({

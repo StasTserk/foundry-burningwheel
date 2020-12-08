@@ -65,7 +65,7 @@ async function statRollCallback(
         actor: BWCharacter,
         name: string,
         accessor: string) {
-    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, skipAdvancement, persona, deeds } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, persona, deeds } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal,
         stat.open,
@@ -103,7 +103,7 @@ async function statRollCallback(
         callons,
         extraInfo
     };
-    if (actor.data.type === "character" && !skipAdvancement) {
+    if (actor.data.type === "character") {
         actor.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
     }
 

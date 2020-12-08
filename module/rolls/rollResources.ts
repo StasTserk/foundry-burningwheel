@@ -112,9 +112,8 @@ async function resourcesRollCallback(
             });
             taxMessage.render(true);
         }
-        if (!rollData.skipAdvancement) {
-            actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
-        }
+
+        actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
     }
 
     return ChatMessage.create({

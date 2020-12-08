@@ -51,7 +51,7 @@
             &.c-diff {
                 @include difficulty-toggle(lightgreen, green, #005500);
             }
-            &.n-track {
+            &.help {
                 @include difficulty-toggle(#FFFFaa, red, #880000);
             }
 

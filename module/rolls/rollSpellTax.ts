@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
+import { Ability, TracksTests } from "../actors/BWActor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -56,7 +56,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
                 roll: {
                     label: "Roll",
                     callback: async (dialogHtml: JQuery) =>
-                        taxTestCallback(dialogHtml, stat, actor, tax, spellName, dataPreset.skipAdvancement || false)
+                        taxTestCallback(dialogHtml, stat, actor, tax, spellName)
                 }
             }
         }).render(true)
@@ -66,10 +66,9 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
 async function taxTestCallback(
         dialogHtml: JQuery,
         stat: Ability,
-        actor: BWActor,
+        actor: BWCharacter,
         tax: number,
-        spellName: string,
-        skipAdvancement: boolean) {
+        spellName: string) {
     const { diceTotal, difficultyTotal, difficultyGroup, baseDifficulty, obSources, dieSources, persona, deeds } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal, stat.open, stat.shade);
@@ -98,8 +97,8 @@ async function taxTestCallback(
         callons
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
-    if (actor.data.type === "character" && !skipAdvancement) {
-        (actor as BWActor & BWCharacter).addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
+    if (actor.data.type === "character") {
+        actor.addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
     }
 
     if (!isSuccessful) {

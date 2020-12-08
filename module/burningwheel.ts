@@ -101,7 +101,7 @@ Hooks.once("ready", async() => {
         const modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
         const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData));
         game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, testData);
-        game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.gmDifficulty, modData.mods, modData.help);
+        game.burningwheel.modifiers = new ModifierDialog(modData.mods, modData.help);
         game.burningwheel.gmDifficulty.render(true);
         game.burningwheel.modifiers.render(true);
     }

@@ -4,10 +4,9 @@ import { difficultyGroup } from "../helpers.js";
 import { DifficultyDialog } from "./DifficultyDialog.js";
 import { ModifierDialog } from "./ModifierDialog.js";
 
-export async function buildHelpDialog({ exponent, path, skillId, actor, rollModifiers, useCustomDifficulty }: HelpDialogData): Promise<unknown> {
+export async function buildHelpDialog({ exponent, path, skillId, actor, useCustomDifficulty }: HelpDialogData): Promise<unknown> {
     const data = {
         exponent,
-        optionalObModifiers: rollModifiers,
         useCustomDifficulty,
     };
     const content = await renderTemplate("systems/burningwheel/templates/dialogs/help-dialog.hbs", data);

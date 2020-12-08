@@ -44,7 +44,7 @@ export class DifficultyDialog extends Application {
         html.find("#gm-diff-custom").on('change', e => {
             this.customDiff = $(e.target).prop("checked") as boolean;
         });
-        html.find("#gm-diff-track").on('change', e => {
+        html.find("#gm-diff-help").on('change', e => {
             this.help = $(e.target).prop("checked") as boolean;
         });
         html.find("#gm-ext-test").on('change', e => {

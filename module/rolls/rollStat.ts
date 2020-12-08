@@ -11,6 +11,7 @@ import {
     RollOptions,
     extractRollData, EventHandlerOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
     const accessor = options.target.dataset.accessor || "";
@@ -22,12 +23,25 @@ export async function handleStatRollEvent(options: EventHandlerOptions): Promise
 
 export async function handleStatRoll({ actor, statName, stat, accessor, dataPreset }: StatRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(statName);
+
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: stat.exp,
+            path: accessor,
+            useCustomDifficulty: dataPreset.useCustomDifficulty || false,
+            actor,
+            rollModifiers: dataPreset.optionalObModifiers,
+        });
+    }
+
     let tax = 0;
     if (statName.toLowerCase() === "will") {
         tax = actor.data.data.willTax;
     } else if (statName.toLowerCase() === "forte") {
         tax = actor.data.data.forteTax;
     }
+
     const data = mergeDialogData<StatDialogData>({
         name: `${statName} Test`,
         difficulty: 3,

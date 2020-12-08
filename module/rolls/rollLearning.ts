@@ -20,6 +20,7 @@ import {
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
 import { Possession, PossessionRootData } from "../items/possession.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
     const actor = rollOptions.sheet.actor;
@@ -54,8 +55,18 @@ export function handleLearningRoll({ actor, skill, extraInfo, dataPreset, onRoll
 }
 
 async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPreset, onRollCallback }: LearningRollDialogSettings): Promise<unknown> {
-    const rollModifiers = actor.getRollModifiers(skill.name);
+
+    const rollModifiers = actor.getRollModifiers(skill.name).concat(actor.getRollModifiers(statName));
     const stat = getProperty(actor.data.data, statName);
+
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: stat.exp,
+            path: `data.${statName}`,
+            actor
+        });
+    }
 
     let tax = 0;
     if (statName.toLowerCase() === "will") {
@@ -154,6 +165,10 @@ async function learningRollCallback(
                 }, {});
             }
         }
+    }
+
+    if (rollData.addHelp) {
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
     }
 
     actor.updateArthaForStat(`data.${statName}`, rollData.persona, rollData.deeds);

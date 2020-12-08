@@ -17,6 +17,7 @@ import {
     NpcEventHandlerOptions
 } from "./rolls.js";
 import { Npc } from "../actors/Npc.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
@@ -35,6 +36,15 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
     dataPreset.deedsPoint = actor.data.data.deeds !== 0;
     if (actor.data.data.persona) {
         dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+    }
+
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: dice,
+            path: `data.${statName}`,
+            actor
+        });
     }
 
     const data = mergeDialogData<NpcStatDialogData>({
@@ -87,7 +97,9 @@ async function statRollCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result, 10) >= rollData.difficultyTotal;
 
-
+    if (rollData.addHelp) {
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+    }
 
     let splitPoolString: string | undefined;
     let splitPoolRoll: Roll | undefined;

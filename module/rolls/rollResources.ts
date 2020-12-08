@@ -12,7 +12,8 @@ import {
     mergeDialogData,
     RollOptions
 } from "./rolls.js";
-import { BWCharacter } from "module/actors/BWCharacter.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = sheet.actor.data.data.resources;
@@ -21,6 +22,14 @@ export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandl
 }
 
 export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRollOption): Promise<unknown> {
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: stat.exp,
+            path: "data.resources",
+            actor
+        });
+    }
     const rollModifiers = actor.getRollModifiers("resources");
     const data: ResourcesDialogData = mergeDialogData<ResourcesDialogData>({
         name: "Resources Test",
@@ -72,6 +81,10 @@ async function resourcesRollCallback(
     const callons: RerollData[] = actor.getCallons("resources").map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.resources" }) as RerollData };
     });
+
+    if (rollData.addHelp) {
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccess);
+    }
 
     const data: RollChatMessageData = {
         name: 'Resources',

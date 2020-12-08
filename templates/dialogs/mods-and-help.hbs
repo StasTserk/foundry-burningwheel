@@ -8,7 +8,7 @@
             <div class="help-name" >{{h.title}}</div>
             <div class="help-amount" >+{{h.dice}}D</div>
             {{#if ../editable}}
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times clickable" data-action="delete" data-index="{{i}}"></i>
             {{/if}}
         </div>
         {{/each}}

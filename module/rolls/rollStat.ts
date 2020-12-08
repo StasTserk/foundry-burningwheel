@@ -79,7 +79,7 @@ async function statRollCallback(
         actor: BWCharacter,
         name: string,
         accessor: string) {
-    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, persona, deeds } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, persona, deeds, addHelp } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal,
         stat.open,
@@ -98,6 +98,10 @@ async function statRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
     });
+
+    if (addHelp) {
+        game.burningwheel.modifiers.grantTests(difficultyTotal, isSuccessful);
+    }
 
     actor.updateArthaForStat(accessor, persona, deeds);
 

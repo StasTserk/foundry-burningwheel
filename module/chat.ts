@@ -30,7 +30,7 @@ export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data:
 }
 
 
-export async function simpleBroadcast(data: SimpleBroadcastMessageData, actor: BWActor): Promise<Entity> {
+export async function simpleBroadcast(data: SimpleBroadcastMessageData, actor?: BWActor): Promise<Entity> {
     const html = await renderTemplate("systems/burningwheel/templates/chat/simple-broadcast.hbs", data);
     return ChatMessage.create({
         content: html,

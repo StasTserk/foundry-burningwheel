@@ -1,7 +1,8 @@
-import { BWActor } from "../actors/BWActor.js";
-import { TestString } from "../helpers.js";
+import { Ability, BWActor } from "../actors/BWActor.js";
+import { difficultyGroup, TestString } from "../helpers.js";
 import * as constants from "../constants.js";
 import { Skill } from "../items/skill.js";
+import { BWCharacter } from "module/actors/BWCharacter.js";
 
 export class ModifierDialog extends Application {
 
@@ -35,13 +36,21 @@ export class ModifierDialog extends Application {
         this.render();
     }
 
-    grantTests(obstacle: number): void {
+    grantTests(obstacle: number, success: boolean): void {
         this.help.forEach((entry) => {
             let name = "";
             if (entry.path) {
+                const actor = game.actors.get(entry.actorId) as BWActor;
                 name = entry.path.substr(entry.path.indexOf('.') + 1).titleCase();
+                const ability = getProperty(actor.data, entry.path) as Ability;
+                const statDiff = difficultyGroup(ability.exp, obstacle);
+                if (actor.data.type === "character") {
+                    (actor as BWCharacter).addStatTest(ability, name, entry.path, statDiff, success);
+                }
             } else {
                 const skill = game.actors.get(entry.actorId).getOwnedItem(entry.skillId || "") as Skill;
+                const testDiff = difficultyGroup(skill.data.data.exp, obstacle);
+                skill.addTest(testDiff);
                 name = skill.name;
             }
             console.log(`Adding a ${name} test at Ob ${obstacle} to ${entry.title}`);

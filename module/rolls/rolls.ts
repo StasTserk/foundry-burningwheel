@@ -320,7 +320,6 @@ export function extractRollData(html: JQuery): RollData {
 
     if (addHelp) {
         helpDice = modifierDialog.helpDiceTotal;
-        modifierDialog.grantTests(obstacleTotal);
     }
 
     let dieSources: { [s:string]: string } = {

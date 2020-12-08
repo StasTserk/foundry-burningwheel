@@ -1,7 +1,17 @@
 <div class="mods-and-help">
     {{!--#if showHelp--}}
     <div class="help-mods">
-        Helping Dice
+        <div class="help-title">Helping Dice</div>
+        <hr>
+        {{#each help as |h i|}}
+        <div class="help-entry flex-row">
+            <div class="help-name" >{{h.title}}</div>
+            <div class="help-amount" >+{{h.dice}}D</div>
+            {{#if ../editable}}
+            <i class="fas fa-times"></i>
+            {{/if}}
+        </div>
+        {{/each}}
     </div>
     {{!--/if--}}
     {{#if (or editable modifiers.length)}}

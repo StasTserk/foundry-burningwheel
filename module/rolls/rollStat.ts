@@ -29,9 +29,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
         return buildHelpDialog({
             exponent: stat.exp,
             path: accessor,
-            useCustomDifficulty: dataPreset.useCustomDifficulty || false,
-            actor,
-            rollModifiers: dataPreset.optionalObModifiers,
+            actor
         });
     }
 

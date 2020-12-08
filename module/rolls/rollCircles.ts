@@ -13,7 +13,8 @@ import {
     mergeDialogData
 } from "./rolls.js";
 import { Relationship } from "../items/relationship.js";
-import { BWCharacter } from "module/actors/BWCharacter.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleCirclesRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
@@ -27,6 +28,15 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
 }
 
 export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContact }: CirclesRollOptions): Promise<unknown> {
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: stat.exp,
+            path: "data.circles",
+            actor
+        });
+    }
+
     const rollModifiers = actor.getRollModifiers("circles");
     const data: CirclesDialogData = mergeDialogData<CirclesDialogData>({
         name: "Circles Test",
@@ -81,6 +91,10 @@ async function circlesRollCallback(
     const callons: RerollData[] = actor.getCallons("circles").map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.circles" }) as RerollData };
     });
+
+    if (rollData.addHelp) {
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, parseInt(roll.result) >= rollData.difficultyTotal);
+    }
 
     actor.updateArthaForStat("data.circles", rollData.persona, rollData.deeds);
 

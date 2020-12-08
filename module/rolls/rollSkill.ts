@@ -19,6 +19,7 @@ import {
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
 import { Possession, PossessionRootData } from "../items/possession.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollEventOptions ): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
@@ -28,6 +29,14 @@ export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInf
 }
 
 export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onRollCallback }: SkillRollOptions): Promise<unknown> {
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: skill.data.data.exp,
+            skillId: skill.id,
+            actor
+        });
+    }
     const rollModifiers = actor.getRollModifiers(skill.name);
 
     const templateData = mergeDialogData({
@@ -71,7 +80,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
 
 async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
-    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, persona, deeds } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, persona, deeds, addHelp } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
@@ -109,6 +118,10 @@ async function skillRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
+
+    if (addHelp) {
+        game.burningwheel.modifiers.grantTests(difficultyTotal, success);
+    }
 
     actor.updateArthaForSkill(skill.id, persona, deeds);
 

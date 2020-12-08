@@ -13,6 +13,7 @@ import {
     RollOptions
 } from "./rolls.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
@@ -45,6 +46,15 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: (!game.burningwheel.useGmDifficulty) || !!obPenalty
     }, dataPreset);
+
+    if (dataPreset && dataPreset.addHelp) {
+        // add a test log instead of testing
+        return buildHelpDialog({
+            exponent: stat.exp,
+            path: accessor,
+            actor
+        });
+    }
 
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
@@ -79,6 +89,10 @@ async function attrRollCallback(
     const callons: RerollData[] = actor.getCallons(name).map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor }) as RerollData };
     });
+
+    if (rollData.addHelp) {
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+    }
 
     actor.updateArthaForStat(accessor, rollData.persona, rollData.deeds);
 

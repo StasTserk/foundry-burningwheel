@@ -97,8 +97,8 @@ export function getMacroRollPreset(actor: BWActor): Partial<RollDialogData> {
             dataPreset.showDifficulty = true;
             dataPreset.showObstacles = true;
         }
-        if (difficultyDialog.noTrack) {
-            dataPreset.skipAdvancement = true;
+        if (difficultyDialog.help) {
+            dataPreset.addHelp = true;
         }
         dataPreset.optionalObModifiers = helpDialog.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
     }

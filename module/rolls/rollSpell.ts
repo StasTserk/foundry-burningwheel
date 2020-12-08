@@ -55,7 +55,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
 
         const onRollCallback = async () => {
             showSpellTaxDialog(obstacle, spell.name, actor, dataPreset || {});
-            if (spell.data.data.inPracticals && !dataPreset?.skipAdvancement) {
+            if (spell.data.data.inPracticals) {
                 const amount = spell.data.data.learningProgress || 0;
                 const aptitude = spell.data.data.aptitude || 9;
                 spell.update({ "data.learningProgress": amount + 1 }, {});

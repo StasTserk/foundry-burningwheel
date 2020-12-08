@@ -72,7 +72,7 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
         dataPreset.offerSplitPool = true;
     }
     if (e.altKey) {
-        dataPreset.skipAdvancement = true;
+        dataPreset.addHelp = true;
     }
 
     if (game.burningwheel.gmDifficulty) {
@@ -88,9 +88,9 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
             dataPreset.useCustomDifficulty = true;
             dialog.customDiff = false;
         }
-        if (dialog.noTrack) {
-            dataPreset.skipAdvancement = true;
-            dialog.noTrack = false;
+        if (dialog.help) {
+            dataPreset.addHelp = true;
+            dialog.help = false;
         }
 
         dataPreset.optionalObModifiers = mods.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
@@ -283,7 +283,7 @@ export function extractRollData(html: JQuery): RollData {
     } else {
         diff = extractNumber(html, "difficulty");
     }
-    const skipAdvancement = extractNumber(html, "skipAdvancement") === 1;
+    const addHelp = extractCheckboxValue(html, "acceptHelp") === 1;
     const persona = extractSelectNumber(html, "personaDice");
     const deeds = extractCheckboxValue(html, "deedsDice");
     const aDice = extractNumber(html, "arthaDice") + persona + deeds;
@@ -348,7 +348,7 @@ export function extractRollData(html: JQuery): RollData {
         cashDice,
         fundDice,
         splitPool,
-        skipAdvancement,
+        addHelp,
         persona,
         deeds
     };
@@ -506,8 +506,8 @@ export interface RollData {
     fundDice: number;
     /** Number of dice split to a secondary pool */
     splitPool: number;
-    /** Is advancement to be tracked for this test? */
-    skipAdvancement: boolean;
+    /** Instead of rolling dice, add helping dice to someone else testing */
+    addHelp: boolean;
     /** Persona points spent */
     persona: number;
     /** Deeds dice granted */
@@ -548,7 +548,7 @@ export interface RollDialogData {
     showDifficulty: boolean;
     showObstacles: boolean;
     useCustomDifficulty?: boolean;
-    skipAdvancement?: boolean;
+    addHelp?: boolean;
 
     deedsPoint?: boolean;
     personaOptions?: number[];

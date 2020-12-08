@@ -182,11 +182,9 @@ async function learningRollCallback(
             speaker: ChatMessage.getSpeaker({actor})
         });
     };
-    if (!rollData.skipAdvancement) {
-        return advanceLearning(skill, statName, actor, rollData.difficultyGroup, isSuccessful, fateReroll, sendChatMessage);
-    } else {
-        return sendChatMessage(fateReroll);
-    }
+
+    return advanceLearning(skill, statName, actor, rollData.difficultyGroup, isSuccessful, fateReroll, sendChatMessage);
+
 }
 
 async function advanceLearning(

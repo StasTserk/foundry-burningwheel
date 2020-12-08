@@ -9,7 +9,7 @@ export class DifficultyDialog extends Application {
     editable: boolean;
     splitPool: boolean;
     customDiff: boolean;
-    noTrack: boolean;
+    help: boolean;
 
     extendedTest: boolean;
     actorGroups: ActorTestGroup[];
@@ -23,7 +23,7 @@ export class DifficultyDialog extends Application {
         this.difficulty = defaultDifficulty;
         this.editable = game.user.isGM;
 
-        this.splitPool = this.customDiff = this.noTrack = false;
+        this.splitPool = this.customDiff = this.help = false;
 
         this.extendedTest = extendedData?.extendedTest || false;
         this.actorGroups = extendedData?.actorGroups || [];
@@ -45,7 +45,7 @@ export class DifficultyDialog extends Application {
             this.customDiff = $(e.target).prop("checked") as boolean;
         });
         html.find("#gm-diff-track").on('change', e => {
-            this.noTrack = $(e.target).prop("checked") as boolean;
+            this.help = $(e.target).prop("checked") as boolean;
         });
         html.find("#gm-ext-test").on('change', e => {
             this.extendedTest = $(e.target).prop("checked") as boolean;
@@ -118,7 +118,7 @@ export class DifficultyDialog extends Application {
                 this.splitPool = true;
                 this.render();
             } else if (e.key === "Alt") {
-                this.noTrack = true;
+                this.help = true;
                 this.render(true);
             } else if (e.key === "Shift") {
                 this.customDiff = true;
@@ -131,7 +131,7 @@ export class DifficultyDialog extends Application {
                 this.splitPool = false;
                 this.render();
             } else if (e.key === "Alt") {
-                this.noTrack = false;
+                this.help = false;
                 this.render(true);
             } else if (e.key === "Shift") {
                 this.customDiff = false;
@@ -218,7 +218,7 @@ export class DifficultyDialog extends Application {
         data.difficulty = this.difficulty;
         data.editable = this.editable;
         data.splitPool = this.splitPool;
-        data.noTrack = this.noTrack;
+        data.help = this.help;
         data.customDiff = this.customDiff;
         
         data.extendedTest = this.extendedTest;
@@ -231,7 +231,7 @@ export class DifficultyDialog extends Application {
 interface DifficultyDialogData {
     extendedTest: boolean;
     customDiff: boolean;
-    noTrack: boolean;
+    help: boolean;
     splitPool: boolean;
     difficulty: number;
     editable: boolean;

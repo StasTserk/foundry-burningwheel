@@ -1,8 +1,6 @@
 import { BWActor } from "../actors/BWActor.js";
 import { TestString } from "../helpers.js";
-import { Skill } from "../items/skill.js";
 import * as constants from "../constants.js";
-import { DifficultyDialog } from "./DifficultyDialog.js";
 
 export class ModifierDialog extends Application {
 
@@ -10,7 +8,7 @@ export class ModifierDialog extends Application {
     help: HelpRecord[];
     editable: boolean;
 
-    constructor(diff: DifficultyDialog, mods?: {name: string, amount: number}[], help?: HelpRecord[] ) {
+    constructor(mods?: {name: string, amount: number}[], help?: HelpRecord[] ) {
         super({
             template: "systems/burningwheel/templates/dialogs/mods-and-help.hbs",
             popOut: false
@@ -19,6 +17,20 @@ export class ModifierDialog extends Application {
         this.mods = mods || [];
         this.help = help || [];
         this.editable = game.user.isGM;
+    }
+
+    addHelp({ dice, skillId, path, difficulty, title, actor }: AddHelpOptions): void {
+        const entry: HelpRecord = {
+            title,
+            dice: dice >= 5 ? 2 : 1,
+            skillId,
+            path,
+            difficulty,
+            actorId: actor.id
+        };
+        this.help.push(entry);
+        this.persistData();
+        this.syncData();
     }
 
     activateListeners(html: JQuery): void {
@@ -39,7 +51,8 @@ export class ModifierDialog extends Application {
             } else {
                 this.mods.splice(index, 1);
             }
-            this.persistMods();
+            this.persistData();
+            this.syncData();
             this.render();
         });
 
@@ -48,7 +61,8 @@ export class ModifierDialog extends Application {
             const amount = parseInt(target.val() as string) || 0;
             const index = parseInt(e.target.dataset.index || "0");
             this.mods[index].amount = amount;
-            this.persistMods();
+            this.persistData();
+            this.syncData();
             this.render();
         });
 
@@ -58,10 +72,25 @@ export class ModifierDialog extends Application {
                 this.render(true);
             }
         });
+
+        game.socket.on(constants.socketName, ({type, help}) => {
+            if (type === "helpDice") {
+                this.help = help;
+                this.syncData();
+                this.persistData();
+                this.render(true);
+            }
+        });
     }
     
-    persistMods(): void {
-        game.settings.set(constants.systemName, constants.settings.obstacleList, JSON.stringify({ mods: this.mods, help: this.help }));
+    persistData(): void {
+        if (game.user.isGM) {
+            game.settings.set(constants.systemName, constants.settings.obstacleList, JSON.stringify({ mods: this.mods, help: this.help }));
+        }
+        
+    }
+
+    syncData(): void {
         game.socket.emit(constants.socketName, { type: "obstacleMods", mods: this.mods });
     }
 
@@ -90,12 +119,14 @@ interface HelpRecord {
     skillId?: string;
     difficulty: TestString;
     dice: number;
+    actorId: string;
 }
 
-export interface AddDeferredTestOptions {
+export interface AddHelpOptions {
     actor: BWActor,
-    name: string,
+    title: string,
     path?: string;
-    skill?: Skill,
-    difficulty: TestString
+    skillId?: string,
+    difficulty: TestString,
+    dice: number
 }

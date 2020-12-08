@@ -277,13 +277,17 @@ function extractSourcedValue(html: JQuery, name: string):
 
 export function extractRollData(html: JQuery): RollData {
     const exponent = extractNumber(html, "stat.exp") + extractNumber(html, "skill.exp");
+    const modifierDialog: ModifierDialog = game.burningwheel.modifiers;
+    const difficultyDialog: DifficultyDialog = game.burningwheel.gmDifficulty;
     let diff = 0;
     if (game.burningwheel.useGmDifficulty && !extractNumber(html, "forceCustomDifficulty")) {
-        diff = game.burningwheel.gmDifficulty.difficulty;
+        diff = difficultyDialog.difficulty;
     } else {
         diff = extractNumber(html, "difficulty");
     }
+
     const addHelp = extractCheckboxValue(html, "acceptHelp") === 1;
+    let helpDice = 0;
     const persona = extractSelectNumber(html, "personaDice");
     const deeds = extractCheckboxValue(html, "deedsDice");
     const aDice = extractNumber(html, "arthaDice") + persona + deeds;
@@ -307,13 +311,17 @@ export function extractRollData(html: JQuery): RollData {
     const learningPenalty = extractNumber(html, "learning") ? diff + toolkitPenalty : 0;
     if (learningPenalty) { penaltySources["Beginner's Luck"] = `+${learningPenalty}`; }
     
-
     penaltySources = {...penaltySources, ...miscObs.entries, ...circlesMalus.entries};
 
     const obstacleTotal = diff + obPenalty + miscObs.sum + toolkitPenalty + circlesMalus.sum;
     const tax = extractNumber(html, "tax");
     const forks = extractCheckboxValue(html, "forkOptions");
     const wildForks = extractCheckboxValue(html, "wildForks");
+
+    if (addHelp) {
+        helpDice = modifierDialog.helpDiceTotal;
+        modifierDialog.grantTests(obstacleTotal);
+    }
 
     let dieSources: { [s:string]: string } = {
         "Exponent": `+${exponent}`
@@ -329,9 +337,10 @@ export function extractRollData(html: JQuery): RollData {
     if (fundDice) { dieSources.Funds = `+${fundDice}`; }
     if (miscDice) { dieSources = { ...dieSources, ...miscDice.entries }; }
     if (splitPool) { dieSources["Secondary Pool"] = `-${splitPool}`; }
+    if (addHelp) { dieSources["Help"] = `+${helpDice}`; }
 
-    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
-    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
+    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
+    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
 
     return { 
         baseDifficulty: diff,

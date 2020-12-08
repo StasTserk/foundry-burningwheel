@@ -1,5 +1,5 @@
 <div class="mods-and-help">
-    {{!--#if showHelp--}}
+    {{#if showHelp}}
     <div class="help-mods">
         <div class="help-title">Helping Dice</div>
         <hr>
@@ -13,7 +13,7 @@
         </div>
         {{/each}}
     </div>
-    {{!--/if--}}
+    {{/if}}
     {{#if (or editable modifiers.length)}}
     <div class="obstacle-mods">
         <div class="obstacle-title">Additional Modifiers</div>

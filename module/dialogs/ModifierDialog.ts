@@ -1,6 +1,7 @@
 import { BWActor } from "../actors/BWActor.js";
 import { TestString } from "../helpers.js";
 import * as constants from "../constants.js";
+import { Skill } from "../items/skill.js";
 
 export class ModifierDialog extends Application {
 
@@ -31,6 +32,28 @@ export class ModifierDialog extends Application {
         this.help.push(entry);
         this.persistData();
         this.syncData();
+        this.render();
+    }
+
+    grantTests(obstacle: number): void {
+        this.help.forEach((entry) => {
+            let name = "";
+            if (entry.path) {
+                name = entry.path.substr(entry.path.indexOf('.') + 1).titleCase();
+            } else {
+                const skill = game.actors.get(entry.actorId).getOwnedItem(entry.skillId || "") as Skill;
+                name = skill.name;
+            }
+            console.log(`Adding a ${name} test at Ob ${obstacle} to ${entry.title}`);
+        });
+        this.help = [];
+        this.persistData();
+        this.syncData();
+        this.render();
+    }
+
+    get helpDiceTotal(): number {
+        return this.help.map(h => h.dice).reduce((t, d) => t + d);
     }
 
     activateListeners(html: JQuery): void {
@@ -99,7 +122,7 @@ export class ModifierDialog extends Application {
         data.editable = this.editable;
         data.modifiers = this.mods;
         data.help = this.help;
-        data.showHelp = !!this.mods.length;
+        data.showHelp = this.help.length > 0;
 
         return data;
     }

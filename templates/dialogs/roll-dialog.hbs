@@ -90,9 +90,9 @@
             </select>
         </div>
         {{/if}}
-        <div class="checkbox-grid half-width">
-            <input id="checkbox-add-help" type="checkbox" name="acceptHelp" value="1">
+        <div class="flex-row dialog-row">
             <label for="checkbox-add-help">Accept Help</label>
+            <input id="checkbox-add-help" type="checkbox" name="acceptHelp" value="1">
         </div>
     </div>
     <div class="flex-row">
@@ -111,14 +111,14 @@
         </div>
         {{/if}}
         {{#if deedsPoint}}
-        <div class="checkbox-grid half-width">
+        <div class="flex-row dialog-row">
+            <label for="checkbox-inspiration">Divine Inspiration</label>
             {{#if skill}}
             <input id="checkbox-inspiration" type="checkbox" name="deedsDice" value="{{skill.exp}}">
             {{/if}}
             {{#if stat}}
             <input id="checkbox-inspiration" type="checkbox" name="deedsDice" value="{{stat.exp}}">
             {{/if}}
-            <label for="checkbox-inspiration">Divine Inspiration</label>
         </div>
         {{/if}}
         <div class="flex-row dialog-row">

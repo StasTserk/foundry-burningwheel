@@ -336,7 +336,7 @@ export function extractRollData(html: JQuery): RollData {
     if (fundDice) { dieSources.Funds = `+${fundDice}`; }
     if (miscDice) { dieSources = { ...dieSources, ...miscDice.entries }; }
     if (splitPool) { dieSources["Secondary Pool"] = `-${splitPool}`; }
-    if (addHelp) { dieSources["Help"] = `+${helpDice}`; }
+    if (addHelp && helpDice) { dieSources["Help"] = `+${helpDice}`; }
 
     const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
     const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;

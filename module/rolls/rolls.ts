@@ -15,7 +15,7 @@ import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
 import { NpcSheet } from "../actors/sheets/NpcSheet.js";
 import { Possession } from "../items/possession.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
-import { ModifierDialog } from "module/dialogs/ModifierDialog.js";
+import { ModifierDialog } from "../dialogs/ModifierDialog.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {

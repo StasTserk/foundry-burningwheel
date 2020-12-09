@@ -89,7 +89,7 @@ export class ModifierDialog extends Application {
     }
 
     get helpDiceTotal(): number {
-        return this.help.map(h => h.dice).reduce((t, d) => t + d);
+        return this.help.map(h => h.dice).reduce((t, d) => t + d, 0);
     }
 
     activateListeners(html: JQuery): void {

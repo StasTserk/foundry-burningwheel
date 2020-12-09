@@ -34,11 +34,10 @@
         {{#if editable}}
         <button class="full-width" data-action="clear">Clear</button>
         {{/if}}
+        <div class="test-title">Extended Test</div>
         {{#each actorGroups as |ah|}}
         <div class="advancement">
-            <div class="group-header">
-                {{ah.name}}
-            </div>
+            <div class="group-header">{{ah.name}}</div>
             {{#each ah.advancements as |a idx|}}
             <div class="entry flex-row">
                 {{#if ../../editable}}

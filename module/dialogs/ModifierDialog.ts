@@ -9,7 +9,6 @@ export class ModifierDialog extends Application {
 
     mods: {name: string, amount: number }[];
     help: HelpRecord[];
-    editable: boolean;
 
     constructor(mods?: {name: string, amount: number}[], help?: HelpRecord[] ) {
         super({
@@ -19,18 +18,19 @@ export class ModifierDialog extends Application {
 
         this.mods = mods || [];
         this.help = help || [];
-        this.editable = game.user.isGM;
     }
 
-    addHelp({ dice, skillId, path, difficulty, title, actor }: AddHelpOptions): void {
+    addHelp({ dice, skillId, path, title, actor }: AddHelpOptions): void {
         const entry: HelpRecord = {
             title,
             dice: dice >= 5 ? 2 : 1,
             skillId,
             path,
-            difficulty,
             actorId: actor.id
         };
+        if (this.help.some(e => e.actorId === actor.id)) {
+            return; // each person can only help once.
+        }
         this.help.push(entry);
         this.persistData();
         this.syncData();
@@ -161,7 +161,7 @@ export class ModifierDialog extends Application {
 
     getData(): DifficultyDialogData {
         const data = super.getData() as DifficultyDialogData;
-        data.editable = this.editable;
+        data.editable = game.user.isGM;
         data.modifiers = this.mods;
         data.help = this.help;
         data.showHelp = this.help.length > 0;
@@ -182,7 +182,6 @@ interface HelpRecord {
     title: string;
     path?: string;
     skillId?: string;
-    difficulty: TestString;
     dice: number;
     actorId: string;
 }
@@ -192,6 +191,5 @@ export interface AddHelpOptions {
     title: string,
     path?: string;
     skillId?: string,
-    difficulty: TestString,
     dice: number
 }

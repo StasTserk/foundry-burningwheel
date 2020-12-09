@@ -152,12 +152,22 @@ export class ModifierDialog extends Application {
     
     persistData(): void {
         if (game.user.isGM) {
-            game.settings.set(constants.systemName, constants.settings.obstacleList, JSON.stringify({ mods: this.mods, help: this.help }));
+            game.settings.set(
+                constants.systemName,
+                constants.settings.obstacleList,
+                JSON.stringify({
+                    mods: this.mods,
+                    help: this.help
+                }));
         }
     }
 
     syncData(): void {
-        game.socket.emit(constants.socketName, { type: "modifierData", mods: this.mods, help: this.help });
+        game.socket.emit(
+            constants.socketName, {
+                type: "modifierData",
+                mods: this.mods,
+                help: this.help });
     }
 
     getData(): DifficultyDialogData {
@@ -190,9 +200,9 @@ interface HelpRecord {
 }
 
 export interface AddHelpOptions {
-    actor: BWActor,
-    title: string,
+    actor: BWActor;
+    title: string;
     path?: string;
-    skillId?: string,
-    dice: number
+    skillId?: string;
+    dice: number;
 }

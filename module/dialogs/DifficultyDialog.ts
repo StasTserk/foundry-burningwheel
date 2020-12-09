@@ -2,7 +2,7 @@ import { Ability, BWActor } from "../actors/BWActor.js";
 import { TestString } from "../helpers.js";
 import { Skill } from "../items/skill.js";
 import * as constants from "../constants.js";
-import { BWCharacter } from "module/actors/BWCharacter.js";
+import { BWCharacter } from "../actors/BWCharacter.js";
 
 export class DifficultyDialog extends Application {
     difficulty: number;

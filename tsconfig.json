@@ -2,7 +2,6 @@
     "include": ["scripts/**/*.ts", "module/**/*.ts", "types/*.d.ts"],
     "exclude": ["node_modules", "node_modules/foundry-pc-types/types/framework/collection.d.ts"],
     "compilerOptions": {
-        "baseUrl": ".",
         "sourceMap": true,
         "types": [
             "foundry-pc-types",

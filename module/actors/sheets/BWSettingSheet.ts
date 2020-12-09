@@ -1,4 +1,4 @@
-import { BWItem } from "module/items/item.js";
+import { BWItem } from "../../items/item.js";
 import { LifepathRootData } from "../../items/lifepath.js";
 import { BWSetting } from "../BWSetting.js";
 import * as helpers from "../../helpers.js";

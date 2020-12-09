@@ -82,9 +82,16 @@
 .mods-and-help {
     position: fixed;
     bottom: 10px;
-    right: calc(320px + 10em);
+    
     display: flex;
     flex-direction: column;
+
+    &.modifiers-only {
+        right: 320px;
+    }
+    &.modifiers-and-difficulty {
+        right: calc(320px + 10em);
+    }
 
     & > div {
         width: 12em;      

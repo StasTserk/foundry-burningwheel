@@ -9,13 +9,14 @@ export class ModifierDialog extends Application {
 
     mods: {name: string, amount: number }[];
     help: HelpRecord[];
+    cssClass: string;
 
-    constructor(mods?: {name: string, amount: number}[], help?: HelpRecord[] ) {
+    constructor(showGmDifficulty: boolean, mods?: {name: string, amount: number}[], help?: HelpRecord[]) {
         super({
             template: "systems/burningwheel/templates/dialogs/mods-and-help.hbs",
-            popOut: false
+            popOut: false,
         });
-
+        this.cssClass = showGmDifficulty ? "modifiers-and-difficulty" : "modifiers-only";
         this.mods = mods || [];
         this.help = help || [];
     }
@@ -161,6 +162,7 @@ export class ModifierDialog extends Application {
 
     getData(): DifficultyDialogData {
         const data = super.getData() as DifficultyDialogData;
+        data.cssClass = this.cssClass;
         data.editable = game.user.isGM;
         data.modifiers = this.mods;
         data.help = this.help;
@@ -171,6 +173,7 @@ export class ModifierDialog extends Application {
 }
 
 interface DifficultyDialogData {
+    cssClass: string;
     editable: boolean;
     extendedTest: boolean;
     modifiers: { name: string; amount: number; }[];

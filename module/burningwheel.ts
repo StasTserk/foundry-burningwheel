@@ -49,7 +49,6 @@ Hooks.once("init", async () => {
     let dowData = {};
     let fightData = {};
     let rncData = {};
-    let modData = { mods: undefined, help: undefined };
     try {
         dowData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.duelData));
     } catch (err) {
@@ -66,13 +65,6 @@ Hooks.once("init", async () => {
         rncData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.rangeData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Range and Cover data");
-        console.log(err);
-    }
-
-    try {
-        modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
-    } catch (err) {
-        ui.notifications.warn("Error parsing serialized Modifier data");
         console.log(err);
     }
     
@@ -99,7 +91,7 @@ Hooks.once("init", async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
     game.burningwheel.rangeAndCover.activateSocketListeners();
-    game.burningwheel.modifiers = new ModifierDialog(modData.mods, modData.help);
+
 });
 
 Hooks.once("ready", async() => {
@@ -107,12 +99,21 @@ Hooks.once("ready", async() => {
     game.burningwheel.useGmDifficulty = await game.settings.get(constants.systemName, constants.settings.useGmDifficulty);
     if (game.burningwheel.useGmDifficulty) {
         const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty);
-        
         const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData));
         game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, testData);
         game.burningwheel.gmDifficulty.render(true);
     }
+
+    let modData = { mods: undefined, help: undefined };
+    try {
+        modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
+    } catch (err) {
+        ui.notifications.warn("Error parsing serialized Modifier data");
+        console.log(err);
+    }
+    game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.useGmDifficulty, modData.mods, modData.help);
     game.burningwheel.modifiers.render(true);
+
     RegisterMacros();
 });
 

@@ -27,7 +27,8 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
         return buildHelpDialog({
             exponent: stat.exp,
             path: "data.resources",
-            actor
+            actor,
+            helpedWith: "Resources"
         });
     }
     const rollModifiers = actor.getRollModifiers("resources");

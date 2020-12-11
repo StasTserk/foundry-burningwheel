@@ -5,7 +5,7 @@
         <hr>
         {{#each help as |h i|}}
         <div class="help-entry flex-row">
-            <div class="help-name" >{{h.title}}</div>
+            <div class="help-name" >{{h.title}}<span class="tooltip">Helped with {{h.helpedWith}}.</span></div>
             <div class="help-amount" >+{{h.dice}}D</div>
             {{#if ../editable}}
             <i class="fas fa-times clickable" data-action="delete" data-index="{{i}}"></i>

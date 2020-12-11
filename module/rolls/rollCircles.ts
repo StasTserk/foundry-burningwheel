@@ -33,7 +33,8 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
         return buildHelpDialog({
             exponent: stat.exp,
             path: "data.circles",
-            actor
+            actor,
+            helpedWith: "Circles"
         });
     }
 

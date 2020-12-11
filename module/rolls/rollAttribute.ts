@@ -52,7 +52,8 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
         return buildHelpDialog({
             exponent: stat.exp,
             path: accessor,
-            actor
+            actor,
+            helpedWith: attrName
         });
     }
 

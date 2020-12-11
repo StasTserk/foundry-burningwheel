@@ -64,7 +64,8 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
         return buildHelpDialog({
             exponent: stat.exp,
             path: `data.${statName}`,
-            actor
+            actor,
+            helpedWith: statName
         });
     }
 

@@ -43,7 +43,8 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
         return buildHelpDialog({
             exponent: dice,
             path: `data.${statName}`,
-            actor
+            actor,
+            helpedWith: statName
         });
     }
 

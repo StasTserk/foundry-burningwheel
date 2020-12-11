@@ -34,7 +34,8 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
         return buildHelpDialog({
             exponent: skill.data.data.exp,
             skillId: skill.id,
-            actor
+            actor,
+            helpedWith: skill.name
         });
     }
     const rollModifiers = actor.getRollModifiers(skill.name);

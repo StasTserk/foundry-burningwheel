@@ -1,7 +1,7 @@
 import { BWActor } from "../actors/BWActor.js";
 import { ModifierDialog } from "./ModifierDialog.js";
 
-export async function buildHelpDialog({ exponent, path, skillId, actor }: HelpDialogData): Promise<unknown> {
+export async function buildHelpDialog({ exponent, path, skillId, actor, helpedWith }: HelpDialogData): Promise<unknown> {
     const data = {
         exponent
     };
@@ -13,14 +13,14 @@ export async function buildHelpDialog({ exponent, path, skillId, actor }: HelpDi
             help: {
                 label: "Help",
                 callback: () => {
-                    registerHelpEntry({ path, skillId, actor, exponent});
+                    registerHelpEntry({ path, skillId, actor, exponent, helpedWith });
                 }
             }
         }
     }).render(true);
 }
 
-async function registerHelpEntry({ path, skillId, actor, exponent }: HelpEntryData): Promise<void> {
+async function registerHelpEntry({ path, skillId, actor, exponent, helpedWith }: HelpEntryData): Promise<void> {
     const modifiers: ModifierDialog = game.burningwheel.modifiers;
 
     modifiers.addHelp({
@@ -28,7 +28,8 @@ async function registerHelpEntry({ path, skillId, actor, exponent }: HelpEntryDa
         skillId,
         path,
         actor,
-        title: actor.name
+        title: actor.name,
+        helpedWith
     });
 }
 
@@ -37,6 +38,7 @@ export interface HelpDialogData {
     path?: string;
     skillId?: string;
     actor: BWActor;
+    helpedWith: string;
 }
 
 interface HelpEntryData {
@@ -44,4 +46,5 @@ interface HelpEntryData {
     skillId?: string;
     actor: BWActor;
     exponent: number;
+    helpedWith: string;
 }

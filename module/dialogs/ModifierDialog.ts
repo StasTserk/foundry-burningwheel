@@ -21,13 +21,14 @@ export class ModifierDialog extends Application {
         this.help = help || [];
     }
 
-    addHelp({ dice, skillId, path, title, actor }: AddHelpOptions): void {
+    addHelp({ dice, skillId, path, title, actor, helpedWith }: AddHelpOptions): void {
         const entry: HelpRecord = {
             title,
             dice: dice >= 5 ? 2 : 1,
             skillId,
             path,
-            actorId: actor.id
+            actorId: actor.id,
+            helpedWith
         };
         if (this.help.some(e => e.actorId === actor.id)) {
             return; // each person can only help once.
@@ -197,6 +198,7 @@ interface HelpRecord {
     skillId?: string;
     dice: number;
     actorId: string;
+    helpedWith: string;
 }
 
 export interface AddHelpOptions {
@@ -205,4 +207,5 @@ export interface AddHelpOptions {
     path?: string;
     skillId?: string;
     dice: number;
+    helpedWith: string;
 }

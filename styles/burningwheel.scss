@@ -64,10 +64,10 @@ input {
     }
 
     &::selection {
-        background: rgba(#800, .25);
+        background: rgba(#800, .5);
     }
     &::-moz-selection {
-        background: rgba(#800, .25);
+        background: rgba(#800, .5);
     }
 }
 

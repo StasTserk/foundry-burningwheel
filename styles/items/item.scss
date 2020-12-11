@@ -30,6 +30,7 @@ img.item-image {
 
     .item-setting-label {
         font-weight: bold;
+        line-height: 1.75em;
     }
 
     .item-setting-toggle {
@@ -38,5 +39,9 @@ img.item-image {
     }
     .item-setting-checkbox:checked + .item-setting-toggle {
         @include button-like-active;
+    }
+
+    .triple-wide {
+        grid-column: span 3;
     }
 }

@@ -369,6 +369,7 @@ Item:
     traitPoints: 0
     skillList: ''
     traitList: ''
+    note: ''
     requirements: ''
     restrictions: ''
     order: 0

@@ -41,8 +41,10 @@ export class ModifierDialog extends Application {
 
     grantTests(obstacle: number, success: boolean): void {
         if (game.user.isGM) {
+            // the GM is allowed to modify all characters so have them assign the tests and send out the message.
             this._grantTests(obstacle, success);
         } else {
+            // if we're not the GM, just send a message over the socket that advancement needs to be handed out.
             game.socket.emit(constants.socketName, { type: "grantHelpTests", obstacle, success });
         }
     }
@@ -145,7 +147,7 @@ export class ModifierDialog extends Application {
         });
 
         game.socket.on(constants.socketName, ({type, obstacle, success}) => {
-            if (type === "grantHelpTests") {
+            if (type === "grantHelpTests" && game.user.isGM) {
                 this._grantTests(obstacle, success);
             }
         });

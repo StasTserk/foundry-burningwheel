@@ -101,6 +101,7 @@ Hooks.once("ready", async() => {
         const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty);
         const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData));
         game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, testData);
+        game.burningwheel.gmDifficulty.activateSocketListeners();
         game.burningwheel.gmDifficulty.render(true);
     }
 
@@ -112,6 +113,7 @@ Hooks.once("ready", async() => {
         console.log(err);
     }
     game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.useGmDifficulty, modData.mods, modData.help);
+    game.burningwheel.modifiers.activateSocketListeners();
     game.burningwheel.modifiers.render(true);
 
     RegisterMacros();

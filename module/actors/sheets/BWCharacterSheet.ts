@@ -79,8 +79,14 @@ export class BWCharacterSheet extends BWActorSheet {
                 case "instinct": instincts.push(i); break;
                 case "trait": traits.push(i); break;
                 case "skill":
-                    (i as SkillDataRoot).data.learning ? learning.push(i as SkillDataRoot) : (
-                        (i as SkillDataRoot).data.training && (i as SkillDataRoot).data.skilltype === "martial" ? training.push(i as SkillDataRoot) : skills.push(i as SkillDataRoot));
+                    const s = i as SkillDataRoot;
+                    if (s.data.learning) {
+                        learning.push(s);
+                    } else if (s.data.training && ["martial", "training"].includes(s.data.skilltype)) {
+                        training.push(s);
+                    } else {
+                        skills.push(s);
+                    }
                     Skill.disableIfWounded.call(i, woundDice);
                     break;
                 case "relationship": relationships.push(i as ItemData<RelationshipData>); break;

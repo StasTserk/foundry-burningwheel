@@ -124,7 +124,7 @@ export class Skill extends BWItem {
                         updateData["data.difficult"] = 0;
                         updateData["data.challenging"] = 0;
                         updateData["data.shade"] = shade;
-                        updateData["data.exp"] = Math.floor((10 - requiredTests) / 2);
+                        updateData["data.exp"] = Math.floor(this.rootStatExp / 2);
                         this.update(updateData, {});
                     },
                     no: () => { return; },
@@ -173,6 +173,25 @@ export class Skill extends BWItem {
                 no: () => { return; },
                 defaultYes: true
             });
+        }
+    }
+
+    get rootStatExp(): number {
+        if (this.actor) {
+            const actor = this.actor;
+            const root1exp = (actor.data.data[this.data.data.root1] as Ability).exp;
+            const root2exp = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).exp : root1exp;
+            let exp = Math.floor((root1exp + root2exp) / 2);
+            if (this.data.data.root2) {
+                const root1Shade = (actor.data.data[this.data.data.root1] as Ability).shade;
+                const root2Shade = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).shade : root1Shade;
+                if (root1Shade != root2Shade) {
+                    exp ++;
+                }
+            }
+            return exp;
+        } else {
+            return 0;
         }
     }
 }

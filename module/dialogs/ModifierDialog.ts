@@ -54,23 +54,23 @@ export class ModifierDialog extends Application {
         this.help.forEach((entry) => {
             let name = "";
             let diff: TestString = "Routine";
-            if (entry.path) {
-                const actor = game.actors.get(entry.actorId) as BWActor;
-                name = entry.path.substr(entry.path.indexOf('.') + 1).titleCase();
-                const ability = getProperty(actor.data, entry.path) as Ability & { name?: string };
-                diff = difficultyGroup(ability.exp, obstacle);
-                if (name === "Custom1" || name === "Custom2") {
-                    name = ability.name || name;
-                }
+            const actor = game.actors.get(entry.actorId) as BWActor;
 
-                if (actor.data.type === "character") {
+            if (actor.data.type === "character") {
+                if (entry.path) {
+                    name = entry.path.substr(entry.path.indexOf('.') + 1).titleCase();
+                    const ability = getProperty(actor.data, entry.path) as Ability & { name?: string };
+                    diff = difficultyGroup(ability.exp, obstacle);
+                    if (name === "Custom1" || name === "Custom2") {
+                        name = ability.name || name;
+                    }
                     (actor as BWCharacter).addStatTest(ability, name, entry.path, diff, success);
+                } else {
+                    const skill = game.actors.get(entry.actorId).getOwnedItem(entry.skillId || "") as Skill;
+                    diff = difficultyGroup(skill.data.data.exp, obstacle);
+                    skill.addTest(diff);
+                    name = skill.name;
                 }
-            } else {
-                const skill = game.actors.get(entry.actorId).getOwnedItem(entry.skillId || "") as Skill;
-                diff = difficultyGroup(skill.data.data.exp, obstacle);
-                skill.addTest(diff);
-                name = skill.name;
             }
             testListing.push({
                 title: entry.title,
@@ -136,7 +136,9 @@ export class ModifierDialog extends Application {
             this.syncData();
             this.render();
         });
+    }
 
+    activateSocketListeners(): void {
         game.socket.on(constants.socketName, ({type, mods, help}) => {
             if (type === "modifierData") {
                 this.mods = mods;

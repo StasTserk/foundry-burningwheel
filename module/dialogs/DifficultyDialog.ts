@@ -96,23 +96,6 @@ export class DifficultyDialog extends Application {
             this.render();
         });
 
-        game.socket.on(constants.socketName, ({ type, difficulty }) => {
-            if (type === "difficulty") {
-                this.difficulty = difficulty;
-                this.render(true);
-            }
-        });
-        game.socket.on(constants.socketName, ({type, data}: {type: string, data: { extendedTest: boolean, actorGroups: ActorTestGroup[] } }) => {
-            if (type === "extendedTest") {
-                this.extendedTest = data.extendedTest;
-                this.actorGroups = data.actorGroups;
-                if (game.user.isGM) {
-                    game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
-                }
-                this.render(true);
-            }
-        });
-
         $(document).on("keydown", e => {
             if (e.key === "Control" || e.key === "Meta") {
                 this.splitPool = true;
@@ -135,6 +118,25 @@ export class DifficultyDialog extends Application {
                 this.render(true);
             } else if (e.key === "Shift") {
                 this.customDiff = false;
+                this.render(true);
+            }
+        });
+    }
+
+    activateSocketListeners(): void {
+        game.socket.on(constants.socketName, ({ type, difficulty }) => {
+            if (type === "difficulty") {
+                this.difficulty = difficulty;
+                this.render(true);
+            }
+        });
+        game.socket.on(constants.socketName, ({type, data}: {type: string, data: { extendedTest: boolean, actorGroups: ActorTestGroup[] } }) => {
+            if (type === "extendedTest") {
+                this.extendedTest = data.extendedTest;
+                this.actorGroups = data.actorGroups;
+                if (game.user.isGM) {
+                    game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
+                }
                 this.render(true);
             }
         });

@@ -1,6 +1,6 @@
 import { BWActor } from "../actors/BWActor.js";
 import { StringIndexedObject } from "../helpers.js";
-import { ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
+import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 import { handleLearningRoll } from "../rolls/rollLearning.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
@@ -125,6 +125,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         return data;
     }
 
+    @changesState()
     async clearEverything(): Promise<void> {
         await this.clearRound();
         const data = this.data.data;
@@ -140,12 +141,9 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.statement2 = "";
         data.actor1Skill = "";
         data.actor2Skill = "";
-
-        await game.settings.set(constants.systemName, this.data.settingName, JSON.stringify(this.data.data));
-        this.syncData(this.data.data);
-        this.render(true);
     }
 
+    @changesState()
     async clearRound(): Promise<void> {
         const data = this.data.data;
         data.v1s1 = "?";
@@ -158,9 +156,6 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.showV1 = false;
         data.showV2 = false;
         data.showV3 = false;
-        await game.settings.set(constants.systemName, constants.settings.duelData, JSON.stringify(this.data.data));
-        this.syncData(this.data.data);
-        this.render(true);
     }
 
     static addSidebarControl(html: JQuery): void {

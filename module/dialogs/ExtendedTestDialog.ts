@@ -4,12 +4,12 @@ import { gmOnly } from "../decorators.js";
 export const changesState = (callback?: () => void): MethodDecorator => {
     return function (_target, _propertyKey, descriptor: PropertyDescriptor) {
         const functionCall = descriptor.value;
-        descriptor.value = function<T> (this: ExtendedTestDialog<T>, ...args) {
-            functionCall.apply(this, args);
+        descriptor.value = async function<T> (this: ExtendedTestDialog<T>, ...args) {
+            await functionCall.apply(this, args);
             this.syncData(this.data.data);
-            this.persistState(this.data.data);
+            await this.persistState(this.data.data);
             this.render();
-            callback?.call(this);
+            await callback?.call(this);
         };
     };
 };

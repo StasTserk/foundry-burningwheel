@@ -1,5 +1,5 @@
 import { BWActor } from "../actors/BWActor.js";
-import { ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
+import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 
 export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
@@ -30,38 +30,34 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         html.find('*[data-action="resetRound"]').on('click', (e) => this._resetRound(e));
         html.find('*[data-action="clearAll"]').on('click', (e) => this._clearAll(e));
     }
+
+    @changesState()
     private _clearAll(e: JQuery.ClickEvent): void {
         e.preventDefault();
         this.data.data.actors = [];
         this.data.data.teams = [];
         this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
         this.data.data.memberIds = [];
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
+
+    @changesState()
     private _resetRound(e: JQuery.ClickEvent): void {
         e.preventDefault();
         this.data.data.teams.forEach(t => {
             t.action1 = t.action2 = t.action3 = "Do Nothing";
         });
         this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
 
+    @changesState()
     private _toggleHidden(target: HTMLElement): void {
         const index = parseInt(target.dataset.index || "0");
         const team = this.data.data.teams[index];
 
         team.hideActions = !team.hideActions;
-
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
 
+    @changesState()
     private _addNewTeam(target: HTMLSelectElement): void {
         const id = target.value;
         const actor = this.data.actors.find(a => a.id === id) as BWActor;
@@ -82,11 +78,9 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
             // reusing npcs is probably fine.
             this.data.data.memberIds.push(id);
         }
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
 
+    @changesState()
     private _addNewMember(target: HTMLSelectElement): void {
         const id = target.value;
         const index = parseInt(target.dataset.index || "0");
@@ -97,12 +91,9 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         if (actor.data.type === "character") {
             this.data.data.memberIds.push(id);
         }
-
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
 
+    @changesState()
     private _deleteMember(target: HTMLElement): void {
         const teamIndex = parseInt(target.dataset.index || "0");
         const memberIndex = parseInt(target.dataset.memberIndex || "0");
@@ -114,9 +105,6 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         if (this.data.actors.find(a => a.id === deleted[0].id)?.data.type === "character") {
             this.data.data.memberIds.splice(this.data.data.memberIds.indexOf(deleted[0].id), 1);
         }
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render();
     }
 
     static get defaultOptions(): FormApplicationOptions {

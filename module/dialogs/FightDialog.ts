@@ -2,7 +2,7 @@ import { BWItemData } from "../items/item.js";
 import { NpcData, NpcDataRoot } from "../actors/Npc.js";
 import { BWActor } from "../actors/BWActor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
-import { ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
+import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
 import { BWCharacterData, CharacterDataRoot } from "../actors/BWCharacter.js";
 import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
@@ -122,6 +122,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             game.actors.find(a => a._id === id).sheet.render(true);
         });
     }
+    
     private _handleRoll(e: JQuery.ClickEvent, type: "speed" | "agility" | "power" | "skill") {
         e.preventDefault();
         const dataPreset = getKeypressModifierPreset(e);
@@ -144,15 +145,15 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         return handleFightRoll({ actor, type, engagementBonus, positionPenalty, dataPreset });
     }
     
+    @changesState()
     private _toggleHidden(target: HTMLDivElement): void {
         if (!game.user.isGM) { return; }
         const index = parseInt(target.dataset.index || "0") ;
         const hidden = this.data.data.participants[index].gmHidden;
         this.data.data.participants[index].gmHidden = !hidden;
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this.render(true);
     }
+
+    @changesState(FightDialog.prototype._syncActors)
     private _addNewParticipant(target: HTMLSelectElement): void {
         const id = target.value;
         const actor = game.actors.get(id) as BWActor;
@@ -163,21 +164,14 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             engagementBonus: 0, positionPenalty: 0
         } as ParticipantEntry);
         this.data.data.participantIds.push(id);
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this._syncActors();
-        this.render();
     }
 
+    @changesState(FightDialog.prototype._syncActors)
     private _removeParticipant(target: HTMLElement): void {
         const index = parseInt(target.dataset.index || "0");
         this.data.data.participantIds.splice(index, 1);
         this.data.data.participants.splice(index, 1);
         this.data.actors.splice(index, 1);
-        this.persistState(this.data.data);
-        this.syncData(this.data.data);
-        this._syncActors();
-        this.render();
     }
 
     activateSocketListeners(): void {

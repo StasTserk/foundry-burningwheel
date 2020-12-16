@@ -16,6 +16,7 @@
         "outDir": "bin",
         "noUnusedLocals": true,
         "strictNullChecks": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "experimentalDecorators": true
     }
 }

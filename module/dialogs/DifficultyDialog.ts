@@ -3,6 +3,7 @@ import { TestString } from "../helpers.js";
 import { Skill } from "../items/skill.js";
 import * as constants from "../constants.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
+import { gmOnly } from "../decorators.js";
 
 export class DifficultyDialog extends Application {
     difficulty: number;
@@ -175,19 +176,19 @@ export class DifficultyDialog extends Application {
                 id: actor.id,
                 advancements: entries
             });
-            this.persistExtendedTestData();
-            this.render();
+
         } else {
             // merge entries without duplication
             existingGroup.advancements = existingGroup.advancements.concat(entries.filter(e => !existingGroup.advancements.find(a => a.title === e.title && a.difficulty === e.difficulty)));
             existingGroup.advancements.sort((a, b) => {
                 return a.title.localeCompare(b.title) === 0 ? a.difficulty.localeCompare(b.difficulty) : a.title.localeCompare(b.title);
             });
-            this.persistExtendedTestData();
-            this.render();
         }
+        this.persistExtendedTestData();
+        this.render();
     }
 
+    @gmOnly
     assignDeferredTest({ actor, diff, skillId, path, title }: AssignTestOptions): void {
         if (actor) {
             const difficulty: TestString = diff === "R" ? "Routine" : (diff === "C" ? "Challenging" : "Difficult");

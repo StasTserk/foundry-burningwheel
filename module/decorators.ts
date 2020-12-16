@@ -4,6 +4,6 @@ export const gmOnly: MethodDecorator = (_target, _propertyKey, descriptor: Prope
         if (!game.user.isGM) {
             return;
         }
-        functionCall.apply(this, args);
+        return functionCall.apply(this, args);
     };
 };

@@ -1,7 +1,6 @@
 import { BWActor, NewItemData } from "../BWActor.js";
 import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
 import * as constants from "../../constants.js";
-import { BWItemData } from "../../items/item.js";
 import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
 import { addNewItem } from "../../dialogs/ImportItemDialog.js";
@@ -15,6 +14,7 @@ import { ReputationDataRoot } from "../../items/reputation.js";
 import { SkillDataRoot, Skill } from "../../items/skill.js";
 import { SpellDataRoot, Spell } from "../../items/spell.js";
 import { TraitDataRoot, Trait } from "../../items/trait.js";
+import { BWItemData } from "../../items/item.js";
 
 export class BWCharacterSheet extends BWActorSheet {
     get actor(): BWCharacter {
@@ -53,7 +53,7 @@ export class BWCharacterSheet extends BWActorSheet {
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
         const woundDice = this.actor.data.data.ptgs.woundDice;
-        const items = Array.from(data.items.values()) as unknown as BWItemData[];
+        const items = this.actor.items.values();
 
         const beliefs: ItemData[] = [];
         const instincts: ItemData[] = [];
@@ -71,7 +71,8 @@ export class BWCharacterSheet extends BWActorSheet {
         const spells: SpellDataRoot[] = [];
 
         let addFist = true; // do we need to add a fist weapon?
-        for (const i of items) {
+        for (const value of items) {
+            const i = value.data as BWItemData;
             switch(i.type) {
                 case "reputation": reps.push(i); break;
                 case "affiliation": affs.push(i); break;

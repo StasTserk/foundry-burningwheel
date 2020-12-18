@@ -1,28 +1,12 @@
 import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor, NewItemData } from "./BWActor.js";
 import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
-import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString, StringIndexedObject } from "../helpers.js";
-import { BWItem, BWItemData } from "../items/item.js";
+import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers.js";
+import { BWItem } from "../items/item.js";
 import { Skill } from "../items/skill.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 
 export class BWCharacter extends BWActor{
     data: CharacterDataRoot;
-
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    async update(data: object, options?: object): Promise<this> {
-        const updateAptitude = this._statsHaveChanged(data as unknown as StringIndexedObject<string>);
-        const self = super.update(data, options);
-        if (updateAptitude) {
-            for (let i = 0; i < this.data.items.length; i ++) {
-                const item = this.data.items[i];
-                if (item.type === "skill" && item.data.learning) {
-                    await this.getOwnedItem((this.data.items[i] as BWItemData & { _id: string })._id)
-                    ?.update({ name: this.data.items[i].name }, { diff: false}); // force
-                }
-            }
-        }
-        return self;
-    }
 
     prepareData(): void {
         super.prepareData();
@@ -287,19 +271,6 @@ export class BWCharacter extends BWActor{
                 }
                 break;
         }
-    }
-
-    private _statsHaveChanged(data: StringIndexedObject<string>): boolean {
-        return [
-            "data.forte.exp",
-            "data.will.exp",
-            "data.power.exp",
-            "data.perception.exp",
-            "data.speed.exp",
-            "data.agility.exp"
-        ].some(accessor => {
-            return data[accessor] && getProperty(this.data, accessor) !== data[accessor];
-        });
     }
 
     taxResources(amount: number, maxFundLoss: number): void {

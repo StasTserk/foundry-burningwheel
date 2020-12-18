@@ -6,12 +6,8 @@
             <label>Exponent</label>
             <input type="number" class="exponent" disabled value="{{exponent}}">
         </div>
-        {{#if useCustomDifficulty}}
-        <div class="flex-row dialog-row">
-            <label>Difficulty</label>
-            <input type="number" class="exponent" name="difficulty" value="3">
+        <div class="dialog-row">
+            Advancement for helping will be logged at the obstacle of the test being helped.
         </div>
-        {{/if}}
     </div>
-    {{#if useCustomDifficulty}}<input type="hidden" name="forceCustomDifficulty" value="1">{{/if}}
 </form>

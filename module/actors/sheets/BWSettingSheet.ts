@@ -1,5 +1,5 @@
 import { BWItem } from "../../items/item.js";
-import { LifepathRootData } from "../../items/lifepath.js";
+import { Lifepath, LifepathRootData } from "../../items/lifepath.js";
 import { BWSetting } from "../BWSetting.js";
 import * as helpers from "../../helpers.js";
 
@@ -18,7 +18,7 @@ export class BWSettingSheet extends ActorSheet {
 
     getData(): BWSettingData {
         const data = super.getData() as BWSettingData;
-        data.lifepaths = (data.actor.items as unknown as LifepathRootData[]).sort((a, b) => a.data.order - b.data.order);
+        data.lifepaths = (Array.from(this.actor.items.values()) as Lifepath[]).map(i => i.data).sort((a, b) => a.data.order - b.data.order);
         return data;
     }
 

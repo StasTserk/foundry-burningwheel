@@ -149,7 +149,7 @@ export class BWActor extends Actor<Common> {
         this.data.fightWeapons = [];
         
         if (this.data.items) {
-            this.data.items.forEach((i) => {
+            this.data.items.forEach(i => {
                 switch (i.type) {
                     case "skill":
                         if (!(i as SkillDataRoot).data.learning &&

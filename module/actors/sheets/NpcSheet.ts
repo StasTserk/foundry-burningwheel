@@ -1,7 +1,7 @@
 import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
 import { ShadeString } from "../../helpers.js";
 import { BWActor } from "../BWActor.js";
-import { BWItemData, ItemType } from "../../items/item.js";
+import { BWItem, BWItemData, ItemType } from "../../items/item.js";
 import { Npc } from "../Npc.js";
 import { handleNpcStatRollEvent } from "../../rolls/npcStatRoll.js";
 import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "../../rolls/npcSkillRoll.js";
@@ -104,7 +104,8 @@ export class NpcSheet extends BWActorSheet {
         data.gear = [];
         data.spells = [];
         data.ranged = [];
-        actor.data.items.forEach((i) => {
+        actor.items.forEach((item: BWItem) => {
+            const i = item.data;
             switch (i.type) {
                 case "belief":
                     data.beliefs.push(i); break;

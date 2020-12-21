@@ -78,7 +78,7 @@ async function statRollCallback(
         actor: BWCharacter,
         name: string,
         accessor: string) {
-    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, persona, deeds, addHelp } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyGroup, baseDifficulty, difficultyTotal, obSources, dieSources, splitPool, persona, deeds, addHelp, difficultyTestTotal } = extractRollData(dialogHtml);
 
     const roll = await rollDice(diceTotal,
         stat.open,
@@ -99,7 +99,7 @@ async function statRollCallback(
     });
 
     if (addHelp) {
-        game.burningwheel.modifiers.grantTests(difficultyTotal, isSuccessful);
+        game.burningwheel.modifiers.grantTests(difficultyTestTotal, isSuccessful);
     }
 
     actor.updateArthaForStat(accessor, persona, deeds);

@@ -84,7 +84,7 @@ async function resourcesRollCallback(
     });
 
     if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccess);
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccess);
     }
 
     const data: RollChatMessageData = {

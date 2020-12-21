@@ -92,7 +92,7 @@ async function attrRollCallback(
     });
 
     if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
     }
 
     actor.updateArthaForStat(accessor, rollData.persona, rollData.deeds);

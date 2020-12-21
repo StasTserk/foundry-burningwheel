@@ -94,7 +94,7 @@ async function circlesRollCallback(
     });
 
     if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, parseInt(roll.result) >= rollData.difficultyTotal);
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, parseInt(roll.result) >= rollData.difficultyTotal);
     }
 
     actor.updateArthaForStat("data.circles", rollData.persona, rollData.deeds);

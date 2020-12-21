@@ -169,7 +169,7 @@ async function learningRollCallback(
     }
 
     if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
     }
 
     actor.updateArthaForStat(`data.${statName}`, rollData.persona, rollData.deeds);

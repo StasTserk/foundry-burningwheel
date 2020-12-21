@@ -221,7 +221,7 @@ async function skillRollCallback(
     actor.updateArthaForStat("", rollData.persona, rollData.deeds);
     
     if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
     }
 
     const data: RollChatMessageData = {

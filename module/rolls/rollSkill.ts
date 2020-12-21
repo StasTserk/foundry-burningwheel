@@ -81,7 +81,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
 
 async function skillRollCallback(
     dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
-    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, persona, deeds, addHelp } = extractRollData(dialogHtml);
+    const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, persona, deeds, addHelp, difficultyTestTotal } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
@@ -121,7 +121,7 @@ async function skillRollCallback(
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
 
     if (addHelp) {
-        game.burningwheel.modifiers.grantTests(difficultyTotal, success);
+        game.burningwheel.modifiers.grantTests(difficultyTestTotal, success);
     }
 
     actor.updateArthaForSkill(skill.id, persona, deeds);

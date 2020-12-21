@@ -99,7 +99,7 @@ async function statRollCallback(
     const isSuccessful = parseInt(roll.result, 10) >= rollData.difficultyTotal;
 
     if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTotal, isSuccessful);
+        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
     }
 
     let splitPoolString: string | undefined;

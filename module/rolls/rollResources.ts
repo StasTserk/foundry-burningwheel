@@ -83,6 +83,31 @@ async function resourcesRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.resources" }) as RerollData };
     });
 
+    actor.updateArthaForStat("data.resources", rollData.persona, rollData.deeds);
+    if (!isSuccess) {
+        const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
+            (rollData.difficultyGroup === "Difficult" ? 2 : 1);
+        const taxMessage = new Dialog({
+            title: "Failed Resource Roll!",
+            content: `<p>You have failed a ${rollData.difficultyGroup} Resource test.</p><p>How do you wish to be taxed?</p><hr/>`,
+            buttons: {
+                full: {
+                    label: `Full Tax (${taxAmount} tax)`,
+                    callback: () => actor.taxResources(taxAmount, rollData.fundDice)
+                },
+                cut: {
+                    label: "Cut your losses. (1 tax)",
+                    callback: () => actor.taxResources(1, rollData.fundDice)
+                },
+                skip: {
+                    label: "Skip for now"
+                }
+            }
+        });
+        taxMessage.render(true);
+    }
+    await actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
+
     if (rollData.addHelp) {
         game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccess);
     }
@@ -102,33 +127,6 @@ async function resourcesRollCallback(
         callons
     };
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
-    if (actor.data.type === "character") {
-        actor.updateArthaForStat("data.resources", rollData.persona, rollData.deeds);
-        if (!isSuccess) {
-            const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
-                (rollData.difficultyGroup === "Difficult" ? 2 : 1);
-            const taxMessage = new Dialog({
-                title: "Failed Resource Roll!",
-                content: `<p>You have failed a ${rollData.difficultyGroup} Resource test.</p><p>How do you wish to be taxed?</p><hr/>`,
-                buttons: {
-                    full: {
-                        label: `Full Tax (${taxAmount} tax)`,
-                        callback: () => actor.taxResources(taxAmount, rollData.fundDice)
-                    },
-                    cut: {
-                        label: "Cut your losses. (1 tax)",
-                        callback: () => actor.taxResources(1, rollData.fundDice)
-                    },
-                    skip: {
-                        label: "Skip for now"
-                    }
-                }
-            });
-            taxMessage.render(true);
-        }
-
-        actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
-    }
 
     return ChatMessage.create({
         content: messageHtml,

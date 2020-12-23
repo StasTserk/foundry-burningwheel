@@ -91,6 +91,7 @@ async function attrRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, accessor }) as RerollData };
     });
 
+    await actor.addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
     if (rollData.addHelp) {
         game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
     }
@@ -111,9 +112,6 @@ async function attrRollCallback(
         fateReroll,
         callons
     };
-    if (actor.data.type === "character") {
-        actor.addAttributeTest(stat, name, accessor, rollData.difficultyGroup, isSuccessful);
-    }
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({
         content: messageHtml,

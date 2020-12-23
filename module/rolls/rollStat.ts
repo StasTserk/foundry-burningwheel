@@ -98,6 +98,7 @@ async function statRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, accessor, splitPoolRoll }) as RerollData };
     });
 
+    await actor.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
     if (addHelp) {
         game.burningwheel.modifiers.grantTests(difficultyTestTotal, isSuccessful);
     }
@@ -120,9 +121,6 @@ async function statRollCallback(
         callons,
         extraInfo
     };
-    if (actor.data.type === "character") {
-        actor.addStatTest(stat, name, accessor, difficultyGroup, isSuccessful);
-    }
 
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({

@@ -119,6 +119,9 @@ async function skillRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
+    if (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
+        await skill.addTest(dg);
+    }
 
     if (addHelp) {
         game.burningwheel.modifiers.grantTests(difficultyTestTotal, success);
@@ -143,9 +146,6 @@ async function skillRollCallback(
         callons,
         extraInfo
     };
-    if (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
-        await skill.addTest(dg);
-    }
 
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({

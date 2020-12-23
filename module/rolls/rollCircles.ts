@@ -93,6 +93,7 @@ async function circlesRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.circles" }) as RerollData };
     });
 
+    await actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
     if (rollData.addHelp) {
         game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, parseInt(roll.result) >= rollData.difficultyTotal);
     }
@@ -127,9 +128,6 @@ async function circlesRollCallback(
                 no: () => { return; }
             });
         }
-    }
-    if (actor.data.type === "character") {
-        actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
     }
 
     return ChatMessage.create({

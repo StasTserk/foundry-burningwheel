@@ -168,13 +168,13 @@ async function learningRollCallback(
         }
     }
 
-    if (rollData.addHelp) {
-        game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
-    }
-
     actor.updateArthaForStat(`data.${statName}`, rollData.persona, rollData.deeds);
 
-    const sendChatMessage = async (fr?: RerollData) => {
+    const afterLearningTest = async (fr?: RerollData) => {
+        if (rollData.addHelp) {
+            game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccessful);
+        }
+
         const data: RollChatMessageData = {
             name: `Beginner's Luck ${skill.data.name}`,
             successes: roll.result,
@@ -199,8 +199,7 @@ async function learningRollCallback(
         });
     };
 
-    return advanceLearning(skill, statName, actor, rollData.difficultyGroup, isSuccessful, fateReroll, sendChatMessage);
-
+    return advanceLearning(skill, statName, actor, rollData.difficultyGroup, isSuccessful, fateReroll, afterLearningTest);
 }
 
 async function advanceLearning(

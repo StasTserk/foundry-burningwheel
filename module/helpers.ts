@@ -122,7 +122,7 @@ export async function getItemsOfTypes(itemTypes: ItemType[], compendiums?: strin
 }
 
 export function compendiumName(c: Compendium): string {
-    return c.collection.substr(c.collection.indexOf('.')+1).replace('-', ' ').titleCase();
+    return c.metadata.label;
 }
 
 export async function getItemsOfType<T extends BWItem>(itemType: ItemType, compendiums?: string[]): Promise<(T & {itemSource?: string })[]> {

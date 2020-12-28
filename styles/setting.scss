@@ -61,6 +61,10 @@
                 border: 2px groove #aaa;
             }
 
+            &.show-drop > .drop-area {
+                display: block;
+            }
+
             .header {
                 width: 100%;
                 background-color: darkgrey;
@@ -101,6 +105,23 @@
                     margin-left: -5px;
                     font-weight: bold;
                     font-style: italic;
+                }
+            }
+
+            .drop-area {
+                border: 2px groove darkgray;
+                height: 5px;
+                border-radius: 5px;
+                line-height: 2em;
+                text-align: center;
+                font-size: 1.2em;
+                font-weight: bold;
+    
+                background: linear-gradient(0deg, rgba(black, 0.1), rgba(black, 0.25));
+                display: none;
+    
+                &:hover {
+                    display: block;
                 }
             }
         }

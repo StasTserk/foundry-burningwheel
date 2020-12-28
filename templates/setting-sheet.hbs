@@ -26,8 +26,9 @@
                 <div class="fas"></div>
             </div>
         </div>
-        {{#each lifepaths as |lp|}}
-        {{> "systems/burningwheel/templates/parts/lifepath.hbs" }}
+        {{#each lifepaths as |lp index|}}
+        {{> "systems/burningwheel/templates/parts/lifepath.hbs" index=index}}
         {{/each}}
+        
     </div>
 </form>

@@ -47,10 +47,97 @@ export class BWSettingSheet extends ActorSheet {
             this.actor.deleteOwnedItem(id);
         });
 
-        html.find('.lifepath').on('click', (e) => {
-            const id = e.currentTarget.dataset.id || "";
-            this.actor.getOwnedItem(id)?.sheet.render(true);
+        
+        html.find('.lifepath').each((_, element) => {
+            let dragCounter = 0;
+            $(element).on('click', (e) => {
+                const id = e.currentTarget.dataset.id || "";
+                this.actor.getOwnedItem(id)?.sheet.render(true);
+            }).on('dragenter', ev => {
+                $(ev.currentTarget).addClass("show-drop");
+                dragCounter ++;
+            }).on('dragleave', ev => {
+                dragCounter --;
+                if (dragCounter === 0) {
+                    $(ev.currentTarget).removeClass("show-drop");
+                }
+            }).on('drop', ev => {
+                dragCounter === 0;
+                $(ev.currentTarget).removeClass("show-drop");
+                $(element).show();
+            });
         });
+
+        html.find('.drop-area').on('drop', ev => {
+            $(ev.currentTarget).parents('.lifepath').removeClass("show-drop");
+            ev.stopPropagation();
+            const element = ev.currentTarget;
+            const index = parseInt(element.dataset.index || "0");
+            const event = ev.originalEvent;
+            if (event) {
+                this.insertItemAtIndex(event, index);
+            }
+        });
+    }
+
+    async insertItemAtIndex(event: DragEvent, index: number): Promise<void> {
+        console.log(`trying to add item at ${index}`);
+
+        let dragData: helpers.DragData;
+        try {
+            dragData = JSON.parse(event.dataTransfer?.getData('text/plain') || "");
+        }
+        catch (err) {
+            console.log(err);
+            return;
+        }
+        
+        if (dragData.type !== "Item") {
+            return;
+        }
+
+        const sortedItems = (Array.from(this.actor.items.values()) as Lifepath[]).sort((a, b) => a.data.data.order - b.data.data.order);
+        if (dragData.actorId === this.actor.id) {
+            // we need to just update the index of the entry
+            const item = this.actor.getOwnedItem(dragData.id || "") as Lifepath;
+            await item.update({ "data.order": index }, {});
+        } else {
+            // we need to get the item data and add it to the setting sheet
+            let itemData: LifepathRootData | undefined;
+            if (dragData.data) {
+                itemData = dragData.data as LifepathRootData;
+            } else if (dragData.pack) {
+                itemData = (await (game.packs.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || "")).data as LifepathRootData;
+            } else if (dragData.actorId) {
+                itemData = (game.actors.find((a: BWSetting) => a._id === dragData.actorId)).getOwnedItem(dragData.id).data as LifepathRootData;
+            } else {
+                itemData = game.items.find((i: BWItem) => i.id === dragData.id).data as LifepathRootData;
+            }
+
+            // if our item is actually a lifepath we need to add it, otherwise abort.
+            if (itemData.type === "lifepath") {
+                itemData.data.order = index;
+                await this.actor.createOwnedItem(itemData);
+            } else {
+                return;
+            }
+        }
+
+        const updateData: Record<string, string | number>[] = [];
+
+        for(let i = 0; i < index; i ++) {
+            const item = sortedItems[i];
+            if (item.id !== dragData.id) {
+                updateData.push( { "_id": sortedItems[i]._id, 'data.order': i });
+            }
+        }
+        for (let i = index; i < sortedItems.length; i ++) {
+            const item = sortedItems[i];
+            if (item.id !== dragData.id) {
+                updateData.push( { "_id": sortedItems[i]._id, 'data.order': i + 1 });
+            }
+        }
+        this.actor.updateEmbeddedEntity("OwnedItem", updateData);
     }
 }
 

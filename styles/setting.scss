@@ -61,10 +61,6 @@
                 border: 2px groove #aaa;
             }
 
-            &.show-drop > .drop-area {
-                display: block;
-            }
-
             .header {
                 width: 100%;
                 background-color: darkgrey;
@@ -107,22 +103,21 @@
                     font-style: italic;
                 }
             }
+        }
 
-            .drop-area {
-                border: 2px groove darkgray;
-                height: 5px;
-                border-radius: 5px;
-                line-height: 2em;
-                text-align: center;
-                font-size: 1.2em;
-                font-weight: bold;
-    
-                background: linear-gradient(0deg, rgba(black, 0.1), rgba(black, 0.25));
-                display: none;
-    
-                &:hover {
-                    display: block;
-                }
+        .drop-area {
+            height: 0;
+            border-radius: 5px;
+            line-height: 2em;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+
+            background: linear-gradient(90deg, rgba(black, .05), black, rgba(black, .05));
+            visibility: hidden;
+            &.show-drop {
+                visibility: visible;
+                height: 6px;
             }
         }
     }

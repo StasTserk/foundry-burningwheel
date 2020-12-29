@@ -27,8 +27,9 @@
             </div>
         </div>
         {{#each lifepaths as |lp index|}}
+        <div class="drop-area" data-index="{{index}}"></div>
         {{> "systems/burningwheel/templates/parts/lifepath.hbs" index=index}}
         {{/each}}
-        
+        <div class="drop-area" data-index="{{lifepaths.length}}"></div>
     </div>
 </form>

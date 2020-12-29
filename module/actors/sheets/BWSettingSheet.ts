@@ -47,42 +47,56 @@ export class BWSettingSheet extends ActorSheet {
             this.actor.deleteOwnedItem(id);
         });
 
-        
-        html.find('.lifepath').each((_, element) => {
-            let dragCounter = 0;
-            $(element).on('click', (e) => {
-                const id = e.currentTarget.dataset.id || "";
-                this.actor.getOwnedItem(id)?.sheet.render(true);
-            }).on('dragenter', ev => {
-                $(ev.currentTarget).addClass("show-drop");
-                dragCounter ++;
-            }).on('dragleave', ev => {
-                dragCounter --;
-                if (dragCounter === 0) {
-                    $(ev.currentTarget).removeClass("show-drop");
+        const dropAreas = html.find('.drop-area').toArray().map(e => $(e));
+        let activeDropArea: JQuery | undefined;
+        let enterCount = 0;
+        html.find('.lifepath-list')
+        .on('dragover', evt => {
+            const yPos = evt.pageY || 0;
+            if (activeDropArea) {
+                const topLimit = (activeDropArea.offset()?.top || 0) - 30;
+                const bottomLimit = (activeDropArea.offset()?.top || 0) + (activeDropArea.height() || 0) + 30;
+                if (yPos < topLimit || yPos > bottomLimit) {
+                    activeDropArea.removeClass("show-drop");
+                    activeDropArea = undefined;
                 }
-            }).on('drop', ev => {
-                dragCounter === 0;
-                $(ev.currentTarget).removeClass("show-drop");
-                $(element).show();
-            });
-        });
-
-        html.find('.drop-area').on('drop', ev => {
-            $(ev.currentTarget).parents('.lifepath').removeClass("show-drop");
-            ev.stopPropagation();
-            const element = ev.currentTarget;
-            const index = parseInt(element.dataset.index || "0");
-            const event = ev.originalEvent;
-            if (event) {
-                this.insertItemAtIndex(event, index);
+            } else {
+                for (const area of dropAreas) {
+                    const top = area.offset()?.top || 0;
+                    const topLimit = top - 20;
+                    const bottomLimit = top + 20;
+                    if (yPos <= bottomLimit && yPos >= topLimit) {
+                        activeDropArea = $(area);
+                        activeDropArea.addClass("show-drop");
+                        return;
+                    }
+                }
             }
+        }).on('dragenter', _ => {
+            enterCount ++;
+        }).on('dragleave', _ => {
+            enterCount --;
+            if (!enterCount) {
+                activeDropArea?.removeClass("show-drop");
+                activeDropArea = undefined;
+            }
+        }).on('drop', ev => {
+            ev.stopPropagation();
+            if (activeDropArea) {
+                const index = parseInt(activeDropArea.data("index") || "0");
+                const event = ev.originalEvent;
+                if (event) {
+                    this.insertItemAtIndex(event, index);
+                }
+            }
+
+            enterCount = 0;
+            activeDropArea?.removeClass("show-drop");
+            activeDropArea = undefined;
         });
     }
 
     async insertItemAtIndex(event: DragEvent, index: number): Promise<void> {
-        console.log(`trying to add item at ${index}`);
-
         let dragData: helpers.DragData;
         try {
             dragData = JSON.parse(event.dataTransfer?.getData('text/plain') || "");

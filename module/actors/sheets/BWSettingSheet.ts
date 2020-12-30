@@ -47,11 +47,15 @@ export class BWSettingSheet extends ActorSheet {
             this.actor.deleteOwnedItem(id);
         });
 
+        html.find('.lifepath').on('click', (e) => {
+            const id = e.currentTarget.dataset.id || "";
+            this.actor.getOwnedItem(id)?.sheet.render(true);
+        });
+
         const dropAreas = html.find('.drop-area').toArray().map(e => $(e));
         let activeDropArea: JQuery | undefined;
         let enterCount = 0;
-        html.find('.lifepath-list')
-        .on('dragover', evt => {
+        html.find('.lifepath-list').on('dragover', evt => {
             const yPos = evt.pageY || 0;
             if (activeDropArea) {
                 const topLimit = (activeDropArea.offset()?.top || 0) - 30;
@@ -81,18 +85,18 @@ export class BWSettingSheet extends ActorSheet {
                 activeDropArea = undefined;
             }
         }).on('drop', ev => {
-            ev.stopPropagation();
             if (activeDropArea) {
+                ev.stopPropagation();
                 const index = parseInt(activeDropArea.data("index") || "0");
                 const event = ev.originalEvent;
                 if (event) {
                     this.insertItemAtIndex(event, index);
                 }
-            }
 
-            enterCount = 0;
-            activeDropArea?.removeClass("show-drop");
-            activeDropArea = undefined;
+                enterCount = 0;
+                activeDropArea?.removeClass("show-drop");
+                activeDropArea = undefined;
+            }
         });
     }
 

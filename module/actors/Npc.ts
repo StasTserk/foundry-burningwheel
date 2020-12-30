@@ -1,6 +1,5 @@
-import { Common, BWActorDataRoot, BWActor, NewItemData } from "./BWActor.js";
+import { Common, BWActorDataRoot, BWActor } from "./BWActor.js";
 import { ShadeString } from "../helpers.js";
-import { BWItem } from "../items/item.js";
 
 export class Npc extends BWActor {
     data: NpcDataRoot;
@@ -19,27 +18,6 @@ export class Npc extends BWActor {
             (this.data.data.ptgs.trTaken * 4);
         this.data.data.ptgs.obPenalty =
             (this.data.data.ptgs.suTaken > 0 && this.data.data.ptgs.suTaken < 3) ? 1 : 0;
-    }
-
-    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
-        // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for the character burner
-        if (Array.isArray(itemData)) {
-            itemData = itemData.filter(id => id.type !== "lifepath");
-            return super.createOwnedItem(itemData, options);
-        }
-        if (itemData.type !== "lifepath") {
-            return super.createOwnedItem(itemData);
-        }
-        return super.createOwnedItem([], options);
-    }
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    async createEmbeddedEntity(entityType: string, data: NewItemData, options?: any): Promise<this> {
-        // we don't add lifepaths to normal actors. they are simply a data structure for holding lifepath info for the character burner
-        if (data.type !== 'lifepath') {
-            return super.createEmbeddedEntity(entityType, data, options);
-        }
-        return this;
     }
 }
 

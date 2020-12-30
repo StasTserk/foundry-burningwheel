@@ -1,4 +1,4 @@
-import { BWActor } from "../actors/BWActor.js";
+import { BWActor, NewItemData } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData } from "../helpers.js";
 import { BWItem, HasPointCost, ItemType } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
@@ -738,7 +738,7 @@ export class CharacterBurnerDialog extends Dialog {
                     ...repData,
                     ...relData,
                     ...gearData,
-                ], {});
+                ] as NewItemData[], {});
             },
             no: () => { return; }
         });

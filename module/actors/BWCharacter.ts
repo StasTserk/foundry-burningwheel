@@ -1,7 +1,6 @@
-import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor, NewItemData } from "./BWActor.js";
+import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./BWActor.js";
 import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers.js";
-import { BWItem } from "../items/item.js";
 import { Skill } from "../items/skill.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 
@@ -354,27 +353,6 @@ export class BWCharacter extends BWActor{
                 }).render(true);
             }
         }, 500);
-    }
-
-    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
-        // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for the character burner
-        if (Array.isArray(itemData)) {
-            itemData = itemData.filter(id => id.type !== "lifepath");
-            return super.createOwnedItem(itemData, options);
-        }
-        if (itemData.type !== "lifepath") {
-            return super.createOwnedItem(itemData);
-        }
-        return super.createOwnedItem([], options);
-    }
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    async createEmbeddedEntity(entityType: string, data: NewItemData, options?: any): Promise<this> {
-        // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for the character burner
-        if (data.type !== 'lifepath') {
-            return super.createEmbeddedEntity(entityType, data, options);
-        }
-        return this;
     }
 }
 

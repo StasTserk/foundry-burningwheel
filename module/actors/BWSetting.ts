@@ -9,13 +9,17 @@ export class BWSetting extends Actor<SettingData> {
             return super.createOwnedItem(itemData, options) as Promise<BWItem>;
         }
         if (itemData.type === "lifepath") {
-            return super.createOwnedItem(itemData) as Promise<BWItem>;
+            return super.createOwnedItem(itemData, options) as Promise<BWItem>;
         }
         return super.createOwnedItem([], options) as Promise<BWItem>;
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    async createEmbeddedEntity(entityType: string, data: NewItemData, options?: any): Promise<this> {
+    async createEmbeddedEntity(entityType: string, data: NewItemData | NewItemData[], options?: any): Promise<this> {
+        if (Array.isArray(data)) {
+            data = data.filter(id => id.type === "lifepath");
+            return super.createEmbeddedEntity(entityType, data, options);
+        }
         // we only add lifepaths to setting actors. They are not meant to hold other actor data.
         if (data.type === 'lifepath') {
             if ((!options || !options.keepOrder) && data.data) {
@@ -23,7 +27,7 @@ export class BWSetting extends Actor<SettingData> {
             }
             return super.createEmbeddedEntity(entityType, data, options);
         }
-        return this;
+        return super.createEmbeddedEntity(entityType, [], options);
     }
 }
 

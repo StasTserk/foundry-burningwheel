@@ -85,6 +85,7 @@ export class BWSettingSheet extends ActorSheet {
                 activeDropArea = undefined;
             }
         }).on('drop', ev => {
+            enterCount = 0;
             if (activeDropArea) {
                 ev.stopPropagation();
                 const index = parseInt(activeDropArea.data("index") || "0");
@@ -93,7 +94,6 @@ export class BWSettingSheet extends ActorSheet {
                     this.insertItemAtIndex(event, index);
                 }
 
-                enterCount = 0;
                 activeDropArea?.removeClass("show-drop");
                 activeDropArea = undefined;
             }
@@ -135,7 +135,7 @@ export class BWSettingSheet extends ActorSheet {
             // if our item is actually a lifepath we need to add it, otherwise abort.
             if (itemData.type === "lifepath") {
                 itemData.data.order = index;
-                await this.actor.createOwnedItem(itemData);
+                await this.actor.createOwnedItem(itemData, { keepOrder: true });
             } else {
                 return;
             }

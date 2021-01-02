@@ -35,8 +35,8 @@ export class BWItem extends Item<BWItemData> {
         return simpleBroadcast({ title: this.name, mainText: `Type - ${this.data.type}` }, speaker);
     }
     prepareData(): void {
-        this.data.hasOwner = !!this.actor;
         super.prepareData();
+        this.data.hasOwner = !!this.actor;
     }
 
     data: BWItemData;

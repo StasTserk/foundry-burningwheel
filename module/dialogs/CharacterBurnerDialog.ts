@@ -519,13 +519,13 @@ export class CharacterBurnerDialog extends Dialog {
                 sum += parseInt($(t).val() as string || "0");
             }
         });
-        html.find("input[name='traitPtsSpent']").val(sum).change();
+        html.find("input[name='traitPtsSpent']").val(sum).trigger("change");
     }
 
     _calculateRelationshipCost(target: JQuery<HTMLElement>): void {
         const parent = target.parent();
         if (!parent.children("input[name='relationshipName']").val()) {
-            parent.parent().children("input[name='relationshipCost']").val(0).change();
+            parent.parent().children("input[name='relationshipCost']").val(0).trigger("change");
             return;
         }
         
@@ -537,23 +537,23 @@ export class CharacterBurnerDialog extends Dialog {
         if (relData.otherFamily) { sum --; }
         if (relData.romantic) { sum -= 2; }
 
-        parent.parent().children("input[name='relationshipCost']").val(sum).change();
+        parent.parent().children("input[name='relationshipCost']").val(sum).trigger("change");
     }
 
     private _calculateRepAffCost(target: JQuery): void {
         const parent = target.parent();
         if (!parent.children("input[name='reputationName']").val()) {
-            parent.children("input[name='reputationCost']").val(0).change();
+            parent.children("input[name='reputationCost']").val(0).trigger("change");
             return;
         }
-        const isAff = parent.children("input[name='reputationType']").prop("checked");
+        const isAff = !(parent.children("input[name='reputationType']").prop("checked"));
         const dice = parseInt(parent.children("input[name='reputationDice']").val() as string) || 0;
         if (isAff) {
             const result = dice === 1 ? 10 : (dice === 2 ? 25 : (dice === 3 ? 50 : 0));
-            parent.children("input[name='reputationCost']").val(result).change();
+            parent.children("input[name='reputationCost']").val(result).trigger("change");
         } else {
             const result = dice === 1 ? 7 : (dice === 2 ? 25 : (dice === 3 ? 45 : 0));
-            parent.children("input[name='reputationCost']").val(result).change();
+            parent.children("input[name='reputationCost']").val(result).trigger("change");
         } 
     }
 
@@ -579,7 +579,7 @@ export class CharacterBurnerDialog extends Dialog {
 
         skillRow.children("*[name='skillExponent']").val(result);
         skillRow.children("*[name='skillShadeRefund']").val(-Math.min(root1Shade, root2Shade));
-        skillRow.children("*[name='skillShade']").val(Math.min(root1Shade, root2Shade)).change();
+        skillRow.children("*[name='skillShade']").val(Math.min(root1Shade, root2Shade)).trigger("change");
     }
 
     private _calculateAllSkillExponents(e: JQuery.ChangeEvent, html: JQuery): void {
@@ -602,7 +602,7 @@ export class CharacterBurnerDialog extends Dialog {
         const refund = parseInt(parent.children("*[name='skillShadeRefund']").val() as string) || 0;
         const open = parent.children("*[name='skillOpened']").prop("checked") ? 1 : 0;
         const training = parent.children("*[name='skillTraining']").prop("checked") ? open : 0;
-        parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + refund).change();
+        parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + refund).trigger("change");
     }
 
     _tryLoadTrait(e: JQuery.TriggeredEvent): void {
@@ -611,21 +611,21 @@ export class CharacterBurnerDialog extends Dialog {
         if (!traitName) {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
             inputTarget.siblings("*[name='traitId']").val("");
-            inputTarget.siblings("*[name='traitCost']").val("0").change();
+            inputTarget.siblings("*[name='traitCost']").val("0").trigger("change");
             return;
         }
         const trait = this._traits.find(t => t.name === traitName);
         if (!trait) {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("fail");
             inputTarget.siblings("*[name='traitId']").val("");
-            inputTarget.siblings("*[name='traitCost']").val("1").change();
+            inputTarget.siblings("*[name='traitCost']").val("1").trigger("change");
         }
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-            inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).change();
+            inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).trigger("change");
             inputTarget.siblings("*[name='traitId']").val(trait._id);
             const cost = (!trait.data.data.pointCost || isNaN(trait.data.data.pointCost)) ? 1 : trait.data.data.pointCost;
-            inputTarget.siblings("*[name='traitCost']").val(cost).change();
+            inputTarget.siblings("*[name='traitCost']").val(cost).trigger("change");
         }
     }
 
@@ -644,8 +644,8 @@ export class CharacterBurnerDialog extends Dialog {
         }
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-            inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).change();
-            inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).change();
+            inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).trigger("change");
+            inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).trigger("change");
             inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
             inputTarget.siblings("*[name='skillId']").val(skill._id);
         }
@@ -657,7 +657,7 @@ export class CharacterBurnerDialog extends Dialog {
         if (!propertyName) {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
             inputTarget.siblings("*[name='propertyId']").val("");
-            inputTarget.siblings("*[name='propertyCost']").val("0").change();
+            inputTarget.siblings("*[name='propertyCost']").val("0").trigger("change");
             return;
         }
         const property = this._property.find(p => p.name === propertyName);
@@ -668,7 +668,7 @@ export class CharacterBurnerDialog extends Dialog {
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='propertyId']").val(property._id);
-            inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).change();
+            inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).trigger("change");
         }
     }
 
@@ -678,7 +678,7 @@ export class CharacterBurnerDialog extends Dialog {
         if (!gearName) {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("none");
             inputTarget.siblings("*[name='gearId']").val("");
-            inputTarget.siblings("*[name='itemCost']").val("0").change();
+            inputTarget.siblings("*[name='itemCost']").val("0").trigger("change");
             return;
         }
         const gear = this._gear.find(p => p.name === gearName);
@@ -690,18 +690,18 @@ export class CharacterBurnerDialog extends Dialog {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='itemType']").val(gear.type);
             inputTarget.siblings("*[name='gearId']").val(gear._id);
-            inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).change();
+            inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).trigger("change");
         }
     }
 
     private _storeSum(html: JQuery, targetName: string, ...sourceNames: string[]): void {
-        html.find(`input[name="${targetName}"]`).val(this._calculateSum(html, ...sourceNames)).change();
+        html.find(`input[name="${targetName}"]`).val(this._calculateSum(html, ...sourceNames)).trigger("change");
     }
 
     private _storeDiff(html: JQuery, targetName: string, source1: string, source2: string) {
         const sum1 = this._calculateSum(html, source1);
         const sum2 = this._calculateSum(html, source2);
-        html.find(`input[name="${targetName}"]`).val(sum1 - sum2).change();
+        html.find(`input[name="${targetName}"]`).val(sum1 - sum2).trigger("change");
     }
 
     private _calculateSum(html: JQuery, ...sourceNames: string[]): number {

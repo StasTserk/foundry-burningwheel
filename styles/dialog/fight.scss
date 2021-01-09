@@ -7,9 +7,9 @@
     }
 
     .control-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: min-content;
         .control-button {
@@ -26,6 +26,54 @@
         grid-template-columns: repeat(4, 1fr);
         margin: 1em 0 1em 0;
 
+        .portrait {
+            width: 130px; height: 130px;
+            border: 2px solid #880000;
+            object-fit: cover;
+        }
+
+        .details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            td {
+                height: 26px;
+                text-align: left;
+                overflow: hidden;
+            }
+            
+            .exponent {
+                text-align: right;
+                width: 22px;
+                height: 22px;
+            }
+
+            .pick-weapon{
+                height: 22px;
+            }
+            
+            .withLabels{
+                display: flex;
+                flex-direction: row-reverse;
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    padding-top: 2px;
+                }
+                .exponent-meaning {
+                    padding-top: 4px;
+                }
+            }
+        }
+
+        .portrait-actions{
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .pill-toggle > label {
             border-radius: 0;
         }
@@ -38,7 +86,7 @@
                 padding-left: 5px;
             }
             .control-button {
-                width: 49%;
+                width: 100%;
                 height: min-content;
             }
         }
@@ -47,7 +95,12 @@
             border: 2px groove #aaaaaa;
             background: linear-gradient(rgba(#444, .25), rgba(#000, .05));
             min-height: 1.5em;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
             margin: 0;
+            padding: 2px;
 
             .attack-action {
                 -webkit-hyphens: auto;
@@ -92,6 +145,7 @@
         .participant-card {
             width: 100%;
             display: flex;
+            flex-direction: column;
             flex-wrap: wrap;
 
             .control-button {
@@ -102,36 +156,73 @@
                 border-radius: 3px;
             }
 
-            .remove-fighter {
-                width: 1.5em;
-                height: 1.5em;
-                padding: 1px;
-                line-height: 1.3em;
-                color: #800;
+            .exponent {
+                text-align: right;
+                width: 22px;
+                height: 22px;
             }
 
-            .actor-name {
-                font-size: 1.125em;
-                font-weight: bold;
-                width: calc(100% - 1.5em);
-                &:hover {
-                    color: #800;
+            .pick-weapon{
+                height: 22px;
+            }
+            
+            .withLabels{
+                display: flex;
+                flex-direction: row-reverse;
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    padding-top: 2px;
+                }
+                .exponent-meaning {
+                    padding-top: 4px;
                 }
             }
-            .portrait {
-                width: 80px; height: 80px;
-                border: 0;
-                object-fit: cover;
+
+            .fighter-action-panel{
+                display: flex;
+                flex-direction: row;
+                position: relative;
+                flex-grow: 1;
+                .remove-fighter {
+                    position: absolute;
+                    width: 1.5em;
+                    height: 1.5em;
+                    padding: 1px;
+                    line-height: 1.3em;
+                    color: #800;
+                }
+                .actor-name {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 1.125em;
+                    font-weight: bold;
+                    flex-grow: 1;
+                    width: calc(100% - 1.5em);
+                    &:hover {
+                        color: #800;
+                    }
+                }
             }
+
             .details {
-                width: calc(95% - 80px);
-                margin-left: 2%;
-                select {
-                    width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-grow: 1;
+                td {
+                    height: 26px;
+                    overflow: hidden;
                 }
             }
         }
+
         .volley {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             label {
                 display: block;
             }

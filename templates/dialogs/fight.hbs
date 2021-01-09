@@ -7,7 +7,7 @@
     {{/if}}
     <div class="volley-description">
         {{#if gmView}}
-        <div>Fighters</div>
+        <div><h3><strong>Fighters</strong></h3></div>
         <div class="pill-toggle">
             <input type="checkbox" name="showV1" id="showFightV1" {{checked showV1}}>
             <label for="showFightV1">Show Volley 1</label>
@@ -21,17 +21,60 @@
             <label for="showFightV3">Show Volley 3</label>
         </div>
         {{else}}
-        <div>Fighters</div><div>Volley 1</div><div>Volley 2</div><div>Volley 3</div>
+        <div><h3><strong>Fighters</strong></h3></div><div>Volley 1</div><div>Volley 2</div><div>Volley 3</div>
         {{/if}}
         {{#each participants as |p i|}}
         <div class="volley-buttons flex-row">
             <div class="participant">{{p.name}}</div>
-            {{#if p.showActions}}
-            <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Test Speed</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollPower">Test Power</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollAgility">Test Agility</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollSkill">Test Skill</button>
-            {{/if}}
+            <div class="portrait-actions">
+                {{#if p.showActions}}
+                <img class="portrait clickable" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
+                <div>
+                    <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Speed</button>
+                    <button class="control-button" data-index="{{i}}" data-action="rollPower">Power</button>
+                    <button class="control-button" data-index="{{i}}" data-action="rollAgility">Agility</button>
+                    <button class="control-button" data-index="{{i}}" data-action="rollSkill">Skill</button>
+                </div>
+                {{else}}
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td>Reflexes</td> 
+                            <td class="exponent">{{p.reflexes}}</td>
+                        </tr>
+                        <tr>
+                            <td>Engagement</td>
+                            <td class="withLabels">
+                                <div class="exponent-meaning">D</div>
+                                <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent" value="{{p.engagementBonus}}">
+                                <div>+</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Position</td>
+                            <td class="withLabels">
+                                <div class="exponent-meaning">Ob</div>
+                                <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent" value="{{p.positionPenalty}}">
+                                <div>+</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Weapon</td>
+                            <td>
+                                <select class="pick-weapon" data-index="{{i}}" name="weaponId">
+                                {{#select p.weaponId}}
+                                <option value="">Pick a Weapon</option>
+                                {{#each p.weapons as |s|}}
+                                <option value="{{s.id}}">{{s.label}}</option>
+                                {{/each}}
+                                {{/select}}
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                {{/if}}
+            </div>
         </div>
         <div class="flex-row" lang="en">
             {{#if ../showV1}}
@@ -60,7 +103,7 @@
         {{/each}}
     </div>
     <div class="fighters-grid">
-        <div class="participant-card">
+        <div class="participant-card volley">
             Participant
         </div>
         <div class="volley">
@@ -74,35 +117,49 @@
         </div>
         {{#each participants as |p i|}}
         <div class="participant-card">
-            {{#if ../gmView}}
-            <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
-            {{/if}}
-            <div class="actor-name clickable" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+            <div class="fighter-action-panel">
+                {{#if ../gmView}}
+                <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
+                {{/if}}
+                <div class="actor-name clickable" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+            </div>
             {{#if p.showActions}}
-            <img class="portrait clickable" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
             <div class="details">
-                <div>
-                    Reflexes: {{p.reflexes}}
-                </div>
-                <div>
-                    Engagement Bonus
-                    <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent no-arrows" value="{{p.engagementBonus}}">
-                </div>
-                <div>
-                    Position Penalty
-                    <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent no-arrows" value="{{p.positionPenalty}}">
-                </div>
-                <div>
-                    Active Weapon
-                    <select data-index="{{i}}" name="weaponId">
-                        {{#select p.weaponId}}
-                        <option value="">Pick a Weapon</option>
-                        {{#each p.weapons as |s|}}
-                        <option value="{{s.id}}">{{s.label}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </div>
+                <table>
+                    <tr>
+                        <td>Reflexes</td> 
+                        <td class="exponent">{{p.reflexes}}</td>
+                    </tr>
+                    <tr>
+                        <td>Engagement</td>
+                        <td class="withLabels">
+                            <div class="exponent-meaning">D</div>
+                            <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent" value="{{p.engagementBonus}}">
+                            <div>+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Position</td>
+                        <td class="withLabels">
+                            <div class="exponent-meaning">Ob</div>
+                            <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent" value="{{p.positionPenalty}}">
+                            <div>+</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Weapon</td>
+                        <td>
+                            <select class="pick-weapon" data-index="{{i}}" name="weaponId">
+                            {{#select p.weaponId}}
+                            <option value="">Pick a Weapon</option>
+                            {{#each p.weapons as |s|}}
+                            <option value="{{s.id}}">{{s.label}}</option>
+                            {{/each}}
+                            {{/select}}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </div>
             {{/if}}
         </div>

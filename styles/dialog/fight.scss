@@ -23,6 +23,7 @@
         display: grid;
         width: 100%;
         height: min-content;
+        overflow: hidden;
         grid-template-columns: repeat(4, 1fr);
         margin: 1em 0 1em 0;
 
@@ -41,6 +42,7 @@
                 height: 26px;
                 text-align: left;
                 overflow: hidden;
+                white-space: nowrap;
             }
             
             .exponent {
@@ -49,10 +51,6 @@
                 height: 22px;
             }
 
-            .pick-weapon{
-                height: 22px;
-            }
-            
             .withLabels{
                 display: flex;
                 flex-direction: row-reverse;
@@ -62,6 +60,7 @@
                     padding-top: 2px;
                 }
                 .exponent-meaning {
+                    flex-direction: row;
                     padding-top: 4px;
                 }
             }

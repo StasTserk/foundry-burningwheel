@@ -253,7 +253,7 @@ export interface FightDialogData {
     showV3: boolean;
 }
 
-interface ParticipantEntry {
+export interface ParticipantEntry {
     showAction3: boolean;
     showAction2: boolean;
     showAction5: boolean;

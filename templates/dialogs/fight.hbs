@@ -45,30 +45,19 @@
                         <tr>
                             <td>Engagement</td>
                             <td class="withLabels">
-                                <div class="exponent-meaning">D</div>
-                                <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent" value="{{p.engagementBonus}}">
-                                <div>+</div>
+                                <div class="exponent-meaning">+{{p.engagementBonus}}D</div>
                             </td>
                         </tr>
                         <tr>
                             <td>Position</td>
                             <td class="withLabels">
-                                <div class="exponent-meaning">Ob</div>
-                                <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent" value="{{p.positionPenalty}}">
-                                <div>+</div>
+                                <div class="exponent-meaning">+{{p.positionPenalty}}Ob</div>
                             </td>
                         </tr>
                         <tr>
                             <td>Weapon</td>
                             <td>
-                                <select class="pick-weapon" data-index="{{i}}" name="weaponId">
-                                {{#select p.weaponId}}
-                                <option value="">Pick a Weapon</option>
-                                {{#each p.weapons as |s|}}
-                                <option value="{{s.id}}">{{s.label}}</option>
-                                {{/each}}
-                                {{/select}}
-                                </select>
+                                <div class="exponent-meaning">{{#getParticipantWeapon p}}{{/getParticipantWeapon}}</div>
                             </td>
                         </tr>
                     </table>

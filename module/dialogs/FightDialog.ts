@@ -117,12 +117,10 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             html.find('button[data-action="roll'+attr+'"]')
                 .on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, attr.toLowerCase() as FightAttr); });
         });
-        const openSheet = (e: JQuery.ClickEvent) => {
+        html.find('div[data-action="openSheet"], img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {
             const id = e.currentTarget.attributes.getNamedItem("data-actor-id").nodeValue || "";
             game.actors.find(a => a._id === id).sheet.render(true);
-        };
-        html.find('img[data-action="openSheet"]').on('click', openSheet);
-        html.find('div[data-action="openSheet"]').on('click', openSheet);
+        });
     }
     
     private _handleRoll(e: JQuery.ClickEvent, type: FightAttr) {

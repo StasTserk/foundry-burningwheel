@@ -1,7 +1,6 @@
 import { BWActor } from "./actors/BWActor.js";
 import { BWCharacterSheet } from "./actors/sheets/BWCharacterSheet.js";
 import { RegisterItemSheets } from "./items/item.js";
-import { ParticipantEntry } from "./dialogs/FightDialog.js";
 
 import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
 import { ShadeString, slugify, translateWoundValue } from "./helpers.js";
@@ -139,12 +138,6 @@ function registerHelpers() {
     Handlebars.registerHelper("clampWound", (shade: ShadeString, value: string | number): string => {
         return translateWoundValue(shade, value);
     });
-
-    Handlebars.registerHelper("getParticipantWeapon", (participant: ParticipantEntry): string => {
-        if (participant.weapons){
-            return participant.weapons.find(x => x.id === participant.weaponId)?.label ?? "";
-        } else {return "";}
-      });
 }
 
 

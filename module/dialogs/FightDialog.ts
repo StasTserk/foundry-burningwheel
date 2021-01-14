@@ -10,6 +10,7 @@ import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
 import * as constants from "../constants.js";
 import { getKeypressModifierPreset } from "../rolls/rolls.js";
 
+export type FightAttr = "speed" | "agility" | "power" | "skill" | "steel";
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: DialogData, o?: ApplicationOptions) {
         super(d, o);
@@ -68,6 +69,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             p.showAction9 = !!p.action8;
 
             p.showActions = (data.gmView && !p.gmHidden) || (!data.gmView && this.data.actors.find(a => a.id === p.id)?.owner);
+            p.chosenWeaponLabel = p.weapons.find(x => x.id === p.weaponId)?.label ?? "";
         });
         data.actionOptions = this.data.actionOptions;
         return data;
@@ -111,19 +113,19 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             this._toggleHidden(e.target);
         });
         html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.participants));
-
-        html.find('button[data-action="rollSpeed"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "speed"); });
-        html.find('button[data-action="rollPower"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "power"); });
-        html.find('button[data-action="rollAgility"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "agility"); });
-        html.find('button[data-action="rollSkill"]').on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, "skill"); });
-
-        html.find('img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {
-            const id = e.target.dataset.actorId || "";
-            game.actors.find(a => a._id === id).sheet.render(true);
+        ["Speed", "Power", "Agility", "Skill", "Steel"].forEach((attr: string) => {
+            html.find('button[data-action="roll'+attr+'"]')
+                .on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, attr.toLowerCase() as FightAttr); });
         });
+        const openSheet = (e: JQuery.ClickEvent) => {
+            const id = e.currentTarget.attributes.getNamedItem("data-actor-id").nodeValue || "";
+            game.actors.find(a => a._id === id).sheet.render(true);
+        };
+        html.find('img[data-action="openSheet"]').on('click', openSheet);
+        html.find('div[data-action="openSheet"]').on('click', openSheet);
     }
     
-    private _handleRoll(e: JQuery.ClickEvent, type: "speed" | "agility" | "power" | "skill") {
+    private _handleRoll(e: JQuery.ClickEvent, type: FightAttr) {
         e.preventDefault();
         const dataPreset = getKeypressModifierPreset(e);
         const index = parseInt(e.target.dataset.index || "0");
@@ -253,7 +255,7 @@ export interface FightDialogData {
     showV3: boolean;
 }
 
-export interface ParticipantEntry {
+interface ParticipantEntry {
     showAction3: boolean;
     showAction2: boolean;
     showAction5: boolean;
@@ -269,6 +271,7 @@ export interface ParticipantEntry {
     showActions?: boolean;
     
     weaponId: string;
+    chosenWeaponLabel: string;
     engagementBonus: number;
     positionPenalty: number;
 

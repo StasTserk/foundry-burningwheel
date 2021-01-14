@@ -19,58 +19,69 @@
         }
     }
 
+    .details {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 2px groove #aaaaaa;
+        justify-items: stretch;
+        column-gap: 2px;
+        row-gap: 2px;
+        .details-key{
+            display: flex;
+            align-items: center;
+            background: rgba(#000, .03);
+            border: 2px groove #aaaaaa;
+            padding: 1px;
+        }
+        .details-value{
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            justify-content: end;
+            text-align: end;
+            background: rgba(#444, .25);
+            border: 2px groove #aaaaaa;
+            text-align: end;
+            padding: 1px;
+        }
+    }
+    .weapon-block {
+        display: grid;
+        align-items: center;
+        padding: 5px 5px 0 5px;
+        //Weapon word has static width
+        grid-template-columns: [line1] 50px [line2] auto [col2-start];
+        justify-content: stretch;
+        .weapon-picker {
+            justify-self: end;
+            grid-column-start: 2;
+        }
+    }
+
     .volley-description {
         display: grid;
         width: 100%;
         height: min-content;
-        overflow: hidden;
         grid-template-columns: repeat(4, 1fr);
         margin: 1em 0 1em 0;
 
+        .pill-toggle{
+            & > input[type="checkbox"]{
+                &:checked + label {
+                    background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+                    border: 2px solid #880000;
+                    color: #880000;
+        }}}
+
+        .fighters-label{
+            width: 100%;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
         .portrait {
-            width: 130px; height: 130px;
-            border: 2px solid #880000;
+            width: 120px; height: 120px;
             object-fit: cover;
-        }
-
-        .details {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-            td {
-                height: 26px;
-                text-align: left;
-                overflow: hidden;
-                white-space: nowrap;
-            }
-            
-            .exponent {
-                text-align: right;
-                width: 22px;
-                height: 22px;
-            }
-
-            .withLabels{
-                display: flex;
-                flex-direction: row-reverse;
-                div {
-                    display: flex;
-                    flex-direction: column;
-                    padding-top: 2px;
-                }
-                .exponent-meaning {
-                    flex-direction: row;
-                    padding-top: 4px;
-                }
-            }
-        }
-
-        .portrait-actions{
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .pill-toggle > label {
@@ -84,9 +95,25 @@
                 font-weight: bold;
                 padding-left: 5px;
             }
-            .control-button {
-                width: 100%;
-                height: min-content;
+            .portrait-actions {
+                flex-grow: 1;
+                display: flex;
+                //justify-content: center;
+                //align-items: center;
+                .fight-rolls {
+                    flex-grow: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
+                    max-height: 130px;
+                    .control-button {
+                        overflow: hidden;
+                        width: 49%;
+                    }
+                }
             }
         }
 
@@ -154,37 +181,11 @@
                 color: black;
                 border-radius: 3px;
             }
-
-            .exponent {
-                text-align: right;
-                width: 22px;
-                height: 22px;
-            }
-
-            .pick-weapon{
-                height: 22px;
-            }
-            
-            .withLabels{
-                display: flex;
-                flex-direction: row-reverse;
-                div {
-                    display: flex;
-                    flex-direction: column;
-                    padding-top: 2px;
-                }
-                .exponent-meaning {
-                    padding-top: 4px;
-                }
-            }
-
-            .fighter-action-panel{
+     
+            .fighter-action-panel {
                 display: flex;
                 flex-direction: row;
-                position: relative;
-                flex-grow: 1;
                 .remove-fighter {
-                    position: absolute;
                     width: 1.5em;
                     height: 1.5em;
                     padding: 1px;
@@ -198,21 +199,11 @@
                     font-size: 1.125em;
                     font-weight: bold;
                     flex-grow: 1;
+                    padding-right: 1.5em;
                     width: calc(100% - 1.5em);
                     &:hover {
                         color: #800;
                     }
-                }
-            }
-
-            .details {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-grow: 1;
-                td {
-                    height: 26px;
-                    overflow: hidden;
                 }
             }
         }
@@ -233,5 +224,9 @@
                 width: 100%;
             }
         }
+    }
+    .gm-overview {
+        display: flex;
+        flex-direction: column;
     }
 }

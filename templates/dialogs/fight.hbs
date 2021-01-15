@@ -39,23 +39,23 @@
                 {{else}}
                     {{#if ../gmView}}
                         <div class="gm-overview">
-                        <div class="details clickable" data-action="openSheet" title="{{p.name}}" data-actor-id="{{p.id}}">
-                                <div class="details-key">Reflexes</div> 
-                                <div class="details-value">{{p.reflexes}}</div>
-                                <div class="details-key">Engagement</div>
-                                <div class="details-value">
-                                    <div style="width: 7px;"></div>
-                                    <div>+{{p.engagementBonus}}D</div>
-                                </div>
-                                <div class="details-key">Position</div>
-                                <div class="details-value">
-                                    <div class=>+{{p.positionPenalty}}Ob</div>
-                                </div>
-                        </div>
-                        <div class="weapon-block">
-                            <div>Weapon</div>
-                            <div class="weapon-picker">{{p.chosenWeaponLabel}}</div>
-                        </div>
+                            <div class="details clickable" data-action="openSheet" title="{{p.name}}" data-actor-id="{{p.id}}">
+                                    <div class="details-key">Reflexes</div> 
+                                    <div class="details-value">{{p.reflexes}}</div>
+                                    <div class="details-key">Engagement</div>
+                                    <div class="details-value">
+                                        <div style="width: 7px;"></div>
+                                        <div>+{{p.engagementBonus}}D</div>
+                                    </div>
+                                    <div class="details-key">Position</div>
+                                    <div class="details-value">
+                                        <div class=>+{{p.positionPenalty}}Ob</div>
+                                    </div>
+                            </div>
+                            <div class="weapon-block">
+                                <div>Weapon</div>
+                                <div class="weapon-picker">{{p.chosenWeaponLabel}}</div>
+                            </div>
                         </div>
                     {{else}}
                         <img class="portrait" src="{{p.imgSrc}}" title="{{p.name}}"/>
@@ -104,25 +104,27 @@
         </div>
         {{#each participants as |p i|}}
         <div class="participant-card">
-            <div class="fighter-action-panel">
+            <div class="fighter-action-panel flex-row">
                 {{#if ../gmView}}
                 <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
+                {{else}}
+                <div style="padding-left: 1.5em;"></div>
                 {{/if}}
-                <div class="actor-name clickable" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+                <div class="actor-name clickable flex-row" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
             </div>
             {{#if p.showActions}}
             <div class="details">
                 <div class="details-key">Reflexes</div>
                 <div class="details-value">{{p.reflexes}}</div>
                 <div class="details-key">Engagement</div>
-                <div class="withLabels details-value">
-                    <div class="exponent-meaning">D</div>
+                <div class="details-value">
+                    <div>D</div>
                     <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent" value="{{p.engagementBonus}}">
                     <div>+</div>
                 </div>
                 <div class="details-key">Position</div>
-                <div class="withLabels details-value">
-                    <div class="exponent-meaning">Ob</div>
+                <div class="details-value">
+                    <div>Ob</div>
                     <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent" value="{{p.positionPenalty}}">
                     <div>+</div>
                 </div>
@@ -132,10 +134,10 @@
                 <div class="weapon-picker">
                     <select data-index="{{i}}" name="weaponId">
                         {{#select p.weaponId}}
-                            <option value="">Pick a Weapon</option>
-                            {{#each p.weapons as |s|}}
-                                <option value="{{s.id}}">{{s.label}}</option>
-                            {{/each}}
+                        <option value="">Pick a Weapon</option>
+                        {{#each p.weapons as |s|}}
+                        <option value="{{s.id}}">{{s.label}}</option>
+                        {{/each}}
                         {{/select}}
                     </select>
                 </div>

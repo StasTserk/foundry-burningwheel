@@ -114,7 +114,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         });
         html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.participants));
         ["Speed", "Power", "Agility", "Skill", "Steel"].forEach((attr: string) => {
-            html.find('button[data-action="roll'+attr+'"]')
+            html.find(`button[data-action="roll${attr}"]`)
                 .on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, attr.toLowerCase() as FightAttr); });
         });
         html.find('div[data-action="openSheet"], img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {

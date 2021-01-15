@@ -326,17 +326,18 @@ export class CharacterBurnerDialog extends Dialog {
         
         const mentalPoints = emptyLifepath.nextAll('.inline-text').first().children('input[name="mentalStat"]').first();
         const physicalPoints = emptyLifepath.nextAll('.inline-text').first().next().children('input[name="physicalStat"]').first();
+        const boostAmount = pathData.subtractStats ? -1 : 1;
 
         switch (pathData.statBoost) {
             case "both":
-                mentalPoints.val(1).trigger('change');
-                physicalPoints.val(1).trigger('change');
+                mentalPoints.val(boostAmount).trigger('change');
+                physicalPoints.val(boostAmount).trigger('change');
                 break;
             case "mental":
-                mentalPoints.val(1).trigger('change');
+                mentalPoints.val(boostAmount).trigger('change');
                 break;
             case "physical":
-                physicalPoints.val(1).trigger('change');
+                physicalPoints.val(boostAmount).trigger('change');
                 break;
             case "either":
                 new Dialog({
@@ -345,11 +346,11 @@ export class CharacterBurnerDialog extends Dialog {
                     buttons: {
                         mental: {
                             label: "Assign to Mental",
-                            callback: () => { mentalPoints.val(1).trigger('change'); }
+                            callback: () => { mentalPoints.val(boostAmount).trigger('change'); }
                         },
                         physical: {
                             label: "Assign to Physical",
-                            callback: () => { physicalPoints.val(1).trigger('change'); }
+                            callback: () => { physicalPoints.val(boostAmount).trigger('change'); }
                         }
                     }
                 }).render(true);

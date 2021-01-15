@@ -104,10 +104,9 @@
             <div class="flex-row">
                 {{#if ../gmView}}
                 <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
-                {{else}}
-                <div style="padding-left: 1.5em;"></div>
                 {{/if}}
-                <div class="actor-name clickable flex-row" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+                <div class="actor-name clickable" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+                {{#if ../gmView}}<div class="remove-fighter"></div>{{/if}}
             </div>
             {{#if p.showActions}}
             <div class="details">

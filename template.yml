@@ -363,6 +363,7 @@ Item:
     time: 5
     resources: 5
     statBoost: 'none'
+    subtractStats: false
     leads: 'Any'
     skillPoints: 0
     generalPoints: 0

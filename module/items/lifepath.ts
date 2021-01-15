@@ -8,7 +8,8 @@ export class Lifepath extends BWItem {
 
     prepareData(): void {
         super.prepareData();
-        this.data.data.statString = statMap[this.data.data.statBoost];
+        const statSign = this.data.data.statBoost === "none" ? "" : (this.data.data.subtractStats ? "-" : "+");
+        this.data.data.statString = statSign + statMap[this.data.data.statBoost];
     }
 }
 
@@ -21,6 +22,7 @@ export interface LifepathData {
     time: number;
     resources: number;
     statBoost: 'none' | 'mental' | 'physical' | 'either' | 'both';
+    subtractStats: boolean;
     leads: string;
     skillPoints: number;
     generalPoints: number;
@@ -38,8 +40,8 @@ export interface LifepathData {
 
 const statMap = {
     "none": "&mdash;",
-    "mental": "+1 M",
-    "physical": "+1 P",
-    "either": "+1 M/P",
-    "both": "+1 M,P"
+    "mental": "1 M",
+    "physical": "1 P",
+    "either": "1 M/P",
+    "both": "1 M,P"
 };

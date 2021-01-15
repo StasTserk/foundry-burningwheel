@@ -22,15 +22,15 @@
     .details {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        border: 2px groove #aaaaaa;
         justify-items: stretch;
         column-gap: 2px;
         row-gap: 2px;
+        width: 100%;
         .details-key{
             display: flex;
             align-items: center;
             background: rgba(#000, .03);
-            border: 2px groove #aaaaaa;
+            border: 1px groove #f0f0f0;
             padding: 1px;
         }
         .details-value{
@@ -39,8 +39,8 @@
             flex-direction: row-reverse;
             justify-content: end;
             text-align: end;
-            background: rgba(#444, .25);
-            border: 2px groove #aaaaaa;
+            background: rgba(#000, .1);
+            border: 1px groove #f0f0f0;
             text-align: end;
             padding: 1px;
         }
@@ -48,9 +48,10 @@
     .weapon-block {
         display: grid;
         align-items: center;
+        width: 100%;
         padding: 5px 5px 0 5px;
         //Weapon word has static width
-        grid-template-columns: [line1] 50px [line2] auto [col2-start];
+        grid-template-columns: 50px 1fr;
         justify-content: stretch;
         .weapon-picker {
             justify-self: end;
@@ -65,13 +66,11 @@
         grid-template-columns: repeat(4, 1fr);
         margin: 1em 0 1em 0;
 
-        .pill-toggle{
-            & > input[type="checkbox"]{
-                &:checked + label {
-                    background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
-                    border: 2px solid #880000;
-                    color: #880000;
-        }}}
+        .pill-toggle > input[type="checkbox"]:checked + label {
+            background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+            border: 2px solid #880000;
+            color: #880000;
+        }
 
         .fighters-label{
             width: 100%;
@@ -81,11 +80,16 @@
 
         .portrait {
             width: 120px; height: 120px;
+            border: 0px;
             object-fit: cover;
         }
 
         .pill-toggle > label {
             border-radius: 0;
+        }
+
+        .gm-overview{
+            width: 100%;
         }
 
         .volley-buttons {
@@ -98,8 +102,6 @@
             .portrait-actions {
                 flex-grow: 1;
                 display: flex;
-                //justify-content: center;
-                //align-items: center;
                 .fight-rolls {
                     flex-grow: 1;
                     display: flex;
@@ -107,10 +109,8 @@
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
-                    overflow: hidden;
                     max-height: 130px;
                     .control-button {
-                        overflow: hidden;
                         width: 49%;
                     }
                 }
@@ -182,28 +182,24 @@
                 border-radius: 3px;
             }
      
-            .fighter-action-panel {
+            .remove-fighter {
+                width: 1.5em;
+                height: 1.5em;
+                padding: 1px;
+                line-height: 1.3em;
+                color: #800;
+            }
+            .actor-name {
                 display: flex;
-                flex-direction: row;
-                .remove-fighter {
-                    width: 1.5em;
-                    height: 1.5em;
-                    padding: 1px;
-                    line-height: 1.3em;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.125em;
+                font-weight: bold;
+                flex-grow: 1;
+                padding-right: 1.5em;
+                width: calc(100% - 1.5em);
+                &:hover {
                     color: #800;
-                }
-                .actor-name {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 1.125em;
-                    font-weight: bold;
-                    flex-grow: 1;
-                    padding-right: 1.5em;
-                    width: calc(100% - 1.5em);
-                    &:hover {
-                        color: #800;
-                    }
                 }
             }
         }
@@ -224,9 +220,5 @@
                 width: 100%;
             }
         }
-    }
-    .gm-overview {
-        display: flex;
-        flex-direction: column;
     }
 }

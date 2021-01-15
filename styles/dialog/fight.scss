@@ -101,9 +101,7 @@
                 display: flex;
                 .fight-rolls {
                     flex-grow: 1;
-                    display: flex;
                     flex-wrap: wrap;
-                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     max-height: 130px;
@@ -167,8 +165,6 @@
 
         .participant-card {
             width: 100%;
-            display: flex;
-            flex-direction: column;
             flex-wrap: wrap;
 
             .control-button {
@@ -211,15 +207,12 @@
                         height: 1.5em;
                         padding: 0;
                         text-align: center;
-                        padding: 0;
                     }
                 }
             }
         }
 
         .volley {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             label {

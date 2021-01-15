@@ -192,7 +192,6 @@
                 text-align: center;
                 font-size: 1.125em;
                 font-weight: bold;
-                padding-right: 1.5em;
                 &:hover {
                     color: #800;
                 }
@@ -209,9 +208,10 @@
 
                     .exponent {
                         width: 1.5em;
+                        height: 1.5em;
                         padding: 0;
                         text-align: center;
-                        padding: 0
+                        padding: 0;
                     }
                 }
             }

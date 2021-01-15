@@ -26,25 +26,20 @@
         column-gap: 2px;
         row-gap: 2px;
         width: 100%;
-        .details-key{
-            display: flex;
-            align-items: center;
+
+        .details-key {
             background: rgba(#000, .03);
             border: 1px groove #f0f0f0;
             padding: 1px;
         }
-        .details-value{
-            display: flex;
-            align-items: center;
-            flex-direction: row-reverse;
-            justify-content: end;
+        .details-value {
             text-align: end;
             background: rgba(#000, .1);
             border: 1px groove #f0f0f0;
-            text-align: end;
             padding: 1px;
         }
     }
+
     .weapon-block {
         display: grid;
         align-items: center;
@@ -54,8 +49,7 @@
         grid-template-columns: 50px 1fr;
         justify-content: stretch;
         .weapon-picker {
-            justify-self: end;
-            grid-column-start: 2;
+            text-align: end;
         }
     }
 
@@ -189,17 +183,33 @@
                 line-height: 1.3em;
                 color: #800;
             }
+
             .actor-name {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                flex: 1;
+                text-align: center;
                 font-size: 1.125em;
                 font-weight: bold;
-                flex-grow: 1;
                 padding-right: 1.5em;
-                width: calc(100% - 1.5em);
                 &:hover {
                     color: #800;
+                }
+            }
+
+            .details {
+                .details-value, .details-key {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .details-value {
+                    justify-content: flex-end;
+
+                    .exponent {
+                        width: 1.5em;
+                        padding: 0;
+                        text-align: center;
+                        padding: 0
+                    }
                 }
             }
         }

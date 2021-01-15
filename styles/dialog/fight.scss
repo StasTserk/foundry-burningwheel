@@ -30,12 +30,15 @@
         .details-key {
             background: rgba(#000, .03);
             border: 1px groove #f0f0f0;
+            border-right: 0;
             padding: 1px;
         }
         .details-value {
             text-align: end;
             background: rgba(#000, .1);
             border: 1px groove #f0f0f0;
+            border-left: 0;
+            margin-left: -2px;
             padding: 1px;
         }
     }

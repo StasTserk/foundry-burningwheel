@@ -82,11 +82,13 @@ function prettierFix() {
 }
 
 const tsTask = gulp.series(
+    prettierCheck,
     lintTs,
     compileTs,
     deploy);
 
 const sassTask = gulp.series(
+    prettierCheck,
     buildCss,
     deploy
 );
@@ -97,6 +99,7 @@ const htmlTask = gulp.series(
 );
 
 const build = gulp.series(
+    prettierCheck,
     lintTs,
     compileTs,
     buildCss,

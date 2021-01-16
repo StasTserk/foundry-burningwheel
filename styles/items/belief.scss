@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .artha-spent {
     label {
@@ -12,7 +12,7 @@
         border: 2px inset black;
         border-bottom-color: grey;
         border-right-color: grey;
-        border-radius: .75em;
+        border-radius: 0.75em;
         height: 1.5em;
         width: 1.5em;
         font-size: 1.5em;
@@ -20,7 +20,7 @@
         @include no-number-arrows;
 
         &:hover {
-            background-color: rgba(black, .15);
+            background-color: rgba(black, 0.15);
         }
     }
 }

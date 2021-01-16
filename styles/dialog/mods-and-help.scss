@@ -1,7 +1,7 @@
 .mods-and-help {
     position: fixed;
     bottom: 10px;
-    
+
     display: flex;
     flex-direction: column;
 
@@ -13,10 +13,10 @@
     }
 
     & > div {
-        width: 12em;      
+        width: 12em;
         border: 2px solid gray;
         border-radius: 5px;
-        background-image: url("/ui/denim075.png");
+        background-image: url('/ui/denim075.png');
         color: white;
         padding: 3px;
         margin-top: 5px;
@@ -30,14 +30,14 @@
         .help-name {
             flex: 1 1 50px;
             position: relative;
-            &>.tooltip {
+            & > .tooltip {
                 position: absolute;
                 visibility: hidden;
                 width: 10em;
                 right: 9em;
                 border: 2px solid gray;
                 border-radius: 5px;
-                background-image: url("/ui/denim075.png");
+                background-image: url('/ui/denim075.png');
             }
             &:hover > .tooltip {
                 visibility: visible;

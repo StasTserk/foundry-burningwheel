@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .spell-section {
     .spell-sustained-info {
@@ -18,7 +18,7 @@
             @include underlined-input;
             height: 100%;
 
-            &[type="number"] {
+            &[type='number'] {
                 width: 3em;
                 @include no-number-arrows;
             }
@@ -64,7 +64,8 @@
         .spell-details-label {
             font-weight: bold;
         }
-        .spell-details-label, .spell-details-data {
+        .spell-details-label,
+        .spell-details-data {
             &:hover {
                 background-color: unset;
             }
@@ -82,9 +83,9 @@
 
             .table-header {
                 background-color: rgba(black, 0.15);
-                font-weight: bold;;
+                font-weight: bold;
             }
-            
+
             &:hover {
                 background-color: unset;
             }
@@ -120,13 +121,13 @@
         margin: -1px 0 0 -1px;
 
         .roll-die {
-            background-color: rgba(orange, .15);
+            background-color: rgba(orange, 0.15);
             color: orangered;
             border-color: orangered;
             margin: auto;
         }
 
-        &>div {
+        & > div {
             border: 1px solid black;
             margin-bottom: -1px;
             margin-right: -1px;
@@ -146,7 +147,7 @@
             color: white;
         }
         .ims-header {
-            background: rgba(black, .15);
+            background: rgba(black, 0.15);
             font-weight: bold;
         }
     }

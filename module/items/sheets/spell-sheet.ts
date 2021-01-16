@@ -1,6 +1,6 @@
-import { weaponLengthSelect } from "../../constants.js";
-import { StringIndexedObject } from "../../helpers.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { weaponLengthSelect } from '../../constants.js';
+import { StringIndexedObject } from '../../helpers.js';
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet.js';
 
 export class SpellSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
@@ -8,7 +8,7 @@ export class SpellSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/spell.hbs";
+        return 'systems/burningwheel/templates/items/spell.hbs';
     }
 
     getData(): TraitSheetData {

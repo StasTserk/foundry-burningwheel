@@ -1,4 +1,4 @@
-import { BWItem } from "../items/item.js";
+import { BWItem } from '../items/item.js';
 
 export async function task021(): Promise<void> {
     // refactored initialization code to use a flag for actors
@@ -11,14 +11,14 @@ export async function task021(): Promise<void> {
         for (const ownedItem of Array.from(actor.items.values())) {
             // also, the typo in the item type 'possession' has been fixed
             // any existing items need to be updated to match the new type
-            if (ownedItem.type === "posession") {
-                await ownedItem.update({type: "possession"}, null);
+            if (ownedItem.type === 'posession') {
+                await ownedItem.update({ type: 'possession' }, null);
             }
         }
-        const ms = getProperty(actor, "data.mountedstride");
+        const ms = getProperty(actor, 'data.mountedstride');
         await actor.update({
-            "data.mountedstride": null,
-            "data.mountedStride": ms
+            'data.mountedstride': null,
+            'data.mountedStride': ms,
         });
     }
 
@@ -26,8 +26,8 @@ export async function task021(): Promise<void> {
     // compendium packs as well.
     const items: Item[] = Array.from(game.items.values());
     for (const item of items) {
-        if (item.type === "posession") {
-            await item.update({type: "possession"}, {});
+        if (item.type === 'posession') {
+            await item.update({ type: 'possession' }, {});
         }
     }
 
@@ -36,8 +36,8 @@ export async function task021(): Promise<void> {
         if (pack.cls === BWItem) {
             const packItems = await pack.getContent();
             for (const item of Array.from(packItems.values()) as Item[]) {
-                if (item.type === "posession") {
-                    item.data.type = "possession";
+                if (item.type === 'posession') {
+                    item.data.type = 'possession';
                     await pack.updateEntity(item.data);
                 }
             }

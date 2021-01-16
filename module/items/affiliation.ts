@@ -1,4 +1,4 @@
-import { BWItem, BWItemData, ItemType } from "./item.js";
+import { BWItem, BWItemData, ItemType } from './item.js';
 
 export class Affiliation extends BWItem {
     data: AffiliationDataRoot;

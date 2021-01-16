@@ -1,4 +1,4 @@
-import { BWItemSheet } from "./bwItemSheet.js";
+import { BWItemSheet } from './bwItemSheet.js';
 
 export class ReputationSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
@@ -6,6 +6,6 @@ export class ReputationSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/reputation.hbs";
+        return 'systems/burningwheel/templates/items/reputation.hbs';
     }
 }

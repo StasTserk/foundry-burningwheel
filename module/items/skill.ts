@@ -1,24 +1,29 @@
-import { skillRootSelect, SkillTypeString } from "../constants.js";
-import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
-import { ShadeString, StringIndexedObject, TestString, updateTestsNeeded } from "../helpers.js";
-import { DisplayClass, ItemType, BWItemData, BWItem } from "./item.js";
-import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
-import * as helpers from "../helpers.js";
+import { skillRootSelect, SkillTypeString } from '../constants.js';
+import { Ability, BWActor, TracksTests } from '../actors/BWActor.js';
+import {
+    ShadeString,
+    StringIndexedObject,
+    TestString,
+    updateTestsNeeded,
+} from '../helpers.js';
+import { DisplayClass, ItemType, BWItemData, BWItem } from './item.js';
+import { DifficultyDialog } from '../dialogs/DifficultyDialog.js';
+import * as helpers from '../helpers.js';
 
 export class Skill extends BWItem {
     getRootSelect(): StringIndexedObject<string> {
         const roots = {};
         Object.assign(roots, skillRootSelect);
-        if (this.data.hasOwner && this.actor.data.type === "character") {
+        if (this.data.hasOwner && this.actor.data.type === 'character') {
             if (this.actor.data.data.custom1.name) {
-                roots["custom1"] = this.actor.data.data.custom1.name;
+                roots['custom1'] = this.actor.data.data.custom1.name;
             }
             if (this.actor.data.data.custom2.name) {
-                roots["custom2"] = this.actor.data.data.custom2.name;
+                roots['custom2'] = this.actor.data.data.custom2.name;
             }
         } else {
-            roots["custom1"] = "Custom Attribute 1";
-            roots["custom2"] = "Custom Attribute 2";
+            roots['custom1'] = 'Custom Attribute 1';
+            roots['custom2'] = 'Custom Attribute 2';
         }
         return roots;
     }
@@ -30,27 +35,39 @@ export class Skill extends BWItem {
     }
 
     calculateAptitude(this: Skill): void {
-        if (!this.actor) { return; }
-        let aptitudeMod = this.actor.getAptitudeModifiers(this.name) + this.actor.getAptitudeModifiers(this.data.data.skilltype);
+        if (!this.actor) {
+            return;
+        }
+        let aptitudeMod =
+            this.actor.getAptitudeModifiers(this.name) +
+            this.actor.getAptitudeModifiers(this.data.data.skilltype);
 
         aptitudeMod += this.actor.getAptitudeModifiers(this.data.data.root1);
-        
+
         if (this.data.data.root2) {
-            aptitudeMod += this.actor.getAptitudeModifiers(`${this.data.data.root1}/${this.data.data.root2}`)
-                + this.actor.getAptitudeModifiers(`${this.data.data.root2}/${this.data.data.root1}`);
-                + this.actor.getAptitudeModifiers(this.data.data.root2);
+            aptitudeMod +=
+                this.actor.getAptitudeModifiers(
+                    `${this.data.data.root1}/${this.data.data.root2}`
+                ) +
+                this.actor.getAptitudeModifiers(
+                    `${this.data.data.root2}/${this.data.data.root1}`
+                );
+            +this.actor.getAptitudeModifiers(this.data.data.root2);
         }
-        
+
         const player = this.actor;
-        const root1exp = (player.data.data[this.data.data.root1] as Ability).exp;
-        const root2exp = this.data.data.root2 ? (player.data.data[this.data.data.root2] as Ability).exp : root1exp;
+        const root1exp = (player.data.data[this.data.data.root1] as Ability)
+            .exp;
+        const root2exp = this.data.data.root2
+            ? (player.data.data[this.data.data.root2] as Ability).exp
+            : root1exp;
         const rootAvg = Math.floor((root1exp + root2exp) / 2);
         this.data.data.aptitude = 10 - rootAvg + aptitudeMod;
     }
 
     static disableIfWounded(this: SkillDataRoot, woundDice: number): void {
         if (!this.data.learning && this.data.exp <= woundDice) {
-            this.data.cssClass += " wound-disabled";
+            this.data.cssClass += ' wound-disabled';
         }
     }
     data: SkillDataRoot;
@@ -63,14 +80,18 @@ export class Skill extends BWItem {
     }
 
     canAdvance(): boolean {
-        const enoughRoutine = (this.data.data.routine >= (this.data.data.routineNeeded || 0 ));
-        const enoughDifficult = this.data.data.difficult >= (this.data.data.difficultNeeded || 0);
-        const enoughChallenging = this.data.data.challenging >= (this.data.data.challengingNeeded || 0);
-    
+        const enoughRoutine =
+            this.data.data.routine >= (this.data.data.routineNeeded || 0);
+        const enoughDifficult =
+            this.data.data.difficult >= (this.data.data.difficultNeeded || 0);
+        const enoughChallenging =
+            this.data.data.challenging >=
+            (this.data.data.challengingNeeded || 0);
+
         if (this.data.data.exp === 0) {
             return enoughRoutine || enoughDifficult || enoughChallenging;
         }
-    
+
         if (this.data.data.exp < 5) {
             // need only enough difficult or routine, not both
             return enoughRoutine && (enoughDifficult || enoughChallenging);
@@ -81,18 +102,28 @@ export class Skill extends BWItem {
 
     async advance(): Promise<void> {
         const exp = this.data.data.exp;
-        this.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
+        this.update(
+            {
+                'data.routine': 0,
+                'data.difficult': 0,
+                'data.challenging': 0,
+                'data.exp': exp + 1,
+            },
+            {}
+        );
     }
 
     async addTest(difficulty: TestString, force = false): Promise<void> {
         // if we're doing deferred tracking, register the test then skip tracking for now
-        const difficultyDialog = game.burningwheel.gmDifficulty as (DifficultyDialog | undefined);
-        if (!force && (difficultyDialog?.extendedTest)) {
+        const difficultyDialog = game.burningwheel.gmDifficulty as
+            | DifficultyDialog
+            | undefined;
+        if (!force && difficultyDialog?.extendedTest) {
             difficultyDialog?.addDeferredTest({
                 actor: this.actor,
                 skill: this,
                 difficulty,
-                name: this.name
+                name: this.name,
             });
             return;
         }
@@ -101,68 +132,106 @@ export class Skill extends BWItem {
         if (this.data.data.learning) {
             const progress = this.data.data.learningProgress;
             let requiredTests = this.data.data.aptitude || 10;
-            let shade = getProperty(this.actor || {}, `data.data.${this.data.data.root1.toLowerCase()}`).shade;
-        
-            this.update({"data.learningProgress": progress + 1 }, {});
+            let shade = getProperty(
+                this.actor || {},
+                `data.data.${this.data.data.root1.toLowerCase()}`
+            ).shade;
+
+            this.update({ 'data.learningProgress': progress + 1 }, {});
             if (progress + 1 >= requiredTests) {
                 if (this.data.data.root2 && this.actor) {
-                    const root2Shade = getProperty(this.actor, `data.data.${this.data.data.root2.toLowerCase()}`).shade;
+                    const root2Shade = getProperty(
+                        this.actor,
+                        `data.data.${this.data.data.root2.toLowerCase()}`
+                    ).shade;
                     if (shade != root2Shade) {
                         requiredTests -= 2;
                     }
                     shade = helpers.getWorstShadeString(shade, root2Shade);
                 }
-        
+
                 Dialog.confirm({
                     title: `Finish Training ${this.name}?`,
                     content: `<p>${this.name} is ready to become a full skill. Go ahead?</p>`,
                     yes: () => {
                         const updateData = {};
-                        updateData["data.learning"] = false;
-                        updateData["data.learningProgress"] = 0;
-                        updateData["data.routine"] = 0;
-                        updateData["data.difficult"] = 0;
-                        updateData["data.challenging"] = 0;
-                        updateData["data.shade"] = shade;
-                        updateData["data.exp"] = Math.floor(this.rootStatExp / 2);
+                        updateData['data.learning'] = false;
+                        updateData['data.learningProgress'] = 0;
+                        updateData['data.routine'] = 0;
+                        updateData['data.difficult'] = 0;
+                        updateData['data.challenging'] = 0;
+                        updateData['data.shade'] = shade;
+                        updateData['data.exp'] = Math.floor(
+                            this.rootStatExp / 2
+                        );
                         this.update(updateData, {});
                     },
-                    no: () => { return; },
-                    defaultYes: true
+                    no: () => {
+                        return;
+                    },
+                    defaultYes: true,
                 });
             }
-        }
-        else {
+        } else {
             switch (difficulty) {
-                case "Routine":
-                    if (this.data.data.routine < (this.data.data.routineNeeded || 0)) {
-                        this.data.data.routine ++;
-                        this.update({ "data.routine": this.data.data.routine }, {});
+                case 'Routine':
+                    if (
+                        this.data.data.routine <
+                        (this.data.data.routineNeeded || 0)
+                    ) {
+                        this.data.data.routine++;
+                        this.update(
+                            { 'data.routine': this.data.data.routine },
+                            {}
+                        );
                     }
                     break;
-                case "Difficult":
-                    if (this.data.data.difficult < (this.data.data.difficultNeeded || 0)) {
-                        this.data.data.difficult ++;
-                        this.update({ "data.difficult": this.data.data.difficult }, {});
+                case 'Difficult':
+                    if (
+                        this.data.data.difficult <
+                        (this.data.data.difficultNeeded || 0)
+                    ) {
+                        this.data.data.difficult++;
+                        this.update(
+                            { 'data.difficult': this.data.data.difficult },
+                            {}
+                        );
                     }
                     break;
-                case "Challenging":
-                    this.data.data.challenging ++;
-                    if (this.data.data.challenging < (this.data.data.challengingNeeded || 0)) {
-                        this.update({ "data.challenging": this.data.data.challenging }, {});
+                case 'Challenging':
+                    this.data.data.challenging++;
+                    if (
+                        this.data.data.challenging <
+                        (this.data.data.challengingNeeded || 0)
+                    ) {
+                        this.update(
+                            { 'data.challenging': this.data.data.challenging },
+                            {}
+                        );
                     }
                     break;
-                case "Routine/Difficult":
-                    if (this.data.data.routine < (this.data.data.routineNeeded || 0)) {
-                        this.data.data.routine ++;
-                        this.update({ "data.routine": this.data.data.routine }, {});
-                    } else if (this.data.data.difficult < (this.data.data.difficultNeeded || 0)) {
-                        this.data.data.difficult ++;
-                        this.update({ "data.difficult": this.data.data.difficult }, {});
+                case 'Routine/Difficult':
+                    if (
+                        this.data.data.routine <
+                        (this.data.data.routineNeeded || 0)
+                    ) {
+                        this.data.data.routine++;
+                        this.update(
+                            { 'data.routine': this.data.data.routine },
+                            {}
+                        );
+                    } else if (
+                        this.data.data.difficult <
+                        (this.data.data.difficultNeeded || 0)
+                    ) {
+                        this.data.data.difficult++;
+                        this.update(
+                            { 'data.difficult': this.data.data.difficult },
+                            {}
+                        );
                     }
                     break;
             }
-            
         }
 
         if (this.canAdvance()) {
@@ -170,8 +239,10 @@ export class Skill extends BWItem {
                 title: `Advance ${this.name}?`,
                 content: `<p>${this.name} is ready to advance. Go ahead?</p>`,
                 yes: () => this.advance(),
-                no: () => { return; },
-                defaultYes: true
+                no: () => {
+                    return;
+                },
+                defaultYes: true,
             });
         }
     }
@@ -179,14 +250,21 @@ export class Skill extends BWItem {
     get rootStatExp(): number {
         if (this.actor) {
             const actor = this.actor;
-            const root1exp = (actor.data.data[this.data.data.root1] as Ability).exp;
-            const root2exp = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).exp : root1exp;
+            const root1exp = (actor.data.data[this.data.data.root1] as Ability)
+                .exp;
+            const root2exp = this.data.data.root2
+                ? (actor.data.data[this.data.data.root2] as Ability).exp
+                : root1exp;
             let exp = Math.floor((root1exp + root2exp) / 2);
             if (this.data.data.root2) {
-                const root1Shade = (actor.data.data[this.data.data.root1] as Ability).shade;
-                const root2Shade = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).shade : root1Shade;
+                const root1Shade = (actor.data.data[
+                    this.data.data.root1
+                ] as Ability).shade;
+                const root2Shade = this.data.data.root2
+                    ? (actor.data.data[this.data.data.root2] as Ability).shade
+                    : root1Shade;
                 if (root1Shade != root2Shade) {
-                    exp ++;
+                    exp++;
                 }
             }
             return exp;

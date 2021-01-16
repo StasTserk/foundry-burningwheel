@@ -1,6 +1,6 @@
-import { skillTypeSelect } from "../../constants.js";
-import { Skill } from "../skill.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { skillTypeSelect } from '../../constants.js';
+import { Skill } from '../skill.js';
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet.js';
 
 export class SkillSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
@@ -8,7 +8,7 @@ export class SkillSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/skill.hbs";
+        return 'systems/burningwheel/templates/items/skill.hbs';
     }
 
     getData(): SkillSheetData {

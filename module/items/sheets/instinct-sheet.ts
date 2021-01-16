@@ -1,4 +1,4 @@
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet.js';
 
 export class InstinctSheet extends BWItemSheet {
     getData(): BWItemSheetData {
@@ -6,8 +6,7 @@ export class InstinctSheet extends BWItemSheet {
         return data;
     }
 
-
     get template(): string {
-        return "systems/burningwheel/templates/items/instinct.hbs";
+        return 'systems/burningwheel/templates/items/instinct.hbs';
     }
 }

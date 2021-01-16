@@ -1,5 +1,5 @@
-import { Common, BWActorDataRoot, BWActor } from "./BWActor.js";
-import { ShadeString } from "../helpers.js";
+import { Common, BWActorDataRoot, BWActor } from './BWActor.js';
+import { ShadeString } from '../helpers.js';
 
 export class Npc extends BWActor {
     data: NpcDataRoot;
@@ -10,14 +10,16 @@ export class Npc extends BWActor {
     }
 
     calculateWounds(): void {
-        this.data.data.ptgs.woundDice = 
+        this.data.data.ptgs.woundDice =
             (this.data.data.ptgs.suTaken >= 3 ? 1 : 0) +
-            (this.data.data.ptgs.liTaken) +
-            (this.data.data.ptgs.miTaken * 2) +
-            (this.data.data.ptgs.seTaken * 3) +
-            (this.data.data.ptgs.trTaken * 4);
+            this.data.data.ptgs.liTaken +
+            this.data.data.ptgs.miTaken * 2 +
+            this.data.data.ptgs.seTaken * 3 +
+            this.data.data.ptgs.trTaken * 4;
         this.data.data.ptgs.obPenalty =
-            (this.data.data.ptgs.suTaken > 0 && this.data.data.ptgs.suTaken < 3) ? 1 : 0;
+            this.data.data.ptgs.suTaken > 0 && this.data.data.ptgs.suTaken < 3
+                ? 1
+                : 0;
     }
 }
 
@@ -53,5 +55,5 @@ export interface NpcData extends Common {
 
         woundDice?: number;
         obPenalty?: number;
-    }
+    };
 }

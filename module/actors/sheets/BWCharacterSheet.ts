@@ -1,20 +1,23 @@
-import { BWActor, NewItemData } from "../BWActor.js";
-import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
-import * as constants from "../../constants.js";
-import { handleRollable } from "../../rolls/rolls.js";
-import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
-import { addNewItem } from "../../dialogs/ImportItemDialog.js";
-import { BWCharacter } from "../BWCharacter.js";
-import { byName } from "../../helpers.js";
-import { ArmorRootData } from "../../items/armor.js";
-import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
-import { RangedWeaponRootData } from "../../items/rangedWeapon.js";
-import { RelationshipData } from "../../items/relationship.js";
-import { ReputationDataRoot } from "../../items/reputation.js";
-import { SkillDataRoot, Skill } from "../../items/skill.js";
-import { SpellDataRoot, Spell } from "../../items/spell.js";
-import { TraitDataRoot, Trait } from "../../items/trait.js";
-import { BWItemData } from "../../items/item.js";
+import { BWActor, NewItemData } from '../BWActor.js';
+import { ActorSheetOptions, BWActorSheet } from './BWActorSheet.js';
+import * as constants from '../../constants.js';
+import { handleRollable } from '../../rolls/rolls.js';
+import { CharacterBurnerDialog } from '../../dialogs/CharacterBurnerDialog.js';
+import { addNewItem } from '../../dialogs/ImportItemDialog.js';
+import { BWCharacter } from '../BWCharacter.js';
+import { byName } from '../../helpers.js';
+import { ArmorRootData } from '../../items/armor.js';
+import {
+    MeleeWeaponRootData,
+    MeleeWeaponData,
+} from '../../items/meleeWeapon.js';
+import { RangedWeaponRootData } from '../../items/rangedWeapon.js';
+import { RelationshipData } from '../../items/relationship.js';
+import { ReputationDataRoot } from '../../items/reputation.js';
+import { SkillDataRoot, Skill } from '../../items/skill.js';
+import { SpellDataRoot, Spell } from '../../items/spell.js';
+import { TraitDataRoot, Trait } from '../../items/trait.js';
+import { BWItemData } from '../../items/item.js';
 
 export class BWCharacterSheet extends BWActorSheet {
     get actor(): BWCharacter {
@@ -32,24 +35,24 @@ export class BWCharacterSheet extends BWActorSheet {
             '.affiliations > .affiliation',
             '.gear > div',
             '.trait-category > .trait',
-            '.bits-artha'
+            '.bits-artha',
         ];
         options.draggableMeleeSelectors = [
             '.weapon-grid .rollable',
-            '.weapon-grid > .weapon-name'
+            '.weapon-grid > .weapon-name',
         ];
         options.draggableRangedSelectors = [
             '.ranged-grid .rollable',
-            '.ranged-grid > .weapon-name'
+            '.ranged-grid > .weapon-name',
         ];
 
         options.draggableStatSelectors = [
             '.stats > .rollable',
-            '.attributes > .rollable'
+            '.attributes > .rollable',
         ];
         return options;
     }
-    
+
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
         const woundDice = this.actor.data.data.ptgs.woundDice;
@@ -73,41 +76,56 @@ export class BWCharacterSheet extends BWActorSheet {
         let addFist = true; // do we need to add a fist weapon?
         for (const value of items) {
             const i = value.data as BWItemData;
-            switch(i.type) {
-                case "reputation": reps.push(i); break;
-                case "affiliation": affs.push(i); break;
-                case "belief": beliefs.push(i); break;
-                case "instinct": instincts.push(i); break;
-                case "trait": traits.push(i); break;
-                case "skill":
+            switch (i.type) {
+                case 'reputation':
+                    reps.push(i);
+                    break;
+                case 'affiliation':
+                    affs.push(i);
+                    break;
+                case 'belief':
+                    beliefs.push(i);
+                    break;
+                case 'instinct':
+                    instincts.push(i);
+                    break;
+                case 'trait':
+                    traits.push(i);
+                    break;
+                case 'skill':
                     const s = i as SkillDataRoot;
                     if (s.data.learning) {
                         learning.push(s);
-                    } else if (s.data.training && ["martial", "training"].includes(s.data.skilltype)) {
+                    } else if (
+                        s.data.training &&
+                        ['martial', 'training'].includes(s.data.skilltype)
+                    ) {
                         training.push(s);
                     } else {
                         skills.push(s);
                     }
                     Skill.disableIfWounded.call(i, woundDice);
                     break;
-                case "relationship": relationships.push(i as ItemData<RelationshipData>); break;
-                case "melee weapon":
-                    if (addFist && i.name === "Bare Fist") {
+                case 'relationship':
+                    relationships.push(i as ItemData<RelationshipData>);
+                    break;
+                case 'melee weapon':
+                    if (addFist && i.name === 'Bare Fist') {
                         addFist = false; // only add one fist weapon if none present
                     } else {
                         equipment.push(i); // don't count fists as equipment
                     }
                     melee.push(i as MeleeWeaponRootData);
                     break;
-                case "ranged weapon":
+                case 'ranged weapon':
                     equipment.push(i);
                     ranged.push(i as RangedWeaponRootData);
                     break;
-                case "armor":
+                case 'armor':
                     equipment.push(i);
                     armor.push(i);
                     break;
-                case "spell":
+                case 'spell':
                     spells.push(i as SpellDataRoot);
                     break;
                 default:
@@ -129,14 +147,24 @@ export class BWCharacterSheet extends BWActorSheet {
         data.affiliations = affs.sort(byName);
         data.spells = spells.sort(byName);
 
-        const traitLists: CharacterSheetTraits = { character: [], die: [], callon: [] };
+        const traitLists: CharacterSheetTraits = {
+            character: [],
+            die: [],
+            callon: [],
+        };
 
         if (traits.length !== 0) {
             traits.forEach((trait) => {
-                switch ((trait as unknown as TraitDataRoot).data.traittype) {
-                    case "character": traitLists.character.push(trait); break;
-                    case "die": traitLists.die.push(trait); break;
-                    default: traitLists.callon.push(trait); break;
+                switch (((trait as unknown) as TraitDataRoot).data.traittype) {
+                    case 'character':
+                        traitLists.character.push(trait);
+                        break;
+                    case 'die':
+                        traitLists.die.push(trait);
+                        break;
+                    default:
+                        traitLists.callon.push(trait);
+                        break;
                 }
             });
             traitLists.callon.sort(byName);
@@ -164,138 +192,207 @@ export class BWCharacterSheet extends BWActorSheet {
             '*[data-action="addSpell"]',
             '*[data-action="learnSpell"]',
             '*[data-action="addGear"]',
-            '*[data-action="broadcast"]'
+            '*[data-action="broadcast"]',
         ];
-        html.find(selectors.join(", ")).on("click", e => this._manageItems(e));
+        html.find(selectors.join(', ')).on('click', (e) =>
+            this._manageItems(e)
+        );
 
         // roll macros
-        html.find("button.rollable").on("click",e => handleRollable(e, this));
-        html.find("i[data-action=\"refresh-ptgs\"]").on("click",_e => this.actor.updatePtgs());
-        html.find('*[data-action="learn-skill"]').on("click",e => this.learnNewSkill(e, this.actor));
-        html.find('label.character-burner-icon').on("click", _e => CharacterBurnerDialog.Open(this.actor));
+        html.find('button.rollable').on('click', (e) =>
+            handleRollable(e, this)
+        );
+        html.find('i[data-action="refresh-ptgs"]').on('click', (_e) =>
+            this.actor.updatePtgs()
+        );
+        html.find('*[data-action="learn-skill"]').on('click', (e) =>
+            this.learnNewSkill(e, this.actor)
+        );
+        html.find('label.character-burner-icon').on('click', (_e) =>
+            CharacterBurnerDialog.Open(this.actor)
+        );
 
         super.activateListeners(html);
     }
 
-    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor): Promise<Application> {
+    async learnNewSkill(
+        e: JQuery.ClickEvent,
+        actor: BWActor
+    ): Promise<Application> {
         e.preventDefault();
         return addNewItem({
             actor: actor,
-            searchTitle: "Learn New Skill",
-            itemType: "skill",
+            searchTitle: 'Learn New Skill',
+            itemType: 'skill',
             itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
             itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
             baseData: {
                 learning: true,
-                root1: "perception",
-                skilltype: "special",
-                img: constants.defaultImages.skill
+                root1: 'perception',
+                skilltype: 'special',
+                img: constants.defaultImages.skill,
             },
             forcedData: {
-                learning: true
+                learning: true,
             },
-            img: constants.defaultImages.skill
+            img: constants.defaultImages.skill,
         });
     }
 
     private async _manageItems(e: JQuery.ClickEvent) {
         e.preventDefault();
         const t = e.currentTarget as EventTarget;
-        const action = $(t).data("action");
-        const id = $(t).data("id") as string;
+        const action = $(t).data('action');
+        const id = $(t).data('id') as string;
         let options: NewItemData;
         switch (action) {
-            case "broadcast": 
+            case 'broadcast':
                 const item = this.actor.getOwnedItem(id);
                 if (item) {
                     return item.generateChatMessage(this.actor);
                 }
                 break;
-            case "addBelief":
-                options = { name: "New Belief", type: "belief", data: { }, img: constants.defaultImages.belief };
-                return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
-            case "addInstinct":
-                options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
-                return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
-            case "addRelationship":
-                options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
-                return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
-            case "addReputation":
-                options = { name: "New Reputation", type: "reputation", data: { }, img: constants.defaultImages.reputation };
-                return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
-            case "addAffiliation":
-                options = { name: "New Affiliation", type: "affiliation", data: { }, img: constants.defaultImages.affiliation };
-                return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
-            case "addSkill": 
+            case 'addBelief':
+                options = {
+                    name: 'New Belief',
+                    type: 'belief',
+                    data: {},
+                    img: constants.defaultImages.belief,
+                };
+                return this.actor
+                    .createOwnedItem(options)
+                    .then((i) =>
+                        this.actor.getOwnedItem(i._id)?.sheet.render(true)
+                    );
+            case 'addInstinct':
+                options = {
+                    name: 'New Instinct',
+                    type: 'instinct',
+                    data: {},
+                    img: constants.defaultImages.belief,
+                };
+                return this.actor
+                    .createOwnedItem(options)
+                    .then((i) =>
+                        this.actor.getOwnedItem(i._id)?.sheet.render(true)
+                    );
+            case 'addRelationship':
+                options = {
+                    name: 'New Relationship',
+                    type: 'relationship',
+                    data: { building: true },
+                    img: constants.defaultImages.relationship,
+                };
+                return this.actor
+                    .createOwnedItem(options)
+                    .then((i) =>
+                        this.actor.getOwnedItem(i._id)?.sheet.render(true)
+                    );
+            case 'addReputation':
+                options = {
+                    name: 'New Reputation',
+                    type: 'reputation',
+                    data: {},
+                    img: constants.defaultImages.reputation,
+                };
+                return this.actor
+                    .createOwnedItem(options)
+                    .then((i) =>
+                        this.actor.getOwnedItem(i._id)?.sheet.render(true)
+                    );
+            case 'addAffiliation':
+                options = {
+                    name: 'New Affiliation',
+                    type: 'affiliation',
+                    data: {},
+                    img: constants.defaultImages.affiliation,
+                };
+                return this.actor
+                    .createOwnedItem(options)
+                    .then((i) =>
+                        this.actor.getOwnedItem(i._id)?.sheet.render(true)
+                    );
+            case 'addSkill':
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Skill",
-                    itemType: "skill",
-                    itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
-                    itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
-                    baseData: { root1: "perception", skilltype: "special" },
-                    popupMessage: "Add a new skill to the character sheet.  "
-                        + "Note this is different than learning a new skill via the beginner's luck rules.  "
-                        + "Check the learning section if you want to begin learning the skill.",
-                    img: constants.defaultImages.skill
+                    searchTitle: 'Add New Skill',
+                    itemType: 'skill',
+                    itemDataLeft: (i: Skill) =>
+                        i.data.data.restrictions.titleCase(),
+                    itemDataMid: (i: Skill) =>
+                        i.data.data.skilltype.titleCase(),
+                    baseData: { root1: 'perception', skilltype: 'special' },
+                    popupMessage:
+                        'Add a new skill to the character sheet.  ' +
+                        "Note this is different than learning a new skill via the beginner's luck rules.  " +
+                        'Check the learning section if you want to begin learning the skill.',
+                    img: constants.defaultImages.skill,
                 });
-            case "addTrait":
+            case 'addTrait':
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Trait",
-                    itemType: "trait",
-                    itemDataLeft: (i: Trait) => i.data.data.restrictions.titleCase(),
-                    itemDataMid: (i: Trait) => i.data.data.traittype.titleCase(),
+                    searchTitle: 'Add New Trait',
+                    itemType: 'trait',
+                    itemDataLeft: (i: Trait) =>
+                        i.data.data.restrictions.titleCase(),
+                    itemDataMid: (i: Trait) =>
+                        i.data.data.traittype.titleCase(),
                     baseData: { traittype: id },
-                    img: constants.defaultImages[id]
+                    img: constants.defaultImages[id],
                 });
-            case "addSpell":
+            case 'addSpell':
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Spell",
-                    itemType: "spell",
-                    itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
-                    itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
-                    baseData: { },
-                    img: constants.defaultImages.spell
+                    searchTitle: 'Add New Spell',
+                    itemType: 'spell',
+                    itemDataLeft: (i: Spell) =>
+                        `Origin: ${i.data.data.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) =>
+                        `Impetus: ${i.data.data.impetus.titleCase()}`,
+                    baseData: {},
+                    img: constants.defaultImages.spell,
                 });
-            case "learnSpell":
+            case 'learnSpell':
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Learn New Spell",
-                    itemType: "spell",
-                    itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
-                    itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
+                    searchTitle: 'Learn New Spell',
+                    itemType: 'spell',
+                    itemDataLeft: (i: Spell) =>
+                        `Origin: ${i.data.data.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) =>
+                        `Impetus: ${i.data.data.impetus.titleCase()}`,
                     baseData: { inPracticals: true },
                     forcedData: {
-                        inPracticals: true
+                        inPracticals: true,
                     },
-                    img: constants.defaultImages.spell
+                    img: constants.defaultImages.spell,
                 });
-            case "addGear":
+            case 'addGear':
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Gear",
-                    itemTypes: ["melee weapon", "ranged weapon", "armor", "possession", "property" ],
-                    itemDataLeft: (_: Item) => "",
+                    searchTitle: 'Add New Gear',
+                    itemTypes: [
+                        'melee weapon',
+                        'ranged weapon',
+                        'armor',
+                        'possession',
+                        'property',
+                    ],
+                    itemDataLeft: (_: Item) => '',
                     itemDataMid: (i: Item) => `Type: ${i.type.titleCase()}`,
                     baseData: { traittype: id },
-                    img: constants.defaultImages[id]
+                    img: constants.defaultImages[id],
                 });
-            case "delItem":
+            case 'delItem':
                 return Dialog.confirm({
-                    title: "Confirm Deletion",
-                    content: "<p>You are about to delete an item from the actor's sheet. Are you sure?</p>",
+                    title: 'Confirm Deletion',
+                    content:
+                        "<p>You are about to delete an item from the actor's sheet. Are you sure?</p>",
                     yes: () => this.actor.deleteOwnedItem(id),
-                    no: () => void 0
+                    no: () => void 0,
                 });
-                
-            case "editItem":
+
+            case 'editItem':
                 return this.actor.getOwnedItem(id)?.sheet.render(true);
         }
         return null;
@@ -303,17 +400,23 @@ export class BWCharacterSheet extends BWActorSheet {
 }
 
 function equipmentCompare(a: ItemData, b: ItemData): number {
-    if (constants.equipmentSheetOrder[a.type] !== constants.equipmentSheetOrder[b.type]) {
-        return constants.equipmentSheetOrder[a.type] > constants.equipmentSheetOrder[b.type] ? 1 : -1;
+    if (
+        constants.equipmentSheetOrder[a.type] !==
+        constants.equipmentSheetOrder[b.type]
+    ) {
+        return constants.equipmentSheetOrder[a.type] >
+            constants.equipmentSheetOrder[b.type]
+            ? 1
+            : -1;
     }
     return a.name.localeCompare(b.name);
 }
 
 function weaponCompare(a: ItemData, b: ItemData): number {
-    if (a.name === "Bare Fist") {
+    if (a.name === 'Bare Fist') {
         return -1;
     }
-    if (b.name === "Bare Fist") {
+    if (b.name === 'Bare Fist') {
         return 1;
     }
     return a.name.localeCompare(b.name);
@@ -325,7 +428,7 @@ interface CharacterSheetData extends ActorSheetData {
     equipment: ItemData[];
     melee: MeleeWeaponRootData[];
     fistStats: MeleeWeaponData;
-    armor: { [key: string]: ItemData | null}; // armor/location dictionary
+    armor: { [key: string]: ItemData | null }; // armor/location dictionary
     ranged: RangedWeaponRootData[];
     relationships: ItemData<RelationshipData>[];
     beliefs: ItemData[];

@@ -19,7 +19,7 @@
         }
 
         &.shade-white {
-            background-color:  rgba(white, .75);
+            background-color: rgba(white, 0.75);
             color: black;
         }
 
@@ -69,13 +69,14 @@
         }
 
         &.roll-title {
-            background-color: rgba(black, .75);
+            background-color: rgba(black, 0.75);
             color: white;
             font-weight: bold;
         }
     }
 
-    .roll-dice, .secondary-dice {
+    .roll-dice,
+    .secondary-dice {
         justify-content: center;
     }
 
@@ -88,7 +89,7 @@
     .roll-die {
         color: red;
         background-color: rgba(255, 0, 0, 0.25);
-        &[data-success="true"]{
+        &[data-success='true'] {
             color: green;
             background-color: rgba(144, 238, 144, 0.25);
         }
@@ -104,7 +105,7 @@
     }
 
     .roll-Routine {
-        background-color: rgba(white, .75);
+        background-color: rgba(white, 0.75);
     }
 
     .roll-Difficult {
@@ -117,17 +118,18 @@
     }
 
     .roll-success {
-        background-color: rgba(green, .5);
+        background-color: rgba(green, 0.5);
     }
     .roll-failure {
-        background-color: rgba(red, .5);
+        background-color: rgba(red, 0.5);
     }
 
     .reroll-buttons {
         .chat-reroll > button {
             line-height: 1.5em;
 
-            &.chat-fate-button, &.chat-deeds-button {
+            &.chat-fate-button,
+            &.chat-deeds-button {
                 flex: 1 1 45%;
             }
 

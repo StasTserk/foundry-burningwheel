@@ -8,26 +8,29 @@ import {
     buildRerollData,
     extractBaseData,
     buildDiceSourceObject,
-    ArmorEventHandlerOptions
-} from "./rolls.js";
-import { BWActor } from "../actors/BWActor.js";
-import { StringIndexedObject } from "../helpers.js";
-import * as helpers from "../helpers.js";
-import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
-import { NpcSheet } from "../actors/sheets/NpcSheet.js";
-import { Armor } from "../items/armor.js";
+    ArmorEventHandlerOptions,
+} from './rolls.js';
+import { BWActor } from '../actors/BWActor.js';
+import { StringIndexedObject } from '../helpers.js';
+import * as helpers from '../helpers.js';
+import { BWCharacterSheet } from '../actors/sheets/BWCharacterSheet.js';
+import { NpcSheet } from '../actors/sheets/NpcSheet.js';
+import { Armor } from '../items/armor.js';
 
-export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {
+export async function handleArmorRollEvent({
+    target,
+    sheet,
+}: ArmorEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
-    const armorId = target.dataset.itemId || "";
+    const armorId = target.dataset.itemId || '';
     const armorItem = actor.getOwnedItem(armorId) as Armor;
-    const location = target.dataset.location || "";
-    const chestBonus = location.toLowerCase() === "torso" ? 1 : 0;
+    const location = target.dataset.location || '';
+    const chestBonus = location.toLowerCase() === 'torso' ? 1 : 0;
     const damage = armorItem.data.data[`damage${location}`];
 
     const dialogData: ArmorDialogData = {
         difficulty: 1,
-        name: "Armor",
+        name: 'Armor',
         arthaDice: 0,
         bonusDice: 0,
         armor: armorItem.data.data.dice + chestBonus,
@@ -38,23 +41,27 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
     const html = await renderTemplate(templates.armorDialog, dialogData);
 
     return new Dialog({
-        title: "Roll Armor Dice",
+        title: 'Roll Armor Dice',
         content: html,
         buttons: {
             roll: {
-                label: "Roll",
-                callback: (html: JQuery) => armorRollCallback(armorItem, html, sheet, location)
-            }
-        }
-
+                label: 'Roll',
+                callback: (html: JQuery) =>
+                    armorRollCallback(armorItem, html, sheet, location),
+            },
+        },
     }).render(true);
-
 }
 
-export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: BWCharacterSheet | NpcSheet, location: string): Promise<unknown> {   
-    const dice = extractNumber(html, "armor");
+export async function armorRollCallback(
+    armorItem: Armor,
+    html: JQuery,
+    sheet: BWCharacterSheet | NpcSheet,
+    location: string
+): Promise<unknown> {
+    const dice = extractNumber(html, 'armor');
     const damage = parseInt(armorItem.data.data[`damage${location}`]);
-    const va = extractNumber(html, "vsArmor");
+    const va = extractNumber(html, 'vsArmor');
     const actor = armorItem.actor as BWActor;
     const baseData = extractBaseData(html, sheet);
     const dieSources: StringIndexedObject<string> = {
@@ -65,36 +72,57 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     }
 
     const numDice = dice - damage;
-    const roll = await rollDice(numDice, false, armorItem.data.data.shade || "B");
-    if (!roll) { return; }
+    const roll = await rollDice(
+        numDice,
+        false,
+        armorItem.data.data.shade || 'B'
+    );
+    if (!roll) {
+        return;
+    }
     const damageAssigned = await armorItem.assignDamage(roll, location);
     const isSuccess = (roll.total || 0) >= 1 + va;
     const rerollData = buildRerollData({ actor, roll, itemId: armorItem._id });
-    rerollData.type = "armor";
+    rerollData.type = 'armor';
     const messageData: RollChatMessageData = {
-        name: "Armor",
-        successes: "" + roll.dice[0].total,
+        name: 'Armor',
+        successes: '' + roll.dice[0].total,
         success: isSuccess,
         rolls: roll.dice[0].results,
         difficulty: 1 + va,
-        nameClass: getRollNameClass(false, armorItem.data.data.shade || "B"),
-        difficultyGroup: "N/A",
+        nameClass: getRollNameClass(false, armorItem.data.data.shade || 'B'),
+        difficultyGroup: 'N/A',
         obstacleTotal: 1 + va,
         callons: [],
         fateReroll: rerollData,
         dieSources: {
             ...dieSources,
-            ...buildDiceSourceObject(0, baseData.aDice, baseData.bDice, 0, 0, 0)
+            ...buildDiceSourceObject(
+                0,
+                baseData.aDice,
+                baseData.bDice,
+                0,
+                0,
+                0
+            ),
         },
-        extraInfo: damageAssigned ? `${armorItem.name} ${helpers.deCamelCaseify(location).toLowerCase()} lost ${damageAssigned} ${damageAssigned > 1 ? 'dice' : 'die'} to damage.` : undefined
+        extraInfo: damageAssigned
+            ? `${armorItem.name} ${helpers
+                  .deCamelCaseify(location)
+                  .toLowerCase()} lost ${damageAssigned} ${
+                  damageAssigned > 1 ? 'dice' : 'die'
+              } to damage.`
+            : undefined,
     };
-    
-    const messageHtml = await renderTemplate(templates.armorMessage, messageData);
+
+    const messageHtml = await renderTemplate(
+        templates.armorMessage,
+        messageData
+    );
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: armorItem.actor as BWActor})
+        speaker: ChatMessage.getSpeaker({ actor: armorItem.actor as BWActor }),
     });
-
 }
 
 interface ArmorDialogData extends RollDialogData {

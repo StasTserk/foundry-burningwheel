@@ -1,9 +1,11 @@
-import { BWItem, BWItemData, DisplayClass } from "./item.js";
+import { BWItem, BWItemData, DisplayClass } from './item.js';
 
 export class Reputation extends BWItem {
     prepareData(): void {
         super.prepareData();
-        this.data.data.cssClass = this.data.data.infamous ? "reputation-infamous" : "reputation-famous";
+        this.data.data.cssClass = this.data.data.infamous
+            ? 'reputation-infamous'
+            : 'reputation-famous';
     }
 
     data: ReputationDataRoot;

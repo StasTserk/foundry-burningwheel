@@ -1,21 +1,21 @@
-import { ShadeString, StringIndexedObject } from "../helpers.js";
-import { DisplayClass, ItemType, BWItemData, BWItem } from "../items/item.js";
-import { SkillDataRoot } from "../items/skill.js";
-import * as constants from "../constants.js";
-import { ArmorRootData } from "../items/armor.js";
-import { PossessionRootData } from "../items/possession.js";
-import { ReputationDataRoot } from "../items/reputation.js";
-import { TraitDataRoot, Trait } from "../items/trait.js";
-import { BWCharacterData } from "./BWCharacter.js";
-import { NpcData } from "./Npc.js";
-import { AffiliationDataRoot } from "../items/affiliation.js";
+import { ShadeString, StringIndexedObject } from '../helpers.js';
+import { DisplayClass, ItemType, BWItemData, BWItem } from '../items/item.js';
+import { SkillDataRoot } from '../items/skill.js';
+import * as constants from '../constants.js';
+import { ArmorRootData } from '../items/armor.js';
+import { PossessionRootData } from '../items/possession.js';
+import { ReputationDataRoot } from '../items/reputation.js';
+import { TraitDataRoot, Trait } from '../items/trait.js';
+import { BWCharacterData } from './BWCharacter.js';
+import { NpcData } from './Npc.js';
+import { AffiliationDataRoot } from '../items/affiliation.js';
 
 export class BWActor extends Actor<Common> {
     data!: BWActorDataRoot;
 
     readonly batchAdd = {
         task: -1,
-        items: [] as NewItemData[]
+        items: [] as NewItemData[],
     };
 
     private async _handleBatchAdd(): Promise<unknown> {
@@ -42,27 +42,27 @@ export class BWActor extends Actor<Common> {
             // this item has been added by someone else.
             return;
         }
-        if (item.type === "trait") {
+        if (item.type === 'trait') {
             const trait = item as TraitDataRoot;
             if (trait.data.addsReputation) {
                 const repData: NewItemData = {
                     name: trait.data.reputationName,
-                    type: "reputation",
-                    img: constants.defaultImages.reputation
+                    type: 'reputation',
+                    img: constants.defaultImages.reputation,
                 };
-                repData["data.dice"] = trait.data.reputationDice;
-                repData["data.infamous"] = trait.data.reputationInfamous;
-                repData["data.description"] = trait.data.text;
+                repData['data.dice'] = trait.data.reputationDice;
+                repData['data.infamous'] = trait.data.reputationInfamous;
+                repData['data.description'] = trait.data.text;
                 this.batchAddItem(repData);
             }
             if (trait.data.addsAffiliation) {
                 const repData: NewItemData = {
                     name: trait.data.affiliationName,
-                    type: "affiliation",
-                    img: constants.defaultImages.affiliation
+                    type: 'affiliation',
+                    img: constants.defaultImages.affiliation,
                 };
-                repData["data.dice"] = trait.data.affiliationDice;
-                repData["data.description"] = trait.data.text;
+                repData['data.dice'] = trait.data.affiliationDice;
+                repData['data.description'] = trait.data.text;
                 this.batchAddItem(repData);
             }
         }
@@ -76,29 +76,43 @@ export class BWActor extends Actor<Common> {
         this._prepareActorData();
     }
 
-    getForkOptions(skillName: string): { name: string, amount: number }[] {
-        return this.data.forks.filter(s =>
-            s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillDataRoot).data.exp > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
-            .map( s => {
-                const exp = (s as unknown as SkillDataRoot).data.exp;
+    getForkOptions(skillName: string): { name: string; amount: number }[] {
+        return this.data.forks
+            .filter(
+                (s) =>
+                    s.name !== skillName && // skills reduced to 0 due to wounds can't be used as forks.
+                    ((s as unknown) as SkillDataRoot).data.exp >
+                        ((this.data.data as BWCharacterData | NpcData).ptgs
+                            .woundDice || 0)
+            )
+            .map((s) => {
+                const exp = ((s as unknown) as SkillDataRoot).data.exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
     }
 
-    getWildForks(skillName: string): { name: string, amount: number }[] {
-        return this.data.wildForks.filter(s =>
-            s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillDataRoot).data.exp > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
-            .map( s => {
-                const exp = (s as unknown as SkillDataRoot).data.exp;
+    getWildForks(skillName: string): { name: string; amount: number }[] {
+        return this.data.wildForks
+            .filter(
+                (s) =>
+                    s.name !== skillName && // skills reduced to 0 due to wounds can't be used as forks.
+                    ((s as unknown) as SkillDataRoot).data.exp >
+                        ((this.data.data as BWCharacterData | NpcData).ptgs
+                            .woundDice || 0)
+            )
+            .map((s) => {
+                const exp = ((s as unknown) as SkillDataRoot).data.exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
     }
 
-    private _addRollModifier(rollName: string, modifier: RollModifier, onlyNonZero = false) {
+    private _addRollModifier(
+        rollName: string,
+        modifier: RollModifier,
+        onlyNonZero = false
+    ) {
         rollName = rollName.toLowerCase();
         if (onlyNonZero && !modifier.dice && !modifier.obstacle) {
             return;
@@ -111,7 +125,9 @@ export class BWActor extends Actor<Common> {
     }
 
     getRollModifiers(rollName: string): RollModifier[] {
-        return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(this.data.rollModifiers.all || []);
+        return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(
+            this.data.rollModifiers.all || []
+        );
     }
 
     private _addAptitudeModifier(name: string, modifier: number) {
@@ -123,7 +139,7 @@ export class BWActor extends Actor<Common> {
         }
     }
 
-    getAptitudeModifiers(name = ""): number {
+    getAptitudeModifiers(name = ''): number {
         return this.data.aptitudeModifiers[name.toLowerCase()] || 0;
     }
 
@@ -131,7 +147,7 @@ export class BWActor extends Actor<Common> {
         this.data.rollModifiers = {};
         this.data.callOns = {};
         this.data.aptitudeModifiers = {};
-        
+
         this._calculateClumsyWeight();
 
         this.data.forks = [];
@@ -143,68 +159,110 @@ export class BWActor extends Actor<Common> {
         this.data.sorcerousSkills = [];
         this.data.toolkits = [];
         this.data.fightWeapons = [];
-        
+
         if (this.data.items) {
-            this.data.items.forEach(i => {
+            this.data.items.forEach((i) => {
                 switch (i.type) {
-                    case "skill":
-                        if (!(i as SkillDataRoot).data.learning &&
-                            !(i as SkillDataRoot).data.training) {
+                    case 'skill':
+                        if (
+                            !(i as SkillDataRoot).data.learning &&
+                            !(i as SkillDataRoot).data.training
+                        ) {
                             if ((i as SkillDataRoot).data.wildFork) {
                                 this.data.wildForks.push(i as SkillDataRoot);
                             } else {
                                 this.data.forks.push(i as SkillDataRoot);
                             }
                         }
-                        if ((i as SkillDataRoot).data.skilltype === "martial" &&
-                            !(i as SkillDataRoot).data.training) {
+                        if (
+                            (i as SkillDataRoot).data.skilltype === 'martial' &&
+                            !(i as SkillDataRoot).data.training
+                        ) {
                             this.data.martialSkills.push(i);
-                        } else if ((i as SkillDataRoot).data.skilltype === "sorcerous") {
+                        } else if (
+                            (i as SkillDataRoot).data.skilltype === 'sorcerous'
+                        ) {
                             this.data.sorcerousSkills.push(i);
-                        } else if ((i as SkillDataRoot).data.skilltype === "social") {
+                        } else if (
+                            (i as SkillDataRoot).data.skilltype === 'social'
+                        ) {
                             this.data.socialSkills.push(i);
                         }
                         break;
-                    case "reputation":
+                    case 'reputation':
                         const rep = i as ReputationDataRoot;
                         if (rep.data.infamous) {
-                            this.data.circlesMalus.push({ name: rep.name, amount: rep.data.dice });
+                            this.data.circlesMalus.push({
+                                name: rep.name,
+                                amount: rep.data.dice,
+                            });
                         } else {
-                            this.data.circlesBonus.push({ name: rep.name, amount: rep.data.dice });
+                            this.data.circlesBonus.push({
+                                name: rep.name,
+                                amount: rep.data.dice,
+                            });
                         }
                         break;
-                    case "affiliation":
-                        this.data.circlesBonus.push({ name: i.name, amount: (i as AffiliationDataRoot).data.dice });
+                    case 'affiliation':
+                        this.data.circlesBonus.push({
+                            name: i.name,
+                            amount: (i as AffiliationDataRoot).data.dice,
+                        });
                         break;
-                    case "trait":
+                    case 'trait':
                         const t = i as TraitDataRoot;
-                        if (t.data.traittype === "die") {
-                            if (t.data.hasDieModifier && t.data.dieModifierTarget) {
-                                t.data.dieModifierTarget.split(',').forEach(target =>
-                                    this._addRollModifier(target.trim(), Trait.asRollDieModifier(t)));
+                        if (t.data.traittype === 'die') {
+                            if (
+                                t.data.hasDieModifier &&
+                                t.data.dieModifierTarget
+                            ) {
+                                t.data.dieModifierTarget
+                                    .split(',')
+                                    .forEach((target) =>
+                                        this._addRollModifier(
+                                            target.trim(),
+                                            Trait.asRollDieModifier(t)
+                                        )
+                                    );
                             }
-                            if (t.data.hasObModifier && t.data.obModifierTarget) {
-                                t.data.obModifierTarget.split(',').forEach(target =>
-                                    this._addRollModifier(target.trim(), Trait.asRollObModifier(t)));
+                            if (
+                                t.data.hasObModifier &&
+                                t.data.obModifierTarget
+                            ) {
+                                t.data.obModifierTarget
+                                    .split(',')
+                                    .forEach((target) =>
+                                        this._addRollModifier(
+                                            target.trim(),
+                                            Trait.asRollObModifier(t)
+                                        )
+                                    );
                             }
-                        } if (t.data.traittype === "call-on") {
+                        }
+                        if (t.data.traittype === 'call-on') {
                             if (t.data.callonTarget) {
                                 this._addCallon(t.data.callonTarget, t.name);
                             }
                         }
                         if (t.data.hasAptitudeModifier) {
-                            t.data.aptitudeTarget.split(',').forEach((target) =>
-                                this._addAptitudeModifier(target.trim(), t.data.aptitudeModifier));
+                            t.data.aptitudeTarget
+                                .split(',')
+                                .forEach((target) =>
+                                    this._addAptitudeModifier(
+                                        target.trim(),
+                                        t.data.aptitudeModifier
+                                    )
+                                );
                         }
                         break;
-                    case "possession":
+                    case 'possession':
                         if ((i as PossessionRootData).data.isToolkit) {
                             this.data.toolkits.push(i);
                         }
                         break;
-                    case "spell":
-                    case "melee weapon":
-                    case "ranged weapon":
+                    case 'spell':
+                    case 'melee weapon':
+                    case 'ranged weapon':
                         this.data.fightWeapons.push(i);
                         break;
                 }
@@ -213,15 +271,13 @@ export class BWActor extends Actor<Common> {
     }
 
     private _addCallon(callonTarget: string, name: string) {
-        callonTarget.split(',').forEach(s => {
+        callonTarget.split(',').forEach((s) => {
             if (this.data.callOns[s.trim().toLowerCase()]) {
                 this.data.callOns[s.trim().toLowerCase()].push(name);
-            }
-            else {
+            } else {
                 this.data.callOns[s.trim().toLowerCase()] = [name];
             }
         });
-
     }
 
     getCallons(roll: string): string[] {
@@ -239,15 +295,58 @@ export class BWActor extends Actor<Common> {
             return;
         }
         this.createOwnedItem([
-            { name: "Instinct 1", type: "instinct", data: {}, img: constants.defaultImages.instinct},
-            { name: "Instinct 2", type: "instinct", data: {}, img: constants.defaultImages.instinct},
-            { name: "Instinct 3", type: "instinct", data: {}, img: constants.defaultImages.instinct},
-            { name: "Instinct Special", type: "instinct", data: {}, img: constants.defaultImages.instinct},
-            { name: "Belief 1", type: "belief", data: {}, img: constants.defaultImages.belief},
-            { name: "Belief 2", type: "belief", data: {}, img: constants.defaultImages.belief},
-            { name: "Belief 3", type: "belief", data: {}, img: constants.defaultImages.belief},
-            { name: "Belief Special", type: "belief", data: {}, img: constants.defaultImages.belief},
-            { ...constants.bareFistData, img: "icons/equipment/hand/gauntlet-simple-leather-steel.webp" }
+            {
+                name: 'Instinct 1',
+                type: 'instinct',
+                data: {},
+                img: constants.defaultImages.instinct,
+            },
+            {
+                name: 'Instinct 2',
+                type: 'instinct',
+                data: {},
+                img: constants.defaultImages.instinct,
+            },
+            {
+                name: 'Instinct 3',
+                type: 'instinct',
+                data: {},
+                img: constants.defaultImages.instinct,
+            },
+            {
+                name: 'Instinct Special',
+                type: 'instinct',
+                data: {},
+                img: constants.defaultImages.instinct,
+            },
+            {
+                name: 'Belief 1',
+                type: 'belief',
+                data: {},
+                img: constants.defaultImages.belief,
+            },
+            {
+                name: 'Belief 2',
+                type: 'belief',
+                data: {},
+                img: constants.defaultImages.belief,
+            },
+            {
+                name: 'Belief 3',
+                type: 'belief',
+                data: {},
+                img: constants.defaultImages.belief,
+            },
+            {
+                name: 'Belief Special',
+                type: 'belief',
+                data: {},
+                img: constants.defaultImages.belief,
+            },
+            {
+                ...constants.bareFistData,
+                img: 'icons/equipment/hand/gauntlet-simple-leather-steel.webp',
+            },
         ]);
     }
 
@@ -263,117 +362,247 @@ export class BWActor extends Actor<Common> {
             swimmingPenalty: 0,
             helmetObPenalty: 0,
             untrainedHealth: 0,
-            untrainedAll: 0
+            untrainedAll: 0,
         };
 
-        const charData = this.data.type === "character" ? this.data.data as BWCharacterData : undefined;
+        const charData =
+            this.data.type === 'character'
+                ? (this.data.data as BWCharacterData)
+                : undefined;
 
-        this.data.items.filter(i => i.type === "armor" && (i as unknown as ArmorRootData).data.equipped)
-            .forEach(i => {
-            const a = i as unknown as ArmorRootData;
-            if (a.data.hasHelm) {
-                    clumsyWeight.helmetObPenalty = a.data.perceptionObservationPenalty || 0;
-            }
-            if (a.data.hasTorso) {
-                clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
-                    a.data.healthFortePenalty || 0);
-                clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
-                    a.data.stealthyPenalty || 0);
-            }
-            if (a.data.hasLeftArm || a.data.hasRightArm) {
-                clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
-                    a.data.agilityPenalty || 0);
-                clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
-                    a.data.throwingShootingPenalty || 0);
-            }
-            if (a.data.hasLeftLeg || a.data.hasRightLeg) {
-                clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
-                    a.data.speedDiePenalty || 0);
-                clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
-                    a.data.speedObPenalty || 0);
-                clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
-                    a.data.climbingPenalty || 0);
-            }
-
-
-            if (charData && !charData.settings.armorTrained &&
-                (a.data.hasHelm || a.data.hasLeftArm || a.data.hasRightArm || a.data.hasTorso || a.data.hasLeftLeg || a.data.hasRightLeg)) {
-                // if this is more than just a shield
-                if (a.data.untrainedPenalty === "plate") {
-                    clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 2);
-                    clumsyWeight.untrainedHealth = 0;
-                } else if (a.data.untrainedPenalty === "heavy") {
-                    clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 1);
-                    clumsyWeight.untrainedHealth = 0;
-                } else if (a.data.untrainedPenalty === "light" && clumsyWeight.untrainedAll === 0) {
-                    clumsyWeight.untrainedHealth = 1;
+        this.data.items
+            .filter(
+                (i) =>
+                    i.type === 'armor' &&
+                    ((i as unknown) as ArmorRootData).data.equipped
+            )
+            .forEach((i) => {
+                const a = (i as unknown) as ArmorRootData;
+                if (a.data.hasHelm) {
+                    clumsyWeight.helmetObPenalty =
+                        a.data.perceptionObservationPenalty || 0;
                 }
-            }
-        });
+                if (a.data.hasTorso) {
+                    clumsyWeight.healthFortePenalty = Math.max(
+                        clumsyWeight.healthFortePenalty,
+                        a.data.healthFortePenalty || 0
+                    );
+                    clumsyWeight.stealthyPenalty = Math.max(
+                        clumsyWeight.stealthyPenalty,
+                        a.data.stealthyPenalty || 0
+                    );
+                }
+                if (a.data.hasLeftArm || a.data.hasRightArm) {
+                    clumsyWeight.agilityPenalty = Math.max(
+                        clumsyWeight.agilityPenalty,
+                        a.data.agilityPenalty || 0
+                    );
+                    clumsyWeight.throwingShootingPenalty = Math.max(
+                        clumsyWeight.throwingShootingPenalty,
+                        a.data.throwingShootingPenalty || 0
+                    );
+                }
+                if (a.data.hasLeftLeg || a.data.hasRightLeg) {
+                    clumsyWeight.speedDiePenalty = Math.max(
+                        clumsyWeight.speedDiePenalty,
+                        a.data.speedDiePenalty || 0
+                    );
+                    clumsyWeight.speedObPenalty = Math.max(
+                        clumsyWeight.speedObPenalty,
+                        a.data.speedObPenalty || 0
+                    );
+                    clumsyWeight.climbingPenalty = Math.max(
+                        clumsyWeight.climbingPenalty,
+                        a.data.climbingPenalty || 0
+                    );
+                }
 
-        if (charData) { charData.clumsyWeight = clumsyWeight; }
-        const baseModifier = { optional: true, label: "Armor Clumsy Weight" };
-        this._addRollModifier("climbing", { obstacle: clumsyWeight.climbingPenalty, ...baseModifier }, true);
-        this._addRollModifier("perception", { obstacle: clumsyWeight.helmetObPenalty,  ...baseModifier }, true);
-        this._addRollModifier("observation", { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier }, true);
-        this._addRollModifier("shooting", { obstacle: clumsyWeight.throwingShootingPenalty,  ...baseModifier }, true);
-        this._addRollModifier("bow", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
-        this._addRollModifier("throwing", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
-        this._addRollModifier("crossbow", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
-        this._addRollModifier("firearms", { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier }, true);
-        this._addRollModifier("agility", { obstacle: clumsyWeight.agilityPenalty, ...baseModifier }, true);
-        this._addRollModifier("speed", { dice: -clumsyWeight.speedDiePenalty, ...baseModifier }, true);
-        this._addRollModifier("speed", { obstacle: clumsyWeight.speedObPenalty, ...baseModifier }, true);
-        this._addRollModifier("health", { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier }, true);
-        this._addRollModifier("forte", { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier }, true);
-        this._addRollModifier("stealthy", { obstacle: clumsyWeight.stealthyPenalty, ...baseModifier }, true);
-        this._addRollModifier("swimming", { obstacle: clumsyWeight.swimmingPenalty, ...baseModifier }, true);
+                if (
+                    charData &&
+                    !charData.settings.armorTrained &&
+                    (a.data.hasHelm ||
+                        a.data.hasLeftArm ||
+                        a.data.hasRightArm ||
+                        a.data.hasTorso ||
+                        a.data.hasLeftLeg ||
+                        a.data.hasRightLeg)
+                ) {
+                    // if this is more than just a shield
+                    if (a.data.untrainedPenalty === 'plate') {
+                        clumsyWeight.untrainedAll = Math.max(
+                            clumsyWeight.untrainedAll,
+                            2
+                        );
+                        clumsyWeight.untrainedHealth = 0;
+                    } else if (a.data.untrainedPenalty === 'heavy') {
+                        clumsyWeight.untrainedAll = Math.max(
+                            clumsyWeight.untrainedAll,
+                            1
+                        );
+                        clumsyWeight.untrainedHealth = 0;
+                    } else if (
+                        a.data.untrainedPenalty === 'light' &&
+                        clumsyWeight.untrainedAll === 0
+                    ) {
+                        clumsyWeight.untrainedHealth = 1;
+                    }
+                }
+            });
+
+        if (charData) {
+            charData.clumsyWeight = clumsyWeight;
+        }
+        const baseModifier = { optional: true, label: 'Armor Clumsy Weight' };
         this._addRollModifier(
-            "all",
-            { obstacle: clumsyWeight.untrainedAll, label: "Untrained Armor Penalty", optional: true },
-            true);
+            'climbing',
+            { obstacle: clumsyWeight.climbingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'perception',
+            { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'observation',
+            { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'shooting',
+            { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'bow',
+            { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'throwing',
+            { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'crossbow',
+            { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'firearms',
+            { obstacle: clumsyWeight.throwingShootingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'agility',
+            { obstacle: clumsyWeight.agilityPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'speed',
+            { dice: -clumsyWeight.speedDiePenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'speed',
+            { obstacle: clumsyWeight.speedObPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'health',
+            { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'forte',
+            { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'stealthy',
+            { obstacle: clumsyWeight.stealthyPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'swimming',
+            { obstacle: clumsyWeight.swimmingPenalty, ...baseModifier },
+            true
+        );
+        this._addRollModifier(
+            'all',
+            {
+                obstacle: clumsyWeight.untrainedAll,
+                label: 'Untrained Armor Penalty',
+                optional: true,
+            },
+            true
+        );
 
         this._addRollModifier(
-            "health",
-            { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
-            true);
+            'health',
+            {
+                obstacle: clumsyWeight.untrainedHealth,
+                label: 'Untrained Armor',
+                optional: true,
+            },
+            true
+        );
         this._addRollModifier(
-            "forte",
-            { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
-            true);
+            'forte',
+            {
+                obstacle: clumsyWeight.untrainedHealth,
+                label: 'Untrained Armor',
+                optional: true,
+            },
+            true
+        );
     }
 
-    public updateArthaForSkill(_skillId: string, persona: number, deeds: number): void {
+    public updateArthaForSkill(
+        _skillId: string,
+        persona: number,
+        deeds: number
+    ): void {
         this.update({
-            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
-            "data.persona": this.data.data.persona - persona,
+            'data.deeds': this.data.data.deeds - (deeds ? 1 : 0),
+            'data.persona': this.data.data.persona - persona,
         });
     }
 
-    public updateArthaForStat(_accessor: string, persona: number, deeds: number): void {
+    public updateArthaForStat(
+        _accessor: string,
+        persona: number,
+        deeds: number
+    ): void {
         this.update({
-            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
-            "data.persona": this.data.data.persona - persona,
+            'data.deeds': this.data.data.deeds - (deeds ? 1 : 0),
+            'data.persona': this.data.data.persona - persona,
         });
     }
 
-    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
+    async createOwnedItem(
+        itemData: NewItemData | NewItemData[],
+        options?: Record<string, unknown>
+    ): Promise<BWItem> {
         // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for settings and the character burner
         if (Array.isArray(itemData)) {
-            itemData = itemData.filter(id => id.type !== "lifepath");
-            return super.createOwnedItem(itemData, options) as  Promise<BWItem>;
+            itemData = itemData.filter((id) => id.type !== 'lifepath');
+            return super.createOwnedItem(itemData, options) as Promise<BWItem>;
         }
-        if (itemData.type !== "lifepath") {
+        if (itemData.type !== 'lifepath') {
             return super.createOwnedItem(itemData) as Promise<BWItem>;
         }
         return super.createOwnedItem([], options) as Promise<BWItem>;
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    async createEmbeddedEntity(entityType: string, data: NewItemData| NewItemData[], options?: any): Promise<this> {
+    async createEmbeddedEntity(
+        entityType: string,
+        data: NewItemData | NewItemData[], // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+        options?: any
+    ): Promise<this> {
         // we don't add lifepaths to normal actors. they are simply a data structure for holding lifepath info for settings and the character burner
         if (Array.isArray(data)) {
-            data = data.filter(id => id.type !== "lifepath");
+            data = data.filter((id) => id.type !== 'lifepath');
             return super.createEmbeddedEntity(entityType, data, options);
         }
         if (data.type !== 'lifepath') {
@@ -434,17 +663,17 @@ export interface BWActorDataRoot extends ActorData<Common> {
     sorcerousSkills: SkillDataRoot[];
     wildForks: SkillDataRoot[];
 
-    circlesMalus: { name: string, amount: number }[];
-    circlesBonus: { name: string, amount: number }[];
+    circlesMalus: { name: string; amount: number }[];
+    circlesBonus: { name: string; amount: number }[];
     items: BWItemData[];
     forks: SkillDataRoot[];
-    rollModifiers: { [rollName:string]: RollModifier[]; };
-    callOns: { [rollName:string]: string[] };
+    rollModifiers: { [rollName: string]: RollModifier[] };
+    callOns: { [rollName: string]: string[] };
     successOnlyRolls: string[];
 
     fightWeapons: BWItemData[];
 
-    type: "character" | "npc" | "setting";
+    type: 'character' | 'npc' | 'setting';
 }
 
 export interface Ability extends TracksTests, DisplayClass {

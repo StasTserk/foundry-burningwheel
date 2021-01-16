@@ -1,5 +1,5 @@
-import { traitTypeSelect } from "../../constants.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { traitTypeSelect } from '../../constants.js';
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet.js';
 
 export class TraitSheet extends BWItemSheet {
     static get defaultOptions(): FormApplicationOptions {
@@ -7,7 +7,7 @@ export class TraitSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/trait.hbs";
+        return 'systems/burningwheel/templates/items/trait.hbs';
     }
 
     getData(): TraitSheetData {

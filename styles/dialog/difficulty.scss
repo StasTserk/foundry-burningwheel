@@ -8,7 +8,10 @@
 
     input {
         &:checked + label {
-            background: linear-gradient(rgba($normal, .25), rgba($normal, 0.75));
+            background: linear-gradient(
+                rgba($normal, 0.25),
+                rgba($normal, 0.75)
+            );
             border: 2px solid $normal;
             color: $light;
         }
@@ -27,7 +30,7 @@
 
     border: 2px solid gray;
     border-radius: 5px;
-    background-image: url("/ui/denim075.png");
+    background-image: url('/ui/denim075.png');
     color: white;
     font-size: 2em;
     text-align: center;
@@ -52,12 +55,12 @@
                 @include difficulty-toggle(lightgreen, green, #005500);
             }
             &.help {
-                @include difficulty-toggle(#FFFFaa, red, #880000);
+                @include difficulty-toggle(#ffffaa, red, #880000);
             }
 
             &.ext-test {
                 flex: 0 0 100%;
-                @include difficulty-toggle(#FFFFaa, red, #880000);
+                @include difficulty-toggle(#ffffaa, red, #880000);
             }
         }
     }
@@ -68,11 +71,12 @@
         flex-direction: column;
     }
 
-    input, .number {
+    input,
+    .number {
         flex: 1;
         color: white;
         line-height: 100%;
-        font-size: 3em
+        font-size: 3em;
     }
     .label {
         flex: 0 0 1em;
@@ -86,7 +90,7 @@
     right: 320px;
     border: 2px solid gray;
     border-radius: 5px;
-    background-image: url("/ui/denim075.png");
+    background-image: url('/ui/denim075.png');
     color: white;
     padding: 3px;
     max-height: 50vh;
@@ -98,10 +102,10 @@
         line-height: 12px;
         font-size: 12px;
         padding: 2px;
-        background-color: rgba(#880000, .25);
-        border: 1px solid #FFFFaa;
-        color: #FFFFaa;
-        transition: background-color .25s;
+        background-color: rgba(#880000, 0.25);
+        border: 1px solid #ffffaa;
+        color: #ffffaa;
+        transition: background-color 0.25s;
         cursor: pointer;
 
         &:hover {
@@ -113,23 +117,23 @@
         font-weight: bold;
         font-size: 1.1em;
         text-align: center;
-        border-bottom: 2px groove #FFFFaa;
+        border-bottom: 2px groove #ffffaa;
         margin-bottom: 5px;
     }
 
     .advancement {
         .group-header {
             font-weight: bold;
-            border-bottom: 1px solid #FFFFaa;
+            border-bottom: 1px solid #ffffaa;
         }
 
         .entry {
             .title {
                 flex: 1;
                 margin-left: 5px;
-                transition: background-color .25s;
+                transition: background-color 0.25s;
                 &:hover {
-                    background-color: rgba(#880000, .25);
+                    background-color: rgba(#880000, 0.25);
                     cursor: pointer;
                 }
             }

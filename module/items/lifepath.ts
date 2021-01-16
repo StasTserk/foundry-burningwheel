@@ -1,4 +1,4 @@
-import { ItemType, BWItemData, BWItem } from "./item.js";
+import { ItemType, BWItemData, BWItem } from './item.js';
 
 export class Lifepath extends BWItem {
     data: LifepathRootData;
@@ -8,8 +8,14 @@ export class Lifepath extends BWItem {
 
     prepareData(): void {
         super.prepareData();
-        const statSign = this.data.data.statBoost === "none" ? "" : (this.data.data.subtractStats ? "-" : "+");
-        this.data.data.statString = statSign + statMap[this.data.data.statBoost];
+        const statSign =
+            this.data.data.statBoost === 'none'
+                ? ''
+                : this.data.data.subtractStats
+                ? '-'
+                : '+';
+        this.data.data.statString =
+            statSign + statMap[this.data.data.statBoost];
     }
 }
 
@@ -32,16 +38,16 @@ export interface LifepathData {
     requirements: string;
     restrictions: string;
     note: string;
-    
+
     order: number; // hidden property  for sorting in the setting sheet
 
     statString?: string;
 }
 
 const statMap = {
-    "none": "&mdash;",
-    "mental": "1 M",
-    "physical": "1 P",
-    "either": "1 M/P",
-    "both": "1 M,P"
+    none: '&mdash;',
+    mental: '1 M',
+    physical: '1 P',
+    either: '1 M/P',
+    both: '1 M,P',
 };

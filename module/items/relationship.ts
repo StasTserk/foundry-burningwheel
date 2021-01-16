@@ -1,5 +1,5 @@
-import { BWActor } from "../actors/BWActor.js";
-import { BWItem, BWItemData, DisplayClass } from "./item.js";
+import { BWActor } from '../actors/BWActor.js';
+import { BWItem, BWItemData, DisplayClass } from './item.js';
 
 export class Relationship extends BWItem {
     prepareData(): void {
@@ -10,11 +10,11 @@ export class Relationship extends BWItem {
         }
 
         if (this.data.data.hateful || this.data.data.enmity) {
-            this.data.data.cssClass = "relationship-hostile";
+            this.data.data.cssClass = 'relationship-hostile';
         } else if (this.data.data.romantic || this.data.data.immediateFamily) {
-            this.data.data.cssClass = "relationship-friendly";
+            this.data.data.cssClass = 'relationship-friendly';
         } else {
-            this.data.data.cssClass = "relationship-neutral";
+            this.data.data.cssClass = 'relationship-neutral';
         }
     }
 
@@ -37,7 +37,7 @@ export interface RelationshipData extends DisplayClass {
     romantic: boolean;
     hateful: boolean;
     enmity: boolean;
-    influence: "minor" | "significant" | "powerful";
+    influence: 'minor' | 'significant' | 'powerful';
     building: boolean;
     buildingProgress: number;
 

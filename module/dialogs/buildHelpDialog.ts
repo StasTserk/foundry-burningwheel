@@ -1,26 +1,47 @@
-import { BWActor } from "../actors/BWActor.js";
-import { ModifierDialog } from "./ModifierDialog.js";
+import { BWActor } from '../actors/BWActor.js';
+import { ModifierDialog } from './ModifierDialog.js';
 
-export async function buildHelpDialog({ exponent, path, skillId, actor, helpedWith }: HelpDialogData): Promise<unknown> {
+export async function buildHelpDialog({
+    exponent,
+    path,
+    skillId,
+    actor,
+    helpedWith,
+}: HelpDialogData): Promise<unknown> {
     const data = {
-        exponent
+        exponent,
     };
-    const content = await renderTemplate("systems/burningwheel/templates/dialogs/help-dialog.hbs", data);
+    const content = await renderTemplate(
+        'systems/burningwheel/templates/dialogs/help-dialog.hbs',
+        data
+    );
     return new Dialog({
-        title: "Add Helping Dice",
+        title: 'Add Helping Dice',
         content: content,
         buttons: {
             help: {
-                label: "Help",
+                label: 'Help',
                 callback: () => {
-                    registerHelpEntry({ path, skillId, actor, exponent, helpedWith });
-                }
-            }
-        }
+                    registerHelpEntry({
+                        path,
+                        skillId,
+                        actor,
+                        exponent,
+                        helpedWith,
+                    });
+                },
+            },
+        },
     }).render(true);
 }
 
-async function registerHelpEntry({ path, skillId, actor, exponent, helpedWith }: HelpEntryData): Promise<void> {
+async function registerHelpEntry({
+    path,
+    skillId,
+    actor,
+    exponent,
+    helpedWith,
+}: HelpEntryData): Promise<void> {
     const modifiers: ModifierDialog = game.burningwheel.modifiers;
 
     modifiers.addHelp({
@@ -29,7 +50,7 @@ async function registerHelpEntry({ path, skillId, actor, exponent, helpedWith }:
         path,
         actor,
         title: actor.name,
-        helpedWith
+        helpedWith,
     });
 }
 

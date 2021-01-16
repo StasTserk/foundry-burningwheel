@@ -1,4 +1,8 @@
-export const gmOnly: MethodDecorator = (_target, _propertyKey, descriptor: PropertyDescriptor) => {
+export const gmOnly: MethodDecorator = (
+    _target,
+    _propertyKey,
+    descriptor: PropertyDescriptor
+) => {
     const functionCall = descriptor.value;
     descriptor.value = function (...args) {
         if (!game.user.isGM) {

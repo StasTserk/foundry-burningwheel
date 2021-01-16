@@ -1,5 +1,6 @@
 const gulp = require("gulp");
 const eslint = require('gulp-eslint');
+const prettier = require('gulp-prettier');
 const yaml = require("gulp-yaml");
 const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
@@ -69,6 +70,17 @@ function version() {
         .pipe(gulp.dest("./"));
 }
 
+function prettierCheck() {
+    return gulp.src(['module/**', "parts/**", "template/**", "styles/**"])
+        .pipe(prettier.check());
+}
+
+function prettierFix() {
+    return gulp.src(['module/**', "parts/**", "template/**", "styles/**"], {base: "./"})
+        .pipe(prettier())
+        .pipe(gulp.dest('./'));
+}
+
 const tsTask = gulp.series(
     lintTs,
     compileTs,
@@ -107,6 +119,8 @@ exports.default = build;
 exports.build = build;
 exports.b = build;
 
+exports.pretty = prettierCheck;
+exports.prettyFix = prettierFix;
 exports.lint = lintTs;
 exports.ts = compileTs;
 exports.css = buildCss;

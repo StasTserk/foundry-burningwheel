@@ -1,0 +1,22 @@
+# IDE
+.idea/
+.vs/
+.vscode/
+
+# Node Modules
+node_modules/
+
+# Build output
+dist
+
+# user config file
+foundryconfig.json
+
+# default deploy destination
+release/
+
+# settings and other config files
+.circleci/
+.github/
+types/
+/*.*

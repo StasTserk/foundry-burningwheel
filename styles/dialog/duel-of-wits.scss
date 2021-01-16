@@ -86,4 +86,10 @@
             }
         }
     }
+
+    .pill-toggle > input[type="checkbox"]:checked + label {
+        background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+        border: 2px solid #880000;
+        color: #880000;
+    }
 }

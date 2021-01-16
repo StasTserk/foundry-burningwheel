@@ -26,25 +26,23 @@
         column-gap: 2px;
         row-gap: 2px;
         width: 100%;
-        .details-key{
-            display: flex;
-            align-items: center;
+
+        .details-key {
             background: rgba(#000, .03);
             border: 1px groove #f0f0f0;
+            border-right: 0;
             padding: 1px;
         }
-        .details-value{
-            display: flex;
-            align-items: center;
-            flex-direction: row-reverse;
-            justify-content: end;
+        .details-value {
             text-align: end;
             background: rgba(#000, .1);
             border: 1px groove #f0f0f0;
-            text-align: end;
+            border-left: 0;
+            margin-left: -2px;
             padding: 1px;
         }
     }
+
     .weapon-block {
         display: grid;
         align-items: center;
@@ -54,8 +52,13 @@
         grid-template-columns: 50px 1fr;
         justify-content: stretch;
         .weapon-picker {
-            justify-self: end;
-            grid-column-start: 2;
+            text-align: end;
+            select {
+                max-width: 12em;
+                option {
+                    max-width: 12em;
+                }
+            }
         }
     }
 
@@ -63,7 +66,7 @@
         display: grid;
         width: 100%;
         height: min-content;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(235px, 1fr));
         margin: 1em 0 1em 0;
 
         .pill-toggle > input[type="checkbox"]:checked + label {
@@ -104,9 +107,7 @@
                 display: flex;
                 .fight-rolls {
                     flex-grow: 1;
-                    display: flex;
                     flex-wrap: wrap;
-                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     max-height: 130px;
@@ -158,7 +159,7 @@
 
     .fighters-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(235px, 1fr));
         height: min-content;
         width: 100%;
 
@@ -170,8 +171,6 @@
 
         .participant-card {
             width: 100%;
-            display: flex;
-            flex-direction: column;
             flex-wrap: wrap;
 
             .control-button {
@@ -190,23 +189,35 @@
                 color: #800;
             }
             .actor-name {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                flex: 1;
+                text-align: center;
                 font-size: 1.125em;
                 font-weight: bold;
-                flex-grow: 1;
-                padding-right: 1.5em;
-                width: calc(100% - 1.5em);
                 &:hover {
                     color: #800;
+                }
+            }
+
+            .details {
+                .details-value, .details-key {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .details-value {
+                    justify-content: flex-end;
+
+                    .exponent {
+                        width: 1.5em;
+                        height: 1.5em;
+                        padding: 0;
+                        text-align: center;
+                    }
                 }
             }
         }
 
         .volley {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             label {

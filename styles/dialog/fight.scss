@@ -53,6 +53,12 @@
         justify-content: stretch;
         .weapon-picker {
             text-align: end;
+            select {
+                max-width: 12em;
+                option {
+                    max-width: 12em;
+                }
+            }
         }
     }
 
@@ -153,7 +159,7 @@
 
     .fighters-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(235px, 1fr));
         height: min-content;
         width: 100%;
 

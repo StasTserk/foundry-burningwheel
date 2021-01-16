@@ -13,6 +13,8 @@ import { MeleeWeapon } from "../items/meleeWeapon.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 import { Skill } from "../items/skill.js";
 import { Spell } from "../items/spell.js";
+import { handleAttrRoll } from "./rollAttribute.js";
+import { FightAttr } from "../dialogs/index.js";
 
 export async function handleFightRoll({actor, type, itemId, attackIndex, positionPenalty, engagementBonus, dataPreset }: FightRollOptions): Promise<unknown> {
     dataPreset = dataPreset || {};
@@ -95,6 +97,17 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
     }
     const accessor = `data.${type}`;
     const stat = getProperty(actor, `data.${accessor}`) as Ability;
+
+    if (type === "steel"){
+        return handleAttrRoll({
+            actor: actor as BWCharacter,
+            stat: actor.data.data.steel,
+            attrName: "Steel",
+            accessor,
+            dataPreset
+        });
+    }
+    
     return handleStatRoll({
         actor: actor as BWCharacter,
         statName: type.titleCase(),
@@ -106,7 +119,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
 
 export interface FightRollOptions {
     actor: BWActor,
-    type: "speed" | "agility" | "power" | "skill",
+    type: FightAttr,
     itemId?: string;
     attackIndex?: number;
     engagementBonus: number;

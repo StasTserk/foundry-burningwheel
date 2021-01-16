@@ -7,15 +7,55 @@
     }
 
     .control-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: min-content;
         .control-button {
             @include button-like(black);
             color: black;
             border-radius: 3px;
+        }
+    }
+
+    .details {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: stretch;
+        column-gap: 2px;
+        row-gap: 2px;
+        width: 100%;
+        .details-key{
+            display: flex;
+            align-items: center;
+            background: rgba(#000, .03);
+            border: 1px groove #f0f0f0;
+            padding: 1px;
+        }
+        .details-value{
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+            justify-content: end;
+            text-align: end;
+            background: rgba(#000, .1);
+            border: 1px groove #f0f0f0;
+            text-align: end;
+            padding: 1px;
+        }
+    }
+    .weapon-block {
+        display: grid;
+        align-items: center;
+        width: 100%;
+        padding: 5px 5px 0 5px;
+        //Weapon word has static width
+        grid-template-columns: 50px 1fr;
+        justify-content: stretch;
+        .weapon-picker {
+            justify-self: end;
+            grid-column-start: 2;
         }
     }
 
@@ -26,8 +66,30 @@
         grid-template-columns: repeat(4, 1fr);
         margin: 1em 0 1em 0;
 
+        .pill-toggle > input[type="checkbox"]:checked + label {
+            background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+            border: 2px solid #880000;
+            color: #880000;
+        }
+
+        .fighters-label{
+            width: 100%;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+
+        .portrait {
+            width: 120px; height: 120px;
+            border: 0px;
+            object-fit: cover;
+        }
+
         .pill-toggle > label {
             border-radius: 0;
+        }
+
+        .gm-overview{
+            width: 100%;
         }
 
         .volley-buttons {
@@ -37,9 +99,21 @@
                 font-weight: bold;
                 padding-left: 5px;
             }
-            .control-button {
-                width: 49%;
-                height: min-content;
+            .portrait-actions {
+                flex-grow: 1;
+                display: flex;
+                .fight-rolls {
+                    flex-grow: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    max-height: 130px;
+                    .control-button {
+                        width: 49%;
+                    }
+                }
             }
         }
 
@@ -47,7 +121,12 @@
             border: 2px groove #aaaaaa;
             background: linear-gradient(rgba(#444, .25), rgba(#000, .05));
             min-height: 1.5em;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
             margin: 0;
+            padding: 2px;
 
             .attack-action {
                 -webkit-hyphens: auto;
@@ -92,6 +171,7 @@
         .participant-card {
             width: 100%;
             display: flex;
+            flex-direction: column;
             flex-wrap: wrap;
 
             .control-button {
@@ -101,7 +181,7 @@
                 color: black;
                 border-radius: 3px;
             }
-
+     
             .remove-fighter {
                 width: 1.5em;
                 height: 1.5em;
@@ -109,29 +189,26 @@
                 line-height: 1.3em;
                 color: #800;
             }
-
             .actor-name {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 font-size: 1.125em;
                 font-weight: bold;
+                flex-grow: 1;
+                padding-right: 1.5em;
                 width: calc(100% - 1.5em);
                 &:hover {
                     color: #800;
                 }
             }
-            .portrait {
-                width: 80px; height: 80px;
-                border: 0;
-                object-fit: cover;
-            }
-            .details {
-                width: calc(95% - 80px);
-                margin-left: 2%;
-                select {
-                    width: 100%;
-                }
-            }
         }
+
         .volley {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             label {
                 display: block;
             }

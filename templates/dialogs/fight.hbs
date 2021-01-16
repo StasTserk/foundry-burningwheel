@@ -7,7 +7,7 @@
     {{/if}}
     <div class="volley-description">
         {{#if gmView}}
-        <div>Fighters</div>
+        <div class="fighters-label">Fighters</div>
         <div class="pill-toggle">
             <input type="checkbox" name="showV1" id="showFightV1" {{checked showV1}}>
             <label for="showFightV1">Show Volley 1</label>
@@ -21,17 +21,47 @@
             <label for="showFightV3">Show Volley 3</label>
         </div>
         {{else}}
-        <div>Fighters</div><div>Volley 1</div><div>Volley 2</div><div>Volley 3</div>
+        <div class="fighters-label">Fighters</div><div>Volley 1</div><div>Volley 2</div><div>Volley 3</div>
         {{/if}}
         {{#each participants as |p i|}}
         <div class="volley-buttons flex-row">
             <div class="participant">{{p.name}}</div>
-            {{#if p.showActions}}
-            <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Test Speed</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollPower">Test Power</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollAgility">Test Agility</button>
-            <button class="control-button" data-index="{{i}}" data-action="rollSkill">Test Skill</button>
-            {{/if}}
+            <div class="portrait-actions">
+                {{#if p.showActions}}
+                    <img class="portrait clickable" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
+                    <div class="fight-rolls">
+                        <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Speed</button>
+                        <button class="control-button" data-index="{{i}}" data-action="rollPower">Power</button>
+                        <button class="control-button" data-index="{{i}}" data-action="rollAgility">Agility</button>
+                        <button class="control-button" data-index="{{i}}" data-action="rollSkill">Skill</button>
+                        <button class="control-button" data-index="{{i}}" data-action="rollSteel">Steel</button>
+                    </div>
+                {{else}}
+                    {{#if ../gmView}}
+                        <div class="gm-overview">
+                            <div class="details clickable" data-action="openSheet" title="{{p.name}}" data-actor-id="{{p.id}}">
+                                    <div class="details-key">Reflexes</div> 
+                                    <div class="details-value">{{p.reflexes}}</div>
+                                    <div class="details-key">Engagement</div>
+                                    <div class="details-value">
+                                        <div style="width: 7px;"></div>
+                                        <div>+{{p.engagementBonus}}D</div>
+                                    </div>
+                                    <div class="details-key">Position</div>
+                                    <div class="details-value">
+                                        <div class=>+{{p.positionPenalty}}Ob</div>
+                                    </div>
+                            </div>
+                            <div class="weapon-block">
+                                <div>Weapon</div>
+                                <div class="weapon-picker">{{p.chosenWeaponLabel}}</div>
+                            </div>
+                        </div>
+                    {{else}}
+                        <img class="portrait" src="{{p.imgSrc}}" title="{{p.name}}"/>
+                    {{/if}}
+                {{/if}}
+            </div>
         </div>
         <div class="flex-row" lang="en">
             {{#if ../showV1}}
@@ -60,7 +90,7 @@
         {{/each}}
     </div>
     <div class="fighters-grid">
-        <div class="participant-card">
+        <div class="participant-card volley">
             Participant
         </div>
         <div class="volley">
@@ -74,26 +104,34 @@
         </div>
         {{#each participants as |p i|}}
         <div class="participant-card">
-            {{#if ../gmView}}
-            <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
-            {{/if}}
-            <div class="actor-name clickable" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+            <div class="fighter-action-panel flex-row">
+                {{#if ../gmView}}
+                <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
+                {{else}}
+                <div style="padding-left: 1.5em;"></div>
+                {{/if}}
+                <div class="actor-name clickable flex-row" data-action="toggleHidden" data-index="{{i}}">{{p.name}}</div>
+            </div>
             {{#if p.showActions}}
-            <img class="portrait clickable" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
             <div class="details">
-                <div>
-                    Reflexes: {{p.reflexes}}
+                <div class="details-key">Reflexes</div>
+                <div class="details-value">{{p.reflexes}}</div>
+                <div class="details-key">Engagement</div>
+                <div class="details-value">
+                    <div>D</div>
+                    <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent" value="{{p.engagementBonus}}">
+                    <div>+</div>
                 </div>
-                <div>
-                    Engagement Bonus
-                    <input data-index="{{i}}" name="engagementBonus" type="number" class="exponent no-arrows" value="{{p.engagementBonus}}">
+                <div class="details-key">Position</div>
+                <div class="details-value">
+                    <div>Ob</div>
+                    <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent" value="{{p.positionPenalty}}">
+                    <div>+</div>
                 </div>
-                <div>
-                    Position Penalty
-                    <input data-index="{{i}}" name="positionPenalty" type="number" class="exponent no-arrows" value="{{p.positionPenalty}}">
-                </div>
-                <div>
-                    Active Weapon
+            </div>
+            <div class="weapon-block">
+                <div>Weapon</div>
+                <div class="weapon-picker">
                     <select data-index="{{i}}" name="weaponId">
                         {{#select p.weaponId}}
                         <option value="">Pick a Weapon</option>

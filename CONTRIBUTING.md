@@ -1,6 +1,6 @@
 ## Contributing Guidelines
 
-With the system going into a more passive bugfixing and maintane mode with the release of 1.0, the pace of new features may slow drastically.
+With the system going into a more passive bugfixing and maintenance mode with the release of 1.0, the pace of new features may slow drastically.
 As such, this project is open to accepting pull requests contributions from enterprising developers.
 That said, I plan on maintaining at least some coherence in the code style and quality of the codebase so new code.
 

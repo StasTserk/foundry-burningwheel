@@ -10,6 +10,8 @@
             .bits-item-name {
                 cursor: pointer;
                 width: 100%;
+                font-weight: bold;
+
                 &:hover {
                     color: #800;
                 }
@@ -18,7 +20,8 @@
             input[type="checkbox"] {
                 width: 1em;
                 height: 1em;
-                margin: 0;
+                margin: 0 5px 0 2px;
+                vertical-align: middle;
             }
         }
         & > .bits-buttons {

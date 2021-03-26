@@ -28,6 +28,10 @@
 @import "./npc/npc.scss";
 @import "./setting.scss";
 
+.bw-app > .window-content {
+    scrollbar-width: thin;
+}
+
 .subheader,
 .header {
     display: flex;
@@ -169,9 +173,14 @@ i.fas.clickable {
     }
 }
 
-textarea.note-box {
-    border: 0;
-    resize: vertical;
+textarea {
+    font-size: 13.333px;
+    scrollbar-width: thin;
+
+    &.note-box {
+        border: 0;
+        resize: vertical;
+    }
 }
 
 input.circle-input {

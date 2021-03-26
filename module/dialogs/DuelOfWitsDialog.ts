@@ -35,7 +35,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     };
 
     static get defaultOptions(): FormApplicationOptions {
-        return mergeObject(super.defaultOptions, { width: 600, height: 600, resizable: true }, { overwrite: true });
+        return mergeObject(super.defaultOptions, { width: 600, height: 600, resizable: true, classes: [ "bw-app" ] }, { overwrite: true });
     }
 
     activateListeners(html: JQuery): void {

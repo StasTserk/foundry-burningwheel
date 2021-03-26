@@ -63,7 +63,7 @@ export class CharacterBurnerDialog extends Dialog {
     }
 
     static get defaultOptions(): FormApplicationOptions {
-        return mergeObject(super.defaultOptions, { width: 900, height: 800 }, { overwrite: true });
+        return mergeObject(super.defaultOptions, { width: 900, height: 800, classes: [ "bw-app" ] }, { overwrite: true });
     }
 
     getData(): CharacterBurnerData {

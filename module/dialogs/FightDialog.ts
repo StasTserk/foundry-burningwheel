@@ -215,7 +215,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             width: 1000,
             height: 600,
             resizable: true,
-            classes: [ "fight" ]
+            classes: [ "fight", "bw-app" ]
         }, { overwrite: true });
     }
 

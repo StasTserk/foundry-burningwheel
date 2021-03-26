@@ -5,6 +5,12 @@ export class BWItemSheet extends ItemSheet {
         data.showImage = game.settings.get(constants.systemName, constants.settings.itemImages);
         return data;
     }
+
+    static get defaultOptions(): FormApplicationOptions {
+        return mergeObject(super.defaultOptions, {
+            classes:  ["bw-app"]
+        });
+    }
 }
 
 export interface BWItemSheetData extends ItemSheetData {

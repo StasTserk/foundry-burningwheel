@@ -25,7 +25,7 @@ export class LifepathSheet extends BWItemSheet {
             data = JSON.parse(event.dataTransfer?.getData('text/plain') || "");
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
         if (data.type === "Item" && data.id) {

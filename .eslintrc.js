@@ -24,6 +24,7 @@ module.exports = {
         ],
         "@typescript-eslint/consistent-type-assertions": "error",
         "semi": "off",
-        "@typescript-eslint/semi": ["error"]
+        "@typescript-eslint/semi": ["error"],
+        "no-console": ["error", { allow: ["warn", "error"] }]
     }
 };

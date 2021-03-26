@@ -21,19 +21,19 @@ export async function initializeExtendedTestDialogs(): Promise<void> {
         dowData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.duelData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Duel of Wits data");
-        console.log(err);
+        console.error(err);
     }
     try {
         fightData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.fightData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Fight data");
-        console.log(err);
+        console.error(err);
     }
     try {
         rncData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.rangeData));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Range and Cover data");
-        console.log(err);
+        console.error(err);
     }
     
     game.burningwheel.dow = new DuelOfWitsDialog({
@@ -76,7 +76,7 @@ export async function initializeRollPanels(): Promise<void> {
         modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
     } catch (err) {
         ui.notifications.warn("Error parsing serialized Modifier data");
-        console.log(err);
+        console.error(err);
     }
     game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.useGmDifficulty, modData.mods, modData.help);
     game.burningwheel.modifiers.activateSocketListeners();

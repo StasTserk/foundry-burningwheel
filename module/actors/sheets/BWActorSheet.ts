@@ -19,7 +19,9 @@ export class BWActorSheet extends ActorSheet {
     options: ActorSheetOptions;
 
     static get defaultOptions(): ActorSheetOptions {
-        return mergeObject(super.defaultOptions, {});
+        return mergeObject(super.defaultOptions, {
+            classes:  [ "bw-app" ]
+        });
     }
 
     activateListeners(html: JQuery): void {

@@ -112,7 +112,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
             width: 1000,
             height: 600,
             resizable: true,
-            classes: [ "rnc" ]
+            classes: [ "rnc", "bw-app" ]
         }, { overwrite: true });
     }
 

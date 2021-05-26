@@ -1,18 +1,19 @@
-import { BWActor } from "../actors/BWActor.js";
 import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
 import { translateWoundValue } from "../helpers.js";
+import { BWActor } from "../actors/BWActor.js";
 
 export class MeleeWeapon extends BWItem {
     prepareData(): void {
         super.prepareData();
-        if (this.actor) {
-            let power = this.actor.data.data.power.exp;
-            if (this.actor.data.data.power.shade === "G") {
+        const actor = this.actor as unknown as BWActor | null;
+        if (actor) {
+            let power = actor.data.data.power.exp;
+            if (actor.data.data.power.shade === "G") {
                 power += 2;
             }
-            if (this.actor.data.data.power.shade === "W") {
+            if (actor.data.data.power.shade === "W") {
                 power += 3;
             }
             Object.values(this.data.data.attacks || []).forEach(ad => {
@@ -43,10 +44,6 @@ export class MeleeWeapon extends BWItem {
         element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].vsArmor));
         element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].weaponLength.titleCase()));
         return element.outerHTML;
-    }
-    
-    get actor(): BWActor | null {
-        return super.actor as BWActor | null;
     }
 
     data: MeleeWeaponRootData;

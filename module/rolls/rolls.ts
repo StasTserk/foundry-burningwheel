@@ -243,7 +243,7 @@ export function getRollNameClass(open: boolean, shade: helpers.ShadeString): str
     return css;
 }
 
-export async function getNoDiceErrorDialog(numDice: number): Promise<Application> {
+export async function getNoDiceErrorDialog(numDice: number): Promise<unknown> {
     return helpers.notifyError("Too Few Dice",
         `Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}`);
 }

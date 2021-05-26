@@ -67,7 +67,8 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
                     callback: async (dialogHtml: JQuery) =>
                         statRollCallback(dialogHtml, stat, actor, statName, accessor)
                 }
-            }
+            },
+            default: "roll"
         }).render(true)
     );
 }

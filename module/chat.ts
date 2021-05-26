@@ -21,7 +21,7 @@ export function onChatLogRender(html: JQuery): void {
 export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data: any): void {
     const message = html.find("div.chat-message");
     if (message.length > 0) {
-        const actor = game.actors.get(data.message.speaker.actor);
+        const actor = game.actors?.get(data.message.speaker.actor);
         if (actor && actor.owner) {
             return; // we are the owner of the message and shouldn't hide the buttons
         }
@@ -30,7 +30,7 @@ export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data:
 }
 
 
-export async function simpleBroadcast(data: SimpleBroadcastMessageData, actor?: BWActor): Promise<Entity> {
+export async function simpleBroadcast(data: SimpleBroadcastMessageData, actor?: BWActor): Promise<ChatMessage | null> {
     const html = await renderTemplate("systems/burningwheel/templates/chat/simple-broadcast.hbs", data);
     return ChatMessage.create({
         content: html,

@@ -7,7 +7,7 @@ import { Armor } from "../items/armor.js";
 import { Skill } from "../items/skill.js";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
-    const actor = game.actors.get(target.dataset.actorId || "") as BWActor;
+    const actor = game.actors?.get(target.dataset.actorId || "") as BWActor;
     const accessor = target.dataset.accessor || '';
     const name = target.dataset.rollName || '';
     const itemId = target.dataset.itemId || '';

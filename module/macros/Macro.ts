@@ -12,26 +12,25 @@ import { ItemType } from "../items/item.js";
 import { CreateStatMacro, RollStatMacro } from "./StatMacro.js";
 import { ModifierDialog } from "../dialogs/ModifierDialog.js";
 
-export async function CreateBurningWheelMacro(data: DragData, slot: number): Promise<boolean> {
-    if (!handlers[data.type]) {
+export async function CreateBurningWheelMacro(data: DragData, slot: string): Promise<boolean> {
+    if (!handlers[data.type || ""]) {
         return true;
     }
 
-    const macroData = handlers[data.type](data);
+    const macroData = handlers[data.type || ""](data);
     if (macroData) {
         // Check if an identical macro already exists. Create it otherwise.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let macro = game.macros.entities.find(m => (m.name === macroData.name) && ((m.data as any).command === macroData.command));
+        let macro = game.macros?.entities.find(m => (m.name === macroData.name) && ((m.data as any).command === macroData.command));
         if (!macro) {
-            macro = await Macro.create({
+            macro = await Macro.create<Macro, Partial<Macro.Data>>({
                 name: macroData.name,
-                type: macroData.type,
                 img: macroData.img,
                 command: macroData.command,
                 flags: macroData.flags
             }) as Macro;
         }
-        await game.user.assignHotbarMacro(macro, slot);
+        await game.user?.assignHotbarMacro(macro, slot);
     }
     return false;
 }
@@ -54,7 +53,7 @@ export function RegisterMacros(): void {
     game.burningwheel.macros['rollStat'] = RollStatMacro;
 }
 
-const handlers: Record<string, (data: DragData) => MacroData | null> = {
+const handlers: Record<string, (data:  DragData) => MacroData | null> = {
     "Item": CreateItemMacro,
     "skill": CreateSkillRollMacro,
     "spell": CreateSpellRollMacro,

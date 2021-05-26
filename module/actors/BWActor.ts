@@ -1,17 +1,17 @@
 import { ShadeString, StringIndexedObject } from "../helpers.js";
-import { DisplayClass, ItemType, BWItemData, BWItem } from "../items/item.js";
+import { DisplayClass, ItemType, BWItemData, BWItem, BWItemDataTypes } from "../items/item.js";
 import { SkillDataRoot } from "../items/skill.js";
 import * as constants from "../constants.js";
 import { ArmorRootData } from "../items/armor.js";
 import { PossessionRootData } from "../items/possession.js";
 import { ReputationDataRoot } from "../items/reputation.js";
 import { TraitDataRoot, Trait } from "../items/trait.js";
-import { BWCharacterData } from "./BWCharacter.js";
-import { NpcData } from "./Npc.js";
+import { BWCharacterData, CharacterDataRoot } from "./BWCharacter.js";
+import { NpcData, NpcDataRoot } from "./Npc.js";
 import { AffiliationDataRoot } from "../items/affiliation.js";
 
-export class BWActor extends Actor<Common> {
-    data!: BWActorDataRoot;
+export class BWActor extends Actor<BWActorDataTypes, BWItem> {
+    data: BWActorDataTypes;
 
     readonly batchAdd = {
         task: -1,
@@ -33,11 +33,7 @@ export class BWActor extends Actor<Common> {
         this.batchAdd.items.push(item);
     }
 
-    getOwnedItem(id: string): BWItem | null {
-        return super.getOwnedItem(id) as BWItem | null;
-    }
-
-    async processNewItem(item: ItemData, userId: string): Promise<unknown> {
+    async processNewItem(item: Item.Data, userId: string): Promise<unknown> {
         if (game.userId !== userId) {
             // this item has been added by someone else.
             return;
@@ -229,8 +225,8 @@ export class BWActor extends Actor<Common> {
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    _onCreate(data: any, options: any, userId: string, context: any): void {
-        super._onCreate(data, options, userId, context);
+    _onCreate(data: any, options: any, userId: string): void {
+        super._onCreate(data, options, userId);
         if (this.data.items.length) {
             return; // this is most likely a duplicate of an existing actor. we don't need to add default items.
         }
@@ -357,30 +353,30 @@ export class BWActor extends Actor<Common> {
         });
     }
 
-    async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
-        // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for settings and the character burner
-        if (Array.isArray(itemData)) {
-            itemData = itemData.filter(id => id.type !== "lifepath");
-            return super.createOwnedItem(itemData, options) as  Promise<BWItem>;
-        }
-        if (itemData.type !== "lifepath") {
-            return super.createOwnedItem(itemData) as Promise<BWItem>;
-        }
-        return super.createOwnedItem([], options) as Promise<BWItem>;
-    }
+    // async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
+    //     // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for settings and the character burner
+    //     if (Array.isArray(itemData)) {
+    //         itemData = itemData.filter(id => id.type !== "lifepath");
+    //         return super.createOwnedItem(itemData, options) as  Promise<BWItem>;
+    //     }
+    //     if (itemData.type !== "lifepath") {
+    //         return super.createOwnedItem(itemData) as Promise<BWItem>;
+    //     }
+    //     return super.createOwnedItem([], options) as Promise<BWItem>;
+    // }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    async createEmbeddedEntity(entityType: string, data: NewItemData| NewItemData[], options?: any): Promise<this> {
-        // we don't add lifepaths to normal actors. they are simply a data structure for holding lifepath info for settings and the character burner
-        if (Array.isArray(data)) {
-            data = data.filter(id => id.type !== "lifepath");
-            return super.createEmbeddedEntity(entityType, data, options);
-        }
-        if (data.type !== 'lifepath') {
-            return super.createEmbeddedEntity(entityType, data, options);
-        }
-        return this;
-    }
+    // // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+    // async createEmbeddedEntity(entityType: string, data: NewItemData| NewItemData[], options?: any): Promise<this> {
+    //     // we don't add lifepaths to normal actors. they are simply a data structure for holding lifepath info for settings and the character burner
+    //     if (Array.isArray(data)) {
+    //         data = data.filter(id => id.type !== "lifepath");
+    //         return super.createEmbeddedEntity(entityType, data, options);
+    //     }
+    //     if (data.type !== 'lifepath') {
+    //         return super.createEmbeddedEntity(entityType, data, options);
+    //     }
+    //     return this;
+    // }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -420,13 +416,13 @@ export interface Common {
     willTax: number;
     forteTax: number;
 
-    resourcesTax: string;
+    resourcesTax: number;
     fate: number;
     persona: number;
     deeds: number;
 }
 
-export interface BWActorDataRoot extends ActorData<Common> {
+export interface BWActorData extends Actor.Data<Common, BWItemDataTypes> {
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
@@ -509,3 +505,5 @@ export interface NewItemData extends StringIndexedObject<any> {
     name: string;
     type: ItemType;
 }
+
+export type BWActorDataTypes = CharacterDataRoot | NpcDataRoot;

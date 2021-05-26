@@ -23,21 +23,21 @@ export function CreateSpellRollMacro(data: ItemDragData): MacroData | null {
 }
 
 export function RollSpellMacro(actorId: string, spellId: string): void {
-    const actor = game.actors.find(a => a.id === actorId) as BWActor;
+    const actor = game.actors?.find(a => a.id === actorId) as BWActor;
     if (!actor) {
-        ui.notifications.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
+        ui.notifications?.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
         return;
     }
 
     const spell = actor.getOwnedItem(spellId) as Spell | null;
     if (!spell) {
-        ui.notifications.notify("Unable to find spell linked to this macro. Was it deleted?", "error");
+        ui.notifications?.notify("Unable to find spell linked to this macro. Was it deleted?", "error");
         return;
     }
 
     const skill = actor.getOwnedItem(spell.data.data.skillId) as Skill | null;
     if (!skill) {
-        ui.notifications.notify("Unable to find skill linked to the spell in this macro. Ensure a sorcerous skill is linked with this spell.", "error");
+        ui.notifications?.notify("Unable to find skill linked to the spell in this macro. Ensure a sorcerous skill is linked with this spell.", "error");
         return;
     }
     const dataPreset: Partial<RollDialogData> = getMacroRollPreset(actor);

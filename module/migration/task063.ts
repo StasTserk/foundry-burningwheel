@@ -3,7 +3,7 @@ import { Trait } from "../items/trait.js";
 import { BWItem } from "../items/item.js";
 
 export async function task063(): Promise<void> {
-    const items: (Skill | Trait)[] = Array.from(game.items.values()).filter((i: BWItem) => i.type === "skill" || i.type === "trait") as (Skill | Trait)[];
+    const items: (Skill | Trait)[] = Array.from(game.items?.values() || []).filter((i: BWItem) => i.type === "skill" || i.type === "trait") as (Skill | Trait)[];
     const updateInfo = {};
 
     for (const item of items) {
@@ -13,7 +13,7 @@ export async function task063(): Promise<void> {
         }
     }
 
-    const actors: Actor[] = Array.from(game.actors.values());
+    const actors: Actor[] = Array.from(game.actors?.values() || []);
     for (const actor of actors) {
         for (const ownedItem of Array.from(actor.items.values()).filter((i: BWItem) => i.type === "skill" || i.type === "trait") as (Skill | Trait)[]) {
             const updateData = updateItem(ownedItem, updateInfo);
@@ -23,7 +23,7 @@ export async function task063(): Promise<void> {
         }
     }
 
-    const packs = Array.from(game.packs.values());
+    const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
         if (pack.cls.prototype.constructor.entity === "Item") {
             const packItems = await pack.getContent();
@@ -42,7 +42,7 @@ export async function task063(): Promise<void> {
         parts.push(`${updateInfo[types]} ${types}s`);
     }
     const message = updatedTypes.length ? `Updated ${parts.join(", ")}.` : "No entities needed to be updated.";
-    ui.notifications.notify(message, "info");
+    ui.notifications?.notify(message, "info");
 }
 
 function updateItem(item: Skill | Trait, updateInfo: Record<string, number>): Record<string, string> {

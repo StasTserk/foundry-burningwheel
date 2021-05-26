@@ -22,7 +22,7 @@ export class DifficultyDialog extends Application {
             popOut: false
         });
         this.difficulty = defaultDifficulty;
-        this.editable = game.user.isGM;
+        this.editable = game.user?.isGM || false;
 
         this.splitPool = this.customDiff = this.help = false;
 
@@ -57,7 +57,7 @@ export class DifficultyDialog extends Application {
         html.find('*[data-action="grant"]').on('click', e => { 
             const skillId = e.target.dataset.skillId;
             const path = e.target.dataset.path;
-            const actor = game.actors.get(e.target.dataset.actorId || '') as BWCharacter;
+            const actor = game.actors?.get(e.target.dataset.actorId || '') as BWCharacter;
             const difficulty = e.target.dataset.difficulty as "R" | "C" | "D";
             const title = e.target.dataset.title || "";
             if (actor) {
@@ -135,7 +135,7 @@ export class DifficultyDialog extends Application {
             if (type === "extendedTest") {
                 this.extendedTest = data.extendedTest;
                 this.actorGroups = data.actorGroups;
-                if (game.user.isGM) {
+                if (game.user?.isGM) {
                     game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
                 }
                 this.render(true);
@@ -145,7 +145,7 @@ export class DifficultyDialog extends Application {
 
     persistExtendedTestData(): void {
         const data = { extendedTest: this.extendedTest, actorGroups: this.actorGroups };
-        if (game.user.isGM) {
+        if (game.user?.isGM) {
             game.settings.set(constants.systemName, constants.settings.extendedTestData, JSON.stringify(data));
         }
         game.socket.emit(constants.socketName, { type: "extendedTest", data });

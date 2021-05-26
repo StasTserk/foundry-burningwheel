@@ -24,7 +24,7 @@ export class Trait extends BWItem {
         };
     }
 
-    async generateChatMessage(actor: BWActor): Promise<Entity> {
+    async generateChatMessage(actor: BWActor): Promise<ChatMessage | null> {
         const extraData: { title?: string, text?: string }[] = [];
         if (this.data.data.traittype === "call-on") {
             extraData.push({

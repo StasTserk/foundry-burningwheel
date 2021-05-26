@@ -1,7 +1,7 @@
 import { BWItemSheet } from "./bwItemSheet.js";
 
 export class RelationshipSheet extends BWItemSheet {
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): BaseEntitySheet.Options {
         return mergeObject(super.defaultOptions, {});
     }
 

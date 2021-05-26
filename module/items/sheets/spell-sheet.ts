@@ -3,7 +3,7 @@ import { StringIndexedObject } from "../../helpers.js";
 import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
 export class SpellSheet extends BWItemSheet {
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): BaseEntitySheet.Options {
         return mergeObject(super.defaultOptions, {});
     }
 

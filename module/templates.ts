@@ -1,5 +1,5 @@
 
-export async function preloadHandlebarsTemplates(): Promise<void> {
+export async function preloadHandlebarsTemplates(): Promise<unknown[]> {
 
     // Define template paths to load
     const templatePaths = [

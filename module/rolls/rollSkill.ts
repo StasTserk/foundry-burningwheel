@@ -74,7 +74,8 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
                         }
                     }
                 }
-            }
+            },
+            default: "roll"
         }).render(true)
     );
 }

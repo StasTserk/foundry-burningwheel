@@ -6,13 +6,14 @@ import { HasPointCost, BWItemData, BWItem } from "./item.js";
 export class Spell extends BWItem {
     prepareData(): void {
         super.prepareData();
+        const actor = this.actor as unknown as BWActor;
         this.data.obstacleLabel = 
             `${this.data.data.variableObstacle ?
                 this.data.data.variableObstacleDescription :
                 this.data.data.obstacle}${this.data.data.upSpell?
                 '^':''}`;
-        if (this.data.data.isWeapon && this.data.hasOwner && this.actor) {
-            const willScore = this.actor.data.data.will.exp;
+        if (this.data.data.isWeapon && this.data.hasOwner && actor) {
+            const willScore = actor.data.data.will.exp;
             if (this.data.data.halfWill) {
                 this.data.data.mark = Math.floor(willScore / 2.0) + this.data.data.willDamageBonus;
             } else {
@@ -24,10 +25,10 @@ export class Spell extends BWItem {
         }
         this.data.spellLengths = weaponLengthSelect;
 
-        if (this.data.hasOwner && this.actor) {
-            this.data.data.aptitude = 10 - this.actor.data.data.perception.exp || 1
-                + this.actor.getAptitudeModifiers("perception")
-                + this.actor.getAptitudeModifiers("spells");
+        if (this.data.hasOwner && actor) {
+            this.data.data.aptitude = 10 - actor.data.data.perception.exp || 1
+                + actor.getAptitudeModifiers("perception")
+                + actor.getAptitudeModifiers("spells");
         }
     }
 
@@ -57,9 +58,6 @@ export class Spell extends BWItem {
     }
 
     data: SpellDataRoot;
-    get actor(): BWActor | null {
-        return super.actor as BWActor | null;
-    }
 }
 
 export interface SpellDataRoot extends BWItemData {

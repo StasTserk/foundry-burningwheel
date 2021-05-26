@@ -58,7 +58,8 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
                     callback: async (dialogHtml: JQuery) =>
                         taxTestCallback(dialogHtml, stat, actor, tax, spellName)
                 }
-            }
+            },
+            default: "yes"
         }).render(true)
     );
 }
@@ -76,7 +77,7 @@ async function taxTestCallback(
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
     const fateReroll = buildRerollData({ actor, roll, accessor: "data.forte" });
-    const callons: RerollData[] = actor.getCallons(name).map(s => {
+    const callons: RerollData[] = actor.getCallons("forte").map(s => {
         return { label: s, ...buildRerollData({ actor, roll, accessor: "data.forte" }) as RerollData };
     });
 
@@ -123,7 +124,8 @@ async function taxTestCallback(
                         label: "I'd rather not.",
                         callback: () => { return; }
                     }
-                }
+                },
+                default: "yes"
             }).render(true);
         } else {
             data.extraInfo += ` Tax test failed by ${margin}. The caster's forte is Taxed.`;
@@ -142,7 +144,8 @@ async function taxTestCallback(
                         label: "Skip for Now",
                         callback: () => { return; }
                     }
-                }
+                },
+                default: "yes"
             }).render(true);
         }
 

@@ -11,7 +11,7 @@ import { ReputationData } from "../items/reputation.js";
 import { RelationshipData } from "../items/relationship.js";
 import { Lifepath, LifepathData } from "../items/lifepath.js";
 
-export class CharacterBurnerDialog extends Dialog {
+export class CharacterBurnerDialog extends Application {
     private readonly _parent: BWActor & BWCharacter;
     private _burnerListeners: JQuery<HTMLElement>[];
     private _skills: Skill[];
@@ -34,7 +34,8 @@ export class CharacterBurnerDialog extends Dialog {
                             title: "",
                             content: "<div class='loading-title'>Loading Character Burner data...</div><div class='burner-loading-spinner'><i class='fas fa-dharmachakra'></i></div>",
                             buttons: {},
-                        }, {classes: ["loading-dialog"], width: "300px"});
+                            default: ""
+                        }, {classes: ["loading-dialog"], width: 300});
                         await loadingDialog.render(true);
                         const dialog = new CharacterBurnerDialog(parent);
                         dialog._skills = await getItemsOfType<Skill>("skill", usedSources);
@@ -48,12 +49,13 @@ export class CharacterBurnerDialog extends Dialog {
                 cancel: {
                     label: "Cancel"
                 }
-            }
+            },
+            default: "select"
         });
-        return compendiumSelect.render(true);
+        return compendiumSelect.render(true) as FormApplication;
     }
     private constructor(parent: BWCharacter) {
-        super({ title: "Character Burner", buttons: {} });
+        super({ title: "Character Burner" });
 
         this._parent = parent;
     }
@@ -62,7 +64,7 @@ export class CharacterBurnerDialog extends Dialog {
         return "systems/burningwheel/templates/dialogs/character-burner.hbs";
     }
 
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): Application.Options {
         return mergeObject(super.defaultOptions, { width: 900, height: 800, classes: [ "bw-app" ] }, { overwrite: true });
     }
 
@@ -245,7 +247,7 @@ export class CharacterBurnerDialog extends Dialog {
         if (idElement.val()) {
             const item = items.find(i => i.id === idElement.val());
             if (item) {
-                item.sheet.render(true);
+                item.sheet?.render(true);
             }
         }
     }
@@ -262,15 +264,15 @@ export class CharacterBurnerDialog extends Dialog {
             if (data.actorId) {
                 if (data.pack) {
                     // this item is dragged out of an actor in a compendium. The most common use case for this is Settings + Lifepaths
-                    const actor = await (game.packs.find(p => p.collection === data.pack) as Compendium).getEntity(data.actorId) as Actor;
+                    const actor = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.actorId) as Actor;
                     item = actor.getOwnedItem(data.id) as BWItem;
                 } else {
-                    item = (game.actors.find((a: BWActor) => a._id === data.actorId) as BWActor).getOwnedItem(data.id) as BWItem;
+                    item = (game.actors?.find((a: BWActor) => a._id === data.actorId) as BWActor).getOwnedItem(data.id) as BWItem;
                 }
             } else if (data.pack) {
-                item = await (game.packs.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;
+                item = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;
             } else {
-                item = game.items.find((i: BWItem) => i.id === data.id) as BWItem;
+                item = game.items?.find((i: BWItem) => i.id === data.id) as BWItem;
             }
             if (item) {
                 this._insertItem(item);
@@ -352,7 +354,8 @@ export class CharacterBurnerDialog extends Dialog {
                             label: "Assign to Physical",
                             callback: () => { physicalPoints.val(boostAmount).trigger('change'); }
                         }
-                    }
+                    },
+                    default: "mental"
                 }).render(true);
                 break;
         }

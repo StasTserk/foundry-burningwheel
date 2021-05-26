@@ -8,13 +8,16 @@ import * as helpers from "../helpers.js";
 export class Skill extends BWItem {
     getRootSelect(): StringIndexedObject<string> {
         const roots = {};
+        const actor = this.actor as unknown as BWActor  | null;
         Object.assign(roots, skillRootSelect);
-        if (this.data.hasOwner && this.actor.data.type === "character") {
-            if (this.actor.data.data.custom1.name) {
-                roots["custom1"] = this.actor.data.data.custom1.name;
+        if (!actor) { return roots; }
+
+        if (this.data.hasOwner && actor.data.type === "character") {
+            if (actor.data.data.custom1.name) {
+                roots["custom1"] = actor.data.data.custom1.name;
             }
-            if (this.actor.data.data.custom2.name) {
-                roots["custom2"] = this.actor.data.data.custom2.name;
+            if (actor.data.data.custom2.name) {
+                roots["custom2"] = actor.data.data.custom2.name;
             }
         } else {
             roots["custom1"] = "Custom Attribute 1";
@@ -30,20 +33,20 @@ export class Skill extends BWItem {
     }
 
     calculateAptitude(this: Skill): void {
-        if (!this.actor) { return; }
-        let aptitudeMod = this.actor.getAptitudeModifiers(this.name) + this.actor.getAptitudeModifiers(this.data.data.skilltype);
+        const actor = this.actor as unknown as BWActor  | null;
+        if (!actor) { return; }
+        let aptitudeMod = actor.getAptitudeModifiers(this.name) + actor.getAptitudeModifiers(this.data.data.skilltype);
 
-        aptitudeMod += this.actor.getAptitudeModifiers(this.data.data.root1);
+        aptitudeMod += actor.getAptitudeModifiers(this.data.data.root1);
         
         if (this.data.data.root2) {
-            aptitudeMod += this.actor.getAptitudeModifiers(`${this.data.data.root1}/${this.data.data.root2}`)
-                + this.actor.getAptitudeModifiers(`${this.data.data.root2}/${this.data.data.root1}`);
-                + this.actor.getAptitudeModifiers(this.data.data.root2);
+            aptitudeMod += actor.getAptitudeModifiers(`${this.data.data.root1}/${this.data.data.root2}`)
+                + actor.getAptitudeModifiers(`${this.data.data.root2}/${this.data.data.root1}`);
+                + actor.getAptitudeModifiers(this.data.data.root2);
         }
-        
-        const player = this.actor;
-        const root1exp = (player.data.data[this.data.data.root1] as Ability).exp;
-        const root2exp = this.data.data.root2 ? (player.data.data[this.data.data.root2] as Ability).exp : root1exp;
+
+        const root1exp = (actor.data.data[this.data.data.root1] as Ability).exp;
+        const root2exp = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).exp : root1exp;
         const rootAvg = Math.floor((root1exp + root2exp) / 2);
         this.data.data.aptitude = 10 - rootAvg + aptitudeMod;
     }
@@ -53,16 +56,15 @@ export class Skill extends BWItem {
             this.data.cssClass += " wound-disabled";
         }
     }
+
     data: SkillDataRoot;
-    get actor(): BWActor {
-        return super.actor as BWActor;
-    }
 
     get type(): ItemType {
         return super.type as ItemType;
     }
 
     canAdvance(): boolean {
+
         const enoughRoutine = (this.data.data.routine >= (this.data.data.routineNeeded || 0 ));
         const enoughDifficult = this.data.data.difficult >= (this.data.data.difficultNeeded || 0);
         const enoughChallenging = this.data.data.challenging >= (this.data.data.challengingNeeded || 0);
@@ -81,7 +83,7 @@ export class Skill extends BWItem {
 
     async advance(): Promise<void> {
         const exp = this.data.data.exp;
-        this.update({ "data.routine": 0, "data.difficult": 0, "data.challenging": 0, "data.exp": exp + 1 }, {});
+        this.update({ data: { routine: 0, difficult: 0, challenging: 0, exp: exp + 1 } }, {});
     }
 
     async addTest(difficulty: TestString, force = false): Promise<void> {
@@ -89,7 +91,7 @@ export class Skill extends BWItem {
         const difficultyDialog = game.burningwheel.gmDifficulty as (DifficultyDialog | undefined);
         if (!force && (difficultyDialog?.extendedTest)) {
             difficultyDialog?.addDeferredTest({
-                actor: this.actor,
+                actor: this.actor as unknown as BWActor,
                 skill: this,
                 difficulty,
                 name: this.name
@@ -197,7 +199,6 @@ export class Skill extends BWItem {
 }
 
 export interface SkillDataRoot extends BWItemData {
-    type: ItemType;
     data: SkillData;
 }
 

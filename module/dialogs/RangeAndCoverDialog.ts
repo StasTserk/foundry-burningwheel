@@ -2,7 +2,7 @@ import { BWActor } from "../actors/BWActor.js";
 import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 
 export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
-    constructor(d: DialogData, o?: ApplicationOptions) {
+    constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
         this.data.topic = "range-and-cover";
         this.data.settingName = "rnc-data";
@@ -107,7 +107,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         }
     }
 
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): Dialog.Options {
         return mergeObject(super.defaultOptions, {
             width: 1000,
             height: 600,
@@ -129,10 +129,10 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         const data = super.getData() as RangeAndCoverData;
         data.actionOptions = options;
         if (!this.data.actors) {
-            this.data.actors = game.actors.entities as BWActor[];
+            this.data.actors = game.actors?.entities as BWActor[];
         }
         data.actors = this.data.actors.filter(a => !this.data.data.memberIds.includes(a.id));
-        data.gmView = game.user.isGM;
+        data.gmView = game.user?.isGM || false;
 
         data.teams.forEach(t => {
             const actorData = t.members.map(m => m.id).map(id => this.data.actors.find(a => a.id === id) as BWActor);

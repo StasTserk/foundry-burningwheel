@@ -10,7 +10,7 @@ export class BWSettingSheet extends ActorSheet {
     get actor(): BWSetting {
         return super.actor as BWSetting;
     }
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): BaseEntitySheet.Options {
         return mergeObject(super.defaultOptions, {
             classes:  ["bw-app"],
             width: 600
@@ -50,7 +50,7 @@ export class BWSettingSheet extends ActorSheet {
 
         html.find('.lifepath').on('click', (e) => {
             const id = e.currentTarget.dataset.id || "";
-            this.actor.getOwnedItem(id)?.sheet.render(true);
+            this.actor.getOwnedItem(id)?.sheet?.render(true);
         });
 
         const dropAreas = html.find('.drop-area').toArray().map(e => $(e));
@@ -126,11 +126,11 @@ export class BWSettingSheet extends ActorSheet {
             if (dragData.data) {
                 itemData = dragData.data as LifepathRootData;
             } else if (dragData.pack) {
-                itemData = (await (game.packs.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || "")).data as LifepathRootData;
+                itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || ""))?.data as LifepathRootData;
             } else if (dragData.actorId) {
-                itemData = (game.actors.find((a: BWSetting) => a._id === dragData.actorId)).getOwnedItem(dragData.id).data as LifepathRootData;
+                itemData = (game.actors?.find((a: Entity) => a._id === dragData.actorId))?.getOwnedItem(dragData.id || "").data as LifepathRootData;
             } else {
-                itemData = game.items.find((i: BWItem) => i.id === dragData.id).data as LifepathRootData;
+                itemData = game.items?.find((i: BWItem) => i.id === dragData.id)?.data as LifepathRootData;
             }
 
             // if our item is actually a lifepath we need to add it, otherwise abort.
@@ -160,6 +160,6 @@ export class BWSettingSheet extends ActorSheet {
     }
 }
 
-export interface BWSettingData extends ActorSheetData {
+export interface BWSettingData extends ActorSheet.Data {
     lifepaths: LifepathRootData[];
 }

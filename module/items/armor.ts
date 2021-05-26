@@ -38,21 +38,21 @@ export class Armor extends BWItem {
             case "run of the mill":
                 newDamage = Math.min(this.data.data.dice, damage + 1);                
                 updateData[locationAccessor] = newDamage;
-                await this.update(updateData, null);
+                await this.update(updateData);
                 return new Promise(r => r(1));
             case "superior":
                 const reroll = await rollDice(num1s, false, "B");
                 if (reroll && reroll.dice[0].results.filter(r => r.result === 1).length) {
                     newDamage = Math.min(this.data.data.dice, damage + 1);                
                     updateData[locationAccessor] = newDamage;
-                    await this.update(updateData, null);
+                    await this.update(updateData);
                     return new Promise(r => r(1));
                 }
                 return new Promise(r => r(0));
             default:
                 newDamage = Math.min(this.data.data.dice, damage + num1s);
                 updateData[locationAccessor] = newDamage;
-                await this.update(updateData, null);
+                await this.update(updateData);
                 return new Promise(r => r(num1s));
         }
     }

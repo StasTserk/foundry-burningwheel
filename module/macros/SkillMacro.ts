@@ -23,15 +23,15 @@ export function CreateSkillRollMacro(data: ItemDragData): MacroData | null {
 }
 
 export function RollSKillMacro(actorId: string, skillId: string): void {
-    const actor = game.actors.find(a => a.id === actorId) as BWActor;
+    const actor = game.actors?.find(a => a.id === actorId) as BWActor;
     if (!actor) {
-        ui.notifications.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
+        ui.notifications?.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
         return;
     }
 
     const skill = actor.getOwnedItem(skillId) as Skill | null;
     if (!skill) {
-        ui.notifications.notify("Unable to find skill linked in this macro. Was it deleted?", "error");
+        ui.notifications?.notify("Unable to find skill linked in this macro. Was it deleted?", "error");
         return;
     }
 

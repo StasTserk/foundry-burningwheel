@@ -4,19 +4,14 @@ import * as constants from "../../constants.js";
 import * as helpers from "../../helpers.js";
 import { BWItem } from "../../items/item.js";
 
-export class BWActorSheet extends ActorSheet {
+export class BWActorSheet<T extends Record<string, unknown>> extends ActorSheet<T, BWActor, ActorSheetOptions> {
     private _keyDownHandler = this._handleKeyPress.bind(this);
     private _keyUpHandler = this._handleKeyUp.bind(this);
-    get actor(): BWActor {
-        return super.actor as BWActor;
-    }
 
     get template(): string {
         const path = "systems/burningwheel/templates";
         return `${path}/${this.actor.data.type}-sheet.hbs`;
     }
-
-    options: ActorSheetOptions;
 
     static get defaultOptions(): ActorSheetOptions {
         return mergeObject(super.defaultOptions, {
@@ -165,7 +160,7 @@ export class BWActorSheet extends ActorSheet {
         if (item) { item.update(updateParams, {}); }
     }
 
-    getArmorDictionary(armorItems: ItemData[]): { [key: string]: ItemData | null; } {
+    getArmorDictionary(armorItems: Item.Data[]): { [key: string]: Item.Data | null; } {
         let armorLocs: { [key: string]: ArmorRootData | null; } = {};
         constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
         armorItems.forEach(i =>
@@ -175,7 +170,7 @@ export class BWActorSheet extends ActorSheet {
     }
 }
 
-export interface ActorSheetOptions extends FormApplicationOptions {
+export interface ActorSheetOptions extends BaseEntitySheet.Options {
     draggableItemSelectors?: string[];
     draggableMeleeSelectors?: string[];
     draggableRangedSelectors?: string[];

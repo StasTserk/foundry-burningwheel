@@ -12,7 +12,7 @@ import { getKeypressModifierPreset } from "../rolls/rolls.js";
 
 export type FightAttr = "speed" | "agility" | "power" | "skill" | "steel";
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
-    constructor(d: DialogData, o?: ApplicationOptions) {
+    constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
         this.data.data.participants = this.data.data.participants || [];
         this.data.data.participantIds = this.data.data.participantIds || [];
@@ -23,17 +23,17 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
 
     getData(): FightDialogData {
-        const data = super.getData();
+        const data = super.getData() as FightDialogData;
 
         if (!this.data.actors.length) {
-            this.data.actors = game.actors.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || [];
+            this.data.actors = (game.actors?.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || []) as BWActor[];
             this.data.actors.sort((a, b) => {
                 return this.data.data.participantIds.indexOf(a.id) > this.data.data.participantIds.indexOf(b.id) ? 1 : -1;
             });
         }
 
-        const actors = game.actors.entities;
-        data.gmView = game.user.isGM;
+        const actors = game.actors?.entities || [];
+        data.gmView = game.user?.isGM || false;
         data.participantOptions = actors
             .filter(a => !this.data.data.participantIds.includes(a._id))
             .map(a => {
@@ -119,7 +119,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         });
         html.find('div[data-action="openSheet"], img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {
             const id = e.currentTarget.attributes.getNamedItem("data-actor-id").nodeValue || "";
-            game.actors.find(a => a._id === id).sheet.render(true);
+            game.actors?.find(a => a._id === id)?.sheet?.render(true);
         });
     }
     
@@ -147,7 +147,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     
     @changesState()
     private _toggleHidden(target: HTMLDivElement): void {
-        if (!game.user.isGM) { return; }
+        if (!game.user?.isGM) { return; }
         const index = parseInt(target.dataset.index || "0") ;
         const hidden = this.data.data.participants[index].gmHidden;
         this.data.data.participants[index].gmHidden = !hidden;
@@ -156,7 +156,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     @changesState(FightDialog.prototype._syncActors)
     private _addNewParticipant(target: HTMLSelectElement): void {
         const id = target.value;
-        const actor = game.actors.get(id) as BWActor;
+        const actor = game.actors?.get(id) as BWActor;
         this.data.actors.push(actor);
         this.data.data.participants.push({ ...toParticipantData(actor),
             action1: '', action2: '', action3: '', action4: '', action5: '',
@@ -178,7 +178,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         super.activateSocketListeners();
         game.socket.on(constants.socketName, ({type}) => {
             if (type === `syncActors${this.data.topic}`) {
-                this.data.actors = game.actors.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || [];
+                this.data.actors = (game.actors?.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || []) as BWActor[];
                 this.data.actors.sort((a, b) => {
                     return this.data.data.participantIds.indexOf(a.id) > this.data.data.participantIds.indexOf(b.id) ? 1 : -1;
                 });
@@ -210,7 +210,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         return "systems/burningwheel/templates/dialogs/fight.hbs";
     }
 
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): Dialog.Options {
         return mergeObject(super.defaultOptions, {
             width: 1000,
             height: 600,

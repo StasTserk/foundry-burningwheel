@@ -8,7 +8,7 @@ import { Reputation } from "../items/reputation.js";
 import { Affiliation } from "../items/affiliation.js";
 
 export async function task061(): Promise<void> {
-    const items: BWItem[] = Array.from(game.items.values()) as BWItem[];
+    const items: BWItem[] = Array.from(game.items?.values() || []) as BWItem[];
     const updateInfo = {};
     for (const item of items) {
         const updateData = updateItem(item, updateInfo);
@@ -17,9 +17,9 @@ export async function task061(): Promise<void> {
         }
     }
 
-    const actors: Actor[] = Array.from(game.actors.values());
+    const actors: Actor[] = Array.from(game.actors?.values() || []);
     for (const actor of actors) {
-        for (const ownedItem of Array.from(actor.items.values()) as BWItem[]) {
+        for (const ownedItem of Array.from(actor.items?.values() || []) as BWItem[]) {
             const updateData = updateItem(ownedItem, updateInfo);
             if (Object.values(updateData).length) {
                 await ownedItem.update(updateData, {});
@@ -27,7 +27,7 @@ export async function task061(): Promise<void> {
         }
     }
 
-    const packs = Array.from(game.packs.values());
+    const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
         if (pack.cls.prototype.constructor.entity === "Item") {
             const packItems = await pack.getContent();
@@ -46,7 +46,7 @@ export async function task061(): Promise<void> {
         parts.push(`${updateInfo[types]} ${types}s`);
     }
     const message = updatedTypes.length ? `Updated ${parts.join(", ")}.` : "No entities needed to be updated.";
-    ui.notifications.notify(message, "info");
+    ui.notifications?.notify(message, "info");
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

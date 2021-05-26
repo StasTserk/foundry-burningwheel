@@ -1,4 +1,3 @@
-import { BWActor } from "../actors/BWActor.js";
 import { BWItem, BWItemData, DisplayClass } from "./item.js";
 
 export class Relationship extends BWItem {
@@ -16,10 +15,6 @@ export class Relationship extends BWItem {
         } else {
             this.data.data.cssClass = "relationship-neutral";
         }
-    }
-
-    get actor(): BWActor {
-        return super.actor as BWActor;
     }
 
     data: RelationshipDataRoot;

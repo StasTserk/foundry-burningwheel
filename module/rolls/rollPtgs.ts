@@ -79,7 +79,8 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
         new Dialog({
             title: `${data.name} Test`,
             content: html,
-            buttons
+            buttons,
+            default: "roll"
         }).render(true)
     );
 }

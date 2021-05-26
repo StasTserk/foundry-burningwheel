@@ -1,10 +1,9 @@
-import { Common, DisplayProps, ClumsyWeightData, TracksTests, BWActorDataRoot, Ability, BWActor } from "./BWActor.js";
+import { DisplayProps, ClumsyWeightData, TracksTests, BWActorData, Ability, BWActor, Common } from "./BWActor.js";
 import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers.js";
 import { Skill } from "../items/skill.js";
-import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 
-export class BWCharacter extends BWActor{
+export class BWCharacter extends BWActor {
     data: CharacterDataRoot;
 
     prepareData(): void {
@@ -169,7 +168,7 @@ export class BWCharacter extends BWActor{
         }
 
         // if the test should be tracked but we're doing deferred tracking do that now.
-        const difficultyDialog = game.burningwheel.gmDifficulty as DifficultyDialog | undefined;
+        const difficultyDialog = game.burningwheel.gmDifficulty;
         if (!force && difficultyDialog?.extendedTest) {
             difficultyDialog?.addDeferredTest({
                 actor: this,
@@ -274,7 +273,7 @@ export class BWCharacter extends BWActor{
 
     taxResources(amount: number, maxFundLoss: number): void {
         const updateData = {};
-        let resourcesTax = parseInt(this.data.data.resourcesTax, 10) || 0;
+        let resourcesTax = parseInt(this.data.data.resourcesTax.toString()) || 0;
         const resourceExp = this.data.data.resources.exp || 0;
         const fundDice = this.data.data.funds || 0;
         if (amount <= maxFundLoss) {
@@ -306,7 +305,8 @@ export class BWCharacter extends BWActor{
                         ignore: {
                             label: "Ignore for now"
                         }
-                    }
+                    },
+                    default: "reduce"
                 }).render(true);
             }
         }
@@ -323,11 +323,11 @@ export class BWCharacter extends BWActor{
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    _onCreate(data: any, options: any, userId: string, context: any): void {
+    _onCreate(data: any, options: any, userId: string): void {
         if (game.userId !== userId) {
             return;
         }
-        super._onCreate(data, options, userId, context);
+        super._onCreate(data, options, userId);
         setTimeout(() => {
             if (this.data.data.settings.showBurner) {
                 new Dialog({
@@ -349,14 +349,15 @@ export class BWCharacter extends BWActor{
                                 this.update({ "data.settings.showBurner": false });
                             }
                         }
-                    }
+                    },
+                    default: "yes"
                 }).render(true);
             }
         }, 500);
     }
 }
 
-export interface CharacterDataRoot extends BWActorDataRoot {
+export interface CharacterDataRoot extends BWActorData {
     data: BWCharacterData;
     type: "character"
 }

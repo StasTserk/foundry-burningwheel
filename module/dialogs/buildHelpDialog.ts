@@ -16,7 +16,8 @@ export async function buildHelpDialog({ exponent, path, skillId, actor, helpedWi
                     registerHelpEntry({ path, skillId, actor, exponent, helpedWith });
                 }
             }
-        }
+        },
+        default: "help"
     }).render(true);
 }
 

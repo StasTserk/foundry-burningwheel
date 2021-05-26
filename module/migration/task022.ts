@@ -2,7 +2,7 @@ import { BWItem } from "../items/item.js";
 
 export async function task022(): Promise<void> {
     // add shade to all weapons
-    const actors: Actor[] = Array.from(game.actors.values());
+    const actors: Actor[] = Array.from(game.actors?.values() || []);
     for (const actor of actors) {
         for (const ownedItem of Array.from(actor.items.values())) {
             // also, the typo in the item type 'possession' has been fixed
@@ -12,7 +12,7 @@ export async function task022(): Promise<void> {
             }
         }
     }
-    const packs = Array.from(game.packs.values());
+    const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
         if (pack.cls === BWItem) {
             const packItems = await pack.getContent();

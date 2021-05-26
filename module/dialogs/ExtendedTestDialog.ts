@@ -15,7 +15,7 @@ export const changesState = (callback?: () => void): MethodDecorator => {
 };
 
 export class ExtendedTestDialog<T> extends Dialog {
-    constructor(d: DialogData, o?: ApplicationOptions) {
+    constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
         this.data.topic = "unknown";
         this.data.settingName = "";
@@ -23,7 +23,8 @@ export class ExtendedTestDialog<T> extends Dialog {
 
     data: ExtendedTestData<T>;
 
-    getData(): T {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getData(): any {
         const data = Object.assign(super.getData(), this.data.data ) as T;
         return data;
     }
@@ -66,17 +67,18 @@ export class ExtendedTestDialog<T> extends Dialog {
         });
     }
 
-    _getHeaderButtons(): { label: string, icon: string, class: string, onclick: (e: JQuery.ClickEvent) => void; }[] {
+    _getHeaderButtons(): Application.HeaderButton[] {
         let buttons = super._getHeaderButtons();
-        if (game.user.isGM) {
-            buttons = [{
-                label: "Show",
-                icon: "fas fa-eye",
-                class: "force-show-dow",
-                onclick: (_) => {
-                    game.socket.emit(constants.socketName, { type: `show${this.data.topic}` });
-                }
-            }].concat(buttons);
+        const showAllButton: Application.HeaderButton = {
+            label: "Show",
+            icon: "fas fa-eye",
+            class: "force-show-dow",
+            onclick: (_) => {
+                game.socket.emit(constants.socketName, { type: `show${this.data.topic}` });
+            }
+        };
+        if (game.user?.isGM) {
+            buttons = [showAllButton].concat(buttons);
         }
         return buttons;
     }
@@ -91,7 +93,7 @@ export class ExtendedTestDialog<T> extends Dialog {
     }
 }
 
-export interface ExtendedTestData<T> {
+export interface ExtendedTestData<T> extends Dialog.Data {
     settingName: string;
     topic: string;
     data: T;

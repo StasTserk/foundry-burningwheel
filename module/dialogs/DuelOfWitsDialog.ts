@@ -12,7 +12,7 @@ import { Skill, SkillDataRoot } from "../items/skill.js";
 import * as constants from "../constants.js";
 
 export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
-    constructor(d: DialogData, o?: ApplicationOptions) {
+    constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
         
         this.data.actionOptions = options;
@@ -34,7 +34,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         actionOptions: StringIndexedObject<string[]>;
     };
 
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): Dialog.Options {
         return mergeObject(super.defaultOptions, { width: 600, height: 600, resizable: true, classes: [ "bw-app" ] }, { overwrite: true });
     }
 
@@ -59,7 +59,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         if (target.dataset.skillId === "") {
             return;
         }
-        const actor = game.actors.entities.find(a => a._id === target.dataset.actorId) as BWActor;
+        const actor = game.actors?.entities.find(a => a._id === target.dataset.actorId) as BWActor;
         const skill = actor?.getOwnedItem(target.dataset.skillId || "") as Skill | undefined;
 
         dataPreset.deedsPoint = actor.data.data.deeds !== 0;
@@ -96,7 +96,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
 
     getData(): DuelOfWitsData {
         const data = super.getData();
-        const actors = game.actors.entities;
+        const actors = game.actors?.entities || [];
         data.actionOptions = this.data.actionOptions;
 
         data.side1Options = actors.filter(a => a._id !== data.side2ActorId);
@@ -110,7 +110,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.side1ReadOnly = !data.actor1 || !data.actor1.owner;
         data.side2ReadOnly = !data.actor2 || !data.actor2.owner;
 
-        data.gmView = game.user.isGM;
+        data.gmView = game.user?.isGM;
 
         data.showS1Select = (data.gmView && !data.blindS1) || (!data.side1ReadOnly && !data.gmView);
         data.showS2Select = (data.gmView && !data.blindS2) || (!data.side2ReadOnly && !data.gmView);

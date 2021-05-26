@@ -142,7 +142,8 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
                             return handleNpcStatRoll(rollData);
                         }
                     }
-                }
+                },
+                default: "root1"
             }).render(true);
         }
         return handleNpcStatRoll(rollData);
@@ -181,7 +182,8 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
                     callback: async (dialogHtml: JQuery) =>
                         skillRollCallback(dialogHtml, actor, skill, extraInfo)
                 }
-            }
+            },
+            default: "roll"
         }).render(true)
     );
 }

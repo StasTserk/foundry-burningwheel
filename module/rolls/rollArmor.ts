@@ -45,8 +45,8 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
                 label: "Roll",
                 callback: (html: JQuery) => armorRollCallback(armorItem, html, sheet, location)
             }
-        }
-
+        },
+        default: "roll"
     }).render(true);
 
 }
@@ -55,7 +55,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const dice = extractNumber(html, "armor");
     const damage = parseInt(armorItem.data.data[`damage${location}`]);
     const va = extractNumber(html, "vsArmor");
-    const actor = armorItem.actor as BWActor;
+    const actor = armorItem.actor as unknown as BWActor;
     const baseData = extractBaseData(html, sheet);
     const dieSources: StringIndexedObject<string> = {
         Armor: `+${dice}`,
@@ -92,7 +92,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const messageHtml = await renderTemplate(templates.armorMessage, messageData);
     return ChatMessage.create({
         content: messageHtml,
-        speaker: ChatMessage.getSpeaker({actor: armorItem.actor as BWActor})
+        speaker: ChatMessage.getSpeaker({actor: armorItem.actor as unknown as BWActor})
     });
 
 }

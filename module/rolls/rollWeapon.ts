@@ -8,7 +8,7 @@ import { RangedWeapon } from "../items/rangedWeapon.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";
 import { Skill } from "../items/skill.js";
 
-export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> | Application {
+export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): unknown {
     const actor = sheet.actor as BWActor & BWCharacter;
     const weaponId = target.dataset.weaponId;
     if (!weaponId) {
@@ -39,7 +39,7 @@ export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandle
 
 }
 
-export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset}: WeaponRollOptions): Promise<unknown> | Application {
+export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset}: WeaponRollOptions): unknown {
     const quality = (weapon as MeleeWeapon | RangedWeapon).data.data.quality;
 
     let weaponPreset: Partial<RollDialogData> = {};

@@ -41,7 +41,7 @@ export class ModifierDialog extends Application {
     }
 
     grantTests(obstacle: number, success: boolean): void {
-        if (game.user.isGM) {
+        if (game.user?.isGM) {
             // the GM is allowed to modify all characters so have them assign the tests and send out the message.
             this._grantTests(obstacle, success);
         } else {
@@ -56,7 +56,7 @@ export class ModifierDialog extends Application {
         this.help.forEach((entry) => {
             let name = "";
             let diff: TestString = "Routine";
-            const actor = game.actors.get(entry.actorId) as BWActor;
+            const actor = game.actors?.get(entry.actorId) as BWActor;
 
             if (actor.data.type === "character") {
                 if (entry.path) {
@@ -68,7 +68,7 @@ export class ModifierDialog extends Application {
                     }
                     (actor as BWCharacter).addStatTest(ability, name, entry.path, diff, success);
                 } else {
-                    const skill = game.actors.get(entry.actorId).getOwnedItem(entry.skillId || "") as Skill;
+                    const skill = game.actors?.get(entry.actorId)?.getOwnedItem(entry.skillId || "") as Skill;
                     diff = difficultyGroup(skill.data.data.exp, obstacle);
                     skill.addTest(diff);
                     name = skill.name;
@@ -151,7 +151,7 @@ export class ModifierDialog extends Application {
         });
 
         game.socket.on(constants.socketName, ({type, obstacle, success}) => {
-            if (type === "grantHelpTests" && game.user.isGM) {
+            if (type === "grantHelpTests" && game.user?.isGM) {
                 this._grantTests(obstacle, success);
             }
         });
@@ -179,7 +179,7 @@ export class ModifierDialog extends Application {
     getData(): DifficultyDialogData {
         const data = super.getData() as DifficultyDialogData;
         data.cssClass = this.cssClass;
-        data.editable = game.user.isGM;
+        data.editable = game.user?.isGM || false;
         data.modifiers = this.mods;
         data.help = this.help;
         data.showHelp = this.help.length > 0;

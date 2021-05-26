@@ -16,7 +16,7 @@ import { SpellDataRoot, Spell } from "../../items/spell.js";
 import { TraitDataRoot, Trait } from "../../items/trait.js";
 import { BWItemData } from "../../items/item.js";
 
-export class BWCharacterSheet extends BWActorSheet {
+export class BWCharacterSheet extends BWActorSheet<CharacterSheetData> {
     get actor(): BWCharacter {
         return super.actor as BWCharacter;
     }
@@ -55,19 +55,19 @@ export class BWCharacterSheet extends BWActorSheet {
         const woundDice = this.actor.data.data.ptgs.woundDice;
         const items = this.actor.items.values();
 
-        const beliefs: ItemData[] = [];
-        const instincts: ItemData[] = [];
-        const traits: ItemData[] = [];
+        const beliefs: Item.Data[] = [];
+        const instincts: Item.Data[] = [];
+        const traits: Item.Data[] = [];
         const skills: SkillDataRoot[] = [];
         const training: SkillDataRoot[] = [];
         const learning: SkillDataRoot[] = [];
-        const relationships: ItemData<RelationshipData>[] = [];
-        const equipment: ItemData[] = [];
+        const relationships: Item.Data<RelationshipData>[] = [];
+        const equipment: Item.Data[] = [];
         const melee: MeleeWeaponRootData[] = [];
         const ranged: RangedWeaponRootData[] = [];
         const armor: ArmorRootData[] = [];
         const reps: ReputationDataRoot[] = [];
-        const affs: ItemData[] = [];
+        const affs: Item.Data[] = [];
         const spells: SpellDataRoot[] = [];
 
         let addFist = true; // do we need to add a fist weapon?
@@ -90,7 +90,7 @@ export class BWCharacterSheet extends BWActorSheet {
                     }
                     Skill.disableIfWounded.call(i, woundDice);
                     break;
-                case "relationship": relationships.push(i as ItemData<RelationshipData>); break;
+                case "relationship": relationships.push(i as Item.Data<RelationshipData>); break;
                 case "melee weapon":
                     if (addFist && i.name === "Bare Fist") {
                         addFist = false; // only add one fist weapon if none present
@@ -177,7 +177,7 @@ export class BWCharacterSheet extends BWActorSheet {
         super.activateListeners(html);
     }
 
-    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor): Promise<Application> {
+    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor): Promise<unknown> {
         e.preventDefault();
         return addNewItem({
             actor: actor,
@@ -214,23 +214,23 @@ export class BWCharacterSheet extends BWActorSheet {
             case "addBelief":
                 options = { name: "New Belief", type: "belief", data: { }, img: constants.defaultImages.belief };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
             case "addInstinct":
                 options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
             case "addReputation":
                 options = { name: "New Reputation", type: "reputation", data: { }, img: constants.defaultImages.reputation };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
             case "addAffiliation":
                 options = { name: "New Affiliation", type: "affiliation", data: { }, img: constants.defaultImages.affiliation };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet.render(true));
+                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
             case "addSkill": 
                 return addNewItem({
                     actor: this.actor,
@@ -296,20 +296,20 @@ export class BWCharacterSheet extends BWActorSheet {
                 });
                 
             case "editItem":
-                return this.actor.getOwnedItem(id)?.sheet.render(true);
+                return this.actor.getOwnedItem(id)?.sheet?.render(true);
         }
         return null;
     }
 }
 
-function equipmentCompare(a: ItemData, b: ItemData): number {
+function equipmentCompare(a: Item.Data, b: Item.Data): number {
     if (constants.equipmentSheetOrder[a.type] !== constants.equipmentSheetOrder[b.type]) {
         return constants.equipmentSheetOrder[a.type] > constants.equipmentSheetOrder[b.type] ? 1 : -1;
     }
     return a.name.localeCompare(b.name);
 }
 
-function weaponCompare(a: ItemData, b: ItemData): number {
+function weaponCompare(a: Item.Data, b: Item.Data): number {
     if (a.name === "Bare Fist") {
         return -1;
     }
@@ -319,27 +319,28 @@ function weaponCompare(a: ItemData, b: ItemData): number {
     return a.name.localeCompare(b.name);
 }
 
-interface CharacterSheetData extends ActorSheetData {
-    reputations: ItemData[];
-    affiliations: ItemData[];
-    equipment: ItemData[];
+interface CharacterSheetData extends ActorSheet.Data {
+    reputations: Item.Data[];
+    affiliations: Item.Data[];
+    equipment: Item.Data[];
     melee: MeleeWeaponRootData[];
     fistStats: MeleeWeaponData;
-    armor: { [key: string]: ItemData | null}; // armor/location dictionary
+    armor: { [key: string]: Item.Data | null}; // armor/location dictionary
     ranged: RangedWeaponRootData[];
-    relationships: ItemData<RelationshipData>[];
-    beliefs: ItemData[];
-    instincts: ItemData[];
+    relationships: Item.Data<RelationshipData>[];
+    beliefs: Item.Data[];
+    instincts: Item.Data[];
     skills: SkillDataRoot[];
     learning: SkillDataRoot[];
     spells: SpellDataRoot[];
     training: SkillDataRoot[];
     traits: CharacterSheetTraits;
     systemVersion: string;
+    [k: string]: unknown;
 }
 
 interface CharacterSheetTraits {
-    character: ItemData[];
-    die: ItemData[];
-    callon: ItemData[];
+    character: Item.Data[];
+    die: Item.Data[];
+    callon: Item.Data[];
 }

@@ -55,7 +55,7 @@ export class ImportItemDialog extends Dialog {
     }
 }
 
-export async function addNewItem(options: AddItemOptions): Promise<Application> {
+export async function addNewItem(options: AddItemOptions): Promise<unknown> {
     if (!options.itemType && !options.itemTypes) {
         throw Error("Must provide one or more item types when adding new items");
     }
@@ -70,7 +70,7 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
             .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
         const sourceList = ["World"].concat(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            Array.from(game.packs.values()).filter((p:any) => !p.private).map((p: Compendium) => {
+            Array.from(game.packs?.values() || []).filter((p:any) => !p.private).map((p: Compendium) => {
                 return helpers.compendiumName(p);
         }));
 
@@ -100,10 +100,11 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
                 cancel: {
                     label: "Cancel"
                 }
-            }
-        } as DialogData,
+            },
+            default: "add"
+        } as Dialog.Data,
         { width: 530 });
-        dialog.sources = actor.getFlag(constants.systemName, "compendia") || [] as string[];
+        dialog.sources = (actor.getFlag(constants.systemName, "compendia") || []) as string[];
         dialog.render(true);
     };
 
@@ -119,7 +120,7 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
                     data: options.baseData,
                     img: options.img
                 });
-                return actor.getOwnedItem(item._id)?.sheet.render(true);
+                return actor.getOwnedItem(item._id)?.sheet?.render(true);
             }
         };
     });
@@ -127,11 +128,12 @@ export async function addNewItem(options: AddItemOptions): Promise<Application> 
         label: `Import existing ${options.itemType || "item"}`,
         callback: (html) => loadExistingCallback(html)
     };
-
+    const defaultButton = (options.itemTypes && options.itemTypes[0]) || "";
     return new Dialog({
         title: options.searchTitle,
-        content: options.popupMessage,
-        buttons: makeNewButtons
+        content: options.popupMessage || "",
+        buttons: makeNewButtons,
+        default: defaultButton
     }, { 
         classes: ["dialog", "import-dialog"]
     }).render(true);

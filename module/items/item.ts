@@ -15,6 +15,18 @@ import * as constants from "../constants.js";
 import { LifepathSheet } from "./sheets/lifepath-sheet.js";
 import { BWActor } from "../actors/BWActor.js";
 import { simpleBroadcast } from "../chat.js";
+import { SkillDataRoot } from "./skill.js";
+import { LifepathRootData } from "./lifepath.js";
+import { MeleeWeaponRootData } from "./meleeWeapon.js";
+import { AffiliationDataRoot } from "./affiliation.js";
+import { ArmorRootData } from "./armor.js";
+import { PossessionRootData } from "./possession.js";
+import { PropertyRootData } from "./property.js";
+import { RangedWeaponRootData } from "./rangedWeapon.js";
+import { RelationshipDataRoot } from "./relationship.js";
+import { ReputationDataRoot } from "./reputation.js";
+import { SpellDataRoot } from "./spell.js";
+import { TraitDataRoot } from "./trait.js";
 
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
@@ -30,8 +42,8 @@ export * from "./sheets/skill-sheet.js";
 export * from "./sheets/trait-sheet.js";
 export * from "./sheets/spell-sheet.js";
 
-export class BWItem extends Item<BWItemData> {
-    async generateChatMessage(speaker: BWActor): Promise<Entity> {
+export class BWItem extends Item<BWItemDataTypes> {
+    async generateChatMessage(speaker: BWActor): Promise<ChatMessage | null> {
         return simpleBroadcast({ title: this.name, mainText: `Type - ${this.data.type}` }, speaker);
     }
     prepareData(): void {
@@ -39,14 +51,12 @@ export class BWItem extends Item<BWItemData> {
         this.data.hasOwner = !!this.actor;
     }
 
-    data: BWItemData;
-
     get type(): ItemType {
         return super.type as ItemType;
     }
 }
 
-export interface BWItemData extends ItemData {
+export interface BWItemData extends Item.Data {
     type: ItemType;
     hasOwner: boolean;
 }
@@ -145,3 +155,7 @@ export type ItemType =
     "property" | "relationship" | "melee weapon" |
     "ranged weapon" | "reputation" | "affiliation"
     | "spell" | "lifepath";
+
+export type BWItemDataTypes = BWItemData | SkillDataRoot | LifepathRootData | MeleeWeaponRootData
+    | AffiliationDataRoot | ArmorRootData | PossessionRootData | PropertyRootData | RangedWeaponRootData
+    | RelationshipDataRoot | ReputationDataRoot | SpellDataRoot | TraitDataRoot;

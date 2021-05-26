@@ -1,21 +1,21 @@
 import * as constants from "../constants.js";
 
 export async function migrateData(): Promise<void> {
-    if (!game.user.isGM) {
+    if (!game.user?.isGM) {
         // players can't do this stuff anyhow.
         return;
     }
     const latest = game.system.data.version;
-    const recentVersion = await game.settings.get(constants.systemName, constants.settings.version) || "0.0.0";
+    const recentVersion = (game.settings.get(constants.systemName, constants.settings.version) || "0.0.0") as string;
     await game.settings.set(constants.systemName, constants.settings.version, latest);
 
     const patchVersions = Object.keys(migrationRoutines);
     for (const version of patchVersions) {
         if (isNewerVersion(version, recentVersion)) {
             // we need to do some updates.
-            ui.notifications.notify(`Beginning ${version} data migration.`, 'info');
+            ui.notifications?.notify(`Beginning ${version} data migration.`, 'info');
             await migrationRoutines[version]();
-            ui.notifications.notify(`Applied ${version} data migration.`, 'info');
+            ui.notifications?.notify(`Applied ${version} data migration.`, 'info');
         }
     }
 }

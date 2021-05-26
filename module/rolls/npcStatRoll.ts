@@ -78,7 +78,8 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
                     callback: async (dialogHtml: JQuery) =>
                         statRollCallback(dialogHtml, actor, statName, shade, open, extraInfo)
                 }
-            }
+            },
+            default: "roll"
         }).render(true)
     );
 }

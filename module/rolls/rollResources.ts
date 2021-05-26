@@ -37,7 +37,7 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        tax: parseInt(actor.data.data.resourcesTax, 10),
+        tax: parseInt(actor.data.data.resourcesTax.toString()),
         stat,
         cashDieOptions: Array.from(Array(actor.data.data.cash || 0).keys()),
         fundDieOptions: Array.from(Array(actor.data.data.funds || 0).keys()),
@@ -58,7 +58,8 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
                     callback: async (dialogHtml: JQuery) =>
                         resourcesRollCallback(dialogHtml, stat, actor)
                 }
-            }
+            },
+            default: "roll"
         }).render(true)
     );
 }
@@ -102,7 +103,8 @@ async function resourcesRollCallback(
                 skip: {
                     label: "Skip for now"
                 }
-            }
+            },
+            default: "full"
         });
         taxMessage.render(true);
     }

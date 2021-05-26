@@ -23,21 +23,21 @@ export function CreateMeleeRollMacro(data: MeleeDragData): MacroData | null {
 }
 
 export function RollMeleeMacro(actorId: string, weaponId: string, attackIndex: number): void {
-    const actor = game.actors.find(a => a.id === actorId) as BWActor;
+    const actor = game.actors?.find(a => a.id === actorId) as BWActor;
     if (!actor) {
-        ui.notifications.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
+        ui.notifications?.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
         return;
     }
 
     const weapon = actor.getOwnedItem(weaponId) as MeleeWeapon | null;
     if (!weapon) {
-        ui.notifications.notify("Unable to find weapon linked to this macro. Was it deleted?", "error");
+        ui.notifications?.notify("Unable to find weapon linked to this macro. Was it deleted?", "error");
         return;
     }
 
     const skill = actor.getOwnedItem(weapon.data.data.skillId) as Skill | null;
     if (!skill) {
-        ui.notifications.notify("Unable to find skill linked to the weapon in this macro. Ensure a martial skill is linked with this weapon.", "error");
+        ui.notifications?.notify("Unable to find skill linked to the weapon in this macro. Ensure a martial skill is linked with this weapon.", "error");
         return;
     }
 

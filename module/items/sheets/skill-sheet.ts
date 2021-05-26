@@ -3,7 +3,7 @@ import { Skill } from "../skill.js";
 import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
 export class SkillSheet extends BWItemSheet {
-    static get defaultOptions(): FormApplicationOptions {
+    static get defaultOptions(): BaseEntitySheet.Options {
         return mergeObject(super.defaultOptions, {});
     }
 

@@ -18,21 +18,21 @@ export async function initializeExtendedTestDialogs(): Promise<void> {
     let fightData = {};
     let rncData = {};
     try {
-        dowData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.duelData));
+        dowData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.duelData) as string);
     } catch (err) {
-        ui.notifications.warn("Error parsing serialized Duel of Wits data");
+        ui.notifications?.warn("Error parsing serialized Duel of Wits data");
         console.error(err);
     }
     try {
-        fightData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.fightData));
+        fightData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.fightData) as string);
     } catch (err) {
-        ui.notifications.warn("Error parsing serialized Fight data");
+        ui.notifications?.warn("Error parsing serialized Fight data");
         console.error(err);
     }
     try {
-        rncData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.rangeData));
+        rncData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.rangeData) as string);
     } catch (err) {
-        ui.notifications.warn("Error parsing serialized Range and Cover data");
+        ui.notifications?.warn("Error parsing serialized Range and Cover data");
         console.error(err);
     }
     
@@ -62,10 +62,10 @@ export async function initializeExtendedTestDialogs(): Promise<void> {
 }
 
 export async function initializeRollPanels(): Promise<void> {
-    game.burningwheel.useGmDifficulty = await game.settings.get(constants.systemName, constants.settings.useGmDifficulty);
+    game.burningwheel.useGmDifficulty = await game.settings.get(constants.systemName, constants.settings.useGmDifficulty) as boolean;
     if (game.burningwheel.useGmDifficulty) {
-        const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty);
-        const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData));
+        const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty) as number;
+        const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData) as string);
         game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, testData);
         game.burningwheel.gmDifficulty.activateSocketListeners();
         game.burningwheel.gmDifficulty.render(true);
@@ -73,9 +73,9 @@ export async function initializeRollPanels(): Promise<void> {
 
     let modData = { mods: undefined, help: undefined };
     try {
-        modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList));
+        modData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.obstacleList) as string);
     } catch (err) {
-        ui.notifications.warn("Error parsing serialized Modifier data");
+        ui.notifications?.warn("Error parsing serialized Modifier data");
         console.error(err);
     }
     game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.useGmDifficulty, modData.mods, modData.help);

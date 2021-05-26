@@ -1,17 +1,18 @@
-import { BWActor } from "../actors/BWActor.js";
 import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
+import { BWActor } from "../actors/BWActor.js";
 
 export class RangedWeapon extends BWItem {
     prepareData(): void {
         super.prepareData();
-        if (this.actor && this.data.data.usePower) {
-            let baseDmg = this.actor.data.data.power.exp + this.data.data.powerBonus;
-            if (this.actor.data.data.power.shade === "G") {
+        const actor = this.actor as unknown as BWActor;
+        if (actor && this.data.data.usePower) {
+            let baseDmg = actor.data.data.power.exp + this.data.data.powerBonus;
+            if (actor.data.data.power.shade === "G") {
                 baseDmg += 2;
             }
-            if (this.actor.data.data.power.shade === "W") {
+            if (actor.data.data.power.shade === "W") {
                 baseDmg += 3;
             }
             this.data.data.incidental = Math.ceil(baseDmg / 2);
@@ -53,9 +54,6 @@ export class RangedWeapon extends BWItem {
     }
 
     data: RangedWeaponRootData;
-    get actor(): BWActor | null {
-        return super.actor as BWActor | null;
-    }
 }
 
 export interface RangedWeaponRootData extends BWItemData {

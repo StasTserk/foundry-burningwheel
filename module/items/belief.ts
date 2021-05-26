@@ -5,7 +5,7 @@ import { ArthaEarner, BWItem, BWItemData } from "./item.js";
 export class Belief extends BWItem {
     data: BWItemData & { data: BeliefData };
 
-    async generateChatMessage(actor: BWActor): Promise<Entity> {
+    async generateChatMessage(actor: BWActor): Promise<ChatMessage | null> {
         const data: SimpleBroadcastMessageData = {
             title: this.name,
             mainText: this.data.data.text,

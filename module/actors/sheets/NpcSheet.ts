@@ -11,9 +11,9 @@ import { ArmorData } from "../../items/armor.js";
 import { SkillDataRoot, Skill } from "../../items/skill.js";
 import { TraitDataRoot } from "../../items/trait.js";
 
-export class NpcSheet extends BWActorSheet {
-    get actor(): BWActor & Npc {
-        return super.actor as BWActor & Npc;
+export class NpcSheet extends BWActorSheet<NpcSheetData> {
+    get actor(): Npc {
+        return super.actor as Npc;
     }
 
     static get defaultOptions(): ActorSheetOptions {
@@ -34,7 +34,7 @@ export class NpcSheet extends BWActorSheet {
         return options;
     }
     
-    getData(): ActorSheetData<unknown> {
+    getData(): NpcSheetData {
         const data = super.getData() as NpcSheetData;
         const rollable = true; const open = true;
         const actor = this.actor;
@@ -175,7 +175,7 @@ export class NpcSheet extends BWActorSheet {
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
         const item = this.actor.getOwnedItem(targetId);
-        item?.sheet.render(true);
+        item?.sheet?.render(true);
     }
     _deleteSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
@@ -186,30 +186,31 @@ export class NpcSheet extends BWActorSheet {
         this.actor.createOwnedItem({
             name: `New ${itemType}`,
             type: itemType as ItemType
-        }).then(i => this.actor.getOwnedItem(i._id)?.sheet.render(true));
+        }).then(i => this.actor.getOwnedItem(i._id)?.sheet?.render(true));
     }
 }
 
-function byName(a: ItemData, b: ItemData): number {
+function byName(a: Item.Data, b: Item.Data): number {
     return a.name.localeCompare(b.name);
 }
 
-export interface NpcSheetData extends ActorSheetData {
+export interface NpcSheetData {
     untrained: SkillDataRoot[];
-    armor: { [key: string]: ItemData<ArmorData> | null; };
+    armor: { [key: string]: Item.Data<ArmorData> | null; };
     statRow: NPCStatEntry[];
-    beliefs: ItemData[];
-    instincts: ItemData[];
+    beliefs: Item.Data[];
+    instincts: Item.Data[];
     traits: TraitDataRoot[];
     skills: SkillDataRoot[];
-    weapons: ItemData[];
-    ranged: ItemData[];
-    affiliations: ItemData[];
-    reputations: ItemData[];
-    relationships: ItemData[];
-    gear: ItemData[];
-    spells: ItemData[];
+    weapons: Item.Data[];
+    ranged: Item.Data[];
+    affiliations: Item.Data[];
+    reputations: Item.Data[];
+    relationships: Item.Data[];
+    gear: Item.Data[];
+    spells: Item.Data[];
     actor: BWActor;
+    [k: string]: unknown;
 }
 
 interface NPCStatEntry {

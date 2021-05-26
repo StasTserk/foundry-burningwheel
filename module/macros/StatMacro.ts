@@ -25,16 +25,16 @@ export function CreateStatMacro(data: StatDragData): MacroData | null {
 }
 
 export function RollStatMacro(actorId: string, statPath: string, statName: string): void {
-    const actor = game.actors.find(a => a.id === actorId) as BWActor;
+    const actor = game.actors?.find(a => a.id === actorId) as BWActor;
     if (!actor) {
-        ui.notifications.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
+        ui.notifications?.notify("Unable to find actor linked to this macro. Were they deleted?", "error");
         return;
     }
 
     const stat = getProperty(actor.data, statPath) as Ability | undefined;
 
     if (!stat) {
-        ui.notifications.notify(`Stat appears to be missing from the actor somehow. Was looking for ${statPath}.`, "error");
+        ui.notifications?.notify(`Stat appears to be missing from the actor somehow. Was looking for ${statPath}.`, "error");
         return;
     }
     const dataPreset: Partial<RollDialogData> = getMacroRollPreset(actor);

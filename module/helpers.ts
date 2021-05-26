@@ -98,7 +98,7 @@ export async function getItemsOfTypes(itemTypes: ItemType[], compendiums?: strin
     const useAll = !compendiums;
     const useWorld = compendiums?.indexOf('world') !== -1;
     if (useWorld) {
-        itemList = game.items.filter((i: BWItem) => itemTypes.indexOf(i.type) !== -1)
+        itemList = game.items?.filter((i: BWItem) => itemTypes.indexOf(i.type) !== -1)
         .map((item: BWItem & {itemSource?: string } ) => {
             item.itemSource = "World"; 
             return item; 
@@ -107,7 +107,7 @@ export async function getItemsOfTypes(itemTypes: ItemType[], compendiums?: strin
 
     let compendiumItems: (BWItem & {itemSource?: string })[] = [];
     let sourceLabel = "";
-    const packs = Array.from(game.packs.values()).filter(p => useAll || compendiums?.indexOf(p.collection) !== -1) as Compendium[];
+    const packs = Array.from(game.packs?.values() || []).filter(p => useAll || compendiums?.indexOf(p.collection) !== -1) as Compendium[];
     for (const pack of packs) {
         const packItems = await pack.getContent();
         sourceLabel = compendiumName(pack);
@@ -130,10 +130,10 @@ export async function getItemsOfType<T extends BWItem>(itemType: ItemType, compe
 }
 
 export function getCompendiumList(): { name: string, label: string}[] {
-    const packs = Array.from(game.packs.values()) as Compendium[];
+    const packs = Array.from(game.packs?.values() || []) as Compendium[];
     return [ { name: "world", label: "World Content" }].concat(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...packs.filter((p: any) => game.user.isGM || !p.private)
+        ...packs.filter((p: any) => game.user?.isGM || !p.private)
         .map(p => {
             return {
                 name: p.collection,
@@ -144,7 +144,7 @@ export function getCompendiumList(): { name: string, label: string}[] {
     );
 }
 
-export async function notifyError(title: string, errorMessage: string): Promise<Application> {
+export async function notifyError(title: string, errorMessage: string): Promise<unknown> {
     return new Dialog({
         title,
         content: `<p>${errorMessage}</p>`,
@@ -152,7 +152,8 @@ export async function notifyError(title: string, errorMessage: string): Promise<
             ok: {
                 label: "OK"
             }
-        }
+        },
+        default: "ok"
     }).render(true);
 }
 
@@ -214,8 +215,8 @@ export interface DragData {
     pack?: string,
 }
 
-export interface ItemDragData extends DragData {
-    data?: BWItemData;
+export interface ItemDragData extends  DragData {
+    data?: DeepPartial<BWItemData>;
 }
 
 export interface MeleeDragData extends DragData {

@@ -1,21 +1,21 @@
 <div class="character-settings-section">
     <h2>Character Settings</h2>
     <div class="checkbox-grid">
-        <input id="checkbox-{{actor._id}}-round-up-mw" type="checkbox" name="data.settings.roundUpMortalWound" {{checked data.settings.roundUpMortalWound}}>
-        <label for="checkbox-{{actor._id}}-round-up-mw">Round Up Mortal Wound</label>
-        <input id="checkbox-{{actor._id}}-round-up-reflex" type="checkbox" name="data.settings.roundUpReflexes" {{checked data.settings.roundUpReflexes}}>
-        <label for="checkbox-{{actor._id}}-round-up-reflex">Round Up Reflexes</label>
-        <input id="checkbox-{{actor._id}}-armor-trained" type="checkbox" name="data.settings.armorTrained" {{checked data.settings.armorTrained}}>
-        <label for="checkbox-{{actor._id}}-armor-trained">Armor Trained</label>
-        <input id="checkbox-{{actor._id}}-numb" type="checkbox" name="data.settings.ignoreSuperficialWounds" {{checked data.settings.ignoreSuperficialWounds}}>
-        <label for="checkbox-{{actor._id}}-numb">Ignore Superficial Wounds</label>
-        <input id="checkbox-{{actor._id}}-burner" type="checkbox" name="data.settings.showBurner" {{checked data.settings.showBurner}}>
-        <label for="checkbox-{{actor._id}}-burner">Show Character Burner</label>
+        <input id="checkbox-{{actor.id}}-round-up-mw" type="checkbox" name="data.settings.roundUpMortalWound" {{checked data.settings.roundUpMortalWound}}>
+        <label for="checkbox-{{actor.id}}-round-up-mw">Round Up Mortal Wound</label>
+        <input id="checkbox-{{actor.id}}-round-up-reflex" type="checkbox" name="data.settings.roundUpReflexes" {{checked data.settings.roundUpReflexes}}>
+        <label for="checkbox-{{actor.id}}-round-up-reflex">Round Up Reflexes</label>
+        <input id="checkbox-{{actor.id}}-armor-trained" type="checkbox" name="data.settings.armorTrained" {{checked data.settings.armorTrained}}>
+        <label for="checkbox-{{actor.id}}-armor-trained">Armor Trained</label>
+        <input id="checkbox-{{actor.id}}-numb" type="checkbox" name="data.settings.ignoreSuperficialWounds" {{checked data.settings.ignoreSuperficialWounds}}>
+        <label for="checkbox-{{actor.id}}-numb">Ignore Superficial Wounds</label>
+        <input id="checkbox-{{actor.id}}-burner" type="checkbox" name="data.settings.showBurner" {{checked data.settings.showBurner}}>
+        <label for="checkbox-{{actor.id}}-burner">Show Character Burner</label>
     </div>
     <hr>
     <div>
-        <input id="input-{{actor._id}}-success-only" type="text" name="data.settings.onlySuccessesCount" value="{{data.settings.onlySuccessesCount}}" >
-        <label for="input-{{actor._id}}-success-only">Skills for which only successes count towards advancement.</label>
+        <input id="input-{{actor.id}}-success-only" type="text" name="data.settings.onlySuccessesCount" value="{{data.settings.onlySuccessesCount}}" >
+        <label for="input-{{actor.id}}-success-only">Skills for which only successes count towards advancement.</label>
     </div>
     <hr>
     <h2>Embedded Items</h2>
@@ -30,8 +30,8 @@
         <div class="setting-item-row">
             <div>{{i.name}}</div>
             <div>{{titlecase i.type}}</div>
-            <div><i class="fas fa-edit" data-action="editItem" data-id="{{i._id}}"></i></div>
-            <div><i class="fas fa-trash" data-action="delItem" data-id="{{i._id}}"></i></div>
+            <div><i class="fas fa-edit" data-action="editItem" data-id="{{i.id}}"></i></div>
+            <div><i class="fas fa-trash" data-action="delItem" data-id="{{i.id}}"></i></div>
         </div>
         {{/each}}
     </div>

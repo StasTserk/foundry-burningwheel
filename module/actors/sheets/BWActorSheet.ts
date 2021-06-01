@@ -1,8 +1,10 @@
-import { BWActor, BWActorDataTypes } from "../BWActor.js";
+import { BWActor } from "../BWActor.js";
 import { ArmorRootData } from "../../items/armor.js";
 import * as constants from "../../constants.js";
 import * as helpers from "../../helpers.js";
 import { BWItem } from "../../items/item.js";
+import { NpcData } from "../Npc.js";
+import { BWCharacterData } from "../BWCharacter.js";
 
 export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O extends ActorSheetOptions> extends ActorSheet<T, A, O> {
     private _keyDownHandler = this._handleKeyPress.bind(this);
@@ -23,7 +25,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         super.getData();
         return {
             actor: this.actor,
-            data: this.actor.data,
+            data: this.actor.data.data,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any;
     }
@@ -186,7 +188,7 @@ export interface ActorSheetOptions extends BaseEntitySheet.Options {
     draggableStatSelectors?: string[];
 }
 
-export interface BaseActorSheetData {
+export interface BaseActorSheetData<T extends NpcData | BWCharacterData = BWCharacterData> {
     actor: BWActor;
-    data: BWActorDataTypes;
+    data: T;
 }

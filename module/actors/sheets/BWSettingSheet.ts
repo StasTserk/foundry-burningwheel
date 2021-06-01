@@ -2,8 +2,9 @@ import { BWItem } from "../../items/item.js";
 import { Lifepath, LifepathRootData } from "../../items/lifepath.js";
 import { BWSetting } from "../BWSetting.js";
 import * as helpers from "../../helpers.js";
+import { BaseActorSheetData } from "./BWActorSheet.js";
 
-export class BWSettingSheet extends ActorSheet {
+export class BWSettingSheet extends ActorSheet<BWSettingData> {
     get template(): string {
         return "systems/burningwheel/templates/setting-sheet.hbs";
     }
@@ -128,7 +129,7 @@ export class BWSettingSheet extends ActorSheet {
             } else if (dragData.pack) {
                 itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || ""))?.data as LifepathRootData;
             } else if (dragData.actorId) {
-                itemData = (game.actors?.find((a: Entity) => a._id === dragData.actorId))?.getOwnedItem(dragData.id || "").data as LifepathRootData;
+                itemData = (game.actors?.find((a: FoundryDocument) => a._id === dragData.actorId))?.getOwnedItem(dragData.id || "").data as LifepathRootData;
             } else {
                 itemData = game.items?.find((i: BWItem) => i.id === dragData.id)?.data as LifepathRootData;
             }
@@ -160,6 +161,6 @@ export class BWSettingSheet extends ActorSheet {
     }
 }
 
-export interface BWSettingData extends ActorSheet.Data {
+export interface BWSettingData extends BaseActorSheetData {
     lifepaths: LifepathRootData[];
 }

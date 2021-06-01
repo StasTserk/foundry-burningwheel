@@ -107,7 +107,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 } else {
                     if (successes <= obstacleTotal && success) {
                         if (actor.data.successOnlyRolls.includes(learningTarget)) {
-                            (actor as BWActor & BWCharacter).addStatTest(
+                            (actor as BWCharacter).addStatTest(
                                 getProperty(actor, `data.data.${learningTarget}`) as TracksTests,
                                 learningTarget.titleCase(),
                                 `data.${learningTarget}`,

@@ -21,8 +21,9 @@ export class Npc extends BWActor {
     }
 }
 
-export interface NpcDataRoot extends BWActorData {
+export interface NpcDataRoot extends BWActorData<NpcData> {
     data: NpcData;
+    // type: "npc"
 }
 
 export interface NpcData extends Common {

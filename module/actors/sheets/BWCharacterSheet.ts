@@ -1,5 +1,5 @@
-import { BWActor, NewItemData } from "../BWActor.js";
-import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
+import { NewItemData } from "../BWActor.js";
+import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet.js";
 import * as constants from "../../constants.js";
 import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
@@ -16,7 +16,7 @@ import { SpellDataRoot, Spell } from "../../items/spell.js";
 import { TraitDataRoot, Trait } from "../../items/trait.js";
 import { BWItemData } from "../../items/item.js";
 
-export class BWCharacterSheet extends BWActorSheet<CharacterSheetData> {
+export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharacter, ActorSheetOptions> {
     get actor(): BWCharacter {
         return super.actor as BWCharacter;
     }
@@ -177,7 +177,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData> {
         super.activateListeners(html);
     }
 
-    async learnNewSkill(e: JQuery.ClickEvent, actor: BWActor): Promise<unknown> {
+    async learnNewSkill(e: JQuery.ClickEvent, actor: BWCharacter): Promise<unknown> {
         e.preventDefault();
         return addNewItem({
             actor: actor,
@@ -319,7 +319,7 @@ function weaponCompare(a: Item.Data, b: Item.Data): number {
     return a.name.localeCompare(b.name);
 }
 
-interface CharacterSheetData extends ActorSheet.Data {
+interface CharacterSheetData extends BaseActorSheetData {
     reputations: Item.Data[];
     affiliations: Item.Data[];
     equipment: Item.Data[];

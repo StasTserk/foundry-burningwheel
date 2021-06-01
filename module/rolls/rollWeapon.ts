@@ -2,14 +2,13 @@ import { handleLearningRoll } from "./rollLearning.js";
 import { handleSkillRoll } from "./rollSkill.js";
 import * as helpers from "../helpers.js";
 import { EventHandlerOptions, mergePartials, RollDialogData, RollOptions } from "./rolls.js";
-import { BWActor } from "../actors/BWActor.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";
 import { Skill } from "../items/skill.js";
 
 export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): unknown {
-    const actor = sheet.actor as BWActor & BWCharacter;
+    const actor = sheet.actor as BWCharacter;
     const weaponId = target.dataset.weaponId;
     if (!weaponId) {
         throw Error("Malformed weapon roll button. Weapon ID must be specified");

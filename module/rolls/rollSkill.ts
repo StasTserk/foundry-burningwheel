@@ -1,4 +1,4 @@
-import { BWActor, TracksTests } from "../actors/BWActor.js";
+import { TracksTests } from "../actors/BWActor.js";
 import * as helpers from "../helpers.js";
 import {
     buildRerollData,
@@ -24,8 +24,8 @@ import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollEventOptions ): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
     const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
-    const actor = sheet.actor as BWActor;
-    return handleSkillRoll({ actor: (actor as BWActor & BWCharacter), skill, dataPreset, extraInfo, onRollCallback});
+    const actor = sheet.actor as BWCharacter;
+    return handleSkillRoll({ actor, skill, dataPreset, extraInfo, onRollCallback});
 }
 
 export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onRollCallback }: SkillRollOptions): Promise<unknown> {
@@ -81,7 +81,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
 }
 
 async function skillRollCallback(
-    dialogHtml: JQuery, skill: Skill, actor: BWActor & BWCharacter, extraInfo?: string): Promise<unknown> {
+    dialogHtml: JQuery, skill: Skill, actor: BWCharacter, extraInfo?: string): Promise<unknown> {
     const { diceTotal, difficultyTotal, wildForks, difficultyDice, baseDifficulty, obSources, dieSources, splitPool, persona, deeds, addHelp, difficultyTestTotal } = extractRollData(dialogHtml);
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
@@ -172,7 +172,7 @@ export interface SkillRollEventOptions extends EventHandlerOptions {
 
 export interface SkillRollOptions extends RollOptions {
     skill: Skill,
-    actor: BWActor & BWCharacter;
+    actor: BWCharacter;
     dataPreset?: Partial<SkillDialogData>;
     extraInfo?: string;
 }

@@ -36,7 +36,7 @@ export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: Np
     const weapon = sheet.actor.getOwnedItem(itemId) as MeleeWeapon | RangedWeapon;
     const attackIndex = parseInt(target.dataset.attackIndex as string);
     return handleNpcWeaponRoll({
-        actor: sheet.actor as BWActor & Npc,
+        actor: sheet.actor as Npc,
         weapon,
         skill,
         attackIndex,
@@ -190,7 +190,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
 
 async function skillRollCallback(
         dialogHtml: JQuery,
-        actor: BWActor & Npc,
+        actor: Npc,
         skill: Skill,
         extraInfo?: string) {
     const rollData = extractRollData(dialogHtml);

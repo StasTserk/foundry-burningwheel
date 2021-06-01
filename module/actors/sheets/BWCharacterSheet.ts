@@ -4,7 +4,7 @@ import * as constants from "../../constants.js";
 import { handleRollable } from "../../rolls/rolls.js";
 import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
 import { addNewItem } from "../../dialogs/ImportItemDialog.js";
-import { BWCharacter } from "../BWCharacter.js";
+import { BWCharacter, BWCharacterData } from "../BWCharacter.js";
 import { byName } from "../../helpers.js";
 import { ArmorRootData } from "../../items/armor.js";
 import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
@@ -319,7 +319,7 @@ function weaponCompare(a: Item.Data, b: Item.Data): number {
     return a.name.localeCompare(b.name);
 }
 
-interface CharacterSheetData extends BaseActorSheetData {
+interface CharacterSheetData extends BaseActorSheetData<BWCharacterData> {
     reputations: Item.Data[];
     affiliations: Item.Data[];
     equipment: Item.Data[];
@@ -336,7 +336,6 @@ interface CharacterSheetData extends BaseActorSheetData {
     training: SkillDataRoot[];
     traits: CharacterSheetTraits;
     systemVersion: string;
-    [k: string]: unknown;
 }
 
 interface CharacterSheetTraits {

@@ -89,7 +89,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
                     callback: async (dialogHtml: JQuery) => {
                         const newItems = dialogHtml.find('input:checked')
                             .map((_, element: HTMLInputElement) => {
-                                const itemRoot = (items.find((s: BWItem) => s._id === element.value) as BWItem).data;
+                                const itemRoot = (items.find((s: BWItem) => s.id === element.value) as BWItem).data;
                                 Object.assign(itemRoot.data, options.forcedData);
                                 return itemRoot;
                             }).toArray();

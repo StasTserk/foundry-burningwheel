@@ -132,7 +132,7 @@ export function buildRerollData({ actor, roll, accessor, splitPoolRoll, itemId }
     const coreData: RerollData = {
         dice: roll.dice[0].results.map(r => r.result).join(","),
         splitDice: splitPoolRoll?.dice[0].results.map(r => r.result).join(",") || undefined,
-        actorId: actor._id,
+        actorId: actor.id,
     };
     if (accessor) {
         return {

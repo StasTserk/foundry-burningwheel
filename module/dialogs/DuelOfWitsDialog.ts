@@ -59,7 +59,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         if (target.dataset.skillId === "") {
             return;
         }
-        const actor = game.actors?.entities.find(a => a._id === target.dataset.actorId) as BWActor;
+        const actor = game.actors?.entities.find(a => a.id === target.dataset.actorId) as BWActor;
         const skill = actor?.getOwnedItem(target.dataset.skillId || "") as Skill | undefined;
 
         dataPreset.deedsPoint = actor.data.data.deeds !== 0;
@@ -99,12 +99,12 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         const actors = game.actors?.entities || [];
         data.actionOptions = this.data.actionOptions;
 
-        data.side1Options = actors.filter(a => a._id !== data.side2ActorId);
-        data.side2Options = actors.filter(a => a._id !== data.side1ActorId);
+        data.side1Options = actors.filter(a => a.id !== data.side2ActorId);
+        data.side2Options = actors.filter(a => a.id !== data.side1ActorId);
 
-        data.actor1 = actors.find(a => a._id === data.side1ActorId) as BWActor | undefined;
+        data.actor1 = actors.find(a => a.id === data.side1ActorId) as BWActor | undefined;
         data.actor1Skills = (data.actor1?.data.socialSkills || []).map((s: SkillDataRoot & { _id: string }) => { return { id: s._id, label: s.name };});
-        data.actor2 = actors.find(a => a._id === data.side2ActorId) as BWActor | undefined;
+        data.actor2 = actors.find(a => a.id === data.side2ActorId) as BWActor | undefined;
         data.actor2Skills = (data.actor2?.data.socialSkills || []).map((s: SkillDataRoot & { _id: string }) => { return { id: s._id, label: s.name };});
 
         data.side1ReadOnly = !data.actor1 || !data.actor1.owner;

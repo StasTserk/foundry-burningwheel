@@ -118,7 +118,7 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
         if (!skillName || skillExp === 0 || !extractNamedCheck($(e), "skillOpened")) { return; }
         skillId = extractNamedChildString($(e), "skillId");
         if (skillId) {
-            skillData = skillsList.find(s => s._id === skillId)?.data;
+            skillData = skillsList.find(s => s.id === skillId)?.data;
             if (skillData) {
                 (skillData.data as SkillData).exp = skillExp;
                 (skillData.data as SkillData).shade = costToString(extractNamedChildNumber($(e), "skillShade"));
@@ -155,7 +155,7 @@ export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]):
         if (!traitName || !extractNamedChildCheck($(e), "traitTaken")) { return; }
         traitId = extractNamedChildString($(e), "traitId");
         if (traitId) {
-            traitData = traitList.find(t => t._id === traitId)?.data;
+            traitData = traitList.find(t => t.id === traitId)?.data;
             traits.push(traitData || {});
         } else {
             traits.push({
@@ -182,7 +182,7 @@ export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Pro
         if (!propertyName || !extractNamedChildNumber($(e), "propertyCost")) { return; }
         propertyId = extractNamedChildString($(e), "propertyId");
         if (propertyId) {
-            propertyData = propertyList.find(p => p._id === propertyId)?.data;
+            propertyData = propertyList.find(p => p.id === propertyId)?.data;
             properties.push(propertyData || {});
         } else {
             properties.push({
@@ -272,7 +272,7 @@ export function extractGearData(html: JQuery<HTMLElement>, gearList: BWItem[]): 
         gearType = extractNamedChildString($(e), "itemType") as ItemType;
         if (!gearName) { return; }
         if (gearId) {
-            gear.push(gearList.find(g => g._id === gearId)?.data || {});
+            gear.push(gearList.find(g => g.id === gearId)?.data || {});
             return;
         }
         const gearItem: Partial<BWItemData> = {

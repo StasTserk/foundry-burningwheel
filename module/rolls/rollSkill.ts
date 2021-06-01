@@ -115,9 +115,9 @@ async function skillRollCallback(
         }
     }
 
-    const fateReroll = buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll });
+    const fateReroll = buildRerollData({ actor, roll, itemId: skill.id, splitPoolRoll });
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, itemId: skill._id, splitPoolRoll }) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, itemId: skill.id, splitPoolRoll }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
     if (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {

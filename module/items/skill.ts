@@ -29,7 +29,7 @@ export class Skill extends BWItem {
         super.prepareData();
         updateTestsNeeded(this.data.data);
         this.calculateAptitude();
-        this.data.data.safeId = this._id;
+        this.data.data.safeId = this.id;
     }
 
     calculateAptitude(this: Skill): void {

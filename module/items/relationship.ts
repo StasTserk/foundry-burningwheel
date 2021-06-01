@@ -3,7 +3,7 @@ import { BWItem, BWItemData, DisplayClass } from "./item.js";
 export class Relationship extends BWItem {
     prepareData(): void {
         super.prepareData();
-        this.data.data.safeId = this._id;
+        this.data.data.safeId = this.id;
         if (this.actor) {
             this.data.data.aptitude = this.actor.data.data.circles.exp || 0;
         }

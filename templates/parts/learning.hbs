@@ -1,14 +1,14 @@
-<div class="learning flex-row" draggable="true" data-id="{{skill.id}}">
-    <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{skill.id}}"></i>
-    <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{skill.id}}"></i>
+<div class="learning flex-row" draggable="true" data-id="{{skill._id}}">
+    <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{skill._id}}"></i>
+    <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{skill._id}}"></i>
     <h3>{{skill.name}}</h3>
-    <button class="rollable modifiable" data-rollable-name="{{skill.name}}" data-skill-id="{{skill.id}}" data-roll-type="learning"><i class="fas fa-dice"></i></button>
+    <button class="rollable modifiable" data-rollable-name="{{skill.name}}" data-skill-id="{{skill._id}}" data-roll-type="learning"><i class="fas fa-dice"></i></button>
     <div class="learning-xp">
         {{#multiboxes skill.data.learningProgress needed=skill.data.aptitude}}
         <input type="radio"
             id="{{skill.data.safeId}}-learningProgress-0"
             value="0" 
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-0"
@@ -19,7 +19,7 @@
             type="radio"
             id="{{skill.data.safeId}}-learningProgress-1"
             value="1" 
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-1"
@@ -29,7 +29,7 @@
             type="radio"
             id="{{skill.data.safeId}}-learningProgress-2"
             value="2" 
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-2"
@@ -41,7 +41,7 @@
             id="{{skill.data.safeId}}-learningProgress-3"
             value="3"
             
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress"
             >
         <label
@@ -52,7 +52,7 @@
         <input
             type="radio" id="{{skill.data.safeId}}-learningProgress-4"
             value="4" 
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-4"
@@ -64,7 +64,7 @@
             id="{{skill.data.safeId}}-learningProgress-5"
             value="5"
             
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-5"
@@ -76,7 +76,7 @@
             id="{{skill.data.safeId}}-learningProgress-6"
             value="6"
             
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-6"
@@ -88,7 +88,7 @@
             id="{{skill.data.safeId}}-learningProgress-7"
             value="7"
             
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-7"
@@ -100,7 +100,7 @@
             id="{{skill.data.safeId}}-learningProgress-8"
             value="8"
             
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-8"
@@ -112,7 +112,7 @@
             id="{{skill.data.safeId}}-learningProgress-9"
             value="9"
             
-            data-item-id="{{skill.id}}"
+            data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
         <label
             for="{{skill.data.safeId}}-learningProgress-9"

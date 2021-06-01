@@ -29,7 +29,7 @@
                 {{#select ../data.skillId}}
                 <option value="">None</option>
                 {{#each ../../skills as |s|}}
-                <option value="{{s.id}}">{{s.name}}</option>
+                <option value="{{s._id}}">{{s.name}}</option>
                 {{/each}}
                 {{/select}}
             </select>
@@ -54,7 +54,7 @@
     <div class="weapon-header">Skill Used</div>
     <div class="weapon-header">~</div>
     {{#each ranged as |r|}}
-    <div class="weapon-row weapon-name" data-roll-type="weapon" data-weapon-id="{{r.id}}" draggable="true">
+    <div class="weapon-row weapon-name" data-roll-type="weapon" data-weapon-id="{{r._id}}" draggable="true">
         {{r.name}}
     </div>
     <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div></div>
@@ -64,15 +64,15 @@
     <div class="weapon-row">{{r.data.extremeRange}}D</div>
     <div class="weapon-row">{{titlecase r.data.maxRange}}</div>
     <div class="weapon-row">
-        <select class="weapon-skill-select" data-item-id="{{r.id}}" data-binding="data.skillId" value="{{r.data.skillId}}">
+        <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="data.skillId" value="{{r.data.skillId}}">
             {{#select r.data.skillId}}
             <option value="">None</option>
             {{#each ../skills as |s|}}
-            <option value="{{s.id}}">{{s.name}}</option>
+            <option value="{{s._id}}">{{s.name}}</option>
             {{/each}}
             {{/select}}
         </select>
     </div>
-    <div class="weapon-row"><button class="rollable modifiable" data-roll-type="weapon" data-skill-id="{{r.data.skillId}}" data-weapon-id="{{r.id}}" draggable="true"><i class="fas fa-dice"></i></button></div>
+    <div class="weapon-row"><button class="rollable modifiable" data-roll-type="weapon" data-skill-id="{{r.data.skillId}}" data-weapon-id="{{r._id}}" draggable="true"><i class="fas fa-dice"></i></button></div>
     {{/each}}
 </div>

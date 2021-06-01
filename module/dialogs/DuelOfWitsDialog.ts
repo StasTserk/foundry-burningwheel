@@ -73,13 +73,13 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         if (actor?.data.type === "character") {
             if (skill.data.data.learning) {
                 handleLearningRoll({
-                    actor: (actor as BWActor & BWCharacter),
+                    actor: (actor as BWCharacter),
                     skill,
                     dataPreset
                 });
             } else {
                 handleSkillRoll({
-                    actor: (actor as BWActor & BWCharacter),
+                    actor: (actor as BWCharacter),
                     skill,
                     dataPreset
                 });
@@ -87,7 +87,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         } else {
             // handle roll as npc
             handleNpcSkillRoll({
-                actor: (actor as BWActor & Npc),
+                actor: (actor as Npc),
                 skill,
                 dataPreset
             });

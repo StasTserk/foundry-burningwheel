@@ -1,10 +1,10 @@
-import { BWActor } from "../BWActor.js";
+import { BWActor, BWActorDataTypes } from "../BWActor.js";
 import { ArmorRootData } from "../../items/armor.js";
 import * as constants from "../../constants.js";
 import * as helpers from "../../helpers.js";
 import { BWItem } from "../../items/item.js";
 
-export class BWActorSheet<T extends Record<string, unknown>> extends ActorSheet<T, BWActor, ActorSheetOptions> {
+export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O extends ActorSheetOptions> extends ActorSheet<T, A, O> {
     private _keyDownHandler = this._handleKeyPress.bind(this);
     private _keyUpHandler = this._handleKeyUp.bind(this);
 
@@ -17,6 +17,15 @@ export class BWActorSheet<T extends Record<string, unknown>> extends ActorSheet<
         return mergeObject(super.defaultOptions, {
             classes:  [ "bw-app" ]
         });
+    }
+
+    getData(_options?: Application.RenderOptions): T {
+        super.getData();
+        return {
+            actor: this.actor,
+            data: this.actor.data,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any;
     }
 
     activateListeners(html: JQuery): void {
@@ -175,4 +184,9 @@ export interface ActorSheetOptions extends BaseEntitySheet.Options {
     draggableMeleeSelectors?: string[];
     draggableRangedSelectors?: string[];
     draggableStatSelectors?: string[];
+}
+
+export interface BaseActorSheetData {
+    actor: BWActor;
+    data: BWActorDataTypes;
 }

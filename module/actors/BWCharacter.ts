@@ -3,7 +3,7 @@ import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers.js";
 import { Skill } from "../items/skill.js";
 
-export class BWCharacter extends BWActor {
+export class BWCharacter extends BWActor<CharacterDataRoot> {
     data: CharacterDataRoot;
 
     prepareData(): void {
@@ -357,7 +357,7 @@ export class BWCharacter extends BWActor {
     }
 }
 
-export interface CharacterDataRoot extends BWActorData {
+export interface CharacterDataRoot extends BWActorData<BWCharacterData> {
     data: BWCharacterData;
     type: "character"
 }

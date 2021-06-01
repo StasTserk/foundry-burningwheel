@@ -1,4 +1,4 @@
-import { ActorSheetOptions, BWActorSheet } from "./BWActorSheet.js";
+import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet.js";
 import { ShadeString } from "../../helpers.js";
 import { BWActor } from "../BWActor.js";
 import { BWItem, BWItemData, ItemType } from "../../items/item.js";
@@ -11,7 +11,7 @@ import { ArmorData } from "../../items/armor.js";
 import { SkillDataRoot, Skill } from "../../items/skill.js";
 import { TraitDataRoot } from "../../items/trait.js";
 
-export class NpcSheet extends BWActorSheet<NpcSheetData> {
+export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions> {
     get actor(): Npc {
         return super.actor as Npc;
     }
@@ -194,7 +194,7 @@ function byName(a: Item.Data, b: Item.Data): number {
     return a.name.localeCompare(b.name);
 }
 
-export interface NpcSheetData {
+export interface NpcSheetData extends BaseActorSheetData {
     untrained: SkillDataRoot[];
     armor: { [key: string]: Item.Data<ArmorData> | null; };
     statRow: NPCStatEntry[];

@@ -17,8 +17,8 @@ import { BWSettingSheet } from "./actors/sheets/BWSettingSheet.js";
 import * as dialogs from "./dialogs/index.js";
 
 Hooks.once("init", async () => {
-    CONFIG.Actor.entityClass = actorConstructor;
-    CONFIG.Item.entityClass = itemConstructor;
+    CONFIG.Actor.documentClass = actorConstructor;
+    CONFIG.Item.documentClass = itemConstructor;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     game.burningwheel = {} as any;
 

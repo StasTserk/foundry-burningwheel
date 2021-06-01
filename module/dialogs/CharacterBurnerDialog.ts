@@ -12,7 +12,7 @@ import { RelationshipData } from "../items/relationship.js";
 import { Lifepath, LifepathData } from "../items/lifepath.js";
 
 export class CharacterBurnerDialog extends Application {
-    private readonly _parent: BWActor & BWCharacter;
+    private readonly _parent: BWCharacter;
     private _burnerListeners: JQuery<HTMLElement>[];
     private _skills: Skill[];
     private _traits: Trait[];

@@ -15,14 +15,14 @@ import { Npc } from "./actors/Npc.js";
 import { Lifepath } from "./items/lifepath.js";
 import { BWSetting } from "./actors/BWSetting.js";
 
-function factory(entities: Record<string, typeof Entity>, baseClass: typeof Entity): unknown {
+function factory(entities: Record<string, typeof FoundryDocument>, baseClass: typeof Entity): unknown {
     return new Proxy(baseClass, {
         construct: (target, args) => {
             const [data, options] = args;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const constructor = entities[data.type] as any;
             if (!constructor) {
-                throw new Error("Unsupported Entity type for create(): " + data.type);
+                throw new Error("Unsupported Document type for create(): " + data.type);
             }
             return new constructor(data, options);
         },
@@ -30,7 +30,7 @@ function factory(entities: Record<string, typeof Entity>, baseClass: typeof Enti
             switch (prop) {
                 case "create":
                 //Calling the class' create() static function
-                    return function (data: Entity.Data, options: unknown) {
+                    return function (data: FoundryDocument.Data, options: unknown) {
                     
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const constructor = entities[data.type] as any;
@@ -45,7 +45,7 @@ function factory(entities: Record<string, typeof Entity>, baseClass: typeof Enti
     
                 case Symbol.hasInstance:
                     //Applying the "instanceof" operator on the instance object
-                    return function (instance: Entity) {
+                    return function (instance: FoundryDocument) {
                     const constr = entities[instance.data.type];
                     if (!constr) {
                         return false;
@@ -60,28 +60,28 @@ function factory(entities: Record<string, typeof Entity>, baseClass: typeof Enti
     });
 }
 
-const actorTypes: Record<string, typeof Entity> = {};
-actorTypes["character"] = BWCharacter as typeof Entity;
-actorTypes["npc"] = Npc as typeof Entity;
-actorTypes["setting"] = BWSetting as typeof Entity;
+const actorTypes: Record<string, typeof FoundryDocument> = {};
+actorTypes["character"] = BWCharacter as typeof FoundryDocument;
+actorTypes["npc"] = Npc as typeof FoundryDocument;
+actorTypes["setting"] = BWSetting as typeof FoundryDocument;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actorConstructor = factory(actorTypes, Actor as any) as typeof Actor;
 
-const itemTypes: Record<string, typeof Entity> = {};
+const itemTypes: Record<string, typeof FoundryDocument> = {};
 
-itemTypes["belief"] = Belief as typeof Entity;
-itemTypes["instinct"] = Instinct as typeof Entity;
-itemTypes["trait"] = Trait as typeof Entity;
-itemTypes["skill"] = Skill as typeof Entity;
-itemTypes["armor"] = Armor as typeof Entity;
-itemTypes["possession"] = Possession as typeof Entity;
-itemTypes["property"] = Property as typeof Entity;
-itemTypes["relationship"] = Relationship as typeof Entity;
-itemTypes["melee weapon"] = MeleeWeapon as typeof Entity;
-itemTypes["ranged weapon"] = RangedWeapon as typeof Entity;
-itemTypes["reputation"] = Reputation as typeof Entity;
-itemTypes["affiliation"] = Relationship as typeof Entity;
-itemTypes["spell"] = Spell as typeof Entity;
-itemTypes["lifepath"] = Lifepath as typeof Entity;
+itemTypes["belief"] = Belief as typeof FoundryDocument;
+itemTypes["instinct"] = Instinct as typeof FoundryDocument;
+itemTypes["trait"] = Trait as typeof FoundryDocument;
+itemTypes["skill"] = Skill as typeof FoundryDocument;
+itemTypes["armor"] = Armor as typeof FoundryDocument;
+itemTypes["possession"] = Possession as typeof FoundryDocument;
+itemTypes["property"] = Property as typeof FoundryDocument;
+itemTypes["relationship"] = Relationship as typeof FoundryDocument;
+itemTypes["melee weapon"] = MeleeWeapon as typeof FoundryDocument;
+itemTypes["ranged weapon"] = RangedWeapon as typeof FoundryDocument;
+itemTypes["reputation"] = Reputation as typeof FoundryDocument;
+itemTypes["affiliation"] = Relationship as typeof FoundryDocument;
+itemTypes["spell"] = Spell as typeof FoundryDocument;
+itemTypes["lifepath"] = Lifepath as typeof FoundryDocument;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const itemConstructor = factory(itemTypes, Item as any) as typeof Item;

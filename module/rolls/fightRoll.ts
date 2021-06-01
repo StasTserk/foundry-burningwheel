@@ -53,7 +53,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
 
                 if (actor.data.type === "character") { 
                     return handleWeaponRoll({
-                        actor: (actor as BWActor & BWCharacter),
+                        actor: (actor as BWCharacter),
                         weapon,
                         skill: weaponSkill,
                         attackIndex,
@@ -61,7 +61,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                     });
                 }
                 return handleNpcWeaponRoll({
-                    actor:  (actor as BWActor & Npc),
+                    actor:  (actor as Npc),
                     weapon,
                     skill: weaponSkill,
                     attackIndex,
@@ -72,10 +72,10 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 const spell = actor.getOwnedItem(itemId) as Spell;
                 const skill = actor.getOwnedItem(spell?.data.data.skillId) as Skill;
                 if (actor.data.type === "character") {
-                    return handleSpellRoll({ actor: (actor as BWActor & BWCharacter), spell, skill, dataPreset});
+                    return handleSpellRoll({ actor: (actor as BWCharacter), spell, skill, dataPreset});
                 }
                 return handleNpcSpellRoll({
-                    actor: actor as BWActor & Npc, spell, skill, dataPreset
+                    actor: actor as Npc, spell, skill, dataPreset
                 });
             default:
                 throw Error(`Unexpected item type (${item.type}) passed to fight attack roll action`);

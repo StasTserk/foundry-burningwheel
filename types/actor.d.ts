@@ -1,5 +1,5 @@
 /**
- * The Actor Entity which represents the protagonists, characters, enemies, and more that inhabit and take actions
+ * The Actor Document which represents the protagonists, characters, enemies, and more that inhabit and take actions
  * within the World.
  *
  * @typeParam D  - The type the `Actor`'s `_data` field. It should extend Actor.Data
@@ -34,10 +34,10 @@
  */
  declare class Actor<
  D extends Actor.Data = Actor.Data,
- I extends Item<Actor.OwnedItemData<D>, any> = Item<Actor.OwnedItemData<D>>,
+ I extends Item<any> = Item<Item.Data>,
  PD extends D = D
-> extends Entity<D, PD> {
- constructor(data?: DeepPartial<D>, options?: Entity.CreateOptions);
+> extends FoundryDocument<D, PD> {
+ constructor(data?: DeepPartial<D>, options?: FoundryDocument.CreateOptions);
 
  /**
   * A reference to a placed Token which creates a synthetic Actor
@@ -66,7 +66,7 @@
  protected _tokenImages: string[];
 
  /** @override */
- static get config(): Entity.Config<Actor>;
+ static get config(): FoundryDocument.Config<Actor>;
 
  /* -------------------------------------------- */
  /*  Properties                                  */
@@ -85,7 +85,7 @@
  };
 
  /**
-  * Test whether an Actor entity is a synthetic representation of a Token (if true) or a full Entity (if false)
+  * Test whether an Actor entity is a synthetic representation of a Token (if true) or a full Document (if false)
   */
  get isToken(): boolean;
 
@@ -215,14 +215,14 @@
  /* -------------------------------------------- */
 
  /** @override */
- update<U>(data: Expanded<U> extends DeepPartial<D> ? U : never, options?: Entity.UpdateOptions): Promise<this>;
- update(data: DeepPartial<D>, options?: Entity.UpdateOptions): Promise<this>;
+ update<U>(data: Expanded<U> extends DeepPartial<D> ? U : never, options?: FoundryDocument.UpdateOptions): Promise<this>;
+ update(data: DeepPartial<D>, options?: FoundryDocument.UpdateOptions): Promise<this>;
 
  /** @override */
- delete(options?: Entity.DeleteOptions): Promise<this>;
+ delete(options?: FoundryDocument.DeleteOptions): Promise<this>;
 
  /** @override */
- protected _onUpdate(data: DeepPartial<D>, options: Entity.UpdateOptions, userId: string, context?: any): void;
+ protected _onUpdate(data: DeepPartial<D>, options: FoundryDocument.UpdateOptions, userId: string, context?: any): void;
 
  /** @override */
  createEmbeddedEntity<U>(
@@ -308,7 +308,7 @@
 
  /**
   * Create a new item owned by this Actor. This redirects its arguments to the createEmbeddedEntity method.
-  * @see Entity#createEmbeddedEntity
+  * @see Document#createEmbeddedEntity
   *
   * @param itemData    - Data for the newly owned item
   * @param options     - Item creation options
@@ -316,11 +316,11 @@
   * @returns A Promise resolving to the created Owned Item data
   */
  createOwnedItem(itemData: DeepPartial<Actor.OwnedItemData<D>>, options?: any): Promise<Actor.OwnedItemData<D>>;
- createOwnedItem(itemData: DeepPartial<Actor.OwnedItemData<D>>[], options?: any): Promise<Actor.OwnedItemData<D>[]>;
+ createOwnedItem(itemData: DeepPartial<Item.Data>[], options?: any): Promise<Item.Data[]>;
 
  /**
   * Update an owned item using provided new data. This redirects its arguments to the updateEmbeddedEntity method.
-  * @see Entity#updateEmbeddedEntity
+  * @see Document#updateEmbeddedEntity
   *
   * @param itemData - Data for the item to update
   * @param options  - Item update options
@@ -328,25 +328,25 @@
   */
  updateOwnedItem(
    itemData: DeepPartial<Actor.OwnedItemData<D>>,
-   options?: Entity.UpdateOptions
+   options?: FoundryDocument.UpdateOptions
  ): Promise<Actor.OwnedItemData<D>>;
  updateOwnedItem(
    itemData: DeepPartial<Actor.OwnedItemData<D>>[],
-   options?: Entity.UpdateOptions
+   options?: FoundryDocument.UpdateOptions
  ): Promise<Array<Actor.OwnedItemData<D>>>;
 
  /* -------------------------------------------- */
 
  /**
   * Delete an owned item by its id. This redirects its arguments to the deleteEmbeddedEntity method.
-  * @see Entity#deleteEmbeddedEntity
+  * @see FoundryDocument#deleteEmbeddedEntity
   *
   * @param itemId - The ID of the item to delete
   * @param options - Item deletion options
   * @returns A Promise resolving to the deleted Owned Item data
   */
- deleteOwnedItem(itemId: string, options?: Entity.DeleteOptions): Promise<Actor.OwnedItemData<D>>;
- deleteOwnedItem(itemId: string[], options?: Entity.DeleteOptions): Promise<Array<Actor.OwnedItemData<D>>>;
+ deleteOwnedItem(itemId: string, options?: FoundryDocument.DeleteOptions): Promise<Actor.OwnedItemData<D>>;
+ deleteOwnedItem(itemId: string[], options?: FoundryDocument.DeleteOptions): Promise<Array<Actor.OwnedItemData<D>>>;
 
  /* -------------------------------------------- */
  /*  DEPRECATED                                  */
@@ -359,7 +359,7 @@
 
  /**
   * @deprecated since 0.7.2
-  * @see {@link Entity#hasPlayerOwner}
+  * @see {@link Document#hasPlayerOwner}
   */
  get isPC(): boolean;
 }
@@ -369,18 +369,16 @@ declare namespace Actor {
   * @typeParam D - Type for `_data.data`
   * @typeParam I - Type for system's Item's _data
   */
- interface Data<D = any, I extends Item.Data = Item.Data> extends Entity.Data {
+ interface Data<D = any, I extends Item.Data = Item.Data> extends FoundryDocument.Data {
    data: D;
    effects: ActiveEffect.Data[];
    folder: string;
    img: string;
    items: I[];
    name: string;
-   permission: Entity.Permission;
+   permission: FoundryDocument.Permission;
    sort: number;
-   token: Omit<Token['data'], 'actorData' | 'effects' | 'elevation' | 'hidden' | 'x' | 'y' | '_id'> & {
-     randomImg: boolean;
-   };
+   readonly token: Token
    type: string;
  }
 

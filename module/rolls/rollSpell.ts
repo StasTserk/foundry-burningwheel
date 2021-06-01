@@ -1,4 +1,3 @@
-import { BWActor } from "../actors/BWActor.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
 import { Spell } from "../items/spell.js";
@@ -9,7 +8,7 @@ import { handleSkillRoll } from "./rollSkill.js";
 import { showSpellTaxDialog } from "./rollSpellTax.js";
 
 export async function handleSpellRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
-    const actor = sheet.actor as BWActor & BWCharacter;
+    const actor = sheet.actor as BWCharacter;
     const sorcerySkillId = target.dataset.skillId;
     if (!sorcerySkillId) {
         return helpers.notifyError("No Skill Specified",
@@ -82,5 +81,5 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
 interface SpellRollOptions extends RollOptions {
     spell: Spell,
     skill: Skill,
-    actor: BWActor & BWCharacter;
+    actor: BWCharacter;
 }

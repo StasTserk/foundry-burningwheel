@@ -10,8 +10,8 @@ import { BWCharacterData, CharacterDataRoot } from "./BWCharacter.js";
 import { NpcData, NpcDataRoot } from "./Npc.js";
 import { AffiliationDataRoot } from "../items/affiliation.js";
 
-export class BWActor extends Actor<BWActorDataTypes, BWItem> {
-    data: BWActorDataTypes;
+export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, BWItem> {
+    data: T;
 
     readonly batchAdd = {
         task: -1,
@@ -247,6 +247,22 @@ export class BWActor extends Actor<BWActorDataTypes, BWItem> {
         ]);
     }
 
+    async _preCreate(actor: BWActorData, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {
+        await super._preCreate(actor as T, _options, user);
+        if (actor.type === 'character' || actor.type === 'npc') {
+            this.data.token.update({
+                disposition: CONST.TOKEN_DISPOSITIONS.NEUTRAL,
+                vision: true
+            });
+        }
+        if (actor.type === 'character' || actor.type === 'setting') {
+            this.data.token.update({
+                actorLink: true,
+                disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY
+            });
+        }
+    }
+
     private _calculateClumsyWeight() {
         const clumsyWeight: ClumsyWeightData = {
             agilityPenalty: 0,
@@ -340,6 +356,8 @@ export class BWActor extends Actor<BWActorDataTypes, BWItem> {
     }
 
     public updateArthaForSkill(_skillId: string, persona: number, deeds: number): void {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         this.update({
             "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
             "data.persona": this.data.data.persona - persona,
@@ -347,6 +365,8 @@ export class BWActor extends Actor<BWActorDataTypes, BWItem> {
     }
 
     public updateArthaForStat(_accessor: string, persona: number, deeds: number): void {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         this.update({
             "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
             "data.persona": this.data.data.persona - persona,
@@ -379,19 +399,6 @@ export class BWActor extends Actor<BWActorDataTypes, BWItem> {
     // }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-Hooks.on('preCreateActor', (actor: any, _options) => {
-    actor.token = actor.token || {};
-    if (actor.type === 'character' || actor.type === 'setting') {
-        actor.token.actorLink = true;
-        actor.token.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
-    }
-    if (actor.type === 'character' || actor.type === 'npc') {
-        actor.token.disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
-        actor.token.vision = true;
-    }
-});
-
 export interface Common {
     will: Ability;
     power: Ability;
@@ -422,7 +429,7 @@ export interface Common {
     deeds: number;
 }
 
-export interface BWActorData extends Actor.Data<Common, BWItemDataTypes> {
+export interface BWActorData<T extends Common = Common> extends Actor.Data<T, BWItemDataTypes> {
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
@@ -441,6 +448,8 @@ export interface BWActorData extends Actor.Data<Common, BWItemDataTypes> {
     fightWeapons: BWItemData[];
 
     type: "character" | "npc" | "setting";
+
+    data: T
 }
 
 export interface Ability extends TracksTests, DisplayClass {

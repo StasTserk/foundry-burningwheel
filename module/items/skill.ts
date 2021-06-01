@@ -33,8 +33,8 @@ export class Skill extends BWItem {
     }
 
     calculateAptitude(this: Skill): void {
-        const actor = this.actor as unknown as BWActor  | null;
-        if (!actor) { return; }
+        const actor = this.actor as BWActor | null;
+        if (!actor || !this.data.hasOwner) { return; }
         let aptitudeMod = actor.getAptitudeModifiers(this.name) + actor.getAptitudeModifiers(this.data.data.skilltype);
 
         aptitudeMod += actor.getAptitudeModifiers(this.data.data.root1);

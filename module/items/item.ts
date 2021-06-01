@@ -48,7 +48,7 @@ export class BWItem extends Item<BWItemDataTypes> {
     }
     prepareData(): void {
         super.prepareData();
-        this.data.hasOwner = !!this.actor;
+        this.data.hasOwner = !!(this.actor && this.actor.data);
     }
 
     get type(): ItemType {

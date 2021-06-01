@@ -1,32 +1,32 @@
-<div class="relationship flex-row {{relationship.data.cssClass}}" draggable="true" data-id="{{relationship.id}}">
+<div class="relationship flex-row {{relationship.data.cssClass}}" draggable="true" data-id="{{relationship._id}}">
     <div class="item-title">
         {{ relationship.name }}
     </div>
-    <button class="rollable modifiable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id="{{relationship.id}}"><i class="fas fa-dice"></i></button>
-    <i class="fas fa-edit" data-action="editItem" data-id="{{relationship.id}}"></i>
-    <i class="fas fa-trash" data-action="delItem" data-id="{{relationship.id}}"></i>
+    <button class="rollable modifiable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id="{{relationship._id}}"><i class="fas fa-dice"></i></button>
+    <i class="fas fa-edit" data-action="editItem" data-id="{{relationship._id}}"></i>
+    <i class="fas fa-trash" data-action="delItem" data-id="{{relationship._id}}"></i>
     {{#if relationship.data.building}}
     <div class="relationship-progress">
         {{#multiboxes relationship.data.buildingProgress exp=exp}}
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-0" value="0" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-0" value="0" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-1" value="1" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-1" value="1" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-1" class="progress-tick progress-tick-1">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-2" value="2" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-2" value="2" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-2" class="progress-tick progress-tick-2">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-3" value="3" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-3" value="3" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-3" class="progress-tick progress-tick-3">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-4" value="4" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-4" value="4" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-4" class="progress-tick progress-tick-4">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-5" value="5" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-5" value="5" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-5" class="progress-tick progress-tick-5">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-6" value="6" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-6" value="6" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-6" class="progress-tick progress-tick-6">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-7" value="7" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-7" value="7" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-7" class="progress-tick progress-tick-7">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-8" value="8" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-8" value="8" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-8" class="progress-tick progress-tick-8">&nbsp;</label>
-        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-9" value="9" data-item-id="{{relationship.id}}" data-binding="data.buildingProgress">
+        <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-9" value="9" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-9" class="progress-tick progress-tick-9">&nbsp;</label>
         {{/multiboxes}}
     </div>

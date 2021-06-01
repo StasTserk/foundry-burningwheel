@@ -1,18 +1,18 @@
-<div class="spell-section-item flex-row" draggable="true" data-id="{{spell.id}}">
-    <input id="{{spell.id}}-collapse" type="checkbox" class="hidden" data-item-id="{{spell.id}}" data-binding="data.collapsed" {{ checked data.collapsed }}>
-    <label for="{{spell.id}}-collapse" class="spell-item-title">
+<div class="spell-section-item flex-row" draggable="true" data-id="{{spell._id}}">
+    <input id="{{spell._id}}-collapse" type="checkbox" class="hidden" data-item-id="{{spell._id}}" data-binding="data.collapsed" {{ checked data.collapsed }}>
+    <label for="{{spell._id}}-collapse" class="spell-item-title">
         {{#if data.collapsed}}<i class="fas fa-chevron-circle-right"></i>{{else}}<i class="fas fa-chevron-circle-down"></i>{{/if}}
         {{spell.name}}
     </label>
-    <button class="rollable modifiable" data-skill-id="{{spell.data.skillId}}" data-spell-id="{{spell.id}}" data-roll-type="spell"><i class="fas fa-dice"></i></button>
+    <button class="rollable modifiable" data-skill-id="{{spell.data.skillId}}" data-spell-id="{{spell._id}}" data-roll-type="spell"><i class="fas fa-dice"></i></button>
     {{#if data.collapsed}}{{else}}
     <div class="spell-details flex-row">
         <label class="spell-details-label">Skill</label>
-        <select class="spell-details-data" data-item-id="{{spell.id}}" data-binding="data.skillId" value="{{spell.data.skillId}}">
+        <select class="spell-details-data" data-item-id="{{spell._id}}" data-binding="data.skillId" value="{{spell.data.skillId}}">
             {{#select spell.data.skillId}}
             <option value="">None</option>
             {{#each skills as |s|}}
-            <option value="{{s.id}}">{{s.name}}</option>
+            <option value="{{s._id}}">{{s.name}}</option>
             {{/each}}
             {{/select}}
         </select>
@@ -38,8 +38,8 @@
         </div>
         {{/if}}
         <div class="edit-icons">
-            <i class="fas fa-edit" data-action="editItem" data-id="{{spell.id}}"></i>
-            <i class="fas fa-trash" data-action="delItem" data-id="{{spell.id}}"></i>
+            <i class="fas fa-edit" data-action="editItem" data-id="{{spell._id}}"></i>
+            <i class="fas fa-trash" data-action="delItem" data-id="{{spell._id}}"></i>
         </div>
     </div>
     {{/if}}

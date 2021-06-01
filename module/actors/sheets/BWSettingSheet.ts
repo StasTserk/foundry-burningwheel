@@ -129,7 +129,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
             } else if (dragData.pack) {
                 itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || ""))?.data as LifepathRootData;
             } else if (dragData.actorId) {
-                itemData = (game.actors?.find((a: FoundryDocument) => a._id === dragData.actorId))?.getOwnedItem(dragData.id || "").data as LifepathRootData;
+                itemData = (game.actors?.find((a: FoundryDocument) => a.id === dragData.actorId))?.getOwnedItem(dragData.id || "").data as LifepathRootData;
             } else {
                 itemData = game.items?.find((i: BWItem) => i.id === dragData.id)?.data as LifepathRootData;
             }
@@ -148,13 +148,13 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
         for(let i = 0; i < index; i ++) {
             const item = sortedItems[i];
             if (item.id !== dragData.id) {
-                updateData.push( { "_id": sortedItems[i]._id, 'data.order': i });
+                updateData.push( { "id": sortedItems[i].id, 'data.order': i });
             }
         }
         for (let i = index; i < sortedItems.length; i ++) {
             const item = sortedItems[i];
             if (item.id !== dragData.id) {
-                updateData.push( { "_id": sortedItems[i]._id, 'data.order': i + 1 });
+                updateData.push( { "id": sortedItems[i].id, 'data.order': i + 1 });
             }
         }
         this.actor.updateEmbeddedEntity("OwnedItem", updateData);

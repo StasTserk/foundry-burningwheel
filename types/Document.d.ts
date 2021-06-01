@@ -160,6 +160,7 @@
      */
     get id(): string;
   
+    /** @deprecated use Document#id or Document#data#_id instead */
     get _id(): string;
   
     /**
@@ -831,6 +832,7 @@
     interface Data {
       /**
        * The id assigned by the database
+       * @deprecated use id instead.
        */
       _id: string;
   

@@ -215,7 +215,7 @@ async function skillRollCallback(
 
     const fateReroll = buildRerollData({ actor, roll, itemId: skill.id, splitPoolRoll });
     const callons: RerollData[] = actor.getCallons(skill.name).map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, splitPoolRoll, itemId: skill._id }) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, splitPoolRoll, itemId: skill.id }) as RerollData };
     });
 
     // because artha isn't tracked individually, it doesn't matter what gets updated.

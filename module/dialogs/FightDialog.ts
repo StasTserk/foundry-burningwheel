@@ -35,9 +35,9 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         const actors = game.actors?.entities || [];
         data.gmView = game.user?.isGM || false;
         data.participantOptions = actors
-            .filter(a => !this.data.data.participantIds.includes(a._id))
+            .filter(a => !this.data.data.participantIds.includes(a.id))
             .map(a => {
-            return { id: a._id, name: a.name };
+            return { id: a.id, name: a.name };
         });
 
         data.participants.forEach(p => {
@@ -119,7 +119,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         });
         html.find('div[data-action="openSheet"], img[data-action="openSheet"]').on('click', (e: JQuery.ClickEvent) => {
             const id = e.currentTarget.attributes.getNamedItem("data-actor-id").nodeValue || "";
-            game.actors?.find(a => a._id === id)?.sheet?.render(true);
+            game.actors?.find(a => a.id === id)?.sheet?.render(true);
         });
     }
     
@@ -236,7 +236,7 @@ function toParticipantData(actor: BWActor): Partial<ParticipantEntry> {
         (actor.data as NpcDataRoot).data.reflexes)}`;
     return {
         name: actor.name,
-        id: actor._id,
+        id: actor.id,
         imgSrc: actor.img,
         reflexes: reflexesString,
     };

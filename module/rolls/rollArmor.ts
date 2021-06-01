@@ -69,7 +69,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     if (!roll) { return; }
     const damageAssigned = await armorItem.assignDamage(roll, location);
     const isSuccess = (roll.total || 0) >= 1 + va;
-    const rerollData = buildRerollData({ actor, roll, itemId: armorItem._id });
+    const rerollData = buildRerollData({ actor, roll, itemId: armorItem.id });
     rerollData.type = "armor";
     const messageData: RollChatMessageData = {
         name: "Armor",

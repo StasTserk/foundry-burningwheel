@@ -267,7 +267,7 @@ export class CharacterBurnerDialog extends Application {
                     const actor = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.actorId) as Actor;
                     item = actor.getOwnedItem(data.id) as BWItem;
                 } else {
-                    item = (game.actors?.find((a: BWActor) => a._id === data.actorId) as BWActor).getOwnedItem(data.id) as BWItem;
+                    item = (game.actors?.find((a: BWActor) => a.id === data.actorId) as BWActor).getOwnedItem(data.id) as BWItem;
                 }
             } else if (data.pack) {
                 item = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;
@@ -627,7 +627,7 @@ export class CharacterBurnerDialog extends Application {
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).trigger("change");
-            inputTarget.siblings("*[name='traitId']").val(trait._id);
+            inputTarget.siblings("*[name='traitId']").val(trait.id);
             const cost = (!trait.data.data.pointCost || isNaN(trait.data.data.pointCost)) ? 1 : trait.data.data.pointCost;
             inputTarget.siblings("*[name='traitCost']").val(cost).trigger("change");
         }
@@ -651,7 +651,7 @@ export class CharacterBurnerDialog extends Application {
             inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).trigger("change");
             inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).trigger("change");
             inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
-            inputTarget.siblings("*[name='skillId']").val(skill._id);
+            inputTarget.siblings("*[name='skillId']").val(skill.id);
         }
     }
 
@@ -671,7 +671,7 @@ export class CharacterBurnerDialog extends Application {
         }
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-            inputTarget.siblings("*[name='propertyId']").val(property._id);
+            inputTarget.siblings("*[name='propertyId']").val(property.id);
             inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).trigger("change");
         }
     }
@@ -693,7 +693,7 @@ export class CharacterBurnerDialog extends Application {
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='itemType']").val(gear.type);
-            inputTarget.siblings("*[name='gearId']").val(gear._id);
+            inputTarget.siblings("*[name='gearId']").val(gear.id);
             inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).trigger("change");
         }
     }

@@ -20,7 +20,7 @@ export async function handleCirclesRollEvent({ target, sheet, dataPreset }: Even
     const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {
-        circlesContact = sheet.actor.getOwnedItem(target.dataset.relationshipId) as Relationship;
+        circlesContact = sheet.actor.items.get<Relationship>(target.dataset.relationshipId);
     }
     const actor = sheet.actor;
 

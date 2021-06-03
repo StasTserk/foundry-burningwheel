@@ -14,12 +14,12 @@ export async function handleSpellRollEvent({ target, sheet, dataPreset }: EventH
         return helpers.notifyError("No Skill Specified",
             "A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.");
     }
-    const skill = actor.getOwnedItem(sorcerySkillId) as Skill;
+    const skill = actor.items.get(sorcerySkillId) as Skill;
     const spellId = target.dataset.spellId;
     if (!spellId) {
         throw Error("Malformed spell roll button. Must specify spell Id");
     }
-    const spell = sheet.actor.getOwnedItem(spellId) as Spell;
+    const spell = sheet.actor.items.get(spellId) as Spell;
     return handleSpellRoll({ actor, spell, skill, dataPreset });
 }
 

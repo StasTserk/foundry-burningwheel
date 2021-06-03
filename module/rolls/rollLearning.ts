@@ -25,7 +25,7 @@ import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
     const actor = rollOptions.sheet.actor;
     const skillId = rollOptions.target.dataset.skillId || "";
-    const skill = (rollOptions.sheet.actor.getOwnedItem(skillId) as Skill);
+    const skill = (rollOptions.sheet.actor.items.get(skillId) as Skill);
     return handleLearningRoll({ actor, skill, ...rollOptions});
 }
 
@@ -158,7 +158,7 @@ async function learningRollCallback(
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = actor.getOwnedItem(toolkitId) as Possession;
+        const tools = actor.items.get(toolkitId) as Possession;
         if (tools) {
             const { expended, text } = await maybeExpendTools(tools);
             extraInfo = extraInfo ? `${extraInfo}${text}` : text;

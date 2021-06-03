@@ -23,7 +23,7 @@ import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollEventOptions ): Promise<unknown> {
     const skillId = target.dataset.skillId || "";
-    const skill = (sheet.actor.getOwnedItem(skillId) as Skill);
+    const skill = (sheet.actor.items.get(skillId) as Skill);
     const actor = sheet.actor as BWCharacter;
     return handleSkillRoll({ actor, skill, dataPreset, extraInfo, onRollCallback});
 }
@@ -103,7 +103,7 @@ async function skillRollCallback(
 
     if (skill.data.data.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
-        const tools = actor.getOwnedItem(toolkitId) as Possession;
+        const tools = actor.items.get<Possession>(toolkitId);
         if (tools) {
             const { expended, text } = await maybeExpendTools(tools);
             extraInfo = extraInfo ? `${extraInfo}${text}` : text;

@@ -174,7 +174,7 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
     }
     _editSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
-        const item = this.actor.getOwnedItem(targetId);
+        const item = this.actor.items.get(targetId);
         item?.sheet?.render(true);
     }
     _deleteSheetItem(e: JQuery.ClickEvent): void {
@@ -186,7 +186,7 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
         this.actor.createOwnedItem({
             name: `New ${itemType}`,
             type: itemType as ItemType
-        }).then(i => this.actor.getOwnedItem(i._id)?.sheet?.render(true));
+        }).then(i => this.actor.items.get(i._id)?.sheet?.render(true));
     }
 }
 

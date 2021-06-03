@@ -193,7 +193,7 @@ export class DifficultyDialog extends Application {
         if (actor) {
             const difficulty: TestString = diff === "R" ? "Routine" : (diff === "C" ? "Challenging" : "Difficult");
             if (skillId) {
-                const skill = actor.getOwnedItem(skillId) as Skill | null;
+                const skill = actor.items.get(skillId) as Skill | null;
                 if (skill) {
                     skill.addTest(difficulty, true);
                 }

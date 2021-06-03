@@ -40,7 +40,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         if (this.options.draggableItemSelectors) {
             html.find(this.options.draggableItemSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
                 const actor = this.actor;
-                const item = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
+                const item = actor.items.get(e.target.dataset.id || "") as BWItem;
                 const dragData: helpers.ItemDragData = {
                     actorId: actor.id,
                     id: item.id,
@@ -58,7 +58,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
             html.find(this.options.draggableMeleeSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
                 const actor = this.actor;
                 const itemId = e.target.dataset.weaponId || "";
-                const weapon = actor.getOwnedItem(itemId) as Item;
+                const weapon = actor.items.get(itemId) as Item;
 
                 const dragData: helpers.MeleeDragData = {
                     actorId: actor.id,
@@ -80,7 +80,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
             html.find(this.options.draggableRangedSelectors.join('[draggable="true"], ')).on('dragstart', (e) => {
                 const actor = this.actor;
                 const itemId = e.target.dataset.weaponId || "";
-                const weapon = actor.getOwnedItem(itemId) as Item;
+                const weapon = actor.items.get(itemId) as Item;
 
                 const dragData: helpers.RangedDragData = {
                     actorId: actor.id,

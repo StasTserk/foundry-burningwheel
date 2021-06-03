@@ -20,17 +20,17 @@ import { Armor } from "../items/armor.js";
 export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
     const armorId = target.dataset.itemId || "";
-    const armorItem = actor.getOwnedItem(armorId) as Armor;
+    const armorItem = actor.items.get<Armor>(armorId);
     const location = target.dataset.location || "";
     const chestBonus = location.toLowerCase() === "torso" ? 1 : 0;
-    const damage = armorItem.data.data[`damage${location}`];
+    const damage = armorItem?.data.data[`damage${location}`];
 
     const dialogData: ArmorDialogData = {
         difficulty: 1,
         name: "Armor",
         arthaDice: 0,
         bonusDice: 0,
-        armor: armorItem.data.data.dice + chestBonus,
+        armor: (armorItem?.data.data.dice || 0) + chestBonus,
         damage,
         showObstacles: true,
         showDifficulty: true,
@@ -43,7 +43,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
         buttons: {
             roll: {
                 label: "Roll",
-                callback: (html: JQuery) => armorRollCallback(armorItem, html, sheet, location)
+                callback: (html: JQuery) => armorRollCallback(armorItem as Armor, html, sheet, location)
             }
         },
         default: "roll"

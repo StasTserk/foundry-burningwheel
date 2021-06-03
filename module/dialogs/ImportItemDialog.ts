@@ -120,7 +120,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
                     data: options.baseData,
                     img: options.img
                 });
-                return actor.getOwnedItem(item._id)?.sheet?.render(true);
+                return actor.items.get(item._id)?.sheet?.render(true);
             }
         };
     });

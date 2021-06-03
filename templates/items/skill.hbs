@@ -41,29 +41,29 @@
         </select>
     </div>
     <div class="item-form-group">
-        {{#if item.hasOwner}}
-        <label for="{{item._id}}-aptitude" class="item-setting-label">Aptitude</label>
-        <input id="{{item._id}}-aptitude" type="number" name="data.aptitude" disabled value="{{data.aptitude}}" placeholder="N/A">
+        {{#if item.data.hasOwner}}
+        <label for="{{item.id}}-aptitude" class="item-setting-label">Aptitude</label>
+        <input id="{{item.id}}-aptitude" type="number" name="data.aptitude" disabled value="{{data.aptitude}}" placeholder="N/A">
         <div class="pill-toggle">
-            <input id="{{item._id}}-learning" type="checkbox" name="data.learning" {{ checked data.learning }}>
-            <label for="{{item._id}}-learning" >Learning</label>
+            <input id="{{item.id}}-learning" type="checkbox" name="data.learning" {{ checked data.learning }}>
+            <label for="{{item.id}}-learning" >Learning</label>
         </div>
         {{/if}}
         <div class="pill-toggle">
-            <input id="{{item._id}}-wild" type="checkbox" name="data.wildFork" {{ checked data.wildFork }}>
-            <label for="{{item._id}}-wild" title="This skill explodes on 1's and 6's when used as a fork.">Wild Fork</label>
+            <input id="{{item.id}}-wild" type="checkbox" name="data.wildFork" {{ checked data.wildFork }}>
+            <label for="{{item.id}}-wild" title="This skill explodes on 1's and 6's when used as a fork.">Wild Fork</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item._id}}-open-skill" type="checkbox" name="data.open" {{ checked data.open }}>
-            <label for="{{item._id}}-open-skill" >Open</label>
+            <input id="{{item.id}}-open-skill" type="checkbox" name="data.open" {{ checked data.open }}>
+            <label for="{{item.id}}-open-skill" >Open</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item._id}}-training" type="checkbox" name="data.training" {{ checked data.training }}>
-            <label for="{{item._id}}-training" >Training Skill</label>
+            <input id="{{item.id}}-training" type="checkbox" name="data.training" {{ checked data.training }}>
+            <label for="{{item.id}}-training" >Training Skill</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item._id}}-tools" type="checkbox" name="data.tools" {{ checked data.tools }}>
-            <label for="{{item._id}}-tools" >Requires Tools</label>
+            <input id="{{item.id}}-tools" type="checkbox" name="data.tools" {{ checked data.tools }}>
+            <label for="{{item.id}}-tools" >Requires Tools</label>
         </div>
     </div>
     <textarea name="data.description">{{data.description}}</textarea>

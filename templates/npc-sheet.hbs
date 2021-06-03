@@ -237,10 +237,10 @@
             <i data-action="add" data-type="ranged weapon" class="fas fa-fan" title="Add Ranged Weapon"></i>
         </div>
         {{#each weapons as |w|}}
-        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.data.martialSkills}}
         {{/each}}
         {{#each ranged as |w|}}
-        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.data.martialSkills}}
         {{/each}}
     </div>
 
@@ -250,7 +250,7 @@
             <i data-action="add" data-type="spell" class="fas fa-plus"></i>
         </div>
         {{#each spells as |s|}}
-        {{> "systems/burningwheel/templates/parts/npc-spell.hbs" spell=s skills= ../actor.sorcerousSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-spell.hbs" spell=s skills= ../actor.data.sorcerousSkills}}
         {{/each}}
     </div>
 

@@ -337,7 +337,7 @@
             <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell4}}" data-obstacle="{{data.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
         </div>
         {{#each spells as |spell|}}
-        {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.sorcerousSkills}}
+        {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.data.sorcerousSkills}}
         {{/each}}
         <div class="right-floating">
             <div class="add-button" data-action="addSpell"><i class="fas fa-plus"></i> Add New Spell</div>
@@ -406,7 +406,7 @@
     </h2>
     {{#if data.collapsePtgs}}{{else}}
     <div class="ptgs">
-        {{> "systems/burningwheel/templates/parts/ptgs.hbs" ptgs=data.ptgs id=actor._id }}
+        {{> "systems/burningwheel/templates/parts/ptgs.hbs" ptgs=data.ptgs id=actor.id }}
     </div>
     {{/if}}
 
@@ -419,7 +419,7 @@
     {{#if data.collapseCombat}}{{else}}
     <div class="combat-section flex-row">
         <div class="weapons">
-            {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=actor.martialSkills}}
+            {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=actor.data.martialSkills}}
         </div>
         <div class="armor-misc flex-column">
             <div class="training-skills">

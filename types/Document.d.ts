@@ -832,7 +832,6 @@
     interface Data {
       /**
        * The id assigned by the database
-       * @deprecated use id instead.
        */
       _id: string;
   

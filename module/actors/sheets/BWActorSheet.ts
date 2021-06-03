@@ -164,7 +164,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         const id = $(t).data("item-id");
         const binding = $(t).data("binding");
 
-        const item = this.actor.getOwnedItem(id);
+        const item = this.actor.items.get(id);
         const updateParams = {};
 
         updateParams[binding] = value;

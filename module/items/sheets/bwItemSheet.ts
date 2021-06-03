@@ -1,8 +1,12 @@
 import * as constants from "../../constants.js";
-export class BWItemSheet extends ItemSheet<BWItemSheetData> {
+import { BWItem } from "../item.js";
+export class BWItemSheet extends ItemSheet<BWItemSheetData, BWItem> {
     getData(): BWItemSheetData {
-        const data = super.getData() as unknown as BWItemSheetData;
-        data.showImage = game.settings.get(constants.systemName, constants.settings.itemImages) as boolean;
+        const data = {
+            showImage: game.settings.get(constants.systemName, constants.settings.itemImages) as boolean,
+            data: this.item.data.data,
+            item: this.item
+        };
         return data;
     }
 
@@ -13,6 +17,8 @@ export class BWItemSheet extends ItemSheet<BWItemSheetData> {
     }
 }
 
-export interface BWItemSheetData extends ItemSheet.Data {
+export interface BWItemSheetData<T = Item.Data['data']> {
     showImage: boolean;
+    data: T;
+    item: BWItem;
 }

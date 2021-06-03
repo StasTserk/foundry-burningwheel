@@ -206,7 +206,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
         let options: NewItemData;
         switch (action) {
             case "broadcast": 
-                const item = this.actor.getOwnedItem(id);
+                const item = this.actor.items.get(id);
                 if (item) {
                     return item.generateChatMessage(this.actor);
                 }
@@ -214,7 +214,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
             case "addBelief":
                 options = { name: "New Belief", type: "belief", data: { }, img: constants.defaultImages.belief };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
+                    this.actor.items.get(i._id)?.sheet?.render(true));
             case "addInstinct":
                 options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
                 return this.actor.createOwnedItem(options).then(i =>
@@ -296,7 +296,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                 });
                 
             case "editItem":
-                return this.actor.getOwnedItem(id)?.sheet?.render(true);
+                return this.actor.items.get(id)?.sheet?.render(true);
         }
         return null;
     }

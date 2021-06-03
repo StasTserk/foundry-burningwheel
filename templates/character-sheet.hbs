@@ -241,24 +241,24 @@
         <div class="reputations">
             <h2>Reputations  <i data-action="addReputation" class="fas fa-plus"></i></h2>
             {{#each reputations as |r|}}
-            <div class="reputation flex-row {{r.data.cssClass}}" draggable="true" data-id="{{r.id}}">
+            <div class="reputation flex-row {{r.data.cssClass}}" draggable="true" data-id="{{r._id}}">
                 <div class="item-title">
                     {{r.data.dice}}D - {{ r.name }}
                 </div>
-                <i class="fas fa-edit" data-action="editItem" data-id="{{r.id}}"></i>
-                <i class="fas fa-trash" data-action="delItem" data-id="{{r.id}}"></i>
+                <i class="fas fa-edit" data-action="editItem" data-id="{{r._id}}"></i>
+                <i class="fas fa-trash" data-action="delItem" data-id="{{r._id}}"></i>
             </div>
             {{/each}}
         </div>
         <div class="affiliations">
             <h2>Affiliations  <i data-action="addAffiliation" class="fas fa-plus"></i></h2>
             {{#each affiliations as |a|}}
-            <div class="affiliation flex-row" draggable="true" data-id="{{a.id}}">
+            <div class="affiliation flex-row" draggable="true" data-id="{{a._id}}">
                 <div class="item-title">
                     {{a.data.dice}}D - {{ a.name }}
                 </div>
-                <i class="fas fa-edit" data-action="editItem" data-id="{{a.id}}"></i>
-                <i class="fas fa-trash" data-action="delItem" data-id="{{a.id}}"></i>
+                <i class="fas fa-edit" data-action="editItem" data-id="{{a._id}}"></i>
+                <i class="fas fa-trash" data-action="delItem" data-id="{{a._id}}"></i>
             </div>
             {{/each}}
         </div>

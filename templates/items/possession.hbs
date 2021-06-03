@@ -6,15 +6,15 @@
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
     <div class="item-form-group">
-        <label for="{{item._id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
-        <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+        <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
         <div class="pill-toggle min-content">
-            <input id="{{item._id}}-checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
-            <label for="{{item._id}}-checkbox-toolkit" >Toolkit</label>
+            <input id="{{item.id}}-checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
+            <label for="{{item.id}}-checkbox-toolkit" >Toolkit</label>
         </div>
         <div class="pill-toggle min-content">
-            <input id="{{item._id}}-checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
-            <label for="{{item._id}}-checkbox-expended">Expended</label>
+            <input id="{{item.id}}-checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
+            <label for="{{item.id}}-checkbox-expended">Expended</label>
         </div>
     </div>
     <hr/>

@@ -179,7 +179,7 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
     }
     _deleteSheetItem(e: JQuery.ClickEvent): void {
         const targetId = $(e.target).data("id") as string;
-        this.actor.deleteOwnedItem(targetId);
+        this.actor.deleteEmbeddedDocuments("Item", [targetId]);
     }
     _addSheetItem(e: JQuery.ClickEvent): void {
         const itemType = $(e.target).data("type") as string;

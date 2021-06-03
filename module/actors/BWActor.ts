@@ -142,7 +142,7 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
         
         if (this.data.items) {
             this.data.items.forEach(({ data }) => {
-                const i = data;
+                const i: BWItemData = data;
                 switch (i.type) {
                     case "skill":
                         if (!(i as SkillDataRoot).data.learning &&

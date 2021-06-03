@@ -4,7 +4,7 @@ export class Relationship extends BWItem {
     prepareData(): void {
         super.prepareData();
         this.data.data.safeId = this.id;
-        if (this.actor) {
+        if (this.actor && this.actor.data) {
             this.data.data.aptitude = this.actor.data.data.circles.exp || 0;
         }
 

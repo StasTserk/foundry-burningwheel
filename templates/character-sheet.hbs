@@ -2,7 +2,6 @@
     {{#if data.settings.showSettings}}
     {{> "systems/burningwheel/templates/parts/character-settings.hbs"}}
     {{/if}}
-    {{log this}}
     <div class="character-header flex-row">
         <div class="portrait">
             <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
@@ -276,10 +275,10 @@
     {{#if data.collapseGear}}{{else}}
     <div class="gear item-grid col-4">
         {{#each equipment as |e|}}
-        <div class="{{e.data.cssClass}}" draggable="true" data-id="{{e.id}}">
+        <div class="{{e.data.cssClass}}" draggable="true" data-id="{{e._id}}">
             {{e.name}}
-            <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e.id}}"></i>
-            <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{e.id}}"></i>
+            <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e._id}}"></i>
+            <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{e._id}}"></i>
         </div>
         {{/each}}
         <div class="right-floating">

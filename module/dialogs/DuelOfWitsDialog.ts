@@ -95,7 +95,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     }
 
     getData(): DuelOfWitsData {
-        const data = super.getData();
+        const data = super.getData() as DuelOfWitsData;
         const actors = game.actors?.entities || [];
         data.actionOptions = this.data.actionOptions;
 
@@ -110,7 +110,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.side1ReadOnly = !data.actor1 || !data.actor1.owner;
         data.side2ReadOnly = !data.actor2 || !data.actor2.owner;
 
-        data.gmView = game.user?.isGM;
+        data.gmView = game.user?.isGM || false;
 
         data.showS1Select = (data.gmView && !data.blindS1) || (!data.side1ReadOnly && !data.gmView);
         data.showS2Select = (data.gmView && !data.blindS2) || (!data.side2ReadOnly && !data.gmView);

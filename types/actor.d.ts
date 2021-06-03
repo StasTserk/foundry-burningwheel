@@ -303,6 +303,7 @@
   * Get an Item instance corresponding to the Owned Item with a given id
   * @param itemId - The owned Item id to retrieve
   * @returns An Item instance representing the Owned Item within the Actor entity
+  * @deprecated use Actor#items#get
   */
  getOwnedItem(itemId: string): I;
 
@@ -314,6 +315,7 @@
   * @param options     - Item creation options
   * @param renderSheet - Render the Item sheet for the newly created item data
   * @returns A Promise resolving to the created Owned Item data
+  * @deprecated use Actor#items#create or Item#create
   */
  createOwnedItem(itemData: DeepPartial<Actor.OwnedItemData<D>>, options?: any): Promise<Actor.OwnedItemData<D>>;
  createOwnedItem(itemData: DeepPartial<Item.Data>[], options?: any): Promise<Item.Data[]>;

@@ -218,19 +218,19 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
             case "addInstinct":
                 options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
+                    this.actor.items.get(i._id)?.sheet?.render(true));
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
+                    this.actor.items.get(i._id)?.sheet?.render(true));
             case "addReputation":
                 options = { name: "New Reputation", type: "reputation", data: { }, img: constants.defaultImages.reputation };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
+                    this.actor.items.get(i._id)?.sheet?.render(true));
             case "addAffiliation":
                 options = { name: "New Affiliation", type: "affiliation", data: { }, img: constants.defaultImages.affiliation };
                 return this.actor.createOwnedItem(options).then(i =>
-                    this.actor.getOwnedItem(i._id)?.sheet?.render(true));
+                    this.actor.items.get(i._id)?.sheet?.render(true));
             case "addSkill": 
                 return addNewItem({
                     actor: this.actor,

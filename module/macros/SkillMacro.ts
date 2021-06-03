@@ -29,7 +29,7 @@ export function RollSKillMacro(actorId: string, skillId: string): void {
         return;
     }
 
-    const skill = actor.getOwnedItem(skillId) as Skill | null;
+    const skill = actor.items.get(skillId) as Skill | null;
     if (!skill) {
         ui.notifications?.notify("Unable to find skill linked in this macro. Was it deleted?", "error");
         return;

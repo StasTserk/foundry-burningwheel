@@ -60,7 +60,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
             return;
         }
         const actor = game.actors?.entities.find(a => a.id === target.dataset.actorId) as BWActor;
-        const skill = actor?.getOwnedItem(target.dataset.skillId || "") as Skill | undefined;
+        const skill = actor?.items.get(target.dataset.skillId || "") as Skill | undefined;
 
         dataPreset.deedsPoint = actor.data.data.deeds !== 0;
         if (actor.data.data.persona) {

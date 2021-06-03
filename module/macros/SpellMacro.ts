@@ -29,13 +29,13 @@ export function RollSpellMacro(actorId: string, spellId: string): void {
         return;
     }
 
-    const spell = actor.getOwnedItem(spellId) as Spell | null;
+    const spell = actor.items.get(spellId) as Spell | null;
     if (!spell) {
         ui.notifications?.notify("Unable to find spell linked to this macro. Was it deleted?", "error");
         return;
     }
 
-    const skill = actor.getOwnedItem(spell.data.data.skillId) as Skill | null;
+    const skill = actor.items.get(spell.data.data.skillId) as Skill | null;
     if (!skill) {
         ui.notifications?.notify("Unable to find skill linked to the spell in this macro. Ensure a sorcerous skill is linked with this spell.", "error");
         return;

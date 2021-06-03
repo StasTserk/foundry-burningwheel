@@ -23,7 +23,7 @@ export function RollEditMacro(actorId: string, itemId: string): void {
         return;
     }
 
-    const item = actor.getOwnedItem(itemId) as BWItem | null;
+    const item = actor.items.get(itemId) as BWItem | null;
     if (!item) {
         ui.notifications?.notify("Unable to find item linked to this macro. Was it deleted?", "error");
         return;

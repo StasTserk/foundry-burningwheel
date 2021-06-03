@@ -25,10 +25,10 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     if (["stat", "learning"].includes(target.dataset.rerollType || "")) {
         rollStat = getProperty(actor, `data.${accessor}`);
     } else if (target.dataset.rerollType === "armor") {
-        const armorItem = actor.getOwnedItem(itemId) as Armor;
+        const armorItem = actor.items.get(itemId) as Armor;
         rollStat = { shade: armorItem.data.data.shade, open: false, };
     } else {
-        rollStat = (actor.getOwnedItem(itemId) as Skill).data.data;
+        rollStat = (actor.items.get(itemId) as Skill).data.data;
     }
 
     const successTarget = rollStat.shade === "B" ? 3 : (rollStat.shade === "G" ? 2 : 1);
@@ -94,16 +94,16 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 }
                 actor.update(updateData);
             } else if (target.dataset.rerollType === "skill") {
-                const skill = actor.getOwnedItem(itemId) as Skill;
-                const fateSpent = skill.data.data.fate || 0;
-                skill.update({ 'data.fate': fateSpent + 1 }, {});
+                const skill = actor.items.get<Skill>(itemId);
+                const fateSpent = skill?.data.data.fate || 0;
+                skill?.update({ 'data.fate': fateSpent + 1 }, {});
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
-                const skill = actor.getOwnedItem(itemId) as Skill;
+                const skill = actor.items.get<Skill>(itemId);
                 if (learningTarget === 'skill') {
                     // learning roll went to the root skill
-                    const fateSpent = skill.data.data.fate || 0;
-                    skill.update({'data.fate': fateSpent + 1 }, {});
+                    const fateSpent = skill?.data.data.fate || 0;
+                    skill?.update({'data.fate': fateSpent + 1 }, {});
                 } else {
                     if (successes <= obstacleTotal && success) {
                         if (actor.data.successOnlyRolls.includes(learningTarget)) {

@@ -34,7 +34,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         if (!itemId) {
             return notifyError("No Item Specified", "Item id must be specified when rolling an attack with a weapon or spell");
         }
-        const item = actor.getOwnedItem(itemId) as BWItem;
+        const item = actor.items.get(itemId) as BWItem;
         if (!item) {
             return notifyError("Missing Item", `Item linked  - id ${itemId} - appears not to exist on the actor's sheet.`);
         }
@@ -45,7 +45,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 }
                 // handle melee attack at the given index.
                 const weapon = item as MeleeWeapon | RangedWeapon;
-                const weaponSkill = actor.getOwnedItem(item.data.data.skillId) as Skill;
+                const weaponSkill = actor.items.get(item.data.data.skillId) as Skill;
 
                 if (!weaponSkill) {
                     return notifyError("No Associated Skill", "In order for a skill test to be rolled, a weapon or spell has to be associated with a skill. Check the Actor's sheet to make sure the selected weapon has a chosen skill.");
@@ -69,8 +69,8 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 });
 
             case "spell":
-                const spell = actor.getOwnedItem(itemId) as Spell;
-                const skill = actor.getOwnedItem(spell?.data.data.skillId) as Skill;
+                const spell = actor.items.get(itemId) as Spell;
+                const skill = actor.items.get(spell?.data.data.skillId) as Skill;
                 if (actor.data.type === "character") {
                     return handleSpellRoll({ actor: (actor as BWCharacter), spell, skill, dataPreset});
                 }

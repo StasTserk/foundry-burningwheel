@@ -28,7 +28,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
         super.activateListeners(html);
         html.find('.lifepath[draggable="true"]').on('dragstart', (e) => {
             const actor = this.actor;
-            const item = actor.getOwnedItem(e.target.dataset.id || "") as BWItem;
+            const item = actor.items.get(e.target.dataset.id || "") as BWItem;
             const dragData: helpers.ItemDragData = {
                 actorId: actor.id,
                 id: item.id,
@@ -51,7 +51,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
 
         html.find('.lifepath').on('click', (e) => {
             const id = e.currentTarget.dataset.id || "";
-            this.actor.getOwnedItem(id)?.sheet?.render(true);
+            this.actor.items.get(id)?.sheet?.render(true);
         });
 
         const dropAreas = html.find('.drop-area').toArray().map(e => $(e));
@@ -119,7 +119,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
         const sortedItems = (Array.from(this.actor.items.values()) as Lifepath[]).sort((a, b) => a.data.data.order - b.data.data.order);
         if (dragData.actorId === this.actor.id) {
             // we need to just update the index of the entry
-            const item = this.actor.getOwnedItem(dragData.id || "") as Lifepath;
+            const item = this.actor.items.get(dragData.id || "") as Lifepath;
             await item.update({ "data.order": index }, {});
         } else {
             // we need to get the item data and add it to the setting sheet
@@ -129,7 +129,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
             } else if (dragData.pack) {
                 itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || ""))?.data as LifepathRootData;
             } else if (dragData.actorId) {
-                itemData = (game.actors?.find((a: FoundryDocument) => a.id === dragData.actorId))?.getOwnedItem(dragData.id || "").data as LifepathRootData;
+                itemData = (game.actors?.find((a: FoundryDocument) => a.id === dragData.actorId))?.items.get(dragData.id || "")?.data as LifepathRootData;
             } else {
                 itemData = game.items?.find((i: BWItem) => i.id === dragData.id)?.data as LifepathRootData;
             }

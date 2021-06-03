@@ -207,7 +207,7 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
             "data.deeds": this.data.data.deeds - deeds,
             "data.persona": this.data.data.persona - persona,
         });
-        const skill = this.getOwnedItem(skillId) as Skill;
+        const skill = this.items.get(skillId) as Skill;
         skill.update({
             "data.deeds": deeds ? (skill.data.data.deeds || 0) + 1 : undefined,
             "data.persona": skill.data.data.persona + persona

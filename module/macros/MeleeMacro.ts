@@ -29,13 +29,13 @@ export function RollMeleeMacro(actorId: string, weaponId: string, attackIndex: n
         return;
     }
 
-    const weapon = actor.getOwnedItem(weaponId) as MeleeWeapon | null;
+    const weapon = actor.items.get(weaponId) as MeleeWeapon | null;
     if (!weapon) {
         ui.notifications?.notify("Unable to find weapon linked to this macro. Was it deleted?", "error");
         return;
     }
 
-    const skill = actor.getOwnedItem(weapon.data.data.skillId) as Skill | null;
+    const skill = actor.items.get(weapon.data.data.skillId) as Skill | null;
     if (!skill) {
         ui.notifications?.notify("Unable to find skill linked to the weapon in this macro. Ensure a martial skill is linked with this weapon.", "error");
         return;

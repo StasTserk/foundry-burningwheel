@@ -265,9 +265,9 @@ export class CharacterBurnerDialog extends Application {
                 if (data.pack) {
                     // this item is dragged out of an actor in a compendium. The most common use case for this is Settings + Lifepaths
                     const actor = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.actorId) as Actor;
-                    item = actor.getOwnedItem(data.id) as BWItem;
+                    item = actor.items.get(data.id) as BWItem;
                 } else {
-                    item = (game.actors?.find((a: BWActor) => a.id === data.actorId) as BWActor).getOwnedItem(data.id) as BWItem;
+                    item = (game.actors?.find((a: BWActor) => a.id === data.actorId) as BWActor).items.get(data.id) as BWItem;
                 }
             } else if (data.pack) {
                 item = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;

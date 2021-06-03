@@ -15,15 +15,15 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
 
     readonly batchAdd = {
         task: -1,
-        items: [] as NewItemData[]
+        items: [] as (NewItemData & Partial<BWItemDataTypes>)[] 
     };
 
-    private async _handleBatchAdd(): Promise<unknown> {
+    private async _handleBatchAdd(): Promise<FoundryDocument[]> {
         const items = this.batchAdd.items;
         this.batchAdd.items = [];
         clearTimeout(this.batchAdd.task);
         this.batchAdd.task = -1;
-        return this.createOwnedItem(items);
+        return this.createEmbeddedDocuments("Item", items);
     }
 
     batchAddItem(item: NewItemData): void {

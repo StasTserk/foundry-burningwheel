@@ -1,11 +1,11 @@
-/**
- * The Item entity.
- * This base Item refers primarily to items which are not currently owned.
-
- * @typeParam D  - The type of the `Item`'s `_data` field. It should extend `Item.Data`.
- * @typeParam PD - The type of the `Item`'s `data` field after `prepareData` has been called. It should extend `D`.
- */
- declare class Item<D extends Item.Data = Item.Data<any>, PD extends D = D> extends FoundryDocument<D, PD> {
+  /**
+   * The Item entity.
+   * This base Item refers primarily to items which are not currently owned.
+  
+   * @typeParam D  - The type of the `Item`'s `_data` field. It should extend `Item.Data`.
+   * @typeParam PD - The type of the `Item`'s `data` field after `prepareData` has been called. It should extend `D`.
+   */
+  declare class Item<D extends Item.Data = Item.Data<any>, PD extends D = D> extends FoundryDocument<D, PD> {
     constructor(data?: DeepPartial<D>, options?: FoundryDocument.CreateOptions);
     /**
      * ActiveEffects are prepared by the Item.prepareEmbeddedEntities() method
@@ -17,6 +17,8 @@
   
     /** @override */
     get uuid(): string;
+    
+    get parent(): Actor | undefined;
   
     /**
      * @remarks

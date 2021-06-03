@@ -94,7 +94,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
                                 return itemRoot;
                             }).toArray();
                         actor.setFlag(constants.systemName, "compendia", dialogHtml.find("select").val());
-                        actor.createOwnedItem(newItems);
+                        actor.createEmbeddedDocuments<BWItem>("Item", newItems);
                     }
                 },
                 cancel: {
@@ -114,13 +114,13 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
         makeNewButtons[i] = {
             label: `Make new ${i}`,
             callback: async () => {
-                const item = await actor.createOwnedItem({
+                const item = await actor.createEmbeddedDocuments("Item", [{
                     name: `New ${i}`,
                     type: i,
                     data: options.baseData,
                     img: options.img
-                });
-                return actor.items.get(item._id)?.sheet?.render(true);
+                }]);
+                return actor.items.get(item[0].id)?.sheet?.render(true);
             }
         };
     });

@@ -1,10 +1,9 @@
 import { BWItem } from "../../items/item.js";
 import { Lifepath, LifepathRootData } from "../../items/lifepath.js";
-import { BWSetting } from "../BWSetting.js";
+import { BWSetting, SettingData } from "../BWSetting.js";
 import * as helpers from "../../helpers.js";
-import { BaseActorSheetData } from "./BWActorSheet.js";
 
-export class BWSettingSheet extends ActorSheet<BWSettingData> {
+export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
     get template(): string {
         return "systems/burningwheel/templates/setting-sheet.hbs";
     }
@@ -18,10 +17,13 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
         });
     }
 
-    getData(): BWSettingData {
-        const data = super.getData() as BWSettingData;
-        data.lifepaths = (Array.from(this.actor.items.values()) as Lifepath[]).map(i => i.data).sort((a, b) => a.data.order - b.data.order);
-        return data;
+    getData(): BWSettingSheetData {
+        return {
+            actor: this.actor,
+            data: this.actor.data.data,
+            lifepaths: (Array.from(this.actor.items.values()) as Lifepath[]).map(i => i.data).sort((a, b) => a.data.order - b.data.order),
+            editable: this.isEditable
+        };
     }
 
     activateListeners(html: JQuery): void {
@@ -161,6 +163,9 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
     }
 }
 
-export interface BWSettingData extends BaseActorSheetData {
+export interface BWSettingSheetData {
+    actor: BWSetting;
+    data: SettingData;
     lifepaths: LifepathRootData[];
+    editable: boolean;
 }

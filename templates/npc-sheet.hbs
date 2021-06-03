@@ -6,27 +6,27 @@
         <h1>
             <input type="text" name="name" value="{{actor.name}}">
             <div class="npc-checkbox">
-                <input id="{{actor._id}}-edit-mode" type="checkbox" name="data.editMode" {{checked data.editMode}}>
-                <label for="{{actor._id}}-edit-mode"><i class="fas fa-edit"></i></label>
+                <input id="{{actor.id}}-edit-mode" type="checkbox" name="data.editMode" {{checked data.editMode}}>
+                <label for="{{actor.id}}-edit-mode"><i class="fas fa-edit"></i></label>
             </div>
         </h1>
         <div class="npc-bio">
             <div>
-                <label class="npc-section-label" for="{{actor._id}}-bio">Bio</label>
-                <textarea id="{{actor._id}}-bio" name="data.bio">{{data.bio}}</textarea>
+                <label class="npc-section-label" for="{{actor.id}}-bio">Bio</label>
+                <textarea id="{{actor.id}}-bio" name="data.bio">{{data.bio}}</textarea>
             </div>
             <div class="flex-row artha-points">
                 <div>
-                    <label for="{{actor._id}}-fate-points" class="artha-label">Fate</label>
-                    <input id="{{actor._id}}-fate-points" name="data.fate" value="{{data.fate}}" type="number" data-dtype="Number" min="0" class="artha-input">
+                    <label for="{{actor.id}}-fate-points" class="artha-label">Fate</label>
+                    <input id="{{actor.id}}-fate-points" name="data.fate" value="{{data.fate}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
                 <div>
-                    <label for="{{actor._id}}-persona-points" class="artha-label">Persona</label>
-                    <input id="{{actor._id}}-persona-points" name="data.persona" value="{{data.persona}}" type="number" data-dtype="Number" min="0" class="artha-input">
+                    <label for="{{actor.id}}-persona-points" class="artha-label">Persona</label>
+                    <input id="{{actor.id}}-persona-points" name="data.persona" value="{{data.persona}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
                 <div>
-                    <label for="{{actor._id}}-deeds-points" class="artha-label">Deeds</label>
-                    <input id="{{actor._id}}-deeds-points" name="data.deeds" value="{{data.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
+                    <label for="{{actor.id}}-deeds-points" class="artha-label">Deeds</label>
+                    <input id="{{actor.id}}-deeds-points" name="data.deeds" value="{{data.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
             </div>
         </div>

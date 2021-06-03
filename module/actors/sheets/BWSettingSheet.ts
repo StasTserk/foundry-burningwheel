@@ -137,7 +137,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
             // if our item is actually a lifepath we need to add it, otherwise abort.
             if (itemData.type === "lifepath") {
                 itemData.data.order = index;
-                await this.actor.createOwnedItem(itemData, { keepOrder: true });
+                await this.actor.createEmbeddedDocuments("Item", [itemData]);
             } else {
                 return;
             }

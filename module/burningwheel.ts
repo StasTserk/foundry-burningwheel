@@ -1,6 +1,6 @@
 import { BWActor } from "./actors/BWActor.js";
 import { BWCharacterSheet } from "./actors/sheets/BWCharacterSheet.js";
-import { RegisterItemSheets } from "./items/item.js";
+import { BWItem, RegisterItemSheets } from "./items/item.js";
 
 import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
 import { DragData, ShadeString, slugify, translateWoundValue } from "./helpers.js";
@@ -145,7 +145,7 @@ function registerHelpers() {
 Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-Hooks.on("createOwnedItem", (actor: BWActor, item: Item.Data, _options: any, userId: string) => {
-    if (actor.data.type !== "setting") { actor.processNewItem(item, userId); }
+Hooks.on("createItem", (item: BWItem, _options: any, userId: string) => {
+    if (item.parent && (item.parent.data.type !== "Setting")) { (item.parent as BWActor).processNewItem(item.data, userId); }
 });
 Hooks.on("hotbarDrop", (_bar, data, slot) => CreateBurningWheelMacro(data as DragData, slot));

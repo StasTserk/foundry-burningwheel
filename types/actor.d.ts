@@ -368,7 +368,7 @@
    * @optional context Additional context which customizes the deletion workflow
    * @returns An array of deleted document instances
    */
-  createEmbeddedDocuments(embeddedName: "Item" | "ActiveEffect", data: FoundryDocument.Data[], context?: FoundryDocument.ModificationContext): Promise<FoundryDocument[]>
+  createEmbeddedDocuments<T>(embeddedName: "Item" | "ActiveEffect", data: Partial<FoundryDocument.Data<T>>[], context?: FoundryDocument.ModificationContext): Promise<FoundryDocument[]>
 
    
  /* -------------------------------------------- */

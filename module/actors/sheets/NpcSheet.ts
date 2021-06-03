@@ -183,10 +183,10 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
     }
     _addSheetItem(e: JQuery.ClickEvent): void {
         const itemType = $(e.target).data("type") as string;
-        this.actor.createOwnedItem({
+        this.actor.createEmbeddedDocuments("Item", [{
             name: `New ${itemType}`,
             type: itemType as ItemType
-        }).then(i => this.actor.items.get(i._id)?.sheet?.render(true));
+        }]).then(i => this.actor.items.get(i[0].id)?.sheet?.render(true));
     }
 }
 

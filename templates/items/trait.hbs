@@ -15,110 +15,110 @@
             {{/select}}
         </select>
 
-        <label for="{{item._id}}-restrictions" class="item-setting-label">Restrictions</label>
-        <input id="{{item._id}}-restrictions" type="text" name="data.restrictions" value="{{data.restrictions}}">
+        <label for="{{item.id}}-restrictions" class="item-setting-label">Restrictions</label>
+        <input id="{{item.id}}-restrictions" type="text" name="data.restrictions" value="{{data.restrictions}}">
 
-        <label for="{{item._id}}-point-cost" class="item-setting-label">Point Cost</label>
-        <input id="{{item._id}}-point-cost" class="exponent no-arrows wide" type="number" name="data.pointCost" value="{{data.pointCost}}" onfocus="this.select();" data-dtype="Number">
+        <label for="{{item.id}}-point-cost" class="item-setting-label">Point Cost</label>
+        <input id="{{item.id}}-point-cost" class="exponent no-arrows wide" type="number" name="data.pointCost" value="{{data.pointCost}}" onfocus="this.select();" data-dtype="Number">
     </div>
     <hr/>
-    {{#if item.isDieTrait}}
+    {{#if item.data.isDieTrait}}
     <div class="flex-column traits-die">
         <div class="trait-effect-section flex-row">
-            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-dice" name="data.hasDieModifier" {{checked data.hasDieModifier}}>
+            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-dice" name="data.hasDieModifier" {{checked data.hasDieModifier}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked data.hasDieModifier}}>
-                <label for="{{item._id}}-checkbox-dice" class="trait-effect-label">Has Die Modifier</label>
+                <label for="{{item.id}}-checkbox-dice" class="trait-effect-label">Has Die Modifier</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double" >
-                    <input id="{{item._id}}-dieModifierTarget" type="text" name="data.dieModifierTarget" value="{{data.dieModifierTarget}}">
-                    <label for="{{item._id}}-dieModifierTarget">Rolls Affected</label>
+                    <input id="{{item.id}}-dieModifierTarget" type="text" name="data.dieModifierTarget" value="{{data.dieModifierTarget}}">
+                    <label for="{{item.id}}-dieModifierTarget">Rolls Affected</label>
                 </div>
                 <div>
-                    <input id="{{item._id}}-dieModifier" type="number" name="data.dieModifier" value="{{data.dieModifier}}" placeholder="0">
-                    <label for="{{item._id}}-dieModifier">Die Modifier</label>
+                    <input id="{{item.id}}-dieModifier" type="number" name="data.dieModifier" value="{{data.dieModifier}}" placeholder="0">
+                    <label for="{{item.id}}-dieModifier">Die Modifier</label>
                 </div>
             </div>
         </div>
         <div class="trait-effect-section flex-row">
-            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-ob" name="data.hasObModifier" {{checked data.hasObModifier}}>
+            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-ob" name="data.hasObModifier" {{checked data.hasObModifier}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked data.hasObModifier}}>
-                <label for="{{item._id}}-checkbox-ob" class="trait-effect-label">Has Ob Modifier</label>
+                <label for="{{item.id}}-checkbox-ob" class="trait-effect-label">Has Ob Modifier</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double" >
-                    <input id="{{item._id}}-obModifierTarget" type="text" name="data.obModifierTarget" value="{{data.obModifierTarget}}">
-                    <label for="{{item._id}}-obModifierTarget">Rolls Affected</label>
+                    <input id="{{item.id}}-obModifierTarget" type="text" name="data.obModifierTarget" value="{{data.obModifierTarget}}">
+                    <label for="{{item.id}}-obModifierTarget">Rolls Affected</label>
                 </div>
                 <div>
-                    <input id="{{item._id}}-obModifier" type="number" name="data.obModifier" value="{{data.obModifier}}" placeholder="0">
-                    <label for="{{item._id}}-obModifier">Ob Modifier</label>
+                    <input id="{{item.id}}-obModifier" type="number" name="data.obModifier" value="{{data.obModifier}}" placeholder="0">
+                    <label for="{{item.id}}-obModifier">Ob Modifier</label>
                 </div>
             </div>
         </div>
         <div class="trait-effect-section flex-row">
-            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-rep" name="data.addsReputation" {{checked data.addsReputation}}>
+            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-rep" name="data.addsReputation" {{checked data.addsReputation}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked data.addsReputation}}>
-                <label for="{{item._id}}-checkbox-rep" class="trait-effect-label">Adds Reputation</label>
+                <label for="{{item.id}}-checkbox-rep" class="trait-effect-label">Adds Reputation</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div>
-                    <input id="{{item._id}}-reputationName" type="text" name="data.reputationName" value="{{data.reputationName}}">
-                    <label for="{{item._id}}-reputationName">Reputation Name</label>
+                    <input id="{{item.id}}-reputationName" type="text" name="data.reputationName" value="{{data.reputationName}}">
+                    <label for="{{item.id}}-reputationName">Reputation Name</label>
                 </div>
                 <div>
-                    <input id="{{item._id}}-reputationDice" type="number" name="data.reputationDice" value="{{data.reputationDice}}" placeholder="0">
-                    <label for="{{item._id}}-reputationDice">Dice</label>
+                    <input id="{{item.id}}-reputationDice" type="number" name="data.reputationDice" value="{{data.reputationDice}}" placeholder="0">
+                    <label for="{{item.id}}-reputationDice">Dice</label>
                 </div>
                 <div>
-                    <input id="{{item._id}}-reputationInfamous" type="checkbox" name="data.reputationInfamous" {{checked data.reputationInfamous}}>
-                    <label for="{{item._id}}-reputationInfamous">Infamous?</label>
+                    <input id="{{item.id}}-reputationInfamous" type="checkbox" name="data.reputationInfamous" {{checked data.reputationInfamous}}>
+                    <label for="{{item.id}}-reputationInfamous">Infamous?</label>
                 </div>
             </div>
         </div>
         <div class="trait-effect-section flex-row">
-            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-aff" name="data.addsAffiliation" {{checked data.addsAffiliation}}>
+            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-aff" name="data.addsAffiliation" {{checked data.addsAffiliation}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked data.addsAffiliation}}>
-                <label for="{{item._id}}-checkbox-aff" class="trait-effect-label">Adds Affiliation</label>
+                <label for="{{item.id}}-checkbox-aff" class="trait-effect-label">Adds Affiliation</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double">
-                    <input id="{{item._id}}-affiliationName" type="text" name="data.affiliationName" value="{{data.affiliationName}}">
-                    <label for="{{item._id}}-affiliationName">Affiliation Name</label>
+                    <input id="{{item.id}}-affiliationName" type="text" name="data.affiliationName" value="{{data.affiliationName}}">
+                    <label for="{{item.id}}-affiliationName">Affiliation Name</label>
                 </div>
                 <div>
-                    <input id="{{item._id}}-affiliationDice" type="number" name="data.affiliationDice" value="{{data.affiliationDice}}" placeholder="0">
-                    <label for="{{item._id}}-affiliationDice">Dice</label>
+                    <input id="{{item.id}}-affiliationDice" type="number" name="data.affiliationDice" value="{{data.affiliationDice}}" placeholder="0">
+                    <label for="{{item.id}}-affiliationDice">Dice</label>
                 </div>
             </div>
         </div>
         <div class="trait-effect-section flex-row">
-            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item._id}}-checkbox-apt" name="data.hasAptitudeModifier" {{checked data.hasAptitudeModifier}}>
+            <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-apt" name="data.hasAptitudeModifier" {{checked data.hasAptitudeModifier}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked data.hasAptitudeModifier}}>
-                <label for="{{item._id}}-checkbox-apt" class="trait-effect-label">Changes Aptitude</label>
+                <label for="{{item.id}}-checkbox-apt" class="trait-effect-label">Changes Aptitude</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double">
-                    <input id="{{item._id}}-aptitude-target" type="text" name="data.aptitudeTarget" value="{{data.aptitudeTarget}}">
-                    <label for="{{item._id}}-aptitude-target">Aptitude Target</label>
+                    <input id="{{item.id}}-aptitude-target" type="text" name="data.aptitudeTarget" value="{{data.aptitudeTarget}}">
+                    <label for="{{item.id}}-aptitude-target">Aptitude Target</label>
                 </div>
                 <div>
-                    <input id="{{item._id}}-aptitude-amount" type="number" name="data.aptitudeModifier" value="{{data.aptitudeModifier}}" placeholder="0" data-dtype="Number">
-                    <label for="{{item._id}}-aptitude-amount">Amount</label>
+                    <input id="{{item.id}}-aptitude-amount" type="number" name="data.aptitudeModifier" value="{{data.aptitudeModifier}}" placeholder="0" data-dtype="Number">
+                    <label for="{{item.id}}-aptitude-amount">Amount</label>
                 </div>
             </div>
         </div>
     </div>
     {{/if}}
-    {{#if item.isCallonTrait}}
+    {{#if item.data.isCallonTrait}}
     <div class="flex-column traits-callon">
-        <input id="{{item._id}}-callonTarget" type="text" name="data.callonTarget" value="{{data.callonTarget}}">
-        <label for="{{item._id}}-callonTarget">Call-on Rolls</label>
+        <input id="{{item.id}}-callonTarget" type="text" name="data.callonTarget" value="{{data.callonTarget}}">
+        <label for="{{item.id}}-callonTarget">Call-on Rolls</label>
         <hr>
     </div>
     {{/if}}

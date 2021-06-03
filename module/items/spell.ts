@@ -32,12 +32,12 @@ export class Spell extends BWItem {
         }
     }
 
-    getSpellMessageData(): string {
+    async getSpellMessageData(): Promise<string> {
         const element = document.createElement("div");
         element.className = "spell-extra-info";
         element.appendChild(DivOfText(this.name, "spell-title"));
         if (this.data.data.isWeapon) {
-            const roll = new Roll("1d6").roll().dice[0].results[0].result;
+            const roll = (await new Roll("1d6").roll({async: true})).dice[0].results[0].result;
             element.appendChild(DivOfText("I", "ims-header"));
             element.appendChild(DivOfText("M", "ims-header"));
             element.appendChild(DivOfText("S", "ims-header"));

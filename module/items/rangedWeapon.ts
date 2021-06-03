@@ -29,9 +29,9 @@ export class RangedWeapon extends BWItem {
         this.data.data.cssClass = "equipment-weapon";
     }
 
-    getWeaponMessageData(): string {
+    async getWeaponMessageData(): Promise<string> {
         const element = document.createElement("div");
-        const roll = new Roll("1d6").roll().dice[0].results[0].result as number;
+        const roll = (await new Roll("1d6").roll({async: true})).dice[0].results[0].result as number;
         const incidental = roll <= (this.data.data.incidentalRoll || 0);
         const mark = !incidental && roll <= (this.data.data.markRoll || 0);
 

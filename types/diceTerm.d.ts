@@ -92,7 +92,7 @@ declare class DiceTerm {
      * @param {boolean} [maximize]    Apply the maximum possible result for each roll.
      * @returns {DiceTerm}    The evaluated dice term
      */
-    evaluate({minimize=false, maximize=false}: boolean={}): DiceTerm
+    async evaluate({minimize=false, maximize=false}: boolean={}): Promise<DiceTerm>
 
     /**
      * Roll the DiceTerm by mapping a random uniform draw against the faces of the dice term.
@@ -100,7 +100,7 @@ declare class DiceTerm {
      * @param {boolean} [maximize]    Apply the maximum possible result instead of a random result.
      * @return {object}
      */
-    roll({minimize:boolean=false, maximize=false}: boolean={}): { result: number, active: true }
+    async roll({minimize:boolean=false, maximize=false}: boolean={}): Promise<{ result: number, active: true }>
 
     /**
      * Return a string used as the label for each rolled result

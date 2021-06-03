@@ -26,7 +26,7 @@ export class MeleeWeapon extends BWItem {
         this.data.data.cssClass = "equipment-weapon";
     }
 
-    getWeaponMessageData(attackIndex: number): string {
+    async getWeaponMessageData(attackIndex: number): Promise<string> {
         const element = document.createElement("div");
         element.className = "weapon-extra-info";
         element.appendChild(helpers.DivOfText(`${this.name} ${this.data.data.attacks[attackIndex].attackName}`, "ims-title shade-black"));

@@ -22,7 +22,7 @@ export function hideChatButtonsIfNotOwner(_message: unknown, html: JQuery, data:
     const message = html.find("div.chat-message");
     if (message.length > 0) {
         const actor = game.actors?.get(data.message.speaker.actor);
-        if (actor && actor.owner) {
+        if (actor && actor.isOwner) {
             return; // we are the owner of the message and shouldn't hide the buttons
         }
         message.find('div.reroll-buttons').each((i, b) => { b.style.display = "none"; });

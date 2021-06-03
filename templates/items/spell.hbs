@@ -7,25 +7,25 @@
     </div>
     {{#if data.variableObstacle}}
     <div class="spell-sheet-entry">
-        <label for="{{item._id}}-var-obstacle-in" class="spell-setting-label">Obstacle</label>
-        <input id="{{item._id}}-var-obstacle-in"
+        <label for="{{item.id}}-var-obstacle-in" class="spell-setting-label">Obstacle</label>
+        <input id="{{item.id}}-var-obstacle-in"
             onClick="this.select();"
             type="text"
             name="data.variableObstacleDescription"
             value="{{data.variableObstacleDescription}}">
         <div class="pill-toggle">
-            <input id="{{item._id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
-            <label for="{{item._id}}-up-spell">Up Spell</label>
+            <input id="{{item.id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
+            <label for="{{item.id}}-up-spell">Up Spell</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item._id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
-            <label for="{{item._id}}-var-obstacle">Variable Ob</label>
+            <input id="{{item.id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+            <label for="{{item.id}}-var-obstacle">Variable Ob</label>
         </div>
     </div>
     {{else}}
     <div class="spell-sheet-entry">
-        <label for="{{item._id}}-obstacle" class="spell-setting-label">Obstacle</label>
-        <input id="{{item._id}}-obstacle"
+        <label for="{{item.id}}-obstacle" class="spell-setting-label">Obstacle</label>
+        <input id="{{item.id}}-obstacle"
             onClick="this.select();"
             data-dType="number"
             type="number"
@@ -33,114 +33,114 @@
             value="{{data.obstacle}}"
             class="exponent">
         <div class="pill-toggle">
-            <input id="{{item._id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
-            <label for="{{item._id}}-up-spell">Up Spell</label>
+            <input id="{{item.id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
+            <label for="{{item.id}}-up-spell">Up Spell</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item._id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
-            <label for="{{item._id}}-var-obstacle">Variable Ob</label>
+            <input id="{{item.id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+            <label for="{{item.id}}-var-obstacle">Variable Ob</label>
         </div>
     </div>
     {{/if}}
     <div class="spell-sheet-entry">
-        <label for="{{item._id}}-actions" class="spell-setting-label" >Actions</label>
-        <input id="{{item._id}}-actions"
+        <label for="{{item.id}}-actions" class="spell-setting-label" >Actions</label>
+        <input id="{{item.id}}-actions"
             onClick="this.select();"
             data-dType="number"
             type="number"
             name="data.actions"
             value="{{data.actions}}"
             class="exponent">
-        <label for="{{item._id}}-origin" class="spell-setting-label">Origin</label>
-        <input id="{{item._id}}-origin"
+        <label for="{{item.id}}-origin" class="spell-setting-label">Origin</label>
+        <input id="{{item.id}}-origin"
             onClick="this.select();"
             type="text"
             name="data.origin"
             value="{{data.origin}}">
-        <label for="{{item._id}}-areaOfEffect" class="spell-setting-label">Area of Effect</label>
-        <input id="{{item._id}}-areaOfEffect"
+        <label for="{{item.id}}-areaOfEffect" class="spell-setting-label">Area of Effect</label>
+        <input id="{{item.id}}-areaOfEffect"
             onClick="this.select();"
             type="text"
             name="data.areaOfEffect"
             value="{{data.areaOfEffect}}">
-        <label for="{{item._id}}-element" class="spell-setting-label">Element</label>
-        <input id="{{item._id}}-element"
+        <label for="{{item.id}}-element" class="spell-setting-label">Element</label>
+        <input id="{{item.id}}-element"
             onClick="this.select();"
             type="text"
             name="data.element"
             value="{{data.element}}">
-        <label for="{{item._id}}-impetus" class="spell-setting-label">Impetus</label>
-        <input id="{{item._id}}-impetus"
+        <label for="{{item.id}}-impetus" class="spell-setting-label">Impetus</label>
+        <input id="{{item.id}}-impetus"
             onClick="this.select();"
             type="text"
             name="data.impetus"
             value="{{data.impetus}}">
-        <label for="{{item._id}}-duration" class="spell-setting-label">Duration</label>
-        <input id="{{item._id}}-duration"
+        <label for="{{item.id}}-duration" class="spell-setting-label">Duration</label>
+        <input id="{{item.id}}-duration"
             onClick="this.select();"
             type="text"
             name="data.duration"
             value="{{data.duration}}">
-        <label for="{{item._id}}-point-cost" class="spell-setting-label">Resource Point Cost</label>
-        <input id="{{item._id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" onfocus="this.select();" value="{{data.pointCost}}" data-dtype="Number">
+        <label for="{{item.id}}-point-cost" class="spell-setting-label">Resource Point Cost</label>
+        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" onfocus="this.select();" value="{{data.pointCost}}" data-dtype="Number">
         {{#if item.hasOwner}}
         <div class="pill-toggle">
-            <input id="{{item._id}}-in-practicals" type="checkbox" name="data.inPracticals" {{checked data.inPracticals}}>
-            <label for="{{item._id}}-in-practicals">In Practicals</label>
+            <input id="{{item.id}}-in-practicals" type="checkbox" name="data.inPracticals" {{checked data.inPracticals}}>
+            <label for="{{item.id}}-in-practicals">In Practicals</label>
         </div>
         {{/if}}
     </div>
     <div class="spell-weapon-toggle">
         <div class="pill-toggle">
-            <input id="{{item._id}}-is-weapon" type="checkbox" name="data.isWeapon" {{checked data.isWeapon}}>
-            <label for="{{item._id}}-is-weapon" class="spell-toggle-label">Is a Weapon</label>
+            <input id="{{item.id}}-is-weapon" type="checkbox" name="data.isWeapon" {{checked data.isWeapon}}>
+            <label for="{{item.id}}-is-weapon" class="spell-toggle-label">Is a Weapon</label>
         </div>
     </div>
     <div class="spell-weapon-stats">
         {{#if data.isWeapon}}
         <div class="spell-sheet-entry">
-            <label for="{{item._id}}-will-bonus" class="spell-setting-label">Will Bonus</label>
-            <input id="{{item._id}}-will-bonus"
+            <label for="{{item.id}}-will-bonus" class="spell-setting-label">Will Bonus</label>
+            <input id="{{item.id}}-will-bonus"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
                 name="data.willDamageBonus"
                 value="{{data.willDamageBonus}}"
                 class="exponent">
-            <label for="{{item._id}}-va" class="spell-setting-label">Vs. Armor</label>
-            <input id="{{item._id}}-va"
+            <label for="{{item.id}}-va" class="spell-setting-label">Vs. Armor</label>
+            <input id="{{item.id}}-va"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
                 name="data.va"
                 value="{{data.va}}"
                 class="exponent">
-            <label for="{{item._id}}-spell-length" class="spell-setting-label">Weapon Length</label>
-            <select id="{{item._id}}-spell-length" name="data.weaponLength" value="{{data.weaponLength}}">
+            <label for="{{item.id}}-spell-length" class="spell-setting-label">Weapon Length</label>
+            <select id="{{item.id}}-spell-length" name="data.weaponLength" value="{{data.weaponLength}}">
                 {{#select data.weaponLength}}
                 {{#each item.spellLengths as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <label for="{{item._id}}-optimal" class="spell-setting-label">Optimal Range</label>
-            <div><input id="{{item._id}}-optimal"
+            <label for="{{item.id}}-optimal" class="spell-setting-label">Optimal Range</label>
+            <div><input id="{{item.id}}-optimal"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
                 name="data.optimalRange"
                 value="{{data.optimalRange}}"
                 class="exponent"> Dice</div>
-            <label for="{{item._id}}-extreme" class="spell-setting-label">Extreme Range</label>
-            <div><input id="{{item._id}}-extreme"
+            <label for="{{item.id}}-extreme" class="spell-setting-label">Extreme Range</label>
+            <div><input id="{{item.id}}-extreme"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
                 name="data.extremeRange"
                 value="{{data.extremeRange}}"
                 class="exponent"> Dice</div>
-            <label for="{{item._id}}-max-range" class="spell-setting-label">Max Range</label>
-            <input id="{{item._id}}-max-range"
+            <label for="{{item.id}}-max-range" class="spell-setting-label">Max Range</label>
+            <input id="{{item.id}}-max-range"
                 onClick="this.select();"
                 type="text"
                 name="data.maxRange"
@@ -152,8 +152,8 @@
             </div>
             {{/if}}
             <div class="pill-toggle">
-                <input id="{{item._id}}-half-will" type="checkbox" name="data.halfWill" {{checked data.halfWill}}>
-                <label for="{{item._id}}-half-will" title="This spell's damage is base off of half the will exponent, rather than the full one.">Half Will</label>
+                <input id="{{item.id}}-half-will" type="checkbox" name="data.halfWill" {{checked data.halfWill}}>
+                <label for="{{item.id}}-half-will" title="This spell's damage is base off of half the will exponent, rather than the full one.">Half Will</label>
             </div>
         </div>
         {{/if}}

@@ -346,10 +346,31 @@
   * @param itemId - The ID of the item to delete
   * @param options - Item deletion options
   * @returns A Promise resolving to the deleted Owned Item data
+  * @deprecated use Item.delete or Actor#deleteEmbeddedDocuments
   */
- deleteOwnedItem(itemId: string, options?: FoundryDocument.DeleteOptions): Promise<Actor.OwnedItemData<D>>;
- deleteOwnedItem(itemId: string[], options?: FoundryDocument.DeleteOptions): Promise<Array<Actor.OwnedItemData<D>>>;
+  deleteOwnedItem(itemId: string, options?: FoundryDocument.DeleteOptions): Promise<Actor.OwnedItemData<D>>;
+  deleteOwnedItem(itemId: string[], options?: FoundryDocument.DeleteOptions): Promise<Array<Actor.OwnedItemData<D>>>;
 
+   
+  /**
+   * Delete multiple embedded Document instances within a parent Document using provided string ids.
+   * @param embeddedName The name of the embedded Document type
+   * @param ids An array of string ids for each Document to be deleted
+   * @optional context Additional context which customizes the deletion workflow
+   * @returns An array of deleted document instances
+   */
+  deleteEmbeddedDocuments(embeddedName: "Item" | "ActiveEffect", ids: string[], context?: FoundryDocument.ModificationContext): Promise<FoundryDocument[]>
+  
+  /**
+   * Create multiple embedded Document instances within a parent Document using provided string ids.
+   * @param embeddedName The name of the embedded Document type
+   * @param ids An array of string ids for each Document to be deleted
+   * @optional context Additional context which customizes the deletion workflow
+   * @returns An array of deleted document instances
+   */
+  createEmbeddedDocuments(embeddedName: "Item" | "ActiveEffect", data: FoundryDocument.Data[], context?: FoundryDocument.ModificationContext): Promise<FoundryDocument[]>
+
+   
  /* -------------------------------------------- */
  /*  DEPRECATED                                  */
  /* -------------------------------------------- */

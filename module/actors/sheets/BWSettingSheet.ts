@@ -46,7 +46,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingData> {
             e.preventDefault();
             e.stopPropagation();
             const id = e.target.dataset.id || "";
-            this.actor.deleteOwnedItem(id);
+            this.actor.deleteEmbeddedDocuments("Item", [id]);
         });
 
         html.find('.lifepath').on('click', (e) => {

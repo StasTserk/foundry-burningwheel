@@ -750,7 +750,66 @@
    async _preCreate(data: D, options: FoundryDocument.CreateOptions, user: User);
   }
   
-  declare namespace FoundryDocument {
+declare namespace FoundryDocument {
+    interface ModificationContext {
+        /**
+         * A parent Document within which these Documents should be embedded
+         * */
+        parent?: Document;
+        /**
+         * A Compendium pack identifier within which the Documents should be modified
+         */
+        pack?: string;
+        /**
+         * Block the dispatch of preCreate hooks for this operation
+         * @default false
+         */
+        noHook?: boolean;
+        /**
+         * Return an index of the Document collection, used only during a get operation.
+         * @default false
+         */
+        index?: boolean;
+        /**
+         * When performing a creation operation, keep the provided _id instead of clearing it.
+         * @default false
+         */
+        keepId?: boolean;
+        /**
+         * Create a temporary document which is not saved to the database. Only used during creation.
+         * @default false
+         */
+        temporary?: boolean;
+        /**
+         * Automatically re-render existing applications associated with the document.
+         * @default true
+         */
+        render?: boolean;
+        /**
+         * Automatically create and render the Document sheet when the Document is first created.
+         * @default false
+         */
+        renderSheet?: boolean;
+        /**
+         * Difference each update object against current Document data to reduce the size of the transferred data. Only used during update.
+         * @default true
+         */
+        diff?: boolean;
+        /**
+         * Merge objects recursively. If false, inner objects will be replaced explicitly. Use with caution!
+         * @default true;
+         */
+        recursive?: boolean;
+        /**
+         * Is the operation undoing a previous operation, only used by embedded Documents within a Scene
+         */
+        isUndo?: boolean;
+        /**
+         * Whether to delete all documents of a given type, regardless of the array of ids provided. Only used during a delete operation.
+         */
+        deleteAll?: boolean;
+    }
+
     /**
      * Common {@link Document} create options
      */

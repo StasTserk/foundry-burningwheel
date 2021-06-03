@@ -102,7 +102,7 @@
     update(data: DeepPartial<D>, options?: FoundryDocument.UpdateOptions): Promise<this>;
   
     /** @override */
-    delete(options?: FoundryDocument.DeleteOptions): Promise<this>;
+    delete(options?: FoundryDocument.ModificationContext): Promise<this>;
   
     /**
      * A convenience constructor method to create an Item instance which is owned by an Actor

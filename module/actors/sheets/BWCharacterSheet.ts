@@ -291,7 +291,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                 return Dialog.confirm({
                     title: "Confirm Deletion",
                     content: "<p>You are about to delete an item from the actor's sheet. Are you sure?</p>",
-                    yes: () => this.actor.deleteOwnedItem(id),
+                    yes: () => this.actor.deleteEmbeddedDocuments("Item", [id]),
                     no: () => void 0
                 });
                 

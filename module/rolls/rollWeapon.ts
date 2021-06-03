@@ -38,7 +38,7 @@ export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandle
 
 }
 
-export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset}: WeaponRollOptions): unknown {
+export async function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset}: WeaponRollOptions): Promise<unknown> {
     const quality = (weapon as MeleeWeapon | RangedWeapon).data.data.quality;
 
     let weaponPreset: Partial<RollDialogData> = {};
@@ -52,9 +52,9 @@ export function handleWeaponRoll({ actor, weapon, attackIndex, skill, dataPreset
     
     let weaponExtraData: string | undefined;
     if (weapon.type === "melee weapon") {
-        weaponExtraData = (weapon as MeleeWeapon).getWeaponMessageData(attackIndex || 0);
+        weaponExtraData = await (weapon as MeleeWeapon).getWeaponMessageData(attackIndex || 0);
     } else {
-        weaponExtraData = (weapon as RangedWeapon).getWeaponMessageData();
+        weaponExtraData = await (weapon as RangedWeapon).getWeaponMessageData();
     }
 
     return skill.data.data.learning ? 

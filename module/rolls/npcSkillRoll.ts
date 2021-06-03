@@ -49,8 +49,8 @@ export async function handleNpcWeaponRoll({actor, weapon, skill, attackIndex, da
         return notifyError("Missing Weapon", "The weapon that is being cast appears to be missing from the character sheet.");
     }
     const extraInfo = weapon.type === "melee weapon" ? 
-        (weapon as MeleeWeapon).getWeaponMessageData(attackIndex || 0) :
-        (weapon as RangedWeapon).getWeaponMessageData();
+        await (weapon as MeleeWeapon).getWeaponMessageData(attackIndex || 0) :
+        await (weapon as RangedWeapon).getWeaponMessageData();
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 
@@ -76,7 +76,7 @@ export async function handleNpcSpellRoll({ actor, spell, skill, dataPreset}: Npc
         dataPreset = { difficulty: obstacle };
     }
     dataPreset.useCustomDifficulty = dataPreset.showObstacles = dataPreset.showDifficulty = true;
-    const extraInfo = spell.getSpellMessageData();
+    const extraInfo = await spell.getSpellMessageData();
     return handleNpcSkillRoll({actor, skill, extraInfo, dataPreset});
 }
 

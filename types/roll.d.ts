@@ -150,9 +150,11 @@ declare class Roll {
     /**
      * Evaluate and return the Roll expression.
      * This function simply calls the evaluate() method but is maintained for backwards compatibility.
+     * @param options Optional parameter informing how the Roll is evaluated.
      * @return {Roll}   The Roll instance, containing evaluated results and the rolled total.
      */
-    roll(): Roll
+    roll(options?: Roll.Options & { async: false | undefined }): Roll
+    roll(options?: Roll.Options & { async: true }): Promise<Roll>
 
     /**
      * Create a new Roll object using the original provided formula and data
@@ -290,6 +292,17 @@ declare class Roll {
      * @return {Roll}           An inner Roll object constructed from the term
      */
     static fromTerm(term: string, data: any): Roll
+}
+
+declare namespace Roll {
+    declare interface Options {
+        /** Minimize the result, obtaining the smallest possible value. */
+        minimize?: boolean;
+        /** Maximize the result, obtaining the largest possible value. */
+        maximize?: boolean;
+        /** Evaluate the roll asynchronously, receiving a Promise as the returned value. This will become the default behavior in version 10.x */
+        async?: boolean;
+    }
 }
 
 declare interface RollDataObject {

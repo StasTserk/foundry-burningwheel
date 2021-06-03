@@ -28,7 +28,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         return helpers.notifyError("Missing Spell",
             "The spell being cast seems to be missing from the character sheet.");
     }
-    const spellData = spell.getSpellMessageData();
+    const spellData = await spell.getSpellMessageData();
 
     if (skill) {
         const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;

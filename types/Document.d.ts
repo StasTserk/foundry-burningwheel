@@ -219,9 +219,16 @@
     /**
      * A boolean indicator for whether or not the current game User has ownership rights for this Entity.
      * This property has a setter which allows for ownership rights to be temporarily overridden on a per- instance basis.
+     * @deprecated in favour of isOwner
      */
     get owner(): boolean;
-  
+
+    /**
+     * A boolean indicator for whether or not the current game User has ownership rights for this Entity.
+     * This property has a setter which allows for ownership rights to be temporarily overridden on a per- instance basis.
+     */
+     get isOwner(): boolean;
+
     /**
      * A boolean indicator for whether or not the current game User has at least limited visibility for this Entity.
      */

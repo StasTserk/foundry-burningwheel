@@ -4,10 +4,10 @@ import { QualityString } from "../constants.js";
 import { translateWoundValue } from "../helpers.js";
 import { BWActorData } from "../actors/BWActor.js";
 
-export class MeleeWeapon extends BWItem {
+export class MeleeWeapon extends BWItem<MeleeWeaponRootData> {
     prepareData(): void {
         super.prepareData();
-        const actorData = this.actor && this.actor.data as BWActorData;
+        const actorData = this.actor && this.actor.data as unknown as BWActorData;
         if (actorData) {
             let power = actorData.data.power.exp;
             if (actorData.data.power.shade === "G") {
@@ -49,7 +49,7 @@ export class MeleeWeapon extends BWItem {
     data: MeleeWeaponRootData;
 }
 
-export interface MeleeWeaponRootData extends BWItemData {
+export interface MeleeWeaponRootData extends BWItemData<MeleeWeaponData> {
     data: MeleeWeaponData;
 }
 

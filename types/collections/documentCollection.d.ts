@@ -131,5 +131,7 @@
      ): Promise<T[]>;
      
      _onUpdateDocuments(documents, result, options, userId)
+
+    filter<T>(condition: (item: T) => boolean): T[];
   }
   

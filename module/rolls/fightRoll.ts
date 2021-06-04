@@ -45,7 +45,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 }
                 // handle melee attack at the given index.
                 const weapon = item as MeleeWeapon | RangedWeapon;
-                const weaponSkill = actor.items.get(item.data.data.skillId) as Skill;
+                const weaponSkill = actor.items.get<Skill>(weapon.data.data.skillId);
 
                 if (!weaponSkill) {
                     return notifyError("No Associated Skill", "In order for a skill test to be rolled, a weapon or spell has to be associated with a skill. Check the Actor's sheet to make sure the selected weapon has a chosen skill.");

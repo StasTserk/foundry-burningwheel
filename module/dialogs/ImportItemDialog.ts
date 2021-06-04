@@ -70,7 +70,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
             .sort((a, b) => a.name < b.name ? -1 : (a.name === b.name ? 0 : 1));
         const sourceList = ["World"].concat(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            Array.from(game.packs?.values() || []).filter((p:any) => !p.private).map((p: Compendium) => {
+            Array.from(game.packs?.values() || []).filter((p:any) => !p.private).map((p: CompendiumCollection) => {
                 return helpers.compendiumName(p);
         }));
 

@@ -122,7 +122,12 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
             if (skillData) {
                 (skillData.data as SkillData).exp = skillExp;
                 (skillData.data as SkillData).shade = costToString(extractNamedChildNumber($(e), "skillShade"));
-                skills.push(skillData);
+                skills.push({
+                    data: skillData.data,
+                    name: skillData.name,
+                    type: skillData.type,
+                    img: skillData.img
+                });
             }
         } else {
             skills.push({

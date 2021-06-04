@@ -1,4 +1,3 @@
-import { BWItem } from "../items/item.js";
 import { AttackData } from "../items/meleeWeapon.js";
 
 export async function task041(): Promise<void> {
@@ -21,8 +20,8 @@ export async function task041(): Promise<void> {
     }
     const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
-        if (pack.cls === BWItem) {
-            const packItems = await pack.getContent();
+        if (pack.documentName === "Item") {
+            const packItems = await pack.getDocuments();
             for (const item of Array.from(packItems.values()) as Item[]) {
                 if (["melee weapon"].indexOf(item.type) !== -1) {
                     const attackData: AttackData = {

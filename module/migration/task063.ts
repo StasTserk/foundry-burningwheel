@@ -25,8 +25,8 @@ export async function task063(): Promise<void> {
 
     const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
-        if (pack.cls.prototype.constructor.entity === "Item") {
-            const packItems = await pack.getContent();
+        if (pack.documentName === "Item") {
+            const packItems = await pack.getDocuments();
             for (const item of Array.from(packItems.values()).filter((i: BWItem) => i.type === "skill" || i.type === "trait") as (Skill | Trait)[]) {
                 const updateData = updateItem(item, updateInfo);
                 if (Object.values(updateData).length) {
@@ -47,7 +47,7 @@ export async function task063(): Promise<void> {
 
 function updateItem(item: Skill | Trait, updateInfo: Record<string, number>): Record<string, string> {
     const data = {};
-    if (item.data.img === "icons/svg/mystery-man.svg") {
+    if (item.data.img === "icons/svg/item-bag.svg") {
         if (item.data.type === "skill") {
             data["img"] = skillImages[(item as Skill).data.data.skilltype];
         } else {

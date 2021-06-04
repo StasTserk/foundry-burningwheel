@@ -488,6 +488,7 @@
      * const created = await actor.createEmbeddedEntity("OwnedItem", data); // Returns an Array of EmbeddedEntities, saved to the Actor
      * const temp = await actor.createEmbeddedEntity("OwnedItem", data, {temporary: true}); // Not saved to the Actor
      * ```
+     * @deprecated
      */
     createEmbeddedEntity(embeddedName: string, data: any, options?: FoundryDocument.CreateOptions): Promise<any>;
   

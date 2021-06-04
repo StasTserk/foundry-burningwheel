@@ -70,6 +70,8 @@ declare class BWGame extends Game {
     /** Optional Dice so Nice module */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dice3d?: any;
+
+    packs?: Collection<CompendiumCollection<FoundryDocument>>;
 }
 
 declare namespace ClientSettings {

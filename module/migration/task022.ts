@@ -14,9 +14,9 @@ export async function task022(): Promise<void> {
     }
     const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
-        if (pack.cls === BWItem) {
-            const packItems = await pack.getContent();
-            for (const item of Array.from(packItems.values()) as Item[]) {
+        if (pack.documentName === "Item") {
+            const packItems = await pack.getDocuments();
+            for (const item of packItems as BWItem[]) {
                 if (["melee weapon", "ranged weapon", "armor"].indexOf(item.type) !== -1) {
                     item.data.type = "possession";
                     await item.update({ data: { shade: "B" }}, {});

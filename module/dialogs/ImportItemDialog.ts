@@ -91,7 +91,13 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
                             .map((_, element: HTMLInputElement) => {
                                 const itemRoot = (items.find((s: BWItem) => s.id === element.value) as BWItem).data;
                                 Object.assign(itemRoot.data, options.forcedData);
-                                return itemRoot;
+                                return {
+                                    data: itemRoot.data,
+                                    flags: itemRoot.flags,
+                                    name: itemRoot.name,
+                                    type: itemRoot.type,
+                                    img: itemRoot.img
+                                };
                             }).toArray();
                         actor.setFlag(constants.systemName, "compendia", dialogHtml.find("select").val());
                         actor.createEmbeddedDocuments<BWItem>("Item", newItems);

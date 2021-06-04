@@ -373,31 +373,6 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
             "data.persona": this.data.data.persona - persona,
         });
     }
-
-    // async createOwnedItem(itemData: NewItemData | NewItemData[], options?: Record<string, unknown>): Promise<BWItem> {
-    //     // we don't add lifepaths to actors. they are simply a data structure for holding lifepath info for settings and the character burner
-    //     if (Array.isArray(itemData)) {
-    //         itemData = itemData.filter(id => id.type !== "lifepath");
-    //         return super.createOwnedItem(itemData, options) as  Promise<BWItem>;
-    //     }
-    //     if (itemData.type !== "lifepath") {
-    //         return super.createOwnedItem(itemData) as Promise<BWItem>;
-    //     }
-    //     return super.createOwnedItem([], options) as Promise<BWItem>;
-    // }
-
-    // // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-    // async createEmbeddedEntity(entityType: string, data: NewItemData| NewItemData[], options?: any): Promise<this> {
-    //     // we don't add lifepaths to normal actors. they are simply a data structure for holding lifepath info for settings and the character burner
-    //     if (Array.isArray(data)) {
-    //         data = data.filter(id => id.type !== "lifepath");
-    //         return super.createEmbeddedEntity(entityType, data, options);
-    //     }
-    //     if (data.type !== 'lifepath') {
-    //         return super.createEmbeddedEntity(entityType, data, options);
-    //     }
-    //     return this;
-    // }
 }
 
 export interface Common {

@@ -5,7 +5,7 @@
             {{#select side1ActorId}}
             <option value="">Side 1</option>
             {{#each side1Options as |o|}}
-                <option value="{{o._id}}">{{o.name}}</option>
+                <option value="{{o.id}}">{{o.name}}</option>
             {{/each}}
             {{/select}}
         </select>
@@ -20,7 +20,7 @@
             {{#select side2ActorId}}
             <option value="">Side 2</option>
             {{#each side2Options as |o|}}
-                <option value="{{o._id}}">{{o.name}}</option>
+                <option value="{{o.id}}">{{o.name}}</option>
             {{/each}}
             {{/select}}
         </select>
@@ -55,7 +55,7 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor1._id}}" data-skill-id="{{actor1Skill}}"><i class="fas fa-dice"></i></button>
+            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor1.id}}" data-skill-id="{{actor1Skill}}"><i class="fas fa-dice"></i></button>
             {{/if}}
             {{#if gmView}}
             <div class="pill-toggle">
@@ -164,7 +164,7 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor2._id}}" data-skill-id="{{actor2Skill}}"><i class="fas fa-dice"></i></button>
+            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor2.id}}" data-skill-id="{{actor2Skill}}"><i class="fas fa-dice"></i></button>
             {{/if}}
             {{#if gmView}}
             <div class="pill-toggle">

@@ -32,7 +32,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             });
         }
 
-        const actors = game.actors?.entities || [];
+        const actors = game.actors?.contents || [];
         data.gmView = game.user?.isGM || false;
         data.participantOptions = actors
             .filter(a => !this.data.data.participantIds.includes(a.id))
@@ -68,7 +68,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             p.showAction8 = !!p.action7;
             p.showAction9 = !!p.action8;
 
-            p.showActions = (data.gmView && !p.gmHidden) || (!data.gmView && this.data.actors.find(a => a.id === p.id)?.owner);
+            p.showActions = (data.gmView && !p.gmHidden) || (!data.gmView && this.data.actors.find(a => a.id === p.id)?.isOwner);
             p.chosenWeaponLabel = p.weapons.find(x => x.id === p.weaponId)?.label ?? "";
         });
         data.actionOptions = this.data.actionOptions;

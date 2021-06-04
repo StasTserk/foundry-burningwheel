@@ -73,7 +73,7 @@ export class ExtendedTestDialog<T> extends Dialog {
             label: "Show",
             icon: "fas fa-eye",
             class: "force-show-dow",
-            onclick: (_) => {
+            onclick: () => {
                 game.socket.emit(constants.socketName, { type: `show${this.data.topic}` });
             }
         };

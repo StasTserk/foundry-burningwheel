@@ -21,13 +21,14 @@ export async function CreateBurningWheelMacro(data: DragData, slot: string): Pro
     if (macroData) {
         // Check if an identical macro already exists. Create it otherwise.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let macro = game.macros?.entities.find(m => (m.name === macroData.name) && ((m.data as any).command === macroData.command));
+        let macro = game.macros?.contents.find(m => (m.name === macroData.name) && ((m.data as any).command === macroData.command));
         if (!macro) {
             macro = await Macro.create<Macro, Partial<Macro.Data>>({
                 name: macroData.name,
                 img: macroData.img,
                 command: macroData.command,
-                flags: macroData.flags
+                flags: macroData.flags,
+                type: "script"
             }) as Macro;
         }
         await game.user?.assignHotbarMacro(macro, slot);

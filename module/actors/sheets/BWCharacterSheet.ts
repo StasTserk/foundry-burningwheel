@@ -14,7 +14,7 @@ import { ReputationDataRoot } from "../../items/reputation.js";
 import { SkillDataRoot, Skill } from "../../items/skill.js";
 import { SpellDataRoot, Spell } from "../../items/spell.js";
 import { TraitDataRoot, Trait } from "../../items/trait.js";
-import { BWItem, BWItemData } from "../../items/item.js";
+import { BWItemData } from "../../items/item.js";
 
 export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharacter, ActorSheetOptions> {
     get actor(): BWCharacter {
@@ -213,23 +213,23 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                 break;
             case "addBelief":
                 options = { name: "New Belief", type: "belief", data: { }, img: constants.defaultImages.belief };
-                return this.actor.createEmbeddedDocuments<BWItem>("Item", [options]).then(i =>
+                return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addInstinct":
                 options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
-                return this.actor.createEmbeddedDocuments<BWItem>("Item", [options]).then(i =>
+                return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addRelationship":
                 options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
-                return this.actor.createEmbeddedDocuments<BWItem>("Item", [options]).then(i =>
+                return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addReputation":
                 options = { name: "New Reputation", type: "reputation", data: { }, img: constants.defaultImages.reputation };
-                return this.actor.createEmbeddedDocuments<BWItem>("Item", [options]).then(i =>
+                return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addAffiliation":
                 options = { name: "New Affiliation", type: "affiliation", data: { }, img: constants.defaultImages.affiliation };
-                return this.actor.createEmbeddedDocuments<BWItem>("Item", [options]).then(i =>
+                return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addSkill": 
                 return addNewItem({

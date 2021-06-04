@@ -355,6 +355,11 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
             }
         }, 500);
     }
+
+    async createEmbeddedDocuments(type: "Item" | "ActiveEffect", data: Partial<FoundryDocument.Data>[], options?: FoundryDocument.ModificationContext): Promise<FoundryDocument[]> {
+        data = data.filter(i => i.type !== "lifepath");
+        return super.createEmbeddedDocuments(type, data, options);
+    }
 }
 
 export interface CharacterDataRoot extends BWActorData<BWCharacterData> {

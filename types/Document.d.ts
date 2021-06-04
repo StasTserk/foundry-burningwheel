@@ -538,9 +538,12 @@
      * });
      * const updated = await actor.updateEmbeddedEntity("OwnedItem", updates); // Updates multiple EmbeddedEntity objects
      * ```
+     * @deprecated use updateEmbeddedDocuments instead
      */
     updateEmbeddedEntity(embeddedName: string, data: any, options?: FoundryDocument.UpdateOptions): Promise<any>;
-    updateEmbeddedEntity(embeddedName: string, data: any[], options?: FoundryDocument.UpdateOptions): Promise<any[]>;
+     updateEmbeddedEntity(embeddedName: string, data: any[], options?: FoundryDocument.UpdateOptions): Promise<any[]>;
+     
+    updateEmbeddedDocuments(embeddedName: "Item" | "ActiveEffect", data: DeepPartial<FoundryDocument.Data[]>, options?: FoundryDocument.UpdateOptions): Promise<FoundryDocument[]>;
   
     /**
      * Handle a SocketResponse from the server when one or multiple Embedded Entities are updated

@@ -150,16 +150,17 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
         for(let i = 0; i < index; i ++) {
             const item = sortedItems[i];
             if (item.id !== dragData.id) {
-                updateData.push( { "id": sortedItems[i].id, 'data.order': i });
+                updateData.push( { "_id": sortedItems[i].id, 'data.order': i });
             }
         }
         for (let i = index; i < sortedItems.length; i ++) {
             const item = sortedItems[i];
             if (item.id !== dragData.id) {
-                updateData.push( { "id": sortedItems[i].id, 'data.order': i + 1 });
+                updateData.push( { "_id": sortedItems[i].id, 'data.order': i + 1 });
             }
         }
-        this.actor.updateEmbeddedEntity("OwnedItem", updateData);
+        // this.actor.updateEmbeddedEntity("OwnedItem", updateData);
+        this.actor.updateEmbeddedDocuments("Item", updateData);
     }
 }
 

@@ -74,7 +74,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
         for (const value of items) {
             const i = value.data as BWItemData;
             switch(i.type) {
-                case "reputation": reps.push(i); break;
+                case "reputation": reps.push(i as ReputationDataRoot); break;
                 case "affiliation": affs.push(i); break;
                 case "belief": beliefs.push(i); break;
                 case "instinct": instincts.push(i); break;
@@ -105,7 +105,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     break;
                 case "armor":
                     equipment.push(i);
-                    armor.push(i);
+                    armor.push(i as ArmorRootData);
                     break;
                 case "spell":
                     spells.push(i as SpellDataRoot);

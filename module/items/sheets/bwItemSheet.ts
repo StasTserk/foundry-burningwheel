@@ -1,13 +1,16 @@
 import * as constants from "../../constants.js";
 import { BWItem } from "../item.js";
-export class BWItemSheet extends ItemSheet<BWItemSheetData, BWItem> {
-    getData(): BWItemSheetData {
+export class BWItemSheet<
+    SD extends BWItemSheetData = BWItemSheetData,
+    ID extends BWItem = BWItem> extends ItemSheet<SD, ID> {
+    
+    getData(): SD {
         const data = {
             showImage: game.settings.get(constants.systemName, constants.settings.itemImages) as boolean,
             data: this.item.data.data,
             item: this.item
         };
-        return data;
+        return data as unknown as SD;
     }
 
     static get defaultOptions(): BaseEntitySheet.Options {

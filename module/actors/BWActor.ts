@@ -2,7 +2,7 @@ import { ShadeString, StringIndexedObject } from "../helpers.js";
 import { DisplayClass, ItemType, BWItemData, BWItem, BWItemDataTypes } from "../items/item.js";
 import { SkillDataRoot } from "../items/skill.js";
 import * as constants from "../constants.js";
-import { ArmorRootData } from "../items/armor.js";
+import { Armor } from "../items/armor.js";
 import { PossessionRootData } from "../items/possession.js";
 import { ReputationDataRoot } from "../items/reputation.js";
 import { TraitDataRoot, Trait } from "../items/trait.js";
@@ -155,11 +155,11 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
                         }
                         if ((i as SkillDataRoot).data.skilltype === "martial" &&
                             !(i as SkillDataRoot).data.training) {
-                            this.data.martialSkills.push(i);
+                            this.data.martialSkills.push(i as SkillDataRoot);
                         } else if ((i as SkillDataRoot).data.skilltype === "sorcerous") {
-                            this.data.sorcerousSkills.push(i);
+                            this.data.sorcerousSkills.push(i as SkillDataRoot);
                         } else if ((i as SkillDataRoot).data.skilltype === "social") {
-                            this.data.socialSkills.push(i);
+                            this.data.socialSkills.push(i as SkillDataRoot);
                         }
                         break;
                     case "reputation":
@@ -196,7 +196,7 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
                         break;
                     case "possession":
                         if ((i as PossessionRootData).data.isToolkit) {
-                            this.data.toolkits.push(i);
+                            this.data.toolkits.push(i as PossessionRootData);
                         }
                         break;
                     case "spell":
@@ -228,7 +228,7 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     _onCreate(data: any, options: any, userId: string): void {
         super._onCreate(data, options, userId);
-        if (this.data.items.length) {
+        if (this.data.items.contents.length) {
             return; // this is most likely a duplicate of an existing actor. we don't need to add default items.
         }
         if (game.userId !== userId) {
@@ -281,9 +281,9 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
 
         const charData = this.data.type === "character" ? this.data.data as BWCharacterData : undefined;
 
-        this.data.items.filter(i => i.type === "armor" && (i as unknown as ArmorRootData).data.equipped)
+        this.data.items.filter<Armor>(i => (i.type === "armor" && i.data.data.equipped))
             .forEach(i => {
-            const a = i as unknown as ArmorRootData;
+            const a = i.data;
             if (a.data.hasHelm) {
                     clumsyWeight.helmetObPenalty = a.data.perceptionObservationPenalty || 0;
             }
@@ -430,7 +430,7 @@ export interface Common {
     deeds: number;
 }
 
-export interface BWActorData<T extends Common = Common> extends Actor.Data<T, BWItemDataTypes> {
+export interface BWActorData<T extends Common = Common> extends Actor.Data<T, BWItem> {
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionRootData[];
     martialSkills: SkillDataRoot[];
@@ -440,7 +440,7 @@ export interface BWActorData<T extends Common = Common> extends Actor.Data<T, BW
 
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
-    items: BWItemData[];
+    items: DocumentCollection<BWItem>;
     forks: SkillDataRoot[];
     rollModifiers: { [rollName:string]: RollModifier[]; };
     callOns: { [rollName:string]: string[] };

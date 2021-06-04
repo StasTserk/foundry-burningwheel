@@ -392,12 +392,12 @@ declare namespace Actor {
   * @typeParam D - Type for `_data.data`
   * @typeParam I - Type for system's Item's _data
   */
- interface Data<D = any, I extends Item.Data = Item.Data> extends FoundryDocument.Data {
+ interface Data<D = any, I extends Item = Item> extends FoundryDocument.Data {
    data: D;
    effects: ActiveEffect.Data[];
    folder: string;
    img: string;
-   items: I[];
+   items: DocumentCollection<I>;
    name: string;
    permission: FoundryDocument.Permission;
    sort: number;

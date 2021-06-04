@@ -42,7 +42,7 @@ export * from "./sheets/skill-sheet.js";
 export * from "./sheets/trait-sheet.js";
 export * from "./sheets/spell-sheet.js";
 
-export class BWItem extends Item<BWItemDataTypes> {
+export class BWItem<T extends BWItemData = BWItemDataTypes> extends Item<T> {
     async generateChatMessage(speaker: BWActor): Promise<ChatMessage | null> {
         return simpleBroadcast({ title: this.name, mainText: `Type - ${this.data.type}` }, speaker);
     }
@@ -56,7 +56,7 @@ export class BWItem extends Item<BWItemDataTypes> {
     }
 }
 
-export interface BWItemData extends Item.Data {
+export interface BWItemData<T = unknown> extends Item.Data<T> {
     type: ItemType;
     hasOwner: boolean;
 }

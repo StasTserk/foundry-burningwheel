@@ -1,9 +1,10 @@
 import { BWActor } from "../../actors/BWActor.js";
 import { DragData } from "../../helpers.js";
 import { BWItem } from "../item.js";
+import { Lifepath } from "../lifepath.js";
 import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
-export class LifepathSheet extends BWItemSheet {
+export class LifepathSheet extends BWItemSheet<BWItemSheetData, Lifepath> {
     getData(): BWItemSheetData {
         const data = super.getData();
         return data;

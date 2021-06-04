@@ -1,4 +1,4 @@
-import { BWActor, NewItemData } from "../actors/BWActor.js";
+import { BWActor } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData } from "../helpers.js";
 import { BWItem, BWItemData, HasPointCost, ItemType } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
@@ -267,13 +267,13 @@ export class CharacterBurnerDialog extends Application {
             if (data.actorId) {
                 if (data.pack) {
                     // this item is dragged out of an actor in a compendium. The most common use case for this is Settings + Lifepaths
-                    const actor = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.actorId) as Actor;
+                    const actor = await (game.packs?.find(p => p.collection === data.pack) as CompendiumCollection).getDocument(data.actorId) as Actor;
                     item = actor.items.get(data.id) as BWItem;
                 } else {
                     item = (game.actors?.find((a: BWActor) => a.id === data.actorId) as BWActor).items.get(data.id) as BWItem;
                 }
             } else if (data.pack) {
-                item = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;
+                item = await (game.packs?.find(p => p.collection === data.pack) as CompendiumCollection).getDocument(data.id) as BWItem;
             } else {
                 item = game.items?.find((i: BWItem) => i.id === data.id) as BWItem;
             }
@@ -738,14 +738,14 @@ export class CharacterBurnerDialog extends Application {
                 
                 this.close();
         
-                return this._parent.createEmbeddedEntity("OwnedItem", [
+                return this._parent.createEmbeddedDocuments("Item", [
                     ...skillData,
                     ...traitData,
                     ...propertyData,
                     ...repData,
                     ...relData,
                     ...gearData,
-                ] as NewItemData[], {});
+                ], { keepId: false });
             },
             no: () => { return; }
         });

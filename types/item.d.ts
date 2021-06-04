@@ -100,8 +100,8 @@
     /* -------------------------------------------- */
   
     /** @override */
-    update<U>(data: Expanded<U> extends DeepPartial<D> ? U : never, options?: FoundryDocument.UpdateOptions): Promise<this>;
-    update(data: DeepPartial<D>, options?: FoundryDocument.UpdateOptions): Promise<this>;
+    update<U>(data: Expanded<U> extends DeepPartial<D> ? U : never, options?: FoundryDocument.ModificationContext): Promise<this>;
+    update(data: DeepPartial<D>, options?: FoundryDocument.ModificationContext): Promise<this>;
   
     /** @override */
     delete(options?: FoundryDocument.ModificationContext): Promise<this>;

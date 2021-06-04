@@ -2,7 +2,7 @@
  * A singleton Collection of Compendium-level Document objects within the Foundry Virtual Tabletop.
  * Each Compendium pack has its own associated instance of the CompendiumCollection class which contains its contents.
  */
-export class CompendiumCollection<T extends FoundryDocument> extends DocumentCollection<T> {
+declare class CompendiumCollection<T extends FoundryDocument = FoundryDocument> extends DocumentCollection<T> {
     /**
      * The amount of time that Document instances within this CompendiumCollection are held in memory.
      * Accessing the contents of the Compendium pack extends the duration of this lifetime.
@@ -36,9 +36,9 @@ export class CompendiumCollection<T extends FoundryDocument> extends DocumentCol
      * Access the compendium configuration data for this pack
      * @type {object}
      */
-    get config(): any;
+    get config(): unknown;
     /** @inheritdoc */
-    get documentName(): any;
+    get documentName(): string;
     /**
      * Track whether the Compendium Collection is locked for editing
      * @type {boolean}

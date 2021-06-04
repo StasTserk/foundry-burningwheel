@@ -32,7 +32,7 @@ export class LifepathSheet extends BWItemSheet<BWItemSheetData, Lifepath> {
         if (data.type === "Item" && data.id) {
             let item: BWItem | undefined;
             if (data.pack) {
-                item = await (game.packs?.find(p => p.collection === data.pack) as Compendium).getEntity(data.id) as BWItem;
+                item = await (game.packs?.find(p => p.collection === data.pack) as CompendiumCollection<BWItem>).getDocument(data.id) as BWItem;
             } else if (data.actorId) {
                 item = (game.actors?.find((a: BWActor) => a.id === data.actorId) as BWActor).items.get(data.id) as BWItem;
             } else {

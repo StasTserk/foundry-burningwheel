@@ -129,7 +129,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
             if (dragData.data) {
                 itemData = dragData.data as LifepathRootData;
             } else if (dragData.pack) {
-                itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as Compendium).getEntity(dragData.id || ""))?.data as LifepathRootData;
+                itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as CompendiumCollection).getDocument(dragData.id || ""))?.data as LifepathRootData;
             } else if (dragData.actorId) {
                 itemData = (game.actors?.find((a: FoundryDocument) => a.id === dragData.actorId))?.items.get(dragData.id || "")?.data as LifepathRootData;
             } else {

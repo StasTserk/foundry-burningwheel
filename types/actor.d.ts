@@ -224,27 +224,6 @@
  /** @override */
  protected _onUpdate(data: DeepPartial<D>, options: FoundryDocument.UpdateOptions, userId: string, context?: any): void;
 
- /** @override */
- createEmbeddedEntity<U>(
-   embeddedName: 'OwnedItem',
-   data: Expanded<U> extends DeepPartial<Actor.OwnedItemData<D>> ? U : DeepPartial<Actor.OwnedItemData<D>>,
-   options?: any
-   ): Promise<Actor.OwnedItemData<D>>;
-
-  /** @override */
- createEmbeddedEntity<U>(
-  embeddedName: 'OwnedItem',
-  data: Expanded<U>[] extends DeepPartial<Actor.OwnedItemData<D>>[] ? U[] : DeepPartial<Actor.OwnedItemData<D>>[],
-  options?: any
-): Promise<Actor.OwnedItemData<D>[]>;
-
- /** @override */
- createEmbeddedEntity<U>(
-   embeddedName: 'ActiveEffect',
-   data: Expanded<U> extends DeepPartial<ActiveEffect.Data> ? U : DeepPartial<ActiveEffect.Data>,
-   options?: any
- ): Promise<ActiveEffect.Data>;
-
  /**
   * When Owned Items are created process each item and extract Active Effects to transfer to the Actor.
   * @param created - Created owned Item data objects

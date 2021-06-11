@@ -1,11 +1,11 @@
 import { skillRootSelect, SkillTypeString } from "../constants.js";
 import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, TestString, updateTestsNeeded } from "../helpers.js";
-import { DisplayClass, ItemType, BWItemData, BWItem } from "./item.js";
+import { DisplayClass, BWItemData, BWItem } from "./item.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 import * as helpers from "../helpers.js";
 
-export class Skill extends BWItem {
+export class Skill extends BWItem<SkillDataRoot> {
     getRootSelect(): StringIndexedObject<string> {
         const roots = {};
         const actor = this.actor as unknown as BWActor  | null;
@@ -55,12 +55,6 @@ export class Skill extends BWItem {
         if (!this.data.learning && this.data.exp <= woundDice) {
             this.data.cssClass += " wound-disabled";
         }
-    }
-
-    data: SkillDataRoot;
-
-    get type(): ItemType {
-        return super.type as ItemType;
     }
 
     canAdvance(): boolean {
@@ -198,8 +192,8 @@ export class Skill extends BWItem {
     }
 }
 
-export interface SkillDataRoot extends BWItemData {
-    data: SkillData;
+export interface SkillDataRoot extends BWItemData<SkillData> {
+    type: "skill";
 }
 
 export interface SkillData extends TracksTests, DisplayClass {

@@ -2,9 +2,7 @@ import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat.js";
 import { BWActor } from "../actors/BWActor.js";
 import { ArthaEarner, BWItem, BWItemData } from "./item.js";
 
-export class Instinct extends BWItem {
-    data: BWItemData & { data: InstinctData };
-
+export class Instinct extends BWItem<BWItemData<InstinctData>> {
     async generateChatMessage(actor: BWActor): Promise<ChatMessage | null> {
         const data: SimpleBroadcastMessageData = {
             title: this.name,

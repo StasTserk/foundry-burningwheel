@@ -8,18 +8,6 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
 
     prepareData(): void {
         super.prepareData();
-        if (!this.data.data.settings) {
-            this.data.data.settings = {
-                onlySuccessesCount: 'Faith, Resources, Perception',
-                showSettings: false,
-                roundUpHealth: false,
-                roundUpMortalWound: false,
-                roundUpReflexes: false,
-                armorTrained: false,
-                ignoreSuperficialWounds: false,
-                showBurner: false
-            };
-        }
 
         this._calculatePtgs();
 
@@ -363,7 +351,6 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
 }
 
 export interface CharacterDataRoot extends BWActorData<BWCharacterData> {
-    data: BWCharacterData;
     type: "character"
 }
 

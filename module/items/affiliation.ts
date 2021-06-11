@@ -1,15 +1,9 @@
-import { BWItem, BWItemData, ItemType } from "./item.js";
+import { BWItem, BWItemData } from "./item.js";
 
-export class Affiliation extends BWItem {
-    data: AffiliationDataRoot;
-    get type(): ItemType {
-        return this.type as ItemType;
-    }
-}
+export class Affiliation extends BWItem<AffiliationDataRoot> { }
 
-export interface AffiliationDataRoot extends BWItemData {
-    data: AffiliationData;
-    type: ItemType;
+export interface AffiliationDataRoot extends BWItemData<AffiliationData> {
+    type: "affiliation";
 }
 
 export interface AffiliationData {

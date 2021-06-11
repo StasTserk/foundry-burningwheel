@@ -2,7 +2,7 @@ import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
 import { rollDice } from "../rolls/rolls.js";
 import { ShadeString } from "../helpers.js";
 
-export class Armor extends BWItem {
+export class Armor extends BWItem<ArmorRootData> {
     prepareData(): void {
         super.prepareData();
         this.data.data.cssClass = "equipment-armor";
@@ -16,8 +16,6 @@ export class Armor extends BWItem {
         this.data.data.rightLegDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageRightLeg);
         this.data.data.shieldDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageShield);
     }
-
-    data: ArmorRootData;
 
     calculateDisplayClass(dice: number, locationDice: string): string {
         if (parseInt(locationDice) >= dice) {
@@ -58,8 +56,8 @@ export class Armor extends BWItem {
     }
 }
 
-export interface ArmorRootData extends BWItemData {
-    data: ArmorData;
+export interface ArmorRootData extends BWItemData<ArmorData> {
+    type: "armor"
 }
 
 export interface ArmorData extends DisplayClass, HasPointCost {

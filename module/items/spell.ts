@@ -3,7 +3,7 @@ import { weaponLengthSelect } from "../constants.js";
 import { StringIndexedObject, DivOfText } from "../helpers.js";
 import { HasPointCost, BWItemData, BWItem } from "./item.js";
 
-export class Spell extends BWItem {
+export class Spell extends BWItem<SpellDataRoot> {
     prepareData(): void {
         super.prepareData();
         const actor = this.actor as unknown as BWActor;
@@ -56,15 +56,12 @@ export class Spell extends BWItem {
         }
         return element.outerHTML;
     }
-
-    data: SpellDataRoot;
 }
 
-export interface SpellDataRoot extends BWItemData {
+export interface SpellDataRoot extends BWItemData<SpellData> {
     spellLengths: StringIndexedObject<string>;
     obstacleLabel: string;
-    type: "spell"
-    data: SpellData
+    type: "spell";
 }
 
 export interface SpellData extends HasPointCost {

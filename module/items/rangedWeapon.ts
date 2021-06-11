@@ -3,7 +3,7 @@ import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
 import { BWActor } from "../actors/BWActor.js";
 
-export class RangedWeapon extends BWItem {
+export class RangedWeapon extends BWItem<RangedWeaponRootData> {
     prepareData(): void {
         super.prepareData();
         const actor = this.actor as unknown as BWActor;
@@ -52,12 +52,10 @@ export class RangedWeapon extends BWItem {
         element.appendChild(helpers.DivOfText("" + roll, "roll-die"));
         return element.outerHTML;
     }
-
-    data: RangedWeaponRootData;
 }
 
-export interface RangedWeaponRootData extends BWItemData {
-    data: RangedWeaponData;
+export interface RangedWeaponRootData extends BWItemData<RangedWeaponData> {
+    type: "ranged weapon"
 }
 
 export interface RangedWeaponData extends DisplayClass, HasPointCost {

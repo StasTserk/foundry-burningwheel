@@ -6,11 +6,11 @@ import { Armor } from "../items/armor.js";
 import { PossessionRootData } from "../items/possession.js";
 import { ReputationDataRoot } from "../items/reputation.js";
 import { TraitDataRoot, Trait } from "../items/trait.js";
-import { BWCharacterData, CharacterDataRoot } from "./BWCharacter.js";
-import { NpcData, NpcDataRoot } from "./Npc.js";
+import { BWCharacterData } from "./BWCharacter.js";
+import { NpcData } from "./Npc.js";
 import { AffiliationDataRoot } from "../items/affiliation.js";
 
-export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, BWItem> {
+export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWItem> {
     data: T;
 
     readonly batchAdd = {
@@ -357,21 +357,17 @@ export class BWActor<T extends BWActorData = BWActorDataTypes> extends Actor<T, 
     }
 
     public updateArthaForSkill(_skillId: string, persona: number, deeds: number): void {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        this.update({
-            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
-            "data.persona": this.data.data.persona - persona,
-        });
+        const updateData = {};
+        updateData["data.deeds"] = this.data.data.deeds - (deeds ? 1 : 0);
+        updateData["data.persona"] = this.data.data.persona - persona;
+        this.update(updateData);
     }
 
-    public updateArthaForStat(_accessor: string, persona: number, deeds: number): void {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        this.update({
-            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
-            "data.persona": this.data.data.persona - persona,
-        });
+    public updateArthaForStat(accessor: string, persona: number, deeds: number): void {
+        const updateData = {};
+        updateData["data.deeds"] = this.data.data.deeds - (deeds ? 1 : 0);
+        updateData["data.persona"] = this.data.data.persona - persona;
+        this.update(updateData);
     }
 }
 
@@ -490,5 +486,3 @@ export interface NewItemData extends StringIndexedObject<any> {
     name: string;
     type: ItemType;
 }
-
-export type BWActorDataTypes = CharacterDataRoot | NpcDataRoot;

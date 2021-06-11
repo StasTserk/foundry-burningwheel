@@ -1,8 +1,7 @@
 import { Common, BWActor, BWActorData } from "./BWActor.js";
 import { ShadeString } from "../helpers.js";
 
-export class Npc extends BWActor {
-    data: NpcDataRoot;
+export class Npc extends BWActor<NpcDataRoot> {
 
     prepareData(): void {
         super.prepareData();
@@ -22,8 +21,7 @@ export class Npc extends BWActor {
 }
 
 export interface NpcDataRoot extends BWActorData<NpcData> {
-    data: NpcData;
-    // type: "npc"
+    type: "npc"
 }
 
 export interface NpcData extends Common {

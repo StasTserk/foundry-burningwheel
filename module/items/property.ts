@@ -1,20 +1,15 @@
-import { DisplayClass, ItemType, HasPointCost, BWItemData, BWItem } from "./item.js";
+import { DisplayClass, HasPointCost, BWItemData, BWItem } from "./item.js";
 
-export class Property extends BWItem {
+export class Property extends BWItem<PropertyRootData> {
     prepareData(): void {
         super.prepareData();
         this.data.data.cssClass = "equipment-property";
     }
-
-    data: PropertyRootData;
-    get type(): ItemType {
-        return super.type as ItemType;
-    }
 }
 
-export interface PropertyRootData extends BWItemData {
+export interface PropertyRootData extends BWItemData<PropertyData> {
     data: PropertyData;
-    type: ItemType;
+    type: "property";
 }
 
 export interface PropertyData extends DisplayClass, HasPointCost {

@@ -1,6 +1,6 @@
 import { BWItem, BWItemData, DisplayClass } from "./item.js";
 
-export class Relationship extends BWItem {
+export class Relationship extends BWItem<RelationshipDataRoot> {
     prepareData(): void {
         super.prepareData();
         this.data.data.safeId = this.id;
@@ -16,12 +16,10 @@ export class Relationship extends BWItem {
             this.data.data.cssClass = "relationship-neutral";
         }
     }
-
-    data: RelationshipDataRoot;
 }
 
-export interface RelationshipDataRoot extends BWItemData {
-    data: RelationshipData;
+export interface RelationshipDataRoot extends BWItemData<RelationshipData> {
+    type: "relationship";
 }
 
 export interface RelationshipData extends DisplayClass {

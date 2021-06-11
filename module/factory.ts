@@ -14,8 +14,9 @@ import { Trait } from "./items/trait.js";
 import { Npc } from "./actors/Npc.js";
 import { Lifepath } from "./items/lifepath.js";
 import { BWSetting } from "./actors/BWSetting.js";
+import { Affiliation } from "./items/affiliation.js";
 
-function factory(entities: Record<string, typeof FoundryDocument>, baseClass: typeof Entity): unknown {
+function factory(entities: Record<string, typeof FoundryDocument>, baseClass: typeof FoundryDocument): typeof FoundryDocument {
     return new Proxy(baseClass, {
         construct: (target, args) => {
             const [data, options] = args;
@@ -80,7 +81,7 @@ itemTypes["relationship"] = Relationship as typeof FoundryDocument;
 itemTypes["melee weapon"] = MeleeWeapon as typeof FoundryDocument;
 itemTypes["ranged weapon"] = RangedWeapon as typeof FoundryDocument;
 itemTypes["reputation"] = Reputation as typeof FoundryDocument;
-itemTypes["affiliation"] = Relationship as typeof FoundryDocument;
+itemTypes["affiliation"] = Affiliation as typeof FoundryDocument;
 itemTypes["spell"] = Spell as typeof FoundryDocument;
 itemTypes["lifepath"] = Lifepath as typeof FoundryDocument;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

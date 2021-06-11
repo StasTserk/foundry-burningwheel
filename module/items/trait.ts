@@ -1,8 +1,8 @@
 import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat.js";
 import { BWActor, RollModifier } from "../actors/BWActor.js";
-import { ItemType, HasPointCost, BWItemData, BWItem } from "./item.js";
+import { HasPointCost, BWItemData, BWItem } from "./item.js";
 
-export class Trait extends BWItem {
+export class Trait extends BWItem<TraitDataRoot> {
     prepareData(): void {
         super.prepareData();
         this.data.isCallonTrait = this.data.data.traittype === "call-on";
@@ -74,17 +74,12 @@ export class Trait extends BWItem {
         };
         return simpleBroadcast(data, actor);
     }
-
-    get type(): ItemType { return super.type as ItemType; }
-
-    data: TraitDataRoot;
 }
 
-export interface TraitDataRoot extends BWItemData {
-    type: ItemType;
+export interface TraitDataRoot extends BWItemData<TraitData> {
+    type: "trait";
     isDieTrait: boolean;
     isCallonTrait: boolean;
-    data: TraitData;
 }
 
 export interface TraitData extends HasPointCost {

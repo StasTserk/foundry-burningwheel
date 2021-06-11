@@ -80,9 +80,9 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
                     }
                 }
             }
-        }).on('dragenter', _ => {
+        }).on('dragenter', () => {
             enterCount ++;
-        }).on('dragleave', _ => {
+        }).on('dragleave', () => {
             enterCount --;
             if (!enterCount) {
                 activeDropArea?.removeClass("show-drop");

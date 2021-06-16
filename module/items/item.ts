@@ -57,7 +57,7 @@ export class BWItem<T extends BWItemData = BWItemDataTypes> extends Item<T> {
 
     async _preCreate(data: Partial<BWItemData>, options: FoundryDocument.CreateOptions, user: User): Promise<void> {
         await super._preCreate(data as T, options, user);
-        if (data.type) {
+        if (data.type && this.data._source.img === "icons/svg/item-bag.svg") {
             this.data._source.img = constants.defaultImages[data.type];
         }
     }

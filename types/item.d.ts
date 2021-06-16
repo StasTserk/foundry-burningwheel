@@ -124,6 +124,9 @@
       permission: FoundryDocument.Permission;
       sort: number;
       type: string;
+      
+      // raw database source data
+      _source: any;
     }
   }
   

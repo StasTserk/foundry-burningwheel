@@ -1,4 +1,4 @@
-import { skillRootSelect, SkillTypeString } from "../constants.js";
+import { skillImages, skillRootSelect, SkillTypeString } from "../constants.js";
 import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, TestString, updateTestsNeeded } from "../helpers.js";
 import { DisplayClass, BWItemData, BWItem } from "./item.js";
@@ -188,6 +188,15 @@ export class Skill extends BWItem<SkillDataRoot> {
             return exp;
         } else {
             return 0;
+        }
+    }
+
+    async _preUpdate(changed: Partial<SkillDataRoot>, options: FoundryDocument.ModificationContext, userId: string): Promise<void> {
+        await super._preUpdate(changed, options, userId);
+
+        if (changed.data?.skilltype && this.data.img === skillImages[this.data.data.skilltype]) {
+            // we should update the image for this skill
+            changed.img = skillImages[changed.data?.skilltype];
         }
     }
 }

@@ -739,7 +739,7 @@
      * This function is asynchronous in case any complex operations are required prior to exporting.
      */
     toCompendium(): Promise<Omit<Duplicated<D>, '_id' | 'permission' | 'folder' | 'sort' | 'active'>>;
-  
+
     /**
      * Provide a Dialog form to create a new Entity of this type.
      * Choose a name and a type from a select menu of types.
@@ -749,11 +749,13 @@
     static createDialog(
       data?: { name?: string; folder?: string; type?: string },
       options?: Partial<Dialog.Options>
-   ): Promise<FoundryDocument>;
+    ): Promise<FoundryDocument>;
 
-   async _preCreate(data: Partial<D>, options: FoundryDocument.CreateOptions, user: User);
+    async _preCreate(data: Partial<D>, options: FoundryDocument.CreateOptions, user: User);
+
+    async _preUpdate(data: Partial<D>, options: FoundryDocument.CreateOptions, userId: string);
   }
-  
+
 declare namespace FoundryDocument {
     interface ModificationContext {
         /**

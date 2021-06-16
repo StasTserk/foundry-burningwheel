@@ -1,6 +1,7 @@
 import { Skill } from "../items/skill.js";
 import { Trait } from "../items/trait.js";
 import { BWItem } from "../items/item.js";
+import { skillImages } from "../constants.js";
 
 export async function task063(): Promise<void> {
     const items: (BWItem)[] = Array.from(game.items?.values() || []).filter((i: BWItem) => i.type === "skill" || i.type === "trait") as (BWItem)[];
@@ -63,26 +64,6 @@ function updateItem(item: BWItem, updateInfo: Record<string, number>): Record<st
     }
     return data;
 }
-
-const skillImages = {
-    "academic": "icons/sundries/documents/document-official-capital.webp",
-    "artist": "icons/tools/hand/brush-paint-brown-white.webp",
-    "artisan": "icons/tools/hand/chisel-steel-brown.webp",
-    "craftsman": "icons/tools/hand/hammer-and-nail.webp",
-    "forester": "icons/tools/navigation/map-simple-tree.webp",
-    "martial": "icons/equipment/shield/heater-steel-sword-yellow-black.webp",
-    "medicinal": "icons/tools/laboratory/bowl-herbs-green.webp",
-    "military": "icons/environment/people/infantry-armored.webp",
-    "musical": "icons/tools/instruments/pipe-flute-brown.webp",
-    "peasant": "icons/environment/settlement/scarecrow.webp",
-    "physical": "icons/equipment/hand/gauntlet-plate-gold.webp",
-    "schoolofthought": "icons/sundries/books/book-worn-blue.webp",
-    "seafaring": "icons/tools/nautical/steering-wheel.webp",
-    "special": "icons/commodities/treasure/broach-lightning-gold.webp",
-    "social": "icons/environment/people/group.webp",
-    "sorcerous": "icons/weapons/staves/staff-ornate-blue-jewel.webp",
-    "training": "icons/environment/settlement/target.webp"
-};
 
 const traitImages = {
     "character": "icons/sundries/gaming/rune-card.webp",

@@ -244,12 +244,12 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
             { name: "Belief 2", type: "belief", data: {}, img: constants.defaultImages.belief},
             { name: "Belief 3", type: "belief", data: {}, img: constants.defaultImages.belief},
             { name: "Belief Special", type: "belief", data: {}, img: constants.defaultImages.belief},
-            { ...constants.bareFistData, img: "icons/equipment/hand/gauntlet-simple-leather-steel.webp" }
+            { ...constants.bareFistData, img: "icons/skills/melee/unarmed-punch-fist-yellow-red.webp" }
         ]);
     }
 
-    async _preCreate(actor: BWActorData, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {
-        await super._preCreate(actor as T, _options, user);
+    async _preCreate(actor: Partial<T>, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {
+        await super._preCreate(actor, _options, user);
         if (actor.type === 'character' || actor.type === 'npc') {
             this.data.token.update({
                 disposition: CONST.TOKEN_DISPOSITIONS.NEUTRAL,

@@ -751,7 +751,7 @@
       options?: Partial<Dialog.Options>
    ): Promise<FoundryDocument>;
 
-   async _preCreate(data: D, options: FoundryDocument.CreateOptions, user: User);
+   async _preCreate(data: Partial<D>, options: FoundryDocument.CreateOptions, user: User);
   }
   
 declare namespace FoundryDocument {

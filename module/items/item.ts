@@ -54,6 +54,13 @@ export class BWItem<T extends BWItemData = BWItemDataTypes> extends Item<T> {
     get type(): ItemType {
         return super.type as ItemType;
     }
+
+    async _preCreate(data: Partial<BWItemData>, options: FoundryDocument.CreateOptions, user: User): Promise<void> {
+        await super._preCreate(data as T, options, user);
+        if (data.type) {
+            this.data._source.img = constants.defaultImages[data.type];
+        }
+    }
 }
 
 export interface BWItemData<T = unknown> extends Item.Data<T> {

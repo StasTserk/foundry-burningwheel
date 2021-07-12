@@ -236,8 +236,7 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
             return;
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (this.data as any).update({
-            items: [
+        this.createEmbeddedDocuments("Item", [
                 { name: "Instinct 1", type: "instinct", data: {}, img: constants.defaultImages.instinct },
                 { name: "Instinct 2", type: "instinct", data: {}, img: constants.defaultImages.instinct },
                 { name: "Instinct 3", type: "instinct", data: {}, img: constants.defaultImages.instinct },
@@ -248,7 +247,7 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
                 { name: "Belief Special", type: "belief", data: {}, img: constants.defaultImages.belief },
                 { ...constants.bareFistData, img: "icons/skills/melee/unarmed-punch-fist-yellow-red.webp" }
             ]
-        });
+        );
     }
 
     async _preCreate(actor: Partial<T>, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {

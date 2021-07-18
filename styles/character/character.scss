@@ -353,4 +353,17 @@
             height: min-content;
         }
     }
+
+    .character-tabs {
+        margin-top: 10px;
+    }
+
+    section.content {
+        div.tab {
+            display: none;
+        }
+        div.tab.active {
+            display: block;
+        }
+    }
 }

@@ -1,5 +1,7 @@
 import { BWActor } from "./actors/BWActor.js";
 import { BWCharacterSheet } from "./actors/sheets/BWCharacterSheet.js";
+import { BWCharacterTabbedSheet } from "./actors/sheets/BWCharacterTabbedSheet.js";
+
 import { BWItem, RegisterItemSheets } from "./items/item.js";
 
 import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
@@ -26,6 +28,11 @@ Hooks.once("init", async () => {
     Actors.registerSheet(constants.systemName, BWCharacterSheet, {
         types: ["character"],
         makeDefault: true
+    });
+    Actors.registerSheet(constants.systemName, BWCharacterTabbedSheet, {
+        label: "burningwheel.BWTabbedCharacterSheet",
+        types: ["character"],
+        makeDefault: false
     });
     Actors.registerSheet(constants.systemName, NpcSheet, {
         types: ["npc"],

@@ -47,10 +47,6 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
             '.stats > .rollable',
             '.attributes > .rollable'
         ];
-
-        options.tabs = [
-            {navSelector: ".tabs", contentSelector: ".content", initial: "BITs"}
-        ];
         
         return options;
     }

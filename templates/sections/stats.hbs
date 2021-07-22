@@ -1,0 +1,19 @@
+<h2 class="section-header">
+    <input type="checkbox" id="{{actor.id}}-collapseStats" name="data.collapseStats" class="section-collapse" {{ checked data.collapseStats }}>
+    <i class="fas fa-chevron-down"></i>
+    <label for="{{actor.id}}-collapseStats" class="section-collapse-label clickable">Stats</label>
+</h2>
+{{#if data.collapseStats}}{{else}}
+<div class="stats">
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=data.will namePrefix="data.will" taxName="data.willTax" taxValue=data.willTax type="stat" taxDisabled=true}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Power" stat=data.power namePrefix="data.power" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Agility" stat=data.agility namePrefix="data.agility" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Perception" stat=data.perception namePrefix="data.perception" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Forte" stat=data.forte namePrefix="data.forte" type="stat" taxName="data.forteTax" taxValue=data.forteTax taxDisabled=true}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Speed" stat=data.speed namePrefix="data.speed" type="stat"}}
+    <div class="stats-footer flex-row">
+        <label>Stride</label><input type="number" placeholder="0" name="data.stride" value="{{data.stride}}">
+        <label>Mounted Stride</label><input type="number" placeholder="0" name="data.mountedStride" value="{{data.mountedStride}}">
+    </div>
+</div>
+{{/if}}

@@ -1,0 +1,25 @@
+<h2 class="section-header">
+    <input type="checkbox" id="{{actor.id}}-collapseInstincts" name="data.collapseInstincts" class="section-collapse" {{ checked data.collapseInstincts }}>
+    <i class="fas fa-chevron-down"></i>
+    <label for="{{actor.id}}-collapseInstincts" class="section-collapse-label clickable">Instincts</label>
+    <i data-action="addInstinct" class="fas fa-plus clickable"></i>
+</h2>
+{{#if data.collapseInstincts}}{{else}}
+<div class="instincts">
+    {{#each instincts as |instinct|}}
+        <div class="bits-item flex-row">
+            <div class="bits-artha" draggable="true" data-id="{{instinct._id}}">
+                <div class="bits-item-name" data-action="editItem" data-id="{{instinct._id}}">{{instinct.name}}</div>
+                F<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.fate" {{ checked instinct.data.fate }}>
+                P<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.persona"  {{ checked instinct.data.persona }}>
+                D<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="data.deeds" {{ checked instinct.data.deeds }}>
+            </div>
+            <div class="bits-buttons flex-column">
+                <i class="fas fa-comment" data-action="broadcast" data-id="{{instinct._id}}"></i>
+                <i class="fas fa-trash" data-action="delItem" data-id="{{instinct._id}}"></i>
+            </div>
+            <textarea data-item-id="{{instinct._id}}" data-binding="data.text" rows="1">{{instinct.data.text}}</textarea>
+        </div>
+    {{/each}}
+</div>
+{{/if}}

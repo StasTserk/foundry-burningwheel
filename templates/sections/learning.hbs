@@ -1,0 +1,19 @@
+<h2 class="section-header">
+    <input type="checkbox" id="{{actor.id}}-collapseLearning" name="data.collapseLearning" class="section-collapse" {{ checked data.collapseLearning }}>
+    <i class="fas fa-chevron-down"></i>
+    <label for="{{actor.id}}-collapseLearning" class="section-collapse-label clickable">Learning and Practice</label>
+</h2>
+{{#if data.collapseLearning}}{{else}}
+<div class="learning-practice flex-row">
+    <div class="flex-row learning-section">
+        {{#each learning as |skill|}}
+            {{> "systems/burningwheel/templates/parts/learning.hbs" skill=skill }}
+        {{/each}}
+    </div>
+    <div class="practice-log">
+        <div class="add-new-item-label" data-action="learn-skill"><i class="fas fa-plus"></i> Learn New Skill</div>
+        <div>Practice Log</div>
+        <textarea name="data.practiceLog">{{data.practiceLog}}</textarea>
+    </div>
+</div>
+{{/if}}

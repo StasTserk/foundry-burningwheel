@@ -1,0 +1,56 @@
+<h2 class="section-header">
+    <input type="checkbox" id="{{actor.id}}-collapse-spells" name="data.collapseSpells" class="section-collapse" {{ checked data.collapseSpells }}>
+    <i class="fas fa-chevron-down"></i>
+    <label for="{{actor.id}}-collapse-spells" class="section-collapse-label clickable">Spells</label>
+</h2>
+{{#if data.collapseSpells}}{{else}}
+<div class="spell-section item-grid col-3">
+    <div class="spell-sustained-info">
+        <div>
+            Spells Sustained
+        </div>
+        <div><input type="number" name="data.willTax" value="{{data.willTax}}" data-dtype="Number" class="exponent"> / {{ data.maxSustained }}</div>
+        
+        <div>
+            Forte Tax
+        </div>
+        <div><input type="number" name="data.forteTax" value="{{data.forteTax}}" data-dtype="Number" class="exponent"> / {{sub data.forte.exp data.ptgs.woundDice}}</div>
+        
+        <div>
+            Maximum Sustainable Obstacle
+        </div>
+        <div><input type="number" disabled value="{{data.maxObSustained}}" class="exponent"></div>
+        
+    </div>
+    <div class="sustained-spell-list">
+        <div class="grid-header">Sustained Spell</div>
+        <div class="grid-header">Ob</div>
+        <div class="grid-header">Test</div>
+        <div class="grid-header">Sustained Spell</div>
+        <div class="grid-header">Ob</div>
+        <div class="grid-header">Test</div>
+        <input type="text" name="data.sustainedSpell1" value="{{data.sustainedSpell1}}">
+        <input type="number" data-dtype="Number" name="data.sustainedSpell1Ob" value="{{data.sustainedSpell1Ob}}">
+        <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell1}}" data-obstacle="{{data.sustainedSpell1Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+
+        <input type="text" name="data.sustainedSpell2" value="{{data.sustainedSpell2}}">
+        <input type="number" data-dtype="Number" name="data.sustainedSpell2Ob" value="{{data.sustainedSpell2Ob}}">
+        <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell2}}" data-obstacle="{{data.sustainedSpell2Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+
+        <input type="text" name="data.sustainedSpell3" value="{{data.sustainedSpell3}}">
+        <input type="number" data-dtype="Number" name="data.sustainedSpell3Ob" value="{{data.sustainedSpell3Ob}}">
+        <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell3}}" data-obstacle="{{data.sustainedSpell3Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+
+        <input type="text" name="data.sustainedSpell4" value="{{data.sustainedSpell4}}">
+        <input type="number" data-dtype="Number" name="data.sustainedSpell4Ob" value="{{data.sustainedSpell4Ob}}">
+        <button class="rollable modifiable" data-rollable-name="{{data.sustainedSpell4}}" data-obstacle="{{data.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
+    </div>
+    {{#each spells as |spell|}}
+    {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.data.sorcerousSkills}}
+    {{/each}}
+    <div class="right-floating">
+        <div class="add-button" data-action="addSpell"><i class="fas fa-plus"></i> Add New Spell</div>
+        <div class="add-button" data-action="learnSpell"><i class="fas fa-plus"></i> Learn New Spell</div>
+    </div>
+</div>
+{{/if}}

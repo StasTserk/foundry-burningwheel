@@ -17,6 +17,7 @@ export async function preloadHandlebarsTemplates(): Promise<unknown[]> {
       "systems/burningwheel/templates/sections/attributes.hbs",
       "systems/burningwheel/templates/sections/beliefs.hbs",
       "systems/burningwheel/templates/sections/character-settings.hbs",
+      "systems/burningwheel/templates/sections/footer.hbs",
       "systems/burningwheel/templates/sections/gear.hbs",
       "systems/burningwheel/templates/sections/header.hbs",
       "systems/burningwheel/templates/sections/instincts.hbs",

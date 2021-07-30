@@ -28,6 +28,32 @@ export class DifficultyDialog extends Application {
 
         this.extendedTest = extendedData?.extendedTest || false;
         this.actorGroups = extendedData?.actorGroups || [];
+
+        $(document).on("keydown", e => {
+            if (e.key === "Control" || e.key === "Meta") {
+                this.splitPool = true;
+                this.render();
+            } else if (e.key === "Alt") {
+                this.help = true;
+                this.render(true);
+            } else if (e.key === "Shift") {
+                this.customDiff = true;
+                this.render(true);
+            }
+        });
+
+        $(document).on("keyup", e => {
+            if (e.key === "Control" || e.key === "Meta") {
+                this.splitPool = false;
+                this.render();
+            } else if (e.key === "Alt") {
+                this.help = false;
+                this.render(true);
+            } else if (e.key === "Shift") {
+                this.customDiff = false;
+                this.render(true);
+            }
+        });
     }
 
     activateListeners(html: JQuery): void {
@@ -95,32 +121,6 @@ export class DifficultyDialog extends Application {
             }
             this.persistExtendedTestData();
             this.render();
-        });
-
-        $(document).on("keydown", e => {
-            if (e.key === "Control" || e.key === "Meta") {
-                this.splitPool = true;
-                this.render();
-            } else if (e.key === "Alt") {
-                this.help = true;
-                this.render(true);
-            } else if (e.key === "Shift") {
-                this.customDiff = true;
-                this.render(true);
-            }
-        });
-
-        $(document).on("keyup", e => {
-            if (e.key === "Control" || e.key === "Meta") {
-                this.splitPool = false;
-                this.render();
-            } else if (e.key === "Alt") {
-                this.help = false;
-                this.render(true);
-            } else if (e.key === "Shift") {
-                this.customDiff = false;
-                this.render(true);
-            }
         });
     }
 

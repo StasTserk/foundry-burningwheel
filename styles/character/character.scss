@@ -1,388 +1,388 @@
 @import "../mixins.scss";
 
 .character {
-  &.ctrl-modified {
-    button:enabled.modifiable {
-      background-color: rgba(darkblue, 0.25);
-    }
-  }
-
-  &.alt-modified {
-    button:enabled.modifiable {
-      background-color: rgba(#800, 0.25);
-    }
-  }
-
-  &.shift-modified {
-    button:enabled.modifiable {
-      background-color: rgba(darkgreen, 0.25);
-    }
-  }
-
-  h2 {
-    &.section-header {
-      display: flex;
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.15);
-      }
-
-      margin-top: 0.75em;
-      margin-bottom: 0;
-      background-color: rgba(0, 0, 0, 0.05);
-
-      & > label {
-        flex: 1 1 100px;
-      }
-
-      & > i {
-        flex: 0 0 1em;
-        margin: 2px 0 0 5px;
-      }
-
-      input.section-collapse:checked + i {
-        transform: rotate(-90deg);
-      }
-
-      .settings-gear {
-        font-size: 0.75em;
-        flex: 0 0 1em;
-        margin: 5px 5px 0 0;
-        color: grey;
-        &:hover {
-          color: red;
+    &.ctrl-modified {
+        button:enabled.modifiable {
+            background-color: rgba(darkblue, 0.25);
         }
-      }
-
-      .settings-checkbox:checked ~ .settings-gear {
-        color: black;
-      }
     }
-
-    text-align: center;
-  }
-
-  .character-header {
+    
+    &.alt-modified {
+        button:enabled.modifiable {
+            background-color: rgba(#800, 0.25);
+        }
+    }
+    
+    &.shift-modified {
+        button:enabled.modifiable {
+            background-color: rgba(darkgreen, 0.25);
+        }
+    }
+    
     h2 {
-      margin-top: 0;
-      grid-column: 1 / 3;
-    }
-
-    .portrait {
-      width: 250px;
-      height: 250px;
-
-      img {
-        border: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    .section-index {
-      width: calc(100% - 255px);
-      margin-left: 5px;
-      grid-template-rows: repeat(auto-fill, minmax(min-content, 1fr));
-
-      input {
-        @include underlined-input;
-
-        &[type="number"] {
-          width: 100%;
-          padding: 3px 1px 3px 1px;
-          height: 24px;
-          @include no-number-arrows;
+        &.section-header {
+            display: flex;
+            
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.15);
+            }
+            
+            margin-top: 0.75em;
+            margin-bottom: 0;
+            background-color: rgba(0, 0, 0, 0.05);
+            
+            & > label {
+                flex: 1 1 100px;
+            }
+            
+            & > i {
+                flex: 0 0 1em;
+                margin: 2px 0 0 5px;
+            }
+            
+            input.section-collapse:checked + i {
+                transform: rotate(-90deg);
+            }
+            
+            .settings-gear {
+                font-size: 0.75em;
+                flex: 0 0 1em;
+                margin: 5px 5px 0 0;
+                color: grey;
+                &:hover {
+                    color: red;
+                }
+            }
+            
+            .settings-checkbox:checked ~ .settings-gear {
+                color: black;
+            }
         }
-      }
-
-      .artha-points {
-        place-content: space-evenly;
-        div {
-          background-color: transparent;
+        
+        text-align: center;
+    }
+    
+    .character-header {
+        h2 {
+            margin-top: 0;
+            grid-column: 1 / 3;
         }
+        
+        .portrait {
+            width: 250px;
+            height: 250px;
+            
+            img {
+                border: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .section-index {
+            width: calc(100% - 255px);
+            margin-left: 5px;
+            grid-template-rows: repeat(auto-fill, minmax(min-content, 1fr));
+            
+            input {
+                @include underlined-input;
+                
+                &[type="number"] {
+                    width: 100%;
+                    padding: 3px 1px 3px 1px;
+                    height: 24px;
+                    @include no-number-arrows;
+                }
+            }
+            
+            .artha-points {
+                place-content: space-evenly;
+                div {
+                    background-color: transparent;
+                }
+                &:hover {
+                    background-color: transparent;
+                }
+                .artha-label {
+                    font-size: 0.75em;
+                    display: block;
+                    width: 3em;
+                    text-align: center;
+                }
+                
+                .artha-input {
+                    border: 2px inset black;
+                    border-bottom-color: grey;
+                    border-right-color: grey;
+                    border-radius: 0.75em;
+                    height: 1.5em;
+                    width: 1.5em;
+                    font-size: 1.5em;
+                    text-align: center;
+                    @include no-number-arrows;
+                    
+                    &:hover {
+                        background-color: rgba(black, 0.15);
+                    }
+                }
+            }
+        }
+    }
+    
+    .stats,
+    .attributes,
+    .skills {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 5px;
+        row-gap: 5px;
+        
+        div.rollable {
+            &.wound-disabled {
+                background-color: rgba(red, 0.15);
+                &:hover {
+                    background-color: rgba(red, 0.25);
+                }
+                
+                button.rollable {
+                    pointer-events: none;
+                }
+            }
+            
+            @include colored-item(black);
+            height: min-content;
+            
+            &.can-advance {
+                background-color: rgba(orange, 0.25);
+            }
+            
+            button {
+                width: 2.25em;
+                height: 2em;
+                box-sizing: border-box;
+                padding: 0;
+                line-height: calc(2em - 3px);
+            }
+            
+            input.exponent {
+                @include no-number-arrows;
+                background-color: rgba(black, 0.1);
+                border-radius: 0;
+                border: 0;
+                border-bottom: 1px solid black;
+                text-align: center;
+                flex: 0 0 2em;
+                height: 2em;
+                margin-left: 2px;
+                font-weight: bold;
+                font-size: 14px;
+            }
+            
+            select.shade {
+                @include select-no-arrow;
+                height: 2em;
+                flex: 0 0 2em;
+                border: 1px solid black;
+                border-radius: 0;
+                text-align-last: center;
+                font-weight: bold;
+                font-size: 14px;
+            }
+        }
+        
+        input.rollable-name {
+            border: 0;
+            border-bottom: 1px solid black;
+            border-radius: 0;
+            padding: 1px 0;
+            font-weight: bold;
+        }
+        .rollable-name {
+            flex: 1 1;
+            margin: 0 1em 0 0;
+            font-size: 1.125em;
+            line-height: 1.75em;
+            font-weight: bold;
+        }
+        
+        .rollable-open-checkbox:checked + .rollable-open-toggle > label {
+            @include button-like-active;
+        }
+        .rollable-open-toggle {
+            width: min-content;
+            display: inline-block;
+            
+            & > label {
+                @include button-like(grey);
+                display: block;
+                font-weight: bold;
+                height: 1.75em;
+                line-height: 1.5em;
+                color: grey;
+            }
+        }
+        
+        .collapse-checkbox {
+            display: none;
+        }
+        
+        .collapse-checkbox:checked ~ .collapsing-section {
+            height: 0;
+            display: none;
+        }
+        
+        .collapse-label {
+            margin-right: 5px;
+            height: 1.75em;
+            padding-top: 5px;
+            flex: 0 0 15px;
+        }
+        
+        .collapse-checkbox:checked + .collapse-label > i {
+            transform: rotate(-90deg);
+        }
+        
+        .collapsing-section {
+            width: 100%;
+        }
+        
+        .test-tracking {
+            @include progress-ticks;
+            
+            .test-title {
+                width: 33%;
+            }
+            
+            .tests-needed {
+                width: 1.5em;
+            }
+        }
+        
+        input[type="radio"] {
+            visibility: hidden;
+            display: none;
+        }
+        
+        .attribute-subrow {
+            display: inline-block;
+            
+            label {
+                font-size: 1.125em;
+                display: inline-block;
+                text-align: center;
+                margin-left: 20px;
+            }
+        }
+    }
+    
+    .stats {
+        .stats-footer {
+            grid-column: 1 / 4;
+            justify-content: flex-end;
+            
+            label {
+                width: 8em;
+                font-size: 1.125em;
+                margin-right: 0.5em;
+                font-weight: bold;
+                text-align: right;
+            }
+            input {
+                font-size: 1.125em;
+                border: 0;
+                border-bottom: 1px solid black;
+                background-color: transparent;
+                text-align: center;
+                width: 2em;
+                @include no-number-arrows;
+            }
+        }
+    }
+    
+    .attributes {
+        .attributes-derived {
+            grid-column: 1 / 4;
+            display: grid;
+            grid-auto-flow: column;
+            grid-template-rows: repeat(3, 1fr);
+            
+            .attribute-label,
+            .debt-label {
+                font-size: 1.125em;
+                display: block;
+                width: 50%;
+            }
+            .debt-label {
+                width: 30%;
+            }
+            
+            .attribute-value,
+            .attribute-text {
+                font-size: 1.125em;
+                border: 0;
+                border-bottom: 1px solid black;
+                background-color: transparent;
+                text-align: center;
+            }
+            
+            .attribute-value {
+                font-weight: bold;
+                width: 4em;
+            }
+            .attribute-text {
+                width: 65%;
+                height: min-content;
+                border-radius: 0;
+                input {
+                    @include no-number-arrows;
+                    display: inline-block;
+                    background: rgba(black, 0.1);
+                    width: 2em;
+                    border: 0;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    
+    .right-floating {
+        grid-column: -2;
         &:hover {
-          background-color: transparent;
+            background-color: unset;
         }
-        .artha-label {
-          font-size: 0.75em;
-          display: block;
-          width: 3em;
-          text-align: center;
+        
+        & > .add-button {
+            @include button-like(green);
+            height: min-content;
         }
-
-        .artha-input {
-          border: 2px inset black;
-          border-bottom-color: grey;
-          border-right-color: grey;
-          border-radius: 0.75em;
-          height: 1.5em;
-          width: 1.5em;
-          font-size: 1.5em;
-          text-align: center;
-          @include no-number-arrows;
-
-          &:hover {
-            background-color: rgba(black, 0.15);
-          }
+    }
+    
+    .character-tabs {
+        margin-top: 10px;
+        
+        .item {
+            width: 100%;
+            margin: 0 1px;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid #b5b3a4;
+            border-radius: 3px;
+            font-size: 14px;
+            line-height: 28px;
+            font-family: "Signika", sans-serif;
         }
-      }
-    }
-  }
-
-  .stats,
-  .attributes,
-  .skills {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 5px;
-    row-gap: 5px;
-
-    div.rollable {
-      &.wound-disabled {
-        background-color: rgba(red, 0.15);
-        &:hover {
-          background-color: rgba(red, 0.25);
+        .item :hover,
+        .item :focus {
+            outline: none;
+            box-shadow: 0 0 5px red;
         }
-
-        button.rollable {
-          pointer-events: none;
+    }
+    
+    section.content {
+        div.tab {
+            display: none;
         }
-      }
-
-      @include colored-item(black);
-      height: min-content;
-
-      &.can-advance {
-        background-color: rgba(orange, 0.25);
-      }
-
-      button {
-        width: 2.25em;
-        height: 2em;
-        box-sizing: border-box;
-        padding: 0;
-        line-height: calc(2em - 3px);
-      }
-
-      input.exponent {
-        @include no-number-arrows;
-        background-color: rgba(black, 0.1);
-        border-radius: 0;
-        border: 0;
-        border-bottom: 1px solid black;
-        text-align: center;
-        flex: 0 0 2em;
-        height: 2em;
-        margin-left: 2px;
-        font-weight: bold;
-        font-size: 14px;
-      }
-
-      select.shade {
-        @include select-no-arrow;
-        height: 2em;
-        flex: 0 0 2em;
-        border: 1px solid black;
-        border-radius: 0;
-        text-align-last: center;
-        font-weight: bold;
-        font-size: 14px;
-      }
-    }
-
-    input.rollable-name {
-      border: 0;
-      border-bottom: 1px solid black;
-      border-radius: 0;
-      padding: 1px 0;
-      font-weight: bold;
-    }
-    .rollable-name {
-      flex: 1 1;
-      margin: 0 1em 0 0;
-      font-size: 1.125em;
-      line-height: 1.75em;
-      font-weight: bold;
-    }
-
-    .rollable-open-checkbox:checked + .rollable-open-toggle > label {
-      @include button-like-active;
-    }
-    .rollable-open-toggle {
-      width: min-content;
-      display: inline-block;
-
-      & > label {
-        @include button-like(grey);
-        display: block;
-        font-weight: bold;
-        height: 1.75em;
-        line-height: 1.5em;
-        color: grey;
-      }
-    }
-
-    .collapse-checkbox {
-      display: none;
-    }
-
-    .collapse-checkbox:checked ~ .collapsing-section {
-      height: 0;
-      display: none;
-    }
-
-    .collapse-label {
-      margin-right: 5px;
-      height: 1.75em;
-      padding-top: 5px;
-      flex: 0 0 15px;
-    }
-
-    .collapse-checkbox:checked + .collapse-label > i {
-      transform: rotate(-90deg);
-    }
-
-    .collapsing-section {
-      width: 100%;
-    }
-
-    .test-tracking {
-      @include progress-ticks;
-
-      .test-title {
-        width: 33%;
-      }
-
-      .tests-needed {
-        width: 1.5em;
-      }
-    }
-
-    input[type="radio"] {
-      visibility: hidden;
-      display: none;
-    }
-
-    .attribute-subrow {
-      display: inline-block;
-
-      label {
-        font-size: 1.125em;
-        display: inline-block;
-        text-align: center;
-        margin-left: 20px;
-      }
-    }
-  }
-
-  .stats {
-    .stats-footer {
-      grid-column: 1 / 4;
-      justify-content: flex-end;
-
-      label {
-        width: 8em;
-        font-size: 1.125em;
-        margin-right: 0.5em;
-        font-weight: bold;
-        text-align: right;
-      }
-      input {
-        font-size: 1.125em;
-        border: 0;
-        border-bottom: 1px solid black;
-        background-color: transparent;
-        text-align: center;
-        width: 2em;
-        @include no-number-arrows;
-      }
-    }
-  }
-
-  .attributes {
-    .attributes-derived {
-      grid-column: 1 / 4;
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-rows: repeat(3, 1fr);
-
-      .attribute-label,
-      .debt-label {
-        font-size: 1.125em;
-        display: block;
-        width: 50%;
-      }
-      .debt-label {
-        width: 30%;
-      }
-
-      .attribute-value,
-      .attribute-text {
-        font-size: 1.125em;
-        border: 0;
-        border-bottom: 1px solid black;
-        background-color: transparent;
-        text-align: center;
-      }
-
-      .attribute-value {
-        font-weight: bold;
-        width: 4em;
-      }
-      .attribute-text {
-        width: 65%;
-        height: min-content;
-        border-radius: 0;
-        input {
-          @include no-number-arrows;
-          display: inline-block;
-          background: rgba(black, 0.1);
-          width: 2em;
-          border: 0;
-          text-align: center;
+        div.tab.active {
+            display: block;
         }
-      }
     }
-  }
-
-  .right-floating {
-    grid-column: -2;
-    &:hover {
-      background-color: unset;
-    }
-
-    & > .add-button {
-      @include button-like(green);
-      height: min-content;
-    }
-  }
-
-  .character-tabs {
-    margin-top: 10px;
-
-    .item {
-      width: 100%;
-      margin: 0 1px;
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid #b5b3a4;
-      border-radius: 3px;
-      font-size: 14px;
-      line-height: 28px;
-      font-family: "Signika", sans-serif;
-    }
-    .item :hover,
-    .item :focus {
-      outline: none;
-      box-shadow: 0 0 5px red;
-    }
-  }
-
-  section.content {
-    div.tab {
-      display: none;
-    }
-    div.tab.active {
-      display: block;
-    }
-  }
 }

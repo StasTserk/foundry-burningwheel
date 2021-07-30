@@ -3,7 +3,7 @@ const eslint = require('gulp-eslint');
 const yaml = require("gulp-yaml");
 const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
-const sass = require("gulp-sass");
+const sass = require("gulp-sass")(require('sass'));
 sass.compiler = require("sass");
 const jsonModify = require("gulp-json-modify");
 

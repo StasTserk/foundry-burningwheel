@@ -35,7 +35,7 @@
             </select>
         </div>
         <div class="weapon-row">
-            <button class="rollable modifiable" data-roll-type="weapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" draggable="true">
+            <button type="button" class="rollable modifiable" data-roll-type="weapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" draggable="true">
                 <i class="fas fa-dice"></i>
             </button>
         </div>
@@ -73,6 +73,6 @@
             {{/select}}
         </select>
     </div>
-    <div class="weapon-row"><button class="rollable modifiable" data-roll-type="weapon" data-skill-id="{{r.data.skillId}}" data-weapon-id="{{r._id}}" draggable="true"><i class="fas fa-dice"></i></button></div>
+    <div class="weapon-row"><button type="button" class="rollable modifiable" data-roll-type="weapon" data-skill-id="{{r.data.skillId}}" data-weapon-id="{{r._id}}" draggable="true"><i class="fas fa-dice"></i></button></div>
     {{/each}}
 </div>

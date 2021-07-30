@@ -6,44 +6,44 @@
             background-color: rgba(darkblue, 0.25);
         }
     }
-    
+
     &.alt-modified {
         button:enabled.modifiable {
             background-color: rgba(#800, 0.25);
         }
     }
-    
+
     &.shift-modified {
         button:enabled.modifiable {
             background-color: rgba(darkgreen, 0.25);
         }
     }
-    
+
     h2 {
         &.section-header {
             display: flex;
-            
+
             &:hover {
                 background-color: rgba(0, 0, 0, 0.15);
             }
-            
+
             margin-top: 0.75em;
             margin-bottom: 0;
             background-color: rgba(0, 0, 0, 0.05);
-            
+
             & > label {
                 flex: 1 1 100px;
             }
-            
+
             & > i {
                 flex: 0 0 1em;
                 margin: 2px 0 0 5px;
             }
-            
+
             input.section-collapse:checked + i {
                 transform: rotate(-90deg);
             }
-            
+
             .settings-gear {
                 font-size: 0.75em;
                 flex: 0 0 1em;
@@ -53,25 +53,25 @@
                     color: red;
                 }
             }
-            
+
             .settings-checkbox:checked ~ .settings-gear {
                 color: black;
             }
         }
-        
+
         text-align: center;
     }
-    
+
     .character-header {
         h2 {
             margin-top: 0;
             grid-column: 1 / 3;
         }
-        
+
         .portrait {
             width: 250px;
             height: 250px;
-            
+
             img {
                 border: 0;
                 width: 100%;
@@ -83,10 +83,10 @@
             width: calc(100% - 255px);
             margin-left: 5px;
             grid-template-rows: repeat(auto-fill, minmax(min-content, 1fr));
-            
+
             input {
                 @include underlined-input;
-                
+
                 &[type="number"] {
                     width: 100%;
                     padding: 3px 1px 3px 1px;
@@ -94,7 +94,7 @@
                     @include no-number-arrows;
                 }
             }
-            
+
             .artha-points {
                 place-content: space-evenly;
                 div {
@@ -109,7 +109,7 @@
                     width: 3em;
                     text-align: center;
                 }
-                
+
                 .artha-input {
                     border: 2px inset black;
                     border-bottom-color: grey;
@@ -120,7 +120,7 @@
                     font-size: 1.5em;
                     text-align: center;
                     @include no-number-arrows;
-                    
+
                     &:hover {
                         background-color: rgba(black, 0.15);
                     }
@@ -128,7 +128,7 @@
             }
         }
     }
-    
+
     .stats,
     .attributes,
     .skills {
@@ -136,26 +136,26 @@
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 5px;
         row-gap: 5px;
-        
+
         div.rollable {
             &.wound-disabled {
                 background-color: rgba(red, 0.15);
                 &:hover {
                     background-color: rgba(red, 0.25);
                 }
-                
+
                 button.rollable {
                     pointer-events: none;
                 }
             }
-            
+
             @include colored-item(black);
             height: min-content;
-            
+
             &.can-advance {
                 background-color: rgba(orange, 0.25);
             }
-            
+
             button {
                 width: 2.25em;
                 height: 2em;
@@ -163,7 +163,7 @@
                 padding: 0;
                 line-height: calc(2em - 3px);
             }
-            
+
             input.exponent {
                 @include no-number-arrows;
                 background-color: rgba(black, 0.1);
@@ -177,7 +177,7 @@
                 font-weight: bold;
                 font-size: 14px;
             }
-            
+
             select.shade {
                 @include select-no-arrow;
                 height: 2em;
@@ -189,7 +189,7 @@
                 font-size: 14px;
             }
         }
-        
+
         input.rollable-name {
             border: 0;
             border-bottom: 1px solid black;
@@ -204,14 +204,14 @@
             line-height: 1.75em;
             font-weight: bold;
         }
-        
+
         .rollable-open-checkbox:checked + .rollable-open-toggle > label {
             @include button-like-active;
         }
         .rollable-open-toggle {
             width: min-content;
             display: inline-block;
-            
+
             & > label {
                 @include button-like(grey);
                 display: block;
@@ -221,51 +221,51 @@
                 color: grey;
             }
         }
-        
+
         .collapse-checkbox {
             display: none;
         }
-        
+
         .collapse-checkbox:checked ~ .collapsing-section {
             height: 0;
             display: none;
         }
-        
+
         .collapse-label {
             margin-right: 5px;
             height: 1.75em;
             padding-top: 5px;
             flex: 0 0 15px;
         }
-        
+
         .collapse-checkbox:checked + .collapse-label > i {
             transform: rotate(-90deg);
         }
-        
+
         .collapsing-section {
             width: 100%;
         }
-        
+
         .test-tracking {
             @include progress-ticks;
-            
+
             .test-title {
                 width: 33%;
             }
-            
+
             .tests-needed {
                 width: 1.5em;
             }
         }
-        
+
         input[type="radio"] {
             visibility: hidden;
             display: none;
         }
-        
+
         .attribute-subrow {
             display: inline-block;
-            
+
             label {
                 font-size: 1.125em;
                 display: inline-block;
@@ -274,12 +274,12 @@
             }
         }
     }
-    
+
     .stats {
         .stats-footer {
             grid-column: 1 / 4;
             justify-content: flex-end;
-            
+
             label {
                 width: 8em;
                 font-size: 1.125em;
@@ -298,14 +298,14 @@
             }
         }
     }
-    
+
     .attributes {
         .attributes-derived {
             grid-column: 1 / 4;
             display: grid;
             grid-auto-flow: column;
             grid-template-rows: repeat(3, 1fr);
-            
+
             .attribute-label,
             .debt-label {
                 font-size: 1.125em;
@@ -315,7 +315,7 @@
             .debt-label {
                 width: 30%;
             }
-            
+
             .attribute-value,
             .attribute-text {
                 font-size: 1.125em;
@@ -324,7 +324,7 @@
                 background-color: transparent;
                 text-align: center;
             }
-            
+
             .attribute-value {
                 font-weight: bold;
                 width: 4em;
@@ -344,22 +344,22 @@
             }
         }
     }
-    
+
     .right-floating {
         grid-column: -2;
         &:hover {
             background-color: unset;
         }
-        
+
         & > .add-button {
             @include button-like(green);
             height: min-content;
         }
     }
-    
+
     .character-tabs {
         margin-top: 10px;
-        
+
         .item {
             width: 100%;
             margin: 0 1px;
@@ -376,7 +376,7 @@
             box-shadow: 0 0 5px red;
         }
     }
-    
+
     section.content {
         div.tab {
             display: none;

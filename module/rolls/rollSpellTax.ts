@@ -59,7 +59,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
                         taxTestCallback(dialogHtml, stat, actor, tax, spellName)
                 }
             },
-            default: "yes"
+            default: "roll"
         }).render(true)
     );
 }

@@ -31,8 +31,8 @@
     </div>
     {{#if gmView}}
     <div class="dow-resets item-grid col-2">
-        <button class="reset-option" data-action="reset-everything">Clear All</button>
-        <button class="reset-option" data-action="reset-round">Reset Round</button>
+        <button type="button" class="reset-option" data-action="reset-everything">Clear All</button>
+        <button type="button" class="reset-option" data-action="reset-round">Reset Round</button>
     </div>
     {{/if}}
     <div class="dow-volleys">
@@ -55,7 +55,7 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor1.id}}" data-skill-id="{{actor1Skill}}"><i class="fas fa-dice"></i></button>
+            <button type="button" class="dow-roll" data-action="roll-dow" data-actor-id="{{actor1.id}}" data-skill-id="{{actor1Skill}}"><i class="fas fa-dice"></i></button>
             {{/if}}
             {{#if gmView}}
             <div class="pill-toggle">
@@ -164,7 +164,7 @@
                 {{/each}}
                 {{/select}}
             </select>
-            <button class="dow-roll" data-action="roll-dow" data-actor-id="{{actor2.id}}" data-skill-id="{{actor2Skill}}"><i class="fas fa-dice"></i></button>
+            <button type="button" class="dow-roll" data-action="roll-dow" data-actor-id="{{actor2.id}}" data-skill-id="{{actor2Skill}}"><i class="fas fa-dice"></i></button>
             {{/if}}
             {{#if gmView}}
             <div class="pill-toggle">

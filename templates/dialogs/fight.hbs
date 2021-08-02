@@ -1,8 +1,8 @@
 <form class="flex-row" autocomplete="off">
     {{#if gmView}}
     <div class="control-grid">
-        <button class="control-button" data-action="clearAll">Clear All</button>
-        <button class="control-button" data-action="resetRound">Reset Round</button>
+        <button type="button" class="control-button" data-action="clearAll">Clear All</button>
+        <button type="button" class="control-button" data-action="resetRound">Reset Round</button>
     </div>
     {{/if}}
     <div class="volley-description">
@@ -30,11 +30,11 @@
                 {{#if p.showActions}}
                     <img class="portrait clickable" src="{{p.imgSrc}}" title="{{p.name}}" data-action="openSheet" data-actor-id="{{p.id}}"/>
                     <div class="fight-rolls flex-column">
-                        <button class="control-button" data-index="{{i}}" data-action="rollSpeed">Speed</button>
-                        <button class="control-button" data-index="{{i}}" data-action="rollPower">Power</button>
-                        <button class="control-button" data-index="{{i}}" data-action="rollAgility">Agility</button>
-                        <button class="control-button" data-index="{{i}}" data-action="rollSkill">Skill</button>
-                        <button class="control-button" data-index="{{i}}" data-action="rollSteel">Steel</button>
+                        <button type="button" class="control-button" data-index="{{i}}" data-action="rollSpeed">Speed</button>
+                        <button type="button" class="control-button" data-index="{{i}}" data-action="rollPower">Power</button>
+                        <button type="button" class="control-button" data-index="{{i}}" data-action="rollAgility">Agility</button>
+                        <button type="button" class="control-button" data-index="{{i}}" data-action="rollSkill">Skill</button>
+                        <button type="button" class="control-button" data-index="{{i}}" data-action="rollSteel">Steel</button>
                     </div>
                 {{else}}
                     {{#if ../gmView}}

@@ -2,7 +2,7 @@
     "name": "burningwheel",
     "title": "The Burning Wheel",
     "description": "Community Foundry implementation of The Burning Wheel",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "templateVersion": 20,
     "author": "Stas Tserkovny",
     "esmodules": [
@@ -24,5 +24,5 @@
     "gridUnits": "ft",
     "url": "https://github.com/StasTserk/foundry-burningwheel",
     "manifest": "https://raw.githubusercontent.com/StasTserk/foundry-burningwheel/master/system.json",
-    "download": "https://github.com/StasTserk/foundry-burningwheel/releases/download/1.1.5/release1.1.5.zip"
+    "download": "https://github.com/StasTserk/foundry-burningwheel/releases/download/1.1.6/release1.1.6.zip"
 }

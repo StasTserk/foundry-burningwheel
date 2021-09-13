@@ -143,8 +143,8 @@ export class Skill extends BWItem<SkillDataRoot> {
                     }
                     break;
                 case "Challenging":
-                    this.data.data.challenging ++;
                     if (this.data.data.challenging < (this.data.data.challengingNeeded || 0)) {
+                        this.data.data.challenging ++;
                         this.update({ "data.challenging": this.data.data.challenging }, {});
                     }
                     break;

@@ -206,6 +206,9 @@ export type StringIndexedObject<T> = { [i: string]: T };
 /** For Sorting Items/Actors/Etc. by Name */
 export const byName = (a: { name: string }, b: { name: string }): number => a.name.localeCompare(b.name);
 
+/** For removing quotes and apostrophes from strings */
+export const escapeQuotes = (a: string): string => a.replace(/\\([\s\S])|(['"])/g, "\\$1$2");
+
 export interface DragData {
     type: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -240,3 +243,4 @@ export interface StatDragData extends DragData {
         path: string;
     }
 }
+

@@ -1,5 +1,5 @@
 import { BWActor } from "../actors/BWActor.js";
-import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData } from "../helpers.js";
+import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData, escapeQuotes } from "../helpers.js";
 import { BWItem, BWItemData, HasPointCost, ItemType } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
@@ -404,7 +404,7 @@ export class CharacterBurnerDialog extends Application {
                 // if a skill is already included don't double include it
                 if (!$(this.element).find(`select[name="skillName"]`).filter((_, element) => $(element).val() === itemName).length) {
                     // Set the value, creating a new option if necessary
-                    if (element.find("option[value='" + itemName + "']").length) {
+                    if (element.find(`option[value='${escapeQuotes(itemName)}']`).length) {
                         element.val(itemName).trigger('change');
                     } else {
                         // Create a DOM Option and pre-select by default
@@ -432,7 +432,7 @@ export class CharacterBurnerDialog extends Application {
                 // if a skill is already included don't double include it
                 if (!$(this.element).find(`select[name="traitName"]`).filter((_, element) => $(element).val() === itemName).length) {
                     // Set the value, creating a new option if necessary
-                    if (element.find("option[value='" + itemName + "']").length) {
+                    if (element.find(`option[value='${escapeQuotes(itemName)}']`).length) {
                         element.val(itemName).trigger('change');
                     } else { 
                         // Create a DOM Option and pre-select by default
@@ -459,7 +459,7 @@ export class CharacterBurnerDialog extends Application {
             case "property":
                 element = $(this.element).find('select[name="propertyName"]').filter((_, e) => !$(e).val()).first();
                 // Set the value, creating a new option if necessary
-                if (element.find("option[value='" + itemName + "']").length) {
+                if (element.find(`option[value='${escapeQuotes(itemName)}']`).length) {
                     element.val(itemName).trigger('change');
                 } else { 
                     // Create a DOM Option and pre-select by default
@@ -505,7 +505,7 @@ export class CharacterBurnerDialog extends Application {
                 // possessions, weapons, and spells
                 element = $(this.element).find('.burner-gear select[name="itemName"]').filter((_, e) => !$(e).val()).first();
                 // Set the value, creating a new option if necessary
-                if (element.find("option[value='" + itemName + "']").length) {
+                if (element.find(`option[value='${escapeQuotes(itemName)}']`).length) {
                     element.val(itemName).trigger('change');
                 } else { 
                     // Create a DOM Option and pre-select by default

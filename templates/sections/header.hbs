@@ -4,9 +4,11 @@
     </div>
     <div class="section-index item-grid col-2">
         <h2 class="section-header"><label>Character Index</label>
-            <input id="{{actor.id}}-settings-checkbox" type="checkbox" class="hidden settings-checkbox" name="data.settings.showSettings" {{checked data.settings.showSettings}}>
-            {{#if data.settings.showBurner}}<label class="settings-gear character-burner-icon clickable"><i class="fas fa-fire-alt"></i></label>{{/if}}
-            <label class="settings-gear clickable" for="{{actor.id}}-settings-checkbox"><i class="fas fa-cogs"></i></label>
+            {{#if isOwner}}
+                <input id="{{actor.id}}-settings-checkbox" type="checkbox" class="hidden settings-checkbox" name="data.settings.showSettings" {{checked data.settings.showSettings}}>
+                {{#if data.settings.showBurner}}<label class="settings-gear character-burner-icon clickable"><i class="fas fa-fire-alt"></i></label>{{/if}}
+                <label class="settings-gear clickable" for="{{actor.id}}-settings-checkbox"><i class="fas fa-cogs"></i></label>
+            {{/if}}
         </h2>
         <div>
             <label for="{{actor.id}}-character-name">Name</label>
@@ -36,6 +38,7 @@
             <label for="{{actor.id}}-character-features">Features</label>
             <input id="{{actor.id}}-character-features" type="text" name="data.features" value="{{data.features}}">
         </div>
+        {{#if isObserver}}
         <div class="flex-row artha-points">
             <div>
                 <label for="{{actor.id}}-character-fate-points" class="artha-label">Fate</label>
@@ -50,5 +53,6 @@
                 <input id="{{actor.id}}-character-deeds-points" name="data.deeds" value="{{data.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
             </div>
         </div>
+        {{/if}}
     </div>
 </div>

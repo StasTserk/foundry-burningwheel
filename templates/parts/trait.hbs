@@ -1,10 +1,12 @@
-<div class="trait" data-item-id="{{trait._id}}" draggable="true" data-id="{{trait._id}}">
+<div class="trait" data-item-id="{{trait._id}}" {{#if isOwner}}draggable="true"{{/if}} data-id="{{trait._id}}">
     <h3 class="flex-row">
         <input type="checkbox" id="{{trait._id}}-toggle" class="hidden trait-checkbox" data-item-id="{{trait._id}}" data-binding="data.collapsed" {{ checked trait.data.collapsed }}>
-        <label for="{{trait._id}}-toggle">{{ trait.name }}</label>    
-        <i class="fas fa-comment" data-action="broadcast" data-id="{{trait._id}}"></i>
-        <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
-        <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+        <label for="{{trait._id}}-toggle">{{ trait.name }}</label>
+        {{#if isOwner}}
+            <i class="fas fa-comment" data-action="broadcast" data-id="{{trait._id}}"></i>
+            <i class="fas fa-edit" data-action="editItem" data-id="{{trait._id}}"></i>
+            <i class="fas fa-trash" data-action="delItem" data-id="{{trait._id}}"></i>
+        {{/if}}
     </h3>
     {{#if trait.data.collapsed}}{{else}}
     <hr>

@@ -63,21 +63,30 @@
         h1 {
             display: flex;
             & > input[type='text'] {
-                width: calc(100% - 2em);
+                flex: 1 1;
+            }
+            & > .npc-checkbox {
+                flex: 0 0 min-content;
+                margin-left: 10px;
+                font-size: 20px;
             }
         }
 
         .npc-bio {
-            display: grid;
-            grid-template-columns: 1fr 9em;
-            height: calc(150px - 2.5em - 10px);
+            display: flex;
+            height: calc(114px);
 
-            textarea {
-                resize: none;
+            .npc-bio-text {
+                flex: 1;
                 height: calc(100% - 1.5em);
+                & > textarea {
+                    resize: none;
+                    height: 100%;
+                }
             }
         
             .artha-points {
+                flex: 0 0 9em;
                 place-content: space-evenly;
                 div {
                     background-color: transparent;

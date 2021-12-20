@@ -26,6 +26,8 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         return {
             actor: this.actor,
             data: this.actor.data.data,
+            isObserver: this.actor.permission >= CONST.ENTITY_PERMISSIONS.OBSERVER,
+            isOwner: this.actor.permission >= CONST.ENTITY_PERMISSIONS.OWNER,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any;
     }
@@ -191,4 +193,6 @@ export interface ActorSheetOptions extends BaseEntitySheet.Options {
 export interface BaseActorSheetData<T extends NpcData | BWCharacterData = BWCharacterData> {
     actor: BWActor;
     data: T;
+    isObserver: boolean;
+    isLimited: boolean;
 }

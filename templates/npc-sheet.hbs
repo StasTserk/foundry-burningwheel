@@ -5,16 +5,19 @@
     <div class="npc-header">
         <h1>
             <input type="text" name="name" value="{{actor.name}}">
+            {{#if isOwner}}
             <div class="npc-checkbox">
                 <input id="{{actor.id}}-edit-mode" type="checkbox" name="data.editMode" {{checked data.editMode}}>
                 <label for="{{actor.id}}-edit-mode"><i class="fas fa-edit"></i></label>
             </div>
+            {{/if}}
         </h1>
         <div class="npc-bio">
-            <div>
+            <div class='npc-bio-text'>
                 <label class="npc-section-label" for="{{actor.id}}-bio">Bio</label>
                 <textarea id="{{actor.id}}-bio" name="data.bio">{{data.bio}}</textarea>
             </div>
+            {{#if isObserver}}
             <div class="flex-row artha-points">
                 <div>
                     <label for="{{actor.id}}-fate-points" class="artha-label">Fate</label>
@@ -29,9 +32,10 @@
                     <input id="{{actor.id}}-deeds-points" name="data.deeds" value="{{data.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
             </div>
+            {{/if}}
         </div>
     </div>
-
+    {{#if isObserver}}
     <div class="npc-stats">
         {{#each statRow as |stat|}}
             {{> "systems/burningwheel/templates/parts/npc-stat.hbs"
@@ -371,6 +375,7 @@
         <div class="item-entry modifiable" data-action="rollSpell" data-skill-id="{{s.data.skillId}}" data-spell-id="{{s._id}}" data-id="{{s._id}}" draggable="true">{{s.name}}</div>
         {{/each}}
     </div>
-    {{/if}}
-    {{/if}}
+    {{/if}} <!-- spells -->
+    {{/if}} <!-- !data.editMode -->
+    {{/if}} <!-- isObserver -->
 </form>

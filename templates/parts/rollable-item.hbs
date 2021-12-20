@@ -1,6 +1,8 @@
-<div class="rollable flex-row {{stat.cssClass}}" draggable="true" data-accessor="{{namePrefix}}" {{#if customName}}data-stat-name="{{stat.name}}"{{else}}data-stat-name="{{statName}}"{{/if}}>
-    <input id="{{actor.id}}-{{namePrefix}}-Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
-    <label for="{{actor.id}}-{{namePrefix}}-Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
+<div class="rollable flex-row {{stat.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-accessor="{{namePrefix}}" {{#if customName}}data-stat-name="{{stat.name}}"{{else}}data-stat-name="{{statName}}"{{/if}}>
+    {{#if isOwner}}
+        <input id="{{actor.id}}-{{namePrefix}}-Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
+        <label for="{{actor.id}}-{{namePrefix}}-Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>
+    {{/if}}
     {{#if customName }}
     <input type="text" name="{{namePrefix}}.name" value="{{stat.name}}" class="rollable-name">
     {{else}}
@@ -14,7 +16,9 @@
         {{/select}}
     </select>
     <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}">
-    <button type="button" class="rollable modifiable" data-rollable-name="{{statName}}" data-accessor="{{namePrefix}}" data-roll-type="{{type}}"><i class="fas fa-dice"></i></button>
+    {{#if isOwner}}
+        <button type="button" class="rollable modifiable" data-rollable-name="{{statName}}" data-accessor="{{namePrefix}}" data-roll-type="{{type}}"><i class="fas fa-dice"></i></button>
+    {{/if}}
     <div class="collapsing-section">
         {{#if routine}}
         <div class="test-tracking">
@@ -22,7 +26,9 @@
             <input class="tests-needed" name="{{namePrefix}}.routineNeeded" value="{{stat.routineNeeded}}" disabled>
             {{#multiboxes stat.routine needed=stat.routineNeeded}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked" data-dtype="Number">
+            {{#if isOwner}}
             <label for="{{actor.id}}-{{namePrefix}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            {{/if}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-1" name="{{namePrefix}}.routine" value="1" data-dtype="Number">
             <label for="{{actor.id}}-{{namePrefix}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-2" name="{{namePrefix}}.routine" value="2" data-dtype="Number">
@@ -39,7 +45,9 @@
             <input class="tests-needed" name="{{namePrefix}}.difficultNeeded" value="{{stat.difficultNeeded}}" disabled>
             {{#multiboxes stat.difficult needed=stat.difficultNeeded}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked" data-dtype="Number">
+            {{#if isOwner}}
             <label for="{{actor.id}}-{{namePrefix}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            {{/if}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-1" name="{{namePrefix}}.difficult" value="1" data-dtype="Number">
             <label for="{{actor.id}}-{{namePrefix}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-2" name="{{namePrefix}}.difficult" value="2" data-dtype="Number">
@@ -55,7 +63,10 @@
             <input class="tests-needed" name="{{namePrefix}}.challengingNeeded" value="{{stat.challengingNeeded}}" disabled>
             {{#multiboxes stat.challenging needed=stat.challengingNeeded}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked" data-dtype="Number">
+            {{#if isOwner}}
             <label for="{{actor.id}}-{{namePrefix}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            {{/if}}
+            
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-1" name="{{namePrefix}}.challenging" value="1" data-dtype="Number">
             <label for="{{actor.id}}-{{namePrefix}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-2" name="{{namePrefix}}.challenging" value="2" data-dtype="Number">

@@ -2,14 +2,18 @@
     <div class="item-title">
         {{ relationship.name }}
     </div>
-    <button type="button" class="rollable modifiable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id="{{relationship._id}}"><i class="fas fa-dice"></i></button>
-    <i class="fas fa-edit" data-action="editItem" data-id="{{relationship._id}}"></i>
-    <i class="fas fa-trash" data-action="delItem" data-id="{{relationship._id}}"></i>
+    {{#if isOwner}}
+        <button type="button" class="rollable modifiable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id="{{relationship._id}}"><i class="fas fa-dice"></i></button>
+        <i class="fas fa-edit" data-action="editItem" data-id="{{relationship._id}}"></i>
+        <i class="fas fa-trash" data-action="delItem" data-id="{{relationship._id}}"></i>
+    {{/if}}
     {{#if relationship.data.building}}
     <div class="relationship-progress">
         {{#multiboxes relationship.data.buildingProgress exp=exp}}
         <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-0" value="0" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
+        {{#if isOwner}}
         <label for="{{relationship.data.safeId}}-buildingProgress-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+        {{/if}}
         <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-1" value="1" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">
         <label for="{{relationship.data.safeId}}-buildingProgress-1" class="progress-tick progress-tick-1">&nbsp;</label>
         <input type="radio" id="{{relationship.data.safeId}}-buildingProgress-2" value="2" data-item-id="{{relationship._id}}" data-binding="data.buildingProgress">

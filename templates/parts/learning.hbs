@@ -1,8 +1,12 @@
 <div class="learning flex-row" draggable="true" data-id="{{skill._id}}">
+    {{#if isOwner}}
     <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{skill._id}}"></i>
     <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{skill._id}}"></i>
+    {{/if}}
     <h3>{{skill.name}}</h3>
-    <button type="button" class="rollable modifiable" data-rollable-name="{{skill.name}}" data-skill-id="{{skill._id}}" data-roll-type="learning"><i class="fas fa-dice"></i></button>
+    {{#if isOwner}}
+        <button type="button" class="rollable modifiable" data-rollable-name="{{skill.name}}" data-skill-id="{{skill._id}}" data-roll-type="learning"><i class="fas fa-dice"></i></button>
+    {{/if}}
     <div class="learning-xp">
         {{#multiboxes skill.data.learningProgress needed=skill.data.aptitude}}
         <input type="radio"
@@ -10,11 +14,13 @@
             value="0" 
             data-item-id="{{skill._id}}"
             data-binding="data.learningProgress">
+        {{#if isOwner}}
         <label
             for="{{skill.data.safeId}}-learningProgress-0"
             class="progress-clear">
             <i class="fas fa-times-circle"></i>
         </label>
+        {{/if}}
         <input
             type="radio"
             id="{{skill.data.safeId}}-learningProgress-1"

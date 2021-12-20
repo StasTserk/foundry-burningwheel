@@ -1,6 +1,8 @@
 <h2 class="section-header">
+    {{#if isOwner}}
     <input type="checkbox" id="{{actor.id}}-collapse-spells" name="data.collapseSpells" class="section-collapse" {{ checked data.collapseSpells }}>
     <i class="fas fa-chevron-down"></i>
+    {{/if}}
     <label for="{{actor.id}}-collapse-spells" class="section-collapse-label clickable">Spells</label>
 </h2>
 {{#if data.collapseSpells}}{{else}}
@@ -46,11 +48,13 @@
         <button type="button" class="rollable modifiable" data-rollable-name="{{data.sustainedSpell4}}" data-obstacle="{{data.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
     </div>
     {{#each spells as |spell|}}
-    {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.data.sorcerousSkills}}
+    {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.data.sorcerousSkills isOwner=../isOwner}}
     {{/each}}
+    {{#if isOwner}}
     <div class="right-floating">
         <div class="add-button" data-action="addSpell"><i class="fas fa-plus"></i> Add New Spell</div>
         <div class="add-button" data-action="learnSpell"><i class="fas fa-plus"></i> Learn New Spell</div>
     </div>
+    {{/if}}
 </div>
 {{/if}}

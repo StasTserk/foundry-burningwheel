@@ -1,37 +1,43 @@
 <h2 class="section-header">
-    <input type="checkbox" id="{{actor.id}}-collapseRelationships" name="data.collapseRelationships" class="section-collapse" {{ checked data.collapseRelationships }}>
-    <i class="fas fa-chevron-down"></i>
+    {{#if isOwner}}
+        <input type="checkbox" id="{{actor.id}}-collapseRelationships" name="data.collapseRelationships" class="section-collapse" {{ checked data.collapseRelationships }}>
+        <i class="fas fa-chevron-down"></i>
+    {{/if}}
     <label for="{{actor.id}}-collapseRelationships" class="section-collapse-label clickable">Relationships & Reputations</label>
 </h2>
 {{#if data.collapseRelationships}}{{else}}
 <div class="relationship-section flex-row">
     <div class="relationships">
-        <h2>Relationships  <i data-action="addRelationship" class="fas fa-plus"></i></h2>
+        <h2>Relationships  {{#if isOwner}}<i data-action="addRelationship" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each relationships as |r|}}
-            {{> "systems/burningwheel/templates/parts/relationships.hbs" relationship=r exp=../data.circles.exp}}
+            {{> "systems/burningwheel/templates/parts/relationships.hbs" relationship=r exp=../data.circles.exp isOwner=../isOwner}}
         {{/each}}
     </div>
     <div class="reputations">
-        <h2>Reputations  <i data-action="addReputation" class="fas fa-plus"></i></h2>
+        <h2>Reputations  {{#if isOwner}}<i data-action="addReputation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each reputations as |r|}}
         <div class="reputation flex-row {{r.data.cssClass}}" draggable="true" data-id="{{r._id}}">
             <div class="item-title">
                 {{r.data.dice}}D - {{ r.name }}
             </div>
-            <i class="fas fa-edit" data-action="editItem" data-id="{{r._id}}"></i>
-            <i class="fas fa-trash" data-action="delItem" data-id="{{r._id}}"></i>
+            {{#if ../isOwner}}
+                <i class="fas fa-edit" data-action="editItem" data-id="{{r._id}}"></i>
+                <i class="fas fa-trash" data-action="delItem" data-id="{{r._id}}"></i>
+            {{/if}}
         </div>
         {{/each}}
     </div>
     <div class="affiliations">
-        <h2>Affiliations  <i data-action="addAffiliation" class="fas fa-plus"></i></h2>
+        <h2>Affiliations  {{#if isOwner}}<i data-action="addAffiliation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each affiliations as |a|}}
         <div class="affiliation flex-row" draggable="true" data-id="{{a._id}}">
             <div class="item-title">
                 {{a.data.dice}}D - {{ a.name }}
             </div>
-            <i class="fas fa-edit" data-action="editItem" data-id="{{a._id}}"></i>
-            <i class="fas fa-trash" data-action="delItem" data-id="{{a._id}}"></i>
+            {{#if ../isOwner}}
+                <i class="fas fa-edit" data-action="editItem" data-id="{{a._id}}"></i>
+                <i class="fas fa-trash" data-action="delItem" data-id="{{a._id}}"></i>
+            {{/if}}
         </div>
         {{/each}}
     </div>

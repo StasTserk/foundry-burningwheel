@@ -6,6 +6,7 @@
     {{!-- Character header --}}
     {{> "systems/burningwheel/templates/sections/header.hbs"}}
 
+{{#if isObserver}}
     {{!-- Beliefs Sheet Section - funny indentation to avoid problems with textareas inserting extra whitespace. --}}
 {{> "systems/burningwheel/templates/sections/beliefs.hbs"}}
 
@@ -44,6 +45,7 @@
 
     {{!-- Weapons and Armor Section --}}
     {{> "systems/burningwheel/templates/sections/weapons-and-armor.hbs"}}
+{{/if}}
     <hr>
     {{> "systems/burningwheel/templates/sections/footer.hbs" }}
 </form>

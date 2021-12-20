@@ -1,32 +1,34 @@
 <h2 class="section-header">
-    <input type="checkbox" id="{{actor.id}}-collapseTraits" name="data.collapseTraits" class="section-collapse" {{ checked data.collapseTraits }}>
-    <i class="fas fa-chevron-down"></i>
+    {{#if isOwner}}
+        <input type="checkbox" id="{{actor.id}}-collapseTraits" name="data.collapseTraits" class="section-collapse" {{ checked data.collapseTraits }}>
+        <i class="fas fa-chevron-down"></i>
+    {{/if}}
     <label for="{{actor.id}}-collapseTraits" class="section-collapse-label clickable">Traits</label>
 </h2>
 {{#if data.collapseTraits}}{{else}}
 <div class="traits flex-row">
     <div class="trait-category">
         <h2>Character Traits
-            <i data-action="addTrait" data-id="character" class="fas fa-plus clickable"></i>
+            {{#if isOwner}}<i data-action="addTrait" data-id="character" class="fas fa-plus clickable"></i>{{/if}}
         </h2>
         {{#each traits.character as |trait|}}
-        {{> "systems/burningwheel/templates/parts/trait.hbs" trait=trait}}
+        {{> "systems/burningwheel/templates/parts/trait.hbs" trait=trait isOwner=../isOwner}}
         {{/each}}
     </div>
     <div class="trait-category">
         <h2>Die Traits
-            <i data-action="addTrait" data-id="die" class="fas fa-plus clickable"></i>
+            {{#if isOwner}}<i data-action="addTrait" data-id="die" class="fas fa-plus clickable"></i>{{/if}}
         </h2>
         {{#each traits.die as |trait|}}
-        {{> "systems/burningwheel/templates/parts/trait.hbs" trait=trait}}
+        {{> "systems/burningwheel/templates/parts/trait.hbs" trait=trait isOwner=../isOwner}}
         {{/each}}
     </div>
     <div class="trait-category">
         <h2>Call-on Traits
-            <i data-action="addTrait" data-id="call-on" class="fas fa-plus clickable"></i>
+            {{#if isOwner}}<i data-action="addTrait" data-id="call-on" class="fas fa-plus clickable"></i>{{/if}}
         </h2>
         {{#each traits.callon as |trait|}}
-        {{> "systems/burningwheel/templates/parts/trait.hbs" trait=trait}}
+        {{> "systems/burningwheel/templates/parts/trait.hbs" trait=trait isOwner=../isOwner}}
         {{/each}}
     </div>
 </div>

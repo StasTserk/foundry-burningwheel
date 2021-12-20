@@ -18,25 +18,27 @@
     width: 66%;
 
     .learning {
+        display: flex;
         width: calc(50% - 10px);
         height: min-content;
         margin: 1px;
         @include colored-item(black);
 
         button {
-            width: 3em;
+            flex: 0 0 3em;
             height: 2em;
         }
 
         h3 {
-            width: calc(100% - 5em);
+            flex: 1 1;
             margin-top: 3px;
             font-weight: bold;
             text-align: center;
         }
         .learning-xp {
-            margin-left: 1.5em;
+            flex: 1 1 100%;
             margin-bottom: 3px;
+            justify-content: center;
             @include progress-ticks;
         }
     }

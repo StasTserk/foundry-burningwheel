@@ -1,6 +1,8 @@
 <h2 class="section-header">
-    <input type="checkbox" id="{{actor.id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse" {{ checked data.collapseAttributes }}>
-    <i class="fas fa-chevron-down"></i>
+    {{#if isOwner}}
+        <input type="checkbox" id="{{actor.id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse" {{ checked data.collapseAttributes }}>
+        <i class="fas fa-chevron-down"></i>
+    {{/if}}
     <label for="{{actor.id}}-collapseAttributes" class="section-collapse-label clickable">Attributes</label>
 </h2>
 {{#if data.collapseAttributes}}{{else}}

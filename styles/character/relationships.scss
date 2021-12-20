@@ -8,28 +8,21 @@
         }
     }
 
-    .relationship {
-        .item-title {
-            width: calc(100% - 5em);
-        }
-    }
-
-    .reputation, .affiliation {
-        .item-title {
-            width: calc(100% - 2.6em);
-        }
-    }
-
     .item-title {
+        flex: 1 1;
         & ~ button.rollable {
+            flex: 0 0 2em;
             width: 2em;
             height: 2em;
             padding: 0;
-            margin: 0 5px 0 0;
+            margin: 0 0 0 5px;
             border-radius: 1em;
+            
         }
 
         & ~ i {
+            flex: 0 0 1em;
+            margin: 0 0 0 5px;
             align-self: center;
         }
     }
@@ -74,6 +67,7 @@
     }
 
     .relationship-progress {
+        flex: 0 0 100%;
         @include progress-ticks;
     }
 }

@@ -1,10 +1,14 @@
 <div class="spell-section-item flex-row" draggable="true" data-id="{{spell._id}}">
+    {{#if isOwner}}
     <input id="{{spell._id}}-collapse" type="checkbox" class="hidden" data-item-id="{{spell._id}}" data-binding="data.collapsed" {{ checked data.collapsed }}>
+    {{/if}}
     <label for="{{spell._id}}-collapse" class="spell-item-title">
-        {{#if data.collapsed}}<i class="fas fa-chevron-circle-right"></i>{{else}}<i class="fas fa-chevron-circle-down"></i>{{/if}}
+        {{#if isOwner}}{{#if data.collapsed}}<i class="fas fa-chevron-circle-right"></i>{{else}}<i class="fas fa-chevron-circle-down"></i>{{/if}}{{/if}}
         {{spell.name}}
     </label>
-    <button type="button" class="rollable modifiable" data-skill-id="{{spell.data.skillId}}" data-spell-id="{{spell._id}}" data-roll-type="spell"><i class="fas fa-dice"></i></button>
+    {{#if isOwner}}
+        <button type="button" class="rollable modifiable" data-skill-id="{{spell.data.skillId}}" data-spell-id="{{spell._id}}" data-roll-type="spell"><i class="fas fa-dice"></i></button>
+    {{/if}}
     {{#if data.collapsed}}{{else}}
     <div class="spell-details flex-row">
         <label class="spell-details-label">Skill</label>
@@ -37,10 +41,12 @@
             <div>{{spell.data.va}}</div>
         </div>
         {{/if}}
+        {{#if isOwner}}
         <div class="edit-icons">
             <i class="fas fa-edit" data-action="editItem" data-id="{{spell._id}}"></i>
             <i class="fas fa-trash" data-action="delItem" data-id="{{spell._id}}"></i>
         </div>
+        {{/if}}
     </div>
     {{/if}}
 </div>

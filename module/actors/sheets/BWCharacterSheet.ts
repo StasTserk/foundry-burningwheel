@@ -84,7 +84,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     const s = i as SkillDataRoot;
                     if (s.data.learning) {
                         learning.push(s);
-                    } else if (s.data.training && ["martial", "training"].includes(s.data.skilltype)) {
+                    } else if (s.data.training) {
                         training.push(s);
                     } else {
                         skills.push(s);

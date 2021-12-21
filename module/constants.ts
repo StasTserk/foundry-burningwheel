@@ -44,7 +44,7 @@ export type SkillTypeString =
     "academic" | "artisan" | "artist" | "craftsman" |
     "forester" | "martial" | "medicinal" | "military" |
     "musical" | "peasant" | "physical" | "schoolofthought" |
-    "seafaring" | "special" | "social" | "sorcerous" | "training";
+    "seafaring" | "special" | "social" | "sorcerous";
 
 export const skillTypes = [
     "academic",
@@ -63,7 +63,6 @@ export const skillTypes = [
     "special",
     "social",
     "sorcerous",
-    "training"
 ];
 export const skillTypeSelect = toDictionary(skillTypes);
 
@@ -158,5 +157,4 @@ export const skillImages: { [k in SkillTypeString]: string } = {
     "special": "icons/skills/trades/academics-investigation-puzzles.webp",
     "social": "icons/skills/social/diplomacy-handshake-yellow.webp",
     "sorcerous": "icons/magic/fire/flame-burning-hand-white.webp",
-    "training": "icons/environment/settlement/target.webp"
 };

@@ -139,12 +139,13 @@
             <div class="burner-section-header flex-row"><div>5. Skills</div><input type="number" disabled class="exponent" name="skillPtsLeft" value="0"><div>Pts. left</div></div>
             <div class="burner-section-header">Roots</div>
             <div class="burner-section-header">&nbsp;</div>
-            <div class="burner-section-header">Req</div>
-            <div class="burner-section-header">Opn</div>
-            <div class="burner-section-header">Tr *</div>
-            <div class="burner-section-header">Adv.</div>
-            <div class="burner-section-header">Shd.</div>
-            <div class="burner-section-header">Exp</div>
+            <div class="burner-section-header" title="Required Skill">Req</div>
+            <div class="burner-section-header" title="Opened skill">Opn</div>
+            <div class="burner-section-header" title="Training Skill (costs 2 points to open)">Tr</div>
+            <div class="burner-section-header" title="Magical Skill (costs 2 points to open)">Mg</div>
+            <div class="burner-section-header" title="Number of Advances">Adv.</div>
+            <div class="burner-section-header" title="Starting Shade">Shd.</div>
+            <div class="burner-section-header" title="Final Exponent">Exp</div>
             <div class="burner-section-header"><i class="fas fa-question-circle" title="Status of loading skill from compendium."></i></div>
         </div>
         {{#each data.skills as |skill|}}
@@ -179,6 +180,7 @@
             <input type="checkbox" name="skillRequired">
             <input type="checkbox" name="skillOpened">
             <input type="checkbox" name="skillTraining">
+            <input type="checkbox" name="skillMagic">
             <input type="number" name="skillAdvances" value="0">
             <select class="shade" name="skillShade">
                 <option value="0">B</option>
@@ -294,7 +296,7 @@
     <div class="burner-resources burner-grid col-3">
         <input type="hidden" name="resourcePointsSpent" value="0">
         <div class="burner-label">
-            8. Resource Points <input type="text" disabled name="resourcePointsLeft" class="burner-inline-total" value="0"> Points left
+            8. Resource Points <input type="number" disabled name="resourcePointsLeft" class="burner-inline-total" value="0"> Points left
         </div><div></div><div class="burner-label">9. Resources and Circles</div>
         <div>
             <div class="burner-property">

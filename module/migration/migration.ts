@@ -33,11 +33,11 @@ import { task022 } from "./task022.js";
 import { task041 } from "./task041.js";
 import { task061 } from "./task061.js";
 import { task063 } from "./task063.js";
-import { task121 } from "./task121.js";
+import { task120 } from "./task120.js";
 
 registerTask("0.2.1", task021);
 registerTask("0.2.2", task022);
 registerTask("0.4.1", task041);
 registerTask("0.6.1", task061);
 registerTask("0.6.3", task063);
-registerTask("1.7.0.1", task121);
+registerTask("1.2.0", task120);

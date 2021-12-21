@@ -1,7 +1,7 @@
 import { BWItem } from "../items/item";
 import { Skill } from "../items/skill";
 
-export async function task121(): Promise<void> {
+export async function task120(): Promise<void> {
     const items: (Skill)[] = Array.from(game.items?.values() || []).filter((i: BWItem) => i.type === "skill") as (Skill)[];
     const updateInfo = {};
 

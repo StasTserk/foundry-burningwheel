@@ -1,6 +1,8 @@
 <h2 class="section-header">
-    <input type="checkbox" id="{{actor.id}}-collapsePtgs" name="data.collapsePtgs" class="section-collapse" {{ checked data.collapsePtgs }}>
-    <i class="fas fa-chevron-down"></i>
+    {{#if isOwner}}
+        <input type="checkbox" id="{{actor.id}}-collapsePtgs" name="data.collapsePtgs" class="section-collapse" {{ checked data.collapsePtgs }}>
+        <i class="fas fa-chevron-down"></i>
+    {{/if}}
     <label for="{{actor.id}}-collapsePtgs" class="section-collapse-label clickable">Injury and Recovery</label>
 </h2>
 {{#if data.collapsePtgs}}{{else}}

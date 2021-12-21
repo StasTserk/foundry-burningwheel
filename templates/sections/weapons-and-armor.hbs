@@ -1,6 +1,8 @@
 <h2 class="section-header">
+    {{#if isOwner}}
     <input type="checkbox" id="{{actor.id}}-collapseCombat" name="data.collapseCombat" class="section-collapse" {{ checked data.collapseCombat }}>
     <i class="fas fa-chevron-down"></i>
+    {{/if}}
     <label for="{{actor.id}}-collapseCombat" class="section-collapse-label clickable">Weapons and Armor</label>
 </h2>
 {{#if data.collapseCombat}}{{else}}
@@ -16,8 +18,10 @@
             <div class="training-skill" data-item-id="{{t.id}}">
                 <div class="flex-row">
                     <div class="training-skill-name">{{ t.name }}</div>
+                    {{#if ../isOwner}}
                     <i class="fas fa-edit" data-action="editItem" data-id="{{t._id}}"></i>
                     <i class="fas fa-trash" data-action="delItem" data-id="{{t._id}}"></i>
+                    {{/if}}
                 </div>
             </div>
             {{/each}}

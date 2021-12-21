@@ -4,7 +4,7 @@
     {{/if}}
     
     {{> "systems/burningwheel/templates/sections/header.hbs"}}
-
+{{#if isObserver}}
     {{!-- Character Tabs --}}
     <nav class="tabs character-tabs" data-group="sheet-tabs">
         <a class="item" data-tab="bits" data-group="sheet-tabs">BITs</a>
@@ -65,6 +65,7 @@
 
         </div>
     </section>
+{{/if}}
     <hr>
     {{> "systems/burningwheel/templates/sections/footer.hbs"}}
 </form>

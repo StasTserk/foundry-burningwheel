@@ -1,4 +1,4 @@
-<div class="learning flex-row" draggable="true" data-id="{{skill._id}}">
+<div class="learning flex-row" {{#if isOwner}}draggable="true"{{/if}} data-id="{{skill._id}}">
     {{#if isOwner}}
     <i class="fas fa-edit item-action-icon" data-action="editItem" data-id="{{skill._id}}"></i>
     <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{skill._id}}"></i>

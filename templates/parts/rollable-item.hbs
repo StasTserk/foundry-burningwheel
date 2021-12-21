@@ -1,4 +1,11 @@
-<div class="rollable flex-row {{stat.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-accessor="{{namePrefix}}" {{#if customName}}data-stat-name="{{stat.name}}"{{else}}data-stat-name="{{statName}}"{{/if}}>
+<div
+    class="rollable flex-row {{stat.cssClass}}"
+    {{#if isOwner}}draggable="true"{{/if}}
+    data-accessor="{{namePrefix}}"
+    {{#if customName}}data-stat-name="{{stat.name}}"
+    {{else}}data-stat-name="{{statName}}"
+    {{/if}}
+    >
     {{#if isOwner}}
         <input id="{{actor.id}}-{{namePrefix}}-Toggle" class="collapse-checkbox" type="checkbox" name="{{namePrefix}}.collapsed" {{ checked stat.collapsed}}>
         <label for="{{actor.id}}-{{namePrefix}}-Toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>

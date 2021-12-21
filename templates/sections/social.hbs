@@ -16,7 +16,7 @@
     <div class="reputations">
         <h2>Reputations  {{#if isOwner}}<i data-action="addReputation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each reputations as |r|}}
-        <div class="reputation flex-row {{r.data.cssClass}}" draggable="true" data-id="{{r._id}}">
+        <div class="reputation flex-row {{r.data.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{r._id}}">
             <div class="item-title">
                 {{r.data.dice}}D - {{ r.name }}
             </div>
@@ -30,7 +30,7 @@
     <div class="affiliations">
         <h2>Affiliations  {{#if isOwner}}<i data-action="addAffiliation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each affiliations as |a|}}
-        <div class="affiliation flex-row" draggable="true" data-id="{{a._id}}">
+        <div class="affiliation flex-row" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{a._id}}">
             <div class="item-title">
                 {{a.data.dice}}D - {{ a.name }}
             </div>

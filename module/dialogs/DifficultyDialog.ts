@@ -7,6 +7,7 @@ import { gmOnly } from "../decorators.js";
 
 export class DifficultyDialog extends Application {
     difficulty: number;
+    showDifficulty: boolean;
     editable: boolean;
     splitPool: boolean;
     customDiff: boolean;
@@ -15,13 +16,14 @@ export class DifficultyDialog extends Application {
     extendedTest: boolean;
     actorGroups: ActorTestGroup[];
 
-    constructor(defaultDifficulty: number, extendedData?: { extendedTest?: boolean, actorGroups?: ActorTestGroup[] } ) {
+    constructor(defaultDifficulty: number, showDifficulty: boolean, extendedData?: { extendedTest?: boolean, actorGroups?: ActorTestGroup[] } ) {
         super({
             template: "systems/burningwheel/templates/dialogs/gm-difficulty.hbs",
             classes: ["gm-difficulty"],
             popOut: false
         });
         this.difficulty = defaultDifficulty;
+        this.showDifficulty = showDifficulty;
         this.editable = game.user?.isGM || false;
 
         this.splitPool = this.customDiff = this.help = false;
@@ -226,6 +228,7 @@ export class DifficultyDialog extends Application {
         
         data.extendedTest = this.extendedTest;
         data.actorGroups = this.actorGroups;
+        data.showDifficulty = this.showDifficulty;
 
         return data;
     }
@@ -237,6 +240,7 @@ interface DifficultyDialogData {
     help: boolean;
     splitPool: boolean;
     difficulty: number;
+    showDifficulty: boolean;
     editable: boolean;
     actorGroups: ActorTestGroup[];
 }

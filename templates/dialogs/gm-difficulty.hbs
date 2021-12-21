@@ -18,6 +18,7 @@
                 <label for="gm-diff-help" title="Provide Helping Dice">HLP</label>
             </div>
         </div>
+        {{#if showDifficulty}}
         <div class="obstacle">
             <div class="label">Obstacle</div>
             {{#if editable}}
@@ -28,6 +29,7 @@
             </div>
             {{/if}}
         </div>
+        {{/if}}
     </div>
     {{#if extendedTest}}
     <div class="extended-test">

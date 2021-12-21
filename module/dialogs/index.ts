@@ -63,13 +63,11 @@ export async function initializeExtendedTestDialogs(): Promise<void> {
 
 export async function initializeRollPanels(): Promise<void> {
     game.burningwheel.useGmDifficulty = await game.settings.get(constants.systemName, constants.settings.useGmDifficulty) as boolean;
-    if (game.burningwheel.useGmDifficulty) {
-        const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty) as number;
-        const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData) as string);
-        game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, testData);
-        game.burningwheel.gmDifficulty.activateSocketListeners();
-        game.burningwheel.gmDifficulty.render(true);
-    }
+    const difficulty = await game.settings.get(constants.systemName, constants.settings.gmDifficulty) as number;
+    const testData = await JSON.parse(game.settings.get(constants.systemName, constants.settings.extendedTestData) as string);
+    game.burningwheel.gmDifficulty = new DifficultyDialog(difficulty, game.burningwheel.useGmDifficulty, testData);
+    game.burningwheel.gmDifficulty.activateSocketListeners();
+    game.burningwheel.gmDifficulty.render(true);
 
     let modData = { mods: undefined, help: undefined };
     try {
@@ -78,7 +76,7 @@ export async function initializeRollPanels(): Promise<void> {
         ui.notifications?.warn("Error parsing serialized Modifier data");
         console.error(err);
     }
-    game.burningwheel.modifiers = new ModifierDialog(game.burningwheel.useGmDifficulty, modData.mods, modData.help);
+    game.burningwheel.modifiers = new ModifierDialog(modData.mods, modData.help);
     game.burningwheel.modifiers.activateSocketListeners();
     game.burningwheel.modifiers.render(true);
 }

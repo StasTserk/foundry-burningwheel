@@ -1,16 +1,11 @@
 .mods-and-help {
     position: fixed;
+    right: calc(320px + 10em);
+
     bottom: 10px;
     
     display: flex;
     flex-direction: column;
-
-    &.modifiers-only {
-        right: 320px;
-    }
-    &.modifiers-and-difficulty {
-        right: calc(320px + 10em);
-    }
 
     & > div {
         width: 12em;      

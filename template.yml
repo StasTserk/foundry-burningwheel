@@ -226,6 +226,7 @@ Item:
     learningProgress: 0
     skilltype: 'academic'
     training: false
+    magical: false
     description: ''
     collapsed: false
     persona: 0

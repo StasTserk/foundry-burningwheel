@@ -209,10 +209,11 @@
 
         .skills-grid, .skills-header {
             display: grid;
-            grid-template-columns: 145px 100px 100px 2em 2em 2em 2em 2em 2em min-content;
+            grid-template-columns: 145px 100px 100px 2em 2em 2em 2em 2em 2em 2em min-content;
         }
         .skills-header {
             margin-top: 1em;
+            text-align: center;
             .lifepath-skill-header {
                 font-weight: bold;
                 background-color: rgba(black, 0.1);

@@ -68,7 +68,7 @@ export class CharacterBurnerDialog extends Application {
     }
 
     static get defaultOptions(): Application.Options {
-        return mergeObject(super.defaultOptions, { width: 900, height: 800, classes: [ "bw-app" ] }, { overwrite: true });
+        return mergeObject(super.defaultOptions, { width: 940, height: 800, classes: [ "bw-app" ] }, { overwrite: true });
     }
 
     getData(): CharacterBurnerData {
@@ -91,8 +91,11 @@ export class CharacterBurnerDialog extends Application {
         for (let i = 0; i < 30; i ++) {
             data.data.skills.push(Object.assign({}, blankSkill));
         }
-        for (let i = 0; i < 15; i ++) {
+        for (let i = 0; i < 18; i ++) {
             data.data.traits.push({});
+        }
+
+        for (let i = 0; i < 15; i++) {
             data.data.gear.push({});
         }
 
@@ -194,7 +197,7 @@ export class CharacterBurnerDialog extends Application {
             html.find("input[name='skillPtsSpent'], input[name='combinedSkillPts']").on('change', _ =>
                 this._storeDiff(html, "skillPtsLeft", "combinedSkillPts", "skillPtsSpent")),
             html.find("select[name='skillName']").on('change', (e) => this._tryLoadSkill(e)),
-            html.find("input[name='skillAdvances'], input[name='skillOpened'], input[name='skillTraining'], select[name='skillShade']").on('change', (e: JQuery.ChangeEvent) =>
+            html.find("input[name='skillAdvances'], input[name='skillOpened'], input[name='skillTraining'], input[name='skillMagic'], select[name='skillShade']").on('change', (e: JQuery.ChangeEvent) =>
                 this._calculateSkillWorth(e)),
             html.find("input[name='skillPtsWorth']").on('change', _ => this._storeSum(html, "skillPtsSpent", "skillPtsWorth")),
 
@@ -609,7 +612,8 @@ export class CharacterBurnerDialog extends Application {
         const refund = parseInt(parent.children("*[name='skillShadeRefund']").val() as string) || 0;
         const open = parent.children("*[name='skillOpened']").prop("checked") ? 1 : 0;
         const training = parent.children("*[name='skillTraining']").prop("checked") ? open : 0;
-        parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + refund).trigger("change");
+        const magical = parent.children("*[name='skillMagic']").prop("checked") && !training ? open : 0;
+        parent.children("*[name='skillPtsWorth']").val(advances + shade + open + training + magical + refund).trigger("change");
     }
 
     _tryLoadTrait(e: JQuery.TriggeredEvent): void {
@@ -654,6 +658,7 @@ export class CharacterBurnerDialog extends Application {
             inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).trigger("change");
             inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).trigger("change");
             inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
+            inputTarget.siblings("*[name='skillMagic']").prop("checked", skill.data.data.magical);
             inputTarget.siblings("*[name='skillId']").val(skill.id);
         }
     }

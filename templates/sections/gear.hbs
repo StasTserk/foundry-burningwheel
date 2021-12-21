@@ -8,7 +8,7 @@
 {{#if data.collapseGear}}{{else}}
 <div class="gear item-grid col-4">
     {{#each equipment as |e|}}
-    <div class="{{e.data.cssClass}}" draggable="true" data-id="{{e._id}}">
+    <div class="{{e.data.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{e._id}}">
         {{e.name}}
         {{#if ../isOwner}}
             <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e._id}}"></i>

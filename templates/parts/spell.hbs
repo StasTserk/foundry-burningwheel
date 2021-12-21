@@ -1,4 +1,4 @@
-<div class="spell-section-item flex-row" draggable="true" data-id="{{spell._id}}">
+<div class="spell-section-item flex-row" {{#if isOwner}}draggable="true"{{/if}} data-id="{{spell._id}}">
     {{#if isOwner}}
     <input id="{{spell._id}}-collapse" type="checkbox" class="hidden" data-item-id="{{spell._id}}" data-binding="data.collapsed" {{ checked data.collapsed }}>
     {{/if}}

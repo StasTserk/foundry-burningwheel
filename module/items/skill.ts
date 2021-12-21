@@ -216,6 +216,7 @@ export interface SkillData extends TracksTests, DisplayClass {
     restrictions: string;
 
     training: boolean;
+    magical: boolean;
     open: boolean;
     wildFork: boolean;
     learning: boolean;

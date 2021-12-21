@@ -58,6 +58,10 @@
             <label for="{{item.id}}-open-skill" >Open</label>
         </div>
         <div class="pill-toggle">
+            <input id="{{item.id}}-magical" type="checkbox" name="data.magical" {{ checked data.magical }}>
+            <label for="{{item.id}}-magical" >Magical Skill</label>
+        </div>
+        <div class="pill-toggle">
             <input id="{{item.id}}-training" type="checkbox" name="data.training" {{ checked data.training }}>
             <label for="{{item.id}}-training" >Training Skill</label>
         </div>

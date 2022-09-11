@@ -42,6 +42,7 @@
      * The original source data for the Entity provided upon initialization.
      * This reflects the database state of the Entity before any transformations are applied.
      * @defaultValue `{}`
+     * @deprecated use `system` instead
      */
     _data: D;
   
@@ -49,8 +50,11 @@
      * The effective data for the Entity.
      * This data object may have transformations applied to it.
      * @defaultValue `this._data`
+     * @deprecated reference keys directly.
      */
     data: PD;
+    
+    system: PD;
   
     /**
      * The options object that was used to configure the Entity upon initialization.

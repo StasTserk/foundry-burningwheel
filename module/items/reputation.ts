@@ -1,14 +1,11 @@
-import { BWItem, BWItemData, DisplayClass } from "./item.js";
+import { BWItem, DisplayClass } from "./item.js";
 
-export class Reputation extends BWItem<ReputationDataRoot> {
+export class Reputation extends BWItem<ReputationData> {
+    type: "reputation";
     prepareData(): void {
         super.prepareData();
-        this.data.data.cssClass = this.data.data.infamous ? "reputation-infamous" : "reputation-famous";
+        this.system.cssClass = this.system.infamous ? "reputation-infamous" : "reputation-famous";
     }
-}
-
-export interface ReputationDataRoot extends BWItemData<ReputationData> {
-    type: "reputation"
 }
 
 export interface ReputationData extends DisplayClass {

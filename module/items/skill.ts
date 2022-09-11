@@ -1,23 +1,24 @@
 import { skillImages, skillRootSelect, SkillTypeString } from "../constants.js";
 import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, TestString, updateTestsNeeded } from "../helpers.js";
-import { DisplayClass, BWItemData, BWItem } from "./item.js";
+import { DisplayClass, BWItem } from "./item.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 import * as helpers from "../helpers.js";
+import { TypeMissing } from "../../types/index.js";
 
-export class Skill extends BWItem<SkillDataRoot> {
+export class Skill extends BWItem<SkillData> {
     getRootSelect(): StringIndexedObject<string> {
         const roots = {};
         const actor = this.actor as unknown as BWActor  | null;
         Object.assign(roots, skillRootSelect);
         if (!actor) { return roots; }
 
-        if (this.data.hasOwner && actor.data.type === "character") {
-            if (actor.data.data.custom1.name) {
-                roots["custom1"] = actor.data.data.custom1.name;
+        if (this.hasOwner && actor.data.type === "character") {
+            if (actor.system.custom1.name) {
+                roots["custom1"] = actor.system.custom1.name;
             }
-            if (actor.data.data.custom2.name) {
-                roots["custom2"] = actor.data.data.custom2.name;
+            if (actor.system.custom2.name) {
+                roots["custom2"] = actor.system.custom2.name;
             }
         } else {
             roots["custom1"] = "Custom Attribute 1";
@@ -27,47 +28,47 @@ export class Skill extends BWItem<SkillDataRoot> {
     }
     prepareData(): void {
         super.prepareData();
-        updateTestsNeeded(this.data.data);
+        updateTestsNeeded(this.system);
         this.calculateAptitude();
-        this.data.data.safeId = this.id;
+        this.system.safeId = this.id;
     }
 
     calculateAptitude(this: Skill): void {
         const actor = this.actor as BWActor | null;
-        if (!actor || !this.data.hasOwner) { return; }
-        let aptitudeMod = actor.getAptitudeModifiers(this.name) + actor.getAptitudeModifiers(this.data.data.skilltype);
+        if (!actor || !this.hasOwner) { return; }
+        let aptitudeMod = actor.getAptitudeModifiers(this.name) + actor.getAptitudeModifiers(this.system.skilltype);
 
-        aptitudeMod += actor.getAptitudeModifiers(this.data.data.root1);
+        aptitudeMod += actor.getAptitudeModifiers(this.system.root1);
         
-        if (this.data.data.root2) {
-            aptitudeMod += actor.getAptitudeModifiers(`${this.data.data.root1}/${this.data.data.root2}`)
-                + actor.getAptitudeModifiers(`${this.data.data.root2}/${this.data.data.root1}`);
-                + actor.getAptitudeModifiers(this.data.data.root2);
+        if (this.system.root2) {
+            aptitudeMod += actor.getAptitudeModifiers(`${this.system.root1}/${this.system.root2}`)
+                + actor.getAptitudeModifiers(`${this.system.root2}/${this.system.root1}`);
+                + actor.getAptitudeModifiers(this.system.root2);
         }
 
-        const root1exp = (actor.data.data[this.data.data.root1] as Ability).exp;
-        const root2exp = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).exp : root1exp;
+        const root1exp = (actor.system[this.system.root1] as Ability).exp;
+        const root2exp = this.system.root2 ? (actor.system[this.system.root2] as Ability).exp : root1exp;
         const rootAvg = Math.floor((root1exp + root2exp) / 2);
-        this.data.data.aptitude = 10 - rootAvg + aptitudeMod;
+        this.system.aptitude = 10 - rootAvg + aptitudeMod;
     }
 
-    static disableIfWounded(this: SkillDataRoot, woundDice: number): void {
-        if (!this.data.learning && this.data.exp <= woundDice) {
-            this.data.cssClass += " wound-disabled";
+    static disableIfWounded(this: SkillData, woundDice: number): void {
+        if (!this.learning && this.exp <= woundDice) {
+            this.cssClass += " wound-disabled";
         }
     }
 
     canAdvance(): boolean {
 
-        const enoughRoutine = (this.data.data.routine >= (this.data.data.routineNeeded || 0 ));
-        const enoughDifficult = this.data.data.difficult >= (this.data.data.difficultNeeded || 0);
-        const enoughChallenging = this.data.data.challenging >= (this.data.data.challengingNeeded || 0);
+        const enoughRoutine = (this.system.routine >= (this.system.routineNeeded || 0 ));
+        const enoughDifficult = this.system.difficult >= (this.system.difficultNeeded || 0);
+        const enoughChallenging = this.system.challenging >= (this.system.challengingNeeded || 0);
     
-        if (this.data.data.exp === 0) {
+        if (this.system.exp === 0) {
             return enoughRoutine || enoughDifficult || enoughChallenging;
         }
     
-        if (this.data.data.exp < 5) {
+        if (this.system.exp < 5) {
             // need only enough difficult or routine, not both
             return enoughRoutine && (enoughDifficult || enoughChallenging);
         }
@@ -76,7 +77,7 @@ export class Skill extends BWItem<SkillDataRoot> {
     }
 
     async advance(): Promise<void> {
-        const exp = this.data.data.exp;
+        const exp = this.system.exp;
         this.update({ data: { routine: 0, difficult: 0, challenging: 0, exp: exp + 1 } }, {});
     }
 
@@ -94,15 +95,15 @@ export class Skill extends BWItem<SkillDataRoot> {
         }
 
         // if we're ready to assign the test, do that now.
-        if (this.data.data.learning) {
-            const progress = this.data.data.learningProgress;
-            let requiredTests = this.data.data.aptitude || 10;
-            let shade = getProperty(this.actor || {}, `data.data.${this.data.data.root1.toLowerCase()}`).shade;
+        if (this.system.learning) {
+            const progress = this.system.learningProgress;
+            let requiredTests = this.system.aptitude || 10;
+            let shade = getProperty(this.actor || {}, `system.${this.system.root1.toLowerCase()}`).shade;
         
             this.update({"data.learningProgress": progress + 1 }, {});
             if (progress + 1 >= requiredTests) {
-                if (this.data.data.root2 && this.actor) {
-                    const root2Shade = getProperty(this.actor, `data.data.${this.data.data.root2.toLowerCase()}`).shade;
+                if (this.system.root2 && this.actor) {
+                    const root2Shade = getProperty(this.actor, `system.${this.system.root2.toLowerCase()}`).shade;
                     if (shade != root2Shade) {
                         requiredTests -= 2;
                     }
@@ -131,30 +132,30 @@ export class Skill extends BWItem<SkillDataRoot> {
         else {
             switch (difficulty) {
                 case "Routine":
-                    if (this.data.data.routine < (this.data.data.routineNeeded || 0)) {
-                        this.data.data.routine ++;
-                        this.update({ "data.routine": this.data.data.routine }, {});
+                    if (this.system.routine < (this.system.routineNeeded || 0)) {
+                        this.system.routine ++;
+                        this.update({ "data.routine": this.system.routine }, {});
                     }
                     break;
                 case "Difficult":
-                    if (this.data.data.difficult < (this.data.data.difficultNeeded || 0)) {
-                        this.data.data.difficult ++;
-                        this.update({ "data.difficult": this.data.data.difficult }, {});
+                    if (this.system.difficult < (this.system.difficultNeeded || 0)) {
+                        this.system.difficult ++;
+                        this.update({ "data.difficult": this.system.difficult }, {});
                     }
                     break;
                 case "Challenging":
-                    if (this.data.data.challenging < (this.data.data.challengingNeeded || 0)) {
-                        this.data.data.challenging ++;
-                        this.update({ "data.challenging": this.data.data.challenging }, {});
+                    if (this.system.challenging < (this.system.challengingNeeded || 0)) {
+                        this.system.challenging ++;
+                        this.update({ "data.challenging": this.system.challenging }, {});
                     }
                     break;
                 case "Routine/Difficult":
-                    if (this.data.data.routine < (this.data.data.routineNeeded || 0)) {
-                        this.data.data.routine ++;
-                        this.update({ "data.routine": this.data.data.routine }, {});
-                    } else if (this.data.data.difficult < (this.data.data.difficultNeeded || 0)) {
-                        this.data.data.difficult ++;
-                        this.update({ "data.difficult": this.data.data.difficult }, {});
+                    if (this.system.routine < (this.system.routineNeeded || 0)) {
+                        this.system.routine ++;
+                        this.update({ "data.routine": this.system.routine }, {});
+                    } else if (this.system.difficult < (this.system.difficultNeeded || 0)) {
+                        this.system.difficult ++;
+                        this.update({ "data.difficult": this.system.difficult }, {});
                     }
                     break;
             }
@@ -175,12 +176,12 @@ export class Skill extends BWItem<SkillDataRoot> {
     get rootStatExp(): number {
         if (this.actor) {
             const actor = this.actor;
-            const root1exp = (actor.data.data[this.data.data.root1] as Ability).exp;
-            const root2exp = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).exp : root1exp;
+            const root1exp = (actor.system[this.system.root1] as Ability).exp;
+            const root2exp = this.system.root2 ? (actor.system[this.system.root2] as Ability).exp : root1exp;
             let exp = Math.floor((root1exp + root2exp) / 2);
-            if (this.data.data.root2) {
-                const root1Shade = (actor.data.data[this.data.data.root1] as Ability).shade;
-                const root2Shade = this.data.data.root2 ? (actor.data.data[this.data.data.root2] as Ability).shade : root1Shade;
+            if (this.system.root2) {
+                const root1Shade = (actor.system[this.system.root1] as Ability).shade;
+                const root2Shade = this.system.root2 ? (actor.system[this.system.root2] as Ability).shade : root1Shade;
                 if (root1Shade != root2Shade) {
                     exp ++;
                 }
@@ -191,18 +192,14 @@ export class Skill extends BWItem<SkillDataRoot> {
         }
     }
 
-    async _preUpdate(changed: Partial<SkillDataRoot>, options: FoundryDocument.ModificationContext, userId: string): Promise<void> {
+    async _preUpdate(changed: Partial<TypeMissing>, options: FoundryDocument.ModificationContext, userId: string): Promise<void> {
         await super._preUpdate(changed, options, userId);
 
-        if (changed.data?.skilltype && this.data.img === skillImages[this.data.data.skilltype]) {
+        if (changed.data?.skilltype && this.img === skillImages[this.system.skilltype]) {
             // we should update the image for this skill
             changed.img = skillImages[changed.data?.skilltype];
         }
     }
-}
-
-export interface SkillDataRoot extends BWItemData<SkillData> {
-    type: "skill";
 }
 
 export interface SkillData extends TracksTests, DisplayClass {

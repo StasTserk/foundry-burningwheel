@@ -1,20 +1,20 @@
-import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
+import { BWItem, DisplayClass, HasPointCost } from "./item.js";
 import { rollDice } from "../rolls/rolls.js";
 import { ShadeString } from "../helpers.js";
 
-export class Armor extends BWItem<ArmorRootData> {
+export class Armor extends BWItem<ArmorData> {
     prepareData(): void {
         super.prepareData();
-        this.data.data.cssClass = "equipment-armor";
+        this.system.cssClass = "equipment-armor";
 
-        const dice = this.data.data.dice;
-        this.data.data.helmDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageHelm);
-        this.data.data.torsoDisplayClass = this.calculateDisplayClass(dice+1, this.data.data.damageTorso);
-        this.data.data.leftArmDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageLeftArm);
-        this.data.data.rightArmDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageRightArm);
-        this.data.data.leftLegDisplayClass= this.calculateDisplayClass(dice, this.data.data.damageLeftLeg);
-        this.data.data.rightLegDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageRightLeg);
-        this.data.data.shieldDisplayClass = this.calculateDisplayClass(dice, this.data.data.damageShield);
+        const dice = this.system.dice;
+        this.system.helmDisplayClass = this.calculateDisplayClass(dice, this.system.damageHelm);
+        this.system.torsoDisplayClass = this.calculateDisplayClass(dice+1, this.system.damageTorso);
+        this.system.leftArmDisplayClass = this.calculateDisplayClass(dice, this.system.damageLeftArm);
+        this.system.rightArmDisplayClass = this.calculateDisplayClass(dice, this.system.damageRightArm);
+        this.system.leftLegDisplayClass= this.calculateDisplayClass(dice, this.system.damageLeftLeg);
+        this.system.rightLegDisplayClass = this.calculateDisplayClass(dice, this.system.damageRightLeg);
+        this.system.shieldDisplayClass = this.calculateDisplayClass(dice, this.system.damageShield);
     }
 
     calculateDisplayClass(dice: number, locationDice: string): string {
@@ -32,32 +32,28 @@ export class Armor extends BWItem<ArmorRootData> {
         const damage = parseInt(getProperty(this, `data.${locationAccessor}`)) || 0;
         const updateData = {};
         let newDamage = 0;
-        switch (this.data.data.quality) {
+        switch (this.system.quality) {
             case "run of the mill":
-                newDamage = Math.min(this.data.data.dice, damage + 1);                
+                newDamage = Math.min(this.system.dice, damage + 1);                
                 updateData[locationAccessor] = newDamage;
                 await this.update(updateData);
                 return new Promise(r => r(1));
             case "superior":
                 const reroll = await rollDice(num1s, false, "B");
                 if (reroll && reroll.dice[0].results.filter(r => r.result === 1).length) {
-                    newDamage = Math.min(this.data.data.dice, damage + 1);                
+                    newDamage = Math.min(this.system.dice, damage + 1);                
                     updateData[locationAccessor] = newDamage;
                     await this.update(updateData);
                     return new Promise(r => r(1));
                 }
                 return new Promise(r => r(0));
             default:
-                newDamage = Math.min(this.data.data.dice, damage + num1s);
+                newDamage = Math.min(this.system.dice, damage + num1s);
                 updateData[locationAccessor] = newDamage;
                 await this.update(updateData);
                 return new Promise(r => r(num1s));
         }
     }
-}
-
-export interface ArmorRootData extends BWItemData<ArmorData> {
-    type: "armor"
 }
 
 export interface ArmorData extends DisplayClass, HasPointCost {

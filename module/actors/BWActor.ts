@@ -1,17 +1,21 @@
 import { ShadeString, StringIndexedObject } from "../helpers.js";
-import { DisplayClass, ItemType, BWItemData, BWItem, BWItemDataTypes } from "../items/item.js";
-import { SkillDataRoot } from "../items/skill.js";
+import { DisplayClass, ItemType, BWItem, BWItemDataTypes } from "../items/item.js";
+import { SkillData } from "../items/skill.js";
 import * as constants from "../constants.js";
 import { Armor } from "../items/armor.js";
-import { PossessionRootData } from "../items/possession.js";
-import { ReputationDataRoot } from "../items/reputation.js";
-import { TraitDataRoot, Trait } from "../items/trait.js";
+import { PossessionData } from "../items/possession.js";
+import { ReputationData } from "../items/reputation.js";
+import { TraitData, Trait } from "../items/trait.js";
 import { BWCharacterData } from "./BWCharacter.js";
 import { NpcData } from "./Npc.js";
-import { AffiliationDataRoot } from "../items/affiliation.js";
+import { AffiliationData } from "../items/affiliation.js";
+import { MeleeWeaponData } from "../items/meleeWeapon.js";
+import { RangedWeaponData } from "../items/rangedWeapon.js";
+import { SpellData } from "../items/spell.js";
+import { TypeMissing } from "../../types/index.js";
 
-export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWItem> {
-    data: T;
+export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BWItem>{
+
 
     readonly batchAdd = {
         task: -1,
@@ -39,26 +43,26 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
             return;
         }
         if (item.type === "trait") {
-            const trait = item as TraitDataRoot;
-            if (trait.data.addsReputation) {
+            const trait = item as unknown as TraitData;
+            if (trait.addsReputation) {
                 const repData: NewItemData = {
-                    name: trait.data.reputationName,
+                    name: trait.reputationName,
                     type: "reputation",
                     img: constants.defaultImages.reputation
                 };
-                repData["data.dice"] = trait.data.reputationDice;
-                repData["data.infamous"] = trait.data.reputationInfamous;
-                repData["data.description"] = trait.data.text;
+                repData["data.dice"] = trait.reputationDice;
+                repData["data.infamous"] = trait.reputationInfamous;
+                repData["data.description"] = trait.text;
                 this.batchAddItem(repData);
             }
-            if (trait.data.addsAffiliation) {
+            if (trait.addsAffiliation) {
                 const repData: NewItemData = {
-                    name: trait.data.affiliationName,
+                    name: trait.affiliationName,
                     type: "affiliation",
                     img: constants.defaultImages.affiliation
                 };
-                repData["data.dice"] = trait.data.affiliationDice;
-                repData["data.description"] = trait.data.text;
+                repData["data.dice"] = trait.affiliationDice;
+                repData["data.description"] = trait.text;
                 this.batchAddItem(repData);
             }
         }
@@ -73,22 +77,22 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
     }
 
     getForkOptions(skillName: string): { name: string, amount: number }[] {
-        return this.data.forks.filter(s =>
+        return this.forks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillDataRoot).data.exp > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && (s as unknown as SkillData).exp > ((this.system.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
-                const exp = (s as unknown as SkillDataRoot).data.exp;
+                const exp = (s as unknown as SkillData).exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
     }
 
     getWildForks(skillName: string): { name: string, amount: number }[] {
-        return this.data.wildForks.filter(s =>
+        return this.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillDataRoot).data.exp > ((this.data.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && (s as unknown as SkillData).exp > ((this.system.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
-                const exp = (s as unknown as SkillDataRoot).data.exp;
+                const exp = (s as unknown as SkillData).exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
@@ -99,110 +103,110 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
         if (onlyNonZero && !modifier.dice && !modifier.obstacle) {
             return;
         }
-        if (this.data.rollModifiers[rollName]) {
-            this.data.rollModifiers[rollName].push(modifier);
+        if (this.rollModifiers[rollName]) {
+            this.rollModifiers[rollName].push(modifier);
         } else {
-            this.data.rollModifiers[rollName] = [modifier];
+            this.rollModifiers[rollName] = [modifier];
         }
     }
 
     getRollModifiers(rollName: string): RollModifier[] {
-        return (this.data.rollModifiers[rollName.toLowerCase()] || []).concat(this.data.rollModifiers.all || []);
+        return (this.rollModifiers[rollName.toLowerCase()] || []).concat(this.rollModifiers.all || []);
     }
 
     private _addAptitudeModifier(name: string, modifier: number) {
         name = name.toLowerCase();
-        if (Number.isInteger(this.data.aptitudeModifiers[name])) {
-            this.data.aptitudeModifiers[name] += modifier;
+        if (Number.isInteger(this.aptitudeModifiers[name])) {
+            this.aptitudeModifiers[name] += modifier;
         } else {
-            this.data.aptitudeModifiers[name] = modifier;
+            this.aptitudeModifiers[name] = modifier;
         }
     }
 
     getAptitudeModifiers(name = ""): number {
-        return this.data.aptitudeModifiers[name.toLowerCase()] || 0;
+        return this.aptitudeModifiers[name.toLowerCase()] || 0;
     }
 
     private _prepareActorData() {
-        this.data.rollModifiers = {};
-        this.data.callOns = {};
-        this.data.aptitudeModifiers = {};
+        this.rollModifiers = {};
+        this.callOns = {};
+        this.aptitudeModifiers = {};
         
         this._calculateClumsyWeight();
 
-        this.data.forks = [];
-        this.data.wildForks = [];
-        this.data.circlesBonus = [];
-        this.data.circlesMalus = [];
-        this.data.martialSkills = [];
-        this.data.socialSkills = [];
-        this.data.sorcerousSkills = [];
-        this.data.toolkits = [];
-        this.data.fightWeapons = [];
+        this.forks = [];
+        this.wildForks = [];
+        this.circlesBonus = [];
+        this.circlesMalus = [];
+        this.martialSkills = [];
+        this.socialSkills = [];
+        this.sorcerousSkills = [];
+        this.toolkits = [];
+        this.fightWeapons = [];
         
-        if (this.data.items) {
-            this.data.items.forEach(({ data }) => {
-                const i: BWItemData = data;
-                switch (i.type) {
+        if (this.items) {
+            this.items.forEach(({ system, name, type }) => {
+                const i: BWItemDataTypes = system;
+                switch (type) {
                     case "skill":
-                        if (!(i as SkillDataRoot).data.learning &&
-                            !(i as SkillDataRoot).data.training) {
-                            if ((i as SkillDataRoot).data.wildFork) {
-                                this.data.wildForks.push(i as SkillDataRoot);
+                        if (!(i as SkillData).learning &&
+                            !(i as SkillData).training) {
+                            if ((i as SkillData).wildFork) {
+                                this.wildForks.push(i as SkillData);
                             } else {
-                                this.data.forks.push(i as SkillDataRoot);
+                                this.forks.push(i as SkillData);
                             }
                         }
-                        if ((i as SkillDataRoot).data.skilltype === "martial" &&
-                            !(i as SkillDataRoot).data.training) {
-                            this.data.martialSkills.push(i as SkillDataRoot);
-                        } else if ((i as SkillDataRoot).data.skilltype === "sorcerous") {
-                            this.data.sorcerousSkills.push(i as SkillDataRoot);
-                        } else if ((i as SkillDataRoot).data.skilltype === "social") {
-                            this.data.socialSkills.push(i as SkillDataRoot);
+                        if ((i as SkillData).skilltype === "martial" &&
+                            !(i as SkillData).training) {
+                            this.martialSkills.push(i as SkillData);
+                        } else if ((i as SkillData).skilltype === "sorcerous") {
+                            this.sorcerousSkills.push(i as SkillData);
+                        } else if ((i as SkillData).skilltype === "social") {
+                            this.socialSkills.push(i as SkillData);
                         }
                         break;
                     case "reputation":
-                        const rep = i as ReputationDataRoot;
-                        if (rep.data.infamous) {
-                            this.data.circlesMalus.push({ name: rep.name, amount: rep.data.dice });
+                        const rep = i as ReputationData;
+                        if (rep.infamous) {
+                            this.circlesMalus.push({ name: name, amount: rep.dice });
                         } else {
-                            this.data.circlesBonus.push({ name: rep.name, amount: rep.data.dice });
+                            this.circlesBonus.push({ name: name, amount: rep.dice });
                         }
                         break;
                     case "affiliation":
-                        this.data.circlesBonus.push({ name: i.name, amount: (i as AffiliationDataRoot).data.dice });
+                        this.circlesBonus.push({ name: name, amount: (i as AffiliationData).dice });
                         break;
                     case "trait":
-                        const t = i as TraitDataRoot;
-                        if (t.data.traittype === "die") {
-                            if (t.data.hasDieModifier && t.data.dieModifierTarget) {
-                                t.data.dieModifierTarget.split(',').forEach(target =>
-                                    this._addRollModifier(target.trim(), Trait.asRollDieModifier(t)));
+                        const t = i as TraitData;
+                        if (t.traittype === "die") {
+                            if (t.hasDieModifier && t.dieModifierTarget) {
+                                t.dieModifierTarget.split(',').forEach(target =>
+                                    this._addRollModifier(target.trim(), Trait.asRollDieModifier(name, t)));
                             }
-                            if (t.data.hasObModifier && t.data.obModifierTarget) {
-                                t.data.obModifierTarget.split(',').forEach(target =>
-                                    this._addRollModifier(target.trim(), Trait.asRollObModifier(t)));
+                            if (t.hasObModifier && t.obModifierTarget) {
+                                t.obModifierTarget.split(',').forEach(target =>
+                                    this._addRollModifier(target.trim(), Trait.asRollObModifier(name, t)));
                             }
-                        } if (t.data.traittype === "call-on") {
-                            if (t.data.callonTarget) {
-                                this._addCallon(t.data.callonTarget, t.name);
+                        } if (t.traittype === "call-on") {
+                            if (t.callonTarget) {
+                                this._addCallon(t.callonTarget, name);
                             }
                         }
-                        if (t.data.hasAptitudeModifier) {
-                            t.data.aptitudeTarget.split(',').forEach((target) =>
-                                this._addAptitudeModifier(target.trim(), t.data.aptitudeModifier));
+                        if (t.hasAptitudeModifier) {
+                            t.aptitudeTarget.split(',').forEach((target) =>
+                                this._addAptitudeModifier(target.trim(), t.aptitudeModifier));
                         }
                         break;
                     case "possession":
-                        if ((i as PossessionRootData).data.isToolkit) {
-                            this.data.toolkits.push(i as PossessionRootData);
+                        if ((i as PossessionData).isToolkit) {
+                            this.toolkits.push(i as PossessionData);
                         }
                         break;
                     case "spell":
                     case "melee weapon":
                     case "ranged weapon":
-                        this.data.fightWeapons.push(i);
+                        this.fightWeapons.push(i as SpellData | MeleeWeaponData | RangedWeaponData);
                         break;
                 }
             });
@@ -211,24 +215,24 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
 
     private _addCallon(callonTarget: string, name: string) {
         callonTarget.split(',').forEach(s => {
-            if (this.data.callOns[s.trim().toLowerCase()]) {
-                this.data.callOns[s.trim().toLowerCase()].push(name);
+            if (this.callOns[s.trim().toLowerCase()]) {
+                this.callOns[s.trim().toLowerCase()].push(name);
             }
             else {
-                this.data.callOns[s.trim().toLowerCase()] = [name];
+                this.callOns[s.trim().toLowerCase()] = [name];
             }
         });
 
     }
 
     getCallons(roll: string): string[] {
-        return this.data.callOns[roll.toLowerCase()] || [];
+        return this.callOns[roll.toLowerCase()] || [];
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     _onCreate(data: any, options: any, userId: string): void {
         super._onCreate(data, options, userId);
-        if (this.data.items.contents.length) {
+        if (this.system.items.contents.length) {
             return; // this is most likely a duplicate of an existing actor. we don't need to add default items.
         }
         if (game.userId !== userId) {
@@ -250,16 +254,16 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
         );
     }
 
-    async _preCreate(actor: Partial<T>, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {
-        await super._preCreate(actor, _options, user);
+    async _preCreate(actor: Partial<T> & TypeMissing, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {
+        await super._preCreate(actor as TypeMissing, _options, user);
         if (actor.type === 'character' || actor.type === 'npc') {
-            this.data.token.update({
+            this.system.token.update({
                 disposition: CONST.TOKEN_DISPOSITIONS.NEUTRAL,
                 vision: true
             });
         }
         if (actor.type === 'character' || actor.type === 'setting') {
-            this.data.token.update({
+            this.system.token.update({
                 actorLink: true,
                 disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY
             });
@@ -281,46 +285,46 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
             untrainedAll: 0
         };
 
-        const charData = this.data.type === "character" ? this.data.data as BWCharacterData : undefined;
+        const charData = this.system.type === "character" ? this.system.data as BWCharacterData : undefined;
 
-        this.data.items.filter<Armor>(i => (i.type === "armor" && i.data.data.equipped))
-            .forEach(i => {
-            const a = i.data;
-            if (a.data.hasHelm) {
+        this.items.filter((i: BWItem) => (i.type === "armor" && (i as Armor).system.equipped))
+            .forEach((i: Armor) => {
+            const a = i.system;
+            if (a.system.hasHelm) {
                     clumsyWeight.helmetObPenalty = a.data.perceptionObservationPenalty || 0;
             }
-            if (a.data.hasTorso) {
+            if (a.system.hasTorso) {
                 clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
-                    a.data.healthFortePenalty || 0);
+                    a.system.healthFortePenalty || 0);
                 clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
-                    a.data.stealthyPenalty || 0);
+                    a.system.stealthyPenalty || 0);
             }
-            if (a.data.hasLeftArm || a.data.hasRightArm) {
+            if (a.system.hasLeftArm || a.system.hasRightArm) {
                 clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
-                    a.data.agilityPenalty || 0);
+                    a.system.agilityPenalty || 0);
                 clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
-                    a.data.throwingShootingPenalty || 0);
+                    a.system.throwingShootingPenalty || 0);
             }
-            if (a.data.hasLeftLeg || a.data.hasRightLeg) {
+            if (a.system.hasLeftLeg || a.system.hasRightLeg) {
                 clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
-                    a.data.speedDiePenalty || 0);
+                    a.system.speedDiePenalty || 0);
                 clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
-                    a.data.speedObPenalty || 0);
+                    a.system.speedObPenalty || 0);
                 clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
-                    a.data.climbingPenalty || 0);
+                    a.system.climbingPenalty || 0);
             }
 
 
             if (charData && !charData.settings.armorTrained &&
-                (a.data.hasHelm || a.data.hasLeftArm || a.data.hasRightArm || a.data.hasTorso || a.data.hasLeftLeg || a.data.hasRightLeg)) {
+                (a.system.hasHelm || a.system.hasLeftArm || a.system.hasRightArm || a.system.hasTorso || a.system.hasLeftLeg || a.system.hasRightLeg)) {
                 // if this is more than just a shield
-                if (a.data.untrainedPenalty === "plate") {
+                if (a.system.untrainedPenalty === "plate") {
                     clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 2);
                     clumsyWeight.untrainedHealth = 0;
-                } else if (a.data.untrainedPenalty === "heavy") {
+                } else if (a.system.untrainedPenalty === "heavy") {
                     clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 1);
                     clumsyWeight.untrainedHealth = 0;
-                } else if (a.data.untrainedPenalty === "light" && clumsyWeight.untrainedAll === 0) {
+                } else if (a.system.untrainedPenalty === "light" && clumsyWeight.untrainedAll === 0) {
                     clumsyWeight.untrainedHealth = 1;
                 }
             }
@@ -360,17 +364,36 @@ export class BWActor<T extends BWActorData = BWActorData> extends Actor<T, BWIte
 
     public updateArthaForSkill(_skillId: string, persona: number, deeds: number): void {
         const updateData = {};
-        updateData["data.deeds"] = this.data.data.deeds - (deeds ? 1 : 0);
-        updateData["data.persona"] = this.data.data.persona - persona;
+        updateData["data.deeds"] = this.system.data.deeds - (deeds ? 1 : 0);
+        updateData["data.persona"] = this.system.data.persona - persona;
         this.update(updateData);
     }
 
     public updateArthaForStat(accessor: string, persona: number, deeds: number): void {
         const updateData = {};
-        updateData["data.deeds"] = this.data.data.deeds - (deeds ? 1 : 0);
-        updateData["data.persona"] = this.data.data.persona - persona;
+        updateData["data.deeds"] = this.system.data.deeds - (deeds ? 1 : 0);
+        updateData["data.persona"] = this.system.data.persona - persona;
         this.update(updateData);
     }
+
+    aptitudeModifiers: StringIndexedObject<number>;
+    toolkits: PossessionData[];
+    martialSkills: SkillData[];
+    socialSkills: SkillData[];
+    sorcerousSkills: SkillData[];
+    wildForks: SkillData[];
+
+    circlesMalus: { name: string, amount: number }[];
+    circlesBonus: { name: string, amount: number }[];
+    items: DocumentCollection<BWItem>;
+    forks: SkillData[];
+    rollModifiers: { [rollName:string]: RollModifier[]; };
+    callOns: { [rollName:string]: string[] };
+    successOnlyRolls: string[];
+
+    fightWeapons: (MeleeWeaponData | RangedWeaponData | SpellData)[];
+
+    type: "character" | "npc" | "setting";
 }
 
 export interface Common {
@@ -401,29 +424,6 @@ export interface Common {
     fate: number;
     persona: number;
     deeds: number;
-}
-
-export interface BWActorData<T extends Common = Common> extends Actor.Data<T, BWItem> {
-    aptitudeModifiers: StringIndexedObject<number>;
-    toolkits: PossessionRootData[];
-    martialSkills: SkillDataRoot[];
-    socialSkills: SkillDataRoot[];
-    sorcerousSkills: SkillDataRoot[];
-    wildForks: SkillDataRoot[];
-
-    circlesMalus: { name: string, amount: number }[];
-    circlesBonus: { name: string, amount: number }[];
-    items: DocumentCollection<BWItem>;
-    forks: SkillDataRoot[];
-    rollModifiers: { [rollName:string]: RollModifier[]; };
-    callOns: { [rollName:string]: string[] };
-    successOnlyRolls: string[];
-
-    fightWeapons: BWItemData[];
-
-    type: "character" | "npc" | "setting";
-
-    data: T
 }
 
 export interface Ability extends TracksTests, DisplayClass {

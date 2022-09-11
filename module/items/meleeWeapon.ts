@@ -1,35 +1,36 @@
-import { BWItem, BWItemData, DisplayClass, HasPointCost } from "./item.js";
+import { BWItem, DisplayClass, HasPointCost } from "./item.js";
 import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
 import { translateWoundValue } from "../helpers.js";
-import { BWActorData } from "../actors/BWActor.js";
+import { BWActor } from "../actors/BWActor.js";
 
-export class MeleeWeapon extends BWItem<MeleeWeaponRootData> {
+export class MeleeWeapon extends BWItem<MeleeWeaponData> {
+    type: 'melee weapon';
     prepareData(): void {
         super.prepareData();
-        const actorData = this.actor && this.actor.data as unknown as BWActorData;
-        if (actorData) {
-            let power = actorData.data.power.exp;
-            if (actorData.data.power.shade === "G") {
+        const actorData = this.actor as unknown as BWActor;
+        if (actorData && actorData.system) {
+            let power = actorData.system.power.exp;
+            if (actorData.system.power.shade === "G") {
                 power += 2;
             }
-            if (actorData.data.power.shade === "W") {
+            if (actorData.system.power.shade === "W") {
                 power += 3;
             }
-            Object.values(this.data.data.attacks || []).forEach(ad => {
+            Object.values(this.system.attacks || []).forEach(ad => {
                 const baseDmg = power + ad.power;
                 ad.incidental = Math.ceil(baseDmg / 2);
                 ad.mark = baseDmg;
                 ad.superb = Math.floor(baseDmg * 1.5);
             });
         }
-        this.data.data.cssClass = "equipment-weapon";
+        this.system.cssClass = "equipment-weapon";
     }
 
     async getWeaponMessageData(attackIndex: number): Promise<string> {
         const element = document.createElement("div");
         element.className = "weapon-extra-info";
-        element.appendChild(helpers.DivOfText(`${this.name} ${this.data.data.attacks[attackIndex].attackName}`, "ims-title shade-black"));
+        element.appendChild(helpers.DivOfText(`${this.name} ${this.system.attacks[attackIndex].attackName}`, "ims-title shade-black"));
         element.appendChild(helpers.DivOfText("I", "ims-header"));
         element.appendChild(helpers.DivOfText("M", "ims-header"));
         element.appendChild(helpers.DivOfText("S", "ims-header"));
@@ -37,20 +38,15 @@ export class MeleeWeapon extends BWItem<MeleeWeaponRootData> {
         element.appendChild(helpers.DivOfText("Va", "ims-header"));
         element.appendChild(helpers.DivOfText("Length", "ims-header"));
     
-        element.appendChild(helpers.DivOfText(translateWoundValue(this.data.data.shade, this.data.data.attacks[attackIndex].incidental || 1)));
-        element.appendChild(helpers.DivOfText(translateWoundValue(this.data.data.shade, this.data.data.attacks[attackIndex].mark || 1)));
-        element.appendChild(helpers.DivOfText(translateWoundValue(this.data.data.shade, this.data.data.attacks[attackIndex].superb || 1)));
-        element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].add));
-        element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].vsArmor));
-        element.appendChild(helpers.DivOfText(this.data.data.attacks[attackIndex].weaponLength.titleCase()));
+        element.appendChild(helpers.DivOfText(translateWoundValue(this.system.shade, this.system.attacks[attackIndex].incidental || 1)));
+        element.appendChild(helpers.DivOfText(translateWoundValue(this.system.shade, this.system.attacks[attackIndex].mark || 1)));
+        element.appendChild(helpers.DivOfText(translateWoundValue(this.system.shade, this.system.attacks[attackIndex].superb || 1)));
+        element.appendChild(helpers.DivOfText(this.system.attacks[attackIndex].add));
+        element.appendChild(helpers.DivOfText(this.system.attacks[attackIndex].vsArmor));
+        element.appendChild(helpers.DivOfText(this.system.attacks[attackIndex].weaponLength.titleCase()));
         return element.outerHTML;
     }
 
-    data: MeleeWeaponRootData;
-}
-
-export interface MeleeWeaponRootData extends BWItemData<MeleeWeaponData> {
-    data: MeleeWeaponData;
 }
 
 export interface MeleeWeaponData extends DisplayClass, HasPointCost {

@@ -1,7 +1,8 @@
 import { BWItem } from "../../items/item.js";
-import { Lifepath, LifepathRootData } from "../../items/lifepath.js";
+import { Lifepath } from "../../items/lifepath.js";
 import { BWSetting, SettingData } from "../BWSetting.js";
 import * as helpers from "../../helpers.js";
+import { TypeMissing } from "../../../types/index.js";
 
 export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
     get template(): string {
@@ -21,7 +22,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
         return {
             actor: this.actor,
             data: this.actor.data.data,
-            lifepaths: (Array.from(this.actor.items.values()) as Lifepath[]).map(i => i.data).sort((a, b) => a.data.order - b.data.order),
+            lifepaths: (Array.from(this.actor.items.values()) as Lifepath[]).map(i => i).sort((a, b) => a.system.order - b.system.order),
             editable: this.isEditable
         };
     }
@@ -35,7 +36,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
                 actorId: actor.id,
                 id: item.id,
                 type: "Item",
-                data: item.data,
+                data: item,
                 pack: actor.compendium ? actor.compendium.collection : undefined
             };
 
@@ -125,21 +126,21 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
             await item.update({ "data.order": index }, {});
         } else {
             // we need to get the item data and add it to the setting sheet
-            let itemData: LifepathRootData | undefined;
+            let itemData: Lifepath | undefined;
             if (dragData.data) {
-                itemData = dragData.data as LifepathRootData;
+                itemData = dragData.data as Lifepath;
             } else if (dragData.pack) {
-                itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as CompendiumCollection).getDocument(dragData.id || ""))?.data as LifepathRootData;
+                itemData = (await (game.packs?.find(p => p.collection === dragData.pack) as CompendiumCollection).getDocument(dragData.id || "")) as Lifepath;
             } else if (dragData.actorId) {
-                itemData = (game.actors?.find((a: FoundryDocument) => a.id === dragData.actorId))?.items.get(dragData.id || "")?.data as LifepathRootData;
+                itemData = (game.actors?.find((a: FoundryDocument) => a.id === dragData.actorId))?.items.get(dragData.id || "") as Lifepath;
             } else {
-                itemData = game.items?.find((i: BWItem) => i.id === dragData.id)?.data as LifepathRootData;
+                itemData = game.items?.find((i: BWItem) => i.id === dragData.id) as Lifepath;
             }
 
             // if our item is actually a lifepath we need to add it, otherwise abort.
             if (itemData.type === "lifepath") {
-                itemData.data.order = index;
-                await this.actor.createEmbeddedDocuments("Item", [itemData]);
+                itemData.system.order = index;
+                await this.actor.createEmbeddedDocuments("Item", [itemData as TypeMissing]);
             } else {
                 return;
             }
@@ -167,6 +168,6 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
 export interface BWSettingSheetData {
     actor: BWSetting;
     data: SettingData;
-    lifepaths: LifepathRootData[];
+    lifepaths: Lifepath[];
     editable: boolean;
 }

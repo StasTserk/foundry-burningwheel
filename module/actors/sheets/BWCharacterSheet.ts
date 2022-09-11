@@ -6,15 +6,15 @@ import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
 import { addNewItem } from "../../dialogs/ImportItemDialog.js";
 import { BWCharacter, BWCharacterData } from "../BWCharacter.js";
 import { byName } from "../../helpers.js";
-import { ArmorRootData } from "../../items/armor.js";
-import { MeleeWeaponRootData, MeleeWeaponData } from "../../items/meleeWeapon.js";
-import { RangedWeaponRootData } from "../../items/rangedWeapon.js";
-import { RelationshipData } from "../../items/relationship.js";
-import { ReputationDataRoot } from "../../items/reputation.js";
-import { SkillDataRoot, Skill } from "../../items/skill.js";
-import { SpellDataRoot, Spell } from "../../items/spell.js";
-import { TraitDataRoot, Trait } from "../../items/trait.js";
-import { BWItemData } from "../../items/item.js";
+import { Armor } from "../../items/armor.js";
+import { MeleeWeapon } from "../../items/meleeWeapon.js";
+import { RangedWeapon } from "../../items/rangedWeapon.js";
+import { Relationship } from "../../items/relationship.js";
+import { Reputation } from "../../items/reputation.js";
+import { SkillData, Skill } from "../../items/skill.js";
+import { Spell } from "../../items/spell.js";
+import { TraitData, Trait } from "../../items/trait.js";
+import { BWItem } from "../../items/item.js";
 
 export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharacter, ActorSheetOptions> {
     get actor(): BWCharacter {
@@ -53,63 +53,62 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
     
     getData(): CharacterSheetData {
         const data = super.getData() as CharacterSheetData;
-        const woundDice = this.actor.data.data.ptgs.woundDice;
+        const woundDice = this.actor.system.ptgs.woundDice;
         const items = this.actor.items.values();
 
-        const beliefs: Item.Data[] = [];
-        const instincts: Item.Data[] = [];
-        const traits: Item.Data[] = [];
-        const skills: SkillDataRoot[] = [];
-        const training: SkillDataRoot[] = [];
-        const learning: SkillDataRoot[] = [];
-        const relationships: Item.Data<RelationshipData>[] = [];
-        const equipment: Item.Data[] = [];
-        const melee: MeleeWeaponRootData[] = [];
-        const ranged: RangedWeaponRootData[] = [];
-        const armor: ArmorRootData[] = [];
-        const reps: ReputationDataRoot[] = [];
-        const affs: Item.Data[] = [];
-        const spells: SpellDataRoot[] = [];
+        const beliefs: BWItem[] = [];
+        const instincts: BWItem[] = [];
+        const traits: BWItem[] = [];
+        const skills: Skill[] = [];
+        const training: Skill[] = [];
+        const learning: Skill[] = [];
+        const relationships: Relationship[] = [];
+        const equipment: BWItem[] = [];
+        const melee: MeleeWeapon[] = [];
+        const ranged: RangedWeapon[] = [];
+        const armor: Armor[] = [];
+        const reps: Reputation[] = [];
+        const affs: BWItem[] = [];
+        const spells: Spell[] = [];
 
         let addFist = true; // do we need to add a fist weapon?
-        for (const value of items) {
-            const i = value.data as BWItemData;
+        for (const i of items) {
             switch(i.type) {
-                case "reputation": reps.push(i as ReputationDataRoot); break;
+                case "reputation": reps.push(i as Reputation); break;
                 case "affiliation": affs.push(i); break;
                 case "belief": beliefs.push(i); break;
                 case "instinct": instincts.push(i); break;
                 case "trait": traits.push(i); break;
                 case "skill":
-                    const s = i as SkillDataRoot;
-                    if (s.data.learning) {
-                        learning.push(s);
-                    } else if (s.data.training) {
-                        training.push(s);
+                    const s = i.system as SkillData;
+                    if (s.learning) {
+                        learning.push(i as Skill);
+                    } else if (s.training) {
+                        training.push(i as Skill);
                     } else {
-                        skills.push(s);
+                        skills.push(i as Skill);
                     }
                     Skill.disableIfWounded.call(i, woundDice);
                     break;
-                case "relationship": relationships.push(i as Item.Data<RelationshipData>); break;
+                case "relationship": relationships.push(i as Relationship); break;
                 case "melee weapon":
                     if (addFist && i.name === "Bare Fist") {
                         addFist = false; // only add one fist weapon if none present
                     } else {
                         equipment.push(i); // don't count fists as equipment
                     }
-                    melee.push(i as MeleeWeaponRootData);
+                    melee.push(i as MeleeWeapon);
                     break;
                 case "ranged weapon":
                     equipment.push(i);
-                    ranged.push(i as RangedWeaponRootData);
+                    ranged.push(i as RangedWeapon);
                     break;
                 case "armor":
                     equipment.push(i);
-                    armor.push(i as ArmorRootData);
+                    armor.push(i as Armor);
                     break;
                 case "spell":
-                    spells.push(i as SpellDataRoot);
+                    spells.push(i as Spell);
                     break;
                 default:
                     equipment.push(i);
@@ -134,7 +133,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
 
         if (traits.length !== 0) {
             traits.forEach((trait) => {
-                switch ((trait as unknown as TraitDataRoot).data.traittype) {
+                switch ((trait as unknown as TraitData).traittype) {
                     case "character": traitLists.character.push(trait); break;
                     case "die": traitLists.die.push(trait); break;
                     default: traitLists.callon.push(trait); break;
@@ -303,14 +302,14 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
     }
 }
 
-function equipmentCompare(a: Item.Data, b: Item.Data): number {
+function equipmentCompare(a: BWItem, b: BWItem): number {
     if (constants.equipmentSheetOrder[a.type] !== constants.equipmentSheetOrder[b.type]) {
         return constants.equipmentSheetOrder[a.type] > constants.equipmentSheetOrder[b.type] ? 1 : -1;
     }
     return a.name.localeCompare(b.name);
 }
 
-function weaponCompare(a: Item.Data, b: Item.Data): number {
+function weaponCompare(a: { name: string }, b: { name: string }): number {
     if (a.name === "Bare Fist") {
         return -1;
     }
@@ -321,26 +320,26 @@ function weaponCompare(a: Item.Data, b: Item.Data): number {
 }
 
 interface CharacterSheetData extends BaseActorSheetData<BWCharacterData> {
-    reputations: Item.Data[];
-    affiliations: Item.Data[];
-    equipment: Item.Data[];
-    melee: MeleeWeaponRootData[];
-    fistStats: MeleeWeaponData;
-    armor: { [key: string]: Item.Data | null}; // armor/location dictionary
-    ranged: RangedWeaponRootData[];
-    relationships: Item.Data<RelationshipData>[];
-    beliefs: Item.Data[];
-    instincts: Item.Data[];
-    skills: SkillDataRoot[];
-    learning: SkillDataRoot[];
-    spells: SpellDataRoot[];
-    training: SkillDataRoot[];
+    reputations: BWItem[];
+    affiliations: BWItem[];
+    equipment: BWItem[];
+    melee: MeleeWeapon[];
+    fistStats: MeleeWeapon;
+    armor: { [key: string]: Armor | null}; // armor/location dictionary
+    ranged: RangedWeapon[];
+    relationships: Relationship[];
+    beliefs: BWItem[];
+    instincts: BWItem[];
+    skills: Skill[];
+    learning: Skill[];
+    spells: Spell[];
+    training: Skill[];
     traits: CharacterSheetTraits;
     systemVersion: string;
 }
 
 interface CharacterSheetTraits {
-    character: Item.Data[];
-    die: Item.Data[];
-    callon: Item.Data[];
+    character: BWItem[];
+    die: BWItem[];
+    callon: BWItem[];
 }

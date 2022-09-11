@@ -1,10 +1,11 @@
 import { BWActor } from "../BWActor.js";
-import { ArmorRootData } from "../../items/armor.js";
+import { Armor } from "../../items/armor.js";
 import * as constants from "../../constants.js";
 import * as helpers from "../../helpers.js";
 import { BWItem } from "../../items/item.js";
 import { NpcData } from "../Npc.js";
 import { BWCharacterData } from "../BWCharacter.js";
+import { TypeMissing } from "../../../types/index.js";
 
 export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O extends ActorSheetOptions> extends ActorSheet<T, A, O> {
     private _keyDownHandler = this._handleKeyPress.bind(this);
@@ -25,9 +26,9 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         super.getData();
         return {
             actor: this.actor,
-            data: this.actor.data.data,
-            isObserver: this.actor.permission >= CONST.ENTITY_PERMISSIONS.OBSERVER,
-            isOwner: this.actor.permission >= CONST.ENTITY_PERMISSIONS.OWNER,
+            data: this.actor.system,
+            isObserver: this.actor.permission >= (CONST as TypeMissing).DOCUMENT_PERMISSION_LEVELS.OBSERVER,
+            isOwner: this.actor.permission >= (CONST as TypeMissing).DOCUMENT_PERMISSION_LEVELS.OWNER,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any;
     }
@@ -47,7 +48,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
                     actorId: actor.id,
                     id: item.id,
                     type: "Item",
-                    data: item.data,
+                    data: item,
                     pack: actor.compendium ? actor.compendium.collection : undefined
                 };
 
@@ -173,11 +174,11 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         if (item) { item.update(updateParams, {}); }
     }
 
-    getArmorDictionary(armorItems: Item.Data[]): { [key: string]: Item.Data | null; } {
-        let armorLocs: { [key: string]: ArmorRootData | null; } = {};
+    getArmorDictionary(armorItems: Armor[]): { [key: string]: Armor | null; } {
+        let armorLocs: { [key: string]: Armor | null; } = {};
         constants.armorLocations.forEach(al => armorLocs[al] = null); // initialize locations
         armorItems.forEach(i =>
-            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i as ArmorRootData)}
+            armorLocs = { ...armorLocs, ...helpers.getArmorLocationDataFromItem(i)}
         );
         return armorLocs;
     }

@@ -12,21 +12,21 @@
     <div class="weapon-header">~</div>
 
     {{#each melee as |m|}}
-        {{#each m.data.attacks as |a|}}
+        {{#each m.system.attacks as |a|}}
         <div class="weapon-row weapon-name" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" {{#if ../../isOwner}}draggable="true"{{/if}}>
             {{../name}}{{#if a.attackName}} {{a.attackName}}{{/if}}
         </div>
-        <div class="weapon-row">{{clampWound ../data.shade a.incidental}}</div>
-        <div class="weapon-row">{{clampWound ../data.shade a.mark}}</div>
-        <div class="weapon-row">{{clampWound ../data.shade a.superb}}</div>
+        <div class="weapon-row">{{clampWound ../system.shade a.incidental}}</div>
+        <div class="weapon-row">{{clampWound ../system.shade a.mark}}</div>
+        <div class="weapon-row">{{clampWound ../system.shade a.superb}}</div>
         <div class="weapon-row">{{a.power}}</div>
         <div class="weapon-row">{{a.add}}</div>
         <div class="weapon-row">{{a.vsArmor}}</div>
         <div class="weapon-row">{{a.weaponSpeed}}</div>
         <div class="weapon-row">{{titlecase a.weaponLength}}</div>
         <div class="weapon-row">
-            <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="data.skillId" value="{{../data.skillId}}">
-                {{#select ../data.skillId}}
+            <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="system.skillId" value="{{../system.skillId}}">
+                {{#select ../system.skillId}}
                 <option value="">None</option>
                 {{#each ../../skills as |s|}}
                 <option value="{{s._id}}">{{s.name}}</option>
@@ -39,7 +39,7 @@
                 type="button"
                 class="rollable modifiable"
                 data-roll-type="weapon"
-                data-skill-id="{{../data.skillId}}"
+                data-skill-id="{{../system.skillId}}"
                 data-weapon-id="{{../_id}}"
                 data-attack-index="{{@key}}"
                 {{#if ../../isOwner}}draggable="true"{{/if}}
@@ -65,15 +65,15 @@
     <div class="weapon-row weapon-name" data-roll-type="weapon" data-weapon-id="{{r._id}}" {{#if ../isOwner}}draggable="true"{{/if}}>
         {{r.name}}
     </div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.incidental}}</div><label class="weapon-dof">{{r.data.incidentalLabel}}</label></div></div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.mark}}</div><label class="weapon-dof">{{r.data.markLabel}}</label></div></div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.data.shade r.data.superb}}</div><label class="weapon-dof">{{r.data.superbLabel}}</label></div></div>
-    <div class="weapon-row">{{r.data.optimalRange}}D</div>
-    <div class="weapon-row">{{r.data.extremeRange}}D</div>
-    <div class="weapon-row">{{titlecase r.data.maxRange}}</div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.incidental}}</div><label class="weapon-dof">{{r.system.incidentalLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.mark}}</div><label class="weapon-dof">{{r.system.markLabel}}</label></div></div>
+    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.superb}}</div><label class="weapon-dof">{{r.system.superbLabel}}</label></div></div>
+    <div class="weapon-row">{{r.system.optimalRange}}D</div>
+    <div class="weapon-row">{{r.system.extremeRange}}D</div>
+    <div class="weapon-row">{{titlecase r.system.maxRange}}</div>
     <div class="weapon-row">
-        <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="data.skillId" value="{{r.data.skillId}}">
-            {{#select r.data.skillId}}
+        <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="system.skillId" value="{{r.system.skillId}}">
+            {{#select r.system.skillId}}
             <option value="">None</option>
             {{#each ../skills as |s|}}
             <option value="{{s._id}}">{{s.name}}</option>
@@ -86,7 +86,7 @@
                 type="button"
                 class="rollable modifiable"
                 data-roll-type="weapon"
-                data-skill-id="{{r.data.skillId}}"
+                data-skill-id="{{r.system.skillId}}"
                 data-weapon-id="{{r._id}}"
                 {{#if ../isOwner}}draggable="true"{{/if}}
                 >

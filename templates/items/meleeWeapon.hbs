@@ -8,8 +8,8 @@
     <h2>Stats</h2>
     <div class="item-form-group">
         <label for="{{item.id}}-select-shade" class="item-setting-label">Shade</label>
-        <select id="{{item.id}}-select-shade" name="data.shade" value="{{data.shade}}">
-            {{#select data.shade}}
+        <select id="{{item.id}}-select-shade" name="system.shade" value="{{system.shade}}">
+            {{#select system.shade}}
             <option value="B">Black</option>
             <option value="G">Grey</option>
             <option value="W">White</option>
@@ -17,8 +17,8 @@
         </select>
 
         <label for="{{item.id}}-select-quality" class="item-setting-label">Weapon Quality</label>
-        <select id="{{item.id}}-select-quality" name="data.quality" value="{{data.quality}}">
-            {{#select data.quality}}
+        <select id="{{item.id}}-select-quality" name="system.quality" value="{{system.quality}}">
+            {{#select system.quality}}
             {{#each weaponQualities as |title value|}}
             <option value="{{value}}">{{title}}</option>
             {{/each}}
@@ -26,15 +26,15 @@
         </select>
 
         <label for="{{item.id}}-select-handedness" class="item-setting-label">Handedness</label>
-        <select id="{{item.id}}-select-handedness" name="data.handedness" value="{{data.handedness}}">
-            {{#select data.handedness}}
+        <select id="{{item.id}}-select-handedness" name="system.handedness" value="{{system.handedness}}">
+            {{#select system.handedness}}
             <option value="one">One-handed</option>
             <option value="two">Two-handed</option>
             {{/select}}
         </select>
             
         <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
-        <input id="{{item.id}}-point-cost" type="number" name="data.pointCost" value="{{data.pointCost}}" class="exponent no-arrows wide" data-dtype="Number">
+        <input id="{{item.id}}-point-cost" type="number" name="system.pointCost" value="{{system.pointCost}}" class="exponent no-arrows wide" data-dtype="Number">
     </div>
     
     <hr/>
@@ -47,12 +47,12 @@
         <div class="attack-grid-header">Ws</div>
         <div class="attack-grid-header">Length</div>
         <div><i class="fas fa-plus"></i></div>
-        {{#each data.attacks}}
-            <input type="text" name="data.attacks.{{@key}}.attackName" value="{{this.attackName}}" placeholder="Default">
-            <input type="number" class="exponent" name="data.attacks.{{@key}}.power" value="{{this.power}}" data-dtype="Number">
-            <input type="number" class="exponent" name="data.attacks.{{@key}}.add" value="{{this.add}}" data-dtype="Number">
-            <input type="number" class="exponent" name="data.attacks.{{@key}}.vsArmor" value="{{this.vsArmor}}" data-dtype="Number">
-            <select name="data.attacks.{{@key}}.weaponSpeed">
+        {{#each system.attacks}}
+            <input type="text" name="system.attacks.{{@key}}.attackName" value="{{this.attackName}}" placeholder="Default">
+            <input type="number" class="exponent" name="system.attacks.{{@key}}.power" value="{{this.power}}" data-dtype="Number">
+            <input type="number" class="exponent" name="system.attacks.{{@key}}.add" value="{{this.add}}" data-dtype="Number">
+            <input type="number" class="exponent" name="system.attacks.{{@key}}.vsArmor" value="{{this.vsArmor}}" data-dtype="Number">
+            <select name="system.attacks.{{@key}}.weaponSpeed">
                 {{#select this.weaponSpeed}}
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -61,7 +61,7 @@
                 <option value="X">X</option>
                 {{/select}}
             </select>
-            <select name="data.attacks.{{@key}}.weaponLength">
+            <select name="system.attacks.{{@key}}.weaponLength">
                 {{#select this.weaponLength}}
                 {{#each ../weaponLengths as |title value|}}
                 <option value="{{value}}">{{title}}</option>
@@ -72,5 +72,5 @@
         {{/each}}
     </div>
     <hr>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

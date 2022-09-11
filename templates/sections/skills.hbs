@@ -1,11 +1,11 @@
 <h2 class="section-header">
     {{#if isOwner}}
-    <input type="checkbox" id="{{actor.id}}-collapseSkills" name="data.collapseSkills" class="section-collapse" {{ checked data.collapseSkills }}>
+    <input type="checkbox" id="{{actor.id}}-collapseSkills" name="system.collapseSkills" class="section-collapse" {{ checked system.collapseSkills }}>
     <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseSkills" class="section-collapse-label clickable">Skills</label>
 </h2>
-{{#if data.collapseSkills}}{{else}}
+{{#if system.collapseSkills}}{{else}}
 <div class="skills">
     {{#each skills as |skill|}}
         {{> "systems/burningwheel/templates/parts/rollable-skill.hbs" skill=skill isOwner=../isOwner}}

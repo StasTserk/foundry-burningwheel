@@ -7,7 +7,7 @@ export class BWItemSheet<
     getData(): SD {
         const data = {
             showImage: game.settings.get(constants.systemName, constants.settings.itemImages) as boolean,
-            data: this.item.system,
+            system: this.item.system,
             item: this.item
         };
         return data as unknown as SD;

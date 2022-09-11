@@ -1,20 +1,20 @@
 <h2 class="section-header">
     {{#if isOwner}}
-        <input type="checkbox" id="{{actor.id}}-collapseBeliefs" name="data.collapseBeliefs" class="section-collapse" {{ checked data.collapseBeliefs }}>
+        <input type="checkbox" id="{{actor.id}}-collapseBeliefs" name="system.collapseBeliefs" class="section-collapse" {{ checked system.collapseBeliefs }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseBeliefs" class="section-collapse-label clickable">Beliefs</label>
     {{#if isOwner}}<i data-action="addBelief" class="fas fa-plus clickable"></i>{{/if}}
 </h2>
-{{#if data.collapseBeliefs}}{{else}}
+{{#if system.collapseBeliefs}}{{else}}
 <div class="beliefs">
     {{#each beliefs as |belief iid|}}
         <div class="bits-item flex-row">
             <div class="bits-artha" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{belief._id}}">
                 <div class="bits-item-name" data-action="editItem" data-id="{{belief._id}}">{{belief.name}}</div>
-                F<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.fate" {{ checked belief.data.fate }}>
-                P<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.persona"  {{ checked belief.data.persona }}>
-                D<input type="checkbox" data-item-id="{{belief._id}}" data-binding="data.deeds" {{ checked belief.data.deeds }}>
+                F<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.fate" {{ checked belief.system.fate }}>
+                P<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.persona"  {{ checked belief.system.persona }}>
+                D<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.deeds" {{ checked belief.system.deeds }}>
             </div>
             {{#if ../isOwner}}
             <div class="bits-buttons flex-column">
@@ -22,7 +22,7 @@
                 <i class="fas fa-trash" data-action="delItem" data-id="{{belief._id}}"></i>
             </div>
             {{/if}}
-            <textarea data-item-id="{{belief._id}}" data-binding="data.text" rows="1">{{belief.data.text}}</textarea>
+            <textarea data-item-id="{{belief._id}}" data-binding="system.text" rows="1">{{belief.system.text}}</textarea>
         </div>
     {{/each}}
 </div>

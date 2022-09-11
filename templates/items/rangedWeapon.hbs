@@ -7,19 +7,19 @@
     </div>
     <div class="item-form-group">
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-usePower" type="checkbox" name="data.usePower" {{checked data.usePower}}>
+            <input id="{{item.id}}-checkbox-usePower" type="checkbox" name="system.usePower" {{checked system.usePower}}>
             <label for="{{item.id}}-checkbox-usePower" >Use Power</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-hasGunpowder" type="checkbox" name="data.hasGunpowder" {{checked data.hasGunpowder}}>
+            <input id="{{item.id}}-checkbox-hasGunpowder" type="checkbox" name="system.hasGunpowder" {{checked system.hasGunpowder}}>
             <label for="{{item.id}}-checkbox-hasGunpowder">Use Gunpowder</label>
         </div>
     </div>
     <hr />
-    {{#if data.usePower}}
+    {{#if system.usePower}}
     <div class="input-grid">
         <div>
-            <input id="{{item.id}}-number-power" type="number" name="data.powerBonus" value="{{data.powerBonus}}">
+            <input id="{{item.id}}-number-power" type="number" name="system.powerBonus" value="{{system.powerBonus}}">
             <label for="{{item.id}}-number-power">Power Bonus</label>
         </div>
     </div>
@@ -27,32 +27,32 @@
     {{/if}}
     <div class="input-grid">
         <div>
-            <input id="{{item.id}}-number-incidental" type="number" name="data.incidental" value="{{data.incidental}}" {{ disabled data.usePower }} >
-            <label for="{{item.id}}-number-incidental">Incidental: {{ data.incidentalLabel }}</label>
+            <input id="{{item.id}}-number-incidental" type="number" name="system.incidental" value="{{system.incidental}}" {{ disabled system.usePower }} >
+            <label for="{{item.id}}-number-incidental">Incidental: {{ system.incidentalLabel }}</label>
         </div>
         <div>
-            <input id="{{item.id}}-number-mark" type="number" name="data.mark" value="{{data.mark}}" {{ disabled data.usePower }} >
-            <label for="{{item.id}}-number-mark">Mark: {{ data.markLabel }}</label>
+            <input id="{{item.id}}-number-mark" type="number" name="system.mark" value="{{system.mark}}" {{ disabled system.usePower }} >
+            <label for="{{item.id}}-number-mark">Mark: {{ system.markLabel }}</label>
         </div>
         <div>
-            <input id="{{item.id}}-number-superb" type="number" name="data.superb" value="{{data.superb}}" {{ disabled data.usePower }} >
-            <label for="{{item.id}}-number-superb">Superb: {{ data.superbLabel }}</label>
+            <input id="{{item.id}}-number-superb" type="number" name="system.superb" value="{{system.superb}}" {{ disabled system.usePower }} >
+            <label for="{{item.id}}-number-superb">Superb: {{ system.superbLabel }}</label>
         </div>
         <div>
-            <input id="{{item.id}}-number-incidentalMax" type="number" name="data.incidentalRoll" value="{{data.incidentalRoll}}" >
+            <input id="{{item.id}}-number-incidentalMax" type="number" name="system.incidentalRoll" value="{{system.incidentalRoll}}" >
             <label for="{{item.id}}-number-incidentalMax" title="Maximum DoF number that results in an incidental hit">Incidental Threshold</label>
         </div>
         <div>
-            <input id="{{item.id}}-number-markMax" type="number" name="data.markRoll" value="{{data.markRoll}}" >
+            <input id="{{item.id}}-number-markMax" type="number" name="system.markRoll" value="{{system.markRoll}}" >
             <label for="{{item.id}}-number-markMax" title="Maximum DoF number that results in an mark hit">Mark Threshold</label>
         </div>
         <div>
-            <input id="{{item.id}}-number-va" type="number" name="data.vsArmor" value="{{data.vsArmor}}">
+            <input id="{{item.id}}-number-va" type="number" name="system.vsArmor" value="{{system.vsArmor}}">
             <label for="{{item.id}}-number-va">Vs. Armor</label>
         </div>
         <div>
-            <select id="{{item.id}}-select-quality" name="data.quality" value="{{data.quality}}">
-                {{#select data.quality}}
+            <select id="{{item.id}}-select-quality" name="system.quality" value="{{system.quality}}">
+                {{#select system.quality}}
                 {{#each weaponQualities as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}
@@ -61,8 +61,8 @@
             <label for="{{item.id}}-select-quality">Weapon Quality</label>
         </div>
         <div>
-            <select id="{{item.id}}-select-shade" name="data.shade" value="{{data.shade}}">
-                {{#select data.shade}}
+            <select id="{{item.id}}-select-shade" name="system.shade" value="{{system.shade}}">
+                {{#select system.shade}}
                 <option value="B">Black</option>
                 <option value="G">Grey</option>
                 <option value="W">White</option>
@@ -71,22 +71,22 @@
             <label for="{{item.id}}-select-shade">Shade</label>
         </div>
         <div>
-            <input id="{{item.id}}-optimal-range" type="number" data-dtype="Number" name="data.optimalRange" value="{{data.optimalRange}}">
+            <input id="{{item.id}}-optimal-range" type="number" data-dtype="Number" name="system.optimalRange" value="{{system.optimalRange}}">
             <label for="{{item.id}}-optimal-range">Optimal Range</label>
         </div>
                 <div>
-            <input id="{{item.id}}-extreme-range" type="number" data-dtype="Number" name="data.extremeRange" value="{{data.extremeRange}}">
+            <input id="{{item.id}}-extreme-range" type="number" data-dtype="Number" name="system.extremeRange" value="{{system.extremeRange}}">
             <label for="{{item.id}}-extreme-range">Extreme Range</label>
         </div>
         <div>
-            <input id="{{item.id}}-number-range" type="text" name="data.maxRange" value="{{data.maxRange}}">
+            <input id="{{item.id}}-number-range" type="text" name="system.maxRange" value="{{system.maxRange}}">
             <label for="{{item.id}}-number-range">Max Range</label>
         </div>
         <div>
-            <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+            <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
             <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
         </div>
     </div>
     <hr/>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

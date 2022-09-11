@@ -7,7 +7,7 @@
 {{#if wound.threshold}}
 <div class="ptgs-wound-column">
     <div class="ptgs-top">
-        <select class="ptgs-tolerance" name="data.ptgs.{{@key}}.threshold" value="{{wound.threshold}}">
+        <select class="ptgs-tolerance" name="system.ptgs.{{@key}}.threshold" value="{{wound.threshold}}">
             {{#select wound.threshold}}
             <option value="bruise">Br</option>
             <option value="superficial">Su</option>
@@ -20,17 +20,17 @@
         </select>
     </div>
     <div class="ptgs-mid">
-        {{../data.mortalWoundShade}}{{plusone @index}}
+        {{../system.mortalWoundShade}}{{plusone @index}}
     </div>
     <div class="ptgs-scale flex-column">
         {{#multiboxes wound.amount}}
-        <input type="radio" id="{{../id}}-{{@key}}-0" name="data.ptgs.{{@key}}.amount" value="0" checked="checked">
+        <input type="radio" id="{{../id}}-{{@key}}-0" name="system.ptgs.{{@key}}.amount" value="0" checked="checked">
         <label for="{{../id}}-{{@key}}-0" class="wound-clear"><i class="fas fa-times-circle"></i></label>
-        <input type="radio" id="{{../id}}-{{@key}}-1" name="data.ptgs.{{@key}}.amount" value="1">
+        <input type="radio" id="{{../id}}-{{@key}}-1" name="system.ptgs.{{@key}}.amount" value="1">
         <label for="{{../id}}-{{@key}}-1" class="wound-tick wound-tick-1">&nbsp;</label>
-        <input type="radio" id="{{../id}}-{{@key}}-2" name="data.ptgs.{{@key}}.amount" value="2">
+        <input type="radio" id="{{../id}}-{{@key}}-2" name="system.ptgs.{{@key}}.amount" value="2">
         <label for="{{../id}}-{{@key}}-2" class="wound-tick wound-tick-2">&nbsp;</label>
-        <input type="radio" id="{{../id}}-{{@key}}-3" name="data.ptgs.{{@key}}.amount" value="3">
+        <input type="radio" id="{{../id}}-{{@key}}-3" name="system.ptgs.{{@key}}.amount" value="3">
         <label for="{{../id}}-{{@key}}-3" class="wound-tick wound-tick-3">&nbsp;</label>
         {{/multiboxes}}
     </div>
@@ -40,30 +40,30 @@
 <div class="ptgs-obpenalty flex-column">
     <h3>Ob Penalty</h3>
     <div class="ptgs-big-number">{{ ptgs.obPenalty }}</div>
-    <input type="checkbox" name="data.ptgs.shrugging" disabled {{ checked ptgs.shrugging }}>
+    <input type="checkbox" name="system.ptgs.shrugging" disabled {{ checked ptgs.shrugging }}>
     <button type="button" class="rollable modifiable" data-roll-type="shrug">Shrug It Off</button>
 </div>
 <div class="ptgs-wounddice flex-column">
     <h3>Wound Dice</h3>
     <div class="ptgs-big-number">{{ ptgs.woundDice }}</div>
-    <input type="checkbox" name="data.ptgs.gritting" {{ checked ptgs.gritting }}>
+    <input type="checkbox" name="system.ptgs.gritting" {{ checked ptgs.gritting }}>
     <button type="button" class="rollable modifiable" data-roll-type="grit">Grit Your Teeth</button>
 </div>
 <div class="ptgs-woundnotes1 flex-row">
     <h3>Injury Recovery</h3>
     <div class="recovery-label">Recovered</div>
-    <input type="number" name="data.ptgs.woundRecovery1" value="{{ptgs.woundRecovery1}}" min="0">
-    <textarea name="data.ptgs.woundNotes1">{{ptgs.woundNotes1}}</textarea>
+    <input type="number" name="system.ptgs.woundRecovery1" value="{{ptgs.woundRecovery1}}" min="0">
+    <textarea name="system.ptgs.woundNotes1">{{ptgs.woundNotes1}}</textarea>
 </div>
 <div class="ptgs-woundnotes2 flex-row">
     <h3>Injury Recovery</h3>
     <div class="recovery-label">Recovered</div>
-    <input type="number" name="data.ptgs.woundRecovery2" value="{{ptgs.woundRecovery2}}" min="0">
-    <textarea name="data.ptgs.woundNotes2">{{ptgs.woundNotes2}}</textarea>
+    <input type="number" name="system.ptgs.woundRecovery2" value="{{ptgs.woundRecovery2}}" min="0">
+    <textarea name="system.ptgs.woundNotes2">{{ptgs.woundNotes2}}</textarea>
 </div>
 <div class="ptgs-woundnotes3 flex-row">
     <h3>Injury Recovery</h3>
     <div class="recovery-label">Recovered</div>
-    <input type="number" name="data.ptgs.woundRecovery3" value="{{ptgs.woundRecovery3}}" min="0">
-    <textarea name="data.ptgs.woundNotes3">{{ptgs.woundNotes3}}</textarea>
+    <input type="number" name="system.ptgs.woundRecovery3" value="{{ptgs.woundRecovery3}}" min="0">
+    <textarea name="system.ptgs.woundNotes3">{{ptgs.woundNotes3}}</textarea>
 </div>

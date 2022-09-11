@@ -1,12 +1,12 @@
-<div class="npc-editable flex-row {{skill.data.cssClass}}">
+<div class="npc-editable flex-row {{skill.system.cssClass}}">
     <div class="npc-skill-name" data-id="{{skill._id}}" data-action="edit">{{skill.name}}</div>
-    <select data-item-id="{{skill._id}}" data-binding="data.shade">
-        {{#select skill.data.shade}}
+    <select data-item-id="{{skill._id}}" data-binding="system.shade">
+        {{#select skill.system.shade}}
         <option value="B">B</option>
         <option value="G">G</option>
         <option value="W">W</option>
         {{/select}}
     </select>
-    <input type="number" data-item-id="{{skill._id}}" data-binding="data.exp" value="{{skill.data.exp}}">
+    <input type="number" data-item-id="{{skill._id}}" data-binding="system.exp" value="{{skill.system.exp}}">
     <i class="fas fa-trash" data-id="{{skill._id}}" data-action="delete"></i>
 </div>

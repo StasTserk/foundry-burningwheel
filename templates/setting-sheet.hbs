@@ -6,10 +6,10 @@
         <div class="details flex-column">
             <input type="text" value="{{actor.name}}" name="name">
             {{#if editable}}
-            <textarea name="data.description">{{data.description}}</textarea>
+            <textarea name="system.description">{{system.description}}</textarea>
             {{else}}
             <div class="description">
-                {{data.description}}
+                {{system.description}}
             </div>
             {{/if}}
         </div>

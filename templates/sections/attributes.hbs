@@ -1,56 +1,56 @@
 <h2 class="section-header">
     {{#if isOwner}}
-        <input type="checkbox" id="{{actor.id}}-collapseAttributes" name="data.collapseAttributes" class="section-collapse" {{ checked data.collapseAttributes }}>
+        <input type="checkbox" id="{{actor.id}}-collapseAttributes" name="system.collapseAttributes" class="section-collapse" {{ checked system.collapseAttributes }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseAttributes" class="section-collapse-label clickable">Attributes</label>
 </h2>
-{{#if data.collapseAttributes}}{{else}}
+{{#if system.collapseAttributes}}{{else}}
 <div class="attributes">
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Health" stat=data.health namePrefix="data.health" routine=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Steel" stat=data.steel namePrefix="data.steel" routine=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Circles" stat=data.circles namePrefix="data.circles" routine=true type="circles"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Resources" stat=data.resources namePrefix="data.resources" routine=true  taxName="data.resourcesTax" taxValue=data.resourcesTax type="resources"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=data.custom1.name stat=data.custom1 namePrefix="data.custom1" routine=true customName=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=data.custom2.name stat=data.custom2 namePrefix="data.custom2" routine=true customName=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Health" stat=system.health namePrefix="system.health" routine=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Steel" stat=system.steel namePrefix="system.steel" routine=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Circles" stat=system.circles namePrefix="system.circles" routine=true type="circles"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Resources" stat=system.resources namePrefix="system.resources" routine=true  taxName="system.resourcesTax" taxValue=system.resourcesTax type="resources"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom1.name stat=system.custom1 namePrefix="system.custom1" routine=true customName=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom2.name stat=system.custom2 namePrefix="system.custom2" routine=true customName=true type="attribute"}}
     <div class="attributes-derived">
         <div class="attributes-item flex-row">
             <label class="attribute-label">Reflexes</label>
-            <div class="attribute-value">{{data.reflexesShade}}{{data.reflexesExp}}</div>
+            <div class="attribute-value">{{system.reflexesShade}}{{system.reflexesExp}}</div>
         </div>
         <div class="attributes-item flex-row">
             <label class="attribute-label">Mortal Wound</label>
-            <div class="attribute-value">{{data.mortalWoundShade}}{{data.mortalWound}}</div>
+            <div class="attribute-value">{{system.mortalWoundShade}}{{system.mortalWound}}</div>
         </div>
         <div class="attributes-item flex-row">
             <label class="attribute-label">Hesitation</label>
-            <div class="attribute-value">{{data.hesitation}}</div>
+            <div class="attribute-value">{{system.hesitation}}</div>
         </div>
         <div class="attributes-item flex-row">
             <label class="debt-label">Cash</label>
             <div class="attribute-text">
-                <input type="number" name="data.cash" value="{{data.cash}}" placeholder="0">
+                <input type="number" name="system.cash" value="{{system.cash}}" placeholder="0">
                 Dice
             </div>
         </div>
         <div class="attributes-item flex-row">
             <label class="debt-label">Funds</label>
             <div class="attribute-text">
-                <input type="number" name="data.funds" value="{{data.funds}}" placeholder="0">
+                <input type="number" name="system.funds" value="{{system.funds}}" placeholder="0">
                 Dice
             </div>
         </div>
         <div class="attributes-item flex-row">
             <label class="debt-label">Property</label>
-            <input type="text" class="attribute-text" name="data.property" value="{{data.property}}">
+            <input type="text" class="attribute-text" name="system.property" value="{{system.property}}">
         </div>
         <div class="attributes-item flex-row">
             <label class="debt-label">Loans</label>
-            <input type="text" class="attribute-text" name="data.loans" value="{{data.loans}}">
+            <input type="text" class="attribute-text" name="system.loans" value="{{system.loans}}">
         </div>
         <div class="attributes-item flex-row">
             <label class="debt-label">Debt</label>
-            <input type="text" class="attribute-text" name="data.debt" value="{{data.debt}}">
+            <input type="text" class="attribute-text" name="system.debt" value="{{system.debt}}">
         </div>
     </div>
     <div class="attributes-debts"></div>

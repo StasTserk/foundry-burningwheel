@@ -7,8 +7,8 @@
     </div>
     <div class="item-form-group">
         <div class="item-setting-label">Influence</div>
-        <select name="data.influence" value="{{data.influence}}">
-            {{#select data.influence}}
+        <select name="system.influence" value="{{system.influence}}">
+            {{#select system.influence}}
             <option value="minor">Minor</option>
             <option value="significant">Significant</option>
             <option value="powerful">Powerful</option>
@@ -16,37 +16,37 @@
         </select>
         <div></div><div></div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-forbidden" type="checkbox" name="data.forbidden" {{checked data.forbidden}}>
+            <input id="{{item.id}}-checkbox-forbidden" type="checkbox" name="system.forbidden" {{checked system.forbidden}}>
             <label for="{{item.id}}-checkbox-forbidden">Forbidden</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-immediateFamily" type="checkbox" name="data.immediateFamily" {{checked data.immediateFamily}}>
+            <input id="{{item.id}}-checkbox-immediateFamily" type="checkbox" name="system.immediateFamily" {{checked system.immediateFamily}}>
             <label for="{{item.id}}-checkbox-immediateFamily">Close Family</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-otherFamily" type="checkbox" name="data.otherFamily" {{checked data.otherFamily}}>
+            <input id="{{item.id}}-checkbox-otherFamily" type="checkbox" name="system.otherFamily" {{checked system.otherFamily}}>
             <label for="{{item.id}}-checkbox-otherFamily">Other Family</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-romantic" type="checkbox" name="data.romantic" {{checked data.romantic}}>
+            <input id="{{item.id}}-checkbox-romantic" type="checkbox" name="system.romantic" {{checked system.romantic}}>
             <label for="{{item.id}}-checkbox-romantic">Romantic</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-hateful" type="checkbox" name="data.hateful" {{checked data.hateful}}>
+            <input id="{{item.id}}-checkbox-hateful" type="checkbox" name="system.hateful" {{checked system.hateful}}>
             <label for="{{item.id}}-checkbox-hateful">Hateful/Rival</label>
         </div>
     </div>
     <hr/>
     <div class="item-form-group">
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-building" type="checkbox" name="data.building" {{checked data.building}}>
+            <input id="{{item.id}}-checkbox-building" type="checkbox" name="system.building" {{checked system.building}}>
             <label for="{{item.id}}-checkbox-building" title="Relationship being built through multiple circles tests.">Building</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-enmity" type="checkbox" name="data.enmity" {{checked data.enmity}}>
+            <input id="{{item.id}}-checkbox-enmity" type="checkbox" name="system.enmity" {{checked system.enmity}}>
             <label for="{{item.id}}-checkbox-enmity">Enmity Clause</label>
         </div>
     </div>
     <hr/>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

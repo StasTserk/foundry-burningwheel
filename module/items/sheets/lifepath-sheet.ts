@@ -41,10 +41,10 @@ export class LifepathSheet extends BWItemSheet<BWItemSheetData, Lifepath> {
 
             if (item) {
                 if (item.type === "skill") {
-                    const skillList = `${this.item.data.data.skillList}${this.item.data.data.skillList ? ', ' : ''}${item.name}`;
+                    const skillList = `${this.item.system.skillList}${this.item.system.skillList ? ', ' : ''}${item.name}`;
                     this.item.update({ "data.skillList": skillList }, {});
                 } else if (item.type === "trait") {
-                    const traitList = `${this.item.data.data.traitList}${this.item.data.data.traitList ? ', ' : ''}${item.name}`;
+                    const traitList = `${this.item.system.traitList}${this.item.system.traitList ? ', ' : ''}${item.name}`;
                     this.item.update({ "data.traitList": traitList }, {});
                 }
             }

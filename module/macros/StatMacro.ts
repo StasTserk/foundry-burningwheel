@@ -11,16 +11,16 @@ import { handleResourcesRoll } from "../rolls/rollResources.js";
 import { handleStatRoll } from "../rolls/rollStat.js";
 import { handleAttrRoll } from "../rolls/rollAttribute.js";
 
-export function CreateStatMacro(data: StatDragData): MacroData | null {
-    if (!data.actorId) {
+export function CreateStatMacro(dragData: StatDragData): MacroData | null {
+    if (!dragData.actorId) {
         return null;
     }
 
     return {
-        name: `Test ${data.data.name}`,
+        name: `Test ${dragData.data.name}`,
         type: 'script',
-        command: `game.burningwheel.macros.rollStat("${data.actorId}", "${data.data.path}", "${data.data.name}");`,
-        img: defaultIcons[data.data.path] || "icons/commodities/biological/organ-heart-red.webp"
+        command: `game.burningwheel.macros.rollStat("${dragData.actorId}", "${dragData.data.path}", "${dragData.data.name}");`,
+        img: defaultIcons[dragData.data.path] || "icons/commodities/biological/organ-heart-red.webp"
     };
 }
 

@@ -36,10 +36,10 @@ export async function CreateBurningWheelMacro(data: DragData, slot: string): Pro
     return false;
 }
 
-function CreateItemMacro(data: DragData): MacroData | null {
-    const itemType = data.data?.type || "";
+function CreateItemMacro(dragData: DragData): MacroData | null {
+    const itemType = dragData.data?.type || "";
     if (handlers[itemType]) {
-        return handlers[itemType](data);
+        return handlers[itemType](dragData);
     }
     return null;
 }

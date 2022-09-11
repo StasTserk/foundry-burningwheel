@@ -1,6 +1,6 @@
 import { TracksTests } from "./actors/BWActor.js";
-import { ArmorRootData } from "./items/armor.js";
-import { BWItem, BWItemData, DisplayClass, ItemType } from "./items/item.js";
+import { Armor } from "./items/armor.js";
+import { BWItem, DisplayClass, ItemType } from "./items/item.js";
 
 export function updateTestsNeeded(ability: TracksTests & DisplayClass, needRoutines = true, woundDice = 0, tax = 0):void {
     const values = AbilityLookup[ability.exp] || { r: 1, d: 1, c: 1};
@@ -70,16 +70,16 @@ export function getWorstShadeString(a: ShadeString, b: ShadeString): ShadeString
     return "G";
 }
 
-export function getArmorLocationDataFromItem(i: ArmorRootData): { [k: string]: ArmorRootData } {
-    if (!i.data.equipped) { return {}; }
-    const data: StringIndexedObject<ArmorRootData> = {};
-    if (i.data.hasHelm) { data.head = i; }
-    if (i.data.hasTorso) { data.torso = i; }
-    if (i.data.hasLeftArm) { data.leftArm = i; }
-    if (i.data.hasRightArm) { data.rightArm = i; }
-    if (i.data.hasRightLeg) { data.rightLeg = i; }
-    if (i.data.hasLeftLeg) { data.leftLeg = i; }
-    if (i.data.hasShield) { data.shield = i; }
+export function getArmorLocationDataFromItem(i: Armor): { [k: string]: Armor } {
+    if (!i.system.equipped) { return {}; }
+    const data: StringIndexedObject<Armor> = {};
+    if (i.system.hasHelm) { data.head = i; }
+    if (i.system.hasTorso) { data.torso = i; }
+    if (i.system.hasLeftArm) { data.leftArm = i; }
+    if (i.system.hasRightArm) { data.rightArm = i; }
+    if (i.system.hasRightLeg) { data.rightLeg = i; }
+    if (i.system.hasLeftLeg) { data.leftLeg = i; }
+    if (i.system.hasShield) { data.shield = i; }
     return data;
 }
 
@@ -219,7 +219,7 @@ export interface DragData {
 }
 
 export interface ItemDragData extends  DragData {
-    data?: DeepPartial<BWItemData>;
+    data?: DeepPartial<BWItem>;
 }
 
 export interface MeleeDragData extends DragData {

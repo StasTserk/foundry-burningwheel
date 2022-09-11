@@ -51,9 +51,7 @@ export class BWItem<T extends BWItemData = BWItemDataTypes> extends Item<T> {
         this.data.hasOwner = !!(this.actor && this.actor.data);
     }
 
-    get type(): ItemType {
-        return super.type as ItemType;
-    }
+    type: ItemType;
 
     async _preCreate(data: Partial<BWItemData>, options: FoundryDocument.CreateOptions, user: User): Promise<void> {
         await super._preCreate(data as T, options, user);

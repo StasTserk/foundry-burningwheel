@@ -33,9 +33,9 @@ export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcE
 export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo, dataPreset, actor }: NpcStatRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(statName);
     dataPreset = dataPreset || {};
-    dataPreset.deedsPoint = actor.data.data.deeds !== 0;
-    if (actor.data.data.persona) {
-        dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+    dataPreset.deedsPoint = actor.system.deeds !== 0;
+    if (actor.system.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(actor.system.persona, 3)).keys());
     }
 
     if (dataPreset && dataPreset.addHelp) {
@@ -53,17 +53,17 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.data.data.ptgs.woundDice : 0,
-        obPenalty: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.data.data.ptgs.obPenalty : 0,
-        circlesBonus: statName === "circles" ? actor.data.circlesBonus : undefined,
-        circlesMalus: statName === "circles" ? actor.data.circlesMalus : undefined,
+        woundDice: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.system.ptgs.woundDice : 0,
+        obPenalty: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.system.ptgs.obPenalty : 0,
+        circlesBonus: statName === "circles" ? actor.circlesBonus : undefined,
+        circlesMalus: statName === "circles" ? actor.circlesMalus : undefined,
         stat: { exp: dice } as TracksTests,
         tax: 0,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: !game.burningwheel.useGmDifficulty
-            || !!actor.data.data.ptgs.obPenalty
+            || !!actor.system.ptgs.obPenalty
             || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
 

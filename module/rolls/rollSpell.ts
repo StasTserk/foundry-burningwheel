@@ -31,11 +31,11 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
     const spellData = await spell.getSpellMessageData();
 
     if (skill) {
-        const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
+        const obstacle = spell.system.variableObstacle ? 3 : spell.system.obstacle;
         let practicalsPenalty = 0;
         const spellPreset: Partial<RollDialogData> = { difficulty: obstacle };
-        if (spell.data.data.inPracticals) {
-            practicalsPenalty = (spell.data.data.aptitude || 9) - spell.data.data.learningProgress || 0;
+        if (spell.system.inPracticals) {
+            practicalsPenalty = (spell.system.aptitude || 9) - spell.system.learningProgress || 0;
             spellPreset.obModifiers = [
                 { label: "In Practicals", obstacle: practicalsPenalty, optional: false }
             ];
@@ -54,9 +54,9 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
 
         const onRollCallback = async () => {
             showSpellTaxDialog(obstacle, spell.name, actor, dataPreset || {});
-            if (spell.data.data.inPracticals) {
-                const amount = spell.data.data.learningProgress || 0;
-                const aptitude = spell.data.data.aptitude || 9;
+            if (spell.system.inPracticals) {
+                const amount = spell.system.learningProgress || 0;
+                const aptitude = spell.system.aptitude || 9;
                 spell.update({ "data.learningProgress": amount + 1 }, {});
                 if (amount + 1 >= aptitude) {
                     return Dialog.confirm({
@@ -71,7 +71,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
             }
         };
 
-        return skill.data.data.learning ? 
+        return skill.system.learning ? 
             handleLearningRoll({ actor, skill, extraInfo: spellData, dataPreset, onRollCallback }) :
             handleSkillRoll({ actor, skill, extraInfo: spellData, dataPreset, onRollCallback });
     }

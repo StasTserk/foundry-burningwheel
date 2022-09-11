@@ -17,7 +17,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
     const obstacleTotal = parseInt(target.dataset.difficulty || "0");
     const splitSuccesses = parseInt(target.dataset.splitSuccesses || "0");
 
-    if (isDeeds && actor.data.data.deeds == 0) {
+    if (isDeeds && actor.system.deeds == 0) {
         return helpers.notifyError("No Deeds Available", "The character must have a deeds point available in order to reroll all traitors.");
     }
 
@@ -25,7 +25,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
     if (["stat", "learning"].includes(target.dataset.rerollType || "")) {
         rollStat = getProperty(actor, `data.${accessor}`);
     } else {
-        rollStat = (actor.items.get(itemId) as Skill).data.data;
+        rollStat = (actor.items.get(itemId) as Skill).system;
     }
 
     const successTarget = rollStat.shade === "B" ? 3 : (rollStat.shade === "G" ? 2 : 1);
@@ -41,7 +41,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
 
     if (!numDice && !numSplitDice) { return getNoDiceErrorDialog(0); }
     const updateData = {};
-    updateData["data.deeds"] = isDeeds ? actor.data.data.deeds -1 : undefined;
+    updateData["data.deeds"] = isDeeds ? actor.system.deeds -1 : undefined;
     if (reroll) {
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
@@ -56,7 +56,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
                         actor.update(updateData);
                     }
-                    if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
+                    if (actor.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
                             char.addAttributeTest(
                                 getProperty(actor, `data.${accessor}`) as TracksTests,
@@ -79,10 +79,10 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
 
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
-                if (actor.data.successOnlyRolls.includes(learningTarget) && successes <= obstacleTotal && success) {
+                if (actor.successOnlyRolls.includes(learningTarget) && successes <= obstacleTotal && success) {
                     // we need to give perception a success that was not counted
                     char.addStatTest(
-                        getProperty(actor, `data.data.${learningTarget}`) as TracksTests,
+                        getProperty(actor, `system.${learningTarget}`) as TracksTests,
                         learningTarget.titleCase(),
                         accessor,
                         target.dataset.difficultyGroup as TestString,
@@ -91,7 +91,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                 updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `data.${accessor}.deeds`) || "0") + 1 : undefined;
             } else if (target.dataset.rerollType === "skill" && isDeeds) {
                 const skill = actor.items.get<Skill>(itemId);
-                await skill?.update({ "data.deeds": skill.data.data.deeds + 1 }, {});
+                await skill?.update({ "data.deeds": skill.system.deeds + 1 }, {});
             }
         }
     }

@@ -36,9 +36,9 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
 
     let tax = 0;
     if (statName.toLowerCase() === "will") {
-        tax = actor.data.data.willTax;
+        tax = actor.system.willTax;
     } else if (statName.toLowerCase() === "forte") {
-        tax = actor.data.data.forteTax;
+        tax = actor.system.forteTax;
     }
 
     const data = mergeDialogData<StatDialogData>({
@@ -46,14 +46,14 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: actor.data.data.ptgs.woundDice,
-        obPenalty: actor.data.data.ptgs.obPenalty,
+        woundDice: actor.system.ptgs.woundDice,
+        obPenalty: actor.system.ptgs.obPenalty,
         stat,
         tax,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
-        showObstacles: !game.burningwheel.useGmDifficulty || !!actor.data.data.ptgs.obPenalty
+        showObstacles: !game.burningwheel.useGmDifficulty || !!actor.system.ptgs.obPenalty
     }, dataPreset);
 
     const html = await renderTemplate(templates.pcRollDialog, data);

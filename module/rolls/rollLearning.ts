@@ -19,7 +19,7 @@ import {
 } from "./rolls.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
-import { Possession, PossessionRootData } from "../items/possession.js";
+import { Possession, PossessionData } from "../items/possession.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
@@ -30,35 +30,35 @@ export async function handleLearningRollEvent(rollOptions: LearningRollEventOpti
 }
 
 export function handleLearningRoll({ actor, skill, extraInfo, dataPreset, onRollCallback}: LearningRollOptions): unknown {
-    if (skill.data.data.root2) {
+    if (skill.system.root2) {
         return new Dialog({
             title: "Pick Root Stat",
             content: "<p>The skill being learned is derived from two roots. Pick one to use for the roll.</p>",
             buttons: {
                 root1: {
-                    label: skill.data.data.root1.titleCase(),
+                    label: skill.system.root1.titleCase(),
                     callback: () => {
-                        return buildLearningDialog({ actor, skill, statName: skill.data.data.root1, extraInfo, dataPreset, onRollCallback });
+                        return buildLearningDialog({ actor, skill, statName: skill.system.root1, extraInfo, dataPreset, onRollCallback });
                     }
                 },
                 root2: {
-                    label: skill.data.data.root2.titleCase(),
+                    label: skill.system.root2.titleCase(),
                     callback: () => {
-                        return buildLearningDialog({ actor, skill, statName: skill.data.data.root2, extraInfo, dataPreset, onRollCallback });
+                        return buildLearningDialog({ actor, skill, statName: skill.system.root2, extraInfo, dataPreset, onRollCallback });
                     }
                 }
             },
             default: "root1"
         }).render(true);
     }
-    return buildLearningDialog({ actor, skill, statName: skill.data.data.root1, extraInfo, dataPreset, onRollCallback });
+    return buildLearningDialog({ actor, skill, statName: skill.system.root1, extraInfo, dataPreset, onRollCallback });
 
 }
 
 async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPreset, onRollCallback }: LearningRollDialogSettings): Promise<unknown> {
 
     const rollModifiers = actor.getRollModifiers(skill.name).concat(actor.getRollModifiers(statName));
-    const stat = getProperty(actor.data.data, statName);
+    const stat = getProperty(actor.system, statName);
 
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
@@ -72,9 +72,9 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
 
     let tax = 0;
     if (statName.toLowerCase() === "will") {
-        tax = actor.data.data.willTax;
+        tax = actor.system.willTax;
     } else if (statName.toLowerCase() === "forte") {
-        tax = actor.data.data.forteTax;
+        tax = actor.system.forteTax;
     }
 
     if (dataPreset) {
@@ -92,17 +92,17 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
         bonusDice: 0,
         arthaDice: 0,
         tax,
-        woundDice: actor.data.data.ptgs.woundDice,
-        obPenalty: actor.data.data.ptgs.obPenalty,
-        toolkits: actor.data.toolkits,
-        needsToolkit: skill.data.data.tools,
+        woundDice: actor.system.ptgs.woundDice,
+        obPenalty: actor.system.ptgs.obPenalty,
+        toolkits: actor.toolkits,
+        needsToolkit: skill.system.tools,
         learning: true,
         skill: stat,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: !game.burningwheel.useGmDifficulty
-            || !!actor.data.data.ptgs.obPenalty
+            || !!actor.system.ptgs.obPenalty
             || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
 
@@ -127,7 +127,7 @@ async function learningRollCallback(
     dialogHtml: JQuery, skill: Skill, statName: string, actor: BWCharacter, extraInfo?: string, onRollCallback?: () => Promise<unknown>): Promise<unknown> {
     
     const rollData = extractRollData(dialogHtml);
-    const stat = getProperty(actor.data.data, statName) as Ability;
+    const stat = getProperty(actor.system, statName) as Ability;
 
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
@@ -136,7 +136,7 @@ async function learningRollCallback(
     let splitPoolString: string | undefined;
     let splitPoolRoll: Roll | undefined;
     if (rollData.splitPool) {
-        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, skill.system.open, skill.system.shade);
         splitPoolString = getSplitPoolText(splitPoolRoll);
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
@@ -156,7 +156,7 @@ async function learningRollCallback(
         };
     });
 
-    if (skill.data.data.tools) {
+    if (skill.system.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
         const tools = actor.items.get(toolkitId) as Possession;
         if (tools) {
@@ -250,7 +250,7 @@ async function advanceBaseStat(
     const accessor = `data.${statName.toLowerCase()}`;
     const rootStat = getProperty(owner, `data.${accessor}`);
     if (statName === "custom1" || statName === "custom2") {
-        statName = owner.data.data[statName].name.titleCase();
+        statName = owner.system[statName].name.titleCase();
         await owner.addAttributeTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
     } else {
         await owner.addStatTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);
@@ -270,7 +270,7 @@ async function advanceLearningProgress(
 export interface LearningDialogData extends RollDialogData {
     skill: TracksTests;
     needsToolkit: boolean;
-    toolkits: PossessionRootData[];
+    toolkits: PossessionData[];
     tax?: number;
     learning: boolean;
 }

@@ -13,7 +13,7 @@ export async function task021(): Promise<void> {
                 await ownedItem.update({type: "possession"});
             }
         }
-        const ms = getProperty(actor, "data.mountedstride");
+        const ms = getProperty(actor, "system.mountedstride");
         await actor.update({
             "data.mountedstride": null,
             "data.mountedStride": ms

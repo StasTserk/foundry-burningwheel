@@ -79,9 +79,9 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     getForkOptions(skillName: string): { name: string, amount: number }[] {
         return this.forks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillData).exp > ((this.system as unknown as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && s.system.exp > ((this.system as unknown as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
-                const exp = (s as unknown as SkillData).exp;
+                const exp = s.system.exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
@@ -90,9 +90,9 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     getWildForks(skillName: string): { name: string, amount: number }[] {
         return this.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillData).exp > ((this.system as unknown as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && s.system.exp > ((this.system as unknown as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
-                const exp = (s as unknown as SkillData).exp;
+                const exp = s.system.exp;
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });

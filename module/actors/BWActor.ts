@@ -124,7 +124,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     }
 
     getAptitudeModifiers(name = ""): number {
-        return this.aptitudeModifiers[name.toLowerCase()] || 0;
+        return (this.aptitudeModifiers || {})[name.toLowerCase()] || 0;
     }
 
     private _prepareActorData() {

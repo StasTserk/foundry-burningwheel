@@ -21,7 +21,7 @@ export class MeleeWeaponSheet extends BWItemSheet {
     activateListeners(html: JQuery): void {
         super.activateListeners(html);
         html.find(".fa-plus").on('click', () => {
-            const attacks = Object.values(this.item.data.data.attacks || []);
+            const attacks = Object.values(this.item.system.attacks || []);
             attacks.push({
                 attackName: "Alternate",
                 power: 1,
@@ -35,7 +35,7 @@ export class MeleeWeaponSheet extends BWItemSheet {
         html.find(".fa-minus").on('click', (e: JQuery.ClickEvent) => {
             const target = e.target;
             const index = parseInt(target.dataset.index);
-            const attacks =  Object.values(this.item.data.data.attacks || []);
+            const attacks =  Object.values(this.item.system.attacks || []);
             attacks.splice(index, 1);
             this.item.update({ "data.attacks": attacks}, {});
         });

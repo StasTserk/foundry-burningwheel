@@ -7,12 +7,12 @@
 </h2>
 {{#if system.collapseStats}}{{else}}
 <div class="stats">
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=system.will namePrefix="system.will" taxName="system.willTax" taxValue=system.willTax type="stat" taxDisabled=true}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Power" stat=system.power namePrefix="system.power" type="stat"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Agility" stat=system.agility namePrefix="system.agility" type="stat"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Perception" stat=system.perception namePrefix="system.perception" type="stat"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Forte" stat=system.forte namePrefix="system.forte" type="stat" taxName="system.forteTax" taxValue=system.forteTax taxDisabled=true}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Speed" stat=system.speed namePrefix="system.speed" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=system.will namePrefix="will" taxName="system.willTax" taxValue=system.willTax type="stat" taxDisabled=true}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Power" stat=system.power namePrefix="power" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Agility" stat=system.agility namePrefix="agility" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Perception" stat=system.perception namePrefix="perception" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Forte" stat=system.forte namePrefix="forte" type="stat" taxName="system.forteTax" taxValue=system.forteTax taxDisabled=true}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Speed" stat=system.speed namePrefix="speed" type="stat"}}
     <div class="stats-footer flex-row">
         <label>Stride</label><input type="number" placeholder="0" name="system.stride" value="{{system.stride}}">
         <label>Mounted Stride</label><input type="number" placeholder="0" name="system.mountedStride" value="{{system.mountedStride}}">

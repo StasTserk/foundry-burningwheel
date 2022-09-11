@@ -75,7 +75,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         }
                     }
                 }
-                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `system.${accessor}.deeds`) || "0") + 1 : undefined;
+                updateData[`data.${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `system.${accessor}.deeds`) || "0") + 1 : undefined;
 
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
@@ -88,7 +88,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         target.dataset.difficultyGroup as TestString,
                         true);
                 }
-                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `system.${accessor}.deeds`) || "0") + 1 : undefined;
+                updateData[`data.${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `system.${accessor}.deeds`) || "0") + 1 : undefined;
             } else if (target.dataset.rerollType === "skill" && isDeeds) {
                 const skill = actor.items.get<Skill>(itemId);
                 await skill?.update({ "data.deeds": skill.system.deeds + 1 }, {});

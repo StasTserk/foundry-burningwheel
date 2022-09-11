@@ -67,7 +67,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
             if (target.dataset.rerollType === "stat") {
                 const fateSpent = parseInt(getProperty(actor, `system.${accessor}.fate`) || "0", 10);
                 const updateData = {};
-                updateData[`${accessor}.fate`] = fateSpent + 1;
+                updateData[`data.${accessor}.fate`] = fateSpent + 1;
                 if (successes <= obstacleTotal && success) {
                     // we turned a failure into a success. we might need to retroactively award xp.
                     if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.

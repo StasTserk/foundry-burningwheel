@@ -1,15 +1,15 @@
 import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet.js";
 import { ShadeString } from "../../helpers.js";
 import { BWActor } from "../BWActor.js";
-import { BWItem, BWItemData, ItemType } from "../../items/item.js";
+import { BWItem, ItemType } from "../../items/item.js";
 import { Npc } from "../Npc.js";
 import { handleNpcStatRollEvent } from "../../rolls/npcStatRoll.js";
 import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "../../rolls/npcSkillRoll.js";
 import { handleArmorRollEvent } from "../../rolls/rollArmor.js";
 import { getKeypressModifierPreset } from "../../rolls/rolls.js";
-import { ArmorData } from "../../items/armor.js";
-import { SkillDataRoot, Skill } from "../../items/skill.js";
-import { TraitDataRoot } from "../../items/trait.js";
+import { Armor } from "../../items/armor.js";
+import { Skill } from "../../items/skill.js";
+import { Trait } from "../../items/trait.js";
 
 export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions> {
     get actor(): Npc {
@@ -40,58 +40,58 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
         const actor = this.actor;
         data.statRow = [
             {
-                statName: "will", rollable, label: "Wi", value: actor.data.data.will.exp,
-                valuePath: "will.exp", shade: actor.data.data.will.shade, shadePath: "will.shade",
+                statName: "will", rollable, label: "Wi", value: actor.system.will.exp,
+                valuePath: "will.exp", shade: actor.system.will.shade, shadePath: "will.shade",
                 draggable: true, accessor: "data.will"
             }, {
-                statName: "perception", rollable, label: "Pe", value: actor.data.data.perception.exp, valuePath: "perception.exp",
-                shade: actor.data.data.perception.shade, shadePath: "perception.shade",
+                statName: "perception", rollable, label: "Pe", value: actor.system.perception.exp, valuePath: "perception.exp",
+                shade: actor.system.perception.shade, shadePath: "perception.shade",
                 draggable: true, accessor: "data.perception"
             }, {
-                statName: "agility", rollable, label: "Ag", value: actor.data.data.agility.exp, valuePath: "agility.exp",
-                shade: actor.data.data.agility.shade, shadePath: "agility.shade",
+                statName: "agility", rollable, label: "Ag", value: actor.system.agility.exp, valuePath: "agility.exp",
+                shade: actor.system.agility.shade, shadePath: "agility.shade",
                 draggable: true, accessor: "data.agility"
             }, {
-                statName: "speed", rollable, label: "Sp", value: actor.data.data.speed.exp, valuePath: "speed.exp",
-                shade: actor.data.data.speed.shade, shadePath: "speed.shade",
+                statName: "speed", rollable, label: "Sp", value: actor.system.speed.exp, valuePath: "speed.exp",
+                shade: actor.system.speed.shade, shadePath: "speed.shade",
                 draggable: true, accessor: "data.speed"
             }, {
-                statName: "power", rollable, label: "Po", value: actor.data.data.power.exp, valuePath: "power.exp",
-                shade: actor.data.data.power.shade, shadePath: "power.shade",
+                statName: "power", rollable, label: "Po", value: actor.system.power.exp, valuePath: "power.exp",
+                shade: actor.system.power.shade, shadePath: "power.shade",
                 draggable: true, accessor: "data.power"
             }, {
-                statName: "forte", rollable, label: "Fo", value: actor.data.data.forte.exp, valuePath: "forte.exp",
-                shade: actor.data.data.forte.shade, shadePath: "forte.shade",
+                statName: "forte", rollable, label: "Fo", value: actor.system.forte.exp, valuePath: "forte.exp",
+                shade: actor.system.forte.shade, shadePath: "forte.shade",
                 draggable: true, accessor: "data.forte"
             }, {
-                statName: "health", rollable, label: "Hea", value: actor.data.data.health.exp, valuePath: "health.exp",
-                shade: actor.data.data.health.shade, shadePath: "health.shade",
+                statName: "health", rollable, label: "Hea", value: actor.system.health.exp, valuePath: "health.exp",
+                shade: actor.system.health.shade, shadePath: "health.shade",
                 draggable: true, accessor: "data.health"
             }, {
-                label: "Ref", value: actor.data.data.reflexes || 0, valuePath: "reflexes",
-                shade: actor.data.data.reflexesShade, shadePath: "reflexesShade"
+                label: "Ref", value: actor.system.reflexes || 0, valuePath: "reflexes",
+                shade: actor.system.reflexesShade, shadePath: "reflexesShade"
             }, {
-                label: "MW", value: actor.data.data.ptgs.moThresh || 0, valuePath: "ptgs.moThresh",
-                shade: actor.data.data.ptgs.woundShade, shadePath: "ptgs.woundShade"
+                label: "MW", value: actor.system.ptgs.moThresh || 0, valuePath: "ptgs.moThresh",
+                shade: actor.system.ptgs.woundShade, shadePath: "ptgs.woundShade"
             }, {
-                statName: "steel", rollable, open, label: "Ste", value: actor.data.data.steel.exp, valuePath: "steel.exp",
-                shade: actor.data.data.steel.shade, shadePath: "steel.shade",
+                statName: "steel", rollable, open, label: "Ste", value: actor.system.steel.exp, valuePath: "steel.exp",
+                shade: actor.system.steel.shade, shadePath: "steel.shade",
                 draggable: true, accessor: "data.steel"
             }, {
-                label: "Hes", value: actor.data.data.hesitation || 0, valuePath: "hesitation"
+                label: "Hes", value: actor.system.hesitation || 0, valuePath: "hesitation"
             }, {
-                statName: "resources", rollable, label: "Res", value: actor.data.data.resources.exp, valuePath: "resources.exp",
-                shade: actor.data.data.resources.shade, shadePath: "resources.shade",
+                statName: "resources", rollable, label: "Res", value: actor.system.resources.exp, valuePath: "resources.exp",
+                shade: actor.system.resources.shade, shadePath: "resources.shade",
                 draggable: true, accessor: "data.resources"
             }, {
-                statName: "circles", rollable, label: "Cir", value: actor.data.data.circles.exp, valuePath: "circles.exp",
-                shade: actor.data.data.circles.shade, shadePath: "circles.shade",
+                statName: "circles", rollable, label: "Cir", value: actor.system.circles.exp, valuePath: "circles.exp",
+                shade: actor.system.circles.shade, shadePath: "circles.shade",
                 draggable: true, accessor: "data.circles"
             },
-            { label: "Str", value: actor.data.data.stride, valuePath: "stride" },
+            { label: "Str", value: actor.system.stride, valuePath: "stride" },
         ];
-        const armor: BWItemData[] = [];
-        const woundDice = actor.data.data.ptgs.woundDice || 0;
+        const armor: Armor[] = [];
+        const woundDice = actor.system.ptgs.woundDice || 0;
         data.beliefs = [];
         data.traits = [];
         data.instincts = [];
@@ -104,21 +104,20 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
         data.gear = [];
         data.spells = [];
         data.ranged = [];
-        actor.items.forEach((item: BWItem) => {
-            const i = item.data;
+        actor.items.forEach((i: BWItem) => {
             switch (i.type) {
                 case "belief":
                     data.beliefs.push(i); break;
                 case "trait":
-                    data.traits.push(i as TraitDataRoot); break;
+                    data.traits.push(i as Trait); break;
                 case "instinct":
                     data.instincts.push(i); break;
                 case "skill":
-                    if ((i as SkillDataRoot).data.learning) {
-                        data.untrained.push(i as SkillDataRoot);
+                    if ((i as Skill).system.learning) {
+                        data.untrained.push(i as Skill);
                     } else {
                         Skill.disableIfWounded.call(i, woundDice);
-                        data.skills.push(i as SkillDataRoot);
+                        data.skills.push(i as Skill);
                     }
                     break;
                 case "melee weapon":
@@ -138,7 +137,7 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
                 case "spell":
                     data.spells.push(i); break;
                 case "armor":
-                    armor.push(i);
+                    armor.push(i as Armor);
                     data.gear.push(i); break;
                 default:
                     data.gear.push(i); break;
@@ -190,25 +189,25 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
     }
 }
 
-function byName(a: Item.Data, b: Item.Data): number {
+function byName(a: BWItem, b: BWItem): number {
     return a.name.localeCompare(b.name);
 }
 
 export interface NpcSheetData extends BaseActorSheetData {
-    untrained: SkillDataRoot[];
-    armor: { [key: string]: Item.Data<ArmorData> | null; };
+    untrained: Skill[];
+    armor: { [key: string]: Armor | null; };
     statRow: NPCStatEntry[];
-    beliefs: Item.Data[];
-    instincts: Item.Data[];
-    traits: TraitDataRoot[];
-    skills: SkillDataRoot[];
-    weapons: Item.Data[];
-    ranged: Item.Data[];
-    affiliations: Item.Data[];
-    reputations: Item.Data[];
-    relationships: Item.Data[];
-    gear: Item.Data[];
-    spells: Item.Data[];
+    beliefs: BWItem[];
+    instincts: BWItem[];
+    traits: Trait[];
+    skills: Skill[];
+    weapons: BWItem[];
+    ranged: BWItem[];
+    affiliations: BWItem[];
+    reputations: BWItem[];
+    relationships: BWItem[];
+    gear: BWItem[];
+    spells: BWItem[];
     actor: BWActor;
     [k: string]: unknown;
 }

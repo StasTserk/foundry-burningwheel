@@ -9,16 +9,16 @@ import { RollDialogData } from "../rolls/rolls.js";
 import { handleWeaponRoll } from "../rolls/rollWeapon.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 
-export function CreateRangedRollMacro(data: RangedDragData): MacroData | null {
-    if (!data.actorId) {
+export function CreateRangedRollMacro(dragData: RangedDragData): MacroData | null {
+    if (!dragData.actorId) {
         return null;
     }
 
     return {
-        name: `Attack with ${data.data.name}`,
+        name: `Attack with ${dragData.data.name}`,
         type: 'script',
-        command: `game.burningwheel.macros.rollRanged("${data.actorId}", "${data.id}");`,
-        img: getImage(data.data.img, "ranged weapon")
+        command: `game.burningwheel.macros.rollRanged("${dragData.actorId}", "${dragData.id}");`,
+        img: getImage(dragData.data.img, "ranged weapon")
     };
 }
 
@@ -35,7 +35,7 @@ export function RollRangedMacro(actorId: string, weaponId: string): void {
         return;
     }
 
-    const skill = actor.items.get(weapon.data.data.skillId) as unknown as Skill | null;
+    const skill = actor.items.get(weapon.system.skillId) as unknown as Skill | null;
     if (!skill) {
         ui.notifications?.notify("Unable to find skill linked to the weapon in this macro. Ensure a martial skill is linked with this weapon.", "error");
         return;

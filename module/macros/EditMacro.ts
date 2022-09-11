@@ -1,13 +1,13 @@
 import { ItemDragData } from "../helpers.js";
 import { getImage, MacroData } from "./Macro.js";
 import { BWActor } from "../actors/BWActor.js";
-import { BWItem, BWItemData } from "../items/item.js";
+import { BWItem } from "../items/item.js";
 
 export function CreateEditMacro(data: ItemDragData): MacroData | null {
     if (!data.actorId) {
         return null;
     }
-    const itemData = data.data as BWItemData & { _id: string };
+    const itemData = data.data as BWItem & { _id: string };
     return {
         name: `Edit ${itemData.name}`,
         type: 'script',

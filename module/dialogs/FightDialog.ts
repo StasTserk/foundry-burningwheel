@@ -46,7 +46,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             p.weapons = actor.fightWeapons.map(w => {
                 if (w.type === "melee weapon") {
                     const mw = w as MeleeWeapon;
-                    return Object.values(mw.data.attacks).map((atk, index) => { 
+                    return Object.values(mw.system.attacks).map((atk, index) => { 
                         return {
                             id: `${(mw).id}_${index}`,
                             label: `${mw.name} ${atk.attackName}`

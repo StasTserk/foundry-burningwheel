@@ -26,7 +26,7 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
         // add a test log instead of testing
         return buildHelpDialog({
             exponent: stat.exp,
-            path: "data.resources",
+            path: "resources",
             actor,
             helpedWith: "Resources"
         });
@@ -78,13 +78,13 @@ async function resourcesRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData({ actor, roll, accessor: "data.resources" });
+    const fateReroll = buildRerollData({ actor, roll, accessor: "resources" });
     const isSuccess = parseInt(roll.result) >= rollData.difficultyTotal;
     const callons: RerollData[] = actor.getCallons("resources").map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, accessor: "data.resources" }) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, accessor: "resources" }) as RerollData };
     });
 
-    actor.updateArthaForStat("data.resources", rollData.persona, rollData.deeds);
+    actor.updateArthaForStat("resources", rollData.persona, rollData.deeds);
     if (!isSuccess) {
         const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
             (rollData.difficultyGroup === "Difficult" ? 2 : 1);
@@ -108,7 +108,7 @@ async function resourcesRollCallback(
         });
         taxMessage.render(true);
     }
-    await actor.addAttributeTest(stat, "Resources", "data.resources", rollData.difficultyGroup, isSuccess);
+    await actor.addAttributeTest(stat, "Resources", "resources", rollData.difficultyGroup, isSuccess);
 
     if (rollData.addHelp) {
         game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccess);

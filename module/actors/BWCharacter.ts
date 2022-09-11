@@ -220,7 +220,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Challenging":
                 testNumber = stat.challenging;
                 if (testNumber < (stat.challengingNeeded || 0)) {
-                    updateData[`${accessor}.challenging`] = testNumber +1;
+                    updateData[`data.${accessor}.challenging`] = testNumber +1;
                     stat.challenging = testNumber+1;
                     return this.update(updateData, {});
                 }
@@ -228,7 +228,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Difficult":
                 testNumber = stat.difficult;
                 if (testNumber < (stat.difficultNeeded || 0)) {
-                    updateData[`${accessor}.difficult`] = testNumber +1;
+                    updateData[`data.${accessor}.difficult`] = testNumber +1;
                     stat.difficult = testNumber+1;
                     return this.update(updateData, {});
                 }
@@ -236,7 +236,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Routine":
                 testNumber = stat.routine;
                 if (testNumber < (stat.routineNeeded || 0)) {
-                    updateData[`${accessor}.routine`] = testNumber +1;
+                    updateData[`data.${accessor}.routine`] = testNumber +1;
                     stat.routine = testNumber;
                     return this.update(updateData, {});
                 }
@@ -244,13 +244,13 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Routine/Difficult":
                 testNumber = stat.difficult;
                 if (testNumber < (stat.difficultNeeded || 0)) {
-                    updateData[`${accessor}.difficult`] = testNumber +1;
+                    updateData[`data.${accessor}.difficult`] = testNumber +1;
                     stat.difficult = testNumber+1;
                     return this.update(updateData, {});
                 } else {
                     testNumber = stat.routine;
                     if (testNumber < (stat.routineNeeded || 0)) {
-                        updateData[`${accessor}.routine`] = testNumber +1;
+                        updateData[`data.${accessor}.routine`] = testNumber +1;
                         stat.routine = testNumber+1;
                         return this.update(updateData, {});
                     }
@@ -303,10 +303,10 @@ export class BWCharacter extends BWActor<BWCharacterData> {
 
     private async _advanceStat(accessor: string, newExp: number) {
         const updateData = {};
-        updateData[`${accessor}.routine`] = 0;
-        updateData[`${accessor}.difficult`] = 0;
-        updateData[`${accessor}.challenging`] = 0;
-        updateData[`${accessor}.exp`] = newExp;
+        updateData[`data.${accessor}.routine`] = 0;
+        updateData[`data.${accessor}.difficult`] = 0;
+        updateData[`data.${accessor}.challenging`] = 0;
+        updateData[`data.${accessor}.exp`] = newExp;
         return this.update(updateData);
     }
 

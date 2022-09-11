@@ -42,31 +42,31 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
             {
                 statName: "will", rollable, label: "Wi", value: actor.system.will.exp,
                 valuePath: "will.exp", shade: actor.system.will.shade, shadePath: "will.shade",
-                draggable: true, accessor: "data.will"
+                draggable: true, accessor: "will"
             }, {
                 statName: "perception", rollable, label: "Pe", value: actor.system.perception.exp, valuePath: "perception.exp",
                 shade: actor.system.perception.shade, shadePath: "perception.shade",
-                draggable: true, accessor: "data.perception"
+                draggable: true, accessor: "perception"
             }, {
                 statName: "agility", rollable, label: "Ag", value: actor.system.agility.exp, valuePath: "agility.exp",
                 shade: actor.system.agility.shade, shadePath: "agility.shade",
-                draggable: true, accessor: "data.agility"
+                draggable: true, accessor: "agility"
             }, {
                 statName: "speed", rollable, label: "Sp", value: actor.system.speed.exp, valuePath: "speed.exp",
                 shade: actor.system.speed.shade, shadePath: "speed.shade",
-                draggable: true, accessor: "data.speed"
+                draggable: true, accessor: "speed"
             }, {
                 statName: "power", rollable, label: "Po", value: actor.system.power.exp, valuePath: "power.exp",
                 shade: actor.system.power.shade, shadePath: "power.shade",
-                draggable: true, accessor: "data.power"
+                draggable: true, accessor: "power"
             }, {
                 statName: "forte", rollable, label: "Fo", value: actor.system.forte.exp, valuePath: "forte.exp",
                 shade: actor.system.forte.shade, shadePath: "forte.shade",
-                draggable: true, accessor: "data.forte"
+                draggable: true, accessor: "forte"
             }, {
                 statName: "health", rollable, label: "Hea", value: actor.system.health.exp, valuePath: "health.exp",
                 shade: actor.system.health.shade, shadePath: "health.shade",
-                draggable: true, accessor: "data.health"
+                draggable: true, accessor: "health"
             }, {
                 label: "Ref", value: actor.system.reflexes || 0, valuePath: "reflexes",
                 shade: actor.system.reflexesShade, shadePath: "reflexesShade"
@@ -76,17 +76,17 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
             }, {
                 statName: "steel", rollable, open, label: "Ste", value: actor.system.steel.exp, valuePath: "steel.exp",
                 shade: actor.system.steel.shade, shadePath: "steel.shade",
-                draggable: true, accessor: "data.steel"
+                draggable: true, accessor: "steel"
             }, {
                 label: "Hes", value: actor.system.hesitation || 0, valuePath: "hesitation"
             }, {
                 statName: "resources", rollable, label: "Res", value: actor.system.resources.exp, valuePath: "resources.exp",
                 shade: actor.system.resources.shade, shadePath: "resources.shade",
-                draggable: true, accessor: "data.resources"
+                draggable: true, accessor: "resources"
             }, {
                 statName: "circles", rollable, label: "Cir", value: actor.system.circles.exp, valuePath: "circles.exp",
                 shade: actor.system.circles.shade, shadePath: "circles.shade",
-                draggable: true, accessor: "data.circles"
+                draggable: true, accessor: "circles"
             },
             { label: "Str", value: actor.system.stride, valuePath: "stride" },
         ];

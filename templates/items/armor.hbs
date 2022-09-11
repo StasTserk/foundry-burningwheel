@@ -7,14 +7,14 @@
     </div>
     <div class="item-form-group">
         <label for="{{item.id}}-number-dice" class="item-setting-label">Armor Dice</label>
-        <input id="{{item.id}}-number-dice" type="number" class="exponent" name="data.dice" value="{{data.dice}}">
+        <input id="{{item.id}}-number-dice" type="number" class="exponent" name="system.dice" value="{{system.dice}}">
         
         <label for="{{item.id}}-checkbox-equipped" class="item-setting-label">Equipped</label>
-        <input id="{{item.id}}-checkbox-equipped" type="checkbox" name="data.equipped" {{ checked data.equipped}}>
+        <input id="{{item.id}}-checkbox-equipped" type="checkbox" name="system.equipped" {{ checked system.equipped}}>
         
         <label for="{{item.id}}-select-quality" class="item-setting-label">Armor Quality</label>
-        <select id="{{item.id}}-select-quality" name="data.quality" value="{{data.quality}}">
-            {{#select data.quality}}
+        <select id="{{item.id}}-select-quality" name="system.quality" value="{{system.quality}}">
+            {{#select system.quality}}
             {{#each armorQuality as |title value|}}
             <option value="{{value}}">{{title}}</option>
             {{/each}}
@@ -22,8 +22,8 @@
         </select>
         
         <label for="{{item.id}}-select-shade" class="item-setting-label">Shade</label>
-        <select id="{{item.id}}-select-shade" name="data.shade" value="{{data.shade}}">
-            {{#select data.shade}}
+        <select id="{{item.id}}-select-shade" name="system.shade" value="{{system.shade}}">
+            {{#select system.shade}}
             <option value="B">Black</option>
             <option value="G">Grey</option>
             <option value="W">White</option>
@@ -31,8 +31,8 @@
         </select>
         
         <label for="{{item.id}}-select-untrained" class="item-setting-label">Untrained Penalty Type</label>
-        <select id="{{item.id}}-select-untrained" name="data.untrainedPenalty" value="{{data.untrainedPenalty}}">
-            {{#select data.untrainedPenalty}}
+        <select id="{{item.id}}-select-untrained" name="system.untrainedPenalty" value="{{system.untrainedPenalty}}">
+            {{#select system.untrainedPenalty}}
             <option value="none">None</option>
             <option value="light">Light</option>
             <option value="heavy">Heavy</option>
@@ -41,127 +41,127 @@
         </select>
 
         <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
-        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
 
     </div>
     <hr/>
     <div class="flex-column">
         <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-helm" name="data.hasHelm" {{checked data.hasHelm}}>
+            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-helm" name="system.hasHelm" {{checked system.hasHelm}}>
             <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasHelm}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasHelm}}>
                 <label for="{{item.id}}-checkbox-has-helm" class="armor-location-label">Has Helm</label>
             </div>
             <div class="armor-location-details input-grid">
                 <div >
-                    <input id="{{item.id}}-damageHelm" type="number" name="data.damageHelm" value="{{data.damageHelm}}" placeholder="0">
+                    <input id="{{item.id}}-damageHelm" type="number" name="system.damageHelm" value="{{system.damageHelm}}" placeholder="0">
                     <label for="{{item.id}}-damageHelm">Helm Damage</label>
                 </div>
                 <div >
-                    <input id="{{item.id}}-perceptionObservationPenalty" type="number" name="data.perceptionObservationPenalty" value="{{data.perceptionObservationPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-perceptionObservationPenalty" type="number" name="system.perceptionObservationPenalty" value="{{system.perceptionObservationPenalty}}" placeholder="0">
                     <label for="{{item.id}}-perceptionObservationPenalty">Perception/Observation Penalty</label>
                 </div>
             </div>
         </div>
         <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-torso" name="data.hasTorso" {{checked data.hasTorso}}>
+            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-torso" name="system.hasTorso" {{checked system.hasTorso}}>
             <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasTorso}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasTorso}}>
                 <label for="{{item.id}}-checkbox-has-torso" class="armor-location-label">Has Torso</label>
             </div>
             <div class="armor-location-details input-grid">
                 <div>
-                    <input id="{{item.id}}-damageTorso" type="number" name="data.damageTorso" value="{{data.damageTorso}}" placeholder="0">
+                    <input id="{{item.id}}-damageTorso" type="number" name="system.damageTorso" value="{{system.damageTorso}}" placeholder="0">
                     <label for="{{item.id}}-damageTorso">Torso Damage</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-healthFortePenalty" type="number" name="data.healthFortePenalty" value="{{data.healthFortePenalty}}" placeholder="0">
+                    <input id="{{item.id}}-healthFortePenalty" type="number" name="system.healthFortePenalty" value="{{system.healthFortePenalty}}" placeholder="0">
                     <label for="{{item.id}}-healthFortePenalty">Health/Forte Fatigue Penalty</label>
                 </div>
                 <div class="clumsy-entry armor-torso">
-                    <input id="{{item.id}}-stealthyPenalty" type="number" name="data.stealthyPenalty" value="{{data.stealthyPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-stealthyPenalty" type="number" name="system.stealthyPenalty" value="{{system.stealthyPenalty}}" placeholder="0">
                     <label for="{{item.id}}-stealthyPenalty">Stealthy Penalty</label>
                 </div>
             </div>
         </div>
         <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="{{item.id}}-checkbox-has-left-arm" name="data.hasLeftArm" {{checked data.hasLeftArm}}>
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="{{item.id}}-checkbox-has-right-arm" name="data.hasRightArm" {{checked data.hasRightArm}}>
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="{{item.id}}-checkbox-has-left-arm" name="system.hasLeftArm" {{checked system.hasLeftArm}}>
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="{{item.id}}-checkbox-has-right-arm" name="system.hasRightArm" {{checked system.hasRightArm}}>
             <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasLeftArm}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasLeftArm}}>
                 <label for="{{item.id}}-checkbox-has-left-arm" class="armor-location-label">Has Left Arm</label>
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasRightArm}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasRightArm}}>
                 <label for="{{item.id}}-checkbox-has-right-arm" class="armor-location-label">Has Right Arm</label>
             </div>
             <div class="armor-location-details input-grid">
                 <div class="armor-damage-left">
-                    <input id="{{item.id}}-damageLeftArm" type="number" name="data.damageLeftArm" value="{{data.damageLeftArm}}" placeholder="0">
+                    <input id="{{item.id}}-damageLeftArm" type="number" name="system.damageLeftArm" value="{{system.damageLeftArm}}" placeholder="0">
                     <label for="{{item.id}}-damageLeftArm">Left Arm Damage</label>
                 </div>
                 <div class="armor-damage-right">
-                    <input id="{{item.id}}-damageRightArm" type="number" name="data.damageRightArm" value="{{data.damageRightArm}}" placeholder="0">
+                    <input id="{{item.id}}-damageRightArm" type="number" name="system.damageRightArm" value="{{system.damageRightArm}}" placeholder="0">
                     <label for="{{item.id}}-damageRightArm">Right Arm Damage</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-agilityPenalty" type="number" name="data.agilityPenalty" value="{{data.agilityPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-agilityPenalty" type="number" name="system.agilityPenalty" value="{{system.agilityPenalty}}" placeholder="0">
                     <label for="{{item.id}}-agilityPenalty">Agility Penalty</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-throwingShootingPenalty" type="number" name="data.throwingShootingPenalty" value="{{data.throwingShootingPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-throwingShootingPenalty" type="number" name="system.throwingShootingPenalty" value="{{system.throwingShootingPenalty}}" placeholder="0">
                     <label for="{{item.id}}-throwingShootingPenalty">Throwing/Shooting Penalty</label>
                 </div>
             </div>
         </div>
         <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="{{item.id}}-checkbox-has-left-leg" name="data.hasLeftLeg" {{checked data.hasLeftLeg}}>
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="{{item.id}}-checkbox-has-right-leg" name="data.hasRightLeg" {{checked data.hasRightLeg}}>
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="{{item.id}}-checkbox-has-left-leg" name="system.hasLeftLeg" {{checked system.hasLeftLeg}}>
+            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="{{item.id}}-checkbox-has-right-leg" name="system.hasRightLeg" {{checked system.hasRightLeg}}>
             <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasLeftLeg}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasLeftLeg}}>
                 <label for="{{item.id}}-checkbox-has-left-leg" class="armor-location-label">Has Left Leg</label>
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasRightLeg}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasRightLeg}}>
                 <label for="{{item.id}}-checkbox-has-right-leg" class="armor-location-label">Has Right Leg</label>
             </div>
             <div class="armor-location-details input-grid">
                 <div class="armor-damage-left">
-                    <input id="{{item.id}}-damageLeftLeg" type="number" name="data.damageLeftLeg" value="{{data.damageLeftLeg}}" placeholder="0">
+                    <input id="{{item.id}}-damageLeftLeg" type="number" name="system.damageLeftLeg" value="{{system.damageLeftLeg}}" placeholder="0">
                     <label for="{{item.id}}-damageLeftLeg">Left Leg Damage</label>
                 </div>
                 <div class="armor-damage-right">
-                    <input id="{{item.id}}-damageRightLeg" type="number" name="data.damageRightLeg" value="{{data.damageRightLeg}}" placeholder="0">
+                    <input id="{{item.id}}-damageRightLeg" type="number" name="system.damageRightLeg" value="{{system.damageRightLeg}}" placeholder="0">
                     <label for="{{item.id}}-damageRightLeg">Right Leg Damage</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-speedObPenalty" type="number" name="data.speedObPenalty" value="{{data.speedObPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-speedObPenalty" type="number" name="system.speedObPenalty" value="{{system.speedObPenalty}}" placeholder="0">
                     <label for="{{item.id}}-speedObPenalty">Speed Obstacle Penalty</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-speedDiePenalty" type="number" name="data.speedDiePenalty" value="{{data.speedDiePenalty}}" placeholder="0">
+                    <input id="{{item.id}}-speedDiePenalty" type="number" name="system.speedDiePenalty" value="{{system.speedDiePenalty}}" placeholder="0">
                     <label for="{{item.id}}-speedDiePenalty">Speed Die Penalty</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-climbingPenalty" type="number" name="data.climbingPenalty" value="{{data.climbingPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-climbingPenalty" type="number" name="system.climbingPenalty" value="{{system.climbingPenalty}}" placeholder="0">
                     <label for="{{item.id}}-climbingPenalty">Climbing Penalty</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-swimmingPenalty" type="number" name="data.swimmingPenalty" value="{{data.swimmingPenalty}}" placeholder="0">
+                    <input id="{{item.id}}-swimmingPenalty" type="number" name="system.swimmingPenalty" value="{{system.swimmingPenalty}}" placeholder="0">
                     <label for="{{item.id}}-swimmingPenalty">Swimming Penalty</label>
                 </div>
             </div>
         </div>
         <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-shield" name="data.hasShield" {{checked data.hasShield}}>
+            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-shield" name="system.hasShield" {{checked system.hasShield}}>
             <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked data.hasShield}}>
+                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasShield}}>
                 <label for="{{item.id}}-checkbox-has-shield" class="armor-location-label">Has Shield</label>
             </div>
             <div class="armor-location-details input-grid">
                 <div >
-                    <input id="{{item.id}}-damageShield" type="number" name="data.damageShield" value="{{data.damageShield}}" placeholder="0">
+                    <input id="{{item.id}}-damageShield" type="number" name="system.damageShield" value="{{system.damageShield}}" placeholder="0">
                     <label for="{{item.id}}-damageShield">Shield Damage</label>
                 </div>
             </div>
         </div>
     </div>
     <hr/>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

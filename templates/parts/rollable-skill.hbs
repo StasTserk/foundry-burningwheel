@@ -1,75 +1,75 @@
-<div class="rollable flex-row {{skill.data.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-id="{{skill._id}}">
-    <input type="checkbox" id="{{skill.data.safeId}}-toggle" class="collapse-checkbox" data-item-id="{{skill._id}}" data-binding="data.collapsed" {{ checked data.collapsed }}>
-    {{#if isOwner}}<label for="{{skill.data.safeId}}-toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>{{/if}}
+<div class="rollable flex-row {{skill.system.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-id="{{skill._id}}">
+    <input type="checkbox" id="{{skill.system.safeId}}-toggle" class="collapse-checkbox" data-item-id="{{skill._id}}" data-binding="system.collapsed" {{ checked system.collapsed }}>
+    {{#if isOwner}}<label for="{{skill.system.safeId}}-toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>{{/if}}
     <h3 class="rollable-name">{{ skill.name }}</h3>
-    <select class="shade" data-item-id="{{skill._id}}" data-binding="data.shade" value="{{skill.data.shade}}">
-        {{#select skill.data.shade}}
+    <select class="shade" data-item-id="{{skill._id}}" data-binding="system.shade" value="{{skill.system.shade}}">
+        {{#select skill.system.shade}}
         <option value="B">B</option>
         <option value="G">G</option>
         <option value="W">W</option>
         {{/select}}
     </select>
-    <input class="exponent" type="number" data-item-id="{{skill._id}}" data-binding="data.exp" value="{{skill.data.exp}}">
+    <input class="exponent" type="number" data-item-id="{{skill._id}}" data-binding="system.exp" value="{{skill.system.exp}}">
     {{#if isOwner}}
         <button type="button" class="rollable modifiable" data-roll-type="skill" data-skill-id="{{skill._id}}"><i class="fas fa-dice"></i></button>
     {{/if}}
     <div class="collapsing-section">
         <div class="test-tracking">
             <div class="test-title">Routine: </div>
-            <input class="tests-needed" value="{{skill.data.routineNeeded}}" disabled>
-            {{#multiboxes skill.data.routine needed=skill.data.routineNeeded}}
-            <input type="radio" id="{{skill.data.safeId}}-routine-0" value="0" data-item-id="{{skill._id}}" data-binding="data.routine">
+            <input class="tests-needed" value="{{skill.system.routineNeeded}}" disabled>
+            {{#multiboxes skill.system.routine needed=skill.system.routineNeeded}}
+            <input type="radio" id="{{skill.system.safeId}}-routine-0" value="0" data-item-id="{{skill._id}}" data-binding="system.routine">
             {{#if isOwner}}
-            <label for="{{skill.data.safeId}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            <label for="{{skill.system.safeId}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             {{/if}}
-            <input type="radio" id="{{skill.data.safeId}}-routine-1" value="1" data-item-id="{{skill._id}}" data-binding="data.routine">
-            <label for="{{skill.data.safeId}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-routine-2" value="2" data-item-id="{{skill._id}}" data-binding="data.routine">
-            <label for="{{skill.data.safeId}}-routine-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-routine-3" value="3" data-item-id="{{skill._id}}" data-binding="data.routine">
-            <label for="{{skill.data.safeId}}-routine-3" class="progress-tick progress-tick-3">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-routine-4" value="4" data-item-id="{{skill._id}}" data-binding="data.routine">
-            <label for="{{skill.data.safeId}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-routine-1" value="1" data-item-id="{{skill._id}}" data-binding="system.routine">
+            <label for="{{skill.system.safeId}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-routine-2" value="2" data-item-id="{{skill._id}}" data-binding="system.routine">
+            <label for="{{skill.system.safeId}}-routine-2" class="progress-tick progress-tick-2">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-routine-3" value="3" data-item-id="{{skill._id}}" data-binding="system.routine">
+            <label for="{{skill.system.safeId}}-routine-3" class="progress-tick progress-tick-3">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-routine-4" value="4" data-item-id="{{skill._id}}" data-binding="system.routine">
+            <label for="{{skill.system.safeId}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         <div class="test-tracking">
             <div class="test-title">Difficult:</div>
-            <input class="tests-needed" value="{{skill.data.difficultNeeded}}" disabled>
-            {{#multiboxes skill.data.difficult needed=skill.data.difficultNeeded}}
-            <input type="radio" id="{{skill.data.safeId}}-difficult-0" value="0" data-item-id="{{skill._id}}" data-binding="data.difficult">
+            <input class="tests-needed" value="{{skill.system.difficultNeeded}}" disabled>
+            {{#multiboxes skill.system.difficult needed=skill.system.difficultNeeded}}
+            <input type="radio" id="{{skill.system.safeId}}-difficult-0" value="0" data-item-id="{{skill._id}}" data-binding="system.difficult">
             {{#if isOwner}}
-            <label for="{{skill.data.safeId}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            <label for="{{skill.system.safeId}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             {{/if}}
-            <input type="radio" id="{{skill.data.safeId}}-difficult-1" value="1" data-item-id="{{skill._id}}" data-binding="data.difficult">
-            <label for="{{skill.data.safeId}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-difficult-2" value="2" data-item-id="{{skill._id}}" data-binding="data.difficult">
-            <label for="{{skill.data.safeId}}-difficult-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-difficult-3" value="3" data-item-id="{{skill._id}}" data-binding="data.difficult">
-            <label for="{{skill.data.safeId}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-difficult-4" value="4" data-item-id="{{skill._id}}" data-binding="data.difficult">
-            <label for="{{skill.data.safeId}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-difficult-1" value="1" data-item-id="{{skill._id}}" data-binding="system.difficult">
+            <label for="{{skill.system.safeId}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-difficult-2" value="2" data-item-id="{{skill._id}}" data-binding="system.difficult">
+            <label for="{{skill.system.safeId}}-difficult-2" class="progress-tick progress-tick-2">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-difficult-3" value="3" data-item-id="{{skill._id}}" data-binding="system.difficult">
+            <label for="{{skill.system.safeId}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-difficult-4" value="4" data-item-id="{{skill._id}}" data-binding="system.difficult">
+            <label for="{{skill.system.safeId}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         <div class="test-tracking">
             <div class="test-title">Challenging:</div>
-            <input class="tests-needed" value="{{skill.data.challengingNeeded}}" disabled>
-            {{#multiboxes skill.data.challenging needed=skill.data.challengingNeeded}}
-            <input type="radio" id="{{skill.data.safeId}}-challenging-0" value="0" data-item-id="{{skill._id}}" data-binding="data.challenging">
+            <input class="tests-needed" value="{{skill.system.challengingNeeded}}" disabled>
+            {{#multiboxes skill.system.challenging needed=skill.system.challengingNeeded}}
+            <input type="radio" id="{{skill.system.safeId}}-challenging-0" value="0" data-item-id="{{skill._id}}" data-binding="system.challenging">
             {{#if isOwner}}
-            <label for="{{skill.data.safeId}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
+            <label for="{{skill.system.safeId}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             {{/if}}
-            <input type="radio" id="{{skill.data.safeId}}-challenging-1" value="1" data-item-id="{{skill._id}}" data-binding="data.challenging">
-            <label for="{{skill.data.safeId}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-challenging-2" value="2" data-item-id="{{skill._id}}" data-binding="data.challenging">
-            <label for="{{skill.data.safeId}}-challenging-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{skill.data.safeId}}-challenging-3" value="3" data-item-id="{{skill._id}}" data-binding="data.challenging">
-            <label for="{{skill.data.safeId}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-challenging-1" value="1" data-item-id="{{skill._id}}" data-binding="system.challenging">
+            <label for="{{skill.system.safeId}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-challenging-2" value="2" data-item-id="{{skill._id}}" data-binding="system.challenging">
+            <label for="{{skill.system.safeId}}-challenging-2" class="progress-tick progress-tick-2">&nbsp;</label>
+            <input type="radio" id="{{skill.system.safeId}}-challenging-3" value="3" data-item-id="{{skill._id}}" data-binding="system.challenging">
+            <label for="{{skill.system.safeId}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
-        <input type="number" class="circle-input" placeholder="F" title="Fate points spent on skill" data-item-id="{{skill._id}}" data-binding="data.fate" value="{{skill.data.fate}}">
-        <input type="number" class="circle-input" placeholder="P" title="Persona points spent on skill" data-item-id="{{skill._id}}" data-binding="data.persona" value="{{skill.data.persona}}">
-        <input type="number" class="circle-input" placeholder="D" title="Deeds points spent on skill" data-item-id="{{skill._id}}" data-binding="data.deeds" value="{{skill.data.deeds}}">
-        <input type="checkbox" class="hidden rollable-open-checkbox" id="{{skill._id}}-open" data-item-id="{{skill._id}}" data-binding="data.open" {{checked skill.data.open}}>
+        <input type="number" class="circle-input" placeholder="F" title="Fate points spent on skill" data-item-id="{{skill._id}}" data-binding="system.fate" value="{{skill.system.fate}}">
+        <input type="number" class="circle-input" placeholder="P" title="Persona points spent on skill" data-item-id="{{skill._id}}" data-binding="system.persona" value="{{skill.system.persona}}">
+        <input type="number" class="circle-input" placeholder="D" title="Deeds points spent on skill" data-item-id="{{skill._id}}" data-binding="system.deeds" value="{{skill.system.deeds}}">
+        <input type="checkbox" class="hidden rollable-open-checkbox" id="{{skill._id}}-open" data-item-id="{{skill._id}}" data-binding="system.open" {{checked skill.system.open}}>
         <div class="rollable-open-toggle">
             <label for="{{skill._id}}-open">Open</label>
         </div>

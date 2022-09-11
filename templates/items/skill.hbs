@@ -9,8 +9,8 @@
         <label class="item-setting-label">
             Skill Type
         </label>
-        <select name="data.skilltype" value="{{data.skilltype}}" >
-            {{#select data.skilltype}}
+        <select name="system.skilltype" value="{{system.skilltype}}" >
+            {{#select system.skilltype}}
             {{#each skillTypes as |type t|}}
             <option value="{{t}}">{{type}}</option>
             {{/each}}
@@ -19,20 +19,20 @@
         <label class="item-setting-label">
             Restrictions
         </label>
-        <input type="text" name="data.restrictions" value="{{data.restrictions}}" placeholder="None">
+        <input type="text" name="system.restrictions" value="{{system.restrictions}}" placeholder="None">
     </div>
     <div class="item-form-group">
         <label class="item-setting-label">Root 1</label>
-        <select name="data.root1" value="{{data.root1}}" >
-            {{#select data.root1}}
+        <select name="system.root1" value="{{system.root1}}" >
+            {{#select system.root1}}
             {{#each skillRoots as |root r|}}
             <option value="{{r}}">{{root}}</option>
             {{/each}}
             {{/select}}
         </select>
         <label class="item-setting-label">Root 2 (Optional)</label>
-        <select name="data.root2" value="{{data.root2}}" >
-            {{#select data.root2}}
+        <select name="system.root2" value="{{system.root2}}" >
+            {{#select system.root2}}
             <option value="">None</option>
             {{#each skillRoots as |root r|}}
             <option value="{{r}}">{{root}}</option>
@@ -41,34 +41,34 @@
         </select>
     </div>
     <div class="item-form-group">
-        {{#if item.data.hasOwner}}
+        {{#if item.system.hasOwner}}
         <label for="{{item.id}}-aptitude" class="item-setting-label">Aptitude</label>
-        <input id="{{item.id}}-aptitude" type="number" name="data.aptitude" disabled value="{{data.aptitude}}" placeholder="N/A">
+        <input id="{{item.id}}-aptitude" type="number" name="system.aptitude" disabled value="{{system.aptitude}}" placeholder="N/A">
         <div class="pill-toggle">
-            <input id="{{item.id}}-learning" type="checkbox" name="data.learning" {{ checked data.learning }}>
+            <input id="{{item.id}}-learning" type="checkbox" name="system.learning" {{ checked system.learning }}>
             <label for="{{item.id}}-learning" >Learning</label>
         </div>
         {{/if}}
         <div class="pill-toggle">
-            <input id="{{item.id}}-wild" type="checkbox" name="data.wildFork" {{ checked data.wildFork }}>
+            <input id="{{item.id}}-wild" type="checkbox" name="system.wildFork" {{ checked system.wildFork }}>
             <label for="{{item.id}}-wild" title="This skill explodes on 1's and 6's when used as a fork.">Wild Fork</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-open-skill" type="checkbox" name="data.open" {{ checked data.open }}>
+            <input id="{{item.id}}-open-skill" type="checkbox" name="system.open" {{ checked system.open }}>
             <label for="{{item.id}}-open-skill" >Open</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-magical" type="checkbox" name="data.magical" {{ checked data.magical }}>
+            <input id="{{item.id}}-magical" type="checkbox" name="system.magical" {{ checked system.magical }}>
             <label for="{{item.id}}-magical" title="Special magical skills such as Dwarven Arts, Elven skill songs and spell songs. Determines cost for opening in character burner.">Magical Skill</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-training" type="checkbox" name="data.training" {{ checked data.training }}>
+            <input id="{{item.id}}-training" type="checkbox" name="system.training" {{ checked system.training }}>
             <label for="{{item.id}}-training" >Training Skill</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-tools" type="checkbox" name="data.tools" {{ checked data.tools }}>
+            <input id="{{item.id}}-tools" type="checkbox" name="system.tools" {{ checked system.tools }}>
             <label for="{{item.id}}-tools" >Requires Tools</label>
         </div>
     </div>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

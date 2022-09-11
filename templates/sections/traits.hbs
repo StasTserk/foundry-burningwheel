@@ -1,11 +1,11 @@
 <h2 class="section-header">
     {{#if isOwner}}
-        <input type="checkbox" id="{{actor.id}}-collapseTraits" name="data.collapseTraits" class="section-collapse" {{ checked data.collapseTraits }}>
+        <input type="checkbox" id="{{actor.id}}-collapseTraits" name="system.collapseTraits" class="section-collapse" {{ checked system.collapseTraits }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseTraits" class="section-collapse-label clickable">Traits</label>
 </h2>
-{{#if data.collapseTraits}}{{else}}
+{{#if system.collapseTraits}}{{else}}
 <div class="traits flex-row">
     <div class="trait-category">
         <h2>Character Traits

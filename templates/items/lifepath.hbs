@@ -9,16 +9,16 @@
         <label class="item-setting-label">
             Time
         </label>
-        <input type="number" name="data.time" value="{{data.time}}">
+        <input type="number" name="system.time" value="{{system.time}}">
         <label class="item-setting-label">
             Resources
         </label>
-        <input type="number" name="data.resources" value="{{data.resources}}">
+        <input type="number" name="system.resources" value="{{system.resources}}">
         <label class="item-setting-label">
             Stat Boost
         </label>
-        <select name="data.statBoost" value="{{data.statBoost}}" >
-            {{#select data.statBoost}}
+        <select name="system.statBoost" value="{{system.statBoost}}" >
+            {{#select system.statBoost}}
             <option value="none">None</option>
             <option value="mental">Mental</option>
             <option value="physical">Physical</option>
@@ -27,40 +27,40 @@
             {{/select}}
         </select>
         <div class="pill-toggle min-content">
-            <input id="{{item.id}}-sub-stats" type="checkbox" class="item-setting-checkbox hidden" name="data.subtractStats" {{checked data.subtractStats}}>
+            <input id="{{item.id}}-sub-stats" type="checkbox" class="item-setting-checkbox hidden" name="system.subtractStats" {{checked system.subtractStats}}>
             <label for="{{item.id}}-sub-stats" class="item-setting-toggle">Subtract Stats</label>
         </div>
         <div></div>
         <label class="item-setting-label">
             Leads
         </label>
-        <input type="text" name="data.leads" value="{{data.leads}}" class="triple-wide">
+        <input type="text" name="system.leads" value="{{system.leads}}" class="triple-wide">
         <label class="item-setting-label">
             Skill Points
         </label>
-        <input type="number" name="data.skillPoints" value="{{data.skillPoints}}">
+        <input type="number" name="system.skillPoints" value="{{system.skillPoints}}">
         <label class="item-setting-label">
             General Points
         </label>
-        <input type="number" name="data.generalPoints" value="{{data.generalPoints}}">
+        <input type="number" name="system.generalPoints" value="{{system.generalPoints}}">
     </div>
     <label class="item-list-label">Skill List</label>
-    <textarea name="data.skillList">{{data.skillList}}</textarea>
+    <textarea name="system.skillList">{{system.skillList}}</textarea>
     <hr>
     <div class="item-form-group">
         <label class="item-setting-label">
             Trait Points
         </label>
-        <input type="number" name="data.traitPoints" value="{{data.traitPoints}}">
+        <input type="number" name="system.traitPoints" value="{{system.traitPoints}}">
     </div>
     <label class="item-list-label">Trait List</label>
-    <textarea name="data.traitList">{{data.traitList}}</textarea>
+    <textarea name="system.traitList">{{system.traitList}}</textarea>
     <hr>
     <label class="item-list-label">Restrictions</label>
-    <textarea name="data.restrictions">{{data.restrictions}}</textarea>
+    <textarea name="system.restrictions">{{system.restrictions}}</textarea>
     <hr>
     <label class="item-list-label">Requirements</label>
-    <textarea name="data.requirements">{{data.requirements}}</textarea>
+    <textarea name="system.requirements">{{system.requirements}}</textarea>
     <label class="item-list-label">Note</label>
-    <textarea name="data.note">{{data.note}}</textarea>
+    <textarea name="system.note">{{system.note}}</textarea>
 </form>

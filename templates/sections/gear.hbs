@@ -1,14 +1,14 @@
 <h2 class="section-header">
     {{#if isOwner}}
-        <input type="checkbox" id="{{actor.id}}-collapseGear" name="data.collapseGear" class="section-collapse" {{ checked data.collapseGear }}>
+        <input type="checkbox" id="{{actor.id}}-collapseGear" name="system.collapseGear" class="section-collapse" {{ checked system.collapseGear }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseGear" class="section-collapse-label clickable">Gear, Possessions, and Property</label>
 </h2>
-{{#if data.collapseGear}}{{else}}
+{{#if system.collapseGear}}{{else}}
 <div class="gear item-grid col-4">
     {{#each equipment as |e|}}
-    <div class="{{e.data.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{e._id}}">
+    <div class="{{e.system.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{e._id}}">
         {{e.name}}
         {{#if ../isOwner}}
             <i class="fas fa-trash item-action-icon" data-action="delItem" data-id="{{e._id}}"></i>

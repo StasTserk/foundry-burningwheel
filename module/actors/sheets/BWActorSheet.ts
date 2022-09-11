@@ -26,7 +26,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
         super.getData();
         return {
             actor: this.actor,
-            data: this.actor.system,
+            system: this.actor.system,
             isObserver: this.actor.permission >= (CONST as TypeMissing).DOCUMENT_PERMISSION_LEVELS.OBSERVER,
             isOwner: this.actor.permission >= (CONST as TypeMissing).DOCUMENT_PERMISSION_LEVELS.OWNER,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

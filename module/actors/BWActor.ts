@@ -79,7 +79,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     getForkOptions(skillName: string): { name: string, amount: number }[] {
         return this.forks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillData).exp > ((this.system.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && (s as unknown as SkillData).exp > ((this.system as unknown as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
                 const exp = (s as unknown as SkillData).exp;
                 // skills at 7+ exp provide 2 dice in forks.
@@ -90,7 +90,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     getWildForks(skillName: string): { name: string, amount: number }[] {
         return this.wildForks.filter(s =>
             s.name !== skillName // skills reduced to 0 due to wounds can't be used as forks.
-            && (s as unknown as SkillData).exp > ((this.system.data as BWCharacterData | NpcData).ptgs.woundDice || 0))
+            && (s as unknown as SkillData).exp > ((this.system as unknown as BWCharacterData | NpcData).ptgs.woundDice || 0))
             .map( s => {
                 const exp = (s as unknown as SkillData).exp;
                 // skills at 7+ exp provide 2 dice in forks.
@@ -285,7 +285,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
             untrainedAll: 0
         };
 
-        const charData = this.system.type === "character" ? this.system.data as BWCharacterData : undefined;
+        const charData = this.system.type === "character" ? this.system as unknown as BWCharacterData : undefined;
 
         this.items.filter((i: BWItem) => (i.type === "armor" && (i as Armor).system.equipped))
             .forEach((i: Armor) => {
@@ -364,15 +364,15 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
 
     public updateArthaForSkill(_skillId: string, persona: number, deeds: number): void {
         const updateData = {};
-        updateData["data.deeds"] = this.system.data.deeds - (deeds ? 1 : 0);
-        updateData["data.persona"] = this.system.data.persona - persona;
+        updateData["data.deeds"] = this.system.deeds - (deeds ? 1 : 0);
+        updateData["data.persona"] = this.system.persona - persona;
         this.update(updateData);
     }
 
     public updateArthaForStat(accessor: string, persona: number, deeds: number): void {
         const updateData = {};
-        updateData["data.deeds"] = this.system.data.deeds - (deeds ? 1 : 0);
-        updateData["data.persona"] = this.system.data.persona - persona;
+        updateData["data.deeds"] = this.system.deeds - (deeds ? 1 : 0);
+        updateData["data.persona"] = this.system.persona - persona;
         this.update(updateData);
     }
 

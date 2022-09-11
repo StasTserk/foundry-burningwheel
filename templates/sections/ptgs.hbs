@@ -1,12 +1,12 @@
 <h2 class="section-header">
     {{#if isOwner}}
-        <input type="checkbox" id="{{actor.id}}-collapsePtgs" name="data.collapsePtgs" class="section-collapse" {{ checked data.collapsePtgs }}>
+        <input type="checkbox" id="{{actor.id}}-collapsePtgs" name="system.collapsePtgs" class="section-collapse" {{ checked system.collapsePtgs }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapsePtgs" class="section-collapse-label clickable">Injury and Recovery</label>
 </h2>
-{{#if data.collapsePtgs}}{{else}}
+{{#if system.collapsePtgs}}{{else}}
 <div class="ptgs">
-    {{> "systems/burningwheel/templates/parts/ptgs.hbs" ptgs=data.ptgs id=actor.id }}
+    {{> "systems/burningwheel/templates/parts/ptgs.hbs" ptgs=system.ptgs id=actor.id }}
 </div>
 {{/if}}

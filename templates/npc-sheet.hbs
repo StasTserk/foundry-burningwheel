@@ -7,7 +7,7 @@
             <input type="text" name="name" value="{{actor.name}}">
             {{#if isOwner}}
             <div class="npc-checkbox">
-                <input id="{{actor.id}}-edit-mode" type="checkbox" name="data.editMode" {{checked data.editMode}}>
+                <input id="{{actor.id}}-edit-mode" type="checkbox" name="system.editMode" {{checked system.editMode}}>
                 <label for="{{actor.id}}-edit-mode"><i class="fas fa-edit"></i></label>
             </div>
             {{/if}}
@@ -15,21 +15,21 @@
         <div class="npc-bio">
             <div class='npc-bio-text'>
                 <label class="npc-section-label" for="{{actor.id}}-bio">Bio</label>
-                <textarea id="{{actor.id}}-bio" name="data.bio">{{data.bio}}</textarea>
+                <textarea id="{{actor.id}}-bio" name="system.bio">{{system.bio}}</textarea>
             </div>
             {{#if isObserver}}
             <div class="flex-row artha-points">
                 <div>
                     <label for="{{actor.id}}-fate-points" class="artha-label">Fate</label>
-                    <input id="{{actor.id}}-fate-points" name="data.fate" value="{{data.fate}}" type="number" data-dtype="Number" min="0" class="artha-input">
+                    <input id="{{actor.id}}-fate-points" name="system.fate" value="{{system.fate}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
                 <div>
                     <label for="{{actor.id}}-persona-points" class="artha-label">Persona</label>
-                    <input id="{{actor.id}}-persona-points" name="data.persona" value="{{data.persona}}" type="number" data-dtype="Number" min="0" class="artha-input">
+                    <input id="{{actor.id}}-persona-points" name="system.persona" value="{{system.persona}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
                 <div>
                     <label for="{{actor.id}}-deeds-points" class="artha-label">Deeds</label>
-                    <input id="{{actor.id}}-deeds-points" name="data.deeds" value="{{data.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
+                    <input id="{{actor.id}}-deeds-points" name="system.deeds" value="{{system.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
                 </div>
             </div>
             {{/if}}
@@ -44,7 +44,7 @@
                 attributeShade = stat.shade
                 attributeShadePath = stat.shadePath
                 attributePath = stat.valuePath
-                editMode = ../data.editMode
+                editMode = ../system.editMode
                 draggable = stat.draggable
                 accessor = stat.accessor}}
         {{/each}}
@@ -52,112 +52,112 @@
     <div class="npc-ptgs">
         <div class="ptgs-header">
             <div>PTGS</div>
-            <div class="ptgs-subheader">+Ob: {{data.ptgs.obPenalty}}</div>
-            <div class="ptgs-subheader">-Dice: {{data.ptgs.woundDice}}</div>
+            <div class="ptgs-subheader">+Ob: {{system.ptgs.obPenalty}}</div>
+            <div class="ptgs-subheader">-Dice: {{system.ptgs.woundDice}}</div>
         </div>
         <div class="ptgs-category">
             Su:
-            {{#if data.editMode}}
-            <select name="data.ptgs.suShade">
-                {{#select data.ptgs.suShade}}
+            {{#if system.editMode}}
+            <select name="system.ptgs.suShade">
+                {{#select system.ptgs.suShade}}
                 <option value="B">B</option>
                 <option value="G">G</option>
                 <option value="W">W</option>
                 {{/select}}
             </select>
-            <input type="number" data-dtype="Number" name="data.ptgs.suThresh" value="{{data.ptgs.suThresh}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.suThresh" value="{{system.ptgs.suThresh}}">
             {{else}}
-            {{data.ptgs.suShade}}{{data.ptgs.suThresh}}
+            {{system.ptgs.suShade}}{{system.ptgs.suThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Li:
-            {{#if data.editMode}}
-            <select name="data.ptgs.liShade">
-                {{#select data.ptgs.liShade}}
+            {{#if system.editMode}}
+            <select name="system.ptgs.liShade">
+                {{#select system.ptgs.liShade}}
                 <option value="B">B</option>
                 <option value="G">G</option>
                 <option value="W">W</option>
                 {{/select}}
             </select>
-            <input type="number" data-dtype="Number" name="data.ptgs.liThresh" value="{{data.ptgs.liThresh}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.liThresh" value="{{system.ptgs.liThresh}}">
             {{else}}
-            {{data.ptgs.liShade}}{{data.ptgs.liThresh}}
+            {{system.ptgs.liShade}}{{system.ptgs.liThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Mi:
-            {{#if data.editMode}}
-            <select name="data.ptgs.miShade">
-                {{#select data.ptgs.miShade}}
+            {{#if system.editMode}}
+            <select name="system.ptgs.miShade">
+                {{#select system.ptgs.miShade}}
                 <option value="B">B</option>
                 <option value="G">G</option>
                 <option value="W">W</option>
                 {{/select}}
             </select>
-            <input type="number" data-dtype="Number" name="data.ptgs.miThresh" value="{{data.ptgs.miThresh}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.miThresh" value="{{system.ptgs.miThresh}}">
             {{else}}
-            {{data.ptgs.miShade}}{{data.ptgs.miThresh}}
+            {{system.ptgs.miShade}}{{system.ptgs.miThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Se:
-            {{#if data.editMode}}
-            <select name="data.ptgs.seShade">
-                {{#select data.ptgs.seShade}}
+            {{#if system.editMode}}
+            <select name="system.ptgs.seShade">
+                {{#select system.ptgs.seShade}}
                 <option value="B">B</option>
                 <option value="G">G</option>
                 <option value="W">W</option>
                 {{/select}}
             </select>
-            <input type="number" data-dtype="Number" name="data.ptgs.seThresh" value="{{data.ptgs.seThresh}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.seThresh" value="{{system.ptgs.seThresh}}">
             {{else}}
-            {{data.ptgs.seShade}}{{data.ptgs.seThresh}}
+            {{system.ptgs.seShade}}{{system.ptgs.seThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Tr:
-            {{#if data.editMode}}
-            <select name="data.ptgs.trShade">
-                {{#select data.ptgs.trShade}}
+            {{#if system.editMode}}
+            <select name="system.ptgs.trShade">
+                {{#select system.ptgs.trShade}}
                 <option value="B">B</option>
                 <option value="G">G</option>
                 <option value="W">W</option>
                 {{/select}}
             </select>
-            <input type="number" data-dtype="Number" name="data.ptgs.trThresh" value="{{data.ptgs.trThresh}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.trThresh" value="{{system.ptgs.trThresh}}">
             {{else}}
-            {{data.ptgs.trShade}}{{data.ptgs.trThresh}}
+            {{system.ptgs.trShade}}{{system.ptgs.trThresh}}
             {{/if}}
         </div>
         <div class="ptgs-category">
             Mo:
-            {{data.ptgs.woundShade}}{{data.ptgs.moThresh}}
+            {{system.ptgs.woundShade}}{{system.ptgs.moThresh}}
         </div>
         <div class="ptgs-input">
-            <input type="number" data-dtype="Number" name="data.ptgs.suTaken" value="{{data.ptgs.suTaken}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.suTaken" value="{{system.ptgs.suTaken}}">
         </div>
         <div class="ptgs-input">
-            <input type="number" data-dtype="Number" name="data.ptgs.liTaken" value="{{data.ptgs.liTaken}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.liTaken" value="{{system.ptgs.liTaken}}">
         </div>
         <div class="ptgs-input">
-            <input type="number" data-dtype="Number" name="data.ptgs.miTaken" value="{{data.ptgs.miTaken}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.miTaken" value="{{system.ptgs.miTaken}}">
         </div>
         <div class="ptgs-input">
-            <input type="number" data-dtype="Number" name="data.ptgs.seTaken" value="{{data.ptgs.seTaken}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.seTaken" value="{{system.ptgs.seTaken}}">
         </div>
         <div class="ptgs-input">
-            <input type="number" data-dtype="Number" name="data.ptgs.trTaken" value="{{data.ptgs.trTaken}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.trTaken" value="{{system.ptgs.trTaken}}">
         </div>
         <div class="ptgs-input">
-            <input type="number" data-dtype="Number" name="data.ptgs.moTaken" value="{{data.ptgs.moTaken}}">
+            <input type="number" data-dtype="Number" name="system.ptgs.moTaken" value="{{system.ptgs.moTaken}}">
         </div>
     </div>
-    {{#if data.editMode}}
+    {{#if system.editMode}}
     <div class="bits-section">
         <div class="npc-section-label">Beliefs</div>
         {{#each beliefs as |b|}}
-        <div class="bits-name">{{b.name}}</div><input type="text" data-item-id="{{b._id}}" data-binding="data.text" value="{{b.data.text}}">
+        <div class="bits-name">{{b.name}}</div><input type="text" data-item-id="{{b._id}}" data-binding="system.text" value="{{b.system.text}}">
         {{/each}}
     </div>
     <div class="bits-section">
@@ -165,7 +165,7 @@
             Instincts
         </div>
         {{#each instincts as |i|}}
-        <div class="bits-name">{{i.name}}</div><input type="text" data-item-id="{{i._id}}" data-binding="data.text" value="{{i.data.text}}">
+        <div class="bits-name">{{i.name}}</div><input type="text" data-item-id="{{i._id}}" data-binding="system.text" value="{{i.system.text}}">
         {{/each}}
     </div>
     <div class="editable-section">
@@ -241,10 +241,10 @@
             <i data-action="add" data-type="ranged weapon" class="fas fa-fan" title="Add Ranged Weapon"></i>
         </div>
         {{#each weapons as |w|}}
-        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.data.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.system.martialSkills}}
         {{/each}}
         {{#each ranged as |w|}}
-        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.data.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.system.martialSkills}}
         {{/each}}
     </div>
 
@@ -254,7 +254,7 @@
             <i data-action="add" data-type="spell" class="fas fa-plus"></i>
         </div>
         {{#each spells as |s|}}
-        {{> "systems/burningwheel/templates/parts/npc-spell.hbs" spell=s skills= ../actor.data.sorcerousSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-spell.hbs" spell=s skills= ../actor.system.sorcerousSkills}}
         {{/each}}
     </div>
 
@@ -263,25 +263,25 @@
     <div class="indented-section">
         <span class="npc-section-label">Beliefs</span>
         {{#each beliefs as |b|}}
-        {{#if b.data.text}}<span class="item-entry">{{b.data.text}}</span>{{/if}}
+        {{#if b.system.text}}<span class="item-entry">{{b.system.text}}</span>{{/if}}
         {{/each}}
     </div>
     <div class="indented-section">
         <span class="npc-section-label">Instincts</span>
         {{#each instincts as |i|}}
-        {{#if i.data.text}}<span class="item-entry">{{i.data.text}}</span>{{/if}}
+        {{#if i.system.text}}<span class="item-entry">{{i.system.text}}</span>{{/if}}
         {{/each}}
     </div>
     <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Traits</div>
         {{#each traits as |t|}}
-        <div class="item-entry" data-id="{{t._id}}" data-action="edit" draggable="true">{{t.name}} [{{titlecase t.data.traittype}}]</div>
+        <div class="item-entry" data-id="{{t._id}}" data-action="edit" draggable="true">{{t.name}} [{{titlecase t.system.traittype}}]</div>
         {{/each}}
     </div>
     <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Skills</div>
         {{#each skills as |s|}}
-        <div class="item-entry {{s.data.cssClass}} modifiable" data-skill-id="{{s._id}}" data-action="rollSkill" draggable="true" data-id="{{s._id}}">{{s.name}}{{#if (eq s.data.exp 0)}}{{else}} [{{s.data.shade}}{{s.data.exp}}]{{/if}}</div>
+        <div class="item-entry {{s.system.cssClass}} modifiable" data-skill-id="{{s._id}}" data-action="rollSkill" draggable="true" data-id="{{s._id}}">{{s.name}}{{#if (eq s.system.exp 0)}}{{else}} [{{s.system.shade}}{{s.system.exp}}]{{/if}}</div>
         {{/each}}
     </div>
     {{#if untrained}}
@@ -296,7 +296,7 @@
     <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Affiliations</div>
         {{#each affiliations as |a|}}
-        <div class="item-entry" data-id="{{a._id}}" data-action="edit" draggable="true">{{a.data.dice}}D {{a.name}}</div>
+        <div class="item-entry" data-id="{{a._id}}" data-action="edit" draggable="true">{{a.system.dice}}D {{a.name}}</div>
         {{/each}}
     </div>
     {{/if}}
@@ -312,7 +312,7 @@
     <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Reputations</div>
         {{#each reputations as |r|}}
-        <div class="item-entry" data-id="{{r._id}}" data-action="edit" draggable="true">{{r.data.dice}}D {{r.name}}</div>
+        <div class="item-entry" data-id="{{r._id}}" data-action="edit" draggable="true">{{r.system.dice}}D {{r.name}}</div>
         {{/each}}
     </div>
     {{/if}}
@@ -325,14 +325,14 @@
     <div class="indented-section flex-row">
         <div class="npc-section-label">Weapons</div>
         {{#each weapons as |w|}}
-        {{#each w.data.attacks as |a|}}
-        <div class="item-entry wide modifiable melee-draggable" data-action="rollWeapon" data-skill-id="{{../data.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" data-id="{{../_id}}" draggable="true">
-            {{../name}} {{a.attackName}}— I:{{clampWound ../data.shade a.incidental}} M:{{clampWound ../data.shade a.mark}} S: {{clampWound ../data.shade a.superb}}, Add {{a.add}}, VA {{a.vsArmor}}, WS {{a.weaponSpeed}}, {{a.weaponLength}}</div>
+        {{#each w.system.attacks as |a|}}
+        <div class="item-entry wide modifiable melee-draggable" data-action="rollWeapon" data-skill-id="{{../system.skillId}}" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" data-id="{{../_id}}" draggable="true">
+            {{../name}} {{a.attackName}}— I:{{clampWound ../system.shade a.incidental}} M:{{clampWound ../system.shade a.mark}} S: {{clampWound ../system.shade a.superb}}, Add {{a.add}}, VA {{a.vsArmor}}, WS {{a.weaponSpeed}}, {{a.weaponLength}}</div>
         {{/each}}
         {{/each}}
         {{#each ranged as |w|}}
-        <div class="item-entry wide modifiable ranged-draggable" data-action="rollWeapon" data-skill-id="{{w.data.skillId}}" data-weapon-id="{{w._id}}" data-id="{{w._id}}" draggable="true">
-            {{w.name}} — I:{{clampWound w.data.shade w.data.incidental}} M:{{clampWound w.data.shade w.data.mark}} S: {{clampWound w.data.shade w.data.superb}}, VA {{w.data.vsArmor}}, Opt: {{w.data.optimalRange}}D, Extr: {{w.data.extremeRange}}D</div>
+        <div class="item-entry wide modifiable ranged-draggable" data-action="rollWeapon" data-skill-id="{{w.system.skillId}}" data-weapon-id="{{w._id}}" data-id="{{w._id}}" draggable="true">
+            {{w.name}} — I:{{clampWound w.system.shade w.system.incidental}} M:{{clampWound w.system.shade w.system.mark}} S: {{clampWound w.system.shade w.system.superb}}, VA {{w.system.vsArmor}}, Opt: {{w.system.optimalRange}}D, Extr: {{w.system.extremeRange}}D</div>
         {{/each}}
     </div>
     {{#if (or armor.head armor.torso armor.leftArm armor.rightArm (or armor.leftLeg armor.rightLeg armor.shield))}}
@@ -340,31 +340,31 @@
         <div class="npc-section-label">Armor</div>
         {{#if armor.head}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.head._id}}" data-location="Helm">
-            Helm: {{sub armor.head.data.dice armor.head.data.damageHelm}}D</div>
+            Helm: {{sub armor.head.system.dice armor.head.system.damageHelm}}D</div>
         {{/if}}
         {{#if armor.torso}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.torso._id}}" data-location="Torso">
-            Torso: {{plusone (sub armor.torso.data.dice armor.torso.data.damageTorso)}}D</div>
+            Torso: {{plusone (sub armor.torso.system.dice armor.torso.system.damageTorso)}}D</div>
         {{/if}}
         {{#if armor.leftArm}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.leftArm._id}}" data-location="LeftArm">
-            Left Arm: {{sub armor.leftArm.data.dice armor.leftArm.data.damageLeftArm}}D</div>
+            Left Arm: {{sub armor.leftArm.system.dice armor.leftArm.system.damageLeftArm}}D</div>
         {{/if}}
         {{#if armor.rightArm}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.rightArm._id}}" data-location="RightArm">
-            Right Arm: {{sub armor.rightArm.data.dice armor.rightArm.data.damageRightArm}}D</div>
+            Right Arm: {{sub armor.rightArm.system.dice armor.rightArm.system.damageRightArm}}D</div>
         {{/if}}
         {{#if armor.leftLeg}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.leftLeg._id}}" data-location="LeftLeg">
-            Left Leg: {{sub armor.leftLeg.data.dice armor.leftArm.data.damageLeftLeg}}D</div>
+            Left Leg: {{sub armor.leftLeg.system.dice armor.leftArm.system.damageLeftLeg}}D</div>
         {{/if}}
         {{#if armor.rightLeg}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.rightLeg._id}}" data-location="RightLeg">
-            Right Leg: {{sub armor.rightLeg.data.dice armor.rightArm.data.damageRightLeg}}D</div>
+            Right Leg: {{sub armor.rightLeg.system.dice armor.rightArm.system.damageRightLeg}}D</div>
         {{/if}}
         {{#if armor.shield}}
         <div class="item-entry" data-action="rollArmor" data-item-id="{{armor.shield._id}}" data-location="Shield">
-            Shield: {{sub armor.shield.data.dice armor.shield.data.damageRightLeg}}D</div>
+            Shield: {{sub armor.shield.system.dice armor.shield.system.damageRightLeg}}D</div>
         {{/if}}
     </div>
     {{/if}}
@@ -372,10 +372,10 @@
     <div class="indented-section flex-row item-draggable">
         <div class="npc-section-label">Spells</div>
         {{#each spells as |s|}}
-        <div class="item-entry modifiable" data-action="rollSpell" data-skill-id="{{s.data.skillId}}" data-spell-id="{{s._id}}" data-id="{{s._id}}" draggable="true">{{s.name}}</div>
+        <div class="item-entry modifiable" data-action="rollSpell" data-skill-id="{{s.system.skillId}}" data-spell-id="{{s._id}}" data-id="{{s._id}}" draggable="true">{{s.name}}</div>
         {{/each}}
     </div>
     {{/if}} <!-- spells -->
-    {{/if}} <!-- !data.editMode -->
+    {{/if}} <!-- !system.editMode -->
     {{/if}} <!-- isObserver -->
 </form>

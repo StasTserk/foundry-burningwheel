@@ -7,16 +7,16 @@
     </div>
     <div class="item-form-group">
         <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
-        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" value="{{data.pointCost}}" data-dtype="Number">
+        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
         <div class="pill-toggle min-content">
-            <input id="{{item.id}}-checkbox-toolkit" type="checkbox" name="data.isToolkit" {{checked data.isToolkit}}>
+            <input id="{{item.id}}-checkbox-toolkit" type="checkbox" name="system.isToolkit" {{checked system.isToolkit}}>
             <label for="{{item.id}}-checkbox-toolkit" >Toolkit</label>
         </div>
         <div class="pill-toggle min-content">
-            <input id="{{item.id}}-checkbox-expended" type="checkbox" name="data.isExpended" {{checked data.isExpended}}>
+            <input id="{{item.id}}-checkbox-expended" type="checkbox" name="system.isExpended" {{checked system.isExpended}}>
             <label for="{{item.id}}-checkbox-expended">Expended</label>
         </div>
     </div>
     <hr/>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

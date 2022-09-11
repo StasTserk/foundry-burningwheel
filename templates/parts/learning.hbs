@@ -8,120 +8,120 @@
         <button type="button" class="rollable modifiable" data-rollable-name="{{skill.name}}" data-skill-id="{{skill._id}}" data-roll-type="learning"><i class="fas fa-dice"></i></button>
     {{/if}}
     <div class="learning-xp">
-        {{#multiboxes skill.data.learningProgress needed=skill.data.aptitude}}
+        {{#multiboxes skill.system.learningProgress needed=skill.system.aptitude}}
         <input type="radio"
-            id="{{skill.data.safeId}}-learningProgress-0"
+            id="{{skill.system.safeId}}-learningProgress-0"
             value="0" 
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         {{#if isOwner}}
         <label
-            for="{{skill.data.safeId}}-learningProgress-0"
+            for="{{skill.system.safeId}}-learningProgress-0"
             class="progress-clear">
             <i class="fas fa-times-circle"></i>
         </label>
         {{/if}}
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-1"
+            id="{{skill.system.safeId}}-learningProgress-1"
             value="1" 
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-1"
+            for="{{skill.system.safeId}}-learningProgress-1"
             class="progress-tick progress-tick-1">&nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-2"
+            id="{{skill.system.safeId}}-learningProgress-2"
             value="2" 
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-2"
+            for="{{skill.system.safeId}}-learningProgress-2"
             class="progress-tick progress-tick-2">
             &nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-3"
+            id="{{skill.system.safeId}}-learningProgress-3"
             value="3"
             
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress"
+            data-binding="system.learningProgress"
             >
         <label
-            for="{{skill.data.safeId}}-learningProgress-3"
+            for="{{skill.system.safeId}}-learningProgress-3"
             class="progress-tick progress-tick-3">
             &nbsp;
         </label>
         <input
-            type="radio" id="{{skill.data.safeId}}-learningProgress-4"
+            type="radio" id="{{skill.system.safeId}}-learningProgress-4"
             value="4" 
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-4"
+            for="{{skill.system.safeId}}-learningProgress-4"
             class="progress-tick progress-tick-4">
             &nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-5"
+            id="{{skill.system.safeId}}-learningProgress-5"
             value="5"
             
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-5"
+            for="{{skill.system.safeId}}-learningProgress-5"
             class="progress-tick progress-tick-5">
             &nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-6"
+            id="{{skill.system.safeId}}-learningProgress-6"
             value="6"
             
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-6"
+            for="{{skill.system.safeId}}-learningProgress-6"
             class="progress-tick progress-tick-6">
             &nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-7"
+            id="{{skill.system.safeId}}-learningProgress-7"
             value="7"
             
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-7"
+            for="{{skill.system.safeId}}-learningProgress-7"
             class="progress-tick progress-tick-7">
             &nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-8"
+            id="{{skill.system.safeId}}-learningProgress-8"
             value="8"
             
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-8"
+            for="{{skill.system.safeId}}-learningProgress-8"
             class="progress-tick progress-tick-8">
             &nbsp;
         </label>
         <input
             type="radio"
-            id="{{skill.data.safeId}}-learningProgress-9"
+            id="{{skill.system.safeId}}-learningProgress-9"
             value="9"
             
             data-item-id="{{skill._id}}"
-            data-binding="data.learningProgress">
+            data-binding="system.learningProgress">
         <label
-            for="{{skill.data.safeId}}-learningProgress-9"
+            for="{{skill.system.safeId}}-learningProgress-9"
             class="progress-tick progress-tick-9">
             &nbsp;
         </label>

@@ -7,8 +7,8 @@
     </div>
     <div class="item-form-group">
         <div class="item-setting-label">Dice</div>
-        <select name="data.dice" value="{{data.dice}}" data-dtype="Number">
-            {{#select data.dice}}
+        <select name="system.dice" value="{{system.dice}}" data-dtype="Number">
+            {{#select system.dice}}
             <option value="0">None</option>
             <option value="1">1D</option>
             <option value="2">2D</option>
@@ -16,10 +16,10 @@
             {{/select}}
         </select>
         <div class="pill-toggle">
-            <input id="{{item.id}}-checkbox-infamous" type="checkbox" name="data.infamous" {{checked data.infamous}}>
+            <input id="{{item.id}}-checkbox-infamous" type="checkbox" name="system.infamous" {{checked system.infamous}}>
             <label for="{{item.id}}-checkbox-infamous">Infamous</label>
         </div>
     </div>
     <hr>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

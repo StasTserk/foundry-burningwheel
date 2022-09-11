@@ -5,20 +5,20 @@
         {{/if}}
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
-    {{#if data.variableObstacle}}
+    {{#if system.variableObstacle}}
     <div class="spell-sheet-entry">
         <label for="{{item.id}}-var-obstacle-in" class="spell-setting-label">Obstacle</label>
         <input id="{{item.id}}-var-obstacle-in"
             onClick="this.select();"
             type="text"
-            name="data.variableObstacleDescription"
-            value="{{data.variableObstacleDescription}}">
+            name="system.variableObstacleDescription"
+            value="{{system.variableObstacleDescription}}">
         <div class="pill-toggle">
-            <input id="{{item.id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
+            <input id="{{item.id}}-up-spell" type="checkbox" name="system.upSpell" {{checked system.upSpell}}>
             <label for="{{item.id}}-up-spell">Up Spell</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+            <input id="{{item.id}}-var-obstacle" type="checkbox" name="system.variableObstacle" {{checked system.variableObstacle}}>
             <label for="{{item.id}}-var-obstacle">Variable Ob</label>
         </div>
     </div>
@@ -29,15 +29,15 @@
             onClick="this.select();"
             data-dType="number"
             type="number"
-            name="data.obstacle"
-            value="{{data.obstacle}}"
+            name="system.obstacle"
+            value="{{system.obstacle}}"
             class="exponent">
         <div class="pill-toggle">
-            <input id="{{item.id}}-up-spell" type="checkbox" name="data.upSpell" {{checked data.upSpell}}>
+            <input id="{{item.id}}-up-spell" type="checkbox" name="system.upSpell" {{checked system.upSpell}}>
             <label for="{{item.id}}-up-spell">Up Spell</label>
         </div>
         <div class="pill-toggle">
-            <input id="{{item.id}}-var-obstacle" type="checkbox" name="data.variableObstacle" {{checked data.variableObstacle}}>
+            <input id="{{item.id}}-var-obstacle" type="checkbox" name="system.variableObstacle" {{checked system.variableObstacle}}>
             <label for="{{item.id}}-var-obstacle">Variable Ob</label>
         </div>
     </div>
@@ -48,76 +48,76 @@
             onClick="this.select();"
             data-dType="number"
             type="number"
-            name="data.actions"
-            value="{{data.actions}}"
+            name="system.actions"
+            value="{{system.actions}}"
             class="exponent">
         <label for="{{item.id}}-origin" class="spell-setting-label">Origin</label>
         <input id="{{item.id}}-origin"
             onClick="this.select();"
             type="text"
-            name="data.origin"
-            value="{{data.origin}}">
+            name="system.origin"
+            value="{{system.origin}}">
         <label for="{{item.id}}-areaOfEffect" class="spell-setting-label">Area of Effect</label>
         <input id="{{item.id}}-areaOfEffect"
             onClick="this.select();"
             type="text"
-            name="data.areaOfEffect"
-            value="{{data.areaOfEffect}}">
+            name="system.areaOfEffect"
+            value="{{system.areaOfEffect}}">
         <label for="{{item.id}}-element" class="spell-setting-label">Element</label>
         <input id="{{item.id}}-element"
             onClick="this.select();"
             type="text"
-            name="data.element"
-            value="{{data.element}}">
+            name="system.element"
+            value="{{system.element}}">
         <label for="{{item.id}}-impetus" class="spell-setting-label">Impetus</label>
         <input id="{{item.id}}-impetus"
             onClick="this.select();"
             type="text"
-            name="data.impetus"
-            value="{{data.impetus}}">
+            name="system.impetus"
+            value="{{system.impetus}}">
         <label for="{{item.id}}-duration" class="spell-setting-label">Duration</label>
         <input id="{{item.id}}-duration"
             onClick="this.select();"
             type="text"
-            name="data.duration"
-            value="{{data.duration}}">
+            name="system.duration"
+            value="{{system.duration}}">
         <label for="{{item.id}}-point-cost" class="spell-setting-label">Resource Point Cost</label>
-        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="data.pointCost" onfocus="this.select();" value="{{data.pointCost}}" data-dtype="Number">
+        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" onfocus="this.select();" value="{{system.pointCost}}" data-dtype="Number">
         {{#if item.hasOwner}}
         <div class="pill-toggle">
-            <input id="{{item.id}}-in-practicals" type="checkbox" name="data.inPracticals" {{checked data.inPracticals}}>
+            <input id="{{item.id}}-in-practicals" type="checkbox" name="system.inPracticals" {{checked system.inPracticals}}>
             <label for="{{item.id}}-in-practicals">In Practicals</label>
         </div>
         {{/if}}
     </div>
     <div class="spell-weapon-toggle">
         <div class="pill-toggle">
-            <input id="{{item.id}}-is-weapon" type="checkbox" name="data.isWeapon" {{checked data.isWeapon}}>
+            <input id="{{item.id}}-is-weapon" type="checkbox" name="system.isWeapon" {{checked system.isWeapon}}>
             <label for="{{item.id}}-is-weapon" class="spell-toggle-label">Is a Weapon</label>
         </div>
     </div>
     <div class="spell-weapon-stats">
-        {{#if data.isWeapon}}
+        {{#if system.isWeapon}}
         <div class="spell-sheet-entry">
             <label for="{{item.id}}-will-bonus" class="spell-setting-label">Will Bonus</label>
             <input id="{{item.id}}-will-bonus"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
-                name="data.willDamageBonus"
-                value="{{data.willDamageBonus}}"
+                name="system.willDamageBonus"
+                value="{{system.willDamageBonus}}"
                 class="exponent">
             <label for="{{item.id}}-va" class="spell-setting-label">Vs. Armor</label>
             <input id="{{item.id}}-va"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
-                name="data.va"
-                value="{{data.va}}"
+                name="system.va"
+                value="{{system.va}}"
                 class="exponent">
             <label for="{{item.id}}-spell-length" class="spell-setting-label">Weapon Length</label>
-            <select id="{{item.id}}-spell-length" name="data.weaponLength" value="{{data.weaponLength}}">
-                {{#select data.weaponLength}}
+            <select id="{{item.id}}-spell-length" name="system.weaponLength" value="{{system.weaponLength}}">
+                {{#select system.weaponLength}}
                 {{#each item.spellLengths as |title value|}}
                 <option value="{{value}}">{{title}}</option>
                 {{/each}}
@@ -128,36 +128,36 @@
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
-                name="data.optimalRange"
-                value="{{data.optimalRange}}"
+                name="system.optimalRange"
+                value="{{system.optimalRange}}"
                 class="exponent"> Dice</div>
             <label for="{{item.id}}-extreme" class="spell-setting-label">Extreme Range</label>
             <div><input id="{{item.id}}-extreme"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
-                name="data.extremeRange"
-                value="{{data.extremeRange}}"
+                name="system.extremeRange"
+                value="{{system.extremeRange}}"
                 class="exponent"> Dice</div>
             <label for="{{item.id}}-max-range" class="spell-setting-label">Max Range</label>
             <input id="{{item.id}}-max-range"
                 onClick="this.select();"
                 type="text"
-                name="data.maxRange"
-                value="{{data.maxRange}}">
+                name="system.maxRange"
+                value="{{system.maxRange}}">
             {{#if item.hasOwner}}
             <label class="spell-setting-label">I/M/S</label>
             <div>
-                <span>{{data.incidental}}</span> / <span>{{data.mark}}</span> / <span>{{data.superb}}</span>
+                <span>{{system.incidental}}</span> / <span>{{system.mark}}</span> / <span>{{system.superb}}</span>
             </div>
             {{/if}}
             <div class="pill-toggle">
-                <input id="{{item.id}}-half-will" type="checkbox" name="data.halfWill" {{checked data.halfWill}}>
+                <input id="{{item.id}}-half-will" type="checkbox" name="system.halfWill" {{checked system.halfWill}}>
                 <label for="{{item.id}}-half-will" title="This spell's damage is base off of half the will exponent, rather than the full one.">Half Will</label>
             </div>
         </div>
         {{/if}}
     </div>
     <hr>
-    <textarea name="data.description">{{data.description}}</textarea>
+    <textarea name="system.description">{{system.description}}</textarea>
 </form>

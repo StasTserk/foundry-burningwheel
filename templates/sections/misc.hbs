@@ -1,14 +1,14 @@
 <h2 class="section-header">
     {{#if isOwner}}
-        <input type="checkbox" id="{{actor.id}}-collapseMisc" name="data.collapseMisc" class="section-collapse" {{ checked data.collapseMisc }}>
+        <input type="checkbox" id="{{actor.id}}-collapseMisc" name="system.collapseMisc" class="section-collapse" {{ checked system.collapseMisc }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseMisc" class="section-collapse-label clickable">Notes and Other Miscellanea</label>
 </h2>
-{{#if data.collapseMisc}}{{else}}
+{{#if system.collapseMisc}}{{else}}
 <div class="misc-section item-grid col-3">
-    <textarea name="data.miscNotes1" class="note-box" rows="4">{{data.miscNotes1}}</textarea>
-    <textarea name="data.miscNotes2" class="note-box" rows="4">{{data.miscNotes2}}</textarea>
-    <textarea name="data.miscNotes3" class="note-box" rows="4">{{data.miscNotes3}}</textarea>
+    <textarea name="system.miscNotes1" class="note-box" rows="4">{{system.miscNotes1}}</textarea>
+    <textarea name="system.miscNotes2" class="note-box" rows="4">{{system.miscNotes2}}</textarea>
+    <textarea name="system.miscNotes3" class="note-box" rows="4">{{system.miscNotes3}}</textarea>
 </div>
 {{/if}}

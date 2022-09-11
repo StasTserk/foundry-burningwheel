@@ -1,14 +1,14 @@
 <h2 class="section-header">
     {{#if isOwner}}
-    <input type="checkbox" id="{{actor.id}}-collapseCombat" name="data.collapseCombat" class="section-collapse" {{ checked data.collapseCombat }}>
+    <input type="checkbox" id="{{actor.id}}-collapseCombat" name="system.collapseCombat" class="section-collapse" {{ checked system.collapseCombat }}>
     <i class="fas fa-chevron-down"></i>
     {{/if}}
     <label for="{{actor.id}}-collapseCombat" class="section-collapse-label clickable">Weapons and Armor</label>
 </h2>
-{{#if data.collapseCombat}}{{else}}
+{{#if system.collapseCombat}}{{else}}
 <div class="combat-section flex-row">
     <div class="weapons">
-        {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=actor.data.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=actor.system.martialSkills}}
     </div>
     <div class="armor-misc flex-column">
         <div class="training-skills">
@@ -30,71 +30,71 @@
             <hr>
             <h3>Clumsy Weight Penalties</h3>
             <div class="flex-row">
-                {{#if data.clumsyWeight.agilityPenalty}}
+                {{#if system.clumsyWeight.agilityPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Agility</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.agilityPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.agilityPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.speedObPenalty}}
+                {{#if system.clumsyWeight.speedObPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Speed</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.speedObPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.speedObPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.speedDiePenalty}}
+                {{#if system.clumsyWeight.speedDiePenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Speed</label>
-                    <div class="clumsy-value">-{{data.clumsyWeight.speedDiePenalty}} Die</div>
+                    <div class="clumsy-value">-{{system.clumsyWeight.speedDiePenalty}} Die</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.climbingPenalty}}
+                {{#if system.clumsyWeight.climbingPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Climbing</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.climbingPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.climbingPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.healthFortePenalty}}
+                {{#if system.clumsyWeight.healthFortePenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Health / Forte</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.healthFortePenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.healthFortePenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.throwingShootingPenalty}}
+                {{#if system.clumsyWeight.throwingShootingPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Throwing / Shooting</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.throwingShootingPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.throwingShootingPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.stealthyPenalty}}
+                {{#if system.clumsyWeight.stealthyPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Stealthy</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.stealthyPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.stealthyPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.swimmingPenalty}}
+                {{#if system.clumsyWeight.swimmingPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Swimming</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.swimmingPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.swimmingPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.helmetObPenalty}}
+                {{#if system.clumsyWeight.helmetObPenalty}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Perception / Obs.</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.helmetObPenalty}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.helmetObPenalty}} Ob</div>
                 </div>
                 {{/if}}
-                {{#unless data.armorTrained}}
-                {{#if data.clumsyWeight.untrainedHealth}}
+                {{#unless system.armorTrained}}
+                {{#if system.clumsyWeight.untrainedHealth}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Untrained Health/Forte Penalty</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.untrainedHealth}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.untrainedHealth}} Ob</div>
                 </div>
                 {{/if}}
-                {{#if data.clumsyWeight.untrainedAll}}
+                {{#if system.clumsyWeight.untrainedAll}}
                 <div class="clumsy-item flex-row">
                     <label class="clumsy-label">Untrained Global Penalty</label>
-                    <div class="clumsy-value">+{{data.clumsyWeight.untrainedAll}} Ob</div>
+                    <div class="clumsy-value">+{{system.clumsyWeight.untrainedAll}} Ob</div>
                 </div>
                 {{/if}}
                 {{/unless}}

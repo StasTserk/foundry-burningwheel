@@ -25,13 +25,13 @@ export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHa
 export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPreset }: AttributeRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(attrName);
     dataPreset = dataPreset || {};
-    const woundDice = attrName === "Steel" ? actor.data.data.ptgs.woundDice : undefined;
-    const obPenalty = attrName === "Steel" ? actor.data.data.ptgs.obPenalty : undefined;
+    const woundDice = attrName === "Steel" ? actor.system.ptgs.woundDice : undefined;
+    const obPenalty = attrName === "Steel" ? actor.system.ptgs.obPenalty : undefined;
     if (attrName.toLowerCase() === "steel") {
         dataPreset.useCustomDifficulty = true;
         dataPreset.showDifficulty = true;
         dataPreset.showObstacles = true;
-        dataPreset.difficulty = actor.data.data.hesitation || 0;
+        dataPreset.difficulty = actor.system.hesitation || 0;
     }
     const data: AttributeDialogData =  mergeDialogData<AttributeDialogData>({
         name: `${attrName} Test`,

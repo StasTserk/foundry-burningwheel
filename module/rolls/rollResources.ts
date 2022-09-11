@@ -16,7 +16,7 @@ import { BWCharacter } from "../actors/BWCharacter.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
-    const stat = sheet.actor.data.data.resources;
+    const stat = sheet.actor.system.resources;
     const actor = sheet.actor;
     return handleResourcesRoll({ actor, stat, dataPreset });
 }
@@ -37,10 +37,10 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        tax: parseInt(actor.data.data.resourcesTax.toString()),
+        tax: parseInt(actor.system.resourcesTax.toString()),
         stat,
-        cashDieOptions: Array.from(Array(actor.data.data.cash || 0).keys()),
-        fundDieOptions: Array.from(Array(actor.data.data.funds || 0).keys()),
+        cashDieOptions: Array.from(Array(actor.system.cash || 0).keys()),
+        fundDieOptions: Array.from(Array(actor.system.funds || 0).keys()),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
@@ -71,7 +71,7 @@ async function resourcesRollCallback(
     const rollData = extractRollData(dialogHtml);
 
     if (rollData.cashDice) {
-        const currentCash = actor.data.data.cash || 0;
+        const currentCash = actor.system.cash || 0;
         actor.update({"data.cash": currentCash - rollData.cashDice});
     }
 

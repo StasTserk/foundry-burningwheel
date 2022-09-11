@@ -27,8 +27,8 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         obstacle: positionPenalty, optional: true, label: "Weapon Disadvantage"
     });
     dataPreset.offerSplitPool = true,
-    dataPreset.deedsPoint = actor.data.data.deeds !== 0,
-    dataPreset.personaOptions = actor.data.data.persona ? Array.from(Array(Math.min(actor.data.data.persona, 3)).keys()) : undefined;
+    dataPreset.deedsPoint = actor.system.deeds !== 0,
+    dataPreset.personaOptions = actor.system.persona ? Array.from(Array(Math.min(actor.system.persona, 3)).keys()) : undefined;
     
     if (type === "skill") {
         if (!itemId) {
@@ -45,7 +45,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                 }
                 // handle melee attack at the given index.
                 const weapon = item as MeleeWeapon | RangedWeapon;
-                const weaponSkill = actor.items.get<Skill>(weapon.data.data.skillId);
+                const weaponSkill = actor.items.get<Skill>(weapon.system.skillId);
 
                 if (!weaponSkill) {
                     return notifyError("No Associated Skill", "In order for a skill test to be rolled, a weapon or spell has to be associated with a skill. Check the Actor's sheet to make sure the selected weapon has a chosen skill.");
@@ -70,7 +70,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
 
             case "spell":
                 const spell = actor.items.get(itemId) as Spell;
-                const skill = actor.items.get(spell?.data.data.skillId) as Skill;
+                const skill = actor.items.get(spell?.system.skillId) as Skill;
                 if (actor.data.type === "character") {
                     return handleSpellRoll({ actor: (actor as BWCharacter), spell, skill, dataPreset});
                 }
@@ -84,8 +84,8 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
     // speed, power, or agility roll
     if (actor.data.type === "npc") {
         // npc specific code
-        const dice = parseInt(getProperty(actor, `data.data.${type}.exp`));
-        const shade = getProperty(actor, `data.data.${type}.shade`) as ShadeString;
+        const dice = parseInt(getProperty(actor, `system.${type}.exp`));
+        const shade = getProperty(actor, `system.${type}.shade`) as ShadeString;
         return handleNpcStatRoll({
             dice,
             shade,
@@ -101,7 +101,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
     if (type === "steel"){
         return handleAttrRoll({
             actor: actor as BWCharacter,
-            stat: actor.data.data.steel,
+            stat: actor.system.steel,
             attrName: "Steel",
             accessor,
             dataPreset

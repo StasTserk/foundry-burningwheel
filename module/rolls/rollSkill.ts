@@ -18,7 +18,7 @@ import {
 } from "./rolls.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
-import { Possession, PossessionRootData } from "../items/possession.js";
+import { Possession, PossessionData } from "../items/possession.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollEventOptions ): Promise<unknown> {
@@ -32,7 +32,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
         return buildHelpDialog({
-            exponent: skill.data.data.exp,
+            exponent: skill.system.exp,
             skillId: skill.id,
             actor,
             helpedWith: skill.name
@@ -45,18 +45,18 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: actor.data.data.ptgs.woundDice,
-        obPenalty: actor.data.data.ptgs.obPenalty,
-        skill: skill.data.data,
-        needsToolkit: skill.data.data.tools,
-        toolkits: actor.data.toolkits,
-        forkOptions: actor.getForkOptions(skill.data.name).sort(helpers.byName),
-        wildForks: actor.getWildForks(skill.data.name).sort(helpers.byName),
+        woundDice: actor.system.ptgs.woundDice,
+        obPenalty: actor.system.ptgs.obPenalty,
+        skill: skill.system,
+        needsToolkit: skill.system.tools,
+        toolkits: actor.toolkits,
+        forkOptions: actor.getForkOptions(skill.name).sort(helpers.byName),
+        wildForks: actor.getWildForks(skill.name).sort(helpers.byName),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: !game.burningwheel.useGmDifficulty
-            || !!actor.data.data.ptgs.obPenalty
+            || !!actor.system.ptgs.obPenalty
             || (dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length || false)
     }, dataPreset);
     const html = await renderTemplate(templates.pcRollDialog, templateData);
@@ -86,22 +86,22 @@ async function skillRollCallback(
 
     const dg = helpers.difficultyGroup(difficultyDice, difficultyTotal);
 
-    const roll = await rollDice(diceTotal, skill.data.data.open, skill.data.data.shade);
+    const roll = await rollDice(diceTotal, skill.system.open, skill.system.shade);
     if (!roll) { return; }
 
-    const wildForkDie = await rollWildFork(wildForks, skill.data.data.shade);
+    const wildForkDie = await rollWildFork(wildForks, skill.system.shade);
     const wildForkBonus = wildForkDie?.total || 0;
     const wildForkDice = wildForkDie?.results || [];
     
     let splitPoolString: string | undefined;
     let splitPoolRoll: Roll | undefined;
     if (splitPool) {
-        splitPoolRoll = await getSplitPoolRoll(splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolRoll = await getSplitPoolRoll(splitPool, skill.system.open, skill.system.shade);
         splitPoolString = getSplitPoolText(splitPoolRoll);
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
-    if (skill.data.data.tools) {
+    if (skill.system.tools) {
         const toolkitId = extractSelectString(dialogHtml, "toolkitId") || '';
         const tools = actor.items.get<Possession>(toolkitId);
         if (tools) {
@@ -120,7 +120,7 @@ async function skillRollCallback(
         return { label: s, ...buildRerollData({ actor, roll, itemId: skill.id, splitPoolRoll }) as RerollData };
     });
     const success = (parseInt(roll.result) + wildForkBonus) >= difficultyTotal;
-    if (success || actor.data.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
+    if (success || actor.successOnlyRolls.indexOf(skill.name.toLowerCase()) === -1) {
         await skill.addTest(dg);
     }
 
@@ -136,7 +136,7 @@ async function skillRollCallback(
         splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: baseDifficulty,
         obstacleTotal: difficultyTotal,
-        nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
+        nameClass: getRollNameClass(skill.system.open, skill.system.shade),
         success,
         rolls: roll.dice[0].results,
         wildRolls: wildForkDice,
@@ -160,7 +160,7 @@ interface SkillDialogData extends RollDialogData {
     forkOptions: { name: string, amount: number }[];
     wildForks: { name: string, amount: number }[];
     needsToolkit: boolean;
-    toolkits: PossessionRootData[];
+    toolkits: PossessionData[];
 }
 
 

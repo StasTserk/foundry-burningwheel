@@ -23,14 +23,14 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
     const armorItem = actor.items.get<Armor>(armorId);
     const location = target.dataset.location || "";
     const chestBonus = location.toLowerCase() === "torso" ? 1 : 0;
-    const damage = armorItem?.data.data[`damage${location}`];
+    const damage = armorItem?.system[`damage${location}`];
 
     const dialogData: ArmorDialogData = {
         difficulty: 1,
         name: "Armor",
         arthaDice: 0,
         bonusDice: 0,
-        armor: (armorItem?.data.data.dice || 0) + chestBonus,
+        armor: (armorItem?.system.dice || 0) + chestBonus,
         damage,
         showObstacles: true,
         showDifficulty: true,
@@ -53,7 +53,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
 
 export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: BWCharacterSheet | NpcSheet, location: string): Promise<unknown> {   
     const dice = extractNumber(html, "armor");
-    const damage = parseInt(armorItem.data.data[`damage${location}`]);
+    const damage = parseInt(armorItem.system[`damage${location}`]);
     const va = extractNumber(html, "vsArmor");
     const actor = armorItem.actor as unknown as BWActor;
     const baseData = extractBaseData(html, sheet);
@@ -65,7 +65,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     }
 
     const numDice = dice - damage;
-    const roll = await rollDice(numDice, false, armorItem.data.data.shade || "B");
+    const roll = await rollDice(numDice, false, armorItem.system.shade || "B");
     if (!roll) { return; }
     const damageAssigned = await armorItem.assignDamage(roll, location);
     const isSuccess = (roll.total || 0) >= 1 + va;
@@ -77,7 +77,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
         success: isSuccess,
         rolls: roll.dice[0].results,
         difficulty: 1 + va,
-        nameClass: getRollNameClass(false, armorItem.data.data.shade || "B"),
+        nameClass: getRollNameClass(false, armorItem.system.shade || "B"),
         difficultyGroup: "N/A",
         obstacleTotal: 1 + va,
         callons: [],

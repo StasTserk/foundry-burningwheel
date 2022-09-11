@@ -17,7 +17,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     const splitRollArray = target.dataset.splitDice?.split(',').map(r => parseInt(r)) || [];
     const splitSuccesses = parseInt(target.dataset.splitSuccesses || "0");
 
-    if (actor.data.data.fate === 0) {
+    if (actor.system.fate === 0) {
         return helpers.notifyError("No Fate Points", "The character does not have any fate points left with which to reroll.");
     }
 
@@ -26,9 +26,9 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         rollStat = getProperty(actor, `data.${accessor}`);
     } else if (target.dataset.rerollType === "armor") {
         const armorItem = actor.items.get(itemId) as Armor;
-        rollStat = { shade: armorItem.data.data.shade, open: false, };
+        rollStat = { shade: armorItem.system.shade, open: false, };
     } else {
-        rollStat = (actor.items.get(itemId) as Skill).data.data;
+        rollStat = (actor.items.get(itemId) as Skill).system;
     }
 
     const successTarget = rollStat.shade === "B" ? 3 : (rollStat.shade === "G" ? 2 : 1);
@@ -62,7 +62,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
 
-        if (actor.data.data.fate !== 0 && actor.data.type === "character") {
+        if (actor.system.fate !== 0 && actor.type === "character") {
             const char = actor as BWCharacter;
             if (target.dataset.rerollType === "stat") {
                 const fateSpent = parseInt(getProperty(actor, `data.${accessor}.fate`) || "0", 10);
@@ -73,7 +73,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                     if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.
                         updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
                     }
-                    if (actor.data.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
+                    if (actor.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
                             char.addAttributeTest(
                                 getProperty(actor, `data.${accessor}`) as TracksTests,
@@ -95,20 +95,20 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                 actor.update(updateData);
             } else if (target.dataset.rerollType === "skill") {
                 const skill = actor.items.get<Skill>(itemId);
-                const fateSpent = skill?.data.data.fate || 0;
+                const fateSpent = skill?.system.fate || 0;
                 skill?.update({ 'data.fate': fateSpent + 1 }, {});
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
                 const skill = actor.items.get<Skill>(itemId);
                 if (learningTarget === 'skill') {
                     // learning roll went to the root skill
-                    const fateSpent = skill?.data.data.fate || 0;
+                    const fateSpent = skill?.system.fate || 0;
                     skill?.update({'data.fate': fateSpent + 1 }, {});
                 } else {
                     if (successes <= obstacleTotal && success) {
-                        if (actor.data.successOnlyRolls.includes(learningTarget)) {
+                        if (actor.successOnlyRolls.includes(learningTarget)) {
                             (actor as BWCharacter).addStatTest(
-                                getProperty(actor, `data.data.${learningTarget}`) as TracksTests,
+                                getProperty(actor, `system.${learningTarget}`) as TracksTests,
                                 learningTarget.titleCase(),
                                 `data.${learningTarget}`,
                                 target.dataset.difficultyGroup as TestString,
@@ -130,7 +130,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         newSplitSuccesses = splitReroll.total || 0;
     }
 
-    const actorFateCount = actor.data.data.fate;
+    const actorFateCount = actor.system.fate;
     actor.update({ 'data.fate': actorFateCount -1 });
 
     const data: RerollMessageData = {

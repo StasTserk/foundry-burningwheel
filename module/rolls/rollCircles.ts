@@ -17,7 +17,7 @@ import { BWCharacter } from "../actors/BWCharacter.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleCirclesRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, "data.circles") as Ability;
+    const stat = getProperty(sheet.actor.system, "circles") as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {
         circlesContact = sheet.actor.items.get<Relationship>(target.dataset.relationshipId);
@@ -44,10 +44,10 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        obPenalty: actor.data.data.ptgs.obPenalty,
+        obPenalty: actor.system.ptgs.obPenalty,
         stat,
-        circlesBonus: actor.data.circlesBonus,
-        circlesMalus: actor.data.circlesMalus,
+        circlesBonus: actor.circlesBonus,
+        circlesMalus: actor.circlesMalus,
         circlesContact,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),

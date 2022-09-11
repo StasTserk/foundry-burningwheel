@@ -22,9 +22,9 @@ export async function handleRollable(
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
     const dataPreset = getKeypressModifierPreset(e);
-    dataPreset.deedsPoint = sheet.actor.data.data.deeds !== 0;
-    if (sheet.actor.data.data.persona) {
-        dataPreset.personaOptions = Array.from(Array(Math.min(sheet.actor.data.data.persona, 3)).keys());
+    dataPreset.deedsPoint = sheet.actor.system.deeds !== 0;
+    if (sheet.actor.system.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(sheet.actor.system.persona, 3)).keys());
     }
 
     switch(rollType) {
@@ -41,12 +41,12 @@ export async function handleRollable(
         case "learning":
             return handleLearningRollEvent({ target, sheet, dataPreset });
         case "shrug":
-            if ((sheet as BWCharacterSheet).actor.data.data.ptgs.shrugging) {
+            if ((sheet as BWCharacterSheet).actor.system.ptgs.shrugging) {
                 return sheet.actor.update({ "data.ptgs.shrugging": false });
             }
             return handleShrugRollEvent({ target, sheet, dataPreset });
         case "grit":
-            if ((sheet as BWCharacterSheet).actor.data.data.ptgs.gritting) {
+            if ((sheet as BWCharacterSheet).actor.system.ptgs.gritting) {
                 return sheet.actor.update({ "data.ptgs.gritting": false });
             }
             return handleGritRollEvent({ target, sheet, dataPreset });

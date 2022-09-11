@@ -29,15 +29,15 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
     const stat = getProperty(actor.data, "data.forte") as Ability;
     
     const rollModifiers = actor.getRollModifiers("forte");
-    const tax = actor.data.data.forteTax;
+    const tax = actor.system.forteTax;
     
     const data: StatDialogData = mergeDialogData<StatDialogData>({
         name: `${spellName} Tax Test`,
         difficulty: obstacle,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: actor.data.data.ptgs.woundDice,
-        obPenalty: actor.data.data.ptgs.obPenalty,
+        woundDice: actor.system.ptgs.woundDice,
+        obPenalty: actor.system.ptgs.obPenalty,
         stat,
         tax,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),

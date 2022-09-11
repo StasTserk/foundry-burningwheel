@@ -21,7 +21,7 @@ import { Npc } from "../actors/Npc.js";
 import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
 import { Skill } from "../items/skill.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";
-import { PossessionRootData } from "../items/possession.js";
+import { PossessionData } from "../items/possession.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 import { Spell } from "../items/spell.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
@@ -69,7 +69,7 @@ export async function handleNpcSpellRoll({ actor, spell, skill, dataPreset}: Npc
     if (!spell) {
         return notifyError("Missing Spell", "The spell that is being cast appears to be missing from the character sheet.");
     }
-    const obstacle = spell.data.data.variableObstacle ? 3 : spell.data.data.obstacle;
+    const obstacle = spell.system.variableObstacle ? 3 : spell.system.obstacle;
     if (dataPreset) {
         dataPreset.difficulty = obstacle;
     } else {
@@ -88,24 +88,24 @@ export async function handleNpcSkillRollEvent({ target, sheet, extraInfo, dataPr
 
 export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}: NpcRollOptions): Promise<unknown>  {
     dataPreset = dataPreset || {};
-    dataPreset.deedsPoint = actor.data.data.deeds !== 0;
+    dataPreset.deedsPoint = actor.system.deeds !== 0;
 
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
         return buildHelpDialog({
-            exponent: skill.data.data.exp,
+            exponent: skill.system.exp,
             skillId: skill.id,
             actor,
             helpedWith: skill.name
         });
     }
 
-    if (actor.data.data.persona) {
-        dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+    if (actor.system.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(actor.system.persona, 3)).keys());
     }
     
-    if (skill.data.data.learning) {
-        const accessor = `data.${skill.data.data.root1}`;
+    if (skill.system.learning) {
+        const accessor = `data.${skill.system.root1}`;
         if (dataPreset) {
             dataPreset.learning = true;
         } else {
@@ -116,29 +116,29 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
             dice: stat.exp,
             shade: stat.shade,
             open: stat.open,
-            statName: skill.data.data.root1 as NpcStatName,
+            statName: skill.system.root1 as NpcStatName,
             actor,
             extraInfo,
             dataPreset
         };
-        if (skill.data.data.root2) {
+        if (skill.system.root2) {
             // learning skill that requires a stat choice for rolling
             return new Dialog({
                 title: "Pick which base stat to use",
                 content: "<p>The listed skill uses one of two possible roots. Pick one to roll.</p>",
                 buttons: {
                     root1: {
-                        label: skill.data.data.root1.titleCase(),
+                        label: skill.system.root1.titleCase(),
                         callback: () => handleNpcStatRoll(rollData)
                     },
                     root2: {
-                        label: skill.data.data.root2.titleCase(),
+                        label: skill.system.root2.titleCase(),
                         callback: () => {
-                            const stat2 = getProperty(actor.data, `data.${skill.data.data.root2}`) as Ability;
+                            const stat2 = getProperty(actor.data, `data.${skill.system.root2}`) as Ability;
                             rollData.dice = stat2.exp;
                             rollData.shade = stat2.shade;
                             rollData.open = stat2.open;
-                            rollData.statName = skill.data.data.root2 as NpcStatName;
+                            rollData.statName = skill.system.root2 as NpcStatName;
                             return handleNpcStatRoll(rollData);
                         }
                     }
@@ -156,18 +156,18 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: actor.data.data.ptgs.woundDice,
-        obPenalty: actor.data.data.ptgs.obPenalty,
-        skill: skill.data.data,
-        needsToolkit: skill.data.data.tools,
-        toolkits: actor.data.toolkits,
+        woundDice: actor.system.ptgs.woundDice,
+        obPenalty: actor.system.ptgs.obPenalty,
+        skill: skill.system,
+        needsToolkit: skill.system.tools,
+        toolkits: actor.toolkits,
         forkOptions: actor.getForkOptions(skill.data.name).sort(byName),
         wildForks: actor.getWildForks(skill.data.name).sort(byName),
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
         optionalObModifiers: rollModifiers.filter(r => r.optional && r.obstacle),
         showDifficulty: !game.burningwheel.useGmDifficulty,
         showObstacles: !game.burningwheel.useGmDifficulty
-            || !!actor.data.data.ptgs.obPenalty
+            || !!actor.system.ptgs.obPenalty
             || ((dataPreset && dataPreset.obModifiers && !!dataPreset.obModifiers.length) || false)
     }, dataPreset);
 
@@ -196,10 +196,10 @@ async function skillRollCallback(
     const rollData = extractRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
 
-    const roll = await rollDice(rollData.diceTotal, skill.data.data.open, skill.data.data.shade);
+    const roll = await rollDice(rollData.diceTotal, skill.system.open, skill.system.shade);
     if (!roll) { return; }
 
-    const wildForkDie = await rollWildFork(rollData.wildForks, skill.data.data.shade);
+    const wildForkDie = await rollWildFork(rollData.wildForks, skill.system.shade);
     const wildForkBonus = wildForkDie?.total || 0;
     const wildForkDice = wildForkDie?.results || [];
 
@@ -208,7 +208,7 @@ async function skillRollCallback(
     let splitPoolString: string | undefined;
     let splitPoolRoll: Roll | undefined;
     if (rollData.splitPool) {
-        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, skill.data.data.open, skill.data.data.shade);
+        splitPoolRoll = await getSplitPoolRoll(rollData.splitPool, skill.system.open, skill.system.shade);
         splitPoolString = getSplitPoolText(splitPoolRoll);
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
@@ -232,7 +232,7 @@ async function skillRollCallback(
         splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,
-        nameClass: getRollNameClass(skill.data.data.open, skill.data.data.shade),
+        nameClass: getRollNameClass(skill.system.open, skill.system.shade),
         success: isSuccessful,
         rolls: roll.dice[0].results,
         wildRolls: wildForkDice,
@@ -254,7 +254,7 @@ async function skillRollCallback(
 interface NpcSkillDialogData extends RollDialogData {
     skill: TracksTests;
     needsToolkit: boolean;
-    toolkits: PossessionRootData[];
+    toolkits: PossessionData[];
     forkOptions: {name: string; amount: number}[];
     wildForks: {name: string; amount: number}[];
 }

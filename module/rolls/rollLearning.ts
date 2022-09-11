@@ -178,7 +178,7 @@ async function learningRollCallback(
         }
 
         const data: RollChatMessageData = {
-            name: `Beginner's Luck ${skill.data.name}`,
+            name: `Beginner's Luck ${skill.name}`,
             successes: roll.result,
             splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
             difficulty: rollData.baseDifficulty,

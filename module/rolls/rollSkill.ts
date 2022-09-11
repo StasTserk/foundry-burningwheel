@@ -41,7 +41,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     const rollModifiers = actor.getRollModifiers(skill.name);
 
     const templateData = mergeDialogData({
-        name: skill.data.name,
+        name: skill.name,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -62,7 +62,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     const html = await renderTemplate(templates.pcRollDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${skill.data.name} Test`,
+            title: `${skill.name} Test`,
             content: html,
             buttons: {
                 roll: {

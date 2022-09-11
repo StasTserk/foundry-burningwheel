@@ -13,7 +13,7 @@ import { Relationship } from "../../items/relationship.js";
 import { Reputation } from "../../items/reputation.js";
 import { SkillData, Skill } from "../../items/skill.js";
 import { Spell } from "../../items/spell.js";
-import { TraitData, Trait } from "../../items/trait.js";
+import { Trait } from "../../items/trait.js";
 import { BWItem } from "../../items/item.js";
 import { TypeMissing } from "../../../types/index.js";
 
@@ -133,8 +133,8 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
         const traitLists: CharacterSheetTraits = { character: [], die: [], callon: [] };
 
         if (traits.length !== 0) {
-            traits.forEach((trait) => {
-                switch ((trait as unknown as TraitData).traittype) {
+            traits.forEach((trait: Trait) => {
+                switch (trait.system.traittype) {
                     case "character": traitLists.character.push(trait); break;
                     case "die": traitLists.die.push(trait); break;
                     default: traitLists.callon.push(trait); break;

@@ -116,7 +116,7 @@ async function ptgsRollCallback(
         fateReroll,
         callons
     };
-    sheet.actor.updateArthaForStat("data.health", persona, deeds);
+    sheet.actor.updateArthaForStat("health", persona, deeds);
     if (isSuccessful) {
         const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
         const updateData = {};

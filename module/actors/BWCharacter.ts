@@ -208,8 +208,8 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             "data.deeds": this.system.deeds - (deeds ? 1 : 0),
             "data.persona": this.system.persona - persona,
         };
-        updateData[`${accessor}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
-        updateData[`${accessor}.persona`] = (stat.persona || 0) + persona;
+        updateData[`data.${accessor}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
+        updateData[`data.${accessor}.persona`] = (stat.persona || 0) + persona;
         this.update(updateData);
     }
 

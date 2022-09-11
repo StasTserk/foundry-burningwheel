@@ -52,9 +52,9 @@ export class Skill extends BWItem<SkillData> {
         this.system.aptitude = 10 - rootAvg + aptitudeMod;
     }
 
-    static disableIfWounded(this: SkillData, woundDice: number): void {
-        if (!this.learning && this.exp <= woundDice) {
-            this.cssClass += " wound-disabled";
+    static disableIfWounded(this: Skill, woundDice: number): void {
+        if (!this.system.learning && this.system.exp <= woundDice) {
+            this.system.cssClass += " wound-disabled";
         }
     }
 
@@ -195,9 +195,9 @@ export class Skill extends BWItem<SkillData> {
     async _preUpdate(changed: Partial<TypeMissing>, options: FoundryDocument.ModificationContext, userId: string): Promise<void> {
         await super._preUpdate(changed, options, userId);
 
-        if (changed.data?.skilltype && this.img === skillImages[this.system.skilltype]) {
+        if (changed.system?.skilltype && this.img === skillImages[this.system.skilltype]) {
             // we should update the image for this skill
-            changed.img = skillImages[changed.data?.skilltype];
+            changed.img = skillImages[changed.system?.skilltype];
         }
     }
 }

@@ -1,15 +1,16 @@
-import { AffiliationDataRoot, AffiliationData } from "../items/affiliation.js";
-import { Property, PropertyRootData, PropertyData } from "../items/property.js";
-import { RelationshipDataRoot, RelationshipData } from "../items/relationship.js";
-import { ReputationDataRoot, ReputationData } from "../items/reputation.js";
-import { Skill, SkillDataRoot, SkillData } from "../items/skill.js";
-import { Trait, TraitDataRoot, TraitData } from "../items/trait.js";
+import { Affiliation } from "../items/affiliation.js";
+import { Property } from "../items/property.js";
+import { Relationship } from "../items/relationship.js";
+import { Reputation } from "../items/reputation.js";
+import { Skill, SkillData } from "../items/skill.js";
+import { Trait } from "../items/trait.js";
 import { CharacterSettings } from "../actors/BWCharacter.js";
 import { StringIndexedObject, ShadeString } from "../helpers.js";
 import {
-    BWItem, BWItemData, ItemType
+    BWItem, ItemType
 } from "../items/item.js";
 import * as constants from "../constants.js";
+import { TypeMissing } from "../../types/index.js";
 
 export function extractRelationshipData(parent: JQuery): BurnerRelationshipData {
     return {
@@ -106,19 +107,19 @@ export function extractBaseCharacterData(html: JQuery<HTMLElement>): StringIndex
     return baseData;
 }
 
-export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[]): Partial<SkillDataRoot>[] {
-    const skills: Partial<SkillDataRoot>[] = [];
+export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[]): Partial<Skill>[] {
+    const skills: Partial<Skill>[] = [];
     let skillId = "";
     let skillName = "";
     let skillExp = 0;
-    let skillData: Partial<SkillDataRoot> | undefined;
+    let skillData: Partial<Skill> | undefined;
     html.find("div.skills-grid").each((_, e) => {
         skillName = extractNamedChildString($(e), "skillName");
         skillExp = extractNamedChildNumber($(e), "skillExponent");
         if (!skillName || skillExp === 0 || !extractNamedCheck($(e), "skillOpened")) { return; }
         skillId = extractNamedChildString($(e), "skillId");
         if (skillId) {
-            skillData = skillsList.find(s => s.id === skillId)?.data;
+            skillData = skillsList.find(s => s.id === skillId);
             if (skillData) {
                 (skillData.data as SkillData).exp = skillExp;
                 (skillData.data as SkillData).shade = costToString(extractNamedChildNumber($(e), "skillShade"));
@@ -144,30 +145,30 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
                 type: "skill",
                 name: skillName,
                 img: constants.defaultImages.skill
-            } as SkillDataRoot);
+            } as Skill);
         }
     });
     return skills;
 }
 
-export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]): Partial<TraitDataRoot>[] {
-    const traits: Partial<TraitDataRoot>[] = [];
+export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]): Partial<Trait>[] {
+    const traits: Partial<Trait>[] = [];
     let traitName = "";
     let traitId = "";
-    let traitData: Partial<TraitDataRoot> | undefined;
+    let traitData: Partial<Trait> | undefined;
     html.find(".burner-traits-grid").each((_, e) => {
         traitName = extractNamedChildString($(e), "traitName");
         if (!traitName || !extractNamedChildCheck($(e), "traitTaken")) { return; }
         traitId = extractNamedChildString($(e), "traitId");
         if (traitId) {
-            traitData = traitList.find(t => t.id === traitId)?.data;
+            traitData = traitList.find(t => t.id === traitId);
             traits.push(traitData || {});
         } else {
             traits.push({
-                data: {
+                system: {
                     traittype: extractNamedChildString($(e), "traitType"),
                     text: "Unknown trait created during character burning. Update data accordingly. If the trait adds a reputation or affiliation, those must be added in manually."
-                } as TraitData,
+                } as TypeMissing,
                 type: "trait",
                 name: traitName,
                 img: constants.defaultImages[extractNamedChildString($(e), "traitType")]
@@ -177,23 +178,23 @@ export function extractTraitData(html: JQuery<HTMLElement>, traitList: Trait[]):
     return traits;
 }
 
-export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Property[]): Partial<PropertyRootData>[] {
-    const properties: Partial<PropertyRootData>[] = [];
+export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Property[]): Partial<Property>[] {
+    const properties: Partial<Property>[] = [];
     let propertyName = "";
     let propertyId = "";
-    let propertyData: Partial<PropertyRootData> | undefined;
+    let propertyData: Partial<Property> | undefined;
     html.find(".burner-property").each((_, e) => {
         propertyName = extractNamedChildString($(e), "propertyName");
         if (!propertyName || !extractNamedChildNumber($(e), "propertyCost")) { return; }
         propertyId = extractNamedChildString($(e), "propertyId");
         if (propertyId) {
-            propertyData = propertyList.find(p => p.id === propertyId)?.data;
+            propertyData = propertyList.find(p => p.id === propertyId);
             properties.push(propertyData || {});
         } else {
             properties.push({
-                data: {
+                system: {
                     description: "Unknown property created during character burning. Update data accordingly."
-                } as PropertyData,
+                } as TypeMissing,
                 type: "property",
                 name: propertyName,
                 img: constants.defaultImages.property
@@ -203,8 +204,8 @@ export function extractPropertyData(html: JQuery<HTMLElement>, propertyList: Pro
     return properties;
 }
 
-export function extractReputationData(html: JQuery<HTMLElement>): Partial<ReputationDataRoot | AffiliationDataRoot>[] {
-    const reputations: Partial<AffiliationDataRoot | ReputationDataRoot>[] = [];
+export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputation | Affiliation>[] {
+    const reputations: Partial<Affiliation | Reputation>[] = [];
     let repName = "";
     let repDice = 0;
     html.find(".burner-reputations").each((_, e) => {
@@ -213,21 +214,21 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
         if (!repName || !extractNamedChildNumber($(e), "reputationCost") || repDice === 0) { return; }
         if (!extractNamedChildCheck($(e), "reputationType")) {
             reputations.push({
-                data: {
+                system: {
                     dice: repDice,
                     description: "Unknown affiliation created during character burning. Update data accordingly."
-                } as AffiliationData,
+                } as TypeMissing,
                 type: "affiliation",
                 name: repName,
                 img: constants.defaultImages.affiliation
             });
         } else {
             reputations.push({
-                data: {
+                system: {
                     dice: repDice,
                     infamous: false,
                     description: "Unknown reputation created during character burning. Update data accordingly."
-                } as ReputationData,
+                } as TypeMissing,
                 type: "reputation",
                 name: repName,
                 img: constants.defaultImages.reputation
@@ -237,8 +238,8 @@ export function extractReputationData(html: JQuery<HTMLElement>): Partial<Reputa
     return reputations;
 }
 
-export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipDataRoot>[] {
-    const relationships: Partial<RelationshipDataRoot>[] = [];
+export function extractRelData(html: JQuery<HTMLElement>): Partial<Relationship>[] {
+    const relationships: Partial<Relationship>[] = [];
     let relName = "";
     let relData: BurnerRelationshipData;
     html.find(".burner-relationship-info").each((_, e) => {
@@ -246,7 +247,7 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
         if (!relName) { return; }
         relData = extractRelationshipData($(e));
         relationships.push({
-            data: {
+            system: {
                 forbidden: relData.forbidden,
                 description: "Relationship created during character burning. Fill in this description accordingly.",
                 immediateFamily: relData.closeFamily,
@@ -257,7 +258,7 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
                 influence: relData.power === 5 ? "minor" : (relData.power === 10 ? "significant" : "powerful"),
                 building: false,
                 buildingProgress: 0
-            } as RelationshipData,
+            } as TypeMissing,
             type: "relationship",
             name: relName,
             img: constants.defaultImages.relationship
@@ -266,8 +267,8 @@ export function extractRelData(html: JQuery<HTMLElement>): Partial<RelationshipD
     return relationships;
 }
 
-export function extractGearData(html: JQuery<HTMLElement>, gearList: BWItem[]): Partial<BWItemData>[] {
-    const gear: Partial<BWItemData>[] = [];
+export function extractGearData(html: JQuery<HTMLElement>, gearList: BWItem[]): Partial<BWItem>[] {
+    const gear: Partial<BWItem>[] = [];
     let gearName = "";
     let gearType: ItemType;
     let gearId = "";
@@ -277,15 +278,15 @@ export function extractGearData(html: JQuery<HTMLElement>, gearList: BWItem[]): 
         gearType = extractNamedChildString($(e), "itemType") as ItemType;
         if (!gearName) { return; }
         if (gearId) {
-            gear.push(gearList.find(g => g.id === gearId)?.data || {});
+            gear.push(gearList.find(g => g.id === gearId) || {});
             return;
         }
-        const gearItem: Partial<BWItemData> = {
+        const gearItem: Partial<BWItem> = {
             type: gearType,
             name: gearName,
-            data: {
+            system: {
                 description: `Unknown ${gearType.titleCase()} created as part of character burning. Update with the appropriate data.`
-            },
+            } as TypeMissing,
             img: constants.defaultImages[gearType]
         };
         gear.push(gearItem);

@@ -6,8 +6,8 @@ export const changesState = (callback?: () => void): MethodDecorator => {
         const functionCall = descriptor.value;
         descriptor.value = async function<T> (this: ExtendedTestDialog<T>, ...args) {
             await functionCall.apply(this, args);
-            this.syncData(this.data.data);
-            await this.persistState(this.data.data);
+            this.syncData(this.data);
+            await this.persistState(this.data);
             this.render();
             await callback?.call(this);
         };
@@ -25,7 +25,7 @@ export class ExtendedTestDialog<T> extends Dialog {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getData(): any {
-        const data = Object.assign(super.getData(), this.data.data ) as T;
+        const data = Object.assign(super.getData(), this.data ) as T;
         return data;
     }
 
@@ -42,7 +42,7 @@ export class ExtendedTestDialog<T> extends Dialog {
         const data = {};
         data[dataPath] = newValue;
 
-        mergeObject(this.data.data, data);
+        mergeObject(this.data, data);
     }
 
     
@@ -58,8 +58,8 @@ export class ExtendedTestDialog<T> extends Dialog {
     activateSocketListeners(): void {
         game.socket.on(constants.socketName, ({type, data}) => {
             if (type === `update${this.data.topic}`) {
-                mergeObject(this.data.data, data);
-                this.persistState(this.data.data);
+                mergeObject(this.data, data);
+                this.persistState(this.data);
                 if (this.rendered) { this.render(true); }
             } else if (type === `show${this.data.topic}`) {
                 this.render(true);
@@ -93,8 +93,7 @@ export class ExtendedTestDialog<T> extends Dialog {
     }
 }
 
-export interface ExtendedTestData<T> extends Dialog.Data {
+type ExtendedTestData<T> = Dialog.Data & T & {
     settingName: string;
     topic: string;
-    data: T;
-}
+};

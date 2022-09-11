@@ -1,15 +1,14 @@
 import { BWActor } from "../actors/BWActor.js";
-import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
+import { changesState, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 
 export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
         this.data.topic = "range-and-cover";
         this.data.settingName = "rnc-data";
-        this.data.data.memberIds = this.data.data.memberIds || [];
-        this.data.data.teams = this.data.data.teams || [];
+        this.data.memberIds = this.data.memberIds || [];
+        this.data.teams = this.data.teams || [];
     }
-    data: RangeAndCoverDialogData;
 
     get template(): string {
         return "systems/burningwheel/templates/dialogs/range-and-cover.hbs";
@@ -26,7 +25,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         html.find('select[name="newMember"]').on('change', (e: JQuery.ChangeEvent) => this._addNewMember(e.target));
         html.find('*[data-action="delete-member"]').on('click', (e: JQuery.ClickEvent) => this._deleteMember(e.target));
         html.find('*[data-action="toggle-hidden"]').on('click', (e: JQuery.ClickEvent) => this._toggleHidden(e.target));
-        html.find('.team-grid select, .team-card input').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.teams));
+        html.find('.team-grid select, .team-card input').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.teams));
         html.find('*[data-action="resetRound"]').on('click', (e) => this._resetRound(e));
         html.find('*[data-action="clearAll"]').on('click', (e) => this._clearAll(e));
     }
@@ -34,25 +33,25 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     @changesState()
     private _clearAll(e: JQuery.ClickEvent): void {
         e.preventDefault();
-        this.data.data.actors = [];
-        this.data.data.teams = [];
-        this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
-        this.data.data.memberIds = [];
+        this.data.actors = [];
+        this.data.teams = [];
+        this.data.showV1 = this.data.showV2 = this.data.showV3 = false;
+        this.data.memberIds = [];
     }
 
     @changesState()
     private _resetRound(e: JQuery.ClickEvent): void {
         e.preventDefault();
-        this.data.data.teams.forEach(t => {
+        this.data.teams.forEach(t => {
             t.action1 = t.action2 = t.action3 = "Do Nothing";
         });
-        this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+        this.data.showV1 = this.data.showV2 = this.data.showV3 = false;
     }
 
     @changesState()
     private _toggleHidden(target: HTMLElement): void {
         const index = parseInt(target.dataset.index || "0");
-        const team = this.data.data.teams[index];
+        const team = this.data.teams[index];
 
         team.hideActions = !team.hideActions;
     }
@@ -61,7 +60,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     private _addNewTeam(target: HTMLSelectElement): void {
         const id = target.value;
         const actor = this.data.actors.find(a => a.id === id) as BWActor;
-        this.data.data.teams.push({
+        this.data.teams.push({
             members: [{ id, name: actor.name } ],
             range: "Optimal",
             hideActions: false,
@@ -76,7 +75,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         if (actor.data.type === "character") {
             // ensure only one character can be added at once.
             // reusing npcs is probably fine.
-            this.data.data.memberIds.push(id);
+            this.data.memberIds.push(id);
         }
     }
 
@@ -84,12 +83,12 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     private _addNewMember(target: HTMLSelectElement): void {
         const id = target.value;
         const index = parseInt(target.dataset.index || "0");
-        const team = this.data.data.teams[index];
+        const team = this.data.teams[index];
         const actor = this.data.actors.find(a => a.id === id) as BWActor;
         
         team.members.push({ id: actor.id, name: actor.name});
         if (actor.data.type === "character") {
-            this.data.data.memberIds.push(id);
+            this.data.memberIds.push(id);
         }
     }
 
@@ -97,13 +96,13 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     private _deleteMember(target: HTMLElement): void {
         const teamIndex = parseInt(target.dataset.index || "0");
         const memberIndex = parseInt(target.dataset.memberIndex || "0");
-        const team = this.data.data.teams[teamIndex];
+        const team = this.data.teams[teamIndex];
         const deleted = team.members.splice(memberIndex, 1);
         if (team.members.length === 0) {
-            this.data.data.teams.splice(teamIndex, 1);
+            this.data.teams.splice(teamIndex, 1);
         }
         if (this.data.actors.find(a => a.id === deleted[0].id)?.data.type === "character") {
-            this.data.data.memberIds.splice(this.data.data.memberIds.indexOf(deleted[0].id), 1);
+            this.data.memberIds.splice(this.data.memberIds.indexOf(deleted[0].id), 1);
         }
     }
 
@@ -131,7 +130,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         if (!this.data.actors) {
             this.data.actors = game.actors?.contents as BWActor[];
         }
-        data.actors = this.data.actors.filter(a => !this.data.data.memberIds.includes(a.id));
+        data.actors = this.data.actors.filter(a => !this.data.memberIds.includes(a.id));
         data.gmView = game.user?.isGM || false;
 
         data.teams.forEach(t => {
@@ -144,10 +143,6 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         });
         return data;
     }
-}
-
-interface RangeAndCoverDialogData extends ExtendedTestData<RangeAndCoverData> {
-    actors: BWActor[];
 }
 
 interface RangeAndCoverData {

@@ -48,7 +48,7 @@
         <button type="button" class="rollable modifiable" data-rollable-name="{{system.sustainedSpell4}}" data-obstacle="{{system.sustainedSpell4Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
     </div>
     {{#each spells as |spell|}}
-    {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.system.sorcerousSkills isOwner=../isOwner}}
+    {{>"systems/burningwheel/templates/parts/spell.hbs" spell=spell skills=../actor.sorcerousSkills isOwner=../isOwner}}
     {{/each}}
     {{#if isOwner}}
     <div class="right-floating">

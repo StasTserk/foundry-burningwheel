@@ -29,7 +29,7 @@ export class Armor extends BWItem<ArmorData> {
         if (num1s === 0) { return new Promise(r => r(0)); }
     
         const locationAccessor = `data.damage${location}`;
-        const damage = parseInt(getProperty(this, `data.${locationAccessor}`)) || 0;
+        const damage = parseInt(getProperty(this, `system.${locationAccessor}`)) || 0;
         const updateData = {};
         let newDamage = 0;
         switch (this.system.quality) {

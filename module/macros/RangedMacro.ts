@@ -42,7 +42,7 @@ export function RollRangedMacro(actorId: string, weaponId: string): void {
     }
 
     const dataPreset: Partial<RollDialogData> = getMacroRollPreset(actor);
-    if (actor.data.type === "character") {
+    if (actor.type === "character") {
         handleWeaponRoll({actor: actor as BWCharacter, weapon, skill, dataPreset});
     } else {
         handleNpcWeaponRoll({ actor: actor as Npc, weapon, skill, dataPreset });

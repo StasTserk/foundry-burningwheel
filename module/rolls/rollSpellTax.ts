@@ -26,7 +26,7 @@ export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCha
 }
 
 export async function showSpellTaxDialog(obstacle: number, spellName: string, actor: BWCharacter, dataPreset: Partial<RollDialogData>): Promise<unknown> {
-    const stat = getProperty(actor.data, "data.forte") as Ability;
+    const stat = getProperty(actor.system, "forte") as Ability;
     
     const rollModifiers = actor.getRollModifiers("forte");
     const tax = actor.system.forteTax;
@@ -98,7 +98,7 @@ async function taxTestCallback(
         callons
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
-    if (actor.data.type === "character") {
+    if (actor.type === "character") {
         actor.addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
     }
 

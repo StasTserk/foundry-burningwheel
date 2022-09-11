@@ -200,7 +200,7 @@ export class DifficultyDialog extends Application {
                     skill.addTest(difficulty, true);
                 }
             } else if (path) {
-                const stat = getProperty(actor.data, path) as Ability & { name?: string };
+                const stat = getProperty(actor.system, path) as Ability & { name?: string };
                 if (["data.power", "data.will", "data.perception", "data.agility", "data.forte", "data.speed" ].includes(path)) {
                     actor.addStatTest(stat, title, path, difficulty, true, false, true);
                 } else {

@@ -23,7 +23,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
 
     let rollStat: Ability | SkillData;
     if (["stat", "learning"].includes(target.dataset.rerollType || "")) {
-        rollStat = getProperty(actor, `data.${accessor}`);
+        rollStat = getProperty(actor, `system.${accessor}`);
     } else {
         rollStat = (actor.items.get(itemId) as Skill).system;
     }
@@ -45,7 +45,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
     if (reroll) {
         newSuccesses = reroll.total || 0;
         success = (newSuccesses + successes) >= obstacleTotal;
-        if (actor.data.type === "character") {
+        if (actor.type === "character") {
             const char = actor as BWCharacter;
             // only characters worry about turning failures into successes.
             // NPCs don't track things closely enough.
@@ -59,7 +59,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                     if (actor.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
                             char.addAttributeTest(
-                                getProperty(actor, `data.${accessor}`) as TracksTests,
+                                getProperty(actor, `system.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
                                 target.dataset.difficultyGroup as TestString,
@@ -67,7 +67,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         }
                         else {
                             char.addStatTest(
-                                getProperty(actor, `data.${accessor}`) as TracksTests,
+                                getProperty(actor, `system.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
                                 target.dataset.difficultyGroup as TestString,
@@ -75,7 +75,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         }
                     }
                 }
-                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `data.${accessor}.deeds`) || "0") + 1 : undefined;
+                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `system.${accessor}.deeds`) || "0") + 1 : undefined;
 
             } else if (target.dataset.rerollType === "learning") {
                 const learningTarget = target.dataset.learningTarget || 'skill';
@@ -88,7 +88,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
                         target.dataset.difficultyGroup as TestString,
                         true);
                 }
-                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `data.${accessor}.deeds`) || "0") + 1 : undefined;
+                updateData[`${accessor}.deeds`] = isDeeds ? parseInt(getProperty(actor, `system.${accessor}.deeds`) || "0") + 1 : undefined;
             } else if (target.dataset.rerollType === "skill" && isDeeds) {
                 const skill = actor.items.get<Skill>(itemId);
                 await skill?.update({ "data.deeds": skill.system.deeds + 1 }, {});

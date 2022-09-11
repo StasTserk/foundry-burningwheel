@@ -18,7 +18,7 @@ export async function task022(): Promise<void> {
             const packItems = await pack.getDocuments();
             for (const item of packItems as BWItem[]) {
                 if (["melee weapon", "ranged weapon", "armor"].indexOf(item.type) !== -1) {
-                    item.data.type = "possession";
+                    item.type = "possession";
                     await item.update({ data: { shade: "B" }}, {});
                 }
             }

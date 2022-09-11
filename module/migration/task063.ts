@@ -48,18 +48,18 @@ export async function task063(): Promise<void> {
 
 function updateItem(item: BWItem, updateInfo: Record<string, number>): Record<string, string> {
     const data = {};
-    if (item.data.img === "icons/svg/item-bag.svg") {
-        if (item.data.type === "skill") {
+    if (item.img === "icons/svg/item-bag.svg") {
+        if (item.type === "skill") {
             data["img"] = skillImages[(item as Skill).data.data.skilltype];
         } else {
             data["img"] = traitImages[(item as Trait).data.data.traittype];
         }
     }
     if (Object.values(data).length) {
-        if (updateInfo[item.data.type]) {
-            updateInfo[item.data.type] ++;
+        if (updateInfo[item.type]) {
+            updateInfo[item.type] ++;
         } else {
-            updateInfo[item.data.type] = 1;
+            updateInfo[item.type] = 1;
         }
     }
     return data;

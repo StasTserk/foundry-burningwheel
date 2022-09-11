@@ -15,6 +15,7 @@ import { SkillData, Skill } from "../../items/skill.js";
 import { Spell } from "../../items/spell.js";
 import { TraitData, Trait } from "../../items/trait.js";
 import { BWItem } from "../../items/item.js";
+import { TypeMissing } from "../../../types/index.js";
 
 export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharacter, ActorSheetOptions> {
     get actor(): BWCharacter {
@@ -144,7 +145,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
             traitLists.die.sort(byName);
         }
         data.traits = traitLists;
-        data.systemVersion = game.system.data.version;
+        data.systemVersion = (game.system as TypeMissing).version;
         return data;
     }
 

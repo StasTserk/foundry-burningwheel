@@ -15,6 +15,7 @@ import { Npc } from "./actors/Npc.js";
 import { Lifepath } from "./items/lifepath.js";
 import { BWSetting } from "./actors/BWSetting.js";
 import { Affiliation } from "./items/affiliation.js";
+import { TypeMissing } from "../types/index.js";
 
 function factory(entities: Record<string, typeof FoundryDocument>, baseClass: typeof FoundryDocument): typeof FoundryDocument {
     return new Proxy(baseClass, {
@@ -47,7 +48,7 @@ function factory(entities: Record<string, typeof FoundryDocument>, baseClass: ty
                 case Symbol.hasInstance:
                     //Applying the "instanceof" operator on the instance object
                     return function (instance: FoundryDocument) {
-                    const constr = entities[instance.data.type];
+                    const constr = entities[(instance as TypeMissing).type];
                     if (!constr) {
                         return false;
                     }

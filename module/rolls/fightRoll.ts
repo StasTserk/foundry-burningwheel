@@ -40,7 +40,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         }
         switch (item.type) {
             case "melee weapon": case "ranged weapon":
-                if (item.data.type === "melee weapon" && typeof attackIndex === 'undefined') {
+                if (item.type === "melee weapon" && typeof attackIndex === 'undefined') {
                     throw Error("A Melee Weapon attack was given without specifying the melee attack index.");
                 }
                 // handle melee attack at the given index.
@@ -51,7 +51,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
                     return notifyError("No Associated Skill", "In order for a skill test to be rolled, a weapon or spell has to be associated with a skill. Check the Actor's sheet to make sure the selected weapon has a chosen skill.");
                 }
 
-                if (actor.data.type === "character") { 
+                if (actor.type === "character") { 
                     return handleWeaponRoll({
                         actor: (actor as BWCharacter),
                         weapon,
@@ -71,7 +71,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
             case "spell":
                 const spell = actor.items.get(itemId) as Spell;
                 const skill = actor.items.get(spell?.system.skillId) as Skill;
-                if (actor.data.type === "character") {
+                if (actor.type === "character") {
                     return handleSpellRoll({ actor: (actor as BWCharacter), spell, skill, dataPreset});
                 }
                 return handleNpcSpellRoll({
@@ -82,7 +82,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         }
     }
     // speed, power, or agility roll
-    if (actor.data.type === "npc") {
+    if (actor.type === "npc") {
         // npc specific code
         const dice = parseInt(getProperty(actor, `system.${type}.exp`));
         const shade = getProperty(actor, `system.${type}.shade`) as ShadeString;
@@ -96,7 +96,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         });
     }
     const accessor = `data.${type}`;
-    const stat = getProperty(actor, `data.${accessor}`) as Ability;
+    const stat = getProperty(actor, `system.${accessor}`) as Ability;
 
     if (type === "steel"){
         return handleAttrRoll({

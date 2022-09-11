@@ -20,7 +20,7 @@ export async function handleGritRollEvent({ target, sheet, dataPreset }: EventHa
 
 async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions): Promise<unknown> {
     const actor = sheet.actor as BWActor;
-    const stat = getProperty(actor.data, "data.health") as Ability;
+    const stat = getProperty(actor.system, "health") as Ability;
     const rollModifiers = sheet.actor.getRollModifiers("health");
     const data: AttributeDialogData = mergeDialogData<AttributeDialogData>({
         name: shrugging ? "Shrug It Off Health" : "Grit Your Teeth Health",
@@ -123,7 +123,7 @@ async function ptgsRollCallback(
         updateData[accessor] = true;
         sheet.actor.update(updateData);
     }
-    if (sheet.actor.data.type === "character") {
+    if (sheet.actor.type === "character") {
         sheet.actor.addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);

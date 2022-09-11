@@ -16,7 +16,7 @@ import { BWCharacter } from "../actors/BWCharacter.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
-    const stat = getProperty(sheet.actor.data, target.dataset.accessor || "") as Ability;
+    const stat = getProperty(sheet.actor.system, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor;
     const attrName = target.dataset.rollableName || "Unknown Attribute";
     return handleAttrRoll({ actor, stat, attrName, dataPreset, accessor: target.dataset.accessor || "" });

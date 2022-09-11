@@ -68,7 +68,7 @@ function updateToNumber(value: string | number | number[] | string[] | null, pat
 
 function updateItem(item: BWItem, updateInfo: Record<string, number>): Record<string, number> {
     let updateData = {};
-    switch (item.data.type) {
+    switch (item.type) {
         case "armor":
             updateData = updateArmor(item as Armor);
             break;
@@ -92,10 +92,10 @@ function updateItem(item: BWItem, updateInfo: Record<string, number>): Record<st
     }
 
     if (Object.values(updateData).length) {
-        if (updateInfo[item.data.type]) {
-            updateInfo[item.data.type] ++;
+        if (updateInfo[item.type]) {
+            updateInfo[item.type] ++;
         } else {
-            updateInfo[item.data.type] = 1;
+            updateInfo[item.type] = 1;
         }
         
     }
@@ -105,72 +105,72 @@ function updateItem(item: BWItem, updateInfo: Record<string, number>): Record<st
 
 function updateArmor(item: Armor): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.dice, "data.dice", data);
-    updateToNumber(item.data.data.damageHelm, "data.damageHelm", data);
-    updateToNumber(item.data.data.damageLeftArm, "data.damageLeftArm", data);
-    updateToNumber(item.data.data.damageLeftLeg, "data.damageLeftLeg", data);
-    updateToNumber(item.data.data.damageRightArm, "data.damageRightArm", data);
-    updateToNumber(item.data.data.damageRightLeg, "data.damageRightLeg", data);
-    updateToNumber(item.data.data.damageTorso, "data.damageTorso", data);
-    updateToNumber(item.data.data.damageShield, "data.damageShield", data);
+    updateToNumber(item.system.dice, "dice", data);
+    updateToNumber(item.system.damageHelm, "damageHelm", data);
+    updateToNumber(item.system.damageLeftArm, "damageLeftArm", data);
+    updateToNumber(item.system.damageLeftLeg, "damageLeftLeg", data);
+    updateToNumber(item.system.damageRightArm, "damageRightArm", data);
+    updateToNumber(item.system.damageRightLeg, "damageRightLeg", data);
+    updateToNumber(item.system.damageTorso, "damageTorso", data);
+    updateToNumber(item.system.damageShield, "damageShield", data);
     return data;
 }
 
 function updateSkill(item: Skill): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.exp, "data.exp", data);
-    updateToNumber(item.data.data.challenging, "data.challenging", data);
-    updateToNumber(item.data.data.routine, "data.routine", data);
-    updateToNumber(item.data.data.difficult, "data.difficult", data);
-    updateToNumber(item.data.data.fate, "data.fate", data);
-    updateToNumber(item.data.data.persona, "data.persona", data);
-    updateToNumber(item.data.data.deeds, "data.deeds", data);
-    updateToNumber(item.data.data.learningProgress, "data.learningProgress", data);
+    updateToNumber(item.system.exp, "exp", data);
+    updateToNumber(item.system.challenging, "challenging", data);
+    updateToNumber(item.system.routine, "routine", data);
+    updateToNumber(item.system.difficult, "difficult", data);
+    updateToNumber(item.system.fate, "fate", data);
+    updateToNumber(item.system.persona, "persona", data);
+    updateToNumber(item.system.deeds, "deeds", data);
+    updateToNumber(item.system.learningProgress, "learningProgress", data);
     return data;
 }
 
 function updateTrait(item: Trait): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.affiliationDice, "data.affiliationDice", data);
-    updateToNumber(item.data.data.dieModifier, "data.dieModifier", data);
-    updateToNumber(item.data.data.obModifier, "data.obModifier", data);
-    updateToNumber(item.data.data.reputationDice, "data.reputationDice", data);
-    updateToNumber(item.data.data.aptitudeModifier, "data.aptitudeModifier", data);
+    updateToNumber(item.system.affiliationDice, "affiliationDice", data);
+    updateToNumber(item.system.dieModifier, "dieModifier", data);
+    updateToNumber(item.system.obModifier, "obModifier", data);
+    updateToNumber(item.system.reputationDice, "reputationDice", data);
+    updateToNumber(item.system.aptitudeModifier, "aptitudeModifier", data);
     return data;
 }
 
 function updateSpell(item: Spell): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.willDamageBonus, "data.willDamageBonus", data);
-    updateToNumber(item.data.data.learningProgress, "data.learningProgress", data);
-    updateToNumber(item.data.data.va, "data.va", data);
-    updateToNumber(item.data.data.optimalRange, "data.optimalRange", data);
-    updateToNumber(item.data.data.extremeRange, "data.extremeRange", data);
+    updateToNumber(item.system.willDamageBonus, "willDamageBonus", data);
+    updateToNumber(item.system.learningProgress, "learningProgress", data);
+    updateToNumber(item.system.va, "va", data);
+    updateToNumber(item.system.optimalRange, "optimalRange", data);
+    updateToNumber(item.system.extremeRange, "extremeRange", data);
     return data;
 }
 
 function updateRanged(item: RangedWeapon): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.incidental, "data.incidental", data);
-    updateToNumber(item.data.data.incidentalRoll, "data.incidentalRoll", data);
-    updateToNumber(item.data.data.mark, "data.mark", data);
-    updateToNumber(item.data.data.markRoll, "data.markRoll", data);
-    updateToNumber(item.data.data.superb, "data.superb", data);
-    updateToNumber(item.data.data.vsArmor, "data.vsArmor", data);
-    updateToNumber(item.data.data.optimalRange, "data.optimalRange", data);
-    updateToNumber(item.data.data.extremeRange, "data.extremeRange", data);
-    updateToNumber(item.data.data.powerBonus, "data.powerBonus", data);
+    updateToNumber(item.system.incidental, "incidental", data);
+    updateToNumber(item.system.incidentalRoll, "incidentalRoll", data);
+    updateToNumber(item.system.mark, "mark", data);
+    updateToNumber(item.system.markRoll, "markRoll", data);
+    updateToNumber(item.system.superb, "superb", data);
+    updateToNumber(item.system.vsArmor, "vsArmor", data);
+    updateToNumber(item.system.optimalRange, "optimalRange", data);
+    updateToNumber(item.system.extremeRange, "extremeRange", data);
+    updateToNumber(item.system.powerBonus, "powerBonus", data);
     return data;
 }
 
 function updateReputation(item: Reputation): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.dice, "data.dice", data);
+    updateToNumber(item.system.dice, "dice", data);
     return data;
 }
 
 function updateAffiliation(item: Affiliation): Record<string, number> {
     const data = {};
-    updateToNumber(item.data.data.dice, "data.dice", data);
+    updateToNumber(item.system.dice, "dice", data);
     return data;
 }

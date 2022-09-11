@@ -31,7 +31,7 @@ export function RollStatMacro(actorId: string, statPath: string, statName: strin
         return;
     }
 
-    const stat = getProperty(actor.data, statPath) as Ability | undefined;
+    const stat = getProperty(actor.system, statPath) as Ability | undefined;
 
     if (!stat) {
         ui.notifications?.notify(`Stat appears to be missing from the actor somehow. Was looking for ${statPath}.`, "error");
@@ -39,7 +39,7 @@ export function RollStatMacro(actorId: string, statPath: string, statName: strin
     }
     const dataPreset: Partial<RollDialogData> = getMacroRollPreset(actor);
 
-    if (actor.data.type === "character") {
+    if (actor.type === "character") {
         const char = actor as BWCharacter;
         if (statPath === "data.circles") {
             handleCirclesRoll({ actor: char, stat, dataPreset });

@@ -5,7 +5,7 @@ import { BWCharacterSheet } from "./BWCharacterSheet.js";
 export class BWCharacterTabbedSheet extends BWCharacterSheet {
     get template(): string {
         const path = "systems/burningwheel/templates";
-        return `${path}/${this.actor.data.type}-tabbed-sheet.hbs`;
+        return `${path}/${this.actor.type}-tabbed-sheet.hbs`;
     }
     
     static get defaultOptions(): ActorSheetOptions {

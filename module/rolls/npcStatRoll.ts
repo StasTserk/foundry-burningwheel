@@ -22,8 +22,8 @@ import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
 
-    const dice = getProperty(actor.data, target.dataset.stat || "") as number;
-    const shade = getProperty(actor.data, target.dataset.shade || "") as helpers.ShadeString;
+    const dice = getProperty(actor.system, target.dataset.stat || "") as number;
+    const shade = getProperty(actor.system, target.dataset.shade || "") as helpers.ShadeString;
     const open = target.dataset.action === "rollStatOpen";
     
     const statName = (target.dataset.rollableName || "Unknown Stat") as NpcStatName;

@@ -13,7 +13,7 @@ export class Skill extends BWItem<SkillData> {
         Object.assign(roots, skillRootSelect);
         if (!actor) { return roots; }
 
-        if (this.hasOwner && actor.data.type === "character") {
+        if (this.hasOwner && actor.type === "character") {
             if (actor.system.custom1.name) {
                 roots["custom1"] = actor.system.custom1.name;
             }

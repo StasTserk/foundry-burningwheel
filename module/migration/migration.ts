@@ -1,3 +1,4 @@
+import { TypeMissing } from "../../types/index.js";
 import * as constants from "../constants.js";
 
 export async function migrateData(): Promise<void> {
@@ -5,7 +6,7 @@ export async function migrateData(): Promise<void> {
         // players can't do this stuff anyhow.
         return;
     }
-    const latest = game.system.data.version;
+    const latest = (game.system as TypeMissing).version;
     const recentVersion = (game.settings.get(constants.systemName, constants.settings.version) || "0.0.0") as string;
     await game.settings.set(constants.systemName, constants.settings.version, latest);
 

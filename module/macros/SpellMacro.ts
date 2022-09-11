@@ -41,7 +41,7 @@ export function RollSpellMacro(actorId: string, spellId: string): void {
         return;
     }
     const dataPreset: Partial<RollDialogData> = getMacroRollPreset(actor);
-    if (actor.data.type === "character") {
+    if (actor.type === "character") {
         handleSpellRoll({ actor: actor as BWCharacter, skill, spell, dataPreset});
     } else {
         handleNpcSpellRoll({ actor: actor as Npc, skill, spell, dataPreset });

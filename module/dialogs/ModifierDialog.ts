@@ -56,10 +56,10 @@ export class ModifierDialog extends Application {
             let diff: TestString = "Routine";
             const actor = game.actors?.get(entry.actorId) as BWActor;
 
-            if (actor.data.type === "character") {
+            if (actor.type === "character") {
                 if (entry.path) {
-                    name = entry.path.substr(entry.path.indexOf('.') + 1).titleCase();
-                    const ability = getProperty(actor.data, entry.path) as Ability & { name?: string };
+                    name = entry.path.substring(entry.path.indexOf('.') + 1).titleCase();
+                    const ability = getProperty(actor.system, entry.path) as Ability & { name?: string };
                     diff = difficultyGroup(ability.exp, obstacle);
                     if (name === "Custom1" || name === "Custom2") {
                         name = ability.name || name;

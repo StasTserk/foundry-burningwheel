@@ -66,7 +66,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         if (!skill) {
             return;
         }
-        if (actor?.data.type === "character") {
+        if (actor?.type === "character") {
             if (skill.system.learning) {
                 handleLearningRoll({
                     actor: (actor as BWCharacter),

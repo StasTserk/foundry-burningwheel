@@ -23,7 +23,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
 
     let rollStat: { shade: helpers.ShadeString, open: boolean };
     if (["stat", "learning"].includes(target.dataset.rerollType || "")) {
-        rollStat = getProperty(actor, `data.${accessor}`);
+        rollStat = getProperty(actor, `system.${accessor}`);
     } else if (target.dataset.rerollType === "armor") {
         const armorItem = actor.items.get(itemId) as Armor;
         rollStat = { shade: armorItem.system.shade, open: false, };
@@ -65,7 +65,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
         if (actor.system.fate !== 0 && actor.type === "character") {
             const char = actor as BWCharacter;
             if (target.dataset.rerollType === "stat") {
-                const fateSpent = parseInt(getProperty(actor, `data.${accessor}.fate`) || "0", 10);
+                const fateSpent = parseInt(getProperty(actor, `system.${accessor}.fate`) || "0", 10);
                 const updateData = {};
                 updateData[`${accessor}.fate`] = fateSpent + 1;
                 if (successes <= obstacleTotal && success) {
@@ -76,7 +76,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                     if (actor.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
                             char.addAttributeTest(
-                                getProperty(actor, `data.${accessor}`) as TracksTests,
+                                getProperty(actor, `system.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
                                 target.dataset.difficultyGroup as TestString,
@@ -84,7 +84,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                         }
                         else {
                             char.addStatTest(
-                                getProperty(actor, `data.${accessor}`) as TracksTests,
+                                getProperty(actor, `system.${accessor}`) as TracksTests,
                                 name,
                                 accessor,
                                 target.dataset.difficultyGroup as TestString,
@@ -116,7 +116,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                         }
                     }
                     const rootAccessor = `data.${learningTarget}.fate`;
-                    const rootStatFate = parseInt(getProperty(actor, `data.${rootAccessor}`), 10) || 0;
+                    const rootStatFate = parseInt(getProperty(actor, `system.${rootAccessor}`), 10) || 0;
                     const updateData = {};
                     updateData[rootAccessor] = rootStatFate + 1;
                     actor.update(updateData);

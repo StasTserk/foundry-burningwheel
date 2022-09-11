@@ -13,7 +13,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
 
     get template(): string {
         const path = "systems/burningwheel/templates";
-        return `${path}/${this.actor.data.type}-sheet.hbs`;
+        return `${path}/${this.actor.type}-sheet.hbs`;
     }
 
     static get defaultOptions(): ActorSheetOptions {

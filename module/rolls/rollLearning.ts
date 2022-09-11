@@ -248,7 +248,7 @@ async function advanceBaseStat(
         cb: (fr?: RerollData) => Promise<ChatMessage | null>) {
 
     const accessor = `data.${statName.toLowerCase()}`;
-    const rootStat = getProperty(owner, `data.${accessor}`);
+    const rootStat = getProperty(owner, `system.${accessor}`);
     if (statName === "custom1" || statName === "custom2") {
         statName = owner.system[statName].name.titleCase();
         await owner.addAttributeTest(rootStat, statName, accessor, difficultyGroup, isSuccessful);

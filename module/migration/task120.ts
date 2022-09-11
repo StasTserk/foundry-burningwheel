@@ -46,15 +46,15 @@ export async function task120(): Promise<void> {
 
 function updateItem(item: Skill, updateInfo: Record<string, number>): Record<string, string> {
     const data = {};
-    if (item.data.data.training && ["military", "martial"].indexOf(item.data.data.skilltype) === -1) {
+    if (item.system.training && ["military", "martial"].indexOf(item.system.skilltype) === -1) {
         data["data.training"] = false;
         data["data.magical"] = true;
     }
     if (Object.values(data).length) {
-        if (updateInfo[item.data.type]) {
-            updateInfo[item.data.type] ++;
+        if (updateInfo[item.type]) {
+            updateInfo[item.type] ++;
         } else {
-            updateInfo[item.data.type] = 1;
+            updateInfo[item.type] = 1;
         }
     }
     return data;

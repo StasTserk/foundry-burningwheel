@@ -72,7 +72,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
             weaponDice: 0,
             miscDice: 0
         });
-        if (actor.data.type === "character") {
+        if (actor.type === "character") {
             // ensure only one character can be added at once.
             // reusing npcs is probably fine.
             this.data.memberIds.push(id);
@@ -87,7 +87,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         const actor = this.data.actors.find(a => a.id === id) as BWActor;
         
         team.members.push({ id: actor.id, name: actor.name});
-        if (actor.data.type === "character") {
+        if (actor.type === "character") {
             this.data.memberIds.push(id);
         }
     }
@@ -101,7 +101,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
         if (team.members.length === 0) {
             this.data.teams.splice(teamIndex, 1);
         }
-        if (this.data.actors.find(a => a.id === deleted[0].id)?.data.type === "character") {
+        if (this.data.actors.find(a => a.id === deleted[0].id)?.type === "character") {
             this.data.memberIds.splice(this.data.memberIds.indexOf(deleted[0].id), 1);
         }
     }

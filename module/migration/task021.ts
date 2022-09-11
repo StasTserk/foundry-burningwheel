@@ -35,7 +35,7 @@ export async function task021(): Promise<void> {
             const packItems = await pack.getDocuments();
             for (const item of Array.from(packItems.values()) as Item[]) {
                 if (item.type === "posession") {
-                    item.data.type = "possession";
+                    item.type = "possession";
                     await item.update(item.data, { pack: pack.name });
                 }
             }

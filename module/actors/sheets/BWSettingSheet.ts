@@ -21,7 +21,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
     getData(): BWSettingSheetData {
         return {
             actor: this.actor,
-            data: this.actor.data.data,
+            system: this.actor.system as unknown as SettingData,
             lifepaths: (Array.from(this.actor.items.values()) as Lifepath[]).map(i => i).sort((a, b) => a.system.order - b.system.order),
             editable: this.isEditable
         };
@@ -167,7 +167,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
 
 export interface BWSettingSheetData {
     actor: BWSetting;
-    data: SettingData;
+    system: SettingData;
     lifepaths: Lifepath[];
     editable: boolean;
 }

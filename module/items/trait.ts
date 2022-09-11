@@ -1,85 +1,81 @@
 import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat.js";
 import { BWActor, RollModifier } from "../actors/BWActor.js";
-import { HasPointCost, BWItemData, BWItem } from "./item.js";
+import { HasPointCost, BWItem } from "./item.js";
 
-export class Trait extends BWItem<TraitDataRoot> {
+export class Trait extends BWItem<TraitData> {
+    type: "trait";
+    
     prepareData(): void {
         super.prepareData();
-        this.data.isCallonTrait = this.data.data.traittype === "call-on";
-        this.data.isDieTrait = this.data.data.traittype === "die";
+        this.system.isCallonTrait = this.system.traittype === "call-on";
+        this.system.isDieTrait = this.system.traittype === "die";
     }
-    static asRollDieModifier(trait: TraitDataRoot): RollModifier {
+    static asRollDieModifier(name: string, trait: TraitData): RollModifier {
         return {
-            label: trait.name,
+            label: name,
             optional: true,
-            dice: trait.data.dieModifier || 0
+            dice: trait.dieModifier || 0
         };
     }
 
-    static asRollObModifier(trait: TraitDataRoot): RollModifier {
+    static asRollObModifier(name: string, trait: TraitData): RollModifier {
         return {
-            label: trait.name,
+            label: name,
             optional: true,
-            obstacle: trait.data.obModifier || 0
+            obstacle: trait.obModifier || 0
         };
     }
 
     async generateChatMessage(actor: BWActor): Promise<ChatMessage | null> {
         const extraData: { title?: string, text?: string }[] = [];
-        if (this.data.data.traittype === "call-on") {
+        if (this.system.traittype === "call-on") {
             extraData.push({
                 title: "Call-on For",
-                text: this.data.data.callonTarget
+                text: this.system.callonTarget
             });
-        } else if (this.data.data.traittype === "die") {
-            if (this.data.data.hasAptitudeModifier) {
+        } else if (this.system.traittype === "die") {
+            if (this.system.hasAptitudeModifier) {
                 extraData.push({
                     title: "Affects Aptitude",
-                    text: `${this.data.data.aptitudeTarget.trim()} : ${this.data.data.aptitudeModifier}`
+                    text: `${this.system.aptitudeTarget.trim()} : ${this.system.aptitudeModifier}`
                 });
             }
-            if (this.data.data.hasDieModifier) {
+            if (this.system.hasDieModifier) {
                 extraData.push({
                     title: "Adds Dice",
-                    text: `${this.data.data.dieModifierTarget} : ${this.data.data.dieModifier >= 0 ? '+' + this.data.data.dieModifier : this.data.data.dieModifier}D`
+                    text: `${this.system.dieModifierTarget} : ${this.system.dieModifier >= 0 ? '+' + this.system.dieModifier : this.system.dieModifier}D`
                 });
             }
-            if (this.data.data.hasObModifier) {
+            if (this.system.hasObModifier) {
                 extraData.push({
                     title: "Changed Obstacle",
-                    text: `${this.data.data.obModifierTarget} : ${this.data.data.obModifier >= 0 ? '+' + this.data.data.obModifier : this.data.data.obModifier} Ob`
+                    text: `${this.system.obModifierTarget} : ${this.system.obModifier >= 0 ? '+' + this.system.obModifier : this.system.obModifier} Ob`
                 });
             }
-            if (this.data.data.addsAffiliation) {
+            if (this.system.addsAffiliation) {
                 extraData.push({
                     title: "Adds an Affiliation",
-                    text: `${this.data.data.affiliationDice}D with ${this.data.data.affiliationName}`
+                    text: `${this.system.affiliationDice}D with ${this.system.affiliationName}`
                 });
             }
-            if (this.data.data.addsReputation) {
+            if (this.system.addsReputation) {
                 extraData.push({
                     title: "Adds a Reputation",
-                    text: `${this.data.data.reputationDice}D ${this.data.data.reputationInfamous ? "infamous " : ""}reputation as ${this.data.data.reputationName}`
+                    text: `${this.system.reputationDice}D ${this.system.reputationInfamous ? "infamous " : ""}reputation as ${this.system.reputationName}`
                 });
             }
         }
         extraData.push({
-            title: `${this.data.data.traittype.titleCase()} Trait`
+            title: `${this.system.traittype.titleCase()} Trait`
         });
 
         const data: SimpleBroadcastMessageData = {
             title: this.name,
-            mainText: this.data.data.text || "No Description Given",
+            mainText: this.system.text || "No Description Given",
             extraData
         };
         return simpleBroadcast(data, actor);
     }
-}
-
-export interface TraitDataRoot extends BWItemData<TraitData> {
-    type: "trait";
-    isDieTrait: boolean;
-    isCallonTrait: boolean;
 }
 
 export interface TraitData extends HasPointCost {
@@ -109,4 +105,7 @@ export interface TraitData extends HasPointCost {
     aptitudeModifier: number;
 
     callonTarget: string;
+
+    isDieTrait: boolean;
+    isCallonTrait: boolean;
 }

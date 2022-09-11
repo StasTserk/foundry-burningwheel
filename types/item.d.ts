@@ -117,7 +117,9 @@
      * @typeParam D - Type for Item.data.data
      */
     interface Data<D = any> extends FoundryDocument.Data {
+      /** @deprecated */
       data: D;
+      system: D;
       effects: ActiveEffect.Data[];
       img: string;
       name: string;

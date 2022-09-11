@@ -1,74 +1,74 @@
-import { DisplayProps, ClumsyWeightData, TracksTests, BWActorData, Ability, BWActor, Common } from "./BWActor.js";
+import { DisplayProps, ClumsyWeightData, TracksTests, Ability, BWActor, Common } from "./BWActor.js";
 import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
 import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers.js";
 import { Skill } from "../items/skill.js";
 
-export class BWCharacter extends BWActor<CharacterDataRoot> {
-    data: CharacterDataRoot;
+export class BWCharacter extends BWActor<BWCharacterData> {
+    type: "character";
 
     prepareData(): void {
         super.prepareData();
 
         this._calculatePtgs();
 
-        const woundDice = this.data.data.ptgs.woundDice || 0;
-        updateTestsNeeded(this.data.data.will, false, woundDice, this.data.data.willTax);
-        updateTestsNeeded(this.data.data.power, false, woundDice);
-        updateTestsNeeded(this.data.data.perception, false, woundDice);
-        updateTestsNeeded(this.data.data.agility, false, woundDice);
-        updateTestsNeeded(this.data.data.forte, false, woundDice, this.data.data.forteTax);
-        updateTestsNeeded(this.data.data.speed, false, woundDice);
-        updateTestsNeeded(this.data.data.health);
-        updateTestsNeeded(this.data.data.steel, true, woundDice);
-        updateTestsNeeded(this.data.data.circles);
-        updateTestsNeeded(this.data.data.resources, true, -1);
-        updateTestsNeeded(this.data.data.custom1);
-        updateTestsNeeded(this.data.data.custom2);
+        const woundDice = this.system.ptgs.woundDice || 0;
+        updateTestsNeeded(this.system.will, false, woundDice, this.system.willTax);
+        updateTestsNeeded(this.system.power, false, woundDice);
+        updateTestsNeeded(this.system.perception, false, woundDice);
+        updateTestsNeeded(this.system.agility, false, woundDice);
+        updateTestsNeeded(this.system.forte, false, woundDice, this.system.forteTax);
+        updateTestsNeeded(this.system.speed, false, woundDice);
+        updateTestsNeeded(this.system.health);
+        updateTestsNeeded(this.system.steel, true, woundDice);
+        updateTestsNeeded(this.system.circles);
+        updateTestsNeeded(this.system.resources, true, -1);
+        updateTestsNeeded(this.system.custom1);
+        updateTestsNeeded(this.system.custom2);
 
-        this.data.data.maxSustained = this.data.data.will.exp - (this.data.data.ptgs.woundDice || 0) - 1;
-        this.data.data.maxObSustained = this.data.data.forte.exp - (this.data.data.ptgs.woundDice || 0) - this.data.data.forteTax - 1;
+        this.system.maxSustained = this.system.will.exp - (this.system.ptgs.woundDice || 0) - 1;
+        this.system.maxObSustained = this.system.forte.exp - (this.system.ptgs.woundDice || 0) - this.system.forteTax - 1;
 
         const unRoundedReflexes =
-            (this.data.data.perception.exp +
-            this.data.data.agility.exp +
-            this.data.data.speed.exp) / 3.0;
-        this.data.data.reflexesExp = (this.data.data.settings.roundUpReflexes ?
+            (this.system.perception.exp +
+            this.system.agility.exp +
+            this.system.speed.exp) / 3.0;
+        this.system.reflexesExp = (this.system.settings.roundUpReflexes ?
             Math.ceil(unRoundedReflexes) : Math.floor(unRoundedReflexes))
-            - (this.data.data.ptgs.woundDice || 0);
-        const shades = [this.data.data.perception.shade, this.data.data.agility.shade, this.data.data.speed.shade];
-        this.data.data.reflexesShade = getWorstShadeString(getWorstShadeString(shades[0], shades[1]), shades[2]);
-        if (this.data.data.reflexesShade === "B") {
-            this.data.data.reflexesExp += shades.filter(s => s !== "B").length;
-        } else if (this.data.data.reflexesShade === "G") {
-            this.data.data.reflexesExp += shades.filter(s => s === "W").length;
+            - (this.system.ptgs.woundDice || 0);
+        const shades = [this.system.perception.shade, this.system.agility.shade, this.system.speed.shade];
+        this.system.reflexesShade = getWorstShadeString(getWorstShadeString(shades[0], shades[1]), shades[2]);
+        if (this.system.reflexesShade === "B") {
+            this.system.reflexesExp += shades.filter(s => s !== "B").length;
+        } else if (this.system.reflexesShade === "G") {
+            this.system.reflexesExp += shades.filter(s => s === "W").length;
         }
 
         const unRoundedMortalWound =
-            (this.data.data.power.exp + this.data.data.forte.exp) / 2 + 6;
-        this.data.data.mortalWound = this.data.data.settings.roundUpMortalWound ?
+            (this.system.power.exp + this.system.forte.exp) / 2 + 6;
+        this.system.mortalWound = this.system.settings.roundUpMortalWound ?
             Math.ceil(unRoundedMortalWound) : Math.floor(unRoundedMortalWound);
-        if (this.data.data.power.shade !== this.data.data.forte.shade) {
-            this.data.data.mortalWound += 1;
+        if (this.system.power.shade !== this.system.forte.shade) {
+            this.system.mortalWound += 1;
         }
-        this.data.data.mortalWoundShade = getWorstShadeString(this.data.data.power.shade, this.data.data.forte.shade);
+        this.system.mortalWoundShade = getWorstShadeString(this.system.power.shade, this.system.forte.shade);
 
-        this.data.data.hesitation = 10 - this.data.data.will.exp;
-        if (this.data.data.will.shade === "G") {
-            this.data.data.hesitation -= 2;
+        this.system.hesitation = 10 - this.system.will.exp;
+        if (this.system.will.shade === "G") {
+            this.system.hesitation -= 2;
         }
-        if (this.data.data.will.shade === "W") {
-            this.data.data.hesitation -= 3;
+        if (this.system.will.shade === "W") {
+            this.system.hesitation -= 3;
         }
 
-        this.data.successOnlyRolls = (this.data.data.settings.onlySuccessesCount || '')
+        this.successOnlyRolls = (this.system.settings.onlySuccessesCount || '')
             .split(',')
             .map(s => s.trim().toLowerCase());
     }
 
     async updatePtgs(): Promise<this> {
         const accessorBase = "data.ptgs.wound";
-        const forte = this.data.data.forte.exp || 1;
-        const mw = this.data.data.mortalWound || 15;
+        const forte = this.system.forte.exp || 1;
+        const mw = this.system.mortalWound || 15;
         const su = Math.floor(forte / 2) + 1;
 
         const wounds = BWCharacter._calculateThresholds(mw, su, forte);
@@ -98,8 +98,8 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
     private _calculatePtgs() {
         let suCount = 0;
         let woundDice = 0;
-        this.data.data.ptgs.obPenalty = 0;
-        Object.entries(this.data.data.ptgs).forEach(([_key, value]) => {
+        this.system.ptgs.obPenalty = 0;
+        Object.entries(this.system.ptgs).forEach(([_key, value]) => {
             const w = value as Wound;
             const a = w && w.amount && parseInt(w.amount[0], 10);
             if ((w && a)) {
@@ -115,17 +115,17 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
 
         if (suCount >= 3) {
             woundDice ++;
-        } else if (!this.data.data.ptgs.shrugging && suCount >= 1 && !this.data.data.settings.ignoreSuperficialWounds) {
-            this.data.data.ptgs.obPenalty = 1;
+        } else if (!this.system.ptgs.shrugging && suCount >= 1 && !this.system.settings.ignoreSuperficialWounds) {
+            this.system.ptgs.obPenalty = 1;
         }
-        if (this.data.data.ptgs.gritting && woundDice) {
+        if (this.system.ptgs.gritting && woundDice) {
             woundDice --;
         }
 
         woundDice = Math.max(0,
-            woundDice - (this.data.data.ptgs.woundRecovery1 || 0) - (this.data.data.ptgs.woundRecovery2 || 0) - (this.data.data.ptgs.woundRecovery3 || 0));
+            woundDice - (this.system.ptgs.woundRecovery1 || 0) - (this.system.ptgs.woundRecovery2 || 0) - (this.system.ptgs.woundRecovery3 || 0));
 
-        this.data.data.ptgs.woundDice = woundDice;
+        this.system.ptgs.woundDice = woundDice;
     }
 
     private static _calculateThresholds(mo: number, su: number, forte: number):
@@ -150,7 +150,7 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
 
         // if the stat should not advance on failure, back out immediately.
         name = name.toLowerCase();
-        const onlySuccessCounts = this.data.successOnlyRolls.indexOf(name) !== -1;
+        const onlySuccessCounts = this.successOnlyRolls.indexOf(name) !== -1;
         if (onlySuccessCounts && !isSuccessful) {
             return;
         }
@@ -192,21 +192,21 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
 
     public updateArthaForSkill(skillId: string, persona: number, deeds: number): void {
         this.update({
-            "data.deeds": this.data.data.deeds - deeds,
-            "data.persona": this.data.data.persona - persona,
+            "data.deeds": this.system.deeds - deeds,
+            "data.persona": this.system.persona - persona,
         });
-        const skill = this.items.get(skillId) as Skill;
+        const skill = this.items.get(skillId) as unknown as Skill;
         skill.update({
-            "data.deeds": deeds ? (skill.data.data.deeds || 0) + 1 : undefined,
-            "data.persona": skill.data.data.persona + persona
+            "data.deeds": deeds ? (skill.system.deeds || 0) + 1 : undefined,
+            "data.persona": skill.system.persona + persona
         }, {});
     }
 
     public updateArthaForStat(accessor: string, persona: number, deeds: number): void {
         const stat = getProperty(this.data, accessor) as Ability;
         const updateData = {
-            "data.deeds": this.data.data.deeds - (deeds ? 1 : 0),
-            "data.persona": this.data.data.persona - persona,
+            "data.deeds": this.system.deeds - (deeds ? 1 : 0),
+            "data.persona": this.system.persona - persona,
         };
         updateData[`${accessor}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
         updateData[`${accessor}.persona`] = (stat.persona || 0) + persona;
@@ -261,9 +261,9 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
 
     taxResources(amount: number, maxFundLoss: number): void {
         const updateData = {};
-        let resourcesTax = parseInt(this.data.data.resourcesTax.toString()) || 0;
-        const resourceExp = this.data.data.resources.exp || 0;
-        const fundDice = this.data.data.funds || 0;
+        let resourcesTax = parseInt(this.system.resourcesTax.toString()) || 0;
+        const resourceExp = this.system.resources.exp || 0;
+        const fundDice = this.system.funds || 0;
         if (amount <= maxFundLoss) {
             updateData["data.funds"] = fundDice - amount;
         } else {
@@ -317,7 +317,7 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
         }
         super._onCreate(data, options, userId);
         setTimeout(() => {
-            if (this.data.data.settings.showBurner) {
+            if (this.system.settings.showBurner) {
                 new Dialog({
                     title: "Launch Burner?",
                     content: "This is a new character. Would you like to launch the character burner?",
@@ -348,10 +348,6 @@ export class BWCharacter extends BWActor<CharacterDataRoot> {
         data = data.filter(i => i.type !== "lifepath");
         return super.createEmbeddedDocuments(type, data, options);
     }
-}
-
-export interface CharacterDataRoot extends BWActorData<BWCharacterData> {
-    type: "character"
 }
 
 export interface BWCharacterData extends Common, DisplayProps, Ptgs, SpellsMaintainedInfo {

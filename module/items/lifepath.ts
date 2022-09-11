@@ -1,17 +1,13 @@
-import { BWItemData, BWItem } from "./item.js";
+import { BWItem } from "./item.js";
 
-export class Lifepath extends BWItem<LifepathRootData> {
+export class Lifepath extends BWItem<LifepathData> {
     type: "lifepath";
 
     prepareData(): void {
         super.prepareData();
-        const statSign = this.data.data.statBoost === "none" ? "" : (this.data.data.subtractStats ? "-" : "+");
-        this.data.data.statString = statSign + statMap[this.data.data.statBoost];
+        const statSign = this.system.statBoost === "none" ? "" : (this.system.subtractStats ? "-" : "+");
+        this.system.statString = statSign + statMap[this.system.statBoost];
     }
-}
-
-export interface LifepathRootData extends BWItemData<LifepathData> {
-    type: "lifepath";
 }
 
 export interface LifepathData {

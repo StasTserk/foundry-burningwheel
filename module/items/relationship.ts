@@ -1,25 +1,25 @@
-import { BWItem, BWItemData, DisplayClass } from "./item.js";
+import { BWActor } from "../actors/BWActor.js";
+import { BWItem, DisplayClass } from "./item.js";
 
-export class Relationship extends BWItem<RelationshipDataRoot> {
+export class Relationship extends BWItem<RelationshipData> {
+    type: "relationship";
+
     prepareData(): void {
         super.prepareData();
-        this.data.data.safeId = this.id;
-        if (this.actor && this.actor.data) {
-            this.data.data.aptitude = this.actor.data.data.circles.exp || 0;
+        const actor = this.actor as unknown as BWActor;
+        this.system.safeId = this.id;
+        if (actor && actor.system) {
+            this.system.aptitude = actor.system.circles.exp || 0;
         }
 
-        if (this.data.data.hateful || this.data.data.enmity) {
-            this.data.data.cssClass = "relationship-hostile";
-        } else if (this.data.data.romantic || this.data.data.immediateFamily) {
-            this.data.data.cssClass = "relationship-friendly";
+        if (this.system.hateful || this.system.enmity) {
+            this.system.cssClass = "relationship-hostile";
+        } else if (this.system.romantic || this.system.immediateFamily) {
+            this.system.cssClass = "relationship-friendly";
         } else {
-            this.data.data.cssClass = "relationship-neutral";
+            this.system.cssClass = "relationship-neutral";
         }
     }
-}
-
-export interface RelationshipDataRoot extends BWItemData<RelationshipData> {
-    type: "relationship";
 }
 
 export interface RelationshipData extends DisplayClass {

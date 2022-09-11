@@ -1,16 +1,13 @@
-import { DisplayClass, HasPointCost, BWItemData, BWItem } from "./item.js";
+import { DisplayClass, HasPointCost, BWItem } from "./item.js";
 
-export class Property extends BWItem<PropertyRootData> {
+export class Property extends BWItem<PropertyData> {
+    type: 'property';
     prepareData(): void {
         super.prepareData();
-        this.data.data.cssClass = "equipment-property";
+        this.system.cssClass = "equipment-property";
     }
 }
 
-export interface PropertyRootData extends BWItemData<PropertyData> {
-    data: PropertyData;
-    type: "property";
-}
 
 export interface PropertyData extends DisplayClass, HasPointCost {
     isWorkshop: boolean;

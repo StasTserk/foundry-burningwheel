@@ -1,7 +1,8 @@
-import { Common, BWActor, BWActorData } from "./BWActor.js";
+import { Common, BWActor } from "./BWActor.js";
 import { ShadeString } from "../helpers.js";
 
-export class Npc extends BWActor<NpcDataRoot> {
+export class Npc extends BWActor<NpcData> {
+    type: "npc";
 
     prepareData(): void {
         super.prepareData();
@@ -9,19 +10,15 @@ export class Npc extends BWActor<NpcDataRoot> {
     }
 
     calculateWounds(): void {
-        this.data.data.ptgs.woundDice = 
-            (this.data.data.ptgs.suTaken >= 3 ? 1 : 0) +
-            (this.data.data.ptgs.liTaken) +
-            (this.data.data.ptgs.miTaken * 2) +
-            (this.data.data.ptgs.seTaken * 3) +
-            (this.data.data.ptgs.trTaken * 4);
-        this.data.data.ptgs.obPenalty =
-            (this.data.data.ptgs.suTaken > 0 && this.data.data.ptgs.suTaken < 3) ? 1 : 0;
+        this.system.ptgs.woundDice = 
+            (this.system.ptgs.suTaken >= 3 ? 1 : 0) +
+            (this.system.ptgs.liTaken) +
+            (this.system.ptgs.miTaken * 2) +
+            (this.system.ptgs.seTaken * 3) +
+            (this.system.ptgs.trTaken * 4);
+        this.system.ptgs.obPenalty =
+            (this.system.ptgs.suTaken > 0 && this.system.ptgs.suTaken < 3) ? 1 : 0;
     }
-}
-
-export interface NpcDataRoot extends BWActorData<NpcData> {
-    type: "npc"
 }
 
 export interface NpcData extends Common {

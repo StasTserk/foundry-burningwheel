@@ -371,8 +371,10 @@ declare namespace Actor {
   * @typeParam D - Type for `_data.data`
   * @typeParam I - Type for system's Item's _data
   */
- interface Data<D = any, I extends Item = Item> extends FoundryDocument.Data {
+  interface Data<D = any, I extends Item = Item> extends FoundryDocument.Data {
+   /** Deprecated */
    data: D;
+   system: D;
    effects: ActiveEffect.Data[];
    folder: string;
    img: string;

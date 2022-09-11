@@ -15,18 +15,18 @@ import * as constants from "../constants.js";
 import { LifepathSheet } from "./sheets/lifepath-sheet.js";
 import { BWActor } from "../actors/BWActor.js";
 import { simpleBroadcast } from "../chat.js";
-import { SkillDataRoot } from "./skill.js";
-import { LifepathRootData } from "./lifepath.js";
-import { MeleeWeaponRootData } from "./meleeWeapon.js";
-import { AffiliationDataRoot } from "./affiliation.js";
-import { ArmorRootData } from "./armor.js";
-import { PossessionRootData } from "./possession.js";
-import { PropertyRootData } from "./property.js";
-import { RangedWeaponRootData } from "./rangedWeapon.js";
-import { RelationshipDataRoot } from "./relationship.js";
-import { ReputationDataRoot } from "./reputation.js";
-import { SpellDataRoot } from "./spell.js";
-import { TraitDataRoot } from "./trait.js";
+import { LifepathData } from "./lifepath.js";
+import { AffiliationData } from "./affiliation.js";
+import { ArmorData } from "./armor.js";
+import { PossessionData } from "./possession.js";
+import { PropertyData } from "./property.js";
+import { RangedWeaponData } from "./rangedWeapon.js";
+import { RelationshipData } from "./relationship.js";
+import { ReputationData } from "./reputation.js";
+import { SpellData } from "./spell.js";
+import { TraitData } from "./trait.js";
+import { MeleeWeaponData } from "./meleeWeapon.js";
+import { SkillData } from "./skill.js";
 
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
@@ -42,28 +42,25 @@ export * from "./sheets/skill-sheet.js";
 export * from "./sheets/trait-sheet.js";
 export * from "./sheets/spell-sheet.js";
 
-export class BWItem<T extends BWItemData = BWItemDataTypes> extends Item<T> {
+export class BWItem<T extends BWItemDataTypes = BWItemDataTypes> extends Item<Item.Data & T> {
     async generateChatMessage(speaker: BWActor): Promise<ChatMessage | null> {
-        return simpleBroadcast({ title: this.name, mainText: `Type - ${this.data.type}` }, speaker);
+        return simpleBroadcast({ title: this.name, mainText: `Type - ${this.type}` }, speaker);
     }
     prepareData(): void {
         super.prepareData();
-        this.data.hasOwner = !!(this.actor && this.actor.data);
+        this.hasOwner = !!(this.actor && this.actor.data);
     }
 
-    type: ItemType;
-
-    async _preCreate(data: Partial<BWItemData>, options: FoundryDocument.CreateOptions, user: User): Promise<void> {
-        await super._preCreate(data as T, options, user);
-        if (data.type && this.data._source.img === "icons/svg/item-bag.svg") {
-            this.data._source.img = constants.defaultImages[data.type];
-        }
-    }
-}
-
-export interface BWItemData<T = unknown> extends Item.Data<T> {
     type: ItemType;
     hasOwner: boolean;
+
+    // TODO: Restore pre-create
+    // async _preCreate(data: Partial<BWItemData>, options: FoundryDocument.CreateOptions, user: User): Promise<void> {
+    //     await super._preCreate(data as T, options, user);
+    //     if (data.type && this.data._source.img === "icons/svg/item-bag.svg") {
+    //         this.data._source.img = constants.defaultImages[data.type];
+    //     }
+    // }
 }
 
 export interface ArthaEarner {
@@ -161,6 +158,6 @@ export type ItemType =
     "ranged weapon" | "reputation" | "affiliation"
     | "spell" | "lifepath";
 
-export type BWItemDataTypes = BWItemData | SkillDataRoot | LifepathRootData | MeleeWeaponRootData
-    | AffiliationDataRoot | ArmorRootData | PossessionRootData | PropertyRootData | RangedWeaponRootData
-    | RelationshipDataRoot | ReputationDataRoot | SpellDataRoot | TraitDataRoot;
+export type BWItemDataTypes = (SkillData | LifepathData | MeleeWeaponData
+    | AffiliationData | ArmorData | PossessionData | PropertyData | RangedWeaponData
+    | RelationshipData | ReputationData | SpellData | TraitData);

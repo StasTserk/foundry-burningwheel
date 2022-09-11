@@ -1,32 +1,33 @@
 import { BWActor } from "../actors/BWActor.js";
 import { weaponLengthSelect } from "../constants.js";
 import { StringIndexedObject, DivOfText } from "../helpers.js";
-import { HasPointCost, BWItemData, BWItem } from "./item.js";
+import { HasPointCost, BWItem } from "./item.js";
 
-export class Spell extends BWItem<SpellDataRoot> {
+export class Spell extends BWItem<SpellData> {
+    type: "spell";
     prepareData(): void {
         super.prepareData();
         const actor = this.actor as unknown as BWActor;
-        this.data.obstacleLabel = 
-            `${this.data.data.variableObstacle ?
-                this.data.data.variableObstacleDescription :
-                this.data.data.obstacle}${this.data.data.upSpell?
+        this.obstacleLabel = 
+            `${this.system.variableObstacle ?
+                this.system.variableObstacleDescription :
+                this.system.obstacle}${this.system.upSpell?
                 '^':''}`;
-        if (this.data.data.isWeapon && this.data.hasOwner && actor) {
-            const willScore = actor.data.data.will.exp;
-            if (this.data.data.halfWill) {
-                this.data.data.mark = Math.floor(willScore / 2.0) + this.data.data.willDamageBonus;
+        if (this.system.isWeapon && this.hasOwner && actor) {
+            const willScore = actor.system.will.exp;
+            if (this.system.halfWill) {
+                this.system.mark = Math.floor(willScore / 2.0) + this.system.willDamageBonus;
             } else {
-                this.data.data.mark = willScore + this.data.data.willDamageBonus;
+                this.system.mark = willScore + this.system.willDamageBonus;
             }
             
-            this.data.data.incidental = Math.ceil(this.data.data.mark / 2.0);
-            this.data.data.superb = Math.floor(this.data.data.mark * 1.5);
+            this.system.incidental = Math.ceil(this.system.mark || 0 / 2.0);
+            this.system.superb = Math.floor(this.system.mark || 0 * 1.5);
         }
-        this.data.spellLengths = weaponLengthSelect;
+        this.spellLengths = weaponLengthSelect;
 
-        if (this.data.hasOwner && actor) {
-            this.data.data.aptitude = 10 - actor.data.data.perception.exp || 1
+        if (this.hasOwner && actor) {
+            this.system.aptitude = 10 - actor.system.perception.exp || 1
                 + actor.getAptitudeModifiers("perception")
                 + actor.getAptitudeModifiers("spells");
         }
@@ -36,7 +37,7 @@ export class Spell extends BWItem<SpellDataRoot> {
         const element = document.createElement("div");
         element.className = "spell-extra-info";
         element.appendChild(DivOfText(this.name, "spell-title"));
-        if (this.data.data.isWeapon) {
+        if (this.system.isWeapon) {
             const roll = (await new Roll("1d6").roll({async: true})).dice[0].results[0].result;
             element.appendChild(DivOfText("I", "ims-header"));
             element.appendChild(DivOfText("M", "ims-header"));
@@ -46,22 +47,19 @@ export class Spell extends BWItem<SpellDataRoot> {
             element.appendChild(DivOfText("DoF", "ims-header"));
             element.appendChild(DivOfText("Length", "ims-header"));
         
-            element.appendChild(DivOfText("B " + this.data.data.incidental, roll < 3 ? "highlight" : undefined));
-            element.appendChild(DivOfText("B " + this.data.data.mark, [3,4].includes(roll) ? "highlight" : undefined));
-            element.appendChild(DivOfText("B " + this.data.data.superb, roll > 4 ? "highlight" : undefined));
-            element.appendChild(DivOfText("" + this.data.data.va));
-            element.appendChild(DivOfText("" + this.data.data.actions));
+            element.appendChild(DivOfText("B " + this.system.incidental, roll < 3 ? "highlight" : undefined));
+            element.appendChild(DivOfText("B " + this.system.mark, [3,4].includes(roll) ? "highlight" : undefined));
+            element.appendChild(DivOfText("B " + this.system.superb, roll > 4 ? "highlight" : undefined));
+            element.appendChild(DivOfText("" + this.system.va));
+            element.appendChild(DivOfText("" + this.system.actions));
             element.appendChild(DivOfText(`${roll}`, "roll-die"));
-            element.appendChild(DivOfText(this.data.data.weaponLength));
+            element.appendChild(DivOfText(this.system.weaponLength));
         }
         return element.outerHTML;
     }
-}
 
-export interface SpellDataRoot extends BWItemData<SpellData> {
     spellLengths: StringIndexedObject<string>;
     obstacleLabel: string;
-    type: "spell";
 }
 
 export interface SpellData extends HasPointCost {

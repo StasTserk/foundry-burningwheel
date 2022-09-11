@@ -1,6 +1,6 @@
 import { ShadeString, StringIndexedObject } from "../helpers.js";
 import { DisplayClass, ItemType, BWItem, BWItemDataTypes } from "../items/item.js";
-import { SkillData } from "../items/skill.js";
+import { Skill, SkillData } from "../items/skill.js";
 import * as constants from "../constants.js";
 import { Armor } from "../items/armor.js";
 import { PossessionData } from "../items/possession.js";
@@ -9,9 +9,9 @@ import { TraitData, Trait } from "../items/trait.js";
 import { BWCharacterData } from "./BWCharacter.js";
 import { NpcData } from "./Npc.js";
 import { AffiliationData } from "../items/affiliation.js";
-import { MeleeWeaponData } from "../items/meleeWeapon.js";
-import { RangedWeaponData } from "../items/rangedWeapon.js";
-import { SpellData } from "../items/spell.js";
+import { MeleeWeapon } from "../items/meleeWeapon.js";
+import { RangedWeapon } from "../items/rangedWeapon.js";
+import { Spell } from "../items/spell.js";
 import { TypeMissing } from "../../types/index.js";
 
 export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BWItem>{
@@ -145,25 +145,25 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
         this.fightWeapons = [];
         
         if (this.items) {
-            this.items.forEach(({ system, name, type }) => {
-                const i: BWItemDataTypes = system;
+            this.items.forEach((item) => {
+                const { system: i, name, type } = item;
                 switch (type) {
                     case "skill":
                         if (!(i as SkillData).learning &&
                             !(i as SkillData).training) {
                             if ((i as SkillData).wildFork) {
-                                this.wildForks.push(i as SkillData);
+                                this.wildForks.push(item as Skill);
                             } else {
-                                this.forks.push(i as SkillData);
+                                this.forks.push(item as Skill);
                             }
                         }
                         if ((i as SkillData).skilltype === "martial" &&
                             !(i as SkillData).training) {
-                            this.martialSkills.push(i as SkillData);
+                            this.martialSkills.push(item as Skill);
                         } else if ((i as SkillData).skilltype === "sorcerous") {
-                            this.sorcerousSkills.push(i as SkillData);
+                            this.sorcerousSkills.push(item as Skill);
                         } else if ((i as SkillData).skilltype === "social") {
-                            this.socialSkills.push(i as SkillData);
+                            this.socialSkills.push(item as Skill);
                         }
                         break;
                     case "reputation":
@@ -206,7 +206,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
                     case "spell":
                     case "melee weapon":
                     case "ranged weapon":
-                        this.fightWeapons.push(i as SpellData | MeleeWeaponData | RangedWeaponData);
+                        this.fightWeapons.push(item as MeleeWeapon | RangedWeapon | Spell);
                         break;
                 }
             });
@@ -290,41 +290,41 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
         this.items.filter((i: BWItem) => (i.type === "armor" && (i as Armor).system.equipped))
             .forEach((i: Armor) => {
             const a = i.system;
-            if (a.system.hasHelm) {
-                    clumsyWeight.helmetObPenalty = a.data.perceptionObservationPenalty || 0;
+            if (a.hasHelm) {
+                    clumsyWeight.helmetObPenalty = a.perceptionObservationPenalty || 0;
             }
-            if (a.system.hasTorso) {
+            if (a.hasTorso) {
                 clumsyWeight.healthFortePenalty = Math.max(clumsyWeight.healthFortePenalty,
-                    a.system.healthFortePenalty || 0);
+                    a.healthFortePenalty || 0);
                 clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
-                    a.system.stealthyPenalty || 0);
+                    a.stealthyPenalty || 0);
             }
-            if (a.system.hasLeftArm || a.system.hasRightArm) {
+            if (a.hasLeftArm || a.hasRightArm) {
                 clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
-                    a.system.agilityPenalty || 0);
+                    a.agilityPenalty || 0);
                 clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
-                    a.system.throwingShootingPenalty || 0);
+                    a.throwingShootingPenalty || 0);
             }
-            if (a.system.hasLeftLeg || a.system.hasRightLeg) {
+            if (a.hasLeftLeg || a.hasRightLeg) {
                 clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
-                    a.system.speedDiePenalty || 0);
+                    a.speedDiePenalty || 0);
                 clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
-                    a.system.speedObPenalty || 0);
+                    a.speedObPenalty || 0);
                 clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
-                    a.system.climbingPenalty || 0);
+                    a.climbingPenalty || 0);
             }
 
 
             if (charData && !charData.settings.armorTrained &&
-                (a.system.hasHelm || a.system.hasLeftArm || a.system.hasRightArm || a.system.hasTorso || a.system.hasLeftLeg || a.system.hasRightLeg)) {
+                (a.hasHelm || a.hasLeftArm || a.hasRightArm || a.hasTorso || a.hasLeftLeg || a.hasRightLeg)) {
                 // if this is more than just a shield
-                if (a.system.untrainedPenalty === "plate") {
+                if (a.untrainedPenalty === "plate") {
                     clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 2);
                     clumsyWeight.untrainedHealth = 0;
-                } else if (a.system.untrainedPenalty === "heavy") {
+                } else if (a.untrainedPenalty === "heavy") {
                     clumsyWeight.untrainedAll = Math.max(clumsyWeight.untrainedAll, 1);
                     clumsyWeight.untrainedHealth = 0;
-                } else if (a.system.untrainedPenalty === "light" && clumsyWeight.untrainedAll === 0) {
+                } else if (a.untrainedPenalty === "light" && clumsyWeight.untrainedAll === 0) {
                     clumsyWeight.untrainedHealth = 1;
                 }
             }
@@ -378,20 +378,20 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
 
     aptitudeModifiers: StringIndexedObject<number>;
     toolkits: PossessionData[];
-    martialSkills: SkillData[];
-    socialSkills: SkillData[];
-    sorcerousSkills: SkillData[];
-    wildForks: SkillData[];
+    martialSkills: Skill[];
+    socialSkills: Skill[];
+    sorcerousSkills: Skill[];
+    wildForks: Skill[];
 
     circlesMalus: { name: string, amount: number }[];
     circlesBonus: { name: string, amount: number }[];
     items: DocumentCollection<BWItem>;
-    forks: SkillData[];
+    forks: Skill[];
     rollModifiers: { [rollName:string]: RollModifier[]; };
     callOns: { [rollName:string]: string[] };
     successOnlyRolls: string[];
 
-    fightWeapons: (MeleeWeaponData | RangedWeaponData | SpellData)[];
+    fightWeapons: (MeleeWeapon | RangedWeapon | Spell)[];
 
     type: "character" | "npc" | "setting";
 }

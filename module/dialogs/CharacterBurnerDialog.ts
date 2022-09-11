@@ -1,6 +1,6 @@
 import { BWActor } from "../actors/BWActor.js";
 import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData, escapeQuotes } from "../helpers.js";
-import { BWItem, BWItemData, HasPointCost, ItemType } from "../items/item.js";
+import { BWItem, HasPointCost, ItemType } from "../items/item.js";
 import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Property, PropertyData } from "../items/property.js";
@@ -13,6 +13,7 @@ import { Lifepath, LifepathData } from "../items/lifepath.js";
 import { MeleeWeaponData } from "../items/meleeWeapon.js";
 import { ArmorData } from "../items/armor.js";
 import { PossessionData } from "../items/possession.js";
+import { TypeMissing } from "../../types/index.js";
 
 export class CharacterBurnerDialog extends Application {
     private readonly _parent: BWCharacter;
@@ -112,16 +113,16 @@ export class CharacterBurnerDialog extends Application {
         this._traits.forEach(s => {
             const trait = {
                 name: s.name,
-                label: s.data.data.pointCost ? `${s.name} - ${s.data.data.pointCost} Pts` : s.name
+                label: s.system.pointCost ? `${s.name} - ${s.system.pointCost} Pts` : s.name
             };
-            if (!s.data.data.restrictions) {
+            if (!s.system.restrictions) {
                 data.data.traitNames.Unrestricted.push(trait);
                 return;
             }
-            if (!data.data.traitNames[s.data.data.restrictions]) {
-                data.data.traitNames[s.data.data.restrictions] = [];   
+            if (!data.data.traitNames[s.system.restrictions]) {
+                data.data.traitNames[s.system.restrictions] = [];   
             }
-            data.data.traitNames[s.data.data.restrictions].push(trait);
+            data.data.traitNames[s.system.restrictions].push(trait);
         });
         data.data.propertyNames = this._property.map(p => p.name);
         data.data.armorNames = [];
@@ -129,8 +130,8 @@ export class CharacterBurnerDialog extends Application {
         data.data.weaponNames = [];
         data.data.spellNames = [];
 
-        this._gear.forEach((g: BWItem<BWItemData<PropertyData|MeleeWeaponData|ArmorData|PossessionData>>) => {
-            const entry = { name: g.name, label: g.data.data.pointCost ? `${g.name} - ${g.data.data.pointCost} Pts` : g.name };
+        this._gear.forEach((g: BWItem<PropertyData|MeleeWeaponData|ArmorData|PossessionData>) => {
+            const entry = { name: g.name, label: g.system.pointCost ? `${g.name} - ${g.system.pointCost} Pts` : g.name };
             switch(g.type) {
                 case "melee weapon":
                 case "ranged weapon":
@@ -290,11 +291,11 @@ export class CharacterBurnerDialog extends Application {
             this._addLifepath(item as Lifepath);
         } else {
             this._ensureCached(item);
-            this._addEntry(item.name, item.data.type, false, item.data.data);
+            this._addEntry(item.name, item.type, false, item.system);
         }
     }
     private _addLifepath(lp: Lifepath) {
-        const pathData = duplicate(lp.data.data) as LifepathData;
+        const pathData = duplicate(lp.system) as LifepathData;
         const numDuplicates = $(this.element).find('input[name="lifepathName"]').filter((_, e) => $(e).val() === lp.name).length;
         const emptyLifepath = $(this.element).find('.lifepath-grid > input[name="lifepathName"]').filter((_, e) => !$(e).val()).first();
 
@@ -372,7 +373,7 @@ export class CharacterBurnerDialog extends Application {
     }
 
     private _ensureCached(item: BWItem) {
-        switch (item.data.type) {
+        switch (item.type) {
             case "skill":
                 if (!this._skills.find(s => s.name === item.name)) {
                     this._skills.push(item as Skill);
@@ -633,9 +634,9 @@ export class CharacterBurnerDialog extends Application {
         }
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-            inputTarget.siblings("*[name='traitType']").val(trait.data.data.traittype).trigger("change");
+            inputTarget.siblings("*[name='traitType']").val(trait.system.traittype).trigger("change");
             inputTarget.siblings("*[name='traitId']").val(trait.id);
-            const cost = (!trait.data.data.pointCost || isNaN(trait.data.data.pointCost)) ? 1 : trait.data.data.pointCost;
+            const cost = (!trait.system.pointCost || isNaN(trait.system.pointCost)) ? 1 : trait.system.pointCost;
             inputTarget.siblings("*[name='traitCost']").val(cost).trigger("change");
         }
     }
@@ -655,10 +656,10 @@ export class CharacterBurnerDialog extends Application {
         }
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
-            inputTarget.siblings("*[name='skillRoot1']").val(skill.data.data.root1).trigger("change");
-            inputTarget.siblings("*[name='skillRoot2']").val(skill.data.data.root2).trigger("change");
-            inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.data.data.training);
-            inputTarget.siblings("*[name='skillMagic']").prop("checked", skill.data.data.magical);
+            inputTarget.siblings("*[name='skillRoot1']").val(skill.system.root1).trigger("change");
+            inputTarget.siblings("*[name='skillRoot2']").val(skill.system.root2).trigger("change");
+            inputTarget.siblings("*[name='skillTraining']").prop("checked", skill.system.training);
+            inputTarget.siblings("*[name='skillMagic']").prop("checked", skill.system.magical);
             inputTarget.siblings("*[name='skillId']").val(skill.id);
         }
     }
@@ -680,7 +681,7 @@ export class CharacterBurnerDialog extends Application {
         else {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='propertyId']").val(property.id);
-            inputTarget.siblings("*[name='propertyCost']").val(property.data.data.pointCost || 0).trigger("change");
+            inputTarget.siblings("*[name='propertyCost']").val(property.system.pointCost || 0).trigger("change");
         }
     }
 
@@ -702,7 +703,7 @@ export class CharacterBurnerDialog extends Application {
             inputTarget.siblings(".load-status").removeClass("none loading fail success").addClass("success");
             inputTarget.siblings("*[name='itemType']").val(gear.type);
             inputTarget.siblings("*[name='gearId']").val(gear.id);
-            inputTarget.siblings("*[name='itemCost']").val((gear.data.data as HasPointCost).pointCost || 0).trigger("change");
+            inputTarget.siblings("*[name='itemCost']").val((gear.system as HasPointCost).pointCost || 0).trigger("change");
         }
     }
 
@@ -750,7 +751,7 @@ export class CharacterBurnerDialog extends Application {
                     ...repData,
                     ...relData,
                     ...gearData,
-                ], { keepId: false });
+                ] as TypeMissing[], { keepId: false });
             },
             no: () => { return; }
         });

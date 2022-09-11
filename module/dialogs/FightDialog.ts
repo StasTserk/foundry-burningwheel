@@ -1,21 +1,21 @@
-import { BWItemData } from "../items/item.js";
-import { NpcData, NpcDataRoot } from "../actors/Npc.js";
+
+import { Npc, NpcData, } from "../actors/Npc.js";
 import { BWActor } from "../actors/BWActor.js";
 import { notifyError, StringIndexedObject } from "../helpers.js";
-import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
+import { changesState, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 import { handleFightRoll } from "../rolls/fightRoll.js";
-import { BWCharacterData, CharacterDataRoot } from "../actors/BWCharacter.js";
-import { MeleeWeaponRootData } from "../items/meleeWeapon.js";
+import { BWCharacter, BWCharacterData } from "../actors/BWCharacter.js";
 
 import * as constants from "../constants.js";
 import { getKeypressModifierPreset } from "../rolls/rolls.js";
+import { MeleeWeapon } from "../items/meleeWeapon.js";
 
 export type FightAttr = "speed" | "agility" | "power" | "skill" | "steel";
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
-        this.data.data.participants = this.data.data.participants || [];
-        this.data.data.participantIds = this.data.data.participantIds || [];
+        this.data.participants = this.data.participants || [];
+        this.data.participantIds = this.data.participantIds || [];
         this.data.actionOptions = options;
         this.data.actors = [];
         this.data.topic = "Fight";
@@ -26,16 +26,16 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         const data = super.getData() as FightDialogData;
 
         if (!this.data.actors.length) {
-            this.data.actors = (game.actors?.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || []) as BWActor[];
+            this.data.actors = (game.actors?.filter((i: BWActor) => this.data.participantIds.includes(i.id)) || []) as BWActor[];
             this.data.actors.sort((a, b) => {
-                return this.data.data.participantIds.indexOf(a.id) > this.data.data.participantIds.indexOf(b.id) ? 1 : -1;
+                return this.data.participantIds.indexOf(a.id) > this.data.participantIds.indexOf(b.id) ? 1 : -1;
             });
         }
 
         const actors = game.actors?.contents || [];
         data.gmView = game.user?.isGM || false;
         data.participantOptions = actors
-            .filter(a => !this.data.data.participantIds.includes(a.id))
+            .filter(a => !this.data.participantIds.includes(a.id))
             .map(a => {
             return { id: a.id, name: a.name };
         });
@@ -43,18 +43,18 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         data.participants.forEach(p => {
             const actor = this.data.actors.find(a => a.id === p.id) as BWActor;
             if (!actor) { return; }
-            p.weapons = actor.data.fightWeapons.map(w => {
+            p.weapons = actor.fightWeapons.map(w => {
                 if (w.type === "melee weapon") {
-                    const mw = w as MeleeWeaponRootData;
+                    const mw = w as MeleeWeapon;
                     return Object.values(mw.data.attacks).map((atk, index) => { 
                         return {
-                            id: `${(mw as BWItemData & { _id:string })._id}_${index}`,
+                            id: `${(mw).id}_${index}`,
                             label: `${mw.name} ${atk.attackName}`
                         };
                     });
                 }
                 return [{
-                    id: (w as BWItemData & { _id:string })._id,
+                    id: (w).id,
                     label: w.name
                 }];
             }).flat(1);
@@ -80,25 +80,25 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
 
         html.find('button[data-action="clearAll"]').on('click', e => {
             e.preventDefault();
-            this.data.data.participants = [];
-            this.data.data.participantIds = [];
-            this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
+            this.data.participants = [];
+            this.data.participantIds = [];
+            this.data.showV1 = this.data.showV2 = this.data.showV3 = false;
             this.data.actors = [];
-            this.syncData(this.data.data);
-            this.persistState(this.data.data);
+            this.syncData(this.data);
+            this.persistState(this.data);
             this._syncActors();
             this.render();
         });
 
         html.find('button[data-action="resetRound"]').on('click', e => {
             e.preventDefault();
-            this.data.data.participants.forEach(p => {
+            this.data.participants.forEach(p => {
                 p.action1 = p.action2 = p.action3 = p.action4 = p.action5
                 = p.action6 = p.action7 = p.action8 = p.action9 = "";
             });
-            this.data.data.showV1 = this.data.data.showV2 = this.data.data.showV3 = false;
-            this.syncData(this.data.data);
-            this.persistState(this.data.data);
+            this.data.showV1 = this.data.showV2 = this.data.showV3 = false;
+            this.syncData(this.data);
+            this.persistState(this.data);
             this.render();
         });
 
@@ -112,7 +112,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             e.preventDefault();
             this._toggleHidden(e.target);
         });
-        html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.data.participants));
+        html.find('.fighters-grid input, .fighters-grid select').on('change', (e: JQuery.ChangeEvent) => this.updateCollection(e, this.data.participants));
         ["Speed", "Power", "Agility", "Skill", "Steel"].forEach((attr: string) => {
             html.find(`button[data-action="roll${attr}"]`)
                 .on('click', (e: JQuery.ClickEvent) => { this._handleRoll(e, attr.toLowerCase() as FightAttr); });
@@ -128,10 +128,10 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         const dataPreset = getKeypressModifierPreset(e);
         const index = parseInt(e.target.dataset.index || "0");
         const actor = this.data.actors[index];
-        const engagementBonus = parseInt(this.data.data.participants[index].engagementBonus.toString());
-        const positionPenalty = parseInt(this.data.data.participants[index].positionPenalty.toString());
+        const engagementBonus = parseInt(this.data.participants[index].engagementBonus.toString());
+        const positionPenalty = parseInt(this.data.participants[index].positionPenalty.toString());
         if (type === "skill") {
-            let itemIdString = this.data.data.participants[index].weaponId;
+            let itemIdString = this.data.participants[index].weaponId;
             if (!itemIdString) {
                 return notifyError("No weapon selected", "A weapon (or bare fists) must be selected to determine which skill to use for the roll.");
             }
@@ -149,28 +149,28 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     private _toggleHidden(target: HTMLDivElement): void {
         if (!game.user?.isGM) { return; }
         const index = parseInt(target.dataset.index || "0") ;
-        const hidden = this.data.data.participants[index].gmHidden;
-        this.data.data.participants[index].gmHidden = !hidden;
+        const hidden = this.data.participants[index].gmHidden;
+        this.data.participants[index].gmHidden = !hidden;
     }
 
     @changesState(FightDialog.prototype._syncActors)
     private _addNewParticipant(target: HTMLSelectElement): void {
         const id = target.value;
-        const actor = game.actors?.get(id) as BWActor;
+        const actor = game.actors?.get(id) as BWCharacter | Npc;
         this.data.actors.push(actor);
-        this.data.data.participants.push({ ...toParticipantData(actor),
+        this.data.participants.push({ ...toParticipantData(actor),
             action1: '', action2: '', action3: '', action4: '', action5: '',
             action6: '', action7: '', action8: '', action9: '', gmHidden: false,
             engagementBonus: 0, positionPenalty: 0
         } as ParticipantEntry);
-        this.data.data.participantIds.push(id);
+        this.data.participantIds.push(id);
     }
 
     @changesState(FightDialog.prototype._syncActors)
     private _removeParticipant(target: HTMLElement): void {
         const index = parseInt(target.dataset.index || "0");
-        this.data.data.participantIds.splice(index, 1);
-        this.data.data.participants.splice(index, 1);
+        this.data.participantIds.splice(index, 1);
+        this.data.participants.splice(index, 1);
         this.data.actors.splice(index, 1);
     }
 
@@ -178,18 +178,18 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         super.activateSocketListeners();
         game.socket.on(constants.socketName, ({type}) => {
             if (type === `syncActors${this.data.topic}`) {
-                this.data.actors = (game.actors?.filter((i: BWActor) => this.data.data.participantIds.includes(i.id)) || []) as BWActor[];
+                this.data.actors = (game.actors?.filter((i: BWActor) => this.data.participantIds.includes(i.id)) || []) as BWActor[];
                 this.data.actors.sort((a, b) => {
-                    return this.data.data.participantIds.indexOf(a.id) > this.data.data.participantIds.indexOf(b.id) ? 1 : -1;
+                    return this.data.participantIds.indexOf(a.id) > this.data.participantIds.indexOf(b.id) ? 1 : -1;
                 });
                 this.render();
             }
         });
-        Hooks.on("updateActor", (actor: BWActor) => {
+        Hooks.on("updateActor", (actor: BWCharacter | Npc) => {
             if (this.data.actors.includes(actor)) {
                 const index = this.data.actors.indexOf(actor);
-                this.data.data.participants[index] = Object.assign(
-                    this.data.data.participants[index],
+                this.data.participants[index] = Object.assign(
+                    this.data.participants[index],
                     toParticipantData(actor)
                 );
                 this.render();
@@ -200,11 +200,6 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     private _syncActors() {
         game.socket.emit(constants.socketName, { type: `syncActors${this.data.topic}`});
     }
-
-    data: ExtendedTestData<FightDialogData> & {
-        actionOptions: StringIndexedObject<string[]>;
-        actors: BWActor[];
-    };
 
     get template(): string {
         return "systems/burningwheel/templates/dialogs/fight.hbs";
@@ -229,11 +224,11 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
 }
 
-function toParticipantData(actor: BWActor): Partial<ParticipantEntry> {
-    const reflexesString = `${(actor.data.data as BWCharacterData | NpcData).reflexesShade}${
-        (actor.data.type === "character" ?
-        (actor.data as CharacterDataRoot).data.reflexesExp :
-        (actor.data as NpcDataRoot).data.reflexes)}`;
+function toParticipantData(actor: BWCharacter | Npc): Partial<ParticipantEntry> {
+    const reflexesString = `${actor.system.reflexesShade}${
+        (actor.type === "character" ?
+            (actor.system as unknown as BWCharacterData).reflexesExp :
+            (actor.system as unknown as NpcData).reflexes)}`;
     return {
         name: actor.name,
         id: actor.id,
@@ -243,6 +238,7 @@ function toParticipantData(actor: BWActor): Partial<ParticipantEntry> {
 }
 
 export interface FightDialogData {
+    actors: (BWActor | Npc)[];
     actionOptions: StringIndexedObject<string[]>;
     participantOptions: { id: string, name: string }[];
     participantIds: string[];

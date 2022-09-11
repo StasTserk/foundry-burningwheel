@@ -1,13 +1,13 @@
 import { BWActor } from "../actors/BWActor.js";
 import { StringIndexedObject } from "../helpers.js";
-import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
+import { changesState, ExtendedTestDialog } from "./ExtendedTestDialog.js";
 import { handleLearningRoll } from "../rolls/rollLearning.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { handleSkillRoll } from "../rolls/rollSkill.js";
 import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
 import { Npc } from "../actors/Npc.js";
 import { getKeypressModifierPreset } from "../rolls/rolls.js";
-import { Skill, SkillDataRoot } from "../items/skill.js";
+import { Skill } from "../items/skill.js";
 
 import * as constants from "../constants.js";
 
@@ -16,11 +16,11 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         super(d, o);
         
         this.data.actionOptions = options;
-        this.data.data.showV1 = this.data.data.showV1 || false;
-        this.data.data.showV2 = this.data.data.showV2 || false;
-        this.data.data.showV3 = this.data.data.showV3 || false;
-        this.data.data.blindS1 = this.data.data.blindS1 || false;
-        this.data.data.blindS2 = this.data.data.blindS2 || false;
+        this.data.showV1 = this.data.showV1 || false;
+        this.data.showV2 = this.data.showV2 || false;
+        this.data.showV3 = this.data.showV3 || false;
+        this.data.blindS1 = this.data.blindS1 || false;
+        this.data.blindS2 = this.data.blindS2 || false;
 
         this.data.topic = "Duel";
         this.data.settingName = constants.settings.duelData;
@@ -29,10 +29,6 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     get template(): string {
         return "systems/burningwheel/templates/dialogs/duel-of-wits.hbs";
     }
-
-    data: ExtendedTestData<DuelOfWitsData> & {
-        actionOptions: StringIndexedObject<string[]>;
-    };
 
     static get defaultOptions(): Dialog.Options {
         return mergeObject(super.defaultOptions, { width: 600, height: 600, resizable: true, classes: [ "bw-app" ] }, { overwrite: true });
@@ -62,16 +58,16 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         const actor = game.actors?.contents.find(a => a.id === target.dataset.actorId) as BWActor;
         const skill = actor?.items.get(target.dataset.skillId || "") as Skill | undefined;
 
-        dataPreset.deedsPoint = actor.data.data.deeds !== 0;
-        if (actor.data.data.persona) {
-            dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+        dataPreset.deedsPoint = actor.system.deeds !== 0;
+        if (actor.system.persona) {
+            dataPreset.personaOptions = Array.from(Array(Math.min(actor.system.persona, 3)).keys());
         }
 
         if (!skill) {
             return;
         }
         if (actor?.data.type === "character") {
-            if (skill.data.data.learning) {
+            if (skill.system.learning) {
                 handleLearningRoll({
                     actor: (actor as BWCharacter),
                     skill,
@@ -103,9 +99,9 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         data.side2Options = actors.filter(a => a.id !== data.side1ActorId);
 
         data.actor1 = actors.find(a => a.id === data.side1ActorId) as BWActor | undefined;
-        data.actor1Skills = (data.actor1?.data.socialSkills || []).map((s: SkillDataRoot ) => { return { id: s._id, label: s.name };});
+        data.actor1Skills = (data.actor1?.socialSkills || []).map((s: Skill ) => { return { id: s.id, label: s.name };});
         data.actor2 = actors.find(a => a.id === data.side2ActorId) as BWActor | undefined;
-        data.actor2Skills = (data.actor2?.data.socialSkills || []).map((s: SkillDataRoot ) => { return { id: s._id, label: s.name };});
+        data.actor2Skills = (data.actor2?.socialSkills || []).map((s: Skill ) => { return { id: s.id, label: s.name };});
 
         data.side1ReadOnly = !data.actor1 || !data.actor1.isOwner;
         data.side2ReadOnly = !data.actor2 || !data.actor2.isOwner;
@@ -128,7 +124,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     @changesState()
     async clearEverything(): Promise<void> {
         await this.clearRound();
-        const data = this.data.data;
+        const data = this.data;
         data.blindS1 = false;
         data.blindS2 = false;
         data.boa1 = 0;
@@ -145,7 +141,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
 
     @changesState()
     async clearRound(): Promise<void> {
-        const data = this.data.data;
+        const data = this.data;
         data.v1s1 = "?";
         data.v1s2 = "?";
         data.v2s1 = "?";

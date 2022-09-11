@@ -70,7 +70,7 @@
      * @remarks
      * This can't be used to type guard this._data and this.data; use this._data.type and this.data.type directly instead.
      */
-    get type(): string;
+    type: string;
   
     /**
      * A boolean indicator for whether the current game user has ONLY limited visibility for this Document.

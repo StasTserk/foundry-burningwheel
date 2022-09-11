@@ -1,9 +1,7 @@
-import { ItemType, BWItemData, BWItem } from "./item.js";
+import { BWItemData, BWItem } from "./item.js";
 
 export class Lifepath extends BWItem<LifepathRootData> {
-    get type(): ItemType {
-        return super.type as ItemType;
-    }
+    type: "lifepath";
 
     prepareData(): void {
         super.prepareData();

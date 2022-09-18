@@ -29,11 +29,15 @@ export class LifepathSheet extends BWItemSheet<BWItemSheetData, Lifepath> {
             console.error(err);
             return;
         }
-        if (data.type === "Item" && data.id) {
+        if (data.type === "Item") {
+
             let item: BWItem | undefined;
-            if (data.pack) {
+            if (data.uuid) {
+                item = await fromUuid(data.uuid) as BWItem;
+            }
+            else if (data.pack && data.id) {
                 item = await (game.packs?.find(p => p.collection === data.pack) as CompendiumCollection<BWItem>).getDocument(data.id) as BWItem;
-            } else if (data.actorId) {
+            } else if (data.actorId && data.id) {
                 item = (game.actors?.find((a: BWActor) => a.id === data.actorId) as BWActor).items.get(data.id) as BWItem;
             } else {
                 item = game.items?.find((i: BWItem) => i.id === data.id) as BWItem;

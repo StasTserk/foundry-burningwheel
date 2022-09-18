@@ -170,7 +170,7 @@ async function learningRollCallback(
         }
     }
 
-    actor.updateArthaForStat(`data.${statName}`, rollData.persona, rollData.deeds);
+    actor.updateArthaForStat(statName, rollData.persona, rollData.deeds);
 
     const afterLearningTest = async (fr?: RerollData) => {
         if (rollData.addHelp) {
@@ -247,7 +247,7 @@ async function advanceBaseStat(
         fr: RerollData | undefined,
         cb: (fr?: RerollData) => Promise<ChatMessage | null>) {
 
-    const accessor = `data.${statName.toLowerCase()}`;
+    const accessor = statName.toLowerCase();
     const rootStat = getProperty(owner, `system.${accessor}`);
     if (statName === "custom1" || statName === "custom2") {
         statName = owner.system[statName].name.titleCase();

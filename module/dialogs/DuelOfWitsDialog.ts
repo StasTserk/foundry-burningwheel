@@ -16,11 +16,11 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         super(d, o);
         
         this.data.actionOptions = options;
-        this.data.showV1 = this.data.showV1 || false;
-        this.data.showV2 = this.data.showV2 || false;
-        this.data.showV3 = this.data.showV3 || false;
-        this.data.blindS1 = this.data.blindS1 || false;
-        this.data.blindS2 = this.data.blindS2 || false;
+        this.data.data.showV1 = this.data.data.showV1 || false;
+        this.data.data.showV2 = this.data.data.showV2 || false;
+        this.data.data.showV3 = this.data.data.showV3 || false;
+        this.data.data.blindS1 = this.data.data.blindS1 || false;
+        this.data.data.blindS2 = this.data.data.blindS2 || false;
 
         this.data.topic = "Duel";
         this.data.settingName = constants.settings.duelData;
@@ -124,7 +124,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     @changesState()
     async clearEverything(): Promise<void> {
         await this.clearRound();
-        const data = this.data;
+        const data = this.data.data;
         data.blindS1 = false;
         data.blindS2 = false;
         data.boa1 = 0;
@@ -141,7 +141,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
 
     @changesState()
     async clearRound(): Promise<void> {
-        const data = this.data;
+        const data = this.data.data;
         data.v1s1 = "?";
         data.v1s2 = "?";
         data.v2s1 = "?";
@@ -162,6 +162,8 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         const combatHeader = $(html).find("header");
         combatHeader.prepend(buttonElement);
     }
+
+    data: ExtendedTestDialog<DuelOfWitsData>["data"] & { actionOptions: Record<string, string[]> };
 }
 
 interface DuelOfWitsData {

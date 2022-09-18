@@ -1,8 +1,10 @@
 <form class="rnc flex-row">
+    {{#if gmView}}
     <div class="control-grid">
         <button type="button" class="control-button" data-action="clearAll">Clear All</button>
         <button type="button" class="control-button" data-action="resetRound">Reset Round</button>
     </div>
+    {{/if}}
     <div class="team-grid">
         <div class="team-header">Team</div>
         {{#if gmView}}

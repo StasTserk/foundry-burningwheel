@@ -95,15 +95,14 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
             dataPreset
         });
     }
-    const accessor = `data.${type}`;
-    const stat = getProperty(actor, `system.${accessor}`) as Ability;
+    const stat = getProperty(actor, `system.${type}`) as Ability;
 
     if (type === "steel"){
         return handleAttrRoll({
             actor: actor as BWCharacter,
             stat: actor.system.steel,
             attrName: "Steel",
-            accessor,
+            accessor: type,
             dataPreset
         });
     }
@@ -112,7 +111,7 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
         actor: actor as BWCharacter,
         statName: type.titleCase(),
         stat,
-        accessor,
+        accessor: type,
         dataPreset
     });
 }

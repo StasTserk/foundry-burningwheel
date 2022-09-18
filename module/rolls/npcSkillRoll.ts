@@ -105,7 +105,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
     }
     
     if (skill.system.learning) {
-        const accessor = `data.${skill.system.root1}`;
+        const accessor = skill.system.root1;
         if (dataPreset) {
             dataPreset.learning = true;
         } else {

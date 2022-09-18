@@ -22,8 +22,8 @@ import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
 
-    const dice = getProperty(actor.system, target.dataset.stat || "") as number;
-    const shade = getProperty(actor.system, target.dataset.shade || "") as helpers.ShadeString;
+    const dice = getProperty(actor, target.dataset.stat || "") as number;
+    const shade = getProperty(actor, target.dataset.shade || "") as helpers.ShadeString;
     const open = target.dataset.action === "rollStatOpen";
     
     const statName = (target.dataset.rollableName || "Unknown Stat") as NpcStatName;
@@ -42,7 +42,7 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
         // add a test log instead of testing
         return buildHelpDialog({
             exponent: dice,
-            path: `data.${statName}`,
+            path: `system.${statName}`,
             actor,
             helpedWith: statName
         });
@@ -93,7 +93,7 @@ async function statRollCallback(
         extraInfo?: string) {
     const rollData = extractRollData(dialogHtml);
     const dg = rollData.difficultyGroup;
-    const accessor = `data.${name}`;
+    const accessor = name;
 
     const roll = await rollDice(rollData.diceTotal, open, shade);
     if (!roll) { return; }

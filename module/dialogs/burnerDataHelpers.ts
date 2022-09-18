@@ -2,7 +2,7 @@ import { Affiliation } from "../items/affiliation.js";
 import { Property } from "../items/property.js";
 import { Relationship } from "../items/relationship.js";
 import { Reputation } from "../items/reputation.js";
-import { Skill, SkillData } from "../items/skill.js";
+import { Skill } from "../items/skill.js";
 import { Trait } from "../items/trait.js";
 import { CharacterSettings } from "../actors/BWCharacter.js";
 import { StringIndexedObject, ShadeString } from "../helpers.js";
@@ -120,11 +120,11 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
         skillId = extractNamedChildString($(e), "skillId");
         if (skillId) {
             skillData = skillsList.find(s => s.id === skillId);
-            if (skillData) {
-                (skillData.data as SkillData).exp = skillExp;
-                (skillData.data as SkillData).shade = costToString(extractNamedChildNumber($(e), "skillShade"));
+            if (skillData && skillData.system) {
+                skillData.system.exp = skillExp;
+                skillData.system.shade = costToString(extractNamedChildNumber($(e), "skillShade"));
                 skills.push({
-                    data: skillData.data,
+                    system: skillData.system,
                     name: skillData.name,
                     type: skillData.type,
                     img: skillData.img
@@ -132,7 +132,7 @@ export function extractSkillData(html: JQuery<HTMLElement>, skillsList: Skill[])
             }
         } else {
             skills.push({
-                data: {
+                system: {
                     name: skillName,
                     exp: skillExp,
                     shade: costToString(extractNamedChildNumber($(e), "skillShade")),

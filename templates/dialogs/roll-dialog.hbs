@@ -194,7 +194,7 @@
             <select id="select-toolkit" name="toolkitId">
                 <option value="">None</option>
                 {{#each toolkits as |t|}}
-                <option value="{{t._id}}">{{t.name}}{{#if t.data.isExpended}} (Expended){{/if}}</option>
+                <option value="{{t._id}}">{{t.name}}{{#if t.system.isExpended}} (Expended){{/if}}</option>
                 {{/each}}
             </select>
         </div>

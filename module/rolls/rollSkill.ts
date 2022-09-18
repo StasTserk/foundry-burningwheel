@@ -18,7 +18,7 @@ import {
 } from "./rolls.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
-import { Possession, PossessionData } from "../items/possession.js";
+import { Possession } from "../items/possession.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleSkillRollEvent({ target, sheet, dataPreset, extraInfo, onRollCallback }: SkillRollEventOptions ): Promise<unknown> {
@@ -160,7 +160,7 @@ interface SkillDialogData extends RollDialogData {
     forkOptions: { name: string, amount: number }[];
     wildForks: { name: string, amount: number }[];
     needsToolkit: boolean;
-    toolkits: PossessionData[];
+    toolkits: Possession[];
 }
 
 

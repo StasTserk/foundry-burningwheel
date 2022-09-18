@@ -3,7 +3,7 @@ import { DisplayClass, ItemType, BWItem, BWItemDataTypes } from "../items/item.j
 import { Skill, SkillData } from "../items/skill.js";
 import * as constants from "../constants.js";
 import { Armor } from "../items/armor.js";
-import { PossessionData } from "../items/possession.js";
+import { Possession, PossessionData } from "../items/possession.js";
 import { ReputationData } from "../items/reputation.js";
 import { TraitData, Trait } from "../items/trait.js";
 import { BWCharacterData } from "./BWCharacter.js";
@@ -200,7 +200,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
                         break;
                     case "possession":
                         if ((i as PossessionData).isToolkit) {
-                            this.toolkits.push(i as PossessionData);
+                            this.toolkits.push(item as Possession);
                         }
                         break;
                     case "spell":
@@ -377,7 +377,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     }
 
     aptitudeModifiers: StringIndexedObject<number>;
-    toolkits: PossessionData[];
+    toolkits: Possession[];
     martialSkills: Skill[];
     socialSkills: Skill[];
     sorcerousSkills: Skill[];

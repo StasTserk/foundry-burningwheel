@@ -19,7 +19,7 @@ import {
 } from "./rolls.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { Skill } from "../items/skill.js";
-import { Possession, PossessionData } from "../items/possession.js";
+import { Possession } from "../items/possession.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
@@ -270,7 +270,7 @@ async function advanceLearningProgress(
 export interface LearningDialogData extends RollDialogData {
     skill: TracksTests;
     needsToolkit: boolean;
-    toolkits: PossessionData[];
+    toolkits: Possession[];
     tax?: number;
     learning: boolean;
 }

@@ -21,7 +21,7 @@ import { Npc } from "../actors/Npc.js";
 import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
 import { Skill } from "../items/skill.js";
 import { MeleeWeapon } from "../items/meleeWeapon.js";
-import { PossessionData } from "../items/possession.js";
+import { Possession } from "../items/possession.js";
 import { RangedWeapon } from "../items/rangedWeapon.js";
 import { Spell } from "../items/spell.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
@@ -254,7 +254,7 @@ async function skillRollCallback(
 interface NpcSkillDialogData extends RollDialogData {
     skill: TracksTests;
     needsToolkit: boolean;
-    toolkits: PossessionData[];
+    toolkits: Possession[];
     forkOptions: {name: string; amount: number}[];
     wildForks: {name: string; amount: number}[];
 }

@@ -215,6 +215,7 @@ export interface DragData {
     data?: any,
     actorId?: string,
     id?: string,
+    uuid?: string,
     pack?: string,
 }
 

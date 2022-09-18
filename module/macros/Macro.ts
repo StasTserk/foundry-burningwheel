@@ -11,17 +11,22 @@ import { CreateEditMacro, RollEditMacro } from "./EditMacro.js";
 import { ItemType } from "../items/item.js";
 import { CreateStatMacro, RollStatMacro } from "./StatMacro.js";
 import { ModifierDialog } from "../dialogs/ModifierDialog.js";
+import { TypeMissing } from "../../types/index.js";
 
-export async function CreateBurningWheelMacro(data: DragData, slot: string): Promise<boolean> {
+export function CreateBurningWheelMacro(data: DragData, slot: string): boolean {
     if (!handlers[data.type || ""]) {
         return true;
     }
+    createAndAssignMacro(data, slot);
+    return false;
+}
 
+async function createAndAssignMacro(data: DragData, slot: string): Promise<void> {
     const macroData = handlers[data.type || ""](data);
     if (macroData) {
         // Check if an identical macro already exists. Create it otherwise.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let macro = game.macros?.contents.find(m => (m.name === macroData.name) && ((m.data as any).command === macroData.command));
+        let macro = game.macros?.contents.find(m => (m.name === macroData.name) && ((m as TypeMissing).command === macroData.command));
         if (!macro) {
             macro = await Macro.create<Macro, Partial<Macro.Data>>({
                 name: macroData.name,
@@ -33,7 +38,6 @@ export async function CreateBurningWheelMacro(data: DragData, slot: string): Pro
         }
         await game.user?.assignHotbarMacro(macro, slot);
     }
-    return false;
 }
 
 function CreateItemMacro(dragData: DragData): MacroData | null {
@@ -102,9 +106,9 @@ export function getMacroRollPreset(actor: BWActor): Partial<RollDialogData> {
         }
         dataPreset.optionalObModifiers = helpDialog.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
     }
-    dataPreset.deedsPoint = actor.data.data.deeds !== 0;
-    if (actor.data.data.persona) {
-        dataPreset.personaOptions = Array.from(Array(Math.min(actor.data.data.persona, 3)).keys());
+    dataPreset.deedsPoint = actor.system.deeds !== 0;
+    if (actor.system.persona) {
+        dataPreset.personaOptions = Array.from(Array(Math.min(actor.system.persona, 3)).keys());
     }
 
     return dataPreset;

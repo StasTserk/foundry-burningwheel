@@ -67,7 +67,7 @@ export class ModifierDialog extends Application {
                     (actor as BWCharacter).addStatTest(ability, name, entry.path, diff, success);
                 } else {
                     const skill = game.actors?.get(entry.actorId)?.items.get(entry.skillId || "") as Skill;
-                    diff = difficultyGroup(skill.data.data.exp, obstacle);
+                    diff = difficultyGroup(skill.system.exp, obstacle);
                     skill.addTest(diff);
                     name = skill.name;
                 }

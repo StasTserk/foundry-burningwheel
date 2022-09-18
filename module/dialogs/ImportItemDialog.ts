@@ -2,6 +2,7 @@ import { BWActor } from "../actors/BWActor.js";
 import { ItemType, BWItem } from "../items/item.js";
 import * as helpers from "../helpers.js";
 import * as constants from "../constants.js";
+import { TypeMissing } from "../../types/index.js";
 
 export class ImportItemDialog extends Dialog {
     defaults: string[];
@@ -89,10 +90,10 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
                     callback: async (dialogHtml: JQuery) => {
                         const newItems = dialogHtml.find('input:checked')
                             .map((_, element: HTMLInputElement) => {
-                                const itemRoot = (items.find((s: BWItem) => s.id === element.value) as BWItem).data;
-                                Object.assign(itemRoot.data, options.forcedData);
+                                const itemRoot: TypeMissing = (items.find((s: BWItem) => s.id === element.value) as BWItem);
+                                Object.assign(itemRoot.system, options.forcedData);
                                 return {
-                                    data: itemRoot.data,
+                                    system: itemRoot.system,
                                     flags: itemRoot.flags,
                                     name: itemRoot.name,
                                     type: itemRoot.type,

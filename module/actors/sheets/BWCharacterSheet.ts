@@ -184,8 +184,8 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
             actor: actor,
             searchTitle: "Learn New Skill",
             itemType: "skill",
-            itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
-            itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
+            itemDataLeft: (i: Skill) => i.system.restrictions.titleCase(),
+            itemDataMid: (i: Skill) => i.system.skilltype.titleCase(),
             baseData: {
                 learning: true,
                 root1: "perception",
@@ -237,8 +237,8 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     actor: this.actor,
                     searchTitle: "Add New Skill",
                     itemType: "skill",
-                    itemDataLeft: (i: Skill) => i.data.data.restrictions.titleCase(),
-                    itemDataMid: (i: Skill) => i.data.data.skilltype.titleCase(),
+                    itemDataLeft: (i: Skill) => i.system.restrictions.titleCase(),
+                    itemDataMid: (i: Skill) => i.system.skilltype.titleCase(),
                     baseData: { root1: "perception", skilltype: "special" },
                     popupMessage: "Add a new skill to the character sheet.  "
                         + "Note this is different than learning a new skill via the beginner's luck rules.  "
@@ -250,8 +250,8 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     actor: this.actor,
                     searchTitle: "Add New Trait",
                     itemType: "trait",
-                    itemDataLeft: (i: Trait) => i.data.data.restrictions.titleCase(),
-                    itemDataMid: (i: Trait) => i.data.data.traittype.titleCase(),
+                    itemDataLeft: (i: Trait) => i.system.restrictions.titleCase(),
+                    itemDataMid: (i: Trait) => i.system.traittype.titleCase(),
                     baseData: { traittype: id },
                     img: constants.defaultImages[id]
                 });
@@ -260,8 +260,8 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     actor: this.actor,
                     searchTitle: "Add New Spell",
                     itemType: "spell",
-                    itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
-                    itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
+                    itemDataLeft: (i: Spell) => `Origin: ${i.system.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) => `Impetus: ${i.system.impetus.titleCase()}`,
                     baseData: { },
                     img: constants.defaultImages.spell
                 });
@@ -270,8 +270,8 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     actor: this.actor,
                     searchTitle: "Learn New Spell",
                     itemType: "spell",
-                    itemDataLeft: (i: Spell) => `Origin: ${i.data.data.origin.titleCase()}`,
-                    itemDataMid: (i: Spell) => `Impetus: ${i.data.data.impetus.titleCase()}`,
+                    itemDataLeft: (i: Spell) => `Origin: ${i.system.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) => `Impetus: ${i.system.impetus.titleCase()}`,
                     baseData: { inPracticals: true },
                     forcedData: {
                         inPracticals: true

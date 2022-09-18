@@ -118,10 +118,10 @@ async function circlesRollCallback(
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
 
     // increment relationship tracking values...
-    if (contact && contact.data.data.building) {
-        const progress = (contact.data.data.buildingProgress || 0) + 1;
+    if (contact && contact.system.building) {
+        const progress = (contact.system.buildingProgress || 0) + 1;
         contact.update({"data.buildingProgress": progress });
-        if (progress >= 10 - (contact.data.data.aptitude || 10)) {
+        if (progress >= 10 - (contact.system.aptitude || 10)) {
             Dialog.confirm({
                 title: "Relationship Building Complete",
                 content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,

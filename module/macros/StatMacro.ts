@@ -41,9 +41,9 @@ export function RollStatMacro(actorId: string, statPath: string, statName: strin
 
     if (actor.type === "character") {
         const char = actor as BWCharacter;
-        if (statPath === "data.circles") {
+        if (statPath === "circles") {
             handleCirclesRoll({ actor: char, stat, dataPreset });
-        } else if (statPath === "data.resources") {
+        } else if (statPath === "resources") {
             handleResourcesRoll({ actor: char, stat, dataPreset });
         } else if (["power", "agility", "forte", "will", "perception", "speed"].some(s => statPath.indexOf(s) !== -1)) {
             handleStatRoll({ actor: char, stat, statName, accessor: statPath, dataPreset });

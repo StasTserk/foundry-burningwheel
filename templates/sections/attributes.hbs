@@ -7,12 +7,12 @@
 </h2>
 {{#if system.collapseAttributes}}{{else}}
 <div class="attributes">
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Health" stat=system.health namePrefix="health" routine=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Steel" stat=system.steel namePrefix="steel" routine=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Circles" stat=system.circles namePrefix="circles" routine=true type="circles"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Resources" stat=system.resources namePrefix="resources" routine=true  taxName="system.resourcesTax" taxValue=system.resourcesTax type="resources"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom1.name stat=system.custom1 namePrefix="custom1" routine=true customName=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom2.name stat=system.custom2 namePrefix="custom2" routine=true customName=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Health" stat=system.health namePrefix="system.health" routine=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Steel" stat=system.steel namePrefix="system.steel" routine=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Circles" stat=system.circles namePrefix="system.circles" routine=true type="circles"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Resources" stat=system.resources namePrefix="system.resources" routine=true  taxName="system.resourcesTax" taxValue=system.resourcesTax type="resources"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom1.name stat=system.custom1 namePrefix="system.custom1" routine=true customName=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom2.name stat=system.custom2 namePrefix="system.custom2" routine=true customName=true type="attribute"}}
     <div class="attributes-derived">
         <div class="attributes-item flex-row">
             <label class="attribute-label">Reflexes</label>

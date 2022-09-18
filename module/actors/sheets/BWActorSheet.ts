@@ -47,6 +47,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
                 const dragData: helpers.ItemDragData = {
                     actorId: actor.id,
                     id: item.id,
+                    uuid: item.uuid,
                     type: "Item",
                     data: item,
                     pack: actor.compendium ? actor.compendium.collection : undefined
@@ -66,6 +67,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
                 const dragData: helpers.MeleeDragData = {
                     actorId: actor.id,
                     id: itemId,
+                    uuid: weapon.uuid,
                     type: "Melee",
                     data: {
                         index: parseInt(e.target.dataset.attackIndex || "0"),
@@ -88,6 +90,7 @@ export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O ext
                 const dragData: helpers.RangedDragData = {
                     actorId: actor.id,
                     id: itemId,
+                    uuid: weapon.uuid,
                     type: "Ranged",
                     data: {
                         name: weapon.name,

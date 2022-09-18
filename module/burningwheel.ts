@@ -154,6 +154,6 @@ Hooks.on("renderChatLog", (_app, html: JQuery, _data) => onChatLogRender(html));
 Hooks.on("renderChatMessage", (app, html, data) => hideChatButtonsIfNotOwner(app, html, data));
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Hooks.on("createItem", (item: BWItem, _options: any, userId: string) => {
-    if (item.parent && ((item.parent as TypeMissing).type !== "setting")) { (item.parent as BWActor).processNewItem(item.data, userId); }
+    if (item.parent && ((item.parent as TypeMissing).type !== "setting")) { (item.parent as BWActor).processNewItem(item.system, userId); }
 });
 Hooks.on("hotbarDrop", (_bar, data, slot) => CreateBurningWheelMacro(data as DragData, slot));

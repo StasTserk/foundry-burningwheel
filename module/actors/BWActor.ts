@@ -285,7 +285,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
             untrainedAll: 0
         };
 
-        const charData = this.system.type === "character" ? this.system as unknown as BWCharacterData : undefined;
+        const charData = this.type === "character" ? this.system as unknown as BWCharacterData : undefined;
 
         this.items.filter((i: BWItem) => (i.type === "armor" && (i as Armor).system.equipped))
             .forEach((i: Armor) => {

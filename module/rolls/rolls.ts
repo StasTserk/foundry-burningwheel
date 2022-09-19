@@ -151,9 +151,9 @@ export function buildRerollData({ actor, roll, accessor, splitPoolRoll, itemId }
 
 export function extractBaseData(html: JQuery, sheet: BWCharacterSheet | NpcSheet ): BaseDataObject {
     const exponent = extractNumber(html, "stat.exp");
-    const actorData = sheet.actor.data;
+    const actorData = sheet.actor.system;
     const woundDice = extractNumber(html, "woundDice") || 0;
-    const obPenalty = actorData.data.ptgs.obPenalty || 0;
+    const obPenalty = actorData.ptgs.obPenalty || 0;
     let penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
     const miscDice = extractMiscDice(html);
     const miscObs = extractMiscObs(html);

@@ -64,7 +64,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
         // add a test log instead of testing
         return buildHelpDialog({
             exponent: stat.exp,
-            path: `data.${statName}`,
+            path: `system.${statName}`,
             actor,
             helpedWith: statName
         });
@@ -141,7 +141,7 @@ async function learningRollCallback(
     }
     extraInfo = `${splitPoolString || ""} ${extraInfo || ""}`;
 
-    const fateReroll = buildRerollData({ actor, roll, accessor: `data.${statName}`, splitPoolRoll });
+    const fateReroll = buildRerollData({ actor, roll, accessor: `system.${statName}`, splitPoolRoll });
     
     if (fateReroll) {
         fateReroll.type = "learning";
@@ -152,7 +152,7 @@ async function learningRollCallback(
             label: s,
             type: "learning",
             learningTarget: statName,
-            ...buildRerollData({ actor, roll, accessor: `data.${statName}`, splitPoolRoll }) as RerollData
+            ...buildRerollData({ actor, roll, accessor: `system.${statName}`, splitPoolRoll }) as RerollData
         };
     });
 

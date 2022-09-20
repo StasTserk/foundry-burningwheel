@@ -67,11 +67,11 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
             if (target.dataset.rerollType === "stat") {
                 const fateSpent = parseInt(getProperty(actor, `system.${accessor}.fate`) || "0", 10);
                 const updateData = {};
-                updateData[`data.${accessor}.fate`] = fateSpent + 1;
+                updateData[`system.${accessor}.fate`] = fateSpent + 1;
                 if (successes <= obstacleTotal && success) {
                     // we turned a failure into a success. we might need to retroactively award xp.
                     if (target.dataset.ptgsAction) { // shrug/grit flags may need to be set.
-                        updateData[`data.ptgs.${target.dataset.ptgsAction}`] = true;
+                        updateData[`system.ptgs.${target.dataset.ptgsAction}`] = true;
                     }
                     if (actor.successOnlyRolls.indexOf(name.toLowerCase()) !== -1) {
                         if (!helpers.isStat(name)) {
@@ -110,12 +110,12 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
                             (actor as BWCharacter).addStatTest(
                                 getProperty(actor, `system.${learningTarget}`) as TracksTests,
                                 learningTarget.titleCase(),
-                                `data.${learningTarget}`,
+                                `system.${learningTarget}`,
                                 target.dataset.difficultyGroup as TestString,
                                 true);
                         }
                     }
-                    const rootAccessor = `data.${learningTarget}.fate`;
+                    const rootAccessor = `system.${learningTarget}.fate`;
                     const rootStatFate = parseInt(getProperty(actor, `system.${rootAccessor}`), 10) || 0;
                     const updateData = {};
                     updateData[rootAccessor] = rootStatFate + 1;

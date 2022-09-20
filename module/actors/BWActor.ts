@@ -232,7 +232,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     _onCreate(data: any, options: any, userId: string): void {
         super._onCreate(data, options, userId);
-        if (this.system.items.contents.length) {
+        if (this.items.contents.length) {
             return; // this is most likely a duplicate of an existing actor. we don't need to add default items.
         }
         if (game.userId !== userId) {
@@ -257,13 +257,13 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
     async _preCreate(actor: Partial<T> & TypeMissing, _options: FoundryDocument.CreateOptions, user: User): Promise<void> {
         await super._preCreate(actor as TypeMissing, _options, user);
         if (actor.type === 'character' || actor.type === 'npc') {
-            this.system.token.update({
+            (this as TypeMissing).prototypeToken.updateSource({
                 disposition: CONST.TOKEN_DISPOSITIONS.NEUTRAL,
-                vision: true
+                sight: { enabled: true }
             });
         }
         if (actor.type === 'character' || actor.type === 'setting') {
-            this.system.token.update({
+            (this as TypeMissing).prototypeToken.updateSource({
                 actorLink: true,
                 disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY
             });

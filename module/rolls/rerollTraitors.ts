@@ -8,7 +8,7 @@ import { Skill, SkillData } from "../items/skill.js";
 export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = false): Promise<unknown> {
     
     const actor = game.actors?.get(target.dataset.actorId || "") as BWActor;
-    const accessor = target.dataset.accessor || '';
+    const accessor = (target.dataset.accessor || '').replace('system.', '');
     const name = target.dataset.rollName || '';
     const itemId = target.dataset.itemId || '';
     const rollArray = target.dataset.dice?.split(',').map(r => parseInt(r)) || [];

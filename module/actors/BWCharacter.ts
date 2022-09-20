@@ -192,13 +192,13 @@ export class BWCharacter extends BWActor<BWCharacterData> {
 
     public updateArthaForSkill(skillId: string, persona: number, deeds: number): void {
         this.update({
-            "data.deeds": this.system.deeds - deeds,
-            "data.persona": this.system.persona - persona,
+            "system.deeds": this.system.deeds - deeds,
+            "system.persona": this.system.persona - persona,
         });
         const skill = this.items.get(skillId) as unknown as Skill;
         skill.update({
-            "data.deeds": deeds ? (skill.system.deeds || 0) + 1 : undefined,
-            "data.persona": skill.system.persona + persona
+            "system.deeds": deeds ? (skill.system.deeds || 0) + 1 : undefined,
+            "system.persona": skill.system.persona + persona
         }, {});
     }
 
@@ -206,22 +206,23 @@ export class BWCharacter extends BWActor<BWCharacterData> {
         accessor = accessor.replace('system.', '');
         const stat = getProperty(this.system, accessor) as Ability;
         const updateData = {
-            "data.deeds": this.system.deeds - (deeds ? 1 : 0),
-            "data.persona": this.system.persona - persona,
+            "system.deeds": this.system.deeds - (deeds ? 1 : 0),
+            "system.persona": this.system.persona - persona,
         };
-        updateData[`data.${accessor}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
-        updateData[`data.${accessor}.persona`] = (stat.persona || 0) + persona;
+        updateData[`system.${accessor}.deeds`] = deeds ? (stat.deeds || 0) + 1 : undefined;
+        updateData[`system.${accessor}.persona`] = (stat.persona || 0) + persona;
         this.update(updateData);
     }
 
     private async _addTestToStat(stat: TracksTests, accessor: string, difficultyGroup: TestString) {
         let testNumber = 0;
+        accessor = accessor.replace('system.', '');
         const updateData = {};
         switch (difficultyGroup) {
             case "Challenging":
                 testNumber = stat.challenging;
                 if (testNumber < (stat.challengingNeeded || 0)) {
-                    updateData[`data.${accessor}.challenging`] = testNumber +1;
+                    updateData[`system.${accessor}.challenging`] = testNumber +1;
                     stat.challenging = testNumber+1;
                     return this.update(updateData, {});
                 }
@@ -229,7 +230,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Difficult":
                 testNumber = stat.difficult;
                 if (testNumber < (stat.difficultNeeded || 0)) {
-                    updateData[`data.${accessor}.difficult`] = testNumber +1;
+                    updateData[`system.${accessor}.difficult`] = testNumber +1;
                     stat.difficult = testNumber+1;
                     return this.update(updateData, {});
                 }
@@ -237,7 +238,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Routine":
                 testNumber = stat.routine;
                 if (testNumber < (stat.routineNeeded || 0)) {
-                    updateData[`data.${accessor}.routine`] = testNumber +1;
+                    updateData[`system.${accessor}.routine`] = testNumber +1;
                     stat.routine = testNumber;
                     return this.update(updateData, {});
                 }
@@ -245,13 +246,13 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             case "Routine/Difficult":
                 testNumber = stat.difficult;
                 if (testNumber < (stat.difficultNeeded || 0)) {
-                    updateData[`data.${accessor}.difficult`] = testNumber +1;
+                    updateData[`system.${accessor}.difficult`] = testNumber +1;
                     stat.difficult = testNumber+1;
                     return this.update(updateData, {});
                 } else {
                     testNumber = stat.routine;
                     if (testNumber < (stat.routineNeeded || 0)) {
-                        updateData[`data.${accessor}.routine`] = testNumber +1;
+                        updateData[`system.${accessor}.routine`] = testNumber +1;
                         stat.routine = testNumber+1;
                         return this.update(updateData, {});
                     }
@@ -266,12 +267,12 @@ export class BWCharacter extends BWActor<BWCharacterData> {
         const resourceExp = this.system.resources.exp || 0;
         const fundDice = this.system.funds || 0;
         if (amount <= maxFundLoss) {
-            updateData["data.funds"] = fundDice - amount;
+            updateData["system.funds"] = fundDice - amount;
         } else {
-            updateData["data.funds"] = 0;
+            updateData["system.funds"] = 0;
             amount -= maxFundLoss;
             resourcesTax = Math.min(resourceExp, amount+resourcesTax);
-            updateData["data.resourcesTax"] = resourcesTax;
+            updateData["system.resourcesTax"] = resourcesTax;
             if (resourcesTax === resourceExp) {
                 // you taxed all your resources away, they degrade
                 new Dialog({
@@ -304,10 +305,10 @@ export class BWCharacter extends BWActor<BWCharacterData> {
 
     private async _advanceStat(accessor: string, newExp: number) {
         const updateData = {};
-        updateData[`data.${accessor}.routine`] = 0;
-        updateData[`data.${accessor}.difficult`] = 0;
-        updateData[`data.${accessor}.challenging`] = 0;
-        updateData[`data.${accessor}.exp`] = newExp;
+        updateData[`system.${accessor}.routine`] = 0;
+        updateData[`system.${accessor}.difficult`] = 0;
+        updateData[`system.${accessor}.challenging`] = 0;
+        updateData[`system.${accessor}.exp`] = newExp;
         return this.update(updateData);
     }
 

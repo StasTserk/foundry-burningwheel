@@ -126,7 +126,7 @@ async function circlesRollCallback(
                 title: "Relationship Building Complete",
                 content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
                 // TODO review data vs. system here.
-                yes: () => { contact.update({"data.building": false}); },
+                yes: () => { contact.update({"system.building": false}); },
                 no: () => { return; }
             });
         }

@@ -8,7 +8,7 @@ import { Skill } from "../items/skill.js";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
     const actor = game.actors?.get(target.dataset.actorId || "") as BWActor;
-    const accessor = target.dataset.accessor || '';
+    const accessor = (target.dataset.accessor || '').replace('system.', '');
     const name = target.dataset.rollName || '';
     const itemId = target.dataset.itemId || '';
     const rollArray = target.dataset.dice?.split(',').map(s => parseInt(s, 10)) || [];

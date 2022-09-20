@@ -59,7 +59,7 @@ export class ModifierDialog extends Application {
             if (actor.type === "character") {
                 if (entry.path) {
                     name = entry.path.substring(entry.path.indexOf('.') + 1).titleCase();
-                    const ability = getProperty(actor.system, entry.path) as Ability & { name?: string };
+                    const ability = getProperty(actor.system, entry.path.replace('system.', '')) as Ability & { name?: string };
                     diff = difficultyGroup(ability.exp, obstacle);
                     if (name === "Custom1" || name === "Custom2") {
                         name = ability.name || name;

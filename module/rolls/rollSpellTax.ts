@@ -76,12 +76,12 @@ async function taxTestCallback(
     if (!roll) { return; }
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
-    const fateReroll = buildRerollData({ actor, roll, accessor: "data.forte" });
+    const fateReroll = buildRerollData({ actor, roll, accessor: "forte" });
     const callons: RerollData[] = actor.getCallons("forte").map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, accessor: "data.forte" }) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, accessor: "forte" }) as RerollData };
     });
 
-    actor.updateArthaForStat("data.forte", persona, deeds);
+    actor.updateArthaForStat("system.forte", persona, deeds);
 
     const data: RollChatMessageData = {
         name: `${spellName} Tax`,
@@ -99,7 +99,7 @@ async function taxTestCallback(
     };
     data.extraInfo = `Attempting to sustain ${spellName}.`;
     if (actor.type === "character") {
-        actor.addStatTest(stat, "Forte", "data.forte", difficultyGroup, isSuccessful);
+        actor.addStatTest(stat, "Forte", "forte", difficultyGroup, isSuccessful);
     }
 
     if (!isSuccessful) {

@@ -116,15 +116,15 @@ async function ptgsRollCallback(
         fateReroll,
         callons
     };
-    sheet.actor.updateArthaForStat("health", persona, deeds);
+    sheet.actor.updateArthaForStat("system.health", persona, deeds);
     if (isSuccessful) {
-        const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
+        const accessor = shrugging ? "system.ptgs.shrugging" : "system.ptgs.gritting";
         const updateData = {};
         updateData[accessor] = true;
         sheet.actor.update(updateData);
     }
     if (sheet.actor.type === "character") {
-        sheet.actor.addAttributeTest(stat, "Health", "data.health", difficultyGroup, isSuccessful);
+        sheet.actor.addAttributeTest(stat, "Health", "system.health", difficultyGroup, isSuccessful);
     }
     const messageHtml = await renderTemplate(templates.pcRollMessage, data);
     return ChatMessage.create({

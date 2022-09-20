@@ -89,17 +89,17 @@ async function circlesRollCallback(
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData({ actor, roll, accessor: "data.circles" });
+    const fateReroll = buildRerollData({ actor, roll, accessor: "system.circles" });
     const callons: RerollData[] = actor.getCallons("circles").map(s => {
-        return { label: s, ...buildRerollData({ actor, roll, accessor: "data.circles" }) as RerollData };
+        return { label: s, ...buildRerollData({ actor, roll, accessor: "system.circles" }) as RerollData };
     });
 
-    await actor.addAttributeTest(stat, "Circles", "data.circles", rollData.difficultyGroup, true);
+    await actor.addAttributeTest(stat, "Circles", "system.circles", rollData.difficultyGroup, true);
     if (rollData.addHelp) {
         game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, parseInt(roll.result) >= rollData.difficultyTotal);
     }
 
-    actor.updateArthaForStat("data.circles", rollData.persona, rollData.deeds);
+    actor.updateArthaForStat("system.circles", rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
         name: `Circles`,
@@ -125,6 +125,7 @@ async function circlesRollCallback(
             Dialog.confirm({
                 title: "Relationship Building Complete",
                 content: `<p>Relationship with ${contact.name} has been built enough to advance. Do so?</p>`,
+                // TODO review data vs. system here.
                 yes: () => { contact.update({"data.building": false}); },
                 no: () => { return; }
             });

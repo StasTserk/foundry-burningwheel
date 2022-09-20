@@ -203,6 +203,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
     }
 
     public updateArthaForStat(accessor: string, persona: number, deeds: number): void {
+        accessor = accessor.replace('system.', '');
         const stat = getProperty(this.system, accessor) as Ability;
         const updateData = {
             "data.deeds": this.system.deeds - (deeds ? 1 : 0),

@@ -2,9 +2,14 @@
     "name": "burningwheel",
     "title": "The Burning Wheel",
     "description": "Community Foundry implementation of The Burning Wheel",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "templateVersion": 20,
-    "author": "Stas Tserkovny",
+    "authors": [
+        {
+            "name": "Stas Tserkovny",
+            "url": "https://github.com/StasTserk/foundry-burningwheel"
+        }
+    ],
     "esmodules": [
         "module/burningwheel.js"
     ],
@@ -18,7 +23,7 @@
     "packs": [],
     "compatibility": {
         "minimum": 10,
-        "verified": "10.285"
+        "verified": "10.286"
     },
     "socket": true,
     "initiative": "1d20",
@@ -26,5 +31,5 @@
     "gridUnits": "ft",
     "url": "https://github.com/StasTserk/foundry-burningwheel",
     "manifest": "https://raw.githubusercontent.com/StasTserk/foundry-burningwheel/master/system.json",
-    "download": "https://github.com/StasTserk/foundry-burningwheel/releases/download/1.3.0/release1.3.0.zip"
+    "download": "https://github.com/StasTserk/foundry-burningwheel/releases/download/1.3.1/release1.3.1.zip"
 }

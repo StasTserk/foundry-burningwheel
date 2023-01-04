@@ -21,8 +21,8 @@ export class Spell extends BWItem<SpellData> {
                 this.system.mark = willScore + this.system.willDamageBonus;
             }
             
-            this.system.incidental = Math.ceil(this.system.mark || 0 / 2.0);
-            this.system.superb = Math.floor(this.system.mark || 0 * 1.5);
+            this.system.incidental = Math.ceil((this.system.mark || 0) / 2.0);
+            this.system.superb = Math.floor((this.system.mark || 0) * 1.5);
         }
         this.spellLengths = weaponLengthSelect;
 

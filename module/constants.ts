@@ -158,3 +158,63 @@ export const skillImages: { [k in SkillTypeString]: string } = {
     "social": "icons/skills/social/diplomacy-handshake-yellow.webp",
     "sorcerous": "icons/magic/fire/flame-burning-hand-white.webp",
 };
+
+export const RangeAndCoverActions: Record<string, string[]> = {
+    "Move In": [
+        "Close", "Sneak In", "Flank", "Charge"
+    ],
+    "Hold Ground": [
+        "Maintain Distance", "Hold Position"
+    ],
+    "Move Out": [
+        "Withdraw", "Sneak Out", "Fall Back", "Retreat"
+    ],
+    "Hesitation Actions": [
+        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
+    ]
+};
+
+export const FightActions: Record<string, string[]> = {
+    "Attack Actions": [
+        "Strike", "Great Strike", "Block and Strike", "Lock and Strike"
+    ],
+    "Defense Actions": [
+        "Avoid", "Block", "Counter&shy;strike"
+    ],
+    "Basic Actions": [
+        "Assess", "Change Stance", "Charge/&shy;Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up",
+    ],
+    "Special Actions": [
+        "Beat", "Disarm", "Feint", "Throw Person"
+    ],
+    "Shooting Actions": [
+        "Throw Object/&shy;Weapon", "Aim", "Nock and Draw", "Reload", "Fire", "Release Bow", "Snapshot"
+    ],
+    "Magic Actions": [
+        "Cast a Spell", "Drop Spell", "Command Spirit"
+    ],
+    "Social Actions": [
+        "Command", "Intimidate"
+    ],
+    "Hesitation Actions": [
+        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
+    ]
+};
+
+export const DuelOfWitsActions = {
+    "Verbal Attack": [
+        "Point", "Dismiss"
+    ],
+    "Verbal Defense": [
+        "Avoid", "Obfuscate", "Rebuttal"
+    ],
+    "Verbal Special": [
+        "Feint", "Incite"
+    ],
+    "Magic": [
+        "Cast Spell", "Command Spirit", "Drop Spell", "Sing, Howl, Pray"
+    ],
+    "Hesitation": [
+        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
+    ]
+};

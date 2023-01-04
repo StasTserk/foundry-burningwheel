@@ -43,18 +43,22 @@ Hooks.once("init", async () => {
         types: ["setting"],
         makeDefault: true
     });
-    
-    RegisterItemSheets();
 
+    game.burningwheel.duelOfWitsActions = constants.DuelOfWitsActions;
+    game.burningwheel.fightActions = constants.FightActions;
+    game.burningwheel.rangeAndCoverActions = constants.RangeAndCoverActions;
+
+    RegisterItemSheets();
     registerSystemSettings();
     preloadHandlebarsTemplates();
     registerHelpers();
-    dialogs.initializeExtendedTestDialogs();
+    
 });
 
 Hooks.once("ready", async() => {
     await migrateData();
     await dialogs.initializeRollPanels();
+    await dialogs.initializeExtendedTestDialogs();
     RegisterMacros();
 });
 

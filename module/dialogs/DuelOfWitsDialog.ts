@@ -15,7 +15,7 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: Dialog.Data, o?: Dialog.Options) {
         super(d, o);
         
-        this.data.actionOptions = options;
+        this.data.actionOptions = game.burningwheel.duelOfWitsActions;
         this.data.data.showV1 = this.data.data.showV1 || false;
         this.data.data.showV2 = this.data.data.showV2 || false;
         this.data.data.showV3 = this.data.data.showV3 || false;
@@ -213,21 +213,3 @@ interface DuelOfWitsData {
 
     actionOptions: StringIndexedObject<string[]>;
 }
-
-const options = {
-    "Verbal Attack": [
-        "Point", "Dismiss"
-    ],
-    "Verbal Defense": [
-        "Avoid", "Obfuscate", "Rebuttal"
-    ],
-    "Verbal Special": [
-        "Feint", "Incite"
-    ],
-    "Magic": [
-        "Cast Spell", "Command Spirit", "Drop Spell", "Sing, Howl, Pray"
-    ],
-    "Hesitation": [
-        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
-    ]
-};

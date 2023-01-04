@@ -64,7 +64,10 @@ declare class BWGame extends Game {
         fight: FightDialog;
         rangeAndCover: RangeAndCoverDialog;
         modifiers: ModifierDialog;
-        macros: { [k: string]: (...args: unknown[]) => void}
+        macros: { [k: string]: (...args: unknown[]) => void };
+        duelOfWitsActions: Record<string, string[]>;
+        fightActions: Record<string, string[]>;
+        rangeAndCoverActions: Record<string, string[]>;
     };
 
     /** Optional Dice so Nice module */

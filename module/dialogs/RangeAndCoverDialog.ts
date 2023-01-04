@@ -129,7 +129,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
 
     getData(): RangeAndCoverData {
         const data = super.getData() as RangeAndCoverData;
-        data.actionOptions = options;
+        data.actionOptions = game.burningwheel.rangeAndCoverActions;
         if (!this.data.actors) {
             this.data.actors = game.actors?.contents as BWActor[];
         }
@@ -182,17 +182,4 @@ interface RnCTeam {
     miscDice: number;
 }
 
-const options = {
-    "Move In": [
-        "Close", "Sneak In", "Flank", "Charge"
-    ],
-    "Hold Ground": [
-        "Maintain Distance", "Hold Position"
-    ],
-    "Move Out": [
-        "Withdraw", "Sneak Out", "Fall Back", "Retreat"
-    ],
-    "Hesitation Actions": [
-        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
-    ]
-};
+

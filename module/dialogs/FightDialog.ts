@@ -16,7 +16,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
         super(d, o);
         this.data.data.participants = this.data.data.participants || [];
         this.data.data.participantIds = this.data.data.participantIds || [];
-        this.data.actionOptions = options;
+        this.data.actionOptions = game.burningwheel.fightActions;
         this.data.actors = [];
         this.data.topic = "Fight";
         this.data.settingName = "fight-data";
@@ -285,30 +285,3 @@ interface ParticipantEntry {
     action9: string;
     weapons?: { id: string, label: string }[];
 }
-
-const options = {
-    "Attack Actions": [
-        "Strike", "Great Strike", "Block and Strike", "Lock and Strike"
-    ],
-    "Defense Actions": [
-        "Avoid", "Block", "Counter&shy;strike"
-    ],
-    "Basic Actions": [
-        "Assess", "Change Stance", "Charge/&shy;Tackle", "Draw Weapon", "Physical Action", "Push", "Lock", "Get Up",
-    ],
-    "Special Actions": [
-        "Beat", "Disarm", "Feint", "Throw Person"
-    ],
-    "Shooting Actions": [
-        "Throw Object/&shy;Weapon", "Aim", "Nock and Draw", "Reload", "Fire", "Release Bow", "Snapshot"
-    ],
-    "Magic Actions": [
-        "Cast a Spell", "Drop Spell", "Command Spirit"
-    ],
-    "Social Actions": [
-        "Command", "Intimidate"
-    ],
-    "Hesitation Actions": [
-        "Fall Prone", "Run Screaming", "Stand & Drool", "Swoon"
-    ]
-};

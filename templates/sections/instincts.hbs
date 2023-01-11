@@ -3,7 +3,7 @@
         <input type="checkbox" id="{{actor.id}}-collapseInstincts" name="system.collapseInstincts" class="section-collapse" {{ checked system.collapseInstincts }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseInstincts" class="section-collapse-label clickable">Instincts</label>
+    <label for="{{actor.id}}-collapseInstincts" class="section-collapse-label clickable">{{localize "BW.character.instincts"}}</label>
     {{#if isOwner}}<i data-action="addInstinct" class="fas fa-plus clickable"></i>{{/if}}
 </h2>
 {{#if system.collapseInstincts}}{{else}}
@@ -12,9 +12,9 @@
         <div class="bits-item flex-row">
             <div class="bits-artha" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{instinct._id}}">
                 <div class="bits-item-name" data-action="editItem" data-id="{{instinct._id}}">{{instinct.name}}</div>
-                F<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="system.fate" {{ checked instinct.system.fate }}>
-                P<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="system.persona"  {{ checked instinct.system.persona }}>
-                D<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="system.deeds" {{ checked instinct.system.deeds }}>
+                {{localize "BW.fateAcronym"}}<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="system.fate" {{ checked instinct.system.fate }}>
+                {{localize "BW.personaAcronym"}}<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="system.persona"  {{ checked instinct.system.persona }}>
+                {{localize "BW.deedsAcronym"}}<input type="checkbox" data-item-id="{{instinct._id}}" data-binding="system.deeds" {{ checked instinct.system.deeds }}>
             </div>
             {{#if ../isOwner}}
                 <div class="bits-buttons flex-column">

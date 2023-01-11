@@ -8,7 +8,7 @@
 {{#if system.collapseTraits}}{{else}}
 <div class="traits flex-row">
     <div class="trait-category">
-        <h2>Character Traits
+        <h2>{{localize "BW.character.charTraits"}}
             {{#if isOwner}}<i data-action="addTrait" data-id="character" class="fas fa-plus clickable"></i>{{/if}}
         </h2>
         {{#each traits.character as |trait|}}
@@ -16,7 +16,7 @@
         {{/each}}
     </div>
     <div class="trait-category">
-        <h2>Die Traits
+        <h2>{{localize "BW.character.dieTraits"}}
             {{#if isOwner}}<i data-action="addTrait" data-id="die" class="fas fa-plus clickable"></i>{{/if}}
         </h2>
         {{#each traits.die as |trait|}}
@@ -24,7 +24,7 @@
         {{/each}}
     </div>
     <div class="trait-category">
-        <h2>Call-on Traits
+        <h2>{{localize "BW.character.callonTraits"}}
             {{#if isOwner}}<i data-action="addTrait" data-id="call-on" class="fas fa-plus clickable"></i>{{/if}}
         </h2>
         {{#each traits.callon as |trait|}}

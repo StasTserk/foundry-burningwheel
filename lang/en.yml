@@ -1,0 +1,24 @@
+BW:
+  fate: Fate
+  fateAcronym: F
+  persona: Persona
+  personaAcronym: P
+  deeds: Deeds
+  deedsAcronym: D
+  character:
+    index: Character Index
+    name: Name
+    stock: Stock
+    age: Age
+    lifepaths: Lifepaths
+    alias: Alias
+    homeland: Homeland
+    features: Features
+    belief: Belief
+    beliefs: Beliefs
+    instinct: Instinct
+    instincts: Instincts
+    charTraits: Character Traits
+    dieTraits: Die Traits
+    callonTraits: Call-on Traits
+

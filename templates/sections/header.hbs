@@ -3,7 +3,7 @@
         <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
     </div>
     <div class="section-index item-grid col-2">
-        <h2 class="section-header"><label>Character Index</label>
+        <h2 class="section-header"><label>{{localize "BW.character.index" }}</label>
             {{#if isOwner}}
                 <input id="{{actor.id}}-settings-checkbox" type="checkbox" class="hidden settings-checkbox" name="system.settings.showSettings" {{checked system.settings.showSettings}}>
                 {{#if system.settings.showBurner}}<label class="settings-gear character-burner-icon clickable"><i class="fas fa-fire-alt"></i></label>{{/if}}
@@ -11,45 +11,45 @@
             {{/if}}
         </h2>
         <div>
-            <label for="{{actor.id}}-character-name">Name</label>
+            <label for="{{actor.id}}-character-name">{{localize "BW.character.name" }}</label>
             <input id="{{actor.id}}-character-name" type="text" name="name" value="{{actor.name}}">
         </div>
         <div>
-            <label for="{{actor.id}}-character-stock">Stock</label>
+            <label for="{{actor.id}}-character-stock">{{localize "BW.character.stocks" }}</label>
             <input id="{{actor.id}}-character-stock" type="text" name="system.stock" value="{{system.stock}}">
         </div>
         <div>
-            <label for="{{actor.id}}-character-age">Age</label>
+            <label for="{{actor.id}}-character-age">{{localize "BW.character.age" }}</label>
             <input id="{{actor.id}}-character-age" type="number" name="system.age" value="{{system.age}}">
         </div>
         <div>
-            <label for="{{actor.id}}-character-lifepaths">Lifepaths</label>
+            <label for="{{actor.id}}-character-lifepaths">{{localize "BW.character.lifepaths" }}</label>
             <input id="{{actor.id}}-character-lifepaths" type="text" name="system.lifepathString" value="{{system.lifepathString}}">
         </div>
         <div>
-            <label for="{{actor.id}}-character-alias">Alias</label>
+            <label for="{{actor.id}}-character-alias">{{localize "BW.character.alias" }}</label>
             <input id="{{actor.id}}-character-alias" type="text" name="system.alias" value="{{system.alias}}">
         </div>
         <div>
-            <label for="{{actor.id}}-character-homeland">Homeland</label>
+            <label for="{{actor.id}}-character-homeland">{{localize "BW.character.homeland" }}</label>
             <input id="{{actor.id}}-character-homeland" type="text" name="system.homeland" value="{{system.homeland}}">
         </div>
         <div>
-            <label for="{{actor.id}}-character-features">Features</label>
+            <label for="{{actor.id}}-character-features">{{localize "BW.character.features" }}</label>
             <input id="{{actor.id}}-character-features" type="text" name="system.features" value="{{system.features}}">
         </div>
         {{#if isObserver}}
         <div class="flex-row artha-points">
             <div>
-                <label for="{{actor.id}}-character-fate-points" class="artha-label">Fate</label>
+                <label for="{{actor.id}}-character-fate-points" class="artha-label">{{localize "BW.fate" }}</label>
                 <input id="{{actor.id}}-character-fate-points" name="system.fate" value="{{system.fate}}" type="number" data-dtype="Number" min="0" class="artha-input">
             </div>
             <div>
-                <label for="{{actor.id}}-character-persona-points" class="artha-label">Persona</label>
+                <label for="{{actor.id}}-character-persona-points" class="artha-label">{{localize "BW.persona" }}</label>
                 <input id="{{actor.id}}-character-persona-points" name="system.persona" value="{{system.persona}}" type="number" data-dtype="Number" min="0" class="artha-input">
             </div>
             <div>
-                <label for="{{actor.id}}-character-deeds-points" class="artha-label">Deeds</label>
+                <label for="{{actor.id}}-character-deeds-points" class="artha-label">{{localize "BW.deeds" }}</label>
                 <input id="{{actor.id}}-character-deeds-points" name="system.deeds" value="{{system.deeds}}" type="number" data-dtype="Number" min="0" class="artha-input">
             </div>
         </div>

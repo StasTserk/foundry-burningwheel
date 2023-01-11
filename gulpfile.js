@@ -54,7 +54,7 @@ function buildHtml() {
 }
 
 function buildYml() {
-    return gulp.src("template.yml")
+    return gulp.src("**/*.yml")
         .pipe(yaml({ space: 2 }))
         .pipe(gulp.dest("./dist"));
 }

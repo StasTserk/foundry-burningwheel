@@ -3,56 +3,55 @@
         <input type="checkbox" id="{{actor.id}}-collapseAttributes" name="system.collapseAttributes" class="section-collapse" {{ checked system.collapseAttributes }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseAttributes" class="section-collapse-label clickable">Attributes</label>
+    <label for="{{actor.id}}-collapseAttributes" class="section-collapse-label clickable">{{ localize "BW.character.attributes"}}</label>
 </h2>
 {{#if system.collapseAttributes}}{{else}}
 <div class="attributes">
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Health" stat=system.health namePrefix="system.health" routine=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Steel" stat=system.steel namePrefix="system.steel" routine=true type="attribute"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Circles" stat=system.circles namePrefix="system.circles" routine=true type="circles"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Resources" stat=system.resources namePrefix="system.resources" routine=true  taxName="system.resourcesTax" taxValue=system.resourcesTax type="resources"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.health" stat=system.health namePrefix="system.health" routine=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.steel" stat=system.steel namePrefix="system.steel" routine=true type="attribute"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.circles" stat=system.circles namePrefix="system.circles" routine=true type="circles"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.resources" stat=system.resources namePrefix="system.resources" routine=true  taxName="system.resourcesTax" taxValue=system.resourcesTax type="resources"}}
     {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom1.name stat=system.custom1 namePrefix="system.custom1" routine=true customName=true type="attribute"}}
     {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName=system.custom2.name stat=system.custom2 namePrefix="system.custom2" routine=true customName=true type="attribute"}}
     <div class="attributes-derived">
         <div class="attributes-item flex-row">
-            <label class="attribute-label">Reflexes</label>
+            <label class="attribute-label">{{ localize "BW.character.reflexes"}}</label>
             <div class="attribute-value">{{system.reflexesShade}}{{system.reflexesExp}}</div>
         </div>
         <div class="attributes-item flex-row">
-            <label class="attribute-label">Mortal Wound</label>
+            <label class="attribute-label">{{ localize "BW.character.mortalWound"}}</label>
             <div class="attribute-value">{{system.mortalWoundShade}}{{system.mortalWound}}</div>
         </div>
         <div class="attributes-item flex-row">
-            <label class="attribute-label">Hesitation</label>
+            <label class="attribute-label">{{ localize "BW.character.hesitation" }}</label>
             <div class="attribute-value">{{system.hesitation}}</div>
         </div>
         <div class="attributes-item flex-row">
-            <label class="debt-label">Cash</label>
+            <label class="debt-label">{{ localize "BW.character.cash" }}</label>
             <div class="attribute-text">
                 <input type="number" name="system.cash" value="{{system.cash}}" placeholder="0">
-                Dice
+                {{ localize "BW.dice" }}
             </div>
         </div>
         <div class="attributes-item flex-row">
-            <label class="debt-label">Funds</label>
+            <label class="debt-label">{{ localize "BW.character.funds" }}</label>
             <div class="attribute-text">
                 <input type="number" name="system.funds" value="{{system.funds}}" placeholder="0">
-                Dice
+                {{ localize "BW.dice" }}
             </div>
         </div>
         <div class="attributes-item flex-row">
-            <label class="debt-label">Property</label>
+            <label class="debt-label">{{ localize "BW.character.property" }}</label>
             <input type="text" class="attribute-text" name="system.property" value="{{system.property}}">
         </div>
         <div class="attributes-item flex-row">
-            <label class="debt-label">Loans</label>
+            <label class="debt-label">{{ localize "BW.character.loans" }}</label>
             <input type="text" class="attribute-text" name="system.loans" value="{{system.loans}}">
         </div>
         <div class="attributes-item flex-row">
-            <label class="debt-label">Debt</label>
+            <label class="debt-label">{{ localize "BW.character.debt" }}</label>
             <input type="text" class="attribute-text" name="system.debt" value="{{system.debt}}">
         </div>
     </div>
-    <div class="attributes-debts"></div>
 </div>
 {{/if}}

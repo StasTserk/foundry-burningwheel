@@ -1,28 +1,28 @@
 <div class="character-settings-section">
-    <h2>Character Settings</h2>
+    <h2>{{localize "BW.character.settings"}}</h2>
     <div class="checkbox-grid">
         <input id="checkbox-{{actor.id}}-round-up-mw" type="checkbox" name="system.settings.roundUpMortalWound" {{checked system.settings.roundUpMortalWound}}>
-        <label for="checkbox-{{actor.id}}-round-up-mw">Round Up Mortal Wound</label>
+        <label for="checkbox-{{actor.id}}-round-up-mw">{{localize "BW.character.roundUpMortal"}}</label>
         <input id="checkbox-{{actor.id}}-round-up-reflex" type="checkbox" name="system.settings.roundUpReflexes" {{checked system.settings.roundUpReflexes}}>
-        <label for="checkbox-{{actor.id}}-round-up-reflex">Round Up Reflexes</label>
+        <label for="checkbox-{{actor.id}}-round-up-reflex">{{localize "BW.character.roundUpReflex"}}</label>
         <input id="checkbox-{{actor.id}}-armor-trained" type="checkbox" name="system.settings.armorTrained" {{checked system.settings.armorTrained}}>
-        <label for="checkbox-{{actor.id}}-armor-trained">Armor Trained</label>
+        <label for="checkbox-{{actor.id}}-armor-trained">{{localize "BW.character.armorTrained"}}</label>
         <input id="checkbox-{{actor.id}}-numb" type="checkbox" name="system.settings.ignoreSuperficialWounds" {{checked system.settings.ignoreSuperficialWounds}}>
-        <label for="checkbox-{{actor.id}}-numb">Ignore Superficial Wounds</label>
+        <label for="checkbox-{{actor.id}}-numb">{{localize "BW.character.ignoreSuperficial"}}</label>
         <input id="checkbox-{{actor.id}}-burner" type="checkbox" name="system.settings.showBurner" {{checked system.settings.showBurner}}>
-        <label for="checkbox-{{actor.id}}-burner">Show Character Burner</label>
+        <label for="checkbox-{{actor.id}}-burner">{{localize "BW.character.showBurner"}}</label>
     </div>
     <hr>
     <div>
         <input id="input-{{actor.id}}-success-only" type="text" name="system.settings.onlySuccessesCount" value="{{system.settings.onlySuccessesCount}}" >
-        <label for="input-{{actor.id}}-success-only">Skills for which only successes count towards advancement.</label>
+        <label for="input-{{actor.id}}-success-only">{{localize "BW.character.skillsAdvancementText"}}</label>
     </div>
     <hr>
-    <h2>Embedded Items</h2>
+    <h2>{{localize "BW.character.embeddedItems"}}</h2>
     <div class="settings-items flex-column">
         <div class="setting-item-header">
-            <div>Name</div>
-            <div>Type</div>
+            <div>{{localize "BW.name"}}</div>
+            <div>{{localize "BW.type"}}</div>
             <div>&nbsp;</div>
             <div>&nbsp;</div>
         </div>

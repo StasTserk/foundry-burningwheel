@@ -3,7 +3,7 @@
         <input type="checkbox" id="{{actor.id}}-collapseMisc" name="system.collapseMisc" class="section-collapse" {{ checked system.collapseMisc }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseMisc" class="section-collapse-label clickable">Notes and Other Miscellanea</label>
+    <label for="{{actor.id}}-collapseMisc" class="section-collapse-label clickable">{{localize "BW.character.notesAndMisc"}}</label>
 </h2>
 {{#if system.collapseMisc}}{{else}}
 <div class="misc-section item-grid col-3">

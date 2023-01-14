@@ -21,6 +21,8 @@ BW:
   dice: Dice
   diceAcronym: D
   die: Die
+  type: Type
+  name: Name
   rollable:
     difficult: Difficult
     challenging: Challenging
@@ -70,7 +72,6 @@ BW:
     untrainedGlobal: Untrained Global Penalty
     damage: Dmg
     location: Location
-    type: Type
     head: Head
     torso: Torso
     leftArm: Left Arm
@@ -149,3 +150,15 @@ BW:
     weaponsAndArmor: Weapons and Armor
     trainingSkills: Training Skills
     clumsyWeight: Clumsy Weight Penalties
+    embeddedItems: Embedded Items
+    settings: Character Settings
+    roundUpMortal: Round Up Mortal Wound
+    roundUpReflexes: Round up Reflexes
+    armorTrained: Armor Trained
+    ignoreSuperficial: Ignore Superficial Wounds
+    showBurner: Show Character Burner
+    skillsAdvancementText: Skills for which only success counts towards advancement.
+    reportProblem: Report Problem
+    sheetVersion: Sheet Version
+    seeReleaseNotes: See Release Notes
+    onGithub: on GitHub

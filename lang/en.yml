@@ -58,3 +58,7 @@ BW:
     relationships: Relationships
     reputations: Reputations
     affiliations: Affiliations
+    gearPosAndProp: Gear, Possessions, and Property
+    addNew: Add new {type}
+    learnNew: Learn new {type}
+    gear: Gear

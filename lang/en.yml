@@ -5,6 +5,21 @@ BW:
   personaAcronym: P
   deeds: Deeds
   deedsAcronym: D
+  will: Will
+  power: Power
+  agility: Agility
+  forte: Forte
+  perception: Perception
+  speed: Speed
+  rollable:
+    difficult: Difficult
+    challenging: Challenging
+    routine: Routine
+    tax: Tax
+    open: Open
+    fateSpent: "Fate points spent on {statName}"
+    personaSpent: "Persona points spent on {statName}"
+    deedsSpent: "Deeds points spent on {statName}"
   character:
     index: Character Index
     name: Name
@@ -21,4 +36,6 @@ BW:
     charTraits: Character Traits
     dieTraits: Die Traits
     callonTraits: Call-on Traits
-
+    stats: Stats
+    stride: Stride
+    mountedStride: Mounted Stride

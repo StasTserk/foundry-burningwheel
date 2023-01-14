@@ -1,7 +1,7 @@
 <div>
-    <div class="ptgs-top">Tolerance {{#if isOwner}}<i class="fas fa-sync-alt" data-action="refresh-ptgs"></i>{{/if}}</div>
-    <div class="ptgs-mid">Coordinate</div>
-    <div class="ptgs-scale">Injury</div>
+    <div class="ptgs-top">{{localize "BW.ptgs.tolerance"}} {{#if isOwner}}<i class="fas fa-sync-alt" data-action="refresh-ptgs"></i>{{/if}}</div>
+    <div class="ptgs-mid">{{localize "BW.ptgs.coordinate"}}</div>
+    <div class="ptgs-scale">{{localize "BW.ptgs.injury"}}</div>
 </div>
 {{#each ptgs as |wound|}}
 {{#if wound.threshold}}
@@ -9,13 +9,13 @@
     <div class="ptgs-top">
         <select class="ptgs-tolerance" name="system.ptgs.{{@key}}.threshold" value="{{wound.threshold}}">
             {{#select wound.threshold}}
-            <option value="bruise">Br</option>
-            <option value="superficial">Su</option>
-            <option value="light">Li</option>
-            <option value="midi">Mi</option>
-            <option value="severe">Se</option>
-            <option value="traumatic">Tr</option>
-            <option value="mortal">M</option>
+            <option value="bruise">{{localize "BW.ptgs.bruise"}}</option>
+            <option value="superficial">{{localize "BW.ptgs.superficial"}}</option>
+            <option value="light">{{localize "BW.ptgs.light"}}</option>
+            <option value="midi">{{localize "BW.ptgs.midi"}}</option>
+            <option value="severe">{{localize "BW.ptgs.severe"}}</option>
+            <option value="traumatic">{{localize "BW.ptgs.traumatic"}}</option>
+            <option value="mortal">{{localize "BW.ptgs.mortal"}}</option>
             {{/select}}
         </select>
     </div>
@@ -38,32 +38,32 @@
 {{/if}}
 {{/each}}
 <div class="ptgs-obpenalty flex-column">
-    <h3>Ob Penalty</h3>
+    <h3>{{localize "BW.ptgs.penalty"}}</h3>
     <div class="ptgs-big-number">{{ ptgs.obPenalty }}</div>
     <input type="checkbox" name="system.ptgs.shrugging" disabled {{ checked ptgs.shrugging }}>
-    <button type="button" class="rollable modifiable" data-roll-type="shrug">Shrug It Off</button>
+    <button type="button" class="rollable modifiable" data-roll-type="shrug">{{localize "BW.ptgs.shrug"}}</button>
 </div>
 <div class="ptgs-wounddice flex-column">
-    <h3>Wound Dice</h3>
+    <h3>{{localize "BW.ptgs.woundDice"}}</h3>
     <div class="ptgs-big-number">{{ ptgs.woundDice }}</div>
     <input type="checkbox" name="system.ptgs.gritting" {{ checked ptgs.gritting }}>
-    <button type="button" class="rollable modifiable" data-roll-type="grit">Grit Your Teeth</button>
+    <button type="button" class="rollable modifiable" data-roll-type="grit">{{localize "BW.ptgs.grit"}}</button>
 </div>
 <div class="ptgs-woundnotes1 flex-row">
-    <h3>Injury Recovery</h3>
-    <div class="recovery-label">Recovered</div>
+    <h3>{{localize "BW.ptgs.recovery"}}</h3>
+    <div class="recovery-label">{{localize "BW.ptgs.recovered"}}</div>
     <input type="number" name="system.ptgs.woundRecovery1" value="{{ptgs.woundRecovery1}}" min="0">
     <textarea name="system.ptgs.woundNotes1">{{ptgs.woundNotes1}}</textarea>
 </div>
 <div class="ptgs-woundnotes2 flex-row">
-    <h3>Injury Recovery</h3>
-    <div class="recovery-label">Recovered</div>
+    <h3>{{localize "BW.ptgs.recovery"}}</h3>
+    <div class="recovery-label">{{localize "BW.ptgs.recovered"}}</div>
     <input type="number" name="system.ptgs.woundRecovery2" value="{{ptgs.woundRecovery2}}" min="0">
     <textarea name="system.ptgs.woundNotes2">{{ptgs.woundNotes2}}</textarea>
 </div>
 <div class="ptgs-woundnotes3 flex-row">
-    <h3>Injury Recovery</h3>
-    <div class="recovery-label">Recovered</div>
+    <h3>{{localize "BW.ptgs.recovery"}}</h3>
+    <div class="recovery-label">{{localize "BW.ptgs.recovered"}}</div>
     <input type="number" name="system.ptgs.woundRecovery3" value="{{ptgs.woundRecovery3}}" min="0">
     <textarea name="system.ptgs.woundNotes3">{{ptgs.woundNotes3}}</textarea>
 </div>

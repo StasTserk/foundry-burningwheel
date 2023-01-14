@@ -39,6 +39,23 @@ BW:
     superbAcronym: S
     vsArmor: Vs Armor
     vsArmorAcronym: VA
+  ptgs:
+    tolerance: Tolerance
+    coordinate: Coordinate
+    injury: Injury
+    bruise: Br
+    superficial: Su
+    light: Li
+    midi: Mi
+    severe: Se
+    traumatic: Tr
+    mortal: M
+    penalty: Ob Penalty
+    woundDice: Wound Dice
+    recovery: Injury Recovery
+    recovered: Recovered
+    shrug: Shrug It Off
+    grit: Grit Your Teeth
   character:
     index: Character Index
     name: Name
@@ -89,3 +106,4 @@ BW:
     notesAndMisc: Notes and Other Miscellanea
     learnAndPractice: Learning and Practice
     practiceLog: Practice Log
+    injuryAndRecovery: Injury and Recovery

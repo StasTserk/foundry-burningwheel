@@ -3,7 +3,7 @@
     <input type="checkbox" id="{{actor.id}}-collapseLearning" name="system.collapseLearning" class="section-collapse" {{ checked system.collapseLearning }}>
     <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseLearning" class="section-collapse-label clickable">Learning and Practice</label>
+    <label for="{{actor.id}}-collapseLearning" class="section-collapse-label clickable">{{localize "BW.character.learnAndPractice"}}</label>
 </h2>
 {{#if system.collapseLearning}}{{else}}
 <div class="learning-practice flex-row">
@@ -14,9 +14,9 @@
     </div>
     <div class="practice-log">
         {{#if isOwner}}
-        <div class="add-new-item-label" data-action="learn-skill"><i class="fas fa-plus"></i> Learn New Skill</div>
+        <div class="add-new-item-label" data-action="learn-skill"><i class="fas fa-plus"></i> {{localize "BW.character.learnNew" type=(localize "BW.skill")}}</div>
         {{/if}}
-        <div>Practice Log</div>
+        <div>{{localize "BW.character.practiceLog"}}</div>
         <textarea name="system.practiceLog">{{system.practiceLog}}</textarea>
     </div>
 </div>

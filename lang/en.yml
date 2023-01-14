@@ -16,6 +16,7 @@ BW:
   circles: Circles
   resources: Resources
   skill: Skill
+  skills: Skills
   none: None
   dice: Dice
   diceAcronym: D
@@ -86,3 +87,5 @@ BW:
     practicals: Practicals
     actions: Actions
     notesAndMisc: Notes and Other Miscellanea
+    learnAndPractice: Learning and Practice
+    practiceLog: Practice Log

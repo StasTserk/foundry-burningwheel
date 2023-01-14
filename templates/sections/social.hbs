@@ -3,22 +3,22 @@
         <input type="checkbox" id="{{actor.id}}-collapseRelationships" name="system.collapseRelationships" class="section-collapse" {{ checked system.collapseRelationships }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseRelationships" class="section-collapse-label clickable">Relationships & Reputations</label>
+    <label for="{{actor.id}}-collapseRelationships" class="section-collapse-label clickable">{{localize "BW.character.relationshipsAndReps"}}</label>
 </h2>
 {{#if system.collapseRelationships}}{{else}}
 <div class="relationship-section flex-row">
     <div class="relationships">
-        <h2>Relationships  {{#if isOwner}}<i data-action="addRelationship" class="fas fa-plus"></i>{{/if}}</h2>
+        <h2>{{localize "BW.character.relationships"}}  {{#if isOwner}}<i data-action="addRelationship" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each relationships as |r|}}
             {{> "systems/burningwheel/templates/parts/relationships.hbs" relationship=r exp=../system.circles.exp isOwner=../isOwner}}
         {{/each}}
     </div>
     <div class="reputations">
-        <h2>Reputations  {{#if isOwner}}<i data-action="addReputation" class="fas fa-plus"></i>{{/if}}</h2>
+        <h2>{{localize "BW.character.reputations"}}  {{#if isOwner}}<i data-action="addReputation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each reputations as |r|}}
         <div class="reputation flex-row {{r.system.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{r._id}}">
             <div class="item-title">
-                {{r.system.dice}}D - {{ r.name }}
+                {{r.system.dice}}{{localize "BW.diceAcronym"}} - {{ r.name }}
             </div>
             {{#if ../isOwner}}
                 <i class="fas fa-edit" data-action="editItem" data-id="{{r._id}}"></i>
@@ -28,11 +28,11 @@
         {{/each}}
     </div>
     <div class="affiliations">
-        <h2>Affiliations  {{#if isOwner}}<i data-action="addAffiliation" class="fas fa-plus"></i>{{/if}}</h2>
+        <h2>{{localize "BW.character.affiliations"}}   {{#if isOwner}}<i data-action="addAffiliation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each affiliations as |a|}}
         <div class="affiliation flex-row" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{a._id}}">
             <div class="item-title">
-                {{a.system.dice}}D - {{ a.name }}
+                {{a.system.dice}}{{localize "BW.diceAcronym"}} - {{ a.name }}
             </div>
             {{#if ../isOwner}}
                 <i class="fas fa-edit" data-action="editItem" data-id="{{a._id}}"></i>

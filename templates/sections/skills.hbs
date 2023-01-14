@@ -3,7 +3,7 @@
     <input type="checkbox" id="{{actor.id}}-collapseSkills" name="system.collapseSkills" class="section-collapse" {{ checked system.collapseSkills }}>
     <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseSkills" class="section-collapse-label clickable">Skills</label>
+    <label for="{{actor.id}}-collapseSkills" class="section-collapse-label clickable">{{ localize "BW.skills"}}</label>
 </h2>
 {{#if system.collapseSkills}}{{else}}
 <div class="skills">
@@ -12,7 +12,7 @@
     {{/each}}
     {{#if isOwner}}
     <div class="right-floating">
-        <div class="add-button" data-action="addSkill"><i class="fas fa-plus"></i> Add New Skill</div>
+        <div class="add-button" data-action="addSkill"><i class="fas fa-plus"></i> {{localize "BW.character.addNew" type=(localize "BW.skill")}}</div>
     </div>
     {{/if}}
 </div>

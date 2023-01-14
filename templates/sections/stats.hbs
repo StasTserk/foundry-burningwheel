@@ -3,19 +3,19 @@
         <input type="checkbox" id="{{actor.id}}-collapseStats" name="system.collapseStats" class="section-collapse" {{ checked system.collapseStats }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseStats" class="section-collapse-label clickable">Stats</label>
+    <label for="{{actor.id}}-collapseStats" class="section-collapse-label clickable">{{localize "BW.character.stats"}}</label>
 </h2>
 {{#if system.collapseStats}}{{else}}
 <div class="stats">
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Will" stat=system.will namePrefix="system.will" taxName="system.willTax" taxValue=system.willTax type="stat" taxDisabled=true}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Power" stat=system.power namePrefix="system.power" type="stat"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Agility" stat=system.agility namePrefix="system.agility" type="stat"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Perception" stat=system.perception namePrefix="system.perception" type="stat"}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Forte" stat=system.forte namePrefix="system.forte" type="stat" taxName="system.forteTax" taxValue=system.forteTax taxDisabled=true}}
-    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="Speed" stat=system.speed namePrefix="system.speed" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.will" stat=system.will namePrefix="system.will" taxName="system.willTax" taxValue=system.willTax type="stat" taxDisabled=true}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.power" stat=system.power namePrefix="system.power" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.agility" stat=system.agility namePrefix="system.agility" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.perception" stat=system.perception namePrefix="system.perception" type="stat"}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.forte" stat=system.forte namePrefix="system.forte" type="stat" taxName="system.forteTax" taxValue=system.forteTax taxDisabled=true}}
+    {{> "systems/burningwheel/templates/parts/rollable-item.hbs" statName="BW.speed" stat=system.speed namePrefix="system.speed" type="stat"}}
     <div class="stats-footer flex-row">
-        <label>Stride</label><input type="number" placeholder="0" name="system.stride" value="{{system.stride}}">
-        <label>Mounted Stride</label><input type="number" placeholder="0" name="system.mountedStride" value="{{system.mountedStride}}">
+        <label>{{localize "BW.character.stride"}}</label><input type="number" placeholder="0" name="system.stride" value="{{system.stride}}">
+        <label>{{localize "BW.character.mountedStride"}}</label><input type="number" placeholder="0" name="system.mountedStride" value="{{system.mountedStride}}">
     </div>
 </div>
 {{/if}}

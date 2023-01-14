@@ -13,7 +13,7 @@
     {{#if customName }}
     <input type="text" name="{{namePrefix}}.name" value="{{stat.name}}" class="rollable-name">
     {{else}}
-    <h3 class="rollable-name">{{ statName }}</h3>
+    <h3 class="rollable-name">{{ localize statName }}</h3>
     {{/if}}
     <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
         {{#select stat.shade}}
@@ -29,7 +29,7 @@
     <div class="collapsing-section">
         {{#if routine}}
         <div class="test-tracking">
-            <div class="test-title">Routine: </div>
+            <div class="test-title">{{localize "BW.rollable.routine"}}: </div>
             <input class="tests-needed" name="{{namePrefix}}.routineNeeded" value="{{stat.routineNeeded}}" disabled>
             {{#multiboxes stat.routine needed=stat.routineNeeded}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked" data-dtype="Number">
@@ -48,7 +48,7 @@
         </div>
         {{/if}}
         <div class="test-tracking">
-            <div class="test-title">Difficult:</div>
+            <div class="test-title">{{localize "BW.rollable.difficult"}}:</div>
             <input class="tests-needed" name="{{namePrefix}}.difficultNeeded" value="{{stat.difficultNeeded}}" disabled>
             {{#multiboxes stat.difficult needed=stat.difficultNeeded}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked" data-dtype="Number">
@@ -66,7 +66,7 @@
             {{/multiboxes}}
         </div>
         <div class="test-tracking">
-            <div class="test-title">Challenging:</div>
+            <div class="test-title">{{localize "BW.rollable.challenging"}}:</div>
             <input class="tests-needed" name="{{namePrefix}}.challengingNeeded" value="{{stat.challengingNeeded}}" disabled>
             {{#multiboxes stat.challenging needed=stat.challengingNeeded}}
             <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked" data-dtype="Number">
@@ -82,18 +82,34 @@
             <label for="{{actor.id}}-{{namePrefix}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
-        <input type="number" class="circle-input" placeholder="F" title="Fate points spent on {{statName}}" name="{{namePrefix}}.fate" value="{{stat.fate}}">
-        <input type="number" class="circle-input" placeholder="P" title="Persona points spent on {{statName}}" name="{{namePrefix}}.persona" value="{{stat.persona}}">
-        <input type="number" class="circle-input" placeholder="D" title="Deeds points spent on {{statName}}" name="{{namePrefix}}.deeds" value="{{stat.deeds}}">
+        <input type="number"
+            class="circle-input"
+            placeholder="F" 
+            title="{{ localize "BW.rollable.fateSpent"
+            statName=(localize statName)}}"
+            name="{{namePrefix}}.fate"
+            value="{{stat.fate}}">
+        <input type="number"
+            class="circle-input"
+            placeholder="P"
+            title="{{ localize "BW.rollable.personaSpent" statName=(localize statName)}}"
+            name="{{namePrefix}}.persona"
+            value="{{stat.persona}}">
+        <input type="number"
+            class="circle-input"
+            placeholder="D"
+            title="{{ localize "BW.rollable.deedsSpent" statName=(localize statName)}}"
+            name="{{namePrefix}}.deeds"
+            value="{{stat.deeds}}">
         {{#if taxName}}
         <div class="attribute-subrow">
-            <label class="attribute-label">Tax</label>
+            <label class="attribute-label">{{localize "BW.rollable.tax"}}</label>
             <input type="number" class="circle-input" value="{{taxValue}}" {{#if taxDisabled}}disabled{{else}}name="{{taxName}}"{{/if}}>
         </div>
         {{/if}}
         <input type="checkbox" class="hidden rollable-open-checkbox" id="{{actor.id}}-{{namePrefix}}-open" name="{{namePrefix}}.open" {{checked stat.open}}>
         <div class="rollable-open-toggle">
-            <label for="{{actor.id}}-{{namePrefix}}-open">Open</label>
+            <label for="{{actor.id}}-{{namePrefix}}-open">{{localize "BW.rollable.open"}}</label>
         </div>
     </div>
 </div>

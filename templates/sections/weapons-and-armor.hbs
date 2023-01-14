@@ -3,7 +3,7 @@
     <input type="checkbox" id="{{actor.id}}-collapseCombat" name="system.collapseCombat" class="section-collapse" {{ checked system.collapseCombat }}>
     <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseCombat" class="section-collapse-label clickable">Weapons and Armor</label>
+    <label for="{{actor.id}}-collapseCombat" class="section-collapse-label clickable">{{localize "BW.character.weaponsAndArmor"}}</label>
 </h2>
 {{#if system.collapseCombat}}{{else}}
 <div class="combat-section flex-row">
@@ -13,7 +13,7 @@
     <div class="armor-misc flex-column">
         <div class="training-skills">
             <hr>
-            <h3>Training Skills</h3>
+            <h3>{{localize "BW.character.trainingSkills"}}</h3>
             {{#each training as |t|}}
             <div class="training-skill" data-item-id="{{t.id}}">
                 <div class="flex-row">
@@ -28,7 +28,7 @@
         </div>
         <div class="clumsy-stats">
             <hr>
-            <h3>Clumsy Weight Penalties</h3>
+            <h3>{{localize "BW.character.clumsyWeight"}}</h3>
             <div class="flex-row">
                 {{#if system.clumsyWeight.agilityPenalty}}
                 <div class="clumsy-item flex-row">

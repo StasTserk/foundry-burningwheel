@@ -115,7 +115,7 @@ function registerHelpers() {
 
     Handlebars.registerHelper("titlecase", (value: string) => {
         if (value) {
-            return value.titleCase();
+            return value.toString().titleCase();
         }
         return "";
     });
@@ -124,9 +124,9 @@ function registerHelpers() {
         return parseInt(value.toString()) + 1;
     });
 
-    Handlebars.registerHelper("disabled", (value: boolean) => {
-        if (value) {
-            return "disabled";
+    Handlebars.registerHelper("conc", (...values: TypeMissing[]) => {
+        if (values) {
+            return values.slice(0, -1).join("").toString();
         }
         return "";
     });

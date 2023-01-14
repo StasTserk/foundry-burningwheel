@@ -1,14 +1,14 @@
 <div class="item-grid weapon-grid">
-    <div class="weapon-header">Melee</div>
-    <div class="weapon-header">I</div>
-    <div class="weapon-header">M</div>
-    <div class="weapon-header">S</div>
-    <div class="weapon-header">Pow</div>
-    <div class="weapon-header">Add</div>
-    <div class="weapon-header">Va</div>
-    <div class="weapon-header">Ws</div>
-    <div class="weapon-header">Length</div>
-    <div class="weapon-header">Skill Used</div>
+    <div class="weapon-header">{{localize "BW.weapon.melee"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.incidentalAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.markAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.superbAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.powerAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.add"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.vsArmorAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.speedAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.length"}}</div>
+    <div class="weapon-header">{{localize "BW.skill"}}</div>
     <div class="weapon-header">~</div>
 
     {{#each melee as |m|}}
@@ -23,11 +23,11 @@
         <div class="weapon-row">{{a.add}}</div>
         <div class="weapon-row">{{a.vsArmor}}</div>
         <div class="weapon-row">{{a.weaponSpeed}}</div>
-        <div class="weapon-row">{{titlecase a.weaponLength}}</div>
+        <div class="weapon-row">{{localize (conc "BW.weapon." a.weaponLength)}}</div>
         <div class="weapon-row">
             <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="system.skillId" value="{{../system.skillId}}">
                 {{#select ../system.skillId}}
-                <option value="">None</option>
+                <option value="">{{localize "BW.none"}}</option>
                 {{#each ../../skills as |s|}}
                 <option value="{{s._id}}">{{s.name}}</option>
                 {{/each}}
@@ -52,14 +52,14 @@
 </div>
 <hr>
 <div class="item-grid ranged-grid">
-    <div class="weapon-header">Missile</div>
-    <div class="weapon-header">I</div>
-    <div class="weapon-header">M</div>
-    <div class="weapon-header">S</div>
-    <div class="weapon-header">Opt</div>
-    <div class="weapon-header">Extr</div>
-    <div class="weapon-header">Max</div>
-    <div class="weapon-header">Skill Used</div>
+    <div class="weapon-header">{{localize "BW.weapon.missile"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.incidentalAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.markAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.superbAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.optimalAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.extremeAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.weapon.maxAcronym"}}</div>
+    <div class="weapon-header">{{localize "BW.skill"}}</div>
     <div class="weapon-header">~</div>
     {{#each ranged as |r|}}
     <div class="weapon-row weapon-name" data-roll-type="weapon" data-weapon-id="{{r._id}}" {{#if ../isOwner}}draggable="true"{{/if}}>
@@ -68,13 +68,13 @@
     <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.incidental}}</div><label class="weapon-dof">{{r.system.incidentalLabel}}</label></div></div>
     <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.mark}}</div><label class="weapon-dof">{{r.system.markLabel}}</label></div></div>
     <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.superb}}</div><label class="weapon-dof">{{r.system.superbLabel}}</label></div></div>
-    <div class="weapon-row">{{r.system.optimalRange}}D</div>
-    <div class="weapon-row">{{r.system.extremeRange}}D</div>
+    <div class="weapon-row">{{r.system.optimalRange}}{{localize "BW.diceAcronym"}}</div>
+    <div class="weapon-row">{{r.system.extremeRange}}{{localize "BW.diceAcronym"}}</div>
     <div class="weapon-row">{{titlecase r.system.maxRange}}</div>
     <div class="weapon-row">
         <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="system.skillId" value="{{r.system.skillId}}">
             {{#select r.system.skillId}}
-            <option value="">None</option>
+            <option value="">{{localize "BW.none"}}</option>
             {{#each ../skills as |s|}}
             <option value="{{s._id}}">{{s.name}}</option>
             {{/each}}

@@ -15,6 +15,8 @@ BW:
   health: Health
   circles: Circles
   resources: Resources
+  skill: Skill
+  none: None
   dice: Dice
   diceAcronym: D
   rollable:
@@ -23,9 +25,19 @@ BW:
     routine: Routine
     tax: Tax
     open: Open
-    fateSpent: "Fate points spent on {statName}"
-    personaSpent: "Persona points spent on {statName}"
-    deedsSpent: "Deeds points spent on {statName}"
+    fateSpent: Fate points spent on {statName}
+    personaSpent: Persona points spent on {statName}
+    deedsSpent: Deeds points spent on {statName}
+  weapon:
+    asWeapon: As weapon
+    incidental: Incidental
+    incidentalAcronym: I
+    mark: Mark
+    markAcronym: M
+    superb: Superb
+    superbAcronym: S
+    vsArmor: Vs Armor
+    vsArmorAcronym: VA
   character:
     index: Character Index
     name: Name
@@ -62,3 +74,14 @@ BW:
     addNew: Add new {type}
     learnNew: Learn new {type}
     gear: Gear
+    spell: Spell
+    spells: Spells
+    spellsSustained: Spells Sustained
+    forteTax: Forte Tax
+    maxObstacle: Maximum Sustainable Obstacle
+    sustainedSpell: Sustained Spell
+    obstacle: Obstacle
+    obstacleAcronym: Ob
+    test: Test
+    practicals: Practicals
+    actions: Actions

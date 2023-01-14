@@ -1,9 +1,9 @@
 <div class="item-grid armor-grid">
     <div class="armor-header">~</div>
-    <div class="armor-header">Dice</div>
-    <div class="armor-header">Dmg</div>
-    <div class="armor-header">Location</div>
-    <div class="armor-header">Type</div>
+    <div class="armor-header">{{localize "BW.dice"}}</div>
+    <div class="armor-header">{{localize "BW.armor.damage"}}</div>
+    <div class="armor-header">{{localize "BW.armor.location"}}</div>
+    <div class="armor-header">{{localize "BW.armor.type"}}</div>
 
     {{#if armor.head}}
     <button type="button" class="rollable {{armor.head.system.helmDisplayClass}}" data-roll-type="armor" data-item-id="{{armor.head._id}}" data-location="Helm">
@@ -16,7 +16,7 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}}
-    <div class="armor-row">Head</div>
+    <div class="armor-row">{{localize "BW.armor.head"}}</div>
     <div class="armor-row">{{armor.head.name}}</div>
 
     {{#if armor.torso}}
@@ -30,7 +30,7 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}}
-    <div class="armor-row">Torso</div>
+    <div class="armor-row">{{localize "BW.armor.torso"}}</div>
     <div class="armor-row">{{armor.torso.name}}</div>
 
     {{#if armor.leftArm}}
@@ -44,7 +44,7 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}}
-    <div class="armor-row">Left Arm</div>
+    <div class="armor-row">{{localize "BW.armor.leftArm"}}</div>
     <div class="armor-row">{{armor.leftArm.name}}</div>
 
     {{#if armor.rightArm}}
@@ -58,7 +58,7 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}}
-    <div class="armor-row">Right Arm</div>
+    <div class="armor-row">{{localize "BW.armor.rightArm"}}</div>
     <div class="armor-row">{{armor.rightArm.name}}</div>
 
     {{#if armor.leftLeg}}
@@ -72,7 +72,7 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}} 
-    <div class="armor-row">Left Leg</div>
+    <div class="armor-row">{{localize "BW.armor.leftLeg"}}</div>
     <div class="armor-row">{{armor.leftLeg.name}}</div>
 
     {{#if armor.rightLeg}}
@@ -86,7 +86,7 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}} 
-    <div class="armor-row">Right Leg</div>
+    <div class="armor-row">{{localize "BW.armor.rightLeg"}}</div>
     <div class="armor-row">{{armor.rightLeg.name}}</div>
 
     {{#if armor.shield}}
@@ -100,6 +100,6 @@
     <div class="armor-row"></div>
     <div class="armor-row"></div>
     {{/if}}
-    <div class="armor-row">Shield</div>
+    <div class="armor-row">{{localize "BW.armor.shield"}}</div>
     <div class="armor-row">{{armor.shield.name}}</div>
 </div>

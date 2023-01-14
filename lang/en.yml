@@ -39,6 +39,26 @@ BW:
     superbAcronym: S
     vsArmor: Vs Armor
     vsArmorAcronym: VA
+    melee: Melee
+    missile: Missile
+    power: Power
+    powerAcronym: Pow
+    add: Add
+    speed: Weapon Speed
+    speedAcronym: Ws
+    length: Length
+    shortest: Shortest
+    short: Short
+    long: Long
+    longer: Longer
+    longest: Longest
+    asRanged: As Ranged
+    optimal: Optimal Range
+    optimalAcronym: Opt
+    extreme: Extreme Range
+    extremeAcronym: Extr
+    max: MaxRange
+    maxAcronym: Max
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate
@@ -107,3 +127,6 @@ BW:
     learnAndPractice: Learning and Practice
     practiceLog: Practice Log
     injuryAndRecovery: Injury and Recovery
+    weaponsAndArmor: Weapons and Armor
+    trainingSkills: Training Skills
+    clumsyWeight: Clumsy Weight Penalties

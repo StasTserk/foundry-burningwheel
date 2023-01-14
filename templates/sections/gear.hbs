@@ -3,7 +3,7 @@
         <input type="checkbox" id="{{actor.id}}-collapseGear" name="system.collapseGear" class="section-collapse" {{ checked system.collapseGear }}>
         <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapseGear" class="section-collapse-label clickable">Gear, Possessions, and Property</label>
+    <label for="{{actor.id}}-collapseGear" class="section-collapse-label clickable">{{localize "BW.character.gearPosAndProp"}}</label>
 </h2>
 {{#if system.collapseGear}}{{else}}
 <div class="gear item-grid col-4">
@@ -18,7 +18,7 @@
     {{/each}}
     {{#if isOwner}}
     <div class="right-floating">
-        <div class="add-button" data-action="addGear"><i class="fas fa-plus"></i> Add New Gear</div>
+        <div class="add-button" data-action="addGear"><i class="fas fa-plus"></i> {{localize "BW.character.addNew" type=(localize "BW.character.gear")}}</div>
     </div>
     {{/if}}
 </div>

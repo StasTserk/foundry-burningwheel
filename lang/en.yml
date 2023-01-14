@@ -20,6 +20,7 @@ BW:
   none: None
   dice: Dice
   diceAcronym: D
+  die: Die
   rollable:
     difficult: Difficult
     challenging: Challenging
@@ -59,6 +60,24 @@ BW:
     extremeAcronym: Extr
     max: MaxRange
     maxAcronym: Max
+  armor:
+    climbing: Climbing Penalty
+    throwingShooting: Throwing / Shooting
+    stealthy: Stealthy
+    swimming: Swimming
+    perceptionObs: Perception / Obs.
+    untrainedHealthForte: Untrained Health / Forte Penalty
+    untrainedGlobal: Untrained Global Penalty
+    damage: Dmg
+    location: Location
+    type: Type
+    head: Head
+    torso: Torso
+    leftArm: Left Arm
+    rightArm: Right Arm
+    leftLeg: Left Leg
+    rightLeg: Right Leg
+    shield: Shield
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

@@ -11,6 +11,11 @@ BW:
   forte: Forte
   perception: Perception
   speed: Speed
+  steel: Steel
+  health: Health
+  circles: Circles
+  resources: Resources
+  dice: Dice
   rollable:
     difficult: Difficult
     challenging: Challenging
@@ -39,3 +44,12 @@ BW:
     stats: Stats
     stride: Stride
     mountedStride: Mounted Stride
+    attributes: Attributes
+    reflexes: Reflexes
+    mortalWound: Mortal Wound
+    hesitation: Hesitation
+    cash: Cash
+    funds: Funds
+    property: Property
+    loans: Loans
+    debt: Debt

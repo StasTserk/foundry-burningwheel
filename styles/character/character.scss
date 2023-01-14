@@ -306,6 +306,10 @@
             grid-auto-flow: column;
             grid-template-rows: repeat(3, 1fr);
 
+            .attributes-item {
+                align-content: flex-end;
+            }
+
             .attribute-label,
             .debt-label {
                 font-size: 1.125em;

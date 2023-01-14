@@ -3,34 +3,34 @@
     <input type="checkbox" id="{{actor.id}}-collapse-spells" name="system.collapseSpells" class="section-collapse" {{ checked system.collapseSpells }}>
     <i class="fas fa-chevron-down"></i>
     {{/if}}
-    <label for="{{actor.id}}-collapse-spells" class="section-collapse-label clickable">Spells</label>
+    <label for="{{actor.id}}-collapse-spells" class="section-collapse-label clickable">{{localize "BW.character.spells"}}</label>
 </h2>
 {{#if system.collapseSpells}}{{else}}
 <div class="spell-section item-grid col-3">
     <div class="spell-sustained-info">
         <div>
-            Spells Sustained
+            {{localize "BW.character.spellsSustained"}}
         </div>
         <div><input type="number" name="system.willTax" value="{{system.willTax}}" data-dtype="Number" class="exponent"> / {{ system.maxSustained }}</div>
         
         <div>
-            Forte Tax
+            {{localize "BW.character.forteTax"}}
         </div>
         <div><input type="number" name="system.forteTax" value="{{system.forteTax}}" data-dtype="Number" class="exponent"> / {{sub system.forte.exp system.ptgs.woundDice}}</div>
         
         <div>
-            Maximum Sustainable Obstacle
+            {{localize "BW.character.maxObstacle"}}
         </div>
         <div><input type="number" disabled value="{{system.maxObSustained}}" class="exponent"></div>
         
     </div>
     <div class="sustained-spell-list">
-        <div class="grid-header">Sustained Spell</div>
-        <div class="grid-header">Ob</div>
-        <div class="grid-header">Test</div>
-        <div class="grid-header">Sustained Spell</div>
-        <div class="grid-header">Ob</div>
-        <div class="grid-header">Test</div>
+        <div class="grid-header">{{localize "BW.character.sustainedSpell"}}</div>
+        <div class="grid-header">{{localize "BW.character.obstacleAcronym"}}</div>
+        <div class="grid-header">{{localize "BW.character.test"}}</div>
+        <div class="grid-header">{{localize "BW.character.sustainedSpell"}}</div>
+        <div class="grid-header">{{localize "BW.character.obstacleAcronym"}}</div>
+        <div class="grid-header">{{localize "BW.character.test"}}</div>
         <input type="text" name="system.sustainedSpell1" value="{{system.sustainedSpell1}}">
         <input type="number" data-dtype="Number" name="system.sustainedSpell1Ob" value="{{system.sustainedSpell1Ob}}">
         <button type="button" class="rollable modifiable" data-rollable-name="{{system.sustainedSpell1}}" data-obstacle="{{system.sustainedSpell1Ob}}" data-roll-type="spellTax"><i class="fas fa-dice"></i></button>
@@ -52,8 +52,8 @@
     {{/each}}
     {{#if isOwner}}
     <div class="right-floating">
-        <div class="add-button" data-action="addSpell"><i class="fas fa-plus"></i> Add New Spell</div>
-        <div class="add-button" data-action="learnSpell"><i class="fas fa-plus"></i> Learn New Spell</div>
+        <div class="add-button" data-action="addSpell"><i class="fas fa-plus"></i> {{localize "BW.character.addNew" type=(localize "BW.character.spell")}}</div>
+        <div class="add-button" data-action="learnSpell"><i class="fas fa-plus"></i> {{localize "BW.character.learnNew" type=(localize "BW.character.spell")}}</div>
     </div>
     {{/if}}
 </div>

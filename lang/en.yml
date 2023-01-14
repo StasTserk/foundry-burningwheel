@@ -16,6 +16,7 @@ BW:
   circles: Circles
   resources: Resources
   dice: Dice
+  diceAcronym: D
   rollable:
     difficult: Difficult
     challenging: Challenging
@@ -53,3 +54,7 @@ BW:
     property: Property
     loans: Loans
     debt: Debt
+    relationshipsAndReps: Relationships & Reputations
+    relationships: Relationships
+    reputations: Reputations
+    affiliations: Affiliations

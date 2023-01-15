@@ -305,6 +305,9 @@ export class BWCharacter extends BWActor<BWCharacterData> {
 
     private async _advanceStat(accessor: string, newExp: number) {
         const updateData = {};
+        if (accessor.indexOf('system.') !== -1) {
+            accessor = accessor.slice(7);
+        }
         updateData[`system.${accessor}.routine`] = 0;
         updateData[`system.${accessor}.difficult`] = 0;
         updateData[`system.${accessor}.challenging`] = 0;

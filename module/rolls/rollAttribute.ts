@@ -18,7 +18,7 @@ import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
 export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor, target.dataset.accessor || "") as Ability;
     const actor = sheet.actor;
-    const attrName = target.dataset.rollableName || "Unknown Attribute";
+    const attrName = game.i18n.localize(target.dataset.rollableName || "Unknown Attribute");
     return handleAttrRoll({ actor, stat, attrName, dataPreset, accessor: target.dataset.accessor || "" });
 }
 
@@ -34,7 +34,7 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
         dataPreset.difficulty = actor.system.hesitation || 0;
     }
     const data: AttributeDialogData =  mergeDialogData<AttributeDialogData>({
-        name: `${attrName} Test`,
+        name: `${attrName} ${game.i18n.localize('BW.test')}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -60,11 +60,11 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${attrName} Test`,
+            title: `${attrName} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         attrRollCallback(dialogHtml, stat, actor, attrName, accessor)
                 }

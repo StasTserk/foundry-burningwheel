@@ -42,7 +42,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
         content: html,
         buttons: {
             roll: {
-                label: "Roll",
+                label: game.i18n.localize("BW.roll.roll"),
                 callback: (html: JQuery) => armorRollCallback(armorItem as Armor, html, sheet, location)
             }
         },

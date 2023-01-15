@@ -23,7 +23,9 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
     const stat = getProperty(actor.system, "health") as Ability;
     const rollModifiers = sheet.actor.getRollModifiers("health");
     const data: AttributeDialogData = mergeDialogData<AttributeDialogData>({
-        name: shrugging ? "Shrug It Off Health" : "Grit Your Teeth Health",
+        name: shrugging ?
+            `${game.i18n.localize("BW.ptgs.shrug")} ${game.i18n.localize("BW.health")}` :
+            `${game.i18n.localize("BW.ptgs.grit")} ${game.i18n.localize("BW.health")}`,
         difficulty: shrugging ? 2 : 4,
         bonusDice: 0,
         arthaDice: 0,
@@ -37,7 +39,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
 
     const buttons: Record<string, DialogButton> = {};
     buttons.roll = {
-        label: "Roll",
+        label: game.i18n.localize("BW.roll.roll"),
         callback: async (dialogHtml: JQuery) =>
             ptgsRollCallback(dialogHtml, stat, sheet, shrugging)
     };
@@ -45,7 +47,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
     const accessor = shrugging ? "data.ptgs.shrugging" : "data.ptgs.gritting";
     updateData[accessor] = true;
     buttons.doIt = {
-        label: "Just do It",
+        label: game.i18n.localize("BW.ptgs.justDoIt"),
         callback: async (_: JQuery) => actor.update(updateData)
     };
 
@@ -53,7 +55,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
         // we're gritting our teeth and have persona points. give option
         // to spend persona.
         buttons.withPersona = {
-            label: "Spend Persona",
+            label: game.i18n.localize("BW.ptgs.spendPersona"),
             callback: async (_: JQuery) => {
                 updateData["data.persona"] = actor.system.persona - 1;
                 updateData["data.health.persona"] = (actor.system.health.persona || 0) + 1;
@@ -65,7 +67,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
         // we're shrugging it off and have fate points. give option
         // to spend fate.
         buttons.withFate = {
-            label: "Spend Fate",
+            label: game.i18n.localize("BW.ptgs.spendFate"),
             callback: async (_: JQuery) => {
                 updateData["data.fate"] = actor.system.fate - 1;
                 updateData["data.health.fate"] = (actor.system.health.fate || 0) + 1;
@@ -77,7 +79,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${data.name} Test`,
+            title: `${data.name} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons,
             default: "roll"

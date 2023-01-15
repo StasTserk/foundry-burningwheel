@@ -87,7 +87,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
     }
 
     const data: LearningDialogData = mergeDialogData<LearningDialogData>({
-        name: `Beginner's Luck ${skill.name} Test`,
+        name: `Beginner's Luck ${skill.name} ${game.i18n.localize('BW.test')}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -113,7 +113,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         learningRollCallback(dialogHtml, skill, statName, actor, extraInfo, onRollCallback)
                 }

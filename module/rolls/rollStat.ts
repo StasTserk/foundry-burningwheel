@@ -17,7 +17,7 @@ export async function handleStatRollEvent(options: EventHandlerOptions): Promise
     const accessor = options.target.dataset.accessor || "";
     const stat = getProperty(options.sheet.actor, accessor) as Ability;
     const actor = options.sheet.actor;
-    const statName = options.target.dataset.rollableName || "Unknown Stat";
+    const statName = game.i18n.localize(options.target.dataset.rollableName || "Unknown Stat");
     return handleStatRoll({ actor, statName, stat, accessor, ...options });
 }
 
@@ -42,7 +42,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
     }
 
     const data = mergeDialogData<StatDialogData>({
-        name: `${statName} Test`,
+        name: `${statName} ${game.i18n.localize('BW.test')}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -59,11 +59,11 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${statName} Test`,
+            title: `${statName} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         statRollCallback(dialogHtml, stat, actor, statName, accessor)
                 }

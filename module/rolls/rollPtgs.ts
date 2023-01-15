@@ -97,10 +97,10 @@ async function ptgsRollCallback(
     const roll = await rollDice(diceTotal, stat.open, stat.shade);
     if (!roll) { return; }
 
-    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor: "data.health" });
+    const fateReroll = buildRerollData({ actor: sheet.actor, roll, accessor: "health" });
     if (fateReroll) { fateReroll.ptgsAction = shrugging? "shrugging" : "gritting"; }
     const callons: RerollData[] = sheet.actor.getCallons("health").map(s => {
-        return { label: s, ptgsAction: shrugging ? "shrugging" : "gritting", ...buildRerollData({ actor: sheet.actor, roll, accessor: "data.health" }) as RerollData };
+        return { label: s, ptgsAction: shrugging ? "shrugging" : "gritting", ...buildRerollData({ actor: sheet.actor, roll, accessor: "health" }) as RerollData };
     });
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 

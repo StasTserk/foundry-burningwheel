@@ -4,11 +4,11 @@
     </div>
     {{#if rerolls}}
     <div class="roll-half-width">
-        <label>Successes</label>
+        <label>{{localize "BW.chat.successes"}}</label>
         <div>{{ successes }} + {{ newSuccesses }} </div>
     </div>
     <div class="roll-half-width">
-        <label>Obstacle</label>
+        <label>{{localize "BW.chat.obstacle"}}</label>
         <div>{{ obstacleTotal }}</div>
     </div>
     <div class="roll-dice roll-full-width flex-row">
@@ -26,17 +26,17 @@
     </div>
     {{#if success}}
     <div class="roll-result roll-full-width roll-success">
-        Success!
+        {{localize "BW.chat.success"}}!
     </div>
     {{else}}
     <div class="roll-result roll-full-width roll-failure">
-        Failure!
+        {{localize "BW.chat.failure"}}!
     </div>
     {{/if}}
     {{/if}}
     {{#if splitRerolls}}
     <div class="roll-full-width roll-extra-info">
-        <div>Secondary Successes</div>
+        <div>{{localize "BW.chat.secondary"}}</div>
         <div class="secondary-pool">{{splitSuccesses}} + {{newSplitSuccesses}}</div>
     </div>
     <div class="roll-full-width flex-row roll-dice">

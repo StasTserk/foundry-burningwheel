@@ -23,6 +23,7 @@ BW:
   die: Die
   type: Type
   name: Name
+  test: Test
   rollable:
     difficult: Difficult
     challenging: Challenging

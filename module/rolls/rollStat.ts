@@ -110,7 +110,7 @@ async function statRollCallback(
     actor.updateArthaForStat(accessor, persona, deeds);
 
     const data: RollChatMessageData = {
-        name: `${name}`,
+        name: game.i18n.localize('BW.'+name),
         successes: roll.result,
         splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: baseDifficulty,

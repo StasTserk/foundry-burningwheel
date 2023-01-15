@@ -303,13 +303,13 @@ export function extractRollData(html: JQuery): RollData {
     const circlesBonus = extractSourcedValue(html, "circlesBonus");
     const circlesMalus = extractSourcedValue(html, "circlesMalus");
 
-    let penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
+    let penaltySources: { [i:string]: string} = obPenalty ? { [game.i18n.localize('BW.roll.woundPenalty')]: `+${obPenalty}` } : { };
 
     const toolkitPenalty = extractCheckboxValue(html, "toolPenalty") ? diff : 0;
-    if (toolkitPenalty) { penaltySources["No Toolkit"] = `+${toolkitPenalty}`; }
+    if (toolkitPenalty) { penaltySources[game.i18n.localize('BW.roll.noToolkit')] = `+${toolkitPenalty}`; }
     const learningPenalty = extractNumber(html, "learning") ? diff + toolkitPenalty : 0;
-    if (learningPenalty) { penaltySources["Beginner's Luck"] = `+${learningPenalty}`; }
-    
+    if (learningPenalty) { penaltySources[game.i18n.localize('BW.roll.beginnersLuck')] = `+${learningPenalty}`; }
+
     penaltySources = {...penaltySources, ...miscObs.entries, ...circlesMalus.entries};
 
     const obstacleTotal = diff + obPenalty + miscObs.sum + toolkitPenalty + circlesMalus.sum;
@@ -322,20 +322,20 @@ export function extractRollData(html: JQuery): RollData {
     }
 
     let dieSources: { [s:string]: string } = {
-        "Exponent": `+${exponent}`
+        [game.i18n.localize('BW.roll.exponent')]: `+${exponent}`
     };
-    if (woundDice) { dieSources["Wound Penalty"] = `-${woundDice}`; }
+    if (woundDice) { dieSources[game.i18n.localize('BW.roll.woundPenalty')] = `-${woundDice}`; }
     if (aDice) { dieSources.Artha = `+${aDice}`; }
     if (bDice) { dieSources.Bonus = `+${bDice}`; }
     if (forks) { dieSources.FoRKs = `+${forks}`; }
-    if (wildForks) { dieSources["Wild FoRKs"] = `+${wildForks}`; }
+    if (wildForks) { dieSources[game.i18n.localize('BW.roll.wildForks')] = `+${wildForks}`; }
     if (circlesBonus.sum) { dieSources = { ...dieSources, ...circlesBonus.entries}; }
     if (tax) { dieSources.Tax = `-${tax}`; }
     if (cashDice) { dieSources.Cash = `+${cashDice}`; }
     if (fundDice) { dieSources.Funds = `+${fundDice}`; }
     if (miscDice) { dieSources = { ...dieSources, ...miscDice.entries }; }
-    if (splitPool) { dieSources["Secondary Pool"] = `-${splitPool}`; }
-    if (addHelp && helpDice) { dieSources["Help"] = `+${helpDice}`; }
+    if (splitPool) { dieSources[game.i18n.localize('BW.roll.secondaryPool')] = `-${splitPool}`; }
+    if (addHelp && helpDice) { dieSources[game.i18n.localize('BW.roll.help')] = `+${helpDice}`; }
 
     const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
     const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;

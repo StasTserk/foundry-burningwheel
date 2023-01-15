@@ -24,6 +24,8 @@ BW:
   type: Type
   name: Name
   test: Test
+  obstacle: Obstacle
+  obstacleAcronym: Ob
   rollable:
     difficult: Difficult
     challenging: Challenging
@@ -139,8 +141,6 @@ BW:
     forteTax: Forte Tax
     maxObstacle: Maximum Sustainable Obstacle
     sustainedSpell: Sustained Spell
-    obstacle: Obstacle
-    obstacleAcronym: Ob
     test: Test
     practicals: Practicals
     actions: Actions
@@ -168,7 +168,7 @@ BW:
     failure: Failure
     success: Success
     successes: Successes
-    obstacle: Obstacle
     secondary: Secondary Successes
     fateReroll: Reroll with Fate
     deedsReroll: Reroll with Deeds
+  roll:

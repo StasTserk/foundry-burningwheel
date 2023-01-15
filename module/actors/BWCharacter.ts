@@ -277,11 +277,11 @@ export class BWCharacter extends BWActor<BWCharacterData> {
             if (resourcesTax === resourceExp) {
                 // you taxed all your resources away, they degrade
                 new Dialog({
-                    title: "Overtaxed Resources!",
-                    content: "<p>Tax has reduced your resources exponent to 0.</p><hr>",
+                    title: game.i18n.localize('BW.dialog.overtaxedTitle'),
+                    content: `<p>${game.i18n.localize('BW.dialog.overtaxedBody')}</p><hr>`,
                     buttons: {
                         reduce: {
-                            label: "Reduce exponent by 1",
+                            label: game.i18n.localize('BW.dialog.reduceByOne'),
                             callback: () => {
                                 resourcesTax --;
                                 this.update({
@@ -294,7 +294,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
                             }
                         },
                         ignore: {
-                            label: "Ignore for now"
+                            label: game.i18n.localize('BW.dialog.skipTax')
                         }
                     },
                     default: "reduce"

@@ -152,7 +152,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
     const rollModifiers = actor.getRollModifiers(skill.name);
 
     const data: NpcSkillDialogData = mergeDialogData<NpcSkillDialogData>({
-        name: `${skill.name} Test`,
+        name: `${skill.name} ${game.i18n.localize('BW.test')}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -174,11 +174,11 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${skill.name} Test`,
+            title: `${skill.name} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         skillRollCallback(dialogHtml, actor, skill, extraInfo)
                 }

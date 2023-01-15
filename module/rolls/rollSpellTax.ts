@@ -32,7 +32,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
     const tax = actor.system.forteTax;
     
     const data: StatDialogData = mergeDialogData<StatDialogData>({
-        name: `${spellName} Tax Test`,
+        name: `${spellName} Tax ${game.i18n.localize('BW.test')}`,
         difficulty: obstacle,
         bonusDice: 0,
         arthaDice: 0,
@@ -50,11 +50,11 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${spellName} Tax Test`,
+            title: `${spellName} Tax ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         taxTestCallback(dialogHtml, stat, actor, tax, spellName)
                 }

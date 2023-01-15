@@ -26,7 +26,7 @@ export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcE
     const shade = getProperty(actor, target.dataset.shade || "") as helpers.ShadeString;
     const open = target.dataset.action === "rollStatOpen";
     
-    const statName = (target.dataset.rollableName || "Unknown Stat") as NpcStatName;
+    const statName = game.i18n.localize((target.dataset.rollableName || "Unknown Stat")) as NpcStatName;
     return handleNpcStatRoll({ dice, shade, open, statName, actor, dataPreset });
 }
 
@@ -49,7 +49,7 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
     }
 
     const data = mergeDialogData<NpcStatDialogData>({
-        name: `${statName.titleCase()} Test`,
+        name: `${statName.titleCase()} ${game.i18n.localize('BW.test')}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -70,11 +70,11 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${statName.titleCase()} Test`,
+            title: `${statName.titleCase()} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         statRollCallback(dialogHtml, actor, statName, shade, open, extraInfo)
                 }

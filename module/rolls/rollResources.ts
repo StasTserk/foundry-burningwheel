@@ -50,11 +50,11 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `Resources Test`,
+            title: `${game.i18n.localize("BW.resources")} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         resourcesRollCallback(dialogHtml, stat, actor)
                 }

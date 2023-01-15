@@ -58,11 +58,11 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `Circles Test`,
+            title: `${game.i18n.localize("BW.circles")} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) =>
                         circlesRollCallback(dialogHtml, stat, actor, circlesContact)
                 }

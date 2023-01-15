@@ -62,11 +62,11 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     const html = await renderTemplate(templates.pcRollDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${skill.name} Test`,
+            title: `${skill.name} ${game.i18n.localize('BW.test')}`,
             content: html,
             buttons: {
                 roll: {
-                    label: "Roll",
+                    label: game.i18n.localize("BW.roll.roll"),
                     callback: async (dialogHtml: JQuery) => {
                         skillRollCallback(dialogHtml, skill, actor, extraInfo);
                         if (onRollCallback) {

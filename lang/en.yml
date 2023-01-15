@@ -162,3 +162,12 @@ BW:
     sheetVersion: Sheet Version
     seeReleaseNotes: See Release Notes
     onGithub: on GitHub
+  chat:
+    baseOb: Base Obstacle
+    failure: Failure
+    success: Success
+    successes: Successes
+    obstacle: Obstacle
+    secondary: Secondary Successes
+    fateReroll: Reroll with Fate
+    deedsReroll: Reroll with Deeds

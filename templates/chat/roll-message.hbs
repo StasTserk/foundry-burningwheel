@@ -1,9 +1,9 @@
 <div class="chat-message flex-row">
     <div class="roll-full-width message-title {{nameClass}}">
-        {{name}} Test
+        {{localize name}} Test
     </div>
     <div class="roll-full-width roll-{{difficultyGroup}}">
-        {{difficultyGroup}}
+        {{localize difficultyGroup}}
     </div>
     <div class="roll-half-width">
         {{#each dieSources as |source|}}
@@ -14,11 +14,11 @@
     </div>
     <div class="roll-half-width">
         <div class="left-align">
-            +{{difficulty}} Base Ob
+            +{{difficulty}} {{localize "BW.chat.baseOb"}}
         </div>
         {{#if obPenalty}}
         <div class="left-align">
-            +{{obPenalty}} Wound Penalty
+            +{{obPenalty}} {{localize "BW.chat.woundPenalty"}}
         </div>    
         {{/if}}
         {{#if penaltySources}}
@@ -30,11 +30,11 @@
         {{/if}}
     </div>
     <div class="roll-half-width">
-        <label>Successes</label>
+        <label>{{localize "BW.chat.successes"}}</label>
         <div>{{ successes }}</div>
     </div>
     <div class="roll-half-width">
-        <label>Obstacle</label>
+        <label>{{localize "BW.chat.obstacle"}}</label>
         <div>{{ obstacleTotal }}</div>
     </div>
     <div class="roll-dice roll-full-width flex-row">
@@ -54,11 +54,11 @@
     </div>
     {{#if success}}
     <div class="roll-result roll-full-width roll-success">
-        Success!
+        {{localize "BW.chat.success"}}!
     </div>
     {{else}}
     <div class="roll-result roll-full-width roll-failure">
-        Failure!
+        {{localize "BW.chat.failure"}}!
     </div>
     {{/if}}
     {{#if extraInfo}}
@@ -82,7 +82,7 @@
                 data-difficulty="{{../obstacleTotal}}"
                 data-successes="{{../successes}}"
                 data-split-successes="{{../splitSuccesses}}"
-                data-difficulty-group="{{../difficultyGroup}}">Call-on: {{c.label}}</button>
+                data-difficulty-group="{{../difficultyGroup}}">{{localize "BW.chat.callon"}}: {{c.label}}</button>
         </div>
         {{/each}}
         {{#if fateReroll}}
@@ -100,7 +100,7 @@
                 data-difficulty="{{obstacleTotal}}"
                 data-successes="{{successes}}"
                 data-split-successes="{{splitSuccesses}}"
-                data-difficulty-group="{{difficultyGroup}}">Reroll with Fate</button>
+                data-difficulty-group="{{difficultyGroup}}">{{localize "BW.chat.fateReroll"}}</button>
             <button class="chat-deeds-button"
                 data-actor-id="{{fateReroll.actorId}}"
                 data-reroll-type="{{fateReroll.type}}"
@@ -114,7 +114,7 @@
                 data-difficulty="{{obstacleTotal}}"
                 data-successes="{{successes}}"
                 data-split-successes="{{splitSuccesses}}"
-                data-difficulty-group="{{difficultyGroup}}">Reroll with Deeds</button>
+                data-difficulty-group="{{difficultyGroup}}">{{localize "BW.chat.deedsReroll"}}</button>
         </div>
         {{/if}}
     </div>

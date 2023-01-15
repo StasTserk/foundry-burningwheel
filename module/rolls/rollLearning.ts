@@ -32,17 +32,17 @@ export async function handleLearningRollEvent(rollOptions: LearningRollEventOpti
 export function handleLearningRoll({ actor, skill, extraInfo, dataPreset, onRollCallback}: LearningRollOptions): unknown {
     if (skill.system.root2) {
         return new Dialog({
-            title: "Pick Root Stat",
-            content: "<p>The skill being learned is derived from two roots. Pick one to use for the roll.</p>",
+            title: game.i18n.localize('BW.dialog.pickRootTitle'),
+            content: `<p>${game.i18n.localize('BW.dialog.pickRootText')}</p>`,
             buttons: {
                 root1: {
-                    label: skill.system.root1.titleCase(),
+                    label: game.i18n.localize('BW.'+skill.system.root1),
                     callback: () => {
                         return buildLearningDialog({ actor, skill, statName: skill.system.root1, extraInfo, dataPreset, onRollCallback });
                     }
                 },
                 root2: {
-                    label: skill.system.root2.titleCase(),
+                    label: game.i18n.localize('BW.'+skill.system.root2),
                     callback: () => {
                         return buildLearningDialog({ actor, skill, statName: skill.system.root2, extraInfo, dataPreset, onRollCallback });
                     }

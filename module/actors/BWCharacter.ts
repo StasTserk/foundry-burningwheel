@@ -170,9 +170,10 @@ export class BWCharacter extends BWActor<BWCharacterData> {
         // if the test should be tracked and we're not deferring track the test.
         this._addTestToStat(stat, accessor, difficultyGroup);
         if (canAdvance(stat, routinesNeeded)) {
+            const statName = game.i18n.localize('BW.' + name);
             Dialog.confirm({
-                title: `Advance ${name}?`,
-                content: `<p>${name} is ready to advance. Go ahead?</p>`,
+                title: game.i18n.localize('BW.dialog.advanceTitle').replace("{name}", statName),
+                content: `<p>${game.i18n.localize('BW.dialog.advanceText').replace("{name}", statName)}</p>`,
                 yes: () => this._advanceStat(accessor, stat.exp + 1),
                 no: () => { return; },
                 defaultYes: true

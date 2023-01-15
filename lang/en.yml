@@ -196,8 +196,9 @@ BW:
     forks: FoRKs
     wildForks: Wild FoRKs
     tools: Tools
-    noToolPenalty: No tool Penalty
+    noToolPenalty: Add no tool Penalty
     expendToolkit: Expend Toolkit?
+    noToolkit: No Toolkit
     expended: Expended
     optionalDiceMod: Optional Dice Modifiers
     optionalObMod: Optional Obstacle Modifiers
@@ -214,3 +215,9 @@ BW:
     armor: Armor
     rollArmor: Roll Armor Dice
     armorDiceLostMessage: "{item} {location} lost {number} {dice} to damage"
+    beginnersLuck: Beginner's Luck
+    learningAssignment: Pick where to assign the test
+    learningAssignmentBody1: This test can count as routine or difficult for the purposes of advancement.
+    learningAssignmentBody2: Pick which option you'd prefer.
+    learningApplyRoutine: Apply as Routine
+    learningApplyDifficult: Apply as Difficult

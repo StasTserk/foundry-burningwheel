@@ -11,8 +11,9 @@ export async function handleSpellRollEvent({ target, sheet, dataPreset }: EventH
     const actor = sheet.actor as BWCharacter;
     const sorcerySkillId = target.dataset.skillId;
     if (!sorcerySkillId) {
-        return helpers.notifyError("No Skill Specified",
-            "A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.dialog.noSkillSpecified'),
+            game.i18n.localize('BW.dialog.spellMissingSkill'));
     }
     const skill = actor.items.get(sorcerySkillId) as Skill;
     const spellId = target.dataset.spellId;
@@ -25,8 +26,9 @@ export async function handleSpellRollEvent({ target, sheet, dataPreset }: EventH
 
 export async function handleSpellRoll({ actor, spell, skill, dataPreset }: SpellRollOptions): Promise<unknown> {
     if (!spell) {
-        return helpers.notifyError("Missing Spell",
-            "The spell being cast seems to be missing from the character sheet.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.dialog.missingSpell'),
+            game.i18n.localize('BW.dialog.missingSpellText'));
     }
     const spellData = await spell.getSpellMessageData();
 
@@ -37,7 +39,7 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
         if (spell.system.inPracticals) {
             practicalsPenalty = (spell.system.aptitude || 9) - spell.system.learningProgress || 0;
             spellPreset.obModifiers = [
-                { label: "In Practicals", obstacle: practicalsPenalty, optional: false }
+                { label: game.i18n.localize('BW.roll.inPracticals'), obstacle: practicalsPenalty, optional: false }
             ];
         }
 
@@ -60,8 +62,8 @@ export async function handleSpellRoll({ actor, spell, skill, dataPreset }: Spell
                 spell.update({ "data.learningProgress": amount + 1 }, {});
                 if (amount + 1 >= aptitude) {
                     return Dialog.confirm({
-                        title: "Spell Practicals Complete!",
-                        content: "<p>The spell practicals process is complete. Time for a second reading.</p><p>Set the spell as no longer in practicals?</p>",
+                        title: game.i18n.localize('BW.dialog.practicalsDone'),
+                        content: `<p>${game.i18n.localize('BW.dialog.practicalsDoneText1')}</p><p>${game.i18n.localize('BW.dialog.practicalsDoneText2')}</p>`,
                         yes: () => {
                             spell.update({ "data.inPracticals": false, "data.learningProgress": 0 }, {});
                         },

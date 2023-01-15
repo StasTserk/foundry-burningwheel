@@ -89,19 +89,21 @@ async function resourcesRollCallback(
         const taxAmount = rollData.difficultyGroup === "Challenging" ? (rollData.difficultyTotal - parseInt(roll.result)) :
             (rollData.difficultyGroup === "Difficult" ? 2 : 1);
         const taxMessage = new Dialog({
-            title: "Failed Resource Roll!",
-            content: `<p>You have failed a ${rollData.difficultyGroup} Resource test.</p><p>How do you wish to be taxed?</p><hr/>`,
+            title: game.i18n.localize('BW.dialog.failResources'),
+            content: `<p>${game.i18n.localize('BW.dialog.failResourcesText1')
+                    .replace("{diff}", rollData.difficultyGroup)
+                }</p><p>${game.i18n.localize('BW.dialog.failResourcesText2')}</p><hr/>`,
             buttons: {
                 full: {
-                    label: `Full Tax (${taxAmount} tax)`,
+                    label: `${game.i18n.localize('BW.dialog.fullTax').replace("{amt}", taxAmount.toString())}`,
                     callback: () => actor.taxResources(taxAmount, rollData.fundDice)
                 },
                 cut: {
-                    label: "Cut your losses. (1 tax)",
+                    label: game.i18n.localize('BW.dialog.cutLosses'),
                     callback: () => actor.taxResources(1, rollData.fundDice)
                 },
                 skip: {
-                    label: "Skip for now"
+                    label: game.i18n.localize('BW.dialog.skipTax')
                 }
             },
             default: "full"

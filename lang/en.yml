@@ -224,7 +224,16 @@ BW:
   dialog:
     advanceTitle: "Advance {name}?"
     advanceText: "{name} is ready to advance. Go ahead?"
-    finishTraining: "Finish training {name}?@"
-    finishTrainingText: "{name} is ready to become a full skill. Go ahead?@"
+    finishTraining: "Finish training {name}?"
+    finishTrainingText: "{name} is ready to become a full skill. Go ahead?"
     pickRootTitle: Pick Root Stat
     pickRootText: The skill being learned is derived from two roots. Pick one to use for the roll.
+    failResources: Failed Resource Roll!
+    failResourcesText1: You have failed a {diff} Resource test.
+    failResourcesText2: How do you wish to be taxed?
+    fullTax: Full Tax ({amt} tax)
+    cutLosses: Cut your losses. (1 tax)
+    skipTax: Skip for now
+    overtaxedTitle: Overtaxed Resources!
+    overtaxedBody: Tax has reduced your resources exponent to 0.
+    reduceByOne: Reduce exponent by 1

@@ -18,7 +18,9 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     const splitSuccesses = parseInt(target.dataset.splitSuccesses || "0");
 
     if (actor.system.fate === 0) {
-        return helpers.notifyError("No Fate Points", "The character does not have any fate points left with which to reroll.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.roll.noFateTitle'),
+            game.i18n.localize('BW.roll.noFateMessage'));
     }
 
     let rollStat: { shade: helpers.ShadeString, open: boolean };
@@ -134,7 +136,7 @@ export async function handleFateReroll(target: HTMLButtonElement): Promise<unkno
     actor.update({ 'data.fate': actorFateCount -1 });
 
     const data: RerollMessageData = {
-        title: "Fate Reroll",
+        title: game.i18n.localize('BW.roll.fateReroll'),
         rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         splitRolls: splitRollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         splitRerolls: splitReroll?.dice[0].results.map(r => { return { roll: r.result, success: r.success || false }; }) || [],

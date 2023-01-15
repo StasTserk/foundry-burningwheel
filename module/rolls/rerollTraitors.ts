@@ -18,7 +18,9 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
     const splitSuccesses = parseInt(target.dataset.splitSuccesses || "0");
 
     if (isDeeds && actor.system.deeds == 0) {
-        return helpers.notifyError("No Deeds Available", "The character must have a deeds point available in order to reroll all traitors.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.roll.noDeedsTitle'),
+            game.i18n.localize('BW.roll.noDeedsMessage'));
     }
 
     let rollStat: Ability | SkillData;
@@ -104,7 +106,7 @@ export async function handleTraitorReroll(target: HTMLButtonElement, isDeeds = f
     actor.update(updateData);
 
     const data: RerollMessageData = {
-        title: isDeeds? "Saving Grace Reroll" : "Call-on Reroll",
+        title: game.i18n.localize(isDeeds? "BW.roll.savingGraceReroll" : "BW.roll.callonReroll"),
         rolls: rollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         splitRolls: splitRollArray.map(r => { return { roll: r, success: r > successTarget }; }),
         rerolls: reroll?.dice[0].results.map(r => { return { roll: r.result, success: r.success || false }; }) || [],

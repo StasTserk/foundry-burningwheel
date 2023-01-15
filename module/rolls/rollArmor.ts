@@ -12,7 +12,6 @@ import {
 } from "./rolls.js";
 import { BWActor } from "../actors/BWActor.js";
 import { StringIndexedObject } from "../helpers.js";
-import * as helpers from "../helpers.js";
 import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
 import { NpcSheet } from "../actors/sheets/NpcSheet.js";
 import { Armor } from "../items/armor.js";
@@ -27,7 +26,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
 
     const dialogData: ArmorDialogData = {
         difficulty: 1,
-        name: "Armor",
+        name: game.i18n.localize('BW.roll.armor'),
         arthaDice: 0,
         bonusDice: 0,
         armor: (armorItem?.system.dice || 0) + chestBonus,
@@ -38,7 +37,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
     const html = await renderTemplate(templates.armorDialog, dialogData);
 
     return new Dialog({
-        title: "Roll Armor Dice",
+        title: game.i18n.localize('BW.roll.rollArmor'),
         content: html,
         buttons: {
             roll: {
@@ -71,8 +70,17 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
     const isSuccess = (roll.total || 0) >= 1 + va;
     const rerollData = buildRerollData({ actor, roll, itemId: armorItem.id });
     rerollData.type = "armor";
+
+    const extraInfo = damageAssigned ?
+        game.i18n.localize('BW.roll.armorDiceLostMessage')
+            .replace("{item}", armorItem.name)
+            .replace("{location}", localizeLocation(location))
+            .replace("{number}", damageAssigned.toString())
+            .replace("{dice}", game.i18n.localize(damageAssigned > 1 ? "BW.dice" : "BW.die"))
+            : undefined;
+
     const messageData: RollChatMessageData = {
-        name: "Armor",
+        name: game.i18n.localize('BW.roll.armor'),
         successes: "" + roll.dice[0].total,
         success: isSuccess,
         rolls: roll.dice[0].results,
@@ -86,7 +94,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
             ...dieSources,
             ...buildDiceSourceObject(0, baseData.aDice, baseData.bDice, 0, 0, 0)
         },
-        extraInfo: damageAssigned ? `${armorItem.name} ${helpers.deCamelCaseify(location).toLowerCase()} lost ${damageAssigned} ${damageAssigned > 1 ? 'dice' : 'die'} to damage.` : undefined
+        extraInfo
     };
     
     const messageHtml = await renderTemplate(templates.armorMessage, messageData);
@@ -95,6 +103,10 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
         speaker: ChatMessage.getSpeaker({actor: armorItem.actor as unknown as BWActor})
     });
 
+}
+
+function localizeLocation(location: string): string {
+    return game.i18n.localize(`BW.armor.${location[0].toLowerCase()}${location.slice(1)}`);
 }
 
 interface ArmorDialogData extends RollDialogData {

@@ -87,7 +87,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
     }
 
     const data: LearningDialogData = mergeDialogData<LearningDialogData>({
-        name: `Beginner's Luck ${skill.name} ${game.i18n.localize('BW.test')}`,
+        name: `${game.i18n.localize('BW.roll.beginnersLuck')} ${skill.name} ${game.i18n.localize('BW.test')}`,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -178,7 +178,7 @@ async function learningRollCallback(
         }
 
         const data: RollChatMessageData = {
-            name: `Beginner's Luck ${skill.name}`,
+            name: `${game.i18n.localize('BW.roll.beginnersLuck')} ${skill.name}`,
             successes: roll.result,
             splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
             difficulty: rollData.baseDifficulty,
@@ -220,15 +220,15 @@ async function advanceLearning(
         case "Routine/Difficult":
             // we can either apply this to the base stat or to the learning
             const dialog = new Dialog({
-                title: "Pick where to assign the test",
-                content: "<p>This test can count as routine of difficult for the purposes of advancement</p><p>Pick which option you'd prefer.</p>",
+                title: game.i18n.localize('BW.roll.learningAssignment'),
+                content: `<p>${game.i18n.localize('BW.roll.learningAssignmentBody1')}</p><p>${game.i18n.localize('BW.roll.learningAssignmentBody2')}</p>`,
                 buttons: {
                     skill: {
-                        label: "Apply as Routine",
+                        label: game.i18n.localize('BW.roll.learningApplyRoutine'),
                         callback: async () => advanceLearningProgress(skill, fr, cb)
                     },
                     stat: {
-                        label: "Apply as Difficult",
+                        label: game.i18n.localize('BW.roll.learningApplyDifficult'),
                         callback: async () => advanceBaseStat(skill, owner, statName, "Difficult", isSuccessful, fr, cb)
                     }
                 },

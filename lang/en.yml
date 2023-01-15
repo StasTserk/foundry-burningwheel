@@ -221,6 +221,7 @@ BW:
     learningAssignmentBody2: Pick which option you'd prefer.
     learningApplyRoutine: Apply as Routine
     learningApplyDifficult: Apply as Difficult
+    inPracticals: In Practicals
   dialog:
     advanceTitle: "Advance {name}?"
     advanceText: "{name} is ready to advance. Go ahead?"
@@ -237,3 +238,10 @@ BW:
     overtaxedTitle: Overtaxed Resources!
     overtaxedBody: Tax has reduced your resources exponent to 0.
     reduceByOne: Reduce exponent by 1
+    noSkillSpecified: No Skill Specified
+    spellMissingSkill: A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.
+    missingSpell: Missing Spell
+    missingSpellText: The spell being cast seems to be missing from the character sheet.
+    practicalsDone: Spell Practicals Complete!
+    practicalsDoneText1: The spell practicals process is complete. Time for a second reading.
+    practicalsDoneText2: Set the spell as no longer in practicals?

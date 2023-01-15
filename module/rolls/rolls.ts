@@ -399,7 +399,7 @@ export function getSplitPoolText(roll: Roll | undefined): string {
     }
     const parentDiv = document.createElement('div');
 
-    const textDiv = helpers.DivOfText("Secondary Successes", );
+    const textDiv = helpers.DivOfText(game.i18n.localize('BW.chat.secondary'), );
     const resultDiv = helpers.DivOfText(`${roll.result}`, "secondary-pool");
     const diceDiv = document.createElement('div');
     diceDiv.className = "secondary-dice";

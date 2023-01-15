@@ -111,8 +111,8 @@ export class Skill extends BWItem<SkillData> {
                 }
         
                 Dialog.confirm({
-                    title: `Finish Training ${this.name}?`,
-                    content: `<p>${this.name} is ready to become a full skill. Go ahead?</p>`,
+                    title: game.i18n.localize('BW.dialog.finishTraining').replace('{name}', this.name),
+                    content: `<p>${game.i18n.localize('BW.dialog.finishTrainingText').replace('{name}', this.name)}</p>`,
                     yes: () => {
                         const updateData = {};
                         updateData["data.learning"] = false;

@@ -221,3 +221,10 @@ BW:
     learningAssignmentBody2: Pick which option you'd prefer.
     learningApplyRoutine: Apply as Routine
     learningApplyDifficult: Apply as Difficult
+  dialog:
+    advanceTitle: "Advance {name}?"
+    advanceText: "{name} is ready to advance. Go ahead?"
+    finishTraining: "Finish training {name}?@"
+    finishTrainingText: "{name} is ready to become a full skill. Go ahead?@"
+    pickRootTitle: Pick Root Stat
+    pickRootText: The skill being learned is derived from two roots. Pick one to use for the roll.

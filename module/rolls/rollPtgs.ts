@@ -105,7 +105,7 @@ async function ptgsRollCallback(
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
     const data: RollChatMessageData = {
-        name: shrugging ? "Shrug It Off Health" : "Grit Your Teeth Health",
+        name: (shrugging ? game.i18n.localize('BW.ptgs.shrug') : game.i18n.localize('BW.ptgs.grit')) + ' ' + game.i18n.localize('BW.health'),
         successes: roll.result,
         difficulty: baseDifficulty,
         nameClass: getRollNameClass(stat.open, stat.shade),

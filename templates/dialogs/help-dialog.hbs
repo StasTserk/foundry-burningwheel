@@ -1,13 +1,13 @@
 <form class="dialog">
     <h2>{{name}}</h2>    
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Help</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.help"}}</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
-            <label>Exponent</label>
+            <label>{{localize "BW.roll.exponent"}}</label>
             <input type="number" class="exponent" disabled value="{{exponent}}">
         </div>
         <div class="dialog-row">
-            Advancement for helping will be logged at the obstacle of the test being helped.
+            {{localize "BW.roll.helpTooltip"}}
         </div>
     </div>
 </form>

@@ -2,16 +2,16 @@
     <h2>{{name}}</h2>
     {{#if showObstacles}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Obstacle</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.obstacle"}}</div><hr class="dialog-section-after">
         {{#if showDifficulty}}
         <div class="flex-row dialog-row">
-            <label>Difficulty</label>
+            <label>{{localize "BW.roll.difficulty"}}</label>
             <input type="number" class="exponent" name="difficulty" value="{{difficulty}}">
         </div>
         {{/if}}
         {{#if obPenalty}}
         <div class="flex-row dialog-row">
-            <label>Wound Penalty</label>
+            <label>{{localize "BW.roll.woundPenalty"}}</label>
             <input type="number" class="exponent" disabled name="obPenalty" value="{{obPenalty}}">
         </div>
         {{/if}}
@@ -25,9 +25,9 @@
     </div>
     {{/if}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Dice</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.dice"}}</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
-            <label>Exponent</label>
+            <label>{{localize "BW.roll.exponent"}}</label>
             {{#if skill}}
             <input type="number" class="exponent" disabled name="skill.exp" value="{{skill.exp}}">
             {{/if}}
@@ -37,19 +37,19 @@
         </div>
         {{#if tax}}
         <div class="flex-row dialog-row">
-            <label>Tax</label>
+            <label>{{localize "BW.tax"}}</label>
             <input type="number" class="exponent" disabled name="tax" value="{{tax}}">
         </div>
         {{/if}}
         {{#if woundDice}}
         <div class="flex-row dialog-row">
-            <label>Wound Penalty</label>
+            <label>{{localize "BW.roll.woundPenalty"}}</label>
             <input type="number" class="exponent" disabled name="woundDice" value="{{woundDice}}">
         </div>
         {{/if}}
             {{#if circlesContact}}
         <div class="flex-row dialog-row">
-            <label>Relationship Bonus</label>
+            <label>{{localize "BW.roll.relationshipBonus"}}</label>
             <input type="number" class="exponent" disabled value="1">
         </div>
         {{/if}}
@@ -61,12 +61,12 @@
         </div>
         {{/each}}
         <div class="flex-row dialog-row">
-            <label>Bonus Dice</label>
+            <label>{{localize "BW.roll.bonusDice"}}</label>
             <input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">
         </div>
         {{#if cashDieOptions}}
         <div class="flex-row dialog-row">
-            <label>Cash Dice</label>
+            <label>{{localize "BW.roll.cashDice"}}</label>
             <select name="cashDice">
                 {{#select cashDice}}
                 <option value="0">0</option>
@@ -79,7 +79,7 @@
         {{/if}}
         {{#if fundDieOptions}}
         <div class="flex-row dialog-row">
-            <label>Fund Dice</label>
+            <label>{{localize "BW.roll.fundDice"}}</label>
             <select name="fundDice">
                 {{#select fundDice}}
                 <option value="0">0</option>
@@ -91,15 +91,15 @@
         </div>
         {{/if}}
         <div class="flex-row dialog-row">
-            <label for="checkbox-add-help">Accept Help</label>
+            <label for="checkbox-add-help">{{localize "BW.roll.acceptHelp"}}</label>
             <input id="checkbox-add-help" type="checkbox" name="acceptHelp" value="1">
         </div>
     </div>
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Artha Dice</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.arthaDice"}}</div><hr class="dialog-section-after">
         {{#if personaOptions}}
         <div class="flex-row dialog-row">
-            <label>Persona Dice</label>
+            <label>{{localize "BW.roll.personaDice"}}</label>
             <select name="personaDice">
                 {{#select personaDice}}
                 <option value="0">0</option>
@@ -112,7 +112,7 @@
         {{/if}}
         {{#if deedsPoint}}
         <div class="flex-row dialog-row">
-            <label for="checkbox-inspiration">Divine Inspiration</label>
+            <label for="checkbox-inspiration">{{localize "BW.roll.divineInspiration"}}</label>
             {{#if skill}}
             <input id="checkbox-inspiration" type="checkbox" name="deedsDice" value="{{skill.exp}}">
             {{/if}}
@@ -122,13 +122,13 @@
         </div>
         {{/if}}
         <div class="flex-row dialog-row">
-            <label>Misc. Artha</label>
+            <label>{{localize "BW.roll.miscArtha"}}</label>
             <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
         </div>
     </div>
     {{#if circlesBonus}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Reputations & Affiliations</div><hr class="dialog-section-after">    
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.repAndAff"}}</div><hr class="dialog-section-after">    
         <div class="checkbox-grid">
             {{#each circlesBonus as |b|}}
                 <input id="checkbox-{{@key}}-{{slugify b.name}}" type="checkbox" name="circlesBonus" value="{{b.amount}}" data-name="{{b.name}}">
@@ -139,7 +139,7 @@
     {{/if}}
     {{#if circlesMalus}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Infamies</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.infamies"}}</div><hr class="dialog-section-after">
         <div class="checkbox-grid">
             {{#each circlesMalus as |b|}}
                 <input id="checkbox-{{@key}}-{{slugify b.name}}" type="checkbox" name="circlesMalus" value="{{b.amount}}" data-name="{{b.name}}">
@@ -150,19 +150,19 @@
     {{/if}}
     {{#if offerSplitPool}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Secondary Pool</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.secondaryPool"}}</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
-            <label>Secondary Pool</label>
+            <label>{{localize "BW.roll.secondaryPool"}}</label>
             <input type="number" class="exponent no-arrows" name="splitPool" value="0">
         </div>
         <div class="dialog-row">
-            Split some dice into a secondary pool. These are subtracted from the total rolled.
+            {{localize "BW.roll.secondaryPoolTooltip"}}
         </div>
     </div>
     {{/if}}
     {{#if forkOptions}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">FoRKs</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.forks"}}</div><hr class="dialog-section-after">
         <div class="checkbox-grid">
             {{#each forkOptions as |skill|}}
                 <input id="checkbox-fork-{{@key}}" type="checkbox" name="forkOptions" value="{{skill.amount}}">
@@ -173,7 +173,7 @@
     {{/if}}
     {{#if wildForks}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Wild FoRKs</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.wildForks"}}</div><hr class="dialog-section-after">
         <div class="checkbox-grid">
             {{#each wildForks as |skill|}}
                 <input id="checkbox-wild-{{@key}}" type="checkbox" name="wildForks" value="{{skill.amount}}">
@@ -184,17 +184,17 @@
     {{/if}}
     {{#if needsToolkit}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Tools</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.tools"}}</div><hr class="dialog-section-after">
         <div class="flex-row dialog-row">
-            <label for="checkbox-tool-penalty">No Tools Penalty</label>
+            <label for="checkbox-tool-penalty">{{localize "BW.roll.noToolPenalty"}}</label>
             <input id="checkbox-tool-penalty" type="checkbox" name="toolPenalty" value="1"> 
         </div>
         <div class="flex-row dialog-row">
-            <label for="select-toolkit" name="toolkit">Expend Toolkit?</label>
+            <label for="select-toolkit" name="toolkit">{{localize "BW.roll.expendToolkit"}}</label>
             <select id="select-toolkit" name="toolkitId">
-                <option value="">None</option>
+                <option value="">{{localize "BW.none"}}</option>
                 {{#each toolkits as |t|}}
-                <option value="{{t._id}}">{{t.name}}{{#if t.system.isExpended}} (Expended){{/if}}</option>
+                <option value="{{t._id}}">{{t.name}}{{#if t.system.isExpended}} ({{localize "BW.roll.expended"}}){{/if}}</option>
                 {{/each}}
             </select>
         </div>
@@ -202,7 +202,7 @@
     {{/if}}
     {{#if optionalDiceModifiers}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Dice Modifiers</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.optionalDiceMod"}}</div><hr class="dialog-section-after">
         <div class="checkbox-grid col-2">
             {{#each optionalDiceModifiers as |mod|}}
             <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
@@ -214,7 +214,7 @@
 
     {{#if optionalObModifiers}}
     <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Obstacle Modifiers</div><hr class="dialog-section-after">
+        <hr class="dialog-section-before"><div class="dialog-section-text">{{localize "BW.roll.optionalObMod"}}</div><hr class="dialog-section-after">
         <div class="checkbox-grid col-2">
             {{#each optionalObModifiers as |mod|}}
             <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">

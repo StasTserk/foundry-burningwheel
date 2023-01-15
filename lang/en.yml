@@ -172,3 +172,30 @@ BW:
     fateReroll: Reroll with Fate
     deedsReroll: Reroll with Deeds
   roll:
+    difficulty: Difficulty
+    woundPenalty: Wound Penalty
+    exponent: Exponent
+    bonusDice: Bonus Dice
+    relationshipBonus: Relationship Bonus
+    cashDice: Cash Dice
+    acceptHelp: Accept Help
+    fundDice: Funds Dice
+    arthaDice: Artha Dice
+    personaDice: Persona Dice
+    divineInspiration: Divine Inspiration
+    miscArtha: Misc. Artha
+    repAndAff: Reputations & Affiliations
+    infamies: Infamies
+    secondaryPool: Secondary Pool
+    secondaryPoolTooltip: Split some dice into a secondary pool. These are subtracted from the total rolled.
+    forks: FoRKs
+    wildForks: Wild FoRKs
+    tools: Tools
+    noToolPenalty: No tool Penalty
+    expendToolkit: Expend Toolkit?
+    expended: Expended
+    optionalDiceMod: Optional Dice Modifiers
+    optionalObMod: Optional Obstacle Modifiers
+    help: Help
+    helpTooltip: Advancement for helping will be logged at the obstacle of the test being helped.
+    helpTitle: Add Helping Dice

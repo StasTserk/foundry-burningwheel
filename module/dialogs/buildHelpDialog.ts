@@ -6,12 +6,13 @@ export async function buildHelpDialog({ exponent, path, skillId, actor, helpedWi
         exponent
     };
     const content = await renderTemplate("systems/burningwheel/templates/dialogs/help-dialog.hbs", data);
+    const help = game.i18n.localize('BW.roll.help');
     return new Dialog({
-        title: "Add Helping Dice",
+        title: game.i18n.localize('BW.roll.helpTitle'),
         content: content,
         buttons: {
             help: {
-                label: "Help",
+                label: help,
                 callback: () => {
                     registerHelpEntry({ path, skillId, actor, exponent, helpedWith });
                 }

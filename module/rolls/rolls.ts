@@ -243,8 +243,9 @@ export function getRollNameClass(open: boolean, shade: helpers.ShadeString): str
 }
 
 export async function getNoDiceErrorDialog(numDice: number): Promise<unknown> {
-    return helpers.notifyError("Too Few Dice",
-        `Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to ${numDice}`);
+    return helpers.notifyError(
+        game.i18n.localize("BW.dialog.tooFewDice"),
+        game.i18n.localize("BW.dialog.tooFewDiceText").replace("{dice}", numDice.toString()));
 }
 
 export async function maybeExpendTools(tools: Possession): Promise<{ expended: boolean, text: string }> {
@@ -253,12 +254,20 @@ export async function maybeExpendTools(tools: Possession): Promise<{ expended: b
     if (roll && result === 1) {
         return  {
             expended: true,
-            text: `<p>The die of fate result for toolkit used (${tools.name}) was a <label class="roll-die" data-success="false">${result}</label> and thus the kit is expended.</p>`
+            text: `<p>
+                    ${game.i18n.localize("BW.dialog.toolsExpendedPre").replace("{tool}", tools.name)}
+                <label class="roll-die" data-success="false">${result}</label>
+                    ${game.i18n.localize("BW.dialog.toolsExpendedPost").replace("{tool}", tools.name)}
+                </p>`
         };
     }
     return {
         expended: false,
-        text: `<p>The die of fate result for the toolkit used (${tools.name}) was a <label class="roll-die" data-success="true">${result}</label></p>`
+        text: `<p>
+                ${game.i18n.localize("BW.dialog.toolsNotExpendedPre").replace("{tool}", tools.name)}
+            <label class="roll-die" data-success="true">${result}</label>
+                ${game.i18n.localize("BW.dialog.toolsNotExpendedPost").replace("{tool}", tools.name)}
+            </p>`
     };
 }
 

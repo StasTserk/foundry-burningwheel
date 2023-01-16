@@ -84,7 +84,7 @@ async function taxTestCallback(
     actor.updateArthaForStat("system.forte", persona, deeds);
 
     const data: RollChatMessageData = {
-        name: `${spellName} Tax`,
+        name: `${spellName} ${game.i18n.localize("BW.rollable.Tax")}`,
         successes: roll.result,
         difficulty: baseDifficulty,
         obstacleTotal: difficultyTotal,
@@ -97,7 +97,7 @@ async function taxTestCallback(
         fateReroll,
         callons
     };
-    data.extraInfo = `Attempting to sustain ${spellName}.`;
+    data.extraInfo = game.i18n.localize("BW.dialog.spellSustain").replace("{name}", spellName);
     if (actor.type === "character") {
         actor.addStatTest(stat, "Forte", "forte", difficultyGroup, isSuccessful);
     }
@@ -108,31 +108,45 @@ async function taxTestCallback(
         if (forteExp < margin + tax ) {
             // overtax.
             const baseWound = (margin + tax - forteExp) * difficultyTotal;
-            data.extraInfo += ` Tax test failed by ${margin}. The caster maxes out their Forte tax and risks a ${translateWoundValue("B", baseWound)} wound.`;
+            data.extraInfo += ` ${game.i18n.localize("BW.dialog.spellTaxWoundInfo")
+                .replace("{margin}", margin.toString())
+                .replace("{wnd}", translateWoundValue("B", baseWound))}`;
             new Dialog({
-                title: "Overtaxed!",
-                content: `<p>Failing your tax test by ${margin} when you have ${forteExp - tax} untaxed Forte dice has resulted in overtax.</p>
-                <p>Your forte will be maxed out automatically as your character falls unconscious. Also apply a ${translateWoundValue("B", baseWound)} wound to your character.</p>`,
+                title: game.i18n.localize("BW.dialog.spellTaxWound"),
+                content: 
+                    `<p>
+                        ${game.i18n.localize("BW.dialog.spellTaxWoundText1")
+                            .replace("{margin}", margin.toString())
+                            .replace("{dice}", (forteExp - tax).toString())}</p>
+                    <p>
+                        ${game.i18n.localize("BW.dialog.spellTaxWoundText2")
+                        .replace("{wnd}", translateWoundValue("B", baseWound))}</p>`,
                 buttons: {
                     yes: {
-                        label: "Ouch! Okay.",
+                        label: game.i18n.localize("BW.dialog.ouch"),
                         callback: () => {
                             actor.update({ data: { forteTax: forteExp }});
                         }
                     },
                     no: {
-                        label: "I'd rather not.",
+                        label: game.i18n.localize("BW.dialog.idRatherNot"),
                         callback: () => { return; }
                     }
                 },
                 default: "yes"
             }).render(true);
         } else {
-            data.extraInfo += ` Tax test failed by ${margin}. The caster's forte is Taxed.`;
+            data.extraInfo += ` ${game.i18n.localize("BW.dialog.spellTaxInfo")
+                .replace("{margin}", margin.toString())}`;
             new Dialog({
-                title: "Taxed",
-                content: `<p>You failed your tax test! Your forte tax will increase by ${margin}.</p>
-                <p>Also, any currently sustained spells are lost.</p>`,
+                title: game.i18n.localize("BW.dialog.spellTax"),
+                content: 
+                `<p>
+                    ${game.i18n.localize("BW.dialog.spellTaxText1")
+                        .replace("{margin}", margin.toString())
+                        .replace("{dice}", (forteExp - tax).toString())}</p>
+                <p>
+                    ${game.i18n.localize("BW.dialog.spellTaxText2")}</p>`,
                 buttons: {
                     yes: {
                         label: "Ok",
@@ -141,7 +155,7 @@ async function taxTestCallback(
                         }
                     },
                     no: {
-                        label: "Skip for Now",
+                        label: game.i18n.localize("BW.dialog.skipTax"),
                         callback: () => { return; }
                     }
                 },

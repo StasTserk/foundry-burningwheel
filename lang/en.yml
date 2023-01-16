@@ -245,3 +245,14 @@ BW:
     practicalsDone: Spell Practicals Complete!
     practicalsDoneText1: The spell practicals process is complete. Time for a second reading.
     practicalsDoneText2: Set the spell as no longer in practicals?
+    spellSustain: "Attempting to sustain {name}."
+    spellTaxWound: Overtaxed!
+    spellTaxWoundInfo: Tax test failed by {margin}. The caster maxes out their Forte tax and risks a {wnd} wound.
+    spellTaxWoundText1: Failing your tax test by {margin} when you have {dice} untaxed Forte dice has resulted in overtax.
+    spellTaxWoundText2: Your Forte will be maxed out automatically as your character falls unconscious. Also apply a {wnd} wound to your character.
+    ouch: Ouch! Okay.
+    idRatherNot: I'd rather not.
+    spellTax: Taxed
+    spellTaxInfo: Tax test failed by {margin}. The caster's forte is Taxed.@
+    spellTaxText1: You failed your tax test! Your forte tax will increase by {margin}.@
+    spellTaxText2: Also, any currently sustained spells are lost.@

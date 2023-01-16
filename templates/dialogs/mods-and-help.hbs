@@ -1,12 +1,12 @@
 <div class="mods-and-help {{cssClass}}">
     {{#if showHelp}}
     <div class="help-mods">
-        <div class="help-title">Helping Dice</div>
+        <div class="help-title">{{localize "BW.gmDifficulty.helpingDice"}}</div>
         <hr>
         {{#each help as |h i|}}
         <div class="help-entry flex-row">
-            <div class="help-name" >{{h.title}}<span class="tooltip">Helped with {{h.helpedWith}}.</span></div>
-            <div class="help-amount" >+{{h.dice}}D</div>
+            <div class="help-name" >{{h.title}}<span class="tooltip">{{localize "BW.gmDifficulty.helpedWith"}} {{maybeLocalize h.helpedWith}}.</span></div>
+            <div class="help-amount" >+{{h.dice}}{{localize "BW.diceAcronym"}}</div>
             {{#if ../editable}}
             <i class="fas fa-times clickable" data-action="delete" data-index="{{i}}"></i>
             {{/if}}
@@ -16,7 +16,7 @@
     {{/if}}
     {{#if (or editable modifiers.length)}}
     <div class="obstacle-mods">
-        <div class="obstacle-title">Additional Modifiers</div>
+        <div class="obstacle-title">{{localize "BW.gmDifficulty.additionalMods"}}</div>
         <hr>
         {{#each modifiers as |mod i|}}
         <div class="mod-entry">
@@ -30,7 +30,7 @@
         </div>
         {{/each}}
         {{#if editable}}
-        <input type="text" name="newMod" placeholder="New Modifier" onfocus="this.select();" autocomplete="off">
+        <input type="text" name="newMod" placeholder="{{localize "BW.gmDifficulty.newModifier"}}" onfocus="this.select();" autocomplete="off">
         {{/if}}
     </div>
     {{/if}}

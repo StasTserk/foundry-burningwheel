@@ -11,6 +11,12 @@ export const weaponLengths = [
 ];
 export const weaponLengthSelect = toDictionary(weaponLengths);
 
+export const spellWeaponLengths = [
+    ...weaponLengths,
+    "As Missile"
+];
+export const spellLengthSelect = toDictionary(spellWeaponLengths);
+
 const fistData: MeleeWeaponData = {
     quality: "basic",
     handedness: "one",

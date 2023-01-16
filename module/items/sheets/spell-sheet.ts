@@ -1,4 +1,4 @@
-import { weaponLengthSelect } from "../../constants.js";
+import { spellLengthSelect } from "../../constants.js";
 import { StringIndexedObject } from "../../helpers.js";
 import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
 
@@ -13,7 +13,7 @@ export class SpellSheet extends BWItemSheet {
 
     getData(): TraitSheetData {
         const data = super.getData() as TraitSheetData;
-        data.spellLengths = weaponLengthSelect;
+        data.spellLengths = spellLengthSelect;
         return data;
     }
 }

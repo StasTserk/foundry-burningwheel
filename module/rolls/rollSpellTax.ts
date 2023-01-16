@@ -20,7 +20,9 @@ export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCha
     const spellName = target.dataset.rollableName || "Unknown Spell";
 
     if (!obstacle && !spellName) {
-        return helpers.notifyError("Missing Spell Data", "Tried to roll a tax test with no obstacle or spell name set.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.dialog.missingSpell'),
+            game.i18n.localize('BW.dialog.missingSpellTax'));
     }
     else return showSpellTaxDialog(obstacle, spellName, sheet.actor, dataPreset);
 }

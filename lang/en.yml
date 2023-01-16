@@ -244,6 +244,7 @@ BW:
     spellMissingSkill: A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.
     missingSpell: Missing Spell
     missingSpellText: The spell being cast seems to be missing from the character sheet.
+    missingSpellTax: Tried to roll a tax test with no obstacle or spell name set.
     weaponMissingSkill: A skill must be specified in order for the weapon attack to be rolled. Please pick from a list of martial skills of the character.
     missingWeapon: No Matching Weapon
     missingWeaponText: The weapon used to roll this attack appears to no longer be present on the character.

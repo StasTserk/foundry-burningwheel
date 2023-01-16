@@ -240,7 +240,7 @@ BW:
     overtaxedTitle: Overtaxed Resources!
     overtaxedBody: Tax has reduced your resources exponent to 0.
     reduceByOne: Reduce exponent by 1
-    noSkillSpecified: No Skill Specified@
+    noSkillSpecified: No Skill Specified
     spellMissingSkill: A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.
     missingSpell: Missing Spell
     missingSpellText: The spell being cast seems to be missing from the character sheet.
@@ -268,3 +268,16 @@ BW:
     toolsExpendedPost: " and thus the kit is expended."
     toolsNotExpendedPre: "The die of fate result for the toolkit used ({tool}) was a "
     toolsNotExpendedPost: ""
+  gmDifficulty:
+    splitPool: Offer to split dice into a secondary pool
+    splitPoolAcronym: S/P
+    customDiff: Force a player set custom difficulty
+    customDiffAcronym: CST
+    help: Provide Helping Dice
+    helpAcronym: HLP
+    extendedTest: Extended Test
+    clear: Clear
+    additionalMods: Additional Modifiers
+    newModifier: New Modifier
+    helpingDice: Helping Dice
+    helpedWith: Helped with

@@ -144,6 +144,13 @@ function registerHelpers() {
         }, 0);
     });
 
+    Handlebars.registerHelper("maybeLocalize", (value: string) => {
+        if (game.i18n.translations.BW[value]) {
+            return game.i18n.translations.BW[value];
+        }
+        return game.i18n.localize(value);
+    });
+
     Handlebars.registerHelper("sub", (a: string, b: string): number => {
         return parseInt(a) - parseInt(b);
     });

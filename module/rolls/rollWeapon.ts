@@ -15,14 +15,16 @@ export function handleWeaponRollEvent({ target, sheet, dataPreset }: EventHandle
     }
     const weapon = sheet.actor.items.get<MeleeWeapon | RangedWeapon>(weaponId);
     if (!weapon) {
-        return helpers.notifyError("No Matching Weapon",
-            "The weapon used to roll this attack appears to no longer be present on the character.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.dialog.missingWeapon'),
+            game.i18n.localize('BW.dialog.missingWeaponText'));
     }
 
     const skillId = target.dataset.skillId;
     if (!skillId) {
-        return helpers.notifyError("No Skill Specified",
-            "A skill must be specified in order for the weapon attack to be rolled. Please pick from a list of martial skills of the character.");
+        return helpers.notifyError(
+            game.i18n.localize('BW.dialog.noSkillSpecified'),
+            game.i18n.localize('BW.dialog.weaponMissingSkill'));
     }
     const skill = sheet.actor.items.get<Skill>(skillId);
     if (!skill) {
@@ -43,9 +45,9 @@ export async function handleWeaponRoll({ actor, weapon, attackIndex, skill, data
 
     let weaponPreset: Partial<RollDialogData> = {};
     if (quality === "superior") {
-        weaponPreset = { diceModifiers: [ { dice: 1, label: "Superior Quality", optional: false }]};
+        weaponPreset = { diceModifiers: [ { dice: 1, label: game.i18n.localize('BW.weapon.superiorQuality'), optional: false }]};
     } else if (quality === "poor") {
-        weaponPreset = { obModifiers: [ { obstacle: 1, label: "Poor Quality", optional: false }]};
+        weaponPreset = { obModifiers: [ { obstacle: 1, label: game.i18n.localize('BW.weapon.superiorQuality'), optional: false }]};
     }
 
     dataPreset = mergePartials(weaponPreset, dataPreset);

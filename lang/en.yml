@@ -65,6 +65,8 @@ BW:
     extremeAcronym: Extr
     max: MaxRange
     maxAcronym: Max
+    superiorQuality: Superior Quality
+    poorQuality: Poor Quality
   armor:
     climbing: Climbing Penalty
     throwingShooting: Throwing / Shooting
@@ -238,10 +240,13 @@ BW:
     overtaxedTitle: Overtaxed Resources!
     overtaxedBody: Tax has reduced your resources exponent to 0.
     reduceByOne: Reduce exponent by 1
-    noSkillSpecified: No Skill Specified
+    noSkillSpecified: No Skill Specified@
     spellMissingSkill: A skill must be specified in order for the spell test to be rolled. Please pick from a list of sorcerous of the character.
     missingSpell: Missing Spell
     missingSpellText: The spell being cast seems to be missing from the character sheet.
+    weaponMissingSkill: A skill must be specified in order for the weapon attack to be rolled. Please pick from a list of martial skills of the character.
+    missingWeapon: No Matching Weapon
+    missingWeaponText: The weapon used to roll this attack appears to no longer be present on the character.
     practicalsDone: Spell Practicals Complete!
     practicalsDoneText1: The spell practicals process is complete. Time for a second reading.
     practicalsDoneText2: Set the spell as no longer in practicals?
@@ -253,6 +258,6 @@ BW:
     ouch: Ouch! Okay.
     idRatherNot: I'd rather not.
     spellTax: Taxed
-    spellTaxInfo: Tax test failed by {margin}. The caster's forte is Taxed.@
-    spellTaxText1: You failed your tax test! Your forte tax will increase by {margin}.@
-    spellTaxText2: Also, any currently sustained spells are lost.@
+    spellTaxInfo: Tax test failed by {margin}. The caster's forte is Taxed.
+    spellTaxText1: You failed your tax test! Your forte tax will increase by {margin}.
+    spellTaxText2: Also, any currently sustained spells are lost.

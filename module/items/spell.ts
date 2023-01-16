@@ -1,5 +1,5 @@
 import { BWActor } from "../actors/BWActor.js";
-import { weaponLengthSelect } from "../constants.js";
+import { spellLengthSelect } from "../constants.js";
 import { StringIndexedObject, DivOfText } from "../helpers.js";
 import { HasPointCost, BWItem } from "./item.js";
 
@@ -24,7 +24,7 @@ export class Spell extends BWItem<SpellData> {
             this.system.incidental = Math.ceil((this.system.mark || 0) / 2.0);
             this.system.superb = Math.floor((this.system.mark || 0) * 1.5);
         }
-        this.spellLengths = weaponLengthSelect;
+        this.spellLengths = spellLengthSelect;
 
         if (this.hasOwner && actor) {
             this.system.aptitude = 10 - actor.system.perception.exp || 1

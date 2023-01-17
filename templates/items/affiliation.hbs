@@ -6,13 +6,13 @@
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
     <div class="item-form-group">
-        <div class="item-setting-label">Dice</div>
+        <div class="item-setting-label">{{localize "BW.dice"}}</div>
         <select name="system.dice" value="{{system.dice}}" data-dtype="Number">
             {{#select system.dice}}
-            <option value="0">None</option>
-            <option value="1">1D</option>
-            <option value="2">2D</option>
-            <option value="3">3D</option>
+            <option value="0">{{localize "BW.none"}}</option>
+            <option value="1">1{{localize "BW.diceAcronym"}}</option>
+            <option value="2">2{{localize "BW.diceAcronym"}}</option>
+            <option value="3">3{{localize "BW.diceAcronym"}}</option>
             {{/select}}
         </select>
     </div>

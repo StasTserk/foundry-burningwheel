@@ -30,6 +30,10 @@ BW:
     fateSpent: Fate Spent
     personaSpent: Persona Spent
     deedsSpent: Deeds Spent
+  shade: Shade
+  black: Black
+  grey: Grey
+  white: White
   rollable:
     difficult: Difficult
     challenging: Challenging
@@ -39,6 +43,11 @@ BW:
     fateSpent: Fate points spent on {statName}
     personaSpent: Persona points spent on {statName}
     deedsSpent: Deeds points spent on {statName}
+  quality:
+    basic: Basic
+    poor: Poor
+    rotm: Run of the Mill
+    superior: Superior
   weapon:
     asWeapon: As weapon
     incidental: Incidental
@@ -88,6 +97,38 @@ BW:
     leftLeg: Left Leg
     rightLeg: Right Leg
     shield: Shield
+    armorDice: Armor Dice
+    equipped: Equipped
+    armorQuality: Armor Quality
+    untrainedType: Untrained Penalty Type
+    untrainedNone: None
+    untrainedLight: Light
+    untrainedHeavy: Heavy
+    untrainedPlate: Plate
+    rpCost: Resources Point Cost
+    hasHelm: Has Helm
+    hasTorso: Has Torso
+    hasLeftArm: Has Left Arm
+    hasRightArm: Has Right Arm
+    hasLeftLeg: Has Left Leg
+    hasRightLeg: Has Right Leg
+    hasShield: Has Shield
+    helmDamage: Helm Damage
+    torsoDamage: Torso Damage
+    leftArmDamage: Left Arm Damage
+    rightArmDamage: Right Arm Damage
+    leftLegDamage: Left Leg Damage
+    rightLegDamage: Right Leg Damage
+    shieldDamage: Shield Damage
+    perceptionObsPenalty: Perception/Observation Penalty
+    healthForteFatiguePenalty: Health/Forte Fatigue Penalty
+    stealthyPenalty: Stealthy Penalty
+    agilityPenalty: Agility Penalty
+    throwingShootingPenalty: Throwing/Shooting Penalty
+    speedObPenalty: Speed Obstacle Penalty
+    speedDiePenalty: Speed Die Penalty
+    climbingPenalty: Climbing Penalty
+    swimmingPenalty: Swimming Penalty
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

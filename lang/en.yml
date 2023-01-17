@@ -26,6 +26,10 @@ BW:
   test: Test
   obstacle: Obstacle
   obstacleAcronym: Ob
+  belief:
+    fateSpent: Fate Spent
+    personaSpent: Persona Spent
+    deedsSpent: Deeds Spent
   rollable:
     difficult: Difficult
     challenging: Challenging

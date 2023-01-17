@@ -88,7 +88,12 @@ export const gearQuality = [
     "run of the mill",
     "superior"
 ];
-export const gearQualitySelect = toDictionary(gearQuality);
+export const gearQualitySelect = {
+    basic: "BW.quality.basic",
+    poor: "BW.quality.poor",
+    "run of the mill": "BW.quality.rotm",
+    superior: "BW.quality.superior"
+};
 export type QualityString = "basic" | "superior" | "run of the mill" | "poor";
 
 export const armorLocations = [

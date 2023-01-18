@@ -163,6 +163,35 @@ BW:
   skill:
     skill: Skill
     skills: Skills
+    type: Skill Type
+    academic: Academic
+    artisan: Artisan
+    artist: Artist
+    craftsman: Craftsman
+    forester: Forester
+    martial: Martial
+    medicinal: Medicinal
+    military: Military
+    musical: Musical
+    peasant: Peasant
+    physical: Physical
+    schoolofthought: School of Thought
+    seafaring: Seafaring
+    special: Special/Misc.
+    social: Social
+    sorcerous: Sorcerous
+    restrictions: Restrictions
+    root1: Root 1
+    root2: Root 2 (Optional)
+    aptitude: Aptitude
+    learning: Learning
+    wildFork: Wild FoRK
+    wildForkHelp: This skill explodes on 1's and 6's when used as a FoRK.
+    open: Open
+    magical: Magical Skill
+    magicalHelp: Special magical skills such as Dwarven Arts, Elven skill songs and spell songs. Determines cost for opening in character burner.
+    training: Training Skill
+    requiresTools: Requires Tools
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

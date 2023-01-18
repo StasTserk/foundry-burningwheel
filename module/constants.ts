@@ -76,7 +76,24 @@ export const skillTypes = [
     "social",
     "sorcerous",
 ];
-export const skillTypeSelect = toDictionary(skillTypes);
+export const skillTypeSelect = {
+    academic: "BW.skill.academic",
+    artisan: "BW.skill.artisan",
+    artist: "BW.skill.artist",
+    craftsman: "BW.skill.craftsman",
+    forester: "BW.skill.forester",
+    martial: "BW.skill.martial",
+    medicinal: "BW.skill.medicinal",
+    military: "BW.skill.military",
+    musical: "BW.skill.musical",
+    peasant: "BW.skill.peasant",
+    physical: "BW.skill.physical",
+    schoolofthought: "BW.skill.schoolofthought",
+    seafaring: "BW.skill.seafaring",
+    special: "BW.skill.special",
+    social: "BW.skill.social",
+    sorcerous: "BW.skill.sorcerous"
+};
 
 export const skillRoots = [
     "power",
@@ -86,7 +103,14 @@ export const skillRoots = [
     "forte",
     "speed"
 ];
-export const skillRootSelect = toDictionary(skillRoots);
+export const skillRootSelect = {
+    power: "BW.power",
+    agility: "BW.agility",
+    will: "BW.will",
+    perception: "BW.perception",
+    forte: "BW.forte",
+    speed: "BW.speed"
+};
 
 export const gearQuality = [
     "basic",

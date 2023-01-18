@@ -35,6 +35,7 @@ BW:
   black: Black
   grey: Grey
   white: White
+  workshop: Workshop
   rollable:
     difficult: Difficult
     challenging: Challenging

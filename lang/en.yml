@@ -129,6 +129,10 @@ BW:
     speedDiePenalty: Speed Die Penalty
     climbingPenalty: Climbing Penalty
     swimmingPenalty: Swimming Penalty
+  possession:
+    rpCost: Resources Point Cost
+    toolkit: Toolkit
+    expended: Expended
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

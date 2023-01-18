@@ -6,15 +6,15 @@
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
     <div class="item-form-group">
-        <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.possession.rpCost"}}</label>
         <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
         <div class="pill-toggle min-content">
             <input id="{{item.id}}-checkbox-toolkit" type="checkbox" name="system.isToolkit" {{checked system.isToolkit}}>
-            <label for="{{item.id}}-checkbox-toolkit" >Toolkit</label>
+            <label for="{{item.id}}-checkbox-toolkit" >{{localize "BW.possession.toolkit"}}</label>
         </div>
         <div class="pill-toggle min-content">
             <input id="{{item.id}}-checkbox-expended" type="checkbox" name="system.isExpended" {{checked system.isExpended}}>
-            <label for="{{item.id}}-checkbox-expended">Expended</label>
+            <label for="{{item.id}}-checkbox-expended">{{localize "BW.possession.expended"}}</label>
         </div>
     </div>
     <hr/>

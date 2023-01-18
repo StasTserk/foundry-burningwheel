@@ -15,6 +15,7 @@ BW:
   health: Health
   circles: Circles
   resources: Resources
+  rpCost: Resource Point Cost
   skill: Skill
   skills: Skills
   none: None
@@ -86,7 +87,6 @@ BW:
     handedness: Handedness
     oneHanded: One-handed
     twoHanded: Two-handed
-    rpCost: Resources Point Cost
     attacks: Attacks
     name: Name
     default: Default
@@ -115,7 +115,6 @@ BW:
     untrainedLight: Light
     untrainedHeavy: Heavy
     untrainedPlate: Plate
-    rpCost: Resources Point Cost
     hasHelm: Has Helm
     hasTorso: Has Torso
     hasLeftArm: Has Left Arm
@@ -140,7 +139,6 @@ BW:
     climbingPenalty: Climbing Penalty
     swimmingPenalty: Swimming Penalty
   possession:
-    rpCost: Resources Point Cost
     toolkit: Toolkit
     expended: Expended
   ptgs:

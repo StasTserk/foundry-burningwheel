@@ -63,8 +63,9 @@ BW:
     power: Power
     powerAcronym: Pow
     add: Add
+    addAcronym: Add
     speed: Weapon Speed
-    speedAcronym: Ws
+    speedAcronym: WS
     length: Length
     shortest: Shortest
     short: Short
@@ -80,6 +81,15 @@ BW:
     maxAcronym: Max
     superiorQuality: Superior Quality
     poorQuality: Poor Quality
+    stats: Stats
+    quality: Weapon Quality
+    handedness: Handedness
+    oneHanded: One-handed
+    twoHanded: Two-handed
+    rpCost: Resources Point Cost
+    attacks: Attacks
+    name: Name
+    default: Default
   armor:
     climbing: Climbing Penalty
     throwingShooting: Throwing / Shooting

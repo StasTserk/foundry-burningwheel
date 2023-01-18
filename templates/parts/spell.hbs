@@ -11,7 +11,7 @@
     {{/if}}
     {{#if system.collapsed}}{{else}}
     <div class="spell-details flex-row">
-        <label class="spell-details-label">{{localize "BW.skill"}}</label>
+        <label class="spell-details-label">{{localize "BW.skill.skill"}}</label>
         <select class="spell-details-data" data-item-id="{{spell._id}}" data-binding="system.skillId" value="{{spell.system.skillId}}">
             {{#select spell.system.skillId}}
             <option value="">{{localize "BW.none"}}</option>

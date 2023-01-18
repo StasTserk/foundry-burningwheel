@@ -16,8 +16,6 @@ BW:
   circles: Circles
   resources: Resources
   rpCost: Resource Point Cost
-  skill: Skill
-  skills: Skills
   none: None
   dice: Dice
   diceAcronym: D
@@ -162,6 +160,9 @@ BW:
     building: Building
     buildingHelp: Relationship being built through multiple Circles tests.
     enmity: Enmity Clause
+  skill:
+    skill: Skill
+    skills: Skills
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

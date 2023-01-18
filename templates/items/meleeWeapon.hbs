@@ -5,50 +5,50 @@
         {{/if}}
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
-    <h2>Stats</h2>
+    <h2>{{localize "BW.weapon.stats"}}</h2>
     <div class="item-form-group">
-        <label for="{{item.id}}-select-shade" class="item-setting-label">Shade</label>
+        <label for="{{item.id}}-select-shade" class="item-setting-label">{{localize "BW.shade"}}</label>
         <select id="{{item.id}}-select-shade" name="system.shade" value="{{system.shade}}">
             {{#select system.shade}}
-            <option value="B">Black</option>
-            <option value="G">Grey</option>
-            <option value="W">White</option>
+            <option value="B">{{localize "BW.black"}}</option>
+            <option value="G">{{localize "BW.grey"}}</option>
+            <option value="W">{{localize "BW.white"}}</option>
             {{/select}}
         </select>
 
-        <label for="{{item.id}}-select-quality" class="item-setting-label">Weapon Quality</label>
+        <label for="{{item.id}}-select-quality" class="item-setting-label">{{localize "BW.weapon.quality"}}</label>
         <select id="{{item.id}}-select-quality" name="system.quality" value="{{system.quality}}">
             {{#select system.quality}}
             {{#each weaponQualities as |title value|}}
-            <option value="{{value}}">{{title}}</option>
+            <option value="{{value}}">{{localize title}}</option>
             {{/each}}
             {{/select}}
         </select>
 
-        <label for="{{item.id}}-select-handedness" class="item-setting-label">Handedness</label>
+        <label for="{{item.id}}-select-handedness" class="item-setting-label">{{localize "BW.weapon.handedness"}}</label>
         <select id="{{item.id}}-select-handedness" name="system.handedness" value="{{system.handedness}}">
             {{#select system.handedness}}
-            <option value="one">One-handed</option>
-            <option value="two">Two-handed</option>
+            <option value="one">{{localize "BW.weapon.oneHanded"}}</option>
+            <option value="two">{{localize "BW.weapon.twoHanded"}}</option>
             {{/select}}
         </select>
             
-        <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+        <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.weapon.rpCost"}}</label>
         <input id="{{item.id}}-point-cost" type="number" name="system.pointCost" value="{{system.pointCost}}" class="exponent no-arrows wide" data-dtype="Number">
     </div>
     
     <hr/>
-    <h2>Attacks</h2>
+    <h2>{{localize "BW.weapon.attacks"}}</h2>
     <div class="weapon-attack-row">
-        <div class="attack-grid-header">Name</div>
-        <div class="attack-grid-header">Pow</div>
-        <div class="attack-grid-header">Add</div>
-        <div class="attack-grid-header">Va</div>
-        <div class="attack-grid-header">Ws</div>
-        <div class="attack-grid-header">Length</div>
+        <div class="attack-grid-header">{{localize "BW.weapon.name"}}</div>
+        <div class="attack-grid-header">{{localize "BW.weapon.powerAcronym"}}</div>
+        <div class="attack-grid-header">{{localize "BW.weapon.addAcronym"}}</div>
+        <div class="attack-grid-header">{{localize "BW.weapon.vsArmorAcronym"}}</div>
+        <div class="attack-grid-header">{{localize "BW.weapon.speedAcronym"}}</div>
+        <div class="attack-grid-header">{{localize "BW.weapon.length"}}</div>
         <div><i class="fas fa-plus"></i></div>
         {{#each system.attacks}}
-            <input type="text" name="system.attacks.{{@key}}.attackName" value="{{this.attackName}}" placeholder="Default">
+            <input type="text" name="system.attacks.{{@key}}.attackName" value="{{this.attackName}}" placeholder="{{localize "BW.weapon.default"}}">
             <input type="number" class="exponent" name="system.attacks.{{@key}}.power" value="{{this.power}}" data-dtype="Number">
             <input type="number" class="exponent" name="system.attacks.{{@key}}.add" value="{{this.add}}" data-dtype="Number">
             <input type="number" class="exponent" name="system.attacks.{{@key}}.vsArmor" value="{{this.vsArmor}}" data-dtype="Number">
@@ -64,7 +64,7 @@
             <select name="system.attacks.{{@key}}.weaponLength">
                 {{#select this.weaponLength}}
                 {{#each ../weaponLengths as |title value|}}
-                <option value="{{value}}">{{title}}</option>
+                <option value="{{value}}">{{localize title}}</option>
                 {{/each}}
                 {{/select}}
             </select>

@@ -9,7 +9,13 @@ export const weaponLengths = [
     "longer",
     "longest"
 ];
-export const weaponLengthSelect = toDictionary(weaponLengths);
+export const weaponLengthSelect = {
+    shortest: "BW.weapon.shortest",
+    short: "BW.weapon.short",
+    long: "BW.weapon.long",
+    longer: "BW.weapon.longer",
+    longest: "BW.weapon.longest"
+};
 
 export const spellWeaponLengths = [
     ...weaponLengths,

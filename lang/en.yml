@@ -142,6 +142,19 @@ BW:
   possession:
     toolkit: Toolkit
     expended: Expended
+  relationship:
+    influence: Influence
+    minor: Minor
+    significant: Significant
+    powerful: Powerful
+    forbidden: Forbidden
+    immediateFamily: Immediate Family
+    otherFamily: Other Family
+    romantic: Romantic
+    hateful: Hateful/Rival
+    building: Building
+    buildingHelp: Relationship being built through multiple Circles tests.
+    enmity: Enmity Clause
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

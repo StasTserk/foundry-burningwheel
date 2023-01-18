@@ -8,11 +8,11 @@
     <div class="item-form-group">
         <div class="pill-toggle">
             <input id="{{item.id}}-checkbox-usePower" type="checkbox" name="system.usePower" {{checked system.usePower}}>
-            <label for="{{item.id}}-checkbox-usePower" >Use Power</label>
+            <label for="{{item.id}}-checkbox-usePower" >{{localize "BW.weapon.usePower"}}</label>
         </div>
         <div class="pill-toggle">
             <input id="{{item.id}}-checkbox-hasGunpowder" type="checkbox" name="system.hasGunpowder" {{checked system.hasGunpowder}}>
-            <label for="{{item.id}}-checkbox-hasGunpowder">Use Gunpowder</label>
+            <label for="{{item.id}}-checkbox-hasGunpowder">{{localize "BW.weapon.useGunpowder"}}</label>
         </div>
     </div>
     <hr />
@@ -20,7 +20,7 @@
     <div class="input-grid">
         <div>
             <input id="{{item.id}}-number-power" type="number" name="system.powerBonus" value="{{system.powerBonus}}">
-            <label for="{{item.id}}-number-power">Power Bonus</label>
+            <label for="{{item.id}}-number-power">{{localize "BW.weapon.powerBonus"}}</label>
         </div>
     </div>
     <hr />
@@ -28,63 +28,64 @@
     <div class="input-grid">
         <div>
             <input id="{{item.id}}-number-incidental" type="number" name="system.incidental" value="{{system.incidental}}" {{ disabled system.usePower }} >
-            <label for="{{item.id}}-number-incidental">Incidental: {{ system.incidentalLabel }}</label>
+            <label for="{{item.id}}-number-incidental">{{localize "BW.weapon.incidental"}}: {{ system.incidentalLabel }}</label>
         </div>
         <div>
             <input id="{{item.id}}-number-mark" type="number" name="system.mark" value="{{system.mark}}" {{ disabled system.usePower }} >
-            <label for="{{item.id}}-number-mark">Mark: {{ system.markLabel }}</label>
+            <label for="{{item.id}}-number-mark">{{localize "BW.weapon.mark"}}: {{ system.markLabel }}</label>
         </div>
         <div>
             <input id="{{item.id}}-number-superb" type="number" name="system.superb" value="{{system.superb}}" {{ disabled system.usePower }} >
-            <label for="{{item.id}}-number-superb">Superb: {{ system.superbLabel }}</label>
+            <label for="{{item.id}}-number-superb">{{localize "BW.weapon.superb"}}: {{ system.superbLabel }}</label>
         </div>
         <div>
             <input id="{{item.id}}-number-incidentalMax" type="number" name="system.incidentalRoll" value="{{system.incidentalRoll}}" >
-            <label for="{{item.id}}-number-incidentalMax" title="Maximum DoF number that results in an incidental hit">Incidental Threshold</label>
+            <label for="{{item.id}}-number-incidentalMax" title="{{localize "BW.weapon.incidentalThresholdHelp"}}">{{localize "BW.weapon.incidentalThreshold"}}</label>
         </div>
         <div>
             <input id="{{item.id}}-number-markMax" type="number" name="system.markRoll" value="{{system.markRoll}}" >
-            <label for="{{item.id}}-number-markMax" title="Maximum DoF number that results in an mark hit">Mark Threshold</label>
+            <label for="{{item.id}}-number-markMax" title="{{localize "BW.weapon.markThresholdHelp"}}">{{localize "BW.weapon.markThreshold"}}</label>
         </div>
         <div>
             <input id="{{item.id}}-number-va" type="number" name="system.vsArmor" value="{{system.vsArmor}}">
-            <label for="{{item.id}}-number-va">Vs. Armor</label>
+            <label for="{{item.id}}-number-va">{{localize "BW.weapon.vsArmor"}}</label>
         </div>
         <div>
             <select id="{{item.id}}-select-quality" name="system.quality" value="{{system.quality}}">
                 {{#select system.quality}}
                 {{#each weaponQualities as |title value|}}
-                <option value="{{value}}">{{title}}</option>
+                <option value="{{value}}">{{localize title}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <label for="{{item.id}}-select-quality">Weapon Quality</label>
+            <label for="{{item.id}}-select-quality">{{localize "BW.weapon.quality"}}</label>
         </div>
         <div>
             <select id="{{item.id}}-select-shade" name="system.shade" value="{{system.shade}}">
                 {{#select system.shade}}
-                <option value="B">Black</option>
-                <option value="G">Grey</option>
-                <option value="W">White</option>
+                <option value="B">{{localize "BW.black"}}</option>
+                <option value="G">{{localize "BW.grey"}}</option>
+                <option value="W">{{localize "BW.white"}}</option>
                 {{/select}}
             </select>
-            <label for="{{item.id}}-select-shade">Shade</label>
+            <label for="{{item.id}}-select-shade">{{localize "BW.shade"}}</label>
         </div>
         <div>
             <input id="{{item.id}}-optimal-range" type="number" data-dtype="Number" name="system.optimalRange" value="{{system.optimalRange}}">
-            <label for="{{item.id}}-optimal-range">Optimal Range</label>
+            <label for="{{item.id}}-optimal-range">{{localize "BW.weapon.optimal"}}</label>
         </div>
                 <div>
             <input id="{{item.id}}-extreme-range" type="number" data-dtype="Number" name="system.extremeRange" value="{{system.extremeRange}}">
-            <label for="{{item.id}}-extreme-range">Extreme Range</label>
+            <label for="{{item.id}}-extreme-range">{{localize "BW.weapon.extreme"}}</label>
         </div>
         <div>
+            <!-- TODO: translate "paces" in system.maxRange on item creation -->
             <input id="{{item.id}}-number-range" type="text" name="system.maxRange" value="{{system.maxRange}}">
-            <label for="{{item.id}}-number-range">Max Range</label>
+            <label for="{{item.id}}-number-range">{{localize "BW.weapon.max"}}</label>
         </div>
         <div>
             <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
-            <label for="{{item.id}}-point-cost" class="item-setting-label">Resource Point Cost</label>
+            <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.rpCost"}}</label>
         </div>
     </div>
     <hr/>

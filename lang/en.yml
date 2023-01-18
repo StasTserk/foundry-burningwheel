@@ -193,6 +193,24 @@ BW:
     magicalHelp: Special magical skills such as Dwarven Arts, Elven skill songs and spell songs. Determines cost for opening in character burner.
     training: Training Skill
     requiresTools: Requires Tools
+  lifepath:
+    time: Time
+    statBoost: Stat Boost
+    none: None
+    mental: Mental
+    physical: Physical
+    either: Either
+    both: Both
+    subtractStats: Subtract Stats
+    leads: Leads
+    skillPoints: Skill Points
+    generalPoints: General Points
+    skillList: Skill List
+    traitPoints: Trait Points
+    traitList: Trait List
+    restrictions: Restrictions
+    requirements: Requirements
+    note: Note
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

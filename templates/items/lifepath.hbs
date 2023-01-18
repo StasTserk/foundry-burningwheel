@@ -7,60 +7,61 @@
     </div>
     <div class="item-form-group">
         <label class="item-setting-label">
-            Time
+            {{localize "BW.lifepath.time"}}
         </label>
         <input type="number" name="system.time" value="{{system.time}}">
         <label class="item-setting-label">
-            Resources
+            {{localize "BW.resources"}}
         </label>
         <input type="number" name="system.resources" value="{{system.resources}}">
         <label class="item-setting-label">
-            Stat Boost
+            {{localize "BW.lifepath.statBoost"}}
         </label>
         <select name="system.statBoost" value="{{system.statBoost}}" >
             {{#select system.statBoost}}
-            <option value="none">None</option>
-            <option value="mental">Mental</option>
-            <option value="physical">Physical</option>
-            <option value="either">Either</option>
-            <option value="both">Both</option>
+            <option value="none">{{localize "BW.lifepath.none"}}</option>
+            <option value="mental">{{localize "BW.lifepath.mental"}}</option>
+            <option value="physical">{{localize "BW.lifepath.physical"}}</option>
+            <option value="either">{{localize "BW.lifepath.either"}}</option>
+            <option value="both">{{localize "BW.lifepath.both"}}</option>
             {{/select}}
         </select>
         <div class="pill-toggle min-content">
             <input id="{{item.id}}-sub-stats" type="checkbox" class="item-setting-checkbox hidden" name="system.subtractStats" {{checked system.subtractStats}}>
-            <label for="{{item.id}}-sub-stats" class="item-setting-toggle">Subtract Stats</label>
+            <label for="{{item.id}}-sub-stats" class="item-setting-toggle">{{localize "BW.lifepath.subtractStats"}}</label>
         </div>
         <div></div>
         <label class="item-setting-label">
-            Leads
+            {{localize "BW.lifepath.leads"}}
         </label>
+        <!-- TODO: translate system.leads on item creation -->
         <input type="text" name="system.leads" value="{{system.leads}}" class="triple-wide">
         <label class="item-setting-label">
-            Skill Points
+            {{localize "BW.lifepath.skillPoints"}}
         </label>
         <input type="number" name="system.skillPoints" value="{{system.skillPoints}}">
         <label class="item-setting-label">
-            General Points
+            {{localize "BW.lifepath.generalPoints"}}
         </label>
         <input type="number" name="system.generalPoints" value="{{system.generalPoints}}">
     </div>
-    <label class="item-list-label">Skill List</label>
+    <label class="item-list-label">{{localize "BW.lifepath.skillList"}}</label>
     <textarea name="system.skillList">{{system.skillList}}</textarea>
     <hr>
     <div class="item-form-group">
         <label class="item-setting-label">
-            Trait Points
+            {{localize "BW.lifepath.traitPoints"}}
         </label>
         <input type="number" name="system.traitPoints" value="{{system.traitPoints}}">
     </div>
-    <label class="item-list-label">Trait List</label>
+    <label class="item-list-label">{{localize "BW.lifepath.traitList"}}</label>
     <textarea name="system.traitList">{{system.traitList}}</textarea>
     <hr>
-    <label class="item-list-label">Restrictions</label>
+    <label class="item-list-label">{{localize "BW.lifepath.restrictions"}}</label>
     <textarea name="system.restrictions">{{system.restrictions}}</textarea>
     <hr>
-    <label class="item-list-label">Requirements</label>
+    <label class="item-list-label">{{localize "BW.lifepath.requirements"}}</label>
     <textarea name="system.requirements">{{system.requirements}}</textarea>
-    <label class="item-list-label">Note</label>
+    <label class="item-list-label">{{localize "BW.lifepath.note"}}</label>
     <textarea name="system.note">{{system.note}}</textarea>
 </form>

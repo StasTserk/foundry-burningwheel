@@ -58,7 +58,7 @@ BW:
     markAcronym: M
     superb: Superb
     superbAcronym: S
-    vsArmor: Vs Armor
+    vsArmor: Versus Armor
     vsArmorAcronym: VA
     melee: Melee
     missile: Missile
@@ -79,7 +79,7 @@ BW:
     optimalAcronym: Opt
     extreme: Extreme Range
     extremeAcronym: Extr
-    max: MaxRange
+    max: Max Range
     maxAcronym: Max
     superiorQuality: Superior Quality
     poorQuality: Poor Quality
@@ -91,6 +91,13 @@ BW:
     attacks: Attacks
     name: Name
     default: Default
+    usePower: Use Power
+    useGunpowder: Use Gunpowder
+    powerBonus: Power Bonus
+    incidentalThreshold: Incidental Threshold
+    incidentalThresholdHelp: Maximum DoF number that results in an incidental hit
+    markThreshold: Mark Threshold
+    markThresholdHelp: Maximum DoF number that results in a mark hit
   armor:
     climbing: Climbing Penalty
     throwingShooting: Throwing / Shooting

@@ -211,6 +211,22 @@ BW:
     restrictions: Restrictions
     requirements: Requirements
     note: Note
+  spell:
+    upSpell: Up Spell
+    variableOb: Variable Ob
+    actions: Actions
+    origin: Origin
+    aoe: Area of Effect
+    element: Element
+    impetus: Impetus
+    duration: Duration
+    inPracticals: In Practicals
+    isWeapon: Is a Weapon
+    willBonus: Will Bonus
+    asMissile: As Missile
+    optimalRange: Optimal Range
+    halfWill: Half Will
+    halfWillHelp: This spell's damage is base off of half the will exponent, rather than the full one.
   trait:
     type: Trait Type
     character: Character

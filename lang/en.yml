@@ -211,6 +211,27 @@ BW:
     restrictions: Restrictions
     requirements: Requirements
     note: Note
+  trait:
+    type: Trait Type
+    character: Character
+    callOn: Call-on
+    die: Die
+    restrictions: Restrictions
+    cost: Cost
+    hasDieModifier: Has Die Modifier
+    rollsAffected: Rolls Affected
+    dieModifier: Die Modifier
+    hasObModifier: Has Ob Modifier
+    obModifier: Ob Modifier
+    addsReputation: Adds Reputation
+    reputationName: Reputation Name
+    isInfamous: Infamous?
+    addsAffiliation: Adds Affiliation
+    affiliationName: Affiliation Name
+    changesAptitude: Changes Aptitude
+    aptitudeTarget: Aptitude Target
+    amount: Amount
+    callOnRolls: Call-on Rolls
   ptgs:
     tolerance: Tolerance
     coordinate: Coordinate

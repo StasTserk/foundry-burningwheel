@@ -50,7 +50,11 @@ export const traitTypes = [
     "call-on",
     "die"
 ];
-export const traitTypeSelect = toDictionary(traitTypes);
+export const traitTypeSelect = {
+    character: "BW.trait.character",
+    "call-on": "BW.trait.callOn",
+    die: "BW.trait.die"
+};
 
 export type SkillTypeString = 
     "academic" | "artisan" | "artist" | "craftsman" |

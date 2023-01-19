@@ -6,19 +6,19 @@
         <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
     </div>
     <div class="item-form-group">
-        <label class="item-setting-label">Trait Type</label>
+        <label class="item-setting-label">{{localize "BW.trait.type"}}</label>
         <select name="system.traittype" value="{{system.traittype}}" >
             {{#select system.traittype}}
             {{#each traitTypes as |type t|}}
-            <option value="{{t}}">{{type}}</option>
+            <option value="{{t}}">{{localize type}}</option>
             {{/each}}
             {{/select}}
         </select>
 
-        <label for="{{item.id}}-restrictions" class="item-setting-label">Restrictions</label>
+        <label for="{{item.id}}-restrictions" class="item-setting-label">{{localize "BW.trait.restrictions"}}</label>
         <input id="{{item.id}}-restrictions" type="text" name="system.restrictions" value="{{system.restrictions}}">
 
-        <label for="{{item.id}}-point-cost" class="item-setting-label">Point Cost</label>
+        <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.trait.cost"}}</label>
         <input id="{{item.id}}-point-cost" class="exponent no-arrows wide" type="number" name="system.pointCost" value="{{system.pointCost}}" onfocus="this.select();" data-dtype="Number">
     </div>
     <hr/>
@@ -28,16 +28,16 @@
             <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-dice" name="system.hasDieModifier" {{checked system.hasDieModifier}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked system.hasDieModifier}}>
-                <label for="{{item.id}}-checkbox-dice" class="trait-effect-label">Has Die Modifier</label>
+                <label for="{{item.id}}-checkbox-dice" class="trait-effect-label">{{localize "BW.trait.hasDieModifier"}}</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double" >
                     <input id="{{item.id}}-dieModifierTarget" type="text" name="system.dieModifierTarget" value="{{system.dieModifierTarget}}">
-                    <label for="{{item.id}}-dieModifierTarget">Rolls Affected</label>
+                    <label for="{{item.id}}-dieModifierTarget">{{localize "BW.trait.rollsAffected"}}</label>
                 </div>
                 <div>
                     <input id="{{item.id}}-dieModifier" type="number" name="system.dieModifier" value="{{system.dieModifier}}" placeholder="0">
-                    <label for="{{item.id}}-dieModifier">Die Modifier</label>
+                    <label for="{{item.id}}-dieModifier">{{localize "BW.trait.dieModifier"}}</label>
                 </div>
             </div>
         </div>
@@ -45,16 +45,16 @@
             <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-ob" name="system.hasObModifier" {{checked system.hasObModifier}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked system.hasObModifier}}>
-                <label for="{{item.id}}-checkbox-ob" class="trait-effect-label">Has Ob Modifier</label>
+                <label for="{{item.id}}-checkbox-ob" class="trait-effect-label">{{localize "BW.trait.hasObModifier"}}</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double" >
                     <input id="{{item.id}}-obModifierTarget" type="text" name="system.obModifierTarget" value="{{system.obModifierTarget}}">
-                    <label for="{{item.id}}-obModifierTarget">Rolls Affected</label>
+                    <label for="{{item.id}}-obModifierTarget">{{localize "BW.trait.rollsAffected"}}</label>
                 </div>
                 <div>
                     <input id="{{item.id}}-obModifier" type="number" name="system.obModifier" value="{{system.obModifier}}" placeholder="0">
-                    <label for="{{item.id}}-obModifier">Ob Modifier</label>
+                    <label for="{{item.id}}-obModifier">{{localize "BW.trait.obModifier"}}</label>
                 </div>
             </div>
         </div>
@@ -62,20 +62,20 @@
             <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-rep" name="system.addsReputation" {{checked system.addsReputation}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked system.addsReputation}}>
-                <label for="{{item.id}}-checkbox-rep" class="trait-effect-label">Adds Reputation</label>
+                <label for="{{item.id}}-checkbox-rep" class="trait-effect-label">{{localize "BW.trait.addsReputation"}}</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div>
                     <input id="{{item.id}}-reputationName" type="text" name="system.reputationName" value="{{system.reputationName}}">
-                    <label for="{{item.id}}-reputationName">Reputation Name</label>
+                    <label for="{{item.id}}-reputationName">{{localize "BW.trait.reputationName"}}</label>
                 </div>
                 <div>
                     <input id="{{item.id}}-reputationDice" type="number" name="system.reputationDice" value="{{system.reputationDice}}" placeholder="0">
-                    <label for="{{item.id}}-reputationDice">Dice</label>
+                    <label for="{{item.id}}-reputationDice">{{localize "BW.dice"}}</label>
                 </div>
                 <div>
                     <input id="{{item.id}}-reputationInfamous" type="checkbox" name="system.reputationInfamous" {{checked system.reputationInfamous}}>
-                    <label for="{{item.id}}-reputationInfamous">Infamous?</label>
+                    <label for="{{item.id}}-reputationInfamous">{{localize "BW.trait.isInfamous"}}</label>
                 </div>
             </div>
         </div>
@@ -83,16 +83,16 @@
             <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-aff" name="system.addsAffiliation" {{checked system.addsAffiliation}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked system.addsAffiliation}}>
-                <label for="{{item.id}}-checkbox-aff" class="trait-effect-label">Adds Affiliation</label>
+                <label for="{{item.id}}-checkbox-aff" class="trait-effect-label">{{localize "BW.trait.addsAffiliation"}}</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double">
                     <input id="{{item.id}}-affiliationName" type="text" name="system.affiliationName" value="{{system.affiliationName}}">
-                    <label for="{{item.id}}-affiliationName">Affiliation Name</label>
+                    <label for="{{item.id}}-affiliationName">{{localize "BW.trait.affiliationName"}}</label>
                 </div>
                 <div>
                     <input id="{{item.id}}-affiliationDice" type="number" name="system.affiliationDice" value="{{system.affiliationDice}}" placeholder="0">
-                    <label for="{{item.id}}-affiliationDice">Dice</label>
+                    <label for="{{item.id}}-affiliationDice">{{localize "BW.dice"}}</label>
                 </div>
             </div>
         </div>
@@ -100,16 +100,16 @@
             <input type="checkbox" class="hidden trait-effect-checkbox" id="{{item.id}}-checkbox-apt" name="system.hasAptitudeModifier" {{checked system.hasAptitudeModifier}}>
             <div class="trait-effect-selection flex-column">
                 <input type="checkbox" class="hidden trait-effect-checkbox" {{checked system.hasAptitudeModifier}}>
-                <label for="{{item.id}}-checkbox-apt" class="trait-effect-label">Changes Aptitude</label>
+                <label for="{{item.id}}-checkbox-apt" class="trait-effect-label">{{localize "BW.trait.changesAptitude"}}</label>
             </div>
             <div class="trait-effect-details input-grid">
                 <div class="trait-input-double">
                     <input id="{{item.id}}-aptitude-target" type="text" name="system.aptitudeTarget" value="{{system.aptitudeTarget}}">
-                    <label for="{{item.id}}-aptitude-target">Aptitude Target</label>
+                    <label for="{{item.id}}-aptitude-target">{{localize "BW.trait.aptitudeTarget"}}</label>
                 </div>
                 <div>
                     <input id="{{item.id}}-aptitude-amount" type="number" name="system.aptitudeModifier" value="{{system.aptitudeModifier}}" placeholder="0" data-dtype="Number">
-                    <label for="{{item.id}}-aptitude-amount">Amount</label>
+                    <label for="{{item.id}}-aptitude-amount">{{localize "BW.trait.amount"}}</label>
                 </div>
             </div>
         </div>

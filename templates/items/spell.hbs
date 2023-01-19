@@ -7,7 +7,7 @@
     </div>
     {{#if system.variableObstacle}}
     <div class="spell-sheet-entry">
-        <label for="{{item.id}}-var-obstacle-in" class="spell-setting-label">Obstacle</label>
+        <label for="{{item.id}}-var-obstacle-in" class="spell-setting-label">{{localize "BW.obstacle"}}</label>
         <input id="{{item.id}}-var-obstacle-in"
             onClick="this.select();"
             type="text"
@@ -15,16 +15,16 @@
             value="{{system.variableObstacleDescription}}">
         <div class="pill-toggle">
             <input id="{{item.id}}-up-spell" type="checkbox" name="system.upSpell" {{checked system.upSpell}}>
-            <label for="{{item.id}}-up-spell">Up Spell</label>
+            <label for="{{item.id}}-up-spell">{{localize "BW.spell.upSpell"}}</label>
         </div>
         <div class="pill-toggle">
             <input id="{{item.id}}-var-obstacle" type="checkbox" name="system.variableObstacle" {{checked system.variableObstacle}}>
-            <label for="{{item.id}}-var-obstacle">Variable Ob</label>
+            <label for="{{item.id}}-var-obstacle">{{localize "BW.spell.variableOb"}}</label>
         </div>
     </div>
     {{else}}
     <div class="spell-sheet-entry">
-        <label for="{{item.id}}-obstacle" class="spell-setting-label">Obstacle</label>
+        <label for="{{item.id}}-obstacle" class="spell-setting-label">{{localize "BW.obstacle"}}</label>
         <input id="{{item.id}}-obstacle"
             onClick="this.select();"
             data-dType="number"
@@ -34,16 +34,16 @@
             class="exponent">
         <div class="pill-toggle">
             <input id="{{item.id}}-up-spell" type="checkbox" name="system.upSpell" {{checked system.upSpell}}>
-            <label for="{{item.id}}-up-spell">Up Spell</label>
+            <label for="{{item.id}}-up-spell">{{localize "BW.spell.upSpell"}}</label>
         </div>
         <div class="pill-toggle">
             <input id="{{item.id}}-var-obstacle" type="checkbox" name="system.variableObstacle" {{checked system.variableObstacle}}>
-            <label for="{{item.id}}-var-obstacle">Variable Ob</label>
+            <label for="{{item.id}}-var-obstacle">{{localize "BW.spell.variableOb"}}</label>
         </div>
     </div>
     {{/if}}
     <div class="spell-sheet-entry">
-        <label for="{{item.id}}-actions" class="spell-setting-label" >Actions</label>
+        <label for="{{item.id}}-actions" class="spell-setting-label">{{localize "BW.spell.actions"}}</label>
         <input id="{{item.id}}-actions"
             onClick="this.select();"
             data-dType="number"
@@ -51,55 +51,55 @@
             name="system.actions"
             value="{{system.actions}}"
             class="exponent">
-        <label for="{{item.id}}-origin" class="spell-setting-label">Origin</label>
+        <label for="{{item.id}}-origin" class="spell-setting-label">{{localize "BW.spell.origin"}}</label>
         <input id="{{item.id}}-origin"
             onClick="this.select();"
             type="text"
             name="system.origin"
             value="{{system.origin}}">
-        <label for="{{item.id}}-areaOfEffect" class="spell-setting-label">Area of Effect</label>
+        <label for="{{item.id}}-areaOfEffect" class="spell-setting-label">{{localize "BW.spell.aoe"}}</label>
         <input id="{{item.id}}-areaOfEffect"
             onClick="this.select();"
             type="text"
             name="system.areaOfEffect"
             value="{{system.areaOfEffect}}">
-        <label for="{{item.id}}-element" class="spell-setting-label">Element</label>
+        <label for="{{item.id}}-element" class="spell-setting-label">{{localize "BW.spell.element"}}</label>
         <input id="{{item.id}}-element"
             onClick="this.select();"
             type="text"
             name="system.element"
             value="{{system.element}}">
-        <label for="{{item.id}}-impetus" class="spell-setting-label">Impetus</label>
+        <label for="{{item.id}}-impetus" class="spell-setting-label">{{localize "BW.spell.impetus"}}</label>
         <input id="{{item.id}}-impetus"
             onClick="this.select();"
             type="text"
             name="system.impetus"
             value="{{system.impetus}}">
-        <label for="{{item.id}}-duration" class="spell-setting-label">Duration</label>
+        <label for="{{item.id}}-duration" class="spell-setting-label">{{localize "BW.spell.duration"}}</label>
         <input id="{{item.id}}-duration"
             onClick="this.select();"
             type="text"
             name="system.duration"
             value="{{system.duration}}">
-        <label for="{{item.id}}-point-cost" class="spell-setting-label">Resource Point Cost</label>
+        <label for="{{item.id}}-point-cost" class="spell-setting-label">{{localize "BW.rpCost"}}</label>
         <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" onfocus="this.select();" value="{{system.pointCost}}" data-dtype="Number">
         {{#if item.hasOwner}}
         <div class="pill-toggle">
             <input id="{{item.id}}-in-practicals" type="checkbox" name="system.inPracticals" {{checked system.inPracticals}}>
-            <label for="{{item.id}}-in-practicals">In Practicals</label>
+            <label for="{{item.id}}-in-practicals">{{localize "BW.spell.inPracticals"}}</label>
         </div>
         {{/if}}
     </div>
     <div class="spell-weapon-toggle">
         <div class="pill-toggle">
             <input id="{{item.id}}-is-weapon" type="checkbox" name="system.isWeapon" {{checked system.isWeapon}}>
-            <label for="{{item.id}}-is-weapon" class="spell-toggle-label">Is a Weapon</label>
+            <label for="{{item.id}}-is-weapon" class="spell-toggle-label">{{localize "BW.spell.isWeapon"}}</label>
         </div>
     </div>
     <div class="spell-weapon-stats">
         {{#if system.isWeapon}}
         <div class="spell-sheet-entry">
-            <label for="{{item.id}}-will-bonus" class="spell-setting-label">Will Bonus</label>
+            <label for="{{item.id}}-will-bonus" class="spell-setting-label">{{localize "BW.spell.willBonus"}}</label>
             <input id="{{item.id}}-will-bonus"
                 onClick="this.select();"
                 data-dtype="Number"
@@ -107,7 +107,7 @@
                 name="system.willDamageBonus"
                 value="{{system.willDamageBonus}}"
                 class="exponent">
-            <label for="{{item.id}}-va" class="spell-setting-label">Vs. Armor</label>
+            <label for="{{item.id}}-va" class="spell-setting-label">{{localize "BW.weapon.vsArmor"}}</label>
             <input id="{{item.id}}-va"
                 onClick="this.select();"
                 data-dtype="Number"
@@ -115,49 +115,51 @@
                 name="system.va"
                 value="{{system.va}}"
                 class="exponent">
-            <label for="{{item.id}}-spell-length" class="spell-setting-label">Weapon Length</label>
+            <label for="{{item.id}}-spell-length" class="spell-setting-label">{{localize "BW.weapon.length"}}</label>
             <select id="{{item.id}}-spell-length" name="system.weaponLength" value="{{system.weaponLength}}">
                 {{#select system.weaponLength}}
                 {{#each item.spellLengths as |title value|}}
-                <option value="{{value}}">{{title}}</option>
+                <option value="{{value}}">{{localize title}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <label for="{{item.id}}-optimal" class="spell-setting-label">Optimal Range</label>
+            <label for="{{item.id}}-optimal" class="spell-setting-label">{{localize "BW.spell.optimalRange"}}</label>
             <div><input id="{{item.id}}-optimal"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
                 name="system.optimalRange"
                 value="{{system.optimalRange}}"
-                class="exponent"> Dice</div>
-            <label for="{{item.id}}-extreme" class="spell-setting-label">Extreme Range</label>
-            <div><input id="{{item.id}}-extreme"
+                class="exponent"> {{localize "BW.dice"}}</div>
+            <label for="{{item.id}}-extreme" class="spell-setting-label">{{localize "BW.weapon.extreme"}}</label>
+            <div><input id="{{item.id}}-optimal"
                 onClick="this.select();"
                 data-dtype="Number"
                 type="number"
-                name="system.extremeRange"
-                value="{{system.extremeRange}}"
-                class="exponent"> Dice</div>
-            <label for="{{item.id}}-max-range" class="spell-setting-label">Max Range</label>
+                name="system.optimalRange"
+                value="{{system.optimalRange}}"
+                class="exponent"> {{localize "BW.dice"}}</div>
+            <label for="{{item.id}}-max-range" class="spell-setting-label">{{localize "BW.weapon.max"}}</label>
+            <!-- TODO: localize system.maxRange on item creation -->
             <input id="{{item.id}}-max-range"
                 onClick="this.select();"
                 type="text"
                 name="system.maxRange"
                 value="{{system.maxRange}}">
             {{#if item.hasOwner}}
-            <label class="spell-setting-label">I/M/S</label>
+            <label class="spell-setting-label">{{localize "BW.weapon.incidentalAcronym"}}/{{localize "BW.weapon.markAcronym"}}/{{localize "BW.weapon.superbAcronym"}}</label>
             <div>
                 <span>{{system.incidental}}</span> / <span>{{system.mark}}</span> / <span>{{system.superb}}</span>
             </div>
             {{/if}}
             <div class="pill-toggle">
                 <input id="{{item.id}}-half-will" type="checkbox" name="system.halfWill" {{checked system.halfWill}}>
-                <label for="{{item.id}}-half-will" title="This spell's damage is base off of half the will exponent, rather than the full one.">Half Will</label>
+                <label for="{{item.id}}-half-will" title="{{localize "BW.spell.halfWillHelp"}}">{{localize "BW.spell.halfWill"}}</label>
             </div>
         </div>
         {{/if}}
     </div>
     <hr>
+    <!-- TODO: localize system.description on item creation -->
     <textarea name="system.description">{{system.description}}</textarea>
 </form>

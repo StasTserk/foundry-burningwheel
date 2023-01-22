@@ -140,7 +140,6 @@
                 value="{{system.optimalRange}}"
                 class="exponent"> {{localize "BW.dice"}}</div>
             <label for="{{item.id}}-max-range" class="spell-setting-label">{{localize "BW.weapon.max"}}</label>
-            <!-- TODO: localize system.maxRange on item creation -->
             <input id="{{item.id}}-max-range"
                 onClick="this.select();"
                 type="text"
@@ -160,6 +159,5 @@
         {{/if}}
     </div>
     <hr>
-    <!-- TODO: localize system.description on item creation -->
     <textarea name="system.description">{{system.description}}</textarea>
 </form>

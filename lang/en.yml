@@ -229,6 +229,8 @@ BW:
     optimalRange: Optimal Range
     halfWill: Half Will
     halfWillHelp: This spell's damage is base off of half the will exponent, rather than the full one.
+    newSpell: A brand new spell
+    tenPaces: 10 Paces
   trait:
     type: Trait Type
     character: Character

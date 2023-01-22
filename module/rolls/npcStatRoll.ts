@@ -24,9 +24,9 @@ export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcE
 
     const dice = getProperty(actor, target.dataset.stat || "") as number;
     const shade = getProperty(actor, target.dataset.shade || "") as helpers.ShadeString;
-    const accessor = getProperty(actor, target.dataset.accessor || "") as NpcStatName;
+    const accessor = (target.dataset.accessor || "") as NpcStatName;
     const open = target.dataset.action === "rollStatOpen";
-    const statName = (target.dataset.rollableName || "Unknown Stat");
+    const statName = target.dataset.rollableName || "Unknown Stat";
     return handleNpcStatRoll({ dice, shade, open, statName, actor, dataPreset, accessor });
 }
 

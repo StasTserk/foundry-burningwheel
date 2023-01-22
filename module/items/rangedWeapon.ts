@@ -53,6 +53,11 @@ export class RangedWeapon extends BWItem<RangedWeaponData> {
         element.appendChild(helpers.DivOfText("" + roll, "roll-die"));
         return element.outerHTML;
     }
+
+    _preCreate(data: Partial<RangedWeaponData>, options: FoundryDocument.CreateOptions, user: User): void {
+        super._preCreate(data, options, user);
+        this.updateSource({ 'system.maxRange': game.i18n.localize("BW.weapon.hundredFiftyPaces") });
+    }
 }
 
 

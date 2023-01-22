@@ -24,16 +24,13 @@ export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcE
 
     const dice = getProperty(actor, target.dataset.stat || "") as number;
     const shade = getProperty(actor, target.dataset.shade || "") as helpers.ShadeString;
+    const accessor = getProperty(actor, target.dataset.accessor || "") as NpcStatName;
     const open = target.dataset.action === "rollStatOpen";
-    
-    let statName = (target.dataset.rollableName || "Unknown Stat") as NpcStatName;
-    if (statName.indexOf('BW.') !== -1) {
-        statName = statName.slice(3) as NpcStatName;
-    }
-    return handleNpcStatRoll({ dice, shade, open, statName, actor, dataPreset });
+    const statName = (target.dataset.rollableName || "Unknown Stat");
+    return handleNpcStatRoll({ dice, shade, open, statName, actor, dataPreset, accessor });
 }
 
-export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo, dataPreset, actor }: NpcStatRollOptions): Promise<unknown> {
+export async function handleNpcStatRoll({ dice, shade, open, statName, accessor, extraInfo, dataPreset, actor }: NpcStatRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(statName);
     dataPreset = dataPreset || {};
     dataPreset.deedsPoint = actor.system.deeds !== 0;
@@ -45,21 +42,21 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, extraInfo
         // add a test log instead of testing
         return buildHelpDialog({
             exponent: dice,
-            path: `system.${statName}`,
+            path: `system.${accessor}`,
             actor,
             helpedWith: statName
         });
     }
 
     const data = mergeDialogData<NpcStatDialogData>({
-        name: `${game.i18n.localize("BW."+statName)} ${game.i18n.localize('BW.test')}`,
+        name: statName,
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
-        woundDice: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.system.ptgs.woundDice : 0,
-        obPenalty: ["circles", "resources", "health"].indexOf(statName) === -1 ? actor.system.ptgs.obPenalty : 0,
-        circlesBonus: statName === "circles" ? actor.circlesBonus : undefined,
-        circlesMalus: statName === "circles" ? actor.circlesMalus : undefined,
+        woundDice: ["circles", "resources", "health"].indexOf(accessor) === -1 ? actor.system.ptgs.woundDice : 0,
+        obPenalty: ["circles", "resources", "health"].indexOf(accessor) === -1 ? actor.system.ptgs.obPenalty : 0,
+        circlesBonus: accessor === "circles" ? actor.circlesBonus : undefined,
+        circlesMalus: accessor === "circles" ? actor.circlesMalus : undefined,
         stat: { exp: dice } as TracksTests,
         tax: 0,
         optionalDiceModifiers: rollModifiers.filter(r => r.optional && r.dice),
@@ -159,7 +156,8 @@ export interface NpcStatRollOptions extends RollOptions {
     dice: number;
     shade: helpers.ShadeString;
     open: boolean;
-    statName: NpcStatName;
+    statName: string;
+    accessor: NpcStatName;
 }
 
 export type NpcStatName = "speed" | "agility" | "power" | "forte" | "perception" | "health" | "will" | "circles" | "steel" | "resources";

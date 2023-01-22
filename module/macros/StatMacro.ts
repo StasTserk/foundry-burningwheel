@@ -51,7 +51,15 @@ export function RollStatMacro(actorId: string, statPath: string, statName: strin
             handleAttrRoll({ actor: char, stat, accessor: statPath, attrName: statName, dataPreset });
         }
     } else {
-        handleNpcStatRoll({ actor: actor as Npc, dice: stat.exp, shade: stat.shade, open: stat.open, statName: statName as NpcStatName, dataPreset });
+        handleNpcStatRoll({
+            actor: actor as Npc,
+            dice: stat.exp,
+            shade: stat.shade,
+            open: stat.open,
+            statName: statName,
+            accessor: statPath as NpcStatName,
+            dataPreset
+        });
     }
 }
 

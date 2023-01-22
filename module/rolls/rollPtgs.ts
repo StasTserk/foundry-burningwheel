@@ -24,8 +24,8 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
     const rollModifiers = sheet.actor.getRollModifiers("health");
     const data: AttributeDialogData = mergeDialogData<AttributeDialogData>({
         name: shrugging ?
-            `${game.i18n.localize("BW.ptgs.shrug")} ${game.i18n.localize("BW.health")}` :
-            `${game.i18n.localize("BW.ptgs.grit")} ${game.i18n.localize("BW.health")}`,
+            game.i18n.localize("BW.ptgs.shrugHealthTest") :
+            game.i18n.localize("BW.ptgs.gritHealthTest"),
         difficulty: shrugging ? 2 : 4,
         bonusDice: 0,
         arthaDice: 0,
@@ -79,7 +79,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format('BW.xTest', { name: data.name}),
+            title: data.name,
             content: html,
             buttons,
             default: "roll"
@@ -105,7 +105,9 @@ async function ptgsRollCallback(
     const isSuccessful = parseInt(roll.result) >= difficultyTotal;
 
     const data: RollChatMessageData = {
-        name: (shrugging ? game.i18n.localize('BW.ptgs.shrug') : game.i18n.localize('BW.ptgs.grit')) + ' ' + game.i18n.localize('BW.health'),
+        name: (shrugging ?
+            game.i18n.localize("BW.ptgs.shrugHealthTest") :
+            game.i18n.localize("BW.ptgs.gritHealthTest")),
         successes: roll.result,
         difficulty: baseDifficulty,
         nameClass: getRollNameClass(stat.open, stat.shade),

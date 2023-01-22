@@ -148,7 +148,7 @@ BW:
     untrainedGlobal: Untrained Global Penalty
     damage: Dmg
     location: Location
-    head: Head
+    helm: Head
     torso: Torso
     leftArm: Left Arm
     rightArm: Right Arm
@@ -271,7 +271,6 @@ BW:
     halfWillHelp: This spell's damage is base off of half the will exponent, rather than the full one.
     newSpell: A brand new spell
     tenPaces: 10 Paces
-    taxNamed: "{name} Tax"
     taxTest: "{name} Tax Test"
   trait:
     type: Trait Type
@@ -310,7 +309,9 @@ BW:
     recovery: Injury Recovery
     recovered: Recovered
     shrug: Shrug It Off
+    shrugHealthTest: Shrug It Off Health Test
     grit: Grit Your Teeth
+    gritHealthTest: Grit Your Teeth Health Test
     justDoIt: Just Do It
     spendPersona: Spend Persona
     spendFate: Spend Fate
@@ -428,7 +429,7 @@ BW:
     rollArmor: Roll Armor Dice
     armorDiceLostMessage: "{item} {location} lost {number} {dice} to damage"
     beginnersLuck: Beginner's Luck
-    beginnersLuckNamed: Beginner's Luck {name}
+    beginnersLuckTest: Beginner's Luck {name} Test
     learningAssignment: Pick where to assign the test
     learningAssignmentBody1: This test can count as routine or difficult for the purposes of advancement.
     learningAssignmentBody2: Pick which option you'd prefer.

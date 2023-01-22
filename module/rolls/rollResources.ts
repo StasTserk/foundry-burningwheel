@@ -33,7 +33,7 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
     }
     const rollModifiers = actor.getRollModifiers("resources");
     const data: ResourcesDialogData = mergeDialogData<ResourcesDialogData>({
-        name: game.i18n.localize("BW.resources"),
+        name: game.i18n.format('BW.xTest', { name: game.i18n.localize("BW.resources")}),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -50,7 +50,7 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format('BW.xTest', { name: game.i18n.localize("BW.resources")}),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {
@@ -117,7 +117,7 @@ async function resourcesRollCallback(
     }
 
     const data: RollChatMessageData = {
-        name: game.i18n.localize("BW.resources"),
+        name: game.i18n.format('BW.xTest', { name: game.i18n.localize("BW.resources")}),
         successes: roll.result,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,

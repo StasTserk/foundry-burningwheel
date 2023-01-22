@@ -26,7 +26,7 @@ export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerO
 
     const dialogData: ArmorDialogData = {
         difficulty: 1,
-        name: game.i18n.localize('BW.roll.armor'),
+        name: game.i18n.format('BW.xTest', {name: game.i18n.localize('BW.roll.armor')}),
         arthaDice: 0,
         bonusDice: 0,
         armor: (armorItem?.system.dice || 0) + chestBonus,
@@ -80,7 +80,7 @@ export async function armorRollCallback(armorItem: Armor, html: JQuery, sheet: B
             : undefined;
 
     const messageData: RollChatMessageData = {
-        name: game.i18n.localize('BW.roll.armor'),
+        name: game.i18n.format('BW.xTest', {name: game.i18n.localize('BW.roll.armor')}),
         successes: "" + roll.dice[0].total,
         success: isSuccess,
         rolls: roll.dice[0].results,

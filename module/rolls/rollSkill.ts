@@ -41,7 +41,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     const rollModifiers = actor.getRollModifiers(skill.name);
 
     const templateData = mergeDialogData({
-        name: skill.name,
+        name: game.i18n.format('BW.xTest', { name: skill.name}),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -62,7 +62,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     const html = await renderTemplate(templates.pcRollDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format('BW.xTest', { name: skill.name}),
+            title: templateData.name,
             content: html,
             buttons: {
                 roll: {
@@ -131,7 +131,7 @@ async function skillRollCallback(
     actor.updateArthaForSkill(skill.id, persona, deeds);
 
     const data: RollChatMessageData = {
-        name: `${skill.name}`,
+        name: game.i18n.format('BW.xTest', { name: skill.name}),
         successes: '' + (parseInt(roll.result) + wildForkBonus),
         splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: baseDifficulty,

@@ -46,7 +46,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
     }
 
     const data = mergeDialogData<StatDialogData>({
-        name: maybeLocalize(statName),
+        name: game.i18n.format("BW.xTest", {name: maybeLocalize(statName)}),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -63,7 +63,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format("BW.xTest", {name: data.name}),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {
@@ -111,7 +111,7 @@ async function statRollCallback(
     actor.updateArthaForStat(accessor, persona, deeds);
 
     const data: RollChatMessageData = {
-        name: game.i18n.localize('BW.'+name),
+        name: game.i18n.format("BW.xTest", {name: maybeLocalize(name)}),
         successes: roll.result,
         splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: baseDifficulty,

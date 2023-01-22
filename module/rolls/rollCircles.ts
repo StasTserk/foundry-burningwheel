@@ -40,7 +40,7 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
 
     const rollModifiers = actor.getRollModifiers("circles");
     const data: CirclesDialogData = mergeDialogData<CirclesDialogData>({
-        name: game.i18n.localize("BW.circles"),
+        name: game.i18n.format("BW.xTest", { name: game.i18n.localize("BW.circles") }),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -58,7 +58,7 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format("BW.xTest", {name: data.name}),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {
@@ -102,7 +102,7 @@ async function circlesRollCallback(
     actor.updateArthaForStat("system.circles", rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
-        name: `Circles`,
+        name: game.i18n.format("BW.xTest", { name: game.i18n.localize("BW.circles") }),
         successes: roll.result,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,

@@ -34,7 +34,7 @@ export async function showSpellTaxDialog(obstacle: number, spellName: string, ac
     const tax = actor.system.forteTax;
     
     const data: StatDialogData = mergeDialogData<StatDialogData>({
-        name: game.i18n.format('BW.spell.taxNamed', { name: spellName }),
+        name: game.i18n.format('BW.spell.taxTest', { name: spellName }),
         difficulty: obstacle,
         bonusDice: 0,
         arthaDice: 0,
@@ -86,7 +86,7 @@ async function taxTestCallback(
     actor.updateArthaForStat("system.forte", persona, deeds);
 
     const data: RollChatMessageData = {
-        name: `${spellName} ${game.i18n.localize("BW.rollable.Tax")}`,
+        name: game.i18n.format('BW.spell.taxTest', { name: spellName }),
         successes: roll.result,
         difficulty: baseDifficulty,
         obstacleTotal: difficultyTotal,

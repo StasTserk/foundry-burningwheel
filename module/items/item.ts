@@ -85,70 +85,84 @@ export function RegisterItemSheets(): void {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet(constants.systemName, BeliefSheet, {
         types: ["belief"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.belief"
     });
     Items.registerSheet(constants.systemName, InstinctSheet, {
         types: ["instinct"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.instinct"
     });
     Items.registerSheet(constants.systemName, TraitSheet, {
         types: ["trait"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.trait"
     });
 
     Items.registerSheet(constants.systemName, SkillSheet, {
         types: ["skill"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.skill"
     });
 
     Items.registerSheet(constants.systemName, RelationshipSheet, {
         types: ["relationship"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.relationship"
     });
 
     Items.registerSheet(constants.systemName, PossessionSheet, {
         types: ["possession"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.possession"
     });
 
     Items.registerSheet(constants.systemName, PropertySheet, {
         types: ["property"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.property"
     });
 
     Items.registerSheet(constants.systemName, MeleeWeaponSheet, {
         types: ["melee weapon"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.meleeWeapon"
     });
 
     Items.registerSheet(constants.systemName, RangedWeaponSheet, {
         types: ["ranged weapon"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.rangedWeapon"
     });
 
     Items.registerSheet(constants.systemName, ArmorSheet, {
         types: ["armor"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.armor"
     });
 
     Items.registerSheet(constants.systemName, ReputationSheet, {
         types: ["reputation"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.reputation"
     });
 
     Items.registerSheet(constants.systemName, AffiliationSheet, {
         types: ["affiliation"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.affiliation"
     });
 
     Items.registerSheet(constants.systemName, SpellSheet, {
         types: ["spell"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.spell"
     });
 
     Items.registerSheet(constants.systemName, LifepathSheet, {
         types: ["lifepath"],
-        makeDefault: true
+        makeDefault: true,
+        label: "BW.sheet.lifepath"
     });
 }
 

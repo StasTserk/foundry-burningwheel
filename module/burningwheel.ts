@@ -28,20 +28,23 @@ Hooks.once("init", async () => {
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet(constants.systemName, BWCharacterSheet, {
         types: ["character"],
-        makeDefault: true
+        makeDefault: true,
+        label: 'BW.sheet.character'
     });
     Actors.registerSheet(constants.systemName, BWCharacterTabbedSheet, {
-        label: "burningwheel.BWTabbedCharacterSheet",
+        label: "BW.sheet.characterTabbed",
         types: ["character"],
-        makeDefault: false
+        makeDefault: false,
     });
     Actors.registerSheet(constants.systemName, NpcSheet, {
         types: ["npc"],
-        makeDefault: true
+        makeDefault: true,
+        label: 'BW.sheet.npc'
     });
     Actors.registerSheet(constants.systemName, BWSettingSheet, {
         types: ["setting"],
-        makeDefault: true
+        makeDefault: true,
+        label: 'BW.sheet.setting'
     });
 
     game.burningwheel.duelOfWitsActions = constants.DuelOfWitsActions;

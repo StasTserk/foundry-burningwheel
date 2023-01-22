@@ -40,31 +40,31 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
         const actor = this.actor;
         data.statRow = [
             {
-                statName: "will", rollable, label: "Wi", value: actor.system.will.exp,
+                statName: game.i18n.localize("BW.will"), rollable, label: "Wi", value: actor.system.will.exp,
                 valuePath: "will.exp", shade: actor.system.will.shade, shadePath: "will.shade",
                 draggable: true, accessor: "will"
             }, {
-                statName: "perception", rollable, label: "Pe", value: actor.system.perception.exp, valuePath: "perception.exp",
+                statName: game.i18n.localize("BW.perception"), rollable, label: "Pe", value: actor.system.perception.exp, valuePath: "perception.exp",
                 shade: actor.system.perception.shade, shadePath: "perception.shade",
                 draggable: true, accessor: "perception"
             }, {
-                statName: "agility", rollable, label: "Ag", value: actor.system.agility.exp, valuePath: "agility.exp",
+                statName: game.i18n.localize("BW.agility"), rollable, label: "Ag", value: actor.system.agility.exp, valuePath: "agility.exp",
                 shade: actor.system.agility.shade, shadePath: "agility.shade",
                 draggable: true, accessor: "agility"
             }, {
-                statName: "speed", rollable, label: "Sp", value: actor.system.speed.exp, valuePath: "speed.exp",
+                statName: game.i18n.localize("BW.speed"), rollable, label: "Sp", value: actor.system.speed.exp, valuePath: "speed.exp",
                 shade: actor.system.speed.shade, shadePath: "speed.shade",
                 draggable: true, accessor: "speed"
             }, {
-                statName: "power", rollable, label: "Po", value: actor.system.power.exp, valuePath: "power.exp",
+                statName: game.i18n.localize("BW.power"), rollable, label: "Po", value: actor.system.power.exp, valuePath: "power.exp",
                 shade: actor.system.power.shade, shadePath: "power.shade",
                 draggable: true, accessor: "power"
             }, {
-                statName: "forte", rollable, label: "Fo", value: actor.system.forte.exp, valuePath: "forte.exp",
+                statName: game.i18n.localize("BW.forte"), rollable, label: "Fo", value: actor.system.forte.exp, valuePath: "forte.exp",
                 shade: actor.system.forte.shade, shadePath: "forte.shade",
                 draggable: true, accessor: "forte"
             }, {
-                statName: "health", rollable, label: "Hea", value: actor.system.health.exp, valuePath: "health.exp",
+                statName: game.i18n.localize("BW.health"), rollable, label: "Hea", value: actor.system.health.exp, valuePath: "health.exp",
                 shade: actor.system.health.shade, shadePath: "health.shade",
                 draggable: true, accessor: "health"
             }, {
@@ -74,17 +74,17 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
                 label: "MW", value: actor.system.ptgs.moThresh || 0, valuePath: "ptgs.moThresh",
                 shade: actor.system.ptgs.woundShade, shadePath: "ptgs.woundShade"
             }, {
-                statName: "steel", rollable, open, label: "Ste", value: actor.system.steel.exp, valuePath: "steel.exp",
+                statName: game.i18n.localize("BW.steel"), rollable, open, label: "Ste", value: actor.system.steel.exp, valuePath: "steel.exp",
                 shade: actor.system.steel.shade, shadePath: "steel.shade",
                 draggable: true, accessor: "steel"
             }, {
                 label: "Hes", value: actor.system.hesitation || 0, valuePath: "hesitation"
             }, {
-                statName: "resources", rollable, label: "Res", value: actor.system.resources.exp, valuePath: "resources.exp",
+                statName: game.i18n.localize("BW.resources"), rollable, label: "Res", value: actor.system.resources.exp, valuePath: "resources.exp",
                 shade: actor.system.resources.shade, shadePath: "resources.shade",
                 draggable: true, accessor: "resources"
             }, {
-                statName: "circles", rollable, label: "Cir", value: actor.system.circles.exp, valuePath: "circles.exp",
+                statName: game.i18n.localize("BW.circles"), rollable, label: "Cir", value: actor.system.circles.exp, valuePath: "circles.exp",
                 shade: actor.system.circles.shade, shadePath: "circles.shade",
                 draggable: true, accessor: "circles"
             },

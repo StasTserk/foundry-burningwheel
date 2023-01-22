@@ -70,7 +70,7 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, accessor,
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: data.name,
+            title: game.i18n.format("BW.xTest", { name: data.name }),
             content: html,
             buttons: {
                 roll: {

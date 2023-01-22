@@ -40,7 +40,7 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
 
     const rollModifiers = actor.getRollModifiers("circles");
     const data: CirclesDialogData = mergeDialogData<CirclesDialogData>({
-        name: `${game.i18n.localize("BW.circles")} ${game.i18n.localize('BW.test')}`,
+        name: game.i18n.localize("BW.circles"),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -58,7 +58,7 @@ export async function handleCirclesRoll({ actor, stat, dataPreset, circlesContac
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: data.name,
+            title: game.i18n.format("BW.xTest", {name: data.name}),
             content: html,
             buttons: {
                 roll: {

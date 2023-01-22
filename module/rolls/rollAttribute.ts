@@ -14,6 +14,7 @@ import {
 } from "./rolls.js";
 import { BWCharacter } from "../actors/BWCharacter.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
+import { maybeLocalize } from "../helpers.js";
 
 export async function handleAttrRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = getProperty(sheet.actor, target.dataset.accessor || "") as Ability;
@@ -37,7 +38,7 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
         dataPreset.difficulty = actor.system.hesitation || 0;
     }
     const data: AttributeDialogData =  mergeDialogData<AttributeDialogData>({
-        name: `${game.i18n.localize("BW." + attrName).titleCase()} ${game.i18n.localize('BW.test')}`,
+        name: maybeLocalize(attrName),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -63,7 +64,7 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: data.name,
+            title: game.i18n.format("BW.xTest", {name: data.name}),
             content: html,
             buttons: {
                 roll: {

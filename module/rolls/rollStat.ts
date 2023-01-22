@@ -12,6 +12,7 @@ import {
     extractRollData, EventHandlerOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
 } from "./rolls.js";
 import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
+import { maybeLocalize } from "../helpers.js";
 
 export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
     const accessor = options.target.dataset.accessor || "";
@@ -45,7 +46,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
     }
 
     const data = mergeDialogData<StatDialogData>({
-        name: `${game.i18n.localize("BW." + statName).titleCase()} ${game.i18n.localize('BW.test')}`,
+        name: maybeLocalize(statName),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -62,7 +63,7 @@ export async function handleStatRoll({ actor, statName, stat, accessor, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: data.name,
+            title: game.i18n.format("BW.xTest", {name: data.name}),
             content: html,
             buttons: {
                 roll: {

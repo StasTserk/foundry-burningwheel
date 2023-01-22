@@ -90,7 +90,8 @@ export async function handleFightRoll({actor, type, itemId, attackIndex, positio
             dice,
             shade,
             open: false,
-            statName: type,
+            statName: game.i18n.localize('BW.'+type),
+            accessor: type,
             actor: (actor as Npc),
             dataPreset
         });

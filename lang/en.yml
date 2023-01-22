@@ -1,3 +1,22 @@
+ACTOR:
+  TypeCharacter: Player Character
+  TypeNpc: Non-Player Character
+  TypeSetting: Setting
+ITEM:
+  TypeBelief: Belief
+  TypeInstinct: Instinct
+  TypeTrait: Trait
+  TypeSkill: Skill
+  TypeRelationship: Relationship
+  TypeReputation: Reputation
+  TypeAffiliation: Affiliation
+  TypePossession: Possession
+  TypeProperty: Property
+  TypeMelee Weapon: Melee Weapon
+  TypeRanged Weapon: Ranged Weapon
+  TypeArmor: Armor
+  TypeSpell: Spell
+  TypeLifepath: Lifepath
 BW:
   fate: Fate
   fateAcronym: F
@@ -35,6 +54,25 @@ BW:
   white: White
   workshop: Workshop
   infamous: Infamous
+  sheet:
+    character: Single Page Character Sheet
+    characterTabbed: Tabbed Character Sheet
+    npc: Default NPC Sheet
+    setting: Default Setting Sheet
+    belief: Default Belief Sheet
+    instinct: Default Instinct Sheet
+    trait: Default Trait Sheet
+    skill: Default Skill Sheet
+    relationship: Default Relationship Sheet
+    reputation: Default Reputation Sheet
+    affiliation: Default Affiliation Sheet
+    possession: Default Possession Sheet
+    property: Default Property Sheet
+    meleeWeapon: Default Melee Weapon Sheet
+    rangedWeapon: Default Ranged Weapon Sheet
+    armor: Default Armor Sheet
+    spell: Default Spell Sheet
+    lifepath: Default Lifepath Sheet
   rollable:
     difficult: Difficult
     challenging: Challenging

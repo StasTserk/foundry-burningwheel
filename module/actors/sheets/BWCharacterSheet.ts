@@ -72,7 +72,6 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
         const affs: BWItem[] = [];
         const spells: Spell[] = [];
 
-        let addFist = true; // do we need to add a fist weapon?
         for (const i of items) {
             switch(i.type) {
                 case "reputation": reps.push(i as Reputation); break;
@@ -93,9 +92,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     break;
                 case "relationship": relationships.push(i as Relationship); break;
                 case "melee weapon":
-                    if (addFist && (i.name === "Bare Fist" || i.name === game.i18n.localize('BW.weapon.bareFist'))) {
-                        addFist = false; // only add one fist weapon if none present
-                    } else {
+                    if (!(i.name === "Bare Fist" || i.name === game.i18n.localize('BW.weapon.bareFist'))) {
                         equipment.push(i); // don't count fists as equipment
                     }
                     melee.push(i as MeleeWeapon);

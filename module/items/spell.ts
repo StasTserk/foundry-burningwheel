@@ -1,3 +1,4 @@
+import { TypeMissing } from "../../types/index.js";
 import { BWActor } from "../actors/BWActor.js";
 import { spellLengthSelect } from "../constants.js";
 import { StringIndexedObject, DivOfText } from "../helpers.js";
@@ -58,8 +59,18 @@ export class Spell extends BWItem<SpellData> {
         return element.outerHTML;
     }
 
+    _preCreate(data: Partial<TypeMissing>, options: FoundryDocument.CreateOptions, user: User): void {
+        super._preCreate(data, options, user);
+        this.updateSource({
+            'system.maxRange': game.i18n.localize('BW.spell.tenPaces'),
+            'system.description': game.i18n.localize('BW.spell.newSpell')
+        });
+    }
+
     spellLengths: StringIndexedObject<string>;
     obstacleLabel: string;
+
+    
 }
 
 export interface SpellData extends HasPointCost {

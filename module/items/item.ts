@@ -27,6 +27,7 @@ import { SpellData } from "./spell.js";
 import { TraitData } from "./trait.js";
 import { MeleeWeaponData } from "./meleeWeapon.js";
 import { SkillData } from "./skill.js";
+import { TypeMissing } from "../../types/index.js";
 
 export * from "./sheets/affiliation-sheet.js";
 export * from "./sheets/armor-sheet.js";
@@ -54,13 +55,13 @@ export class BWItem<T extends BWItemDataTypes = BWItemDataTypes> extends Item<It
     type: ItemType;
     hasOwner: boolean;
 
-    // TODO: Restore pre-create
-    // async _preCreate(data: Partial<BWItemData>, options: FoundryDocument.CreateOptions, user: User): Promise<void> {
-    //     await super._preCreate(data as T, options, user);
-    //     if (data.type && this.data._source.img === "icons/svg/item-bag.svg") {
-    //         this.data._source.img = constants.defaultImages[data.type];
-    //     }
-    // }
+    _preCreate(data: Partial<T & Item.Data>, options: FoundryDocument.CreateOptions, user: User): void {
+        super._preCreate(data, options, user);
+        const entity = this as TypeMissing;
+        if (entity.type && entity._source.img === "icons/svg/item-bag.svg") {
+             this.updateSource({ "img": constants.defaultImages[(data.type as keyof typeof constants.defaultImages)] });
+        }
+    }
 }
 
 export interface ArthaEarner {

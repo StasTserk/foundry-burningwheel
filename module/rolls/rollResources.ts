@@ -28,12 +28,12 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
             exponent: stat.exp,
             path: "resources",
             actor,
-            helpedWith: "Resources"
+            helpedWith: game.i18n.localize("BW.resources")
         });
     }
     const rollModifiers = actor.getRollModifiers("resources");
     const data: ResourcesDialogData = mergeDialogData<ResourcesDialogData>({
-        name: "Resources Test",
+        name: game.i18n.localize("BW.resources"),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -50,7 +50,7 @@ export async function handleResourcesRoll({actor, stat, dataPreset}: ResourcesRo
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${game.i18n.localize("BW.resources")} ${game.i18n.localize('BW.test')}`,
+            title: game.i18n.format('BW.xTest', { name: game.i18n.localize("BW.resources")}),
             content: html,
             buttons: {
                 roll: {
@@ -110,14 +110,14 @@ async function resourcesRollCallback(
         });
         taxMessage.render(true);
     }
-    await actor.addAttributeTest(stat, "Resources", "resources", rollData.difficultyGroup, isSuccess);
+    await actor.addAttributeTest(stat, game.i18n.localize("BW.resources"), "resources", rollData.difficultyGroup, isSuccess);
 
     if (rollData.addHelp) {
         game.burningwheel.modifiers.grantTests(rollData.difficultyTestTotal, isSuccess);
     }
 
     const data: RollChatMessageData = {
-        name: 'Resources',
+        name: game.i18n.localize("BW.resources"),
         successes: roll.result,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,

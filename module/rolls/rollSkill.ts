@@ -62,7 +62,7 @@ export async function handleSkillRoll({ actor, skill, dataPreset, extraInfo, onR
     const html = await renderTemplate(templates.pcRollDialog, templateData);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${skill.name} ${game.i18n.localize('BW.test')}`,
+            title: game.i18n.format('BW.xTest', { name: skill.name}),
             content: html,
             buttons: {
                 roll: {

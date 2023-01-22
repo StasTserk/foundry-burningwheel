@@ -79,7 +79,7 @@ async function handlePtgsRoll({ sheet, shrugging, dataPreset }: PtgsRollOptions)
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: `${data.name} ${game.i18n.localize('BW.test')}`,
+            title: game.i18n.format('BW.xTest', { name: data.name}),
             content: html,
             buttons,
             default: "roll"

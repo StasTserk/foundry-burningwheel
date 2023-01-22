@@ -761,7 +761,7 @@
 
     async _preCreate(data: Partial<D>, options: FoundryDocument.CreateOptions, user: User);
 
-   async _preUpdate(data: Partial<D>, options: FoundryDocument.CreateOptions, userId: string);
+    async _preUpdate(data: Partial<D>, options: FoundryDocument.CreateOptions, userId: string);
   }
 
 declare namespace FoundryDocument {

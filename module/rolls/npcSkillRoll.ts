@@ -176,7 +176,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: skill.name,
+            title: game.i18n.format("BW.xTest", { name: skill.name }),
             content: html,
             buttons: {
                 roll: {

@@ -88,7 +88,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
 
     const data: LearningDialogData = mergeDialogData<LearningDialogData>({
         difficulty: 3,
-        name: game.i18n.format("BW.roll.beginnersLuckNamed", {name: skill.name}),
+        name: game.i18n.format("BW.roll.beginnersLuckTest", {name: skill.name}),
         bonusDice: 0,
         arthaDice: 0,
         tax,
@@ -109,7 +109,7 @@ async function buildLearningDialog({ skill, statName, actor, extraInfo, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format("BW.xTest", {name: data.name}),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {
@@ -178,7 +178,7 @@ async function learningRollCallback(
         }
 
         const data: RollChatMessageData = {
-            name: game.i18n.format("BW.roll.beginnersLuckNamed", {name: skill.name}),
+            name: game.i18n.format("BW.roll.beginnersLuckTest", {name: skill.name}),
             successes: roll.result,
             splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
             difficulty: rollData.baseDifficulty,

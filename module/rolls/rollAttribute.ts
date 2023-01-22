@@ -38,7 +38,7 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
         dataPreset.difficulty = actor.system.hesitation || 0;
     }
     const data: AttributeDialogData =  mergeDialogData<AttributeDialogData>({
-        name: maybeLocalize(attrName),
+        name: game.i18n.format("BW.xTest", {name: maybeLocalize(attrName)}),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -64,7 +64,7 @@ export async function handleAttrRoll({ actor, stat, attrName, accessor, dataPres
     const html = await renderTemplate(templates.pcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format("BW.xTest", {name: data.name}),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {
@@ -104,7 +104,7 @@ async function attrRollCallback(
     actor.updateArthaForStat(accessor, rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
-        name: `${name}`,
+        name,
         successes: roll.result,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,

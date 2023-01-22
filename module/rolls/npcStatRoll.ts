@@ -49,7 +49,7 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, accessor,
     }
 
     const data = mergeDialogData<NpcStatDialogData>({
-        name: statName,
+        name: game.i18n.format("BW.xTest", { name: statName }),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -70,7 +70,7 @@ export async function handleNpcStatRoll({ dice, shade, open, statName, accessor,
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format("BW.xTest", { name: data.name }),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {

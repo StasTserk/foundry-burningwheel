@@ -154,7 +154,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
     const rollModifiers = actor.getRollModifiers(skill.name);
 
     const data: NpcSkillDialogData = mergeDialogData<NpcSkillDialogData>({
-        name: skill.name,
+        name: game.i18n.format("BW.xTest", { name: skill.name }),
         difficulty: 3,
         bonusDice: 0,
         arthaDice: 0,
@@ -176,7 +176,7 @@ export async function handleNpcSkillRoll({ actor, skill, extraInfo, dataPreset}:
     const html = await renderTemplate(templates.npcRollDialog, data);
     return new Promise(_resolve =>
         new Dialog({
-            title: game.i18n.format("BW.xTest", { name: skill.name }),
+            title: data.name,
             content: html,
             buttons: {
                 roll: {
@@ -229,7 +229,7 @@ async function skillRollCallback(
     }
 
     const data: RollChatMessageData = {
-        name: `${skill.name}`,
+        name: game.i18n.format("BW.xTest", { name: skill.name }),
         successes: '' + (parseInt(roll.result) + wildForkBonus),
         splitSuccesses: splitPoolRoll ? splitPoolRoll.result : undefined,
         difficulty: rollData.baseDifficulty,

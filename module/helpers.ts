@@ -40,6 +40,15 @@ export function canAdvance(skill: TracksTests, needRoutines = true): boolean {
     return enoughDifficult && enoughChallenging;
 }
 
+export function maybeLocalize(maybeLocalize: string): string {
+    const key = `BW.${maybeLocalize}`;
+    const localized = game.i18n.localize(key);
+    if (localized === key) {
+        return maybeLocalize;
+    }
+    return localized;
+}
+
 export function difficultyGroup(dice: number, difficulty: number): TestString {
     if (difficulty > dice) {
         return "Challenging";

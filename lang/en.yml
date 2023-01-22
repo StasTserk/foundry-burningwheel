@@ -41,7 +41,7 @@ BW:
   die: Die
   type: Type
   name: Name
-  test: Test
+  xTest: "{name} Test"
   obstacle: Obstacle
   obstacleAcronym: Ob
   belief:
@@ -271,6 +271,8 @@ BW:
     halfWillHelp: This spell's damage is base off of half the will exponent, rather than the full one.
     newSpell: A brand new spell
     tenPaces: 10 Paces
+    taxNamed: "{name} Tax"
+    taxTest: "{name} Tax Test"
   trait:
     type: Trait Type
     character: Character
@@ -426,6 +428,7 @@ BW:
     rollArmor: Roll Armor Dice
     armorDiceLostMessage: "{item} {location} lost {number} {dice} to damage"
     beginnersLuck: Beginner's Luck
+    beginnersLuckNamed: Beginner's Luck {name}
     learningAssignment: Pick where to assign the test
     learningAssignmentBody1: This test can count as routine or difficult for the purposes of advancement.
     learningAssignmentBody2: Pick which option you'd prefer.

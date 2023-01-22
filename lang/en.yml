@@ -97,6 +97,7 @@ BW:
     incidentalThresholdHelp: Maximum DoF number that results in an incidental hit
     markThreshold: Mark Threshold
     markThresholdHelp: Maximum DoF number that results in a mark hit
+    hundredFiftyPaces: 150 Paces
   armor:
     climbing: Climbing Penalty
     throwingShooting: Throwing / Shooting

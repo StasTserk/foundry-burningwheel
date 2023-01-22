@@ -194,6 +194,7 @@ BW:
     training: Training Skill
     requiresTools: Requires Tools
   lifepath:
+    any: Any
     time: Time
     statBoost: Stat Boost
     none: None

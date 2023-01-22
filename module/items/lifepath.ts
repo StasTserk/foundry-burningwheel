@@ -8,6 +8,15 @@ export class Lifepath extends BWItem<LifepathData> {
         const statSign = this.system.statBoost === "none" ? "" : (this.system.subtractStats ? "-" : "+");
         this.system.statString = statSign + statMap[this.system.statBoost];
     }
+
+    _preCreate(
+        data: Partial<LifepathData>,
+        options: FoundryDocument.CreateOptions,
+        user: User): void {
+
+        this.updateSource({ 'system.leads': game.i18n.localize("BW.lifepath.any") });
+        return super._preCreate(data, options, user);
+    }
 }
 
 export interface LifepathData {

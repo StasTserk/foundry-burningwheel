@@ -98,6 +98,8 @@ BW:
     markThreshold: Mark Threshold
     markThresholdHelp: Maximum DoF number that results in a mark hit
     hundredFiftyPaces: 150 Paces
+    bareFist: Bare Fist
+    bareFistDescription: Your bare fist.
   armor:
     climbing: Climbing Penalty
     throwingShooting: Throwing / Shooting

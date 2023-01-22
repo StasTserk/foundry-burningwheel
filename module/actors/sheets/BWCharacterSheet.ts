@@ -93,7 +93,7 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                     break;
                 case "relationship": relationships.push(i as Relationship); break;
                 case "melee weapon":
-                    if (addFist && i.name === "Bare Fist") {
+                    if (addFist && (i.name === "Bare Fist" || i.name === game.i18n.localize('BW.weapon.bareFist'))) {
                         addFist = false; // only add one fist weapon if none present
                     } else {
                         equipment.push(i); // don't count fists as equipment
@@ -311,10 +311,11 @@ function equipmentCompare(a: BWItem, b: BWItem): number {
 }
 
 function weaponCompare(a: { name: string }, b: { name: string }): number {
-    if (a.name === "Bare Fist") {
+    const fistName = game.i18n.localize('BW.weapon.bareFist');
+    if (a.name === "Bare Fist" || a.name === fistName) {
         return -1;
     }
-    if (b.name === "Bare Fist") {
+    if (b.name === "Bare Fist" || b.name === fistName) {
         return 1;
     }
     return a.name.localeCompare(b.name);

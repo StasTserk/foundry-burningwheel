@@ -3,6 +3,7 @@ import * as helpers from "../helpers.js";
 import { QualityString } from "../constants.js";
 import { translateWoundValue } from "../helpers.js";
 import { BWActor } from "../actors/BWActor.js";
+import { TypeMissing } from "../../types/index.js";
 
 export class MeleeWeapon extends BWItem<MeleeWeaponData> {
     type: 'melee weapon';
@@ -47,6 +48,16 @@ export class MeleeWeapon extends BWItem<MeleeWeaponData> {
         return element.outerHTML;
     }
 
+    _preCreate(data: Partial<TypeMissing>, options: FoundryDocument.CreateOptions, user: User): void {
+        super._preCreate(data, options, user);
+        if (data.name === 'Bare Fist') {
+            this.updateSource({
+                name: game.i18n.localize('BW.weapon.bareFist'),
+                'system.description': game.i18n.localize('BW.weapon.bareFistDescription')
+            });
+            
+        }
+    }
 }
 
 export interface MeleeWeaponData extends DisplayClass, HasPointCost {

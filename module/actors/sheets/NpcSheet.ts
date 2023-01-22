@@ -121,7 +121,7 @@ export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions>
                     }
                     break;
                 case "melee weapon":
-                    if (i.name !== "Bare Fist") {
+                    if (i.name !== "Bare Fist" && i.name !== game.i18n.localize('BW.weapon.bareFist')) {
                         data.gear.push(i);
                     }
                     data.weapons.push(i);

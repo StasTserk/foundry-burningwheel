@@ -377,7 +377,11 @@
         ? ReadonlyArray<U & { _id: string }>
         : ReadonlyArray<DeepPartial<T['_data']> & { _id: string }>,
       options?: FoundryDocument.UpdateOptions
-    ): Promise<T | T[]>;
+   ): Promise<T | T[]>;
+
+    updateSource(
+      data: Expanded<U> extends DeepPartial<T> ? U & { _id: string } : DeepPartial<T> & { _id: string },
+      options?: FoundryDocument.UpdateOptions)
   
     /**
      * Handle a SocketResponse from the server when one or multiple Entities are updated
@@ -757,7 +761,7 @@
 
     async _preCreate(data: Partial<D>, options: FoundryDocument.CreateOptions, user: User);
 
-    async _preUpdate(data: Partial<D>, options: FoundryDocument.CreateOptions, userId: string);
+   async _preUpdate(data: Partial<D>, options: FoundryDocument.CreateOptions, userId: string);
   }
 
 declare namespace FoundryDocument {

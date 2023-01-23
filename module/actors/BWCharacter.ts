@@ -240,7 +240,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
                 testNumber = stat.routine;
                 if (testNumber < (stat.routineNeeded || 0)) {
                     updateData[`system.${accessor}.routine`] = testNumber +1;
-                    stat.routine = testNumber;
+                    stat.routine = testNumber + 1;
                     return this.update(updateData, {});
                 }
                 break;

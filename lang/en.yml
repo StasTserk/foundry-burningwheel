@@ -243,6 +243,8 @@ BW:
     physical: Physical
     either: Either
     both: Both
+    phystwo: Physical (x2)
+    menttwo: Mental (x2)
     subtractStats: Subtract Stats
     leads: Leads
     skillPoints: Skill Points
@@ -268,7 +270,7 @@ BW:
     asMissile: As Missile
     optimalRange: Optimal Range
     halfWill: Half Will
-    halfWillHelp: This spell's damage is base off of half the will exponent, rather than the full one.
+    halfWillHelp: This spell's damage is based off of half the will exponent, rather than the full one.
     newSpell: A brand new spell
     tenPaces: 10 Paces
     taxTest: "{name} Tax Test"

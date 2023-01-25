@@ -340,14 +340,18 @@ export class CharacterBurnerDialog extends Application {
         const physicalPoints = emptyLifepath.nextAll('.inline-text').first().next().children('input[name="physicalStat"]').first();
         const boostAmount = pathData.subtractStats ? -1 : 1;
 
-        switch (pathData.statBoost) {
+        switch (pathData.statBoost) { 
             case "both":
                 mentalPoints.val(boostAmount).trigger('change');
                 physicalPoints.val(boostAmount).trigger('change');
                 break;
+            case "mentwo":
+                mentalPoints.val(boostAmount).trigger('change');
             case "mental":
                 mentalPoints.val(boostAmount).trigger('change');
                 break;
+            case "phystwo":
+                physicalPoints.val(boostAmount).trigger('change');
             case "physical":
                 physicalPoints.val(boostAmount).trigger('change');
                 break;

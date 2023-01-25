@@ -22,7 +22,7 @@ export class Lifepath extends BWItem<LifepathData> {
 export interface LifepathData {
     time: number;
     resources: number;
-    statBoost: 'none' | 'mental' | 'physical' | 'either' | 'both';
+    statBoost: 'none' | 'mental' | 'physical' | 'either' | 'both' | 'phystwo' | 'menttwo';
     subtractStats: boolean;
     leads: string;
     skillPoints: number;
@@ -44,5 +44,7 @@ const statMap = {
     "mental": "1 M",
     "physical": "1 P",
     "either": "1 M/P",
-    "both": "1 M,P"
+    "both": "1 M,P",
+    "phystwo": "2 P",
+    "menttwo": "2 M"
 };

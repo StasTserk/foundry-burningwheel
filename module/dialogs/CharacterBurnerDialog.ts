@@ -345,7 +345,7 @@ export class CharacterBurnerDialog extends Application {
                 mentalPoints.val(boostAmount).trigger('change');
                 physicalPoints.val(boostAmount).trigger('change');
                 break;
-            case "mentwo":
+            case "menttwo":
                 mentalPoints.val(2*boostAmount).trigger('change');
                 break;
             case "mental":

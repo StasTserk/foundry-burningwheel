@@ -122,7 +122,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
             label: game.i18n.format("BW.dialog.makeNew", {type: i}),
             callback: async () => {
                 const item = await actor.createEmbeddedDocuments("Item", [{
-                    name: game.i18n.format("BW.dialog.importExisting", { type: i }),
+                    name: game.i18n.format("BW.newItem", { type: i }),
                     type: i,
                     data: options.baseData,
                     img: options.img

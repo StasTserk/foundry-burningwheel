@@ -19,7 +19,7 @@
                 {{i.itemDataMid}}
             </div>
             <div class="item-select-info">
-                Src: {{i.itemSource}}
+                {{localize "BW.dialog.sourcesAcronym"}}: {{i.itemSource}}
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
     <input type="text" class="new-item-dialog-search" placeholder="Search">
 </div>
 <div class="import-compendium-select">
-    Sources:
+    {{localize "BW.dialog.sources"}}:
     <select name="select-compendiums">
         {{#each sources as |c|}}
         <option value="{{c}}">{{c}}</option>

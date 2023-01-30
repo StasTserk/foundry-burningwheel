@@ -86,7 +86,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
             content: html,
             buttons: {
                 add: {
-                    label: "Add",
+                    label: game.i18n.localize('BW.dialog.add'),
                     callback: async (dialogHtml: JQuery) => {
                         const newItems = dialogHtml.find('input:checked')
                             .map((_, element: HTMLInputElement) => {
@@ -105,7 +105,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
                     }
                 },
                 cancel: {
-                    label: "Cancel"
+                    label: game.i18n.localize('BW.dialog.cancel')
                 }
             },
             default: "add"
@@ -119,10 +119,10 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
     
     options.itemTypes?.forEach((i) => {
         makeNewButtons[i] = {
-            label: `Make new ${i}`,
+            label: game.i18n.format("BW.dialog.makeNew", {type: i}),
             callback: async () => {
                 const item = await actor.createEmbeddedDocuments("Item", [{
-                    name: `New ${i}`,
+                    name: game.i18n.format("BW.dialog.importExisting", { type: i }),
                     type: i,
                     data: options.baseData,
                     img: options.img
@@ -132,7 +132,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
         };
     });
     makeNewButtons.loadExisting = {
-        label: `Import existing ${options.itemType || "item"}`,
+        label: game.i18n.format("BW.dialog.importExisting", {type: options.itemType || "item"}),
         callback: (html) => loadExistingCallback(html)
     };
     const defaultButton = (options.itemTypes && options.itemTypes[0]) || "";
@@ -151,7 +151,7 @@ function ItemToRowData(item: BWItem & { itemSource?: string }, options: AddItemO
         name: item.name,
         itemDataLeft: options.itemDataLeft(item),
         itemDataMid: options.itemDataMid(item),
-        itemSource: item.itemSource || "World",
+        itemSource: item.itemSource || game.i18n.localize("BW.dialog.world"),
         id: item.id,
         img: item.img,
         source: item.compendium ? item.compendium.collection : undefined

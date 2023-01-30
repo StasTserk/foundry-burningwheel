@@ -44,6 +44,7 @@ BW:
   xTest: "{name} Test"
   obstacle: Obstacle
   obstacleAcronym: Ob
+  newItem: New {type}
   belief:
     fateSpent: Fate Spent
     personaSpent: Persona Spent
@@ -482,6 +483,13 @@ BW:
     toolsExpendedPost: " and thus the kit is expended."
     toolsNotExpendedPre: "The die of fate result for the toolkit used ({tool}) was a "
     toolsNotExpendedPost: ""
+    sources: Sources
+    sourcesAcronym: Src
+    add: Add
+    cancel: Cancel
+    makeNew: Make new {type}
+    importExisting: Import existing {type}
+    world: World
   gmDifficulty:
     splitPool: Offer to split dice into a secondary pool
     splitPoolAcronym: S/P

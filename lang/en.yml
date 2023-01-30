@@ -220,7 +220,7 @@ BW:
     physical: Physical
     schoolofthought: School of Thought
     seafaring: Seafaring
-    special: Special/Misc.
+    special: Special
     social: Social
     sorcerous: Sorcerous
     restrictions: Restrictions
@@ -279,6 +279,7 @@ BW:
     type: Trait Type
     character: Character
     callOn: Call-on
+    call-on: Call-on
     die: Die
     restrictions: Restrictions
     cost: Cost
@@ -490,6 +491,9 @@ BW:
     makeNew: Make new {type}
     importExisting: Import existing {type}
     world: World
+    addSkillTooltip: Add a new skill to the character sheet.  Note this is different than learning a new skill via the beginner's luck rules.  Check the learning section if you want to being learning the skill.
+    confirmDelete: Confirm Deletion
+    confirmDeleteTooltip: You are about to delete an item from the actor's sheet. Are you sure?
   gmDifficulty:
     splitPool: Offer to split dice into a secondary pool
     splitPoolAcronym: S/P

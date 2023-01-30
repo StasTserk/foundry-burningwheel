@@ -179,10 +179,10 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
         e.preventDefault();
         return addNewItem({
             actor: actor,
-            searchTitle: "Learn New Skill",
+            searchTitle: game.i18n.format("BW.character.learnNew", {type: game.i18n.localize("ITEM.TypeSkill")}),
             itemType: "skill",
             itemDataLeft: (i: Skill) => i.system.restrictions.titleCase(),
-            itemDataMid: (i: Skill) => i.system.skilltype.titleCase(),
+            itemDataMid: (i: Skill) => game.i18n.localize(`BW.skill.${i.system.skilltype}`),
             baseData: {
                 learning: true,
                 root1: "perception",
@@ -210,65 +210,88 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
                 }
                 break;
             case "addBelief":
-                options = { name: "New Belief", type: "belief", data: { }, img: constants.defaultImages.belief };
+                options = {
+                    name: game.i18n.format("BW.newItem", { type: game.i18n.localize("ITEM.TypeBelief") }),
+                    type: "belief",
+                    data: {},
+                    img: constants.defaultImages.belief
+                };
                 return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addInstinct":
-                options = { name: "New Instinct", type: "instinct", data: { }, img: constants.defaultImages.belief };
+                options = {
+                    name: game.i18n.format("BW.newItem", { type: game.i18n.localize("ITEM.TypeInstinct") }),
+                    type: "instinct",
+                    data: {},
+                    img: constants.defaultImages.instinct
+                };
                 return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addRelationship":
-                options = { name: "New Relationship", type: "relationship", data: { building: true }, img: constants.defaultImages.relationship };
+                options = {
+                    name: game.i18n.format("BW.newItem", { type: game.i18n.localize("ITEM.TypeRelationship") }),
+                    type: "relationship",
+                    data: { building: true },
+                    img: constants.defaultImages.relationship
+                };
                 return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addReputation":
-                options = { name: "New Reputation", type: "reputation", data: { }, img: constants.defaultImages.reputation };
+                options = {
+                    name: game.i18n.format("BW.newItem", { type: game.i18n.localize("ITEM.TypeReputation") }),
+                    type: "reputation",
+                    data: {},
+                    img: constants.defaultImages.reputation
+                };
                 return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addAffiliation":
-                options = { name: "New Affiliation", type: "affiliation", data: { }, img: constants.defaultImages.affiliation };
+                options = {
+                    name: game.i18n.format("BW.newItem", { type: game.i18n.localize("ITEM.TypeAffiliation") }),
+                    type: "affiliation",
+                    data: {},
+                    img: constants.defaultImages.affiliation
+                };
                 return this.actor.createEmbeddedDocuments("Item", [options]).then(i =>
                     this.actor.items.get(i[0].id)?.sheet?.render(true));
             case "addSkill": 
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Skill",
+                    searchTitle: game.i18n.format("BW.character.addNew", {type: game.i18n.localize("ITEM.TypeSkill")}),
                     itemType: "skill",
                     itemDataLeft: (i: Skill) => i.system.restrictions.titleCase(),
-                    itemDataMid: (i: Skill) => i.system.skilltype.titleCase(),
+                    itemDataMid: (i: Skill) => game.i18n.localize(`BW.skill.${i.system.skilltype}`),
                     baseData: { root1: "perception", skilltype: "special" },
-                    popupMessage: "Add a new skill to the character sheet.  "
-                        + "Note this is different than learning a new skill via the beginner's luck rules.  "
-                        + "Check the learning section if you want to begin learning the skill.",
+                    popupMessage: game.i18n.localize("BW.dialog.addSkillTooltip"),
                     img: constants.defaultImages.skill
                 });
             case "addTrait":
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Trait",
+                    searchTitle: game.i18n.format("BW.character.addNew", {type: game.i18n.localize("ITEM.TypeTrait")}),
                     itemType: "trait",
                     itemDataLeft: (i: Trait) => i.system.restrictions.titleCase(),
-                    itemDataMid: (i: Trait) => i.system.traittype.titleCase(),
+                    itemDataMid: (i: Trait) => game.i18n.localize(`BW.trait.${i.system.traittype}`),
                     baseData: { traittype: id },
                     img: constants.defaultImages[id]
                 });
             case "addSpell":
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Spell",
+                    searchTitle: game.i18n.format("BW.character.addNew", {type: game.i18n.localize("ITEM.TypeSpell")}),
                     itemType: "spell",
-                    itemDataLeft: (i: Spell) => `Origin: ${i.system.origin.titleCase()}`,
-                    itemDataMid: (i: Spell) => `Impetus: ${i.system.impetus.titleCase()}`,
+                    itemDataLeft: (i: Spell) => `${game.i18n.localize("BW.spell.origin")}: ${i.system.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) => `${game.i18n.localize("BW.spell.impetus")}: ${i.system.impetus.titleCase()}`,
                     baseData: { },
                     img: constants.defaultImages.spell
                 });
             case "learnSpell":
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Learn New Spell",
+                    searchTitle: game.i18n.format("BW.character.addNew", {type: game.i18n.localize("ITEM.TypeSpell")}),
                     itemType: "spell",
-                    itemDataLeft: (i: Spell) => `Origin: ${i.system.origin.titleCase()}`,
-                    itemDataMid: (i: Spell) => `Impetus: ${i.system.impetus.titleCase()}`,
+                    itemDataLeft: (i: Spell) => `${game.i18n.localize("BW.spell.origin")}: ${i.system.origin.titleCase()}`,
+                    itemDataMid: (i: Spell) => `${game.i18n.localize("BW.spell.impetus")}: ${i.system.impetus.titleCase()}`,
                     baseData: { inPracticals: true },
                     forcedData: {
                         inPracticals: true
@@ -278,17 +301,20 @@ export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharact
             case "addGear":
                 return addNewItem({
                     actor: this.actor,
-                    searchTitle: "Add New Gear",
+                    searchTitle: game.i18n.format("BW.character.addNew", {type: game.i18n.localize("BW.character.gear")}),
                     itemTypes: ["melee weapon", "ranged weapon", "armor", "possession", "property" ],
                     itemDataLeft: (_: Item) => "",
-                    itemDataMid: (i: Item) => `Type: ${i.type.titleCase()}`,
+                    itemDataMid: (i: Item) =>
+                        game.i18n.localize('BW.type')
+                        + ": "
+                        + game.i18n.localize(`ITEM.Type${i.type.titleCase()}`),
                     baseData: { traittype: id },
                     img: constants.defaultImages[id]
                 });
             case "delItem":
                 return Dialog.confirm({
-                    title: "Confirm Deletion",
-                    content: "<p>You are about to delete an item from the actor's sheet. Are you sure?</p>",
+                    title: game.i18n.localize("BW.dialog.confirmDelete"),
+                    content: `<p>${game.i18n.localize("BW.dialog.confirmDeleteTooltip")}</p>`,
                     yes: () => this.actor.deleteEmbeddedDocuments("Item", [id]),
                     no: () => void 0
                 });

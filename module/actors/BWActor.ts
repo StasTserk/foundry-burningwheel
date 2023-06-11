@@ -298,20 +298,22 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
                     a.healthFortePenalty || 0);
                 clumsyWeight.stealthyPenalty = Math.max(clumsyWeight.stealthyPenalty,
                     a.stealthyPenalty || 0);
+                clumsyWeight.swimmingPenalty = Math.max(clumsyWeight.swimmingPenalty,
+                    a.swimmingPenalty || 0);
             }
             if (a.hasLeftArm || a.hasRightArm) {
                 clumsyWeight.agilityPenalty = Math.max(clumsyWeight.agilityPenalty,
                     a.agilityPenalty || 0);
                 clumsyWeight.throwingShootingPenalty = Math.max(clumsyWeight.throwingShootingPenalty,
                     a.throwingShootingPenalty || 0);
+                clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
+                    a.climbingPenalty || 0);
             }
             if (a.hasLeftLeg || a.hasRightLeg) {
                 clumsyWeight.speedDiePenalty = Math.max(clumsyWeight.speedDiePenalty,
                     a.speedDiePenalty || 0);
                 clumsyWeight.speedObPenalty = Math.max(clumsyWeight.speedObPenalty,
                     a.speedObPenalty || 0);
-                clumsyWeight.climbingPenalty = Math.max(clumsyWeight.climbingPenalty,
-                    a.climbingPenalty || 0);
             }
 
 
@@ -346,7 +348,16 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
         this._addRollModifier("health", { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier }, true);
         this._addRollModifier("forte", { obstacle: clumsyWeight.healthFortePenalty, ...baseModifier }, true);
         this._addRollModifier("stealthy", { obstacle: clumsyWeight.stealthyPenalty, ...baseModifier }, true);
-        this._addRollModifier("swimming", { obstacle: clumsyWeight.swimmingPenalty, ...baseModifier }, true);
+
+        const swimmingModifier = {
+            label: "Armor Swimming Penalty",
+            obstacle: clumsyWeight.swimmingPenalty,
+            optional: true
+        };
+        this._addRollModifier("forte", swimmingModifier, true);
+        this._addRollModifier("power", swimmingModifier, true);
+        this._addRollModifier("speed", swimmingModifier, true);
+
         this._addRollModifier(
             "all",
             { obstacle: clumsyWeight.untrainedAll, label: "Untrained Armor Penalty", optional: true },

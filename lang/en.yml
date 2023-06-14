@@ -187,6 +187,10 @@ BW:
     speedDiePenalty: Speed Die Penalty
     climbingPenalty: Climbing Penalty
     swimmingPenalty: Swimming Penalty
+    armorClumsyWeight: Armor Clumsy Weight
+    armorSwimmingPenalty: Armor Swimming Penalty
+    untrainedArmorPenalty: Untrained Armor Penalty
+    untrainedArmor: Untrained Armor
   possession:
     toolkit: Toolkit
     expended: Expended

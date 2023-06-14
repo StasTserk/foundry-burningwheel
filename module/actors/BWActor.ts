@@ -333,7 +333,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
         });
 
         if (charData) { charData.clumsyWeight = clumsyWeight; }
-        const baseModifier = { optional: true, label: "Armor Clumsy Weight" };
+        const baseModifier = { optional: true, label: game.i18n.localize('BW.armor.armorClumsyWeight') };
         this._addRollModifier("climbing", { obstacle: clumsyWeight.climbingPenalty, ...baseModifier }, true);
         this._addRollModifier("perception", { obstacle: clumsyWeight.helmetObPenalty,  ...baseModifier }, true);
         this._addRollModifier("observation", { obstacle: clumsyWeight.helmetObPenalty, ...baseModifier }, true);
@@ -350,7 +350,7 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
         this._addRollModifier("stealthy", { obstacle: clumsyWeight.stealthyPenalty, ...baseModifier }, true);
 
         const swimmingModifier = {
-            label: "Armor Swimming Penalty",
+            label: game.i18n.localize('BW.armor.armorSwimmingPenalty'),
             obstacle: clumsyWeight.swimmingPenalty,
             optional: true
         };
@@ -360,16 +360,16 @@ export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BW
 
         this._addRollModifier(
             "all",
-            { obstacle: clumsyWeight.untrainedAll, label: "Untrained Armor Penalty", optional: true },
+            { obstacle: clumsyWeight.untrainedAll, label: game.i18n.localize('BW.armor.untrainedArmorPenalty'), optional: true },
             true);
 
         this._addRollModifier(
             "health",
-            { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
+            { obstacle: clumsyWeight.untrainedHealth, label: game.i18n.localize('BW.armor.untrainedArmor'), optional: true },
             true);
         this._addRollModifier(
             "forte",
-            { obstacle: clumsyWeight.untrainedHealth, label: "Untrained Armor", optional: true },
+            { obstacle: clumsyWeight.untrainedHealth, label: game.i18n.localize('BW.armor.untrainedArmor'), optional: true },
             true);
     }
 

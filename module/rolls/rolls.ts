@@ -16,6 +16,7 @@ import { NpcSheet } from "../actors/sheets/NpcSheet.js";
 import { Possession } from "../items/possession.js";
 import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
 import { ModifierDialog } from "../dialogs/ModifierDialog.js";
+import { AstrologyDie } from "./customRolls.js";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {
@@ -460,41 +461,6 @@ export function mergePartials<T extends RollDialogData>(target: Partial<T>, sour
     }
 
     return Object.assign(target, source);
-}
-
-export class AstrologyDie extends Die {
-    constructor({ diceNumber, target }: { diceNumber: number, target: number}) {
-        super({ 
-            number: diceNumber,
-            faces: 6,
-            modifiers: [
-                "x",
-                `cs>${target}`,
-                "cf1"
-            ],
-            options: {}
-        });
-    }
-    explode(_modifier: string): void {
-        let checked = 0;
-        while ( checked < this.results.length ) {
-            const r = this.results[checked];
-            checked++;
-            if (!r.active) continue;
-      
-            if (r.result === 1 || r.result === 6) {
-                r.exploded = true;
-                this.roll();
-            }
-        }
-    }
-    countFailures(_modifier: string): void {
-        for (const r of this.results) {
-            if (r.result === 1) {
-                r.count = -1;
-            }
-        }
-    }
 }
 
 export interface RollData {

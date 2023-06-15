@@ -20,7 +20,7 @@ declare type ComparisonString = "=" | "<" | ">" | "<=" | ">=";
  * @param {string[]} termData.modifiers     An array of modifiers applied to the results
  * @param {object} termData.options         Additional options that modify the term
  */
-declare class DiceTerm {
+declare class DiceTerm extends RollTerm{
     constructor(termData?: {number?: number =1, faces?: number =6, modifiers?: string[]=[], options?:any={}}={})
 
     /**
@@ -169,7 +169,7 @@ declare class DiceTerm {
      * @param {string} expression
      * @return {RegExpMatchArray|null}
      */
-    static matchTerm(expression: string): RegExpMatchArray | null
+    static matchTerm(expression: string, { imputeNumber = true } = {}): RegExpMatchArray | null
 
     /**
      * Create a "fake" dice term from a pre-defined array of results
@@ -197,4 +197,11 @@ declare class DiceTerm {
      * @return {DiceTerm}     A reconstructed DiceTerm from the provided JSON
      */
     static fromJSON(json: string): DiceTerm
+
+  /**
+   * Construct a term of this type given a matched regular expression array.
+   * @param {RegExpMatchArray} match          The matched regular expression array
+   * @return {DiceTerm}                      The constructed term
+   */
+  static fromMatch(match: RegExpMatchArray): DiceTerm
 }

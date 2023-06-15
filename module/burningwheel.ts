@@ -19,11 +19,15 @@ import { BWSettingSheet } from "./actors/sheets/BWSettingSheet.js";
 import * as dialogs from "./dialogs/index.js";
 import { TypeMissing } from "../types/index.js";
 
+import { BWRoll } from "../module/rolls/customRolls.js";
+
 Hooks.once("init", async () => {
     CONFIG.Actor.documentClass = actorConstructor;
     CONFIG.Item.documentClass = itemConstructor;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     game.burningwheel = {} as any;
+
+    CONFIG.Dice.rolls = [BWRoll];
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet(constants.systemName, BWCharacterSheet, {

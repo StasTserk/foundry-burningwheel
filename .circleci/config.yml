@@ -2,17 +2,17 @@ version: 2.1
 orbs:
   node: circleci/node@4.1.0
 jobs:
-  build-and-test:
+  build:
     executor:
       name: node/default
-      tag: '14.17.0'
+      tag: '18.16.1'
     steps:
       - checkout
       - node/install-packages:
           cache-version: v3
           override-ci-command: npm install
       - run: sudo npm install -g gulp
-      - run: gulp build
+      - run: npm run build
       - run: mkdir ./artifacts
       - persist_to_workspace:
           root: ./
@@ -32,12 +32,12 @@ jobs:
             VERSION=${CIRCLE_TAG}
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
 workflows:
-    build-and-test:
+    build:
       jobs:
-        - build-and-test
+        - build
     publish-github-release:
       jobs:
-        - build-and-test:
+        - build:
             filters:
               branches:
                 ignore: /.*/
@@ -45,7 +45,7 @@ workflows:
                 only: /^\d+\.\d+\.\d+$/
         - publish-github-release:
             requires:
-              - build-and-test
+              - build
             filters:
               branches:
                 ignore: /.*/

@@ -9,7 +9,7 @@ That said, I plan on maintaining at least some coherence in the code style and q
 If you are interested in writing some cool new feature or quality of life improvement for the system, first step is to build the project.
  - Ensure Node.js and NPM are installed
  - Clone the project somehwere locally
- - Run `npm install` then `gulp` to build the project
+ - Run `npm install` then `npm run build-dev` to build the project. `npm run watch` if you want changes live as you develop.
  - Have a look at the newly created `foundryConfig.json`. All build artifacts are deployed to the path indicated there.
  Do with that what you will (set up a symlink, change to the foundry systems folder, whatever floats your boat)
  - Once the generated files make their way over to `wherever your foundry exists/data/systems/burningwheel` test that the system starts correctly

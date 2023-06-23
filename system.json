@@ -11,13 +11,13 @@
         }
     ],
     "esmodules": [
-        "module/burningwheel.js"
+        "burningwheel.js"
     ],
     "scripts": [
         "lib/select2/select2.min.js"
     ],
     "styles": [
-        "styles/burningwheel.css",
+        "burningwheel.css",
         "lib/select2/select2.min.css"
     ],
     "languages": [

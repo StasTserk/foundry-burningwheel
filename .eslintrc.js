@@ -16,6 +16,10 @@ module.exports = {
     "plugins": [
         "@typescript-eslint"
     ],
+    "ignorePatterns": [
+        "webpack.config.js",
+        ".eslintrc.js"
+    ],
     "rules": {
         "no-case-declarations": "off",
         "@typescript-eslint/no-unused-vars": [

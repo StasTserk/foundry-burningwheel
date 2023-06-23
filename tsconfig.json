@@ -8,11 +8,11 @@
             "select2",
             "handlebars"
         ],
-        "typeRoots": [ "./types", "./types/collections" ],
-		"target": "ES2020",
-		"lib": [
-			"DOM",
-			"es2020"
+        "typeRoots": [ "./types", "./types/collections", "node_modules", "node_modules/@types" ],
+        "target": "ES2020",
+        "lib": [
+            "DOM",
+            "es2020"
         ],
         "outDir": "bin",
         "noUnusedLocals": true,

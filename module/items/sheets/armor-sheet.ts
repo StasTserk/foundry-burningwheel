@@ -9,8 +9,9 @@ export class ArmorSheet extends BWItemSheet {
     getData(): MeleeSheetData {
         const data = super.getData() as MeleeSheetData;
         data.armorLocations = armorLocationSelect;
-        data.armorQuality = {...gearQualitySelect};
-        delete data.armorQuality.basic;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { basic, ...rest } = {...gearQualitySelect};
+        data.armorQuality = rest;
         return data;
     }
 }

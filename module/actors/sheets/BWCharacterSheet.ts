@@ -228,7 +228,7 @@ export class BWCharacterSheet extends BWActorSheet<
         return addNewItem({
             actor: actor,
             searchTitle: game.i18n.format('BW.character.learnNew', {
-                type: game.i18n.localize('ITEM.TypeSkill'),
+                type: game.i18n.localize('TYPES.Item.Skill'),
             }),
             itemType: 'skill',
             itemDataLeft: (i: Skill) => i.system.restrictions.titleCase(),
@@ -263,7 +263,7 @@ export class BWCharacterSheet extends BWActorSheet<
             case 'addBelief':
                 options = {
                     name: game.i18n.format('BW.newItem', {
-                        type: game.i18n.localize('ITEM.TypeBelief'),
+                        type: game.i18n.localize('TYPES.Item.Belief'),
                     }),
                     type: 'belief',
                     data: {},
@@ -277,7 +277,7 @@ export class BWCharacterSheet extends BWActorSheet<
             case 'addInstinct':
                 options = {
                     name: game.i18n.format('BW.newItem', {
-                        type: game.i18n.localize('ITEM.TypeInstinct'),
+                        type: game.i18n.localize('TYPES.Item.Instinct'),
                     }),
                     type: 'instinct',
                     data: {},
@@ -291,7 +291,7 @@ export class BWCharacterSheet extends BWActorSheet<
             case 'addRelationship':
                 options = {
                     name: game.i18n.format('BW.newItem', {
-                        type: game.i18n.localize('ITEM.TypeRelationship'),
+                        type: game.i18n.localize('TYPES.Item.Relationship'),
                     }),
                     type: 'relationship',
                     data: { building: true },
@@ -305,7 +305,7 @@ export class BWCharacterSheet extends BWActorSheet<
             case 'addReputation':
                 options = {
                     name: game.i18n.format('BW.newItem', {
-                        type: game.i18n.localize('ITEM.TypeReputation'),
+                        type: game.i18n.localize('TYPES.Item.Reputation'),
                     }),
                     type: 'reputation',
                     data: {},
@@ -319,7 +319,7 @@ export class BWCharacterSheet extends BWActorSheet<
             case 'addAffiliation':
                 options = {
                     name: game.i18n.format('BW.newItem', {
-                        type: game.i18n.localize('ITEM.TypeAffiliation'),
+                        type: game.i18n.localize('TYPES.Item.Affiliation'),
                     }),
                     type: 'affiliation',
                     data: {},
@@ -334,7 +334,7 @@ export class BWCharacterSheet extends BWActorSheet<
                 return addNewItem({
                     actor: this.actor,
                     searchTitle: game.i18n.format('BW.character.addNew', {
-                        type: game.i18n.localize('ITEM.TypeSkill'),
+                        type: game.i18n.localize('TYPES.Item.Skill'),
                     }),
                     itemType: 'skill',
                     itemDataLeft: (i: Skill) =>
@@ -351,7 +351,7 @@ export class BWCharacterSheet extends BWActorSheet<
                 return addNewItem({
                     actor: this.actor,
                     searchTitle: game.i18n.format('BW.character.addNew', {
-                        type: game.i18n.localize('ITEM.TypeTrait'),
+                        type: game.i18n.localize('TYPES.Item.Trait'),
                     }),
                     itemType: 'trait',
                     itemDataLeft: (i: Trait) =>
@@ -365,7 +365,7 @@ export class BWCharacterSheet extends BWActorSheet<
                 return addNewItem({
                     actor: this.actor,
                     searchTitle: game.i18n.format('BW.character.addNew', {
-                        type: game.i18n.localize('ITEM.TypeSpell'),
+                        type: game.i18n.localize('TYPES.Item.Spell'),
                     }),
                     itemType: 'spell',
                     itemDataLeft: (i: Spell) =>
@@ -383,7 +383,7 @@ export class BWCharacterSheet extends BWActorSheet<
                 return addNewItem({
                     actor: this.actor,
                     searchTitle: game.i18n.format('BW.character.addNew', {
-                        type: game.i18n.localize('ITEM.TypeSpell'),
+                        type: game.i18n.localize('TYPES.Item.Spell'),
                     }),
                     itemType: 'spell',
                     itemDataLeft: (i: Spell) =>
@@ -417,7 +417,7 @@ export class BWCharacterSheet extends BWActorSheet<
                     itemDataMid: (i: Item) =>
                         game.i18n.localize('BW.type') +
                         ': ' +
-                        game.i18n.localize(`ITEM.Type${i.type.titleCase()}`),
+                        game.i18n.localize(`TYPES.Item.${i.type.titleCase()}`),
                     baseData: { traittype: id },
                     img: constants.defaultImages[id],
                 });

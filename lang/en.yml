@@ -1,22 +1,23 @@
-ACTOR:
-  TypeCharacter: Player Character
-  TypeNpc: Non-Player Character
-  TypeSetting: Setting
-ITEM:
-  TypeBelief: Belief
-  TypeInstinct: Instinct
-  TypeTrait: Trait
-  TypeSkill: Skill
-  TypeRelationship: Relationship
-  TypeReputation: Reputation
-  TypeAffiliation: Affiliation
-  TypePossession: Possession
-  TypeProperty: Property
-  TypeMelee Weapon: Melee Weapon
-  TypeRanged Weapon: Ranged Weapon
-  TypeArmor: Armor
-  TypeSpell: Spell
-  TypeLifepath: Lifepath
+TYPES:
+  Actor:
+    Character: Player Character
+    Npc: Non-Player Character
+    Setting: Setting
+  Item:
+    Belief: Belief
+    Instinct: Instinct
+    Trait: Trait
+    Skill: Skill
+    Relationship: Relationship
+    Reputation: Reputation
+    Affiliation: Affiliation
+    Possession: Possession
+    Property: Property
+    Melee Weapon: Melee Weapon
+    Ranged Weapon: Ranged Weapon
+    Armor: Armor
+    Spell: Spell
+    Lifepath: Lifepath
 BW:
   fate: Fate
   fateAcronym: F

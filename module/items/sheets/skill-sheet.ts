@@ -1,6 +1,6 @@
-import { skillTypeSelect } from "../../constants";
-import { Skill } from "../skill";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
+import { skillTypeSelect } from '../../constants';
+import { Skill } from '../skill';
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class SkillSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {
@@ -8,7 +8,7 @@ export class SkillSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/skill.hbs";
+        return 'systems/burningwheel/templates/items/skill.hbs';
     }
 
     getData(): SkillSheetData {

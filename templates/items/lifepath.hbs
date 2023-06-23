@@ -1,68 +1,122 @@
-<form autocomplete="off" class="flex-column lifepath-sheet">
-    <div class="flex-row">
+<form autocomplete='off' class='flex-column lifepath-sheet'>
+    <div class='flex-row'>
         {{#if showImage}}
-        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+            <img
+                class='item-image'
+                src='{{item.img}}'
+                title='{{item.name}}'
+                data-edit='img'
+            />
         {{/if}}
-        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+        <input
+            name='name'
+            type='text'
+            value='{{item.name}}'
+            class='item-sheet-name'
+        />
     </div>
-    <div class="item-form-group">
-        <label class="item-setting-label">
-            {{localize "BW.lifepath.time"}}
+    <div class='item-form-group'>
+        <label class='item-setting-label'>
+            {{localize 'BW.lifepath.time'}}
         </label>
-        <input type="number" name="system.time" value="{{system.time}}">
-        <label class="item-setting-label">
-            {{localize "BW.resources"}}
+        <input type='number' name='system.time' value='{{system.time}}' />
+        <label class='item-setting-label'>
+            {{localize 'BW.resources'}}
         </label>
-        <input type="number" name="system.resources" value="{{system.resources}}">
-        <label class="item-setting-label">
-            {{localize "BW.lifepath.statBoost"}}
+        <input
+            type='number'
+            name='system.resources'
+            value='{{system.resources}}'
+        />
+        <label class='item-setting-label'>
+            {{localize 'BW.lifepath.statBoost'}}
         </label>
-        <select name="system.statBoost" value="{{system.statBoost}}" >
+        <select name='system.statBoost' value='{{system.statBoost}}'>
             {{#select system.statBoost}}
-            <option value="none">{{localize "BW.lifepath.none"}}</option>
-            <option value="mental">{{localize "BW.lifepath.mental"}}</option>
-            <option value="physical">{{localize "BW.lifepath.physical"}}</option>
-            <option value="either">{{localize "BW.lifepath.either"}}</option>
-            <option value="both">{{localize "BW.lifepath.both"}}</option>
-            <option value="phystwo">{{localize "BW.lifepath.phystwo"}}</option>
-            <option value="menttwo">{{localize "BW.lifepath.menttwo"}}</option>
+                <option value='none'>{{localize 'BW.lifepath.none'}}</option>
+                <option value='mental'>{{localize
+                        'BW.lifepath.mental'
+                    }}</option>
+                <option value='physical'>{{localize
+                        'BW.lifepath.physical'
+                    }}</option>
+                <option value='either'>{{localize
+                        'BW.lifepath.either'
+                    }}</option>
+                <option value='both'>{{localize 'BW.lifepath.both'}}</option>
+                <option value='phystwo'>{{localize
+                        'BW.lifepath.phystwo'
+                    }}</option>
+                <option value='menttwo'>{{localize
+                        'BW.lifepath.menttwo'
+                    }}</option>
             {{/select}}
         </select>
-        <div class="pill-toggle min-content">
-            <input id="{{item.id}}-sub-stats" type="checkbox" class="item-setting-checkbox hidden" name="system.subtractStats" {{checked system.subtractStats}}>
-            <label for="{{item.id}}-sub-stats" class="item-setting-toggle">{{localize "BW.lifepath.subtractStats"}}</label>
+        <div class='pill-toggle min-content'>
+            <input
+                id='{{item.id}}-sub-stats'
+                type='checkbox'
+                class='item-setting-checkbox hidden'
+                name='system.subtractStats'
+                {{checked system.subtractStats}}
+            />
+            <label
+                for='{{item.id}}-sub-stats'
+                class='item-setting-toggle'
+            >{{localize 'BW.lifepath.subtractStats'}}</label>
         </div>
         <div></div>
-        <label class="item-setting-label">
-            {{localize "BW.lifepath.leads"}}
+        <label class='item-setting-label'>
+            {{localize 'BW.lifepath.leads'}}
         </label>
-        <input type="text" name="system.leads" value="{{system.leads}}" class="triple-wide">
-        <label class="item-setting-label">
-            {{localize "BW.lifepath.skillPoints"}}
+        <input
+            type='text'
+            name='system.leads'
+            value='{{system.leads}}'
+            class='triple-wide'
+        />
+        <label class='item-setting-label'>
+            {{localize 'BW.lifepath.skillPoints'}}
         </label>
-        <input type="number" name="system.skillPoints" value="{{system.skillPoints}}">
-        <label class="item-setting-label">
-            {{localize "BW.lifepath.generalPoints"}}
+        <input
+            type='number'
+            name='system.skillPoints'
+            value='{{system.skillPoints}}'
+        />
+        <label class='item-setting-label'>
+            {{localize 'BW.lifepath.generalPoints'}}
         </label>
-        <input type="number" name="system.generalPoints" value="{{system.generalPoints}}">
+        <input
+            type='number'
+            name='system.generalPoints'
+            value='{{system.generalPoints}}'
+        />
     </div>
-    <label class="item-list-label">{{localize "BW.lifepath.skillList"}}</label>
-    <textarea name="system.skillList">{{system.skillList}}</textarea>
-    <hr>
-    <div class="item-form-group">
-        <label class="item-setting-label">
-            {{localize "BW.lifepath.traitPoints"}}
+    <label class='item-list-label'>{{localize 'BW.lifepath.skillList'}}</label>
+    <textarea name='system.skillList'>{{system.skillList}}</textarea>
+    <hr />
+    <div class='item-form-group'>
+        <label class='item-setting-label'>
+            {{localize 'BW.lifepath.traitPoints'}}
         </label>
-        <input type="number" name="system.traitPoints" value="{{system.traitPoints}}">
+        <input
+            type='number'
+            name='system.traitPoints'
+            value='{{system.traitPoints}}'
+        />
     </div>
-    <label class="item-list-label">{{localize "BW.lifepath.traitList"}}</label>
-    <textarea name="system.traitList">{{system.traitList}}</textarea>
-    <hr>
-    <label class="item-list-label">{{localize "BW.lifepath.restrictions"}}</label>
-    <textarea name="system.restrictions">{{system.restrictions}}</textarea>
-    <hr>
-    <label class="item-list-label">{{localize "BW.lifepath.requirements"}}</label>
-    <textarea name="system.requirements">{{system.requirements}}</textarea>
-    <label class="item-list-label">{{localize "BW.lifepath.note"}}</label>
-    <textarea name="system.note">{{system.note}}</textarea>
+    <label class='item-list-label'>{{localize 'BW.lifepath.traitList'}}</label>
+    <textarea name='system.traitList'>{{system.traitList}}</textarea>
+    <hr />
+    <label class='item-list-label'>{{localize
+            'BW.lifepath.restrictions'
+        }}</label>
+    <textarea name='system.restrictions'>{{system.restrictions}}</textarea>
+    <hr />
+    <label class='item-list-label'>{{localize
+            'BW.lifepath.requirements'
+        }}</label>
+    <textarea name='system.requirements'>{{system.requirements}}</textarea>
+    <label class='item-list-label'>{{localize 'BW.lifepath.note'}}</label>
+    <textarea name='system.note'>{{system.note}}</textarea>
 </form>

@@ -1,10 +1,12 @@
-import { BWItem, DisplayClass } from "./item";
+import { BWItem, DisplayClass } from './item';
 
 export class Reputation extends BWItem<ReputationData> {
-    type: "reputation";
+    type: 'reputation';
     prepareData(): void {
         super.prepareData();
-        this.system.cssClass = this.system.infamous ? "reputation-infamous" : "reputation-famous";
+        this.system.cssClass = this.system.infamous
+            ? 'reputation-infamous'
+            : 'reputation-famous';
     }
 }
 

@@ -1,35 +1,45 @@
-import { Ability, BWActor } from "../actors/BWActor";
-import { difficultyGroup, TestString } from "../helpers";
-import * as constants from "../constants";
-import { Skill } from "../items/skill";
-import { BWCharacter } from "../actors/BWCharacter";
-import { simpleBroadcast } from "../chat";
-import { gmOnly } from "../decorators";
+import { Ability, BWActor } from '../actors/BWActor';
+import { difficultyGroup, TestString } from '../helpers';
+import * as constants from '../constants';
+import { Skill } from '../items/skill';
+import { BWCharacter } from '../actors/BWCharacter';
+import { simpleBroadcast } from '../chat';
+import { gmOnly } from '../decorators';
 
 export class ModifierDialog extends Application {
-
-    mods: {name: string, amount: number }[];
+    mods: { name: string; amount: number }[];
     help: HelpRecord[];
 
-    constructor(mods?: {name: string, amount: number}[], help?: HelpRecord[]) {
+    constructor(
+        mods?: { name: string; amount: number }[],
+        help?: HelpRecord[]
+    ) {
         super({
-            template: "systems/burningwheel/templates/dialogs/mods-and-help.hbs",
+            template:
+                'systems/burningwheel/templates/dialogs/mods-and-help.hbs',
             popOut: false,
         });
         this.mods = mods || [];
         this.help = help || [];
     }
 
-    addHelp({ dice, skillId, path, title, actor, helpedWith }: AddHelpOptions): void {
+    addHelp({
+        dice,
+        skillId,
+        path,
+        title,
+        actor,
+        helpedWith,
+    }: AddHelpOptions): void {
         const entry: HelpRecord = {
             title,
             dice: dice >= 5 ? 2 : 1,
             skillId,
             path,
             actorId: actor.id,
-            helpedWith
+            helpedWith,
         };
-        if (this.help.some(e => e.actorId === actor.id)) {
+        if (this.help.some((e) => e.actorId === actor.id)) {
             return; // each person can only help once.
         }
         this.help.push(entry);
@@ -44,29 +54,46 @@ export class ModifierDialog extends Application {
             this._grantTests(obstacle, success);
         } else {
             // if we're not the GM, just send a message over the socket that advancement needs to be handed out.
-            game.socket.emit(constants.socketName, { type: "grantHelpTests", obstacle, success });
+            game.socket.emit(constants.socketName, {
+                type: 'grantHelpTests',
+                obstacle,
+                success,
+            });
         }
     }
 
     @gmOnly
     private _grantTests(obstacle: number, success: boolean): void {
-        const testListing: { title?: string, text?: string }[] = [];
+        const testListing: { title?: string; text?: string }[] = [];
         this.help.forEach((entry) => {
-            let name = "";
-            let diff: TestString = "Routine";
+            let name = '';
+            let diff: TestString = 'Routine';
             const actor = game.actors?.get(entry.actorId) as BWActor;
 
-            if (actor.type === "character") {
+            if (actor.type === 'character') {
                 if (entry.path) {
-                    name = entry.path.substring(entry.path.indexOf('.') + 1).titleCase();
-                    const ability = getProperty(actor.system, entry.path.replace('system.', '')) as Ability & { name?: string };
+                    name = entry.path
+                        .substring(entry.path.indexOf('.') + 1)
+                        .titleCase();
+                    const ability = getProperty(
+                        actor.system,
+                        entry.path.replace('system.', '')
+                    ) as Ability & { name?: string };
                     diff = difficultyGroup(ability.exp, obstacle);
-                    if (name === "Custom1" || name === "Custom2") {
+                    if (name === 'Custom1' || name === 'Custom2') {
                         name = ability.name || name;
                     }
-                    (actor as BWCharacter).addStatTest(ability, name, entry.path, diff, success);
+                    (actor as BWCharacter).addStatTest(
+                        ability,
+                        name,
+                        entry.path,
+                        diff,
+                        success
+                    );
                 } else {
-                    const skill = game.actors?.get(entry.actorId)?.items.get(entry.skillId || "") as Skill;
+                    const skill = game.actors
+                        ?.get(entry.actorId)
+                        ?.items.get(entry.skillId || '') as Skill;
                     diff = difficultyGroup(skill.system.exp, obstacle);
                     skill.addTest(diff);
                     name = skill.name;
@@ -74,7 +101,7 @@ export class ModifierDialog extends Application {
             }
             testListing.push({
                 title: entry.title,
-                text: `A ${diff} ${name} test at Ob ${obstacle}`
+                text: `A ${diff} ${name} test at Ob ${obstacle}`,
             });
         });
         this.help = [];
@@ -84,30 +111,31 @@ export class ModifierDialog extends Application {
 
         if (testListing.length) {
             simpleBroadcast({
-                title: "Tests Granted for Helping",
-                mainText: "For their assistance in the test, the following tests have been granted.",
-                extraData: testListing
+                title: 'Tests Granted for Helping',
+                mainText:
+                    'For their assistance in the test, the following tests have been granted.',
+                extraData: testListing,
             });
         }
     }
 
     get helpDiceTotal(): number {
-        return this.help.map(h => h.dice).reduce((t, d) => t + d, 0);
+        return this.help.map((h) => h.dice).reduce((t, d) => t + d, 0);
     }
 
     activateListeners(html: JQuery): void {
-        html.find('input[name="newMod"]').on('change', e => {
+        html.find('input[name="newMod"]').on('change', (e) => {
             const target = $(e.target);
             const name = target.val() as string;
-            target.val("");
-            this.mods.push({ name, amount: 0});
+            target.val('');
+            this.mods.push({ name, amount: 0 });
             this.render();
         });
 
-        html.find('input.mod-name').on('change', e => {
+        html.find('input.mod-name').on('change', (e) => {
             const target = $(e.target);
             const name = target.val() as string;
-            const index = parseInt(e.target.dataset.index || "0");
+            const index = parseInt(e.target.dataset.index || '0');
             if (name) {
                 this.mods[index].name = name;
             } else {
@@ -118,19 +146,19 @@ export class ModifierDialog extends Application {
             this.render();
         });
 
-        html.find('input.mod-amount').on('change', e => {
+        html.find('input.mod-amount').on('change', (e) => {
             const target = $(e.target);
             const amount = parseInt(target.val() as string) || 0;
-            const index = parseInt(e.target.dataset.index || "0");
+            const index = parseInt(e.target.dataset.index || '0');
             this.mods[index].amount = amount;
             this.persistData();
             this.syncData();
             this.render();
         });
 
-        html.find('i[data-action="delete"]').on('click', e => {
+        html.find('i[data-action="delete"]').on('click', (e) => {
             const target = e.currentTarget;
-            const index = parseInt(target.dataset.index || "0");
+            const index = parseInt(target.dataset.index || '0');
             this.help.splice(index, 1);
             this.persistData();
             this.syncData();
@@ -139,8 +167,8 @@ export class ModifierDialog extends Application {
     }
 
     activateSocketListeners(): void {
-        game.socket.on(constants.socketName, ({type, mods, help}) => {
-            if (type === "modifierData") {
+        game.socket.on(constants.socketName, ({ type, mods, help }) => {
+            if (type === 'modifierData') {
                 this.mods = mods;
                 this.help = help;
                 this.persistData();
@@ -148,13 +176,13 @@ export class ModifierDialog extends Application {
             }
         });
 
-        game.socket.on(constants.socketName, ({type, obstacle, success}) => {
-            if (type === "grantHelpTests" && game.user?.isGM) {
+        game.socket.on(constants.socketName, ({ type, obstacle, success }) => {
+            if (type === 'grantHelpTests' && game.user?.isGM) {
                 this._grantTests(obstacle, success);
             }
         });
     }
-    
+
     @gmOnly
     persistData(): void {
         game.settings.set(
@@ -162,16 +190,17 @@ export class ModifierDialog extends Application {
             constants.settings.obstacleList,
             JSON.stringify({
                 mods: this.mods,
-                help: this.help
-            }));
+                help: this.help,
+            })
+        );
     }
 
     syncData(): void {
-        game.socket.emit(
-            constants.socketName, {
-                type: "modifierData",
-                mods: this.mods,
-                help: this.help });
+        game.socket.emit(constants.socketName, {
+            type: 'modifierData',
+            mods: this.mods,
+            help: this.help,
+        });
     }
 
     getData(): DifficultyDialogData {
@@ -188,7 +217,7 @@ export class ModifierDialog extends Application {
 interface DifficultyDialogData {
     editable: boolean;
     extendedTest: boolean;
-    modifiers: { name: string; amount: number; }[];
+    modifiers: { name: string; amount: number }[];
     help: HelpRecord[];
     showHelp: boolean;
 }

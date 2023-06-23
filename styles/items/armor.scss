@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .armor-sheet {
     .armor-location-group {
@@ -19,16 +19,21 @@
             width: 10em;
             place-content: space-evenly;
         }
-    
+
         .armor-location-checkbox:checked ~ .armor-location-details {
             display: grid;
         }
 
-        .armor-damage-left, .armor-damage-right {
+        .armor-damage-left,
+        .armor-damage-right {
             display: none;
         }
-        .armor-checkbox-left:checked ~ .armor-location-details .armor-damage-left,
-        .armor-checkbox-right:checked ~ .armor-location-details .armor-damage-right {
+        .armor-checkbox-left:checked
+            ~ .armor-location-details
+            .armor-damage-left,
+        .armor-checkbox-right:checked
+            ~ .armor-location-details
+            .armor-damage-right {
             display: block;
         }
 
@@ -38,7 +43,7 @@
         .armor-location-label {
             text-align: center;
             font-size: 1em;
-            background: linear-gradient(rgba(black, .05), rgba(black, 0.25));
+            background: linear-gradient(rgba(black, 0.05), rgba(black, 0.25));
             border: 2px solid darkgrey;
             border-radius: 3px;
             padding: 1px 3px;

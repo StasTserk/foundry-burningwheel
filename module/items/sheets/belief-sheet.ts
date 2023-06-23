@@ -1,4 +1,4 @@
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class BeliefSheet extends BWItemSheet {
     getData(): BWItemSheetData {
@@ -7,6 +7,6 @@ export class BeliefSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/belief.hbs";
+        return 'systems/burningwheel/templates/items/belief.hbs';
     }
 }

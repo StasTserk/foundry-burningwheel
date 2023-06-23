@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 .npc {
     &.ctrl-modified {
         .modifiable {
@@ -84,7 +84,7 @@
                     height: 100%;
                 }
             }
-        
+
             .artha-points {
                 flex: 0 0 9em;
                 place-content: space-evenly;
@@ -95,7 +95,7 @@
                     background-color: transparent;
                 }
                 .artha-label {
-                    font-size: .75em;
+                    font-size: 0.75em;
                     display: block;
                     width: 3em;
                     text-align: center;
@@ -105,7 +105,7 @@
                     border: 2px inset black;
                     border-bottom-color: grey;
                     border-right-color: grey;
-                    border-radius: .75em;
+                    border-radius: 0.75em;
                     height: 1.5em;
                     width: 1.5em;
                     font-size: 1.5em;
@@ -113,7 +113,7 @@
                     @include no-number-arrows;
 
                     &:hover {
-                        background-color: rgba(black, .15);
+                        background-color: rgba(black, 0.15);
                     }
                 }
             }
@@ -180,13 +180,13 @@
             line-height: 2em;
             .ptgs-subheader {
                 line-height: 1em;
-                font-size: .75em;
+                font-size: 0.75em;
                 font-weight: normal;
             }
         }
         .ptgs-category {
             font-size: 1.5em;
-            background-color: rgba(black, .1);
+            background-color: rgba(black, 0.1);
 
             select {
                 display: inline-block;
@@ -202,10 +202,12 @@
             }
         }
 
-        .ptgs-input > input[type="number"] {
+        .ptgs-input > input[type='number'] {
             font-size: 1.25em;
         }
-        .ptgs-input, .ptgs-category, .ptgs-header  {
+        .ptgs-input,
+        .ptgs-category,
+        .ptgs-header {
             text-align: center;
             border: 1px solid black;
         }
@@ -214,11 +216,11 @@
     .indented-section {
         height: min-content;
         margin-left: 20px;
-        widtH: 100%;
+        width: 100%;
         .npc-section-label {
             margin-left: -20px;
             &:after {
-                content: "—";
+                content: '—';
             }
         }
         .item-entry {
@@ -228,10 +230,10 @@
                 color: red;
             }
             &:after {
-                content: ",";
+                content: ',';
             }
             &:last-child:after {
-                content: "";
+                content: '';
             }
 
             &.wide {
@@ -239,7 +241,7 @@
             }
 
             &.wound-disabled {
-                color: rgba(80,0,0,.8);
+                color: rgba(80, 0, 0, 0.8);
                 pointer-events: none;
                 font-style: italic;
             }
@@ -292,7 +294,7 @@
                 color: #800;
             }
 
-            input[type="number"] {
+            input[type='number'] {
                 @include no-number-arrows;
                 flex: 0 0 1.5em;
                 height: 1.5em;
@@ -319,7 +321,8 @@
             }
         }
     }
-    .weapon-section, .spell-section {
+    .weapon-section,
+    .spell-section {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -329,7 +332,8 @@
             @include button-like(black);
             height: min-content;
 
-            & > .npc-weapon-name, & > .npc-spell-name {
+            & > .npc-weapon-name,
+            & > .npc-spell-name {
                 width: 100%;
             }
             select {

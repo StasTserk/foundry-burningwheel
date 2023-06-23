@@ -1,18 +1,47 @@
-<form autocomplete="off" class="flex-column">
-    <div class="flex-row">
+<form autocomplete='off' class='flex-column'>
+    <div class='flex-row'>
         {{#if showImage}}
-        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+            <img
+                class='item-image'
+                src='{{item.img}}'
+                title='{{item.name}}'
+                data-edit='img'
+            />
         {{/if}}
-        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+        <input
+            name='name'
+            type='text'
+            value='{{item.name}}'
+            class='item-sheet-name'
+        />
     </div>
-    <div class="item-form-group">
-        <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.rpCost"}}</label>
-        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
-        <div class="pill-toggle min-content">
-            <input id="{{item.id}}-checkbox-isWorkshop" type="checkbox" class="item-setting-checkbox hidden" name="system.isWorkshop" {{checked system.isWorkshop}}>
-            <label for="{{item.id}}-checkbox-isWorkshop" class="item-setting-toggle">{{localize "BW.workshop"}}</label>
+    <div class='item-form-group'>
+        <label
+            for='{{item.id}}-point-cost'
+            class='item-setting-label'
+        >{{localize 'BW.rpCost'}}</label>
+        <input
+            id='{{item.id}}-point-cost'
+            type='number'
+            class='exponent no-arrows wide'
+            name='system.pointCost'
+            value='{{system.pointCost}}'
+            data-dtype='Number'
+        />
+        <div class='pill-toggle min-content'>
+            <input
+                id='{{item.id}}-checkbox-isWorkshop'
+                type='checkbox'
+                class='item-setting-checkbox hidden'
+                name='system.isWorkshop'
+                {{checked system.isWorkshop}}
+            />
+            <label
+                for='{{item.id}}-checkbox-isWorkshop'
+                class='item-setting-toggle'
+            >{{localize 'BW.workshop'}}</label>
         </div>
     </div>
-    <hr/>
-    <textarea name="system.description">{{system.description}}</textarea>
+    <hr />
+    <textarea name='system.description'>{{system.description}}</textarea>
 </form>

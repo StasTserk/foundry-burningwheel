@@ -26,7 +26,7 @@
  * console.log(r.total);    // 22
  */
 declare class Roll {
-    constructor(formula: string, data={})
+    constructor(formula: string, data = {});
 
     /**
      * The original provided data
@@ -38,7 +38,7 @@ declare class Roll {
      * The identified terms of the Roll
      * @type {Array<Roll|DicePool|DiceTerm|number|string>}
      */
-    terms: Roll|DicePool|DiceTerm|number|string[];
+    terms: Roll | DicePool | DiceTerm | number | string[];
 
     /**
      * The original formula before evaluation
@@ -56,7 +56,7 @@ declare class Roll {
      * The evaluated results of the Roll
      * @type {Array<number|string>}
      */
-    results: number|string[];
+    results: number | string[];
 
     /**
      * An internal flag for whether the Roll object has been rolled
@@ -77,7 +77,7 @@ declare class Roll {
      * @param {any[]} args      Arguments passed to the Roll instance constructor
      * @return {Roll}           The constructed Roll instance
      */
-    static create(...args): Roll
+    static create(...args): Roll;
 
     /**
      * Replace referenced data attributes in the roll formula with values from the provided data.
@@ -90,31 +90,35 @@ declare class Roll {
      * @param {boolean} [warn]          Display a warning notification when encountering an un-matched key.
      * @static
      */
-    static replaceFormulaData(formula: string, data: any, {missing, warn=false}: string={})
+    static replaceFormulaData(
+        formula: string,
+        data: any,
+        { missing, warn = false }: string = {}
+    );
 
     /**
      * Return an Array of the individual DiceTerm instances contained within this Roll.
      * @return {DiceTerm[]}
      */
-    get dice(): DiceTerm[]
+    get dice(): DiceTerm[];
 
     /**
      * Return a standardized representation for the displayed formula associated with this Roll.
      * @return {string}
      */
-    get formula(): string
+    get formula(): string;
 
     /**
      * The resulting arithmetic expression after rolls have been evaluated
      * @return {string|null}
      */
-    get result(): string
+    get result(): string;
 
     /**
      * Return the total result of the Roll expression if it has been evaluated, otherwise null
      * @type {number|null}
      */
-    get total(): number | null
+    get total(): number | null;
 
     /**
      * Alter the Roll expression by adding or multiplying the number of dice which are rolled
@@ -123,7 +127,11 @@ declare class Roll {
      * @param {boolean} [multiplyNumeric]  Apply multiplication factor to numeric scalar terms
      * @return {Roll}             The altered Roll expression
      */
-    alter(multiply: number, add: number, {multiplyNumeric=false}: boolean={}): Roll
+    alter(
+        multiply: number,
+        add: number,
+        { multiplyNumeric = false }: boolean = {}
+    ): Roll;
 
     /**
      * Execute the Roll, replacing dice and evaluating the total result
@@ -139,13 +147,13 @@ declare class Roll {
      * console.log(r.result); // 5 + 4 + 2
      * console.log(r.total);  // 11
      */
-    evaluate({minimize=false, maximize=false}: boolean={}): Roll
+    evaluate({ minimize = false, maximize = false }: boolean = {}): Roll;
 
     /**
      * Clone the Roll instance, returning a new Roll instance that has not yet been evaluated
      * @return {Roll}
      */
-    clone(): Roll
+    clone(): Roll;
 
     /**
      * Evaluate and return the Roll expression.
@@ -153,8 +161,8 @@ declare class Roll {
      * @param options Optional parameter informing how the Roll is evaluated.
      * @return {Roll}   The Roll instance, containing evaluated results and the rolled total.
      */
-    roll(options?: Roll.Options & { async: false | undefined }): Roll
-    roll(options?: Roll.Options & { async: true }): Promise<Roll>
+    roll(options?: Roll.Options & { async: false | undefined }): Roll;
+    roll(options?: Roll.Options & { async: true }): Promise<Roll>;
 
     /**
      * Create a new Roll object using the original provided formula and data
@@ -162,7 +170,7 @@ declare class Roll {
      *
      * @return {Roll}    A new Roll object, rolled using the same formula and data
      */
-    reroll(): Roll
+    reroll(): Roll;
 
     /**
      * Simulate a roll and evaluate the distribution of returned results
@@ -170,27 +178,29 @@ declare class Roll {
      * @param {number} n          The number of simulations
      * @return {number[]}         The rolled totals
      */
-    static simulate(formula: string, n: number=10000): number[]
+    static simulate(formula: string, n: number = 10000): number[];
 
     /**
      * Validate that a provided roll formula can represent a valid
      * @param {string} formula    A candidate formula to validate
      * @return {boolean}          Is the provided input a valid dice formula?
      */
-    static validate(formula: string): boolean
+    static validate(formula: string): boolean;
 
     /**
      * Create a formula string from an array of Dice terms.
      * @return {string}
      */
-    static cleanFormula(terms): string
+    static cleanFormula(terms): string;
 
     /**
      * Clean the terms of a Roll equation, removing empty space and de-duping arithmetic operators
      * @param {Array<DiceTerm|string|number>} terms  The input array of terms
      * @return {Array<DiceTerm|string|number>}       The cleaned array of terms
      */
-    static cleanTerms(terms: Array<DiceTerm | string | number>): Array<DiceTerm | string | number>
+    static cleanTerms(
+        terms: Array<DiceTerm | string | number>
+    ): Array<DiceTerm | string | number>;
 
     /**
      * Split a provided Roll formula to identify it's component terms.
@@ -203,7 +213,9 @@ declare class Roll {
      * @param {string} formula  The formula to parse
      * @return {Array<Roll|DicePool|DiceTerm|number|string>}       An array of identified terms
      */
-    _identifyTerms(formula: string): Array<Roll | DicePool | DiceTerm | number | string>
+    _identifyTerms(
+        formula: string
+    ): Array<Roll | DicePool | DiceTerm | number | string>;
 
     /**
      * Prepare the data structure used for the Roll.
@@ -211,25 +223,25 @@ declare class Roll {
      * @param {any} data   Provided roll data
      * @private
      */
-    _prepareData(data: any)
+    _prepareData(data: any);
 
     /**
      * Identify and split a formula into separate terms by arithmetic terms
      * @private
      */
-    _splitDiceTerms(formula: string): string[]
+    _splitDiceTerms(formula: string): string[];
 
     /**
      * Identify and split a formula into separate terms by parenthetical expressions
      * @private
      */
-    _splitParentheticalTerms(formula: string): string[]
+    _splitParentheticalTerms(formula: string): string[];
 
     /**
      * Identify and split a formula into separate terms by curly braces which represent pooled expressions
      * @private
      */
-    _splitPooledTerms(formula: string): string[]
+    _splitPooledTerms(formula: string): string[];
 
     /**
      * Safely evaluate a formulaic expression using a Proxy environment which is allowed access to Math commands
@@ -237,20 +249,20 @@ declare class Roll {
      * @return {number}               The returned numeric result
      * @private
      */
-    _safeEval(expression: string): number
+    _safeEval(expression: string): number;
 
     /**
      * Render the tooltip HTML for a Roll instance
      * @return {Promise<HTMLElement>}
      */
-    getTooltip(): Promise<HTMLElement>
+    getTooltip(): Promise<HTMLElement>;
 
     /**
      * Render a Roll instance to HTML
      * @param chatOptions {Object}      An object configuring the behavior of the resulting chat message.
      * @return {Promise.<HTMLElement>}  A Promise which resolves to the rendered HTML
      */
-    async render(chatOptions: any = {}): Promise<HTMLElement>
+    async render(chatOptions: any = {}): Promise<HTMLElement>;
 
     /**
      * Transform a Roll instance into a ChatMessage, displaying the roll result.
@@ -263,27 +275,30 @@ declare class Roll {
      * @return {Promise|any}             A promise which resolves to the created ChatMessage entity, if create is true
      *                                      or the Object of prepared chatData otherwise.
      */
-    toMessage(messageData: any={}, {rollMode=null, create=true}: string | null={}): Promise<any> | any
+    toMessage(
+        messageData: any = {},
+        { rollMode = null, create = true }: string | null = {}
+    ): Promise<any> | any;
 
     /**
      * Represent the data of the Roll as an object suitable for JSON serialization.
      * @return {object}     Structured data which can be serialized into JSON
      */
-    toJSON(): any
+    toJSON(): any;
 
     /**
      * Recreate a Roll instance using a provided data object
      * @param {RollDataObject} data   Unpacked data representing the Roll
      * @return {Roll}         A reconstructed Roll instance
      */
-    static fromData(data: RollDataObject): Roll
+    static fromData(data: RollDataObject): Roll;
 
     /**
      * Recreate a Roll instance using a provided JSON string
      * @param {string} json   Serialized JSON data representing the Roll
      * @return {Roll}         A reconstructed Roll instance
      */
-    static fromJSON(json: string): Roll
+    static fromJSON(json: string): Roll;
 
     /**
      * Construct a new Roll object from a parenthetical term of an outer Roll.
@@ -291,7 +306,7 @@ declare class Roll {
      * @param {any} data     The Roll data object, provided by the outer Roll
      * @return {Roll}           An inner Roll object constructed from the term
      */
-    static fromTerm(term: string, data: any): Roll
+    static fromTerm(term: string, data: any): Roll;
 }
 
 declare namespace Roll {

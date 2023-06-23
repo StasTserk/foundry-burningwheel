@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 .fight {
     .window-content {
         & > form {
@@ -28,14 +28,14 @@
         width: 100%;
 
         .details-key {
-            background: rgba(#000, .03);
+            background: rgba(#000, 0.03);
             border: 1px groove #f0f0f0;
             border-right: 0;
             padding: 1px;
         }
         .details-value {
             text-align: end;
-            background: rgba(#000, .1);
+            background: rgba(#000, 0.1);
             border: 1px groove #f0f0f0;
             border-left: 0;
             margin-left: -2px;
@@ -69,20 +69,21 @@
         grid-template-columns: repeat(4, minmax(235px, 1fr));
         margin: 1em 0 1em 0;
 
-        .pill-toggle > input[type="checkbox"]:checked + label {
+        .pill-toggle > input[type='checkbox']:checked + label {
             background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
             border: 2px solid #880000;
             color: #880000;
         }
 
-        .fighters-label{
+        .fighters-label {
             width: 100%;
             font-size: 1.25em;
             font-weight: bold;
         }
 
         .portrait {
-            width: 120px; height: 120px;
+            width: 120px;
+            height: 120px;
             border: 0px;
             object-fit: cover;
         }
@@ -91,7 +92,7 @@
             border-radius: 0;
         }
 
-        .gm-overview{
+        .gm-overview {
             width: 100%;
         }
 
@@ -120,12 +121,12 @@
 
         & > div {
             border: 2px groove #aaaaaa;
-            background: linear-gradient(rgba(#444, .25), rgba(#000, .05));
+            background: linear-gradient(rgba(#444, 0.25), rgba(#000, 0.05));
             min-height: 1.5em;
             text-align: center;
             display: flex;
             align-items: center;
-            justify-content: center; 
+            justify-content: center;
             margin: 0;
             padding: 2px;
 
@@ -139,7 +140,10 @@
                 height: 100px;
                 border: 3px solid #800;
                 color: #800;
-                background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+                background: linear-gradient(
+                    rgb(238, 230, 126),
+                    rgb(170, 159, 0)
+                );
                 border-radius: 3px;
                 text-align: center;
 
@@ -147,11 +151,11 @@
                     line-height: 100px;
                     font-size: 3.5em;
                 }
-    
+
                 &.action-card {
-                    display:flex;
-                    justify-content:center;
-                    align-items:center;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
         }
@@ -163,9 +167,10 @@
         height: min-content;
         width: 100%;
 
-        .participant-card, .volley {
+        .participant-card,
+        .volley {
             border: 2px groove #aaaaaa;
-            background: linear-gradient(rgba(#444, .25), rgba(#000, .05));
+            background: linear-gradient(rgba(#444, 0.25), rgba(#000, 0.05));
             padding: 4px;
         }
 
@@ -180,7 +185,7 @@
                 color: black;
                 border-radius: 3px;
             }
-     
+
             .remove-fighter {
                 width: 1.5em;
                 height: 1.5em;
@@ -200,7 +205,8 @@
             }
 
             .details {
-                .details-value, .details-key {
+                .details-value,
+                .details-key {
                     display: flex;
                     align-items: center;
                 }

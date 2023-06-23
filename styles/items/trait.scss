@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .trait-sheet {
     .trait-effect-section {
@@ -14,7 +14,10 @@
 
     .trait-effect-details {
         display: none;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 2fr) minmax(60px, 1fr) minmax(60px, 1fr));
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(120px, 2fr) minmax(60px, 1fr) minmax(60px, 1fr)
+        );
         border: 1px solid black;
         border-top: 1px solid darkgrey;
         border-left: 1px solid darkgrey;
@@ -29,7 +32,7 @@
     .trait-effect-label {
         text-align: center;
         font-size: 1em;
-        background: linear-gradient(rgba(black, .05), rgba(black, 0.25));
+        background: linear-gradient(rgba(black, 0.05), rgba(black, 0.25));
         border: 2px solid darkgrey;
         border-radius: 3px;
         padding: 1px 3px;

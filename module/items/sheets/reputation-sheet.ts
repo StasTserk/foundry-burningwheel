@@ -1,4 +1,4 @@
-import { BWItemSheet } from "./bwItemSheet";
+import { BWItemSheet } from './bwItemSheet';
 
 export class ReputationSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {
@@ -6,6 +6,6 @@ export class ReputationSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/reputation.hbs";
+        return 'systems/burningwheel/templates/items/reputation.hbs';
     }
 }

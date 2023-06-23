@@ -9,14 +9,14 @@ export async function task021(): Promise<void> {
         for (const ownedItem of Array.from(actor.items.values())) {
             // also, the typo in the item type 'possession' has been fixed
             // any existing items need to be updated to match the new type
-            if (ownedItem.type === "posession") {
-                await ownedItem.update({type: "possession"});
+            if (ownedItem.type === 'posession') {
+                await ownedItem.update({ type: 'possession' });
             }
         }
-        const ms = getProperty(actor, "system.mountedstride");
+        const ms = getProperty(actor, 'system.mountedstride');
         await actor.update({
-            "data.mountedstride": null,
-            "data.mountedStride": ms
+            'data.mountedstride': null,
+            'data.mountedStride': ms,
         });
     }
 
@@ -24,18 +24,18 @@ export async function task021(): Promise<void> {
     // compendium packs as well.
     const items: Item[] = Array.from(game.items?.values() || []);
     for (const item of items) {
-        if (item.type === "posession") {
-            await item.update({type: "possession"}, {});
+        if (item.type === 'posession') {
+            await item.update({ type: 'possession' }, {});
         }
     }
 
     const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
-        if (pack.documentName === "Item") {
+        if (pack.documentName === 'Item') {
             const packItems = await pack.getDocuments();
             for (const item of Array.from(packItems.values()) as Item[]) {
-                if (item.type === "posession") {
-                    item.type = "possession";
+                if (item.type === 'posession') {
+                    item.type = 'possession';
                     await item.update(item.data, { pack: pack.name });
                 }
             }

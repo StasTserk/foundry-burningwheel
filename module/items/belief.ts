@@ -1,10 +1,10 @@
-import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat";
-import { BWActor } from "../actors/BWActor";
-import { ArthaEarner, BWItem } from "./item";
-import { TypeMissing } from "../../types/index";
+import { simpleBroadcast, SimpleBroadcastMessageData } from '../chat';
+import { BWActor } from '../actors/BWActor';
+import { ArthaEarner, BWItem } from './item';
+import { TypeMissing } from '../../types/index';
 
 export class Belief extends BWItem<BeliefData & TypeMissing> {
-    type: "belief";
+    type: 'belief';
     async generateChatMessage(actor: BWActor): Promise<ChatMessage | null> {
         const data: SimpleBroadcastMessageData = {
             title: this.name,
@@ -12,9 +12,11 @@ export class Belief extends BWItem<BeliefData & TypeMissing> {
             extraData: [
                 {
                     title: `Spent Artha`,
-                    text: `Fate: ${this.system.fateSpent || 0}; Persona: ${this.system.personaSpent || 0}; Deeds: ${this.system.deedsSpent || 0}`
-                }
-            ]
+                    text: `Fate: ${this.system.fateSpent || 0}; Persona: ${
+                        this.system.personaSpent || 0
+                    }; Deeds: ${this.system.deedsSpent || 0}`,
+                },
+            ],
         };
         return simpleBroadcast(data, actor);
     }

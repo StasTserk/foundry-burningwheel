@@ -1,38 +1,88 @@
-<div class="character-settings-section">
-    <h2>{{localize "BW.character.settings"}}</h2>
-    <div class="checkbox-grid">
-        <input id="checkbox-{{actor.id}}-round-up-mw" type="checkbox" name="system.settings.roundUpMortalWound" {{checked system.settings.roundUpMortalWound}}>
-        <label for="checkbox-{{actor.id}}-round-up-mw">{{localize "BW.character.roundUpMortal"}}</label>
-        <input id="checkbox-{{actor.id}}-round-up-reflex" type="checkbox" name="system.settings.roundUpReflexes" {{checked system.settings.roundUpReflexes}}>
-        <label for="checkbox-{{actor.id}}-round-up-reflex">{{localize "BW.character.roundUpReflex"}}</label>
-        <input id="checkbox-{{actor.id}}-armor-trained" type="checkbox" name="system.settings.armorTrained" {{checked system.settings.armorTrained}}>
-        <label for="checkbox-{{actor.id}}-armor-trained">{{localize "BW.character.armorTrained"}}</label>
-        <input id="checkbox-{{actor.id}}-numb" type="checkbox" name="system.settings.ignoreSuperficialWounds" {{checked system.settings.ignoreSuperficialWounds}}>
-        <label for="checkbox-{{actor.id}}-numb">{{localize "BW.character.ignoreSuperficial"}}</label>
-        <input id="checkbox-{{actor.id}}-burner" type="checkbox" name="system.settings.showBurner" {{checked system.settings.showBurner}}>
-        <label for="checkbox-{{actor.id}}-burner">{{localize "BW.character.showBurner"}}</label>
+<div class='character-settings-section'>
+    <h2>{{localize 'BW.character.settings'}}</h2>
+    <div class='checkbox-grid'>
+        <input
+            id='checkbox-{{actor.id}}-round-up-mw'
+            type='checkbox'
+            name='system.settings.roundUpMortalWound'
+            {{checked system.settings.roundUpMortalWound}}
+        />
+        <label for='checkbox-{{actor.id}}-round-up-mw'>{{localize
+                'BW.character.roundUpMortal'
+            }}</label>
+        <input
+            id='checkbox-{{actor.id}}-round-up-reflex'
+            type='checkbox'
+            name='system.settings.roundUpReflexes'
+            {{checked system.settings.roundUpReflexes}}
+        />
+        <label for='checkbox-{{actor.id}}-round-up-reflex'>{{localize
+                'BW.character.roundUpReflex'
+            }}</label>
+        <input
+            id='checkbox-{{actor.id}}-armor-trained'
+            type='checkbox'
+            name='system.settings.armorTrained'
+            {{checked system.settings.armorTrained}}
+        />
+        <label for='checkbox-{{actor.id}}-armor-trained'>{{localize
+                'BW.character.armorTrained'
+            }}</label>
+        <input
+            id='checkbox-{{actor.id}}-numb'
+            type='checkbox'
+            name='system.settings.ignoreSuperficialWounds'
+            {{checked system.settings.ignoreSuperficialWounds}}
+        />
+        <label for='checkbox-{{actor.id}}-numb'>{{localize
+                'BW.character.ignoreSuperficial'
+            }}</label>
+        <input
+            id='checkbox-{{actor.id}}-burner'
+            type='checkbox'
+            name='system.settings.showBurner'
+            {{checked system.settings.showBurner}}
+        />
+        <label for='checkbox-{{actor.id}}-burner'>{{localize
+                'BW.character.showBurner'
+            }}</label>
     </div>
-    <hr>
+    <hr />
     <div>
-        <input id="input-{{actor.id}}-success-only" type="text" name="system.settings.onlySuccessesCount" value="{{system.settings.onlySuccessesCount}}" >
-        <label for="input-{{actor.id}}-success-only">{{localize "BW.character.skillsAdvancementText"}}</label>
+        <input
+            id='input-{{actor.id}}-success-only'
+            type='text'
+            name='system.settings.onlySuccessesCount'
+            value='{{system.settings.onlySuccessesCount}}'
+        />
+        <label for='input-{{actor.id}}-success-only'>{{localize
+                'BW.character.skillsAdvancementText'
+            }}</label>
     </div>
-    <hr>
-    <h2>{{localize "BW.character.embeddedItems"}}</h2>
-    <div class="settings-items flex-column">
-        <div class="setting-item-header">
-            <div>{{localize "BW.name"}}</div>
-            <div>{{localize "BW.type"}}</div>
+    <hr />
+    <h2>{{localize 'BW.character.embeddedItems'}}</h2>
+    <div class='settings-items flex-column'>
+        <div class='setting-item-header'>
+            <div>{{localize 'BW.name'}}</div>
+            <div>{{localize 'BW.type'}}</div>
             <div>&nbsp;</div>
             <div>&nbsp;</div>
         </div>
         {{#each actor.items as |i|}}
-        <div class="setting-item-row">
-            <div>{{i.name}}</div>
-            <div>{{titlecase i.type}}</div>
-            <div><i class="fas fa-edit" data-action="editItem" data-id="{{i.id}}"></i></div>
-            <div><i class="fas fa-trash" data-action="delItem" data-id="{{i.id}}"></i></div>
-        </div>
+            <div class='setting-item-row'>
+                <div>{{i.name}}</div>
+                <div>{{titlecase i.type}}</div>
+                <div><i
+                        class='fas fa-edit'
+                        data-action='editItem'
+                        data-id='{{i.id}}'
+                    ></i></div>
+                <div><i
+                        class='fas fa-trash'
+                        data-action='delItem'
+                        data-id='{{i.id}}'
+                    ></i></div>
+            </div>
         {{/each}}
     </div>
 </div>

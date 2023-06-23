@@ -2,7 +2,9 @@
  * A singleton Collection of Compendium-level Document objects within the Foundry Virtual Tabletop.
  * Each Compendium pack has its own associated instance of the CompendiumCollection class which contains its contents.
  */
-declare class CompendiumCollection<T extends FoundryDocument = FoundryDocument> extends DocumentCollection<T> {
+declare class CompendiumCollection<
+    T extends FoundryDocument = FoundryDocument
+> extends DocumentCollection<T> {
     /**
      * The amount of time that Document instances within this CompendiumCollection are held in memory.
      * Accessing the contents of the Compendium pack extends the duration of this lifetime.
@@ -20,7 +22,10 @@ declare class CompendiumCollection<T extends FoundryDocument = FoundryDocument> 
      * @param {object} options   Additional options which modify the Compendium creation request
      * @return {Promise<CompendiumCollection>}
      */
-    static createCompendium<T extends FoundryDocument>(metadata: unknown, options?: unknown): Promise<CompendiumCollection<T>>;
+    static createCompendium<T extends FoundryDocument>(
+        metadata: unknown,
+        options?: unknown
+    ): Promise<CompendiumCollection<T>>;
     constructor(metadata: unknown);
     /**
      * The compendium metadata which defines the compendium content and location
@@ -55,7 +60,10 @@ declare class CompendiumCollection<T extends FoundryDocument = FoundryDocument> 
      */
     get title(): string;
     /** @inheritdoc */
-    get(key: string, options?: { strict: boolean } = { strict: false }): FoundryDocument | undefined;
+    get(
+        key: string,
+        options?: { strict: boolean } = { strict: false }
+    ): FoundryDocument | undefined;
     /** @inheritdoc */
     set(id: string, document: FoundryDocument): unknown;
     /** @inheritdoc */
@@ -90,7 +98,10 @@ declare class CompendiumCollection<T extends FoundryDocument = FoundryDocument> 
      * @param {string} [folderName]     A new Folder name to create.
      * @return {Promise<FoundryDocument[]>}    The imported Documents, now existing within the World
      */
-    importAll({ folderId, folderName }?: string | null): Promise<FoundryDocument[]>;
+    importAll({
+        folderId,
+        folderName,
+    }?: string | null): Promise<FoundryDocument[]>;
     /**
      * Add a Document to the index, capturing it's relevant index attributes
      * @param {FoundryDocument} document       The document to index
@@ -126,11 +137,26 @@ declare class CompendiumCollection<T extends FoundryDocument = FoundryDocument> 
      */
     migrate(options: unknown): Promise<CompendiumCollection>;
     /** @inheritdoc */
-    _onCreateDocuments(documents: FoundryDocument[], result: FoundryDocument[], options: unknown, userId: string): void;
+    _onCreateDocuments(
+        documents: FoundryDocument[],
+        result: FoundryDocument[],
+        options: unknown,
+        userId: string
+    ): void;
     /** @inheritdoc */
-    _onUpdateDocuments(documents: FoundryDocument[], result: FoundryDocument[], options: unknown, userId: string): void;
+    _onUpdateDocuments(
+        documents: FoundryDocument[],
+        result: FoundryDocument[],
+        options: unknown,
+        userId: string
+    ): void;
     /** @inheritdoc */
-    _onDeleteDocuments(documents: FoundryDocument[], result: FoundryDocument[], options: unknown, userId: string): void;
+    _onDeleteDocuments(
+        documents: FoundryDocument[],
+        result: FoundryDocument[],
+        options: unknown,
+        userId: string
+    ): void;
     /**
      * Follow-up actions taken when Documents within this Compendium pack are modified
      * @private

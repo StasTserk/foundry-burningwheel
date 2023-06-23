@@ -1,21 +1,24 @@
-import * as constants from "../../constants";
-import { BWItem } from "../item";
+import * as constants from '../../constants';
+import { BWItem } from '../item';
 export class BWItemSheet<
     SD extends BWItemSheetData = BWItemSheetData,
-    ID extends BWItem = BWItem> extends ItemSheet<SD, ID> {
-    
+    ID extends BWItem = BWItem
+> extends ItemSheet<SD, ID> {
     getData(): SD {
         const data = {
-            showImage: game.settings.get(constants.systemName, constants.settings.itemImages) as boolean,
+            showImage: game.settings.get(
+                constants.systemName,
+                constants.settings.itemImages
+            ) as boolean,
             system: this.item.system,
-            item: this.item
+            item: this.item,
         };
         return data as unknown as SD;
     }
 
     static get defaultOptions(): BaseEntitySheet.Options {
         return mergeObject(super.defaultOptions, {
-            classes:  ["bw-app"]
+            classes: ['bw-app'],
         });
     }
 }

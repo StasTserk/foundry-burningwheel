@@ -1,5 +1,5 @@
 Actor:
-  types: 
+  types:
     - character
     - npc
     - setting
@@ -70,7 +70,7 @@ Actor:
         open: true
       circles: *ability
       resources: *ability
-      custom1: 
+      custom1:
         <<: *ability
         name: ''
       custom2:
@@ -181,11 +181,11 @@ Item:
     pointCost:
       pointCost: 1
   belief:
-    templates: 
+    templates:
       - arthaEarner
     text: ''
   instinct:
-    templates: 
+    templates:
       - arthaEarner
     text: ''
   trait:
@@ -268,7 +268,7 @@ Item:
     shade: 'B'
     baseOb: 1
     attacks:
-      - attackName: ""
+      - attackName: ''
         power: 1
         add: 2
         vsArmor: 0

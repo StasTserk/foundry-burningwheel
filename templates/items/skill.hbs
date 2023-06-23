@@ -1,74 +1,143 @@
-<form autocomplete="off" class="skill-form flex-column">
-    <div class="flex-row">
+<form autocomplete='off' class='skill-form flex-column'>
+    <div class='flex-row'>
         {{#if showImage}}
-        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+            <img
+                class='item-image'
+                src='{{item.img}}'
+                title='{{item.name}}'
+                data-edit='img'
+            />
         {{/if}}
-        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+        <input
+            name='name'
+            type='text'
+            value='{{item.name}}'
+            class='item-sheet-name'
+        />
     </div>
-    <div class="item-form-group">
-        <label class="item-setting-label">
-            {{localize "BW.skill.type"}}
+    <div class='item-form-group'>
+        <label class='item-setting-label'>
+            {{localize 'BW.skill.type'}}
         </label>
-        <select name="system.skilltype" value="{{system.skilltype}}" >
+        <select name='system.skilltype' value='{{system.skilltype}}'>
             {{#select system.skilltype}}
-            {{#each skillTypes as |type t|}}
-            <option value="{{t}}">{{localize type}}</option>
-            {{/each}}
+                {{#each skillTypes as |type t|}}
+                    <option value='{{t}}'>{{localize type}}</option>
+                {{/each}}
             {{/select}}
         </select>
-        <label class="item-setting-label">
-            {{localize "BW.skill.restrictions"}}
+        <label class='item-setting-label'>
+            {{localize 'BW.skill.restrictions'}}
         </label>
-        <input type="text" name="system.restrictions" value="{{system.restrictions}}" placeholder="None">
+        <input
+            type='text'
+            name='system.restrictions'
+            value='{{system.restrictions}}'
+            placeholder='None'
+        />
     </div>
-    <div class="item-form-group">
-        <label class="item-setting-label">{{localize "BW.skill.root1"}}</label>
-        <select name="system.root1" value="{{system.root1}}" >
+    <div class='item-form-group'>
+        <label class='item-setting-label'>{{localize 'BW.skill.root1'}}</label>
+        <select name='system.root1' value='{{system.root1}}'>
             {{#select system.root1}}
-            {{#each skillRoots as |root r|}}
-            <option value="{{r}}">{{localize root}}</option>
-            {{/each}}
+                {{#each skillRoots as |root r|}}
+                    <option value='{{r}}'>{{localize root}}</option>
+                {{/each}}
             {{/select}}
         </select>
-        <label class="item-setting-label">{{localize "BW.skill.root2"}}</label>
-        <select name="system.root2" value="{{system.root2}}" >
+        <label class='item-setting-label'>{{localize 'BW.skill.root2'}}</label>
+        <select name='system.root2' value='{{system.root2}}'>
             {{#select system.root2}}
-            <option value="">{{localize "BW.none"}}</option>
-            {{#each skillRoots as |root r|}}
-            <option value="{{r}}">{{localize root}}</option>
-            {{/each}}
+                <option value=''>{{localize 'BW.none'}}</option>
+                {{#each skillRoots as |root r|}}
+                    <option value='{{r}}'>{{localize root}}</option>
+                {{/each}}
             {{/select}}
         </select>
     </div>
-    <div class="item-form-group">
+    <div class='item-form-group'>
         {{#if item.system.hasOwner}}
-        <label for="{{item.id}}-aptitude" class="item-setting-label">{{localize "BW.skill.aptitude"}}</label>
-        <input id="{{item.id}}-aptitude" type="number" name="system.aptitude" disabled value="{{system.aptitude}}" placeholder="N/A">
-        <div class="pill-toggle">
-            <input id="{{item.id}}-learning" type="checkbox" name="system.learning" {{ checked system.learning }}>
-            <label for="{{item.id}}-learning" >{{localize "BW.skill.learning"}}</label>
-        </div>
+            <label
+                for='{{item.id}}-aptitude'
+                class='item-setting-label'
+            >{{localize 'BW.skill.aptitude'}}</label>
+            <input
+                id='{{item.id}}-aptitude'
+                type='number'
+                name='system.aptitude'
+                disabled
+                value='{{system.aptitude}}'
+                placeholder='N/A'
+            />
+            <div class='pill-toggle'>
+                <input
+                    id='{{item.id}}-learning'
+                    type='checkbox'
+                    name='system.learning'
+                    {{checked system.learning}}
+                />
+                <label for='{{item.id}}-learning'>{{localize
+                        'BW.skill.learning'
+                    }}</label>
+            </div>
         {{/if}}
-        <div class="pill-toggle">
-            <input id="{{item.id}}-wild" type="checkbox" name="system.wildFork" {{ checked system.wildFork }}>
-            <label for="{{item.id}}-wild" title="{{localize "BW.skill.wildForkHelp"}}">{{localize "BW.skill.wildFork"}}</label>
+        <div class='pill-toggle'>
+            <input
+                id='{{item.id}}-wild'
+                type='checkbox'
+                name='system.wildFork'
+                {{checked system.wildFork}}
+            />
+            <label
+                for='{{item.id}}-wild'
+                title='{{localize "BW.skill.wildForkHelp"}}'
+            >{{localize 'BW.skill.wildFork'}}</label>
         </div>
-        <div class="pill-toggle">
-            <input id="{{item.id}}-open-skill" type="checkbox" name="system.open" {{ checked system.open }}>
-            <label for="{{item.id}}-open-skill" >{{localize "BW.skill.open"}}</label>
+        <div class='pill-toggle'>
+            <input
+                id='{{item.id}}-open-skill'
+                type='checkbox'
+                name='system.open'
+                {{checked system.open}}
+            />
+            <label for='{{item.id}}-open-skill'>{{localize
+                    'BW.skill.open'
+                }}</label>
         </div>
-        <div class="pill-toggle">
-            <input id="{{item.id}}-magical" type="checkbox" name="system.magical" {{ checked system.magical }}>
-            <label for="{{item.id}}-magical" title="{{localize "BW.skill.magicalHelp"}}">{{localize "BW.skill.magical"}}</label>
+        <div class='pill-toggle'>
+            <input
+                id='{{item.id}}-magical'
+                type='checkbox'
+                name='system.magical'
+                {{checked system.magical}}
+            />
+            <label
+                for='{{item.id}}-magical'
+                title='{{localize "BW.skill.magicalHelp"}}'
+            >{{localize 'BW.skill.magical'}}</label>
         </div>
-        <div class="pill-toggle">
-            <input id="{{item.id}}-training" type="checkbox" name="system.training" {{ checked system.training }}>
-            <label for="{{item.id}}-training" >{{localize "BW.skill.training"}}</label>
+        <div class='pill-toggle'>
+            <input
+                id='{{item.id}}-training'
+                type='checkbox'
+                name='system.training'
+                {{checked system.training}}
+            />
+            <label for='{{item.id}}-training'>{{localize
+                    'BW.skill.training'
+                }}</label>
         </div>
-        <div class="pill-toggle">
-            <input id="{{item.id}}-tools" type="checkbox" name="system.tools" {{ checked system.tools }}>
-            <label for="{{item.id}}-tools" >{{localize "BW.skill.requiresTools"}}</label>
+        <div class='pill-toggle'>
+            <input
+                id='{{item.id}}-tools'
+                type='checkbox'
+                name='system.tools'
+                {{checked system.tools}}
+            />
+            <label for='{{item.id}}-tools'>{{localize
+                    'BW.skill.requiresTools'
+                }}</label>
         </div>
     </div>
-    <textarea name="system.description">{{system.description}}</textarea>
+    <textarea name='system.description'>{{system.description}}</textarea>
 </form>

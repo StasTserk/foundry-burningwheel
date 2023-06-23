@@ -1,22 +1,56 @@
-<form autocomplete="off" class="flex-column">
-    <div class="flex-row">
+<form autocomplete='off' class='flex-column'>
+    <div class='flex-row'>
         {{#if showImage}}
-        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+            <img
+                class='item-image'
+                src='{{item.img}}'
+                title='{{item.name}}'
+                data-edit='img'
+            />
         {{/if}}
-        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+        <input
+            name='name'
+            type='text'
+            value='{{item.name}}'
+            class='item-sheet-name'
+        />
     </div>
-    <div class="item-form-group">
-        <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.rpCost"}}</label>
-        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
-        <div class="pill-toggle min-content">
-            <input id="{{item.id}}-checkbox-toolkit" type="checkbox" name="system.isToolkit" {{checked system.isToolkit}}>
-            <label for="{{item.id}}-checkbox-toolkit" >{{localize "BW.possession.toolkit"}}</label>
+    <div class='item-form-group'>
+        <label
+            for='{{item.id}}-point-cost'
+            class='item-setting-label'
+        >{{localize 'BW.rpCost'}}</label>
+        <input
+            id='{{item.id}}-point-cost'
+            type='number'
+            class='exponent no-arrows wide'
+            name='system.pointCost'
+            value='{{system.pointCost}}'
+            data-dtype='Number'
+        />
+        <div class='pill-toggle min-content'>
+            <input
+                id='{{item.id}}-checkbox-toolkit'
+                type='checkbox'
+                name='system.isToolkit'
+                {{checked system.isToolkit}}
+            />
+            <label for='{{item.id}}-checkbox-toolkit'>{{localize
+                    'BW.possession.toolkit'
+                }}</label>
         </div>
-        <div class="pill-toggle min-content">
-            <input id="{{item.id}}-checkbox-expended" type="checkbox" name="system.isExpended" {{checked system.isExpended}}>
-            <label for="{{item.id}}-checkbox-expended">{{localize "BW.possession.expended"}}</label>
+        <div class='pill-toggle min-content'>
+            <input
+                id='{{item.id}}-checkbox-expended'
+                type='checkbox'
+                name='system.isExpended'
+                {{checked system.isExpended}}
+            />
+            <label for='{{item.id}}-checkbox-expended'>{{localize
+                    'BW.possession.expended'
+                }}</label>
         </div>
     </div>
-    <hr/>
-    <textarea name="system.description">{{system.description}}</textarea>
+    <hr />
+    <textarea name='system.description'>{{system.description}}</textarea>
 </form>

@@ -1,6 +1,7 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
-.beliefs, .instincts {
+.beliefs,
+.instincts {
     .bits-item {
         & > .bits-artha {
             flex: 0 0 100px;
@@ -17,7 +18,7 @@
                 }
             }
 
-            input[type="checkbox"] {
+            input[type='checkbox'] {
                 width: 1em;
                 height: 1em;
                 margin: 0 5px 0 2px;
@@ -34,7 +35,7 @@
                 color: gray;
                 margin-top: 3px;
                 cursor: pointer;
-                
+
                 &:hover {
                     color: #800;
                 }
@@ -56,7 +57,6 @@
         margin: 5px;
 
         .trait {
-
             @include colored-item(black);
             textarea {
                 background-color: transparent;
@@ -76,11 +76,11 @@
                 font-size: 12px;
                 margin-top: 6px;
                 margin-left: 5px;
-                color: transparentize($color: black, $amount: 0.25)
+                color: transparentize($color: black, $amount: 0.25);
             }
-    
+
             i:hover {
-                color: #FF0000;
+                color: #ff0000;
             }
         }
     }

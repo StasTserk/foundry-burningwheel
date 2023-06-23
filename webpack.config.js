@@ -54,7 +54,7 @@ const getBuild = (isDev) => ({
     new CopyPlugin({
       patterns: [
         { from: 'system.json' },
-        { from: '**/*.hbs' },
+        { from: 'templates/**/*.hbs' },
         {
           from: 'node_modules/select2/dist/js/select2.min.js',
           to: 'lib/select2',

@@ -1,6 +1,8 @@
-import { BWItem } from "./item";
+import { BWItem } from './item';
 
-export class Affiliation extends BWItem<AffiliationData> { type: "affiliation"; }
+export class Affiliation extends BWItem<AffiliationData> {
+    type: 'affiliation';
+}
 
 export interface AffiliationData {
     dice: number;

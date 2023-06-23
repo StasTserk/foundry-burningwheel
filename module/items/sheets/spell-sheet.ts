@@ -1,6 +1,6 @@
-import { spellLengthSelect } from "../../constants";
-import { StringIndexedObject } from "../../helpers";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
+import { spellLengthSelect } from '../../constants';
+import { StringIndexedObject } from '../../helpers';
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class SpellSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {
@@ -8,7 +8,7 @@ export class SpellSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/spell.hbs";
+        return 'systems/burningwheel/templates/items/spell.hbs';
     }
 
     getData(): TraitSheetData {

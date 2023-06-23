@@ -1,11 +1,10 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .ptgs {
     display: grid;
     grid-template-columns: 2fr repeat(16, 1fr);
     row-gap: 5px;
-    &>div {
-
+    & > div {
         border: 1px solid black;
     }
     select {
@@ -15,7 +14,7 @@
     .ptgs-top {
         height: 2em;
         text-align: center;
-        
+
         i.fas:hover {
             color: red;
         }
@@ -43,7 +42,7 @@
             color: red;
         }
 
-        input[type=radio] {
+        input[type='radio'] {
             visibility: hidden;
             display: none;
         }
@@ -58,19 +57,20 @@
             margin: 1px auto 1px auto;
         }
 
-        input[type=radio]:checked ~ label.wound-tick:hover {
+        input[type='radio']:checked ~ label.wound-tick:hover {
             background-color: $hover-color;
         }
 
-        input[type="radio"]:checked ~ .wound-tick {
+        input[type='radio']:checked ~ .wound-tick {
             background-color: white;
         }
-        input[type="radio"]:checked + .wound-tick {
+        input[type='radio']:checked + .wound-tick {
             background-color: #333333;
         }
     }
 
-    .ptgs-obpenalty , .ptgs-wounddice {
+    .ptgs-obpenalty,
+    .ptgs-wounddice {
         justify-content: space-between;
         & > button {
             width: calc(100% - 6px);
@@ -100,7 +100,9 @@
         grid-column: 3 / 6;
     }
 
-    .ptgs-woundnotes1, .ptgs-woundnotes2, .ptgs-woundnotes3 {
+    .ptgs-woundnotes1,
+    .ptgs-woundnotes2,
+    .ptgs-woundnotes3 {
         h3 {
             text-align: center;
         }
@@ -123,7 +125,7 @@
             resize: none;
             border: 0;
             margin: auto;
-            height: 8em
+            height: 8em;
         }
     }
 
@@ -134,7 +136,7 @@
         grid-column: 10 / 14;
     }
     .ptgs-woundnotes3 {
-        grid-column: 14 / 19
+        grid-column: 14 / 19;
     }
 
     h3 {

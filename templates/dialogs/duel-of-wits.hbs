@@ -1,239 +1,332 @@
-<form class="dow flex-row" autocomplete="off">
-    <div class="dow-side">
+<form class='dow flex-row' autocomplete='off'>
+    <div class='dow-side'>
         {{#if gmView}}
-        <select name="side1ActorId">
-            {{#select side1ActorId}}
-            <option value="">Side 1</option>
-            {{#each side1Options as |o|}}
-                <option value="{{o.id}}">{{o.name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
+            <select name='side1ActorId'>
+                {{#select side1ActorId}}
+                    <option value=''>Side 1</option>
+                    {{#each side1Options as |o|}}
+                        <option value='{{o.id}}'>{{o.name}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
         {{else}}
-        <div class="participant-name">{{actor1.name}}</div>
+            <div class='participant-name'>{{actor1.name}}</div>
         {{/if}}
-        <textarea name="statement1" {{disabled side1ReadOnly}} placeholder="Statement of Purpose">{{statement1}}</textarea>
+        <textarea
+            name='statement1'
+            {{disabled side1ReadOnly}}
+            placeholder='Statement of Purpose'
+        >{{statement1}}</textarea>
     </div>
-    <div class="dow-side">
+    <div class='dow-side'>
         {{#if gmView}}
-        <select name="side2ActorId">
-            {{#select side2ActorId}}
-            <option value="">Side 2</option>
-            {{#each side2Options as |o|}}
-                <option value="{{o.id}}">{{o.name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
+            <select name='side2ActorId'>
+                {{#select side2ActorId}}
+                    <option value=''>Side 2</option>
+                    {{#each side2Options as |o|}}
+                        <option value='{{o.id}}'>{{o.name}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
         {{else}}
-        <div class="participant-name">{{actor2.name}}</div>
+            <div class='participant-name'>{{actor2.name}}</div>
         {{/if}}
-        <textarea name="statement2" {{disabled side2ReadOnly}} placeholder="Statement of Purpose">{{statement2}}</textarea>
+        <textarea
+            name='statement2'
+            {{disabled side2ReadOnly}}
+            placeholder='Statement of Purpose'
+        >{{statement2}}</textarea>
     </div>
     {{#if gmView}}
-    <div class="dow-resets item-grid col-2">
-        <button type="button" class="reset-option" data-action="reset-everything">Clear All</button>
-        <button type="button" class="reset-option" data-action="reset-round">Reset Round</button>
-    </div>
+        <div class='dow-resets item-grid col-2'>
+            <button
+                type='button'
+                class='reset-option'
+                data-action='reset-everything'
+            >Clear All</button>
+            <button
+                type='button'
+                class='reset-option'
+                data-action='reset-round'
+            >Reset Round</button>
+        </div>
     {{/if}}
-    <div class="dow-volleys">
-        <div class="dow-participant">
-            <div class="participant-name">{{actor1.name}}</div>
+    <div class='dow-volleys'>
+        <div class='dow-participant'>
+            <div class='participant-name'>{{actor1.name}}</div>
             {{#if actor1}}
-            <img class="dow-portrait" src="{{actor1.img}}" title="{{actor1.name}}" data-edit="img"/>
+                <img
+                    class='dow-portrait'
+                    src='{{actor1.img}}'
+                    title='{{actor1.name}}'
+                    data-edit='img'
+                />
             {{else}}
-            <img class="dow-portrait" src="icons/svg/mystery-man.svg" title="Choose an interlocutor" data-edit="img"/>
+                <img
+                    class='dow-portrait'
+                    src='icons/svg/mystery-man.svg'
+                    title='Choose an interlocutor'
+                    data-edit='img'
+                />
             {{/if}}
             <div>Body of Argument:</div>
-            <input type="number" {{disabled side1ReadOnly}} name="boa1" value="{{boa1}}">/
-            <input type="number" {{disabled side1ReadOnly}} name="boa1Max" value="{{boa1Max}}">
+            <input
+                type='number'
+                {{disabled side1ReadOnly}}
+                name='boa1'
+                value='{{boa1}}'
+            />/
+            <input
+                type='number'
+                {{disabled side1ReadOnly}}
+                name='boa1Max'
+                value='{{boa1Max}}'
+            />
             {{#if (eq side1ReadOnly false)}}
-            <select name="actor1Skill">
-                {{#select actor1Skill}}
-                <option value="">Pick a social skill</option>
-                {{#each actor1Skills}}
-                <option value="{{this.id}}">{{this.label}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-            <button type="button" class="dow-roll" data-action="roll-dow" data-actor-id="{{actor1.id}}" data-skill-id="{{actor1Skill}}"><i class="fas fa-dice"></i></button>
+                <select name='actor1Skill'>
+                    {{#select actor1Skill}}
+                        <option value=''>Pick a social skill</option>
+                        {{#each actor1Skills}}
+                            <option value='{{this.id}}'>{{this.label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+                <button
+                    type='button'
+                    class='dow-roll'
+                    data-action='roll-dow'
+                    data-actor-id='{{actor1.id}}'
+                    data-skill-id='{{actor1Skill}}'
+                ><i class='fas fa-dice'></i></button>
             {{/if}}
             {{#if gmView}}
-            <div class="pill-toggle">
-                <input type="checkbox" name="blindS1" id="blindS1" {{checked blindS1}}>
-                <label for="blindS1">Hide Actions</label>
-            </div>
+                <div class='pill-toggle'>
+                    <input
+                        type='checkbox'
+                        name='blindS1'
+                        id='blindS1'
+                        {{checked blindS1}}
+                    />
+                    <label for='blindS1'>Hide Actions</label>
+                </div>
             {{/if}}
         </div>
-        <div class="dow-volley">
+        <div class='dow-volley'>
             {{#if gmView}}
-            <div class="pill-toggle">
-                <input type="checkbox" name="showV1" id="showV1" {{checked showV1}}>
-                <label for="showV1">Show Volley</label>
-            </div>
+                <div class='pill-toggle'>
+                    <input
+                        type='checkbox'
+                        name='showV1'
+                        id='showV1'
+                        {{checked showV1}}
+                    />
+                    <label for='showV1'>Show Volley</label>
+                </div>
             {{/if}}
             {{#if showS1Select}}
-            <select class="action-select" name="v1s1">
-                <option value="?">Pick an Option</option>
-                {{#select v1s1}}
-                {{#each actionOptions as |ao|}}
-                <optgroup label="{{@key}}">
-                    {{#each ao as |o|}}
-                    <option value="{{o}}">{{o}}</option>
-                    {{/each}}
-                </optgroup>
-                {{/each}}
-                {{/select}}
-            </select>
+                <select class='action-select' name='v1s1'>
+                    <option value='?'>Pick an Option</option>
+                    {{#select v1s1}}
+                        {{#each actionOptions as |ao|}}
+                            <optgroup label='{{@key}}'>
+                                {{#each ao as |o|}}
+                                    <option value='{{o}}'>{{o}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    {{/select}}
+                </select>
             {{/if}}
             {{#if showV1S1Card}}
-            <div class="action-card">{{v1s1}}</div>
+                <div class='action-card'>{{v1s1}}</div>
             {{else}}
-            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+                <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="dow-volley">
+        <div class='dow-volley'>
             {{#if gmView}}
-            <div class="pill-toggle">
-                <input type="checkbox" name="showV2" id="showV2" {{checked showV2}}>
-                <label for="showV2">Show Volley</label>
-            </div>
+                <div class='pill-toggle'>
+                    <input
+                        type='checkbox'
+                        name='showV2'
+                        id='showV2'
+                        {{checked showV2}}
+                    />
+                    <label for='showV2'>Show Volley</label>
+                </div>
             {{/if}}
             {{#if showS1Select}}
-            <select class="action-select" name="v2s1">
-                <option value="?">Pick an Option</option>
-                {{#select v2s1}}
-                {{#each actionOptions as |ao|}}
-                <optgroup label="{{@key}}">
-                    {{#each ao as |o|}}
-                    <option value="{{o}}">{{o}}</option>
-                    {{/each}}
-                </optgroup>
-                {{/each}}
-                {{/select}}
-            </select>
+                <select class='action-select' name='v2s1'>
+                    <option value='?'>Pick an Option</option>
+                    {{#select v2s1}}
+                        {{#each actionOptions as |ao|}}
+                            <optgroup label='{{@key}}'>
+                                {{#each ao as |o|}}
+                                    <option value='{{o}}'>{{o}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    {{/select}}
+                </select>
             {{/if}}
             {{#if showV2S1Card}}
-            <div class="action-card">{{v2s1}}</div>
+                <div class='action-card'>{{v2s1}}</div>
             {{else}}
-            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+                <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="dow-volley">
+        <div class='dow-volley'>
             {{#if gmView}}
-            <div class="pill-toggle">
-                <input type="checkbox" name="showV3" id="showV3" {{checked showV3}}>
-                <label for="showV3">Show Volley</label>
-            </div>
+                <div class='pill-toggle'>
+                    <input
+                        type='checkbox'
+                        name='showV3'
+                        id='showV3'
+                        {{checked showV3}}
+                    />
+                    <label for='showV3'>Show Volley</label>
+                </div>
             {{/if}}
             {{#if showS1Select}}
-            <select class="action-select" name="v3s1">
-                <option value="?">Pick an Option</option>
-                {{#select v3s1}}
-                {{#each actionOptions as |ao|}}
-                <optgroup label="{{@key}}">
-                    {{#each ao as |o|}}
-                    <option value="{{o}}">{{o}}</option>
-                    {{/each}}
-                </optgroup>
-                {{/each}}
-                {{/select}}
-            </select>
+                <select class='action-select' name='v3s1'>
+                    <option value='?'>Pick an Option</option>
+                    {{#select v3s1}}
+                        {{#each actionOptions as |ao|}}
+                            <optgroup label='{{@key}}'>
+                                {{#each ao as |o|}}
+                                    <option value='{{o}}'>{{o}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    {{/select}}
+                </select>
             {{/if}}
             {{#if showV3S1Card}}
-            <div class="action-card">{{v3s1}}</div>
+                <div class='action-card'>{{v3s1}}</div>
             {{else}}
-            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+                <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="dow-participant">
-            <div class="participant-name">{{actor2.name}}</div>
+        <div class='dow-participant'>
+            <div class='participant-name'>{{actor2.name}}</div>
             {{#if actor2}}
-            <img class="dow-portrait" src="{{actor2.img}}" title="{{actor2.name}}" data-edit="img"/>
+                <img
+                    class='dow-portrait'
+                    src='{{actor2.img}}'
+                    title='{{actor2.name}}'
+                    data-edit='img'
+                />
             {{else}}
-            <img class="dow-portrait" src="icons/svg/mystery-man.svg" title="Choose an interlocutor" data-edit="img"/>
+                <img
+                    class='dow-portrait'
+                    src='icons/svg/mystery-man.svg'
+                    title='Choose an interlocutor'
+                    data-edit='img'
+                />
             {{/if}}
             <div>Body of Argument:</div>
-            <input type="number" {{disabled side2ReadOnly}} name="boa2" value="{{boa2}}">/
-            <input type="number" {{disabled side2ReadOnly}} name="boa2Max" value="{{boa2Max}}">
+            <input
+                type='number'
+                {{disabled side2ReadOnly}}
+                name='boa2'
+                value='{{boa2}}'
+            />/
+            <input
+                type='number'
+                {{disabled side2ReadOnly}}
+                name='boa2Max'
+                value='{{boa2Max}}'
+            />
             {{#if (eq side2ReadOnly false)}}
-            <select name="actor2Skill">
-                {{#select actor2Skill}}
-                <option value="">Pick a social skill</option>
-                {{#each actor2Skills}}
-                <option value="{{this.id}}">{{this.label}}</option>
-                {{/each}}
-                {{/select}}
-            </select>
-            <button type="button" class="dow-roll" data-action="roll-dow" data-actor-id="{{actor2.id}}" data-skill-id="{{actor2Skill}}"><i class="fas fa-dice"></i></button>
+                <select name='actor2Skill'>
+                    {{#select actor2Skill}}
+                        <option value=''>Pick a social skill</option>
+                        {{#each actor2Skills}}
+                            <option value='{{this.id}}'>{{this.label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+                <button
+                    type='button'
+                    class='dow-roll'
+                    data-action='roll-dow'
+                    data-actor-id='{{actor2.id}}'
+                    data-skill-id='{{actor2Skill}}'
+                ><i class='fas fa-dice'></i></button>
             {{/if}}
             {{#if gmView}}
-            <div class="pill-toggle">
-                <input type="checkbox" name="blindS2" id="blindS2" {{checked blindS2}}>
-                <label for="blindS2">Hide Actions</label>
-            </div>
+                <div class='pill-toggle'>
+                    <input
+                        type='checkbox'
+                        name='blindS2'
+                        id='blindS2'
+                        {{checked blindS2}}
+                    />
+                    <label for='blindS2'>Hide Actions</label>
+                </div>
             {{/if}}
         </div>
-        <div class="dow-volley">
+        <div class='dow-volley'>
             {{#if showS2Select}}
-            <select class="action-select" name="v1s2">
-                <option value="?">Pick an Option</option>
-                {{#select v1s2}}
-                {{#each actionOptions as |ao|}}
-                <optgroup label="{{@key}}">
-                    {{#each ao as |o|}}
-                    <option value="{{o}}">{{o}}</option>
-                    {{/each}}
-                </optgroup>
-                {{/each}}
-                {{/select}}
-            </select>
+                <select class='action-select' name='v1s2'>
+                    <option value='?'>Pick an Option</option>
+                    {{#select v1s2}}
+                        {{#each actionOptions as |ao|}}
+                            <optgroup label='{{@key}}'>
+                                {{#each ao as |o|}}
+                                    <option value='{{o}}'>{{o}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    {{/select}}
+                </select>
             {{/if}}
             {{#if showV1S2Card}}
-            <div class="action-card">{{v1s2}}</div>
+                <div class='action-card'>{{v1s2}}</div>
             {{else}}
-            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+                <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="dow-volley">
+        <div class='dow-volley'>
             {{#if showS2Select}}
-            <select class="action-select" name="v2s2">
-                <option value="?">Pick an Option</option>
-                {{#select v2s2}}
-                {{#each actionOptions as |ao|}}
-                <optgroup label="{{@key}}">
-                    {{#each ao as |o|}}
-                    <option value="{{o}}">{{o}}</option>
-                    {{/each}}
-                </optgroup>
-                {{/each}}
-                {{/select}}
-            </select>
+                <select class='action-select' name='v2s2'>
+                    <option value='?'>Pick an Option</option>
+                    {{#select v2s2}}
+                        {{#each actionOptions as |ao|}}
+                            <optgroup label='{{@key}}'>
+                                {{#each ao as |o|}}
+                                    <option value='{{o}}'>{{o}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    {{/select}}
+                </select>
             {{/if}}
             {{#if showV2S2Card}}
-            <div class="action-card">{{v2s2}}</div>
+                <div class='action-card'>{{v2s2}}</div>
             {{else}}
-            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+                <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="dow-volley">
+        <div class='dow-volley'>
             {{#if showS2Select}}
-            <select class="action-select" name="v3s2">
-                <option value="?">Pick an Option</option>
-                {{#select v3s2}}
-                {{#each actionOptions as |ao|}}
-                <optgroup label="{{@key}}">
-                    {{#each ao as |o|}}
-                    <option value="{{o}}">{{o}}</option>
-                    {{/each}}
-                </optgroup>
-                {{/each}}
-                {{/select}}
-            </select>
+                <select class='action-select' name='v3s2'>
+                    <option value='?'>Pick an Option</option>
+                    {{#select v3s2}}
+                        {{#each actionOptions as |ao|}}
+                            <optgroup label='{{@key}}'>
+                                {{#each ao as |o|}}
+                                    <option value='{{o}}'>{{o}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    {{/select}}
+                </select>
             {{/if}}
             {{#if showV3S2Card}}
-            <div class="action-card">{{v3s2}}</div>
+                <div class='action-card'>{{v3s2}}</div>
             {{else}}
-            <div class="card-back"><i class='fas fa-dharmachakra'></i></div>
+                <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
     </div>

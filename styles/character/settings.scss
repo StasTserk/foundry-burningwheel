@@ -17,7 +17,6 @@
         overflow-y: scroll;
         border-bottom: 2px inset grey;
         border-right: 2px inset grey;
-        
 
         .setting-item-header,
         .setting-item-row {
@@ -30,7 +29,7 @@
         }
 
         .setting-item-header {
-            background-color: rgba(black, .15);
+            background-color: rgba(black, 0.15);
             font-weight: bold;
             font-size: 1.5em;
             border-bottom: 2px solid black;
@@ -39,7 +38,7 @@
         .setting-item-row {
             font-size: 1em;
             &:nth-child(2n) {
-                background-color: rgba(black, .05);
+                background-color: rgba(black, 0.05);
             }
         }
     }

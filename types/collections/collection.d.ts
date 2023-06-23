@@ -3,20 +3,20 @@
  * This concept is reused throughout Foundry VTT where a collection of uniquely identified elements is required.
  * @typeParam T - The type of the objects contained in the Collection
  */
- declare class Collection<T> extends Map<string, T> {
+declare class Collection<T> extends Map<string, T> {
     constructor(entries: T);
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * When iterating over a Collection, we should iterate over its values instead of over its entries
      * @returns Typescript doesn't allow this
      *          (type: `IterableIterator<T>`)
      */
     [Symbol.iterator](): any;
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * Return an Array of all the entry values in the Collection
      * @remarks
@@ -25,9 +25,9 @@
      *          (type: `Array<T>`)
      */
     entries(): any;
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * Find an entry in the Map using an functional condition.
      * @see {@link Array#find}
@@ -42,9 +42,9 @@
      * ```
      */
     find(condition: (entity: T) => boolean): T | null;
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * Filter the Collection, returning an Array of entries which match a functional condition.
      * @see {@link Array#filter}
@@ -59,9 +59,9 @@
      * ```
      */
     filter(condition: (entity: T) => boolean): T[];
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * Get an element from the Collection by its key.
      * @param key     - The key of the entry to retrieve
@@ -76,10 +76,13 @@
      * c.get("d", {strict: true}); // throws Error
      * ```
      */
-    get<V extends T = T>(key: string, { strict }?: { strict?: boolean }): V | undefined;
-  
+    get<V extends T = T>(
+        key: string,
+        { strict }?: { strict?: boolean }
+    ): V | undefined;
+
     /* -------------------------------------------- */
-  
+
     /**
      * Get an entry from the Collection by name.
      * Use of this method assumes that the objects stored in the collection have a "name" attribute.
@@ -90,9 +93,9 @@
      * @returns The retrieved Entity, if one was found, otherwise null
      */
     getName(name: string, { strict }?: { strict?: boolean }): T | null;
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * Transform each element of the Collection into a new form, returning an Array of transformed values
      * @param transformer - The transformation function to apply to each entry value
@@ -100,9 +103,9 @@
      * @returns An Array of transformed values
      */
     map<M>(transformer: (entity: T) => M): M[];
-  
+
     /* -------------------------------------------- */
-  
+
     /**
      * Reduce the Collection by applying an evaluator function and accumulating entries
      * @see {@link Array#reduce}
@@ -119,8 +122,7 @@
      * }, ""); // "ABC"
      * ```
      */
-     reduce<A>(evaluator: (accumulator: A, entity: T) => A, initial: A): A;
-     
-     get contents(): Array<T>;
-  }
-  
+    reduce<A>(evaluator: (accumulator: A, entity: T) => A, initial: A): A;
+
+    get contents(): Array<T>;
+}

@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .dialog > .window-content > .character-burner {
     flex: unset;
@@ -33,8 +33,12 @@
             animation-iteration-count: infinite;
             animation-timing-function: linear;
             @keyframes spin {
-                from {transform:rotate(0deg);}
-                to {transform:rotate(360deg);}
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
             }
         }
     }
@@ -64,7 +68,7 @@
         color: rgba(black, 0.5);
     }
 
-    input[type="number"].burner-inline-total {
+    input[type='number'].burner-inline-total {
         display: inline-block;
         width: 2em;
         height: 1.5em;
@@ -80,22 +84,28 @@
         height: 100%;
         padding-top: 6px;
 
-        & > .fas { display: none; }
+        & > .fas {
+            display: none;
+        }
         &.none > .fa-ellipsis-h,
         &.success > .fa-check-circle,
         &.loading > .fa-spinner,
         &.fail > .fa-question-circle {
             display: block;
         }
-        
+
         .fa-spinner {
             animation-name: spin;
             animation-duration: 1s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
             @keyframes spin {
-                from {transform:rotate(0deg);}
-                to {transform:rotate(360deg);}
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
             }
         }
     }
@@ -112,7 +122,7 @@
         &.col-2 {
             grid-template-columns: 1fr 1fr;
         }
-        
+
         &.col-3 {
             grid-template-columns: 1fr 1fr 1fr;
         }
@@ -129,7 +139,7 @@
             border-bottom: 1px solid black;
         }
 
-        &[type="number"] {
+        &[type='number'] {
             @include no-number-arrows;
             text-align: center;
             height: 100%;
@@ -176,9 +186,9 @@
 
         .inline-text input {
             width: calc(100% - 1em);
-            height: 100%
+            height: 100%;
         }
-        
+
         div.lifepath-grid-totals {
             text-align: right;
         }
@@ -194,12 +204,12 @@
         select {
             @include select-no-arrow;
         }
-        input[type="number"] {
+        input[type='number'] {
             height: 100%;
             width: 1.5em;
             border: 1px solid black;
         }
-        input[type="text"] {
+        input[type='text'] {
             width: 6em;
         }
     }
@@ -207,7 +217,8 @@
     .burner-skills-section {
         width: 60%;
 
-        .skills-grid, .skills-header {
+        .skills-grid,
+        .skills-header {
             display: grid;
             grid-template-columns: 145px 100px 100px 2em 2em 2em 2em 2em 2em 2em min-content;
         }
@@ -224,10 +235,10 @@
                 @include select-no-arrow;
                 text-align-last: center;
             }
-    
-            input[type="checkbox"] {
+
+            input[type='checkbox'] {
                 width: 1em;
-                height: 1em;    
+                height: 1em;
             }
         }
     }
@@ -242,7 +253,7 @@
             height: min-content;
         }
 
-        input[type="checkbox"] {
+        input[type='checkbox'] {
             height: 1em;
             width: 1em;
         }
@@ -251,7 +262,9 @@
             height: 100%;
             padding-top: 6px;
 
-            & > .fas { display: none; }
+            & > .fas {
+                display: none;
+            }
             &.none > .fa-ellipsis-h,
             &.success > .fa-check-circle,
             &.loading > .fa-spinner,
@@ -278,7 +291,6 @@
             display: grid;
             grid-template-columns: 1fr 2em 2em 2em;
 
-
             .burner-rel-aff {
                 @include button-like(orange);
             }
@@ -299,10 +311,9 @@
         .burner-relationships {
             display: grid;
             grid-template-columns: 1fr 2em;
-            
 
             .burner-relationship-info {
-                font-size: .75em;
+                font-size: 0.75em;
                 .rel-name {
                     font-size: 1.5em;
                     font-weight: bold;
@@ -314,9 +325,9 @@
                     height: min-content;
                 }
 
-                input[type="checkbox"] {
-                    width: .75em;
-                    height: .75em;
+                input[type='checkbox'] {
+                    width: 0.75em;
+                    height: 0.75em;
                     margin-right: -5px;
                 }
             }
@@ -367,7 +378,7 @@
     }
 }
 
-.select2-container--default { 
+.select2-container--default {
     .select2-dropdown {
         background-color: #aa9;
     }

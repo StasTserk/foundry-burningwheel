@@ -27,27 +27,27 @@ jobs:
       - store_artifacts:
           path: ./
       - run:
-          name: "Publish Release on Github"
+          name: 'Publish Release on Github'
           command: |
             VERSION=${CIRCLE_TAG}
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
 workflows:
-    build:
-      jobs:
-        - build
-    publish-github-release:
-      jobs:
-        - build:
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /^\d+\.\d+\.\d+$/
-        - publish-github-release:
-            requires:
-              - build
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /^\d+\.\d+\.\d+$/
+  build:
+    jobs:
+      - build
+  publish-github-release:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/
+      - publish-github-release:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/

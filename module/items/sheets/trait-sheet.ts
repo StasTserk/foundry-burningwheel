@@ -1,5 +1,5 @@
-import { traitTypeSelect } from "../../constants";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
+import { traitTypeSelect } from '../../constants';
+import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class TraitSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {
@@ -7,7 +7,7 @@ export class TraitSheet extends BWItemSheet {
     }
 
     get template(): string {
-        return "systems/burningwheel/templates/items/trait.hbs";
+        return 'systems/burningwheel/templates/items/trait.hbs';
     }
 
     getData(): TraitSheetData {

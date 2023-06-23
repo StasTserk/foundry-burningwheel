@@ -41,7 +41,7 @@ BW:
   die: Die
   type: Type
   name: Name
-  xTest: "{name} Test"
+  xTest: '{name} Test'
   obstacle: Obstacle
   obstacleAcronym: Ob
   newItem: New {type}
@@ -278,7 +278,7 @@ BW:
     halfWillHelp: This spell's damage is based off of half the will exponent, rather than the full one.
     newSpell: A brand new spell
     tenPaces: 10 Paces
-    taxTest: "{name} Tax Test"
+    taxTest: '{name} Tax Test'
   trait:
     type: Trait Type
     character: Character
@@ -435,7 +435,7 @@ BW:
     callonReroll: Call-on Reroll
     armor: Armor
     rollArmor: Roll Armor Dice
-    armorDiceLostMessage: "{item} {location} lost {number} {dice} to damage"
+    armorDiceLostMessage: '{item} {location} lost {number} {dice} to damage'
     beginnersLuck: Beginner's Luck
     beginnersLuckTest: Beginner's Luck {name} Test
     learningAssignment: Pick where to assign the test
@@ -445,10 +445,10 @@ BW:
     learningApplyDifficult: Apply as Difficult
     inPracticals: In Practicals
   dialog:
-    advanceTitle: "Advance {name}?"
-    advanceText: "{name} is ready to advance. Go ahead?"
-    finishTraining: "Finish training {name}?"
-    finishTrainingText: "{name} is ready to become a full skill. Go ahead?"
+    advanceTitle: 'Advance {name}?'
+    advanceText: '{name} is ready to advance. Go ahead?'
+    finishTraining: 'Finish training {name}?'
+    finishTrainingText: '{name} is ready to become a full skill. Go ahead?'
     pickRootTitle: Pick Root Stat
     pickRootText: The skill being learned is derived from two roots. Pick one to use for the roll.
     failResources: Failed Resource Roll!
@@ -471,7 +471,7 @@ BW:
     practicalsDone: Spell Practicals Complete!
     practicalsDoneText1: The spell practicals process is complete. Time for a second reading.
     practicalsDoneText2: Set the spell as no longer in practicals?
-    spellSustain: "Attempting to sustain {name}."
+    spellSustain: 'Attempting to sustain {name}.'
     spellTaxWound: Overtaxed!
     spellTaxWoundInfo: Tax test failed by {margin}. The caster maxes out their Forte tax and risks a {wnd} wound.
     spellTaxWoundText1: Failing your tax test by {margin} when you have {dice} untaxed Forte dice has resulted in overtax.
@@ -483,11 +483,11 @@ BW:
     spellTaxText1: You failed your tax test! Your forte tax will increase by {margin}.
     spellTaxText2: Also, any currently sustained spells are lost.
     tooFewDice: Too Few Dice
-    tooFewDiceText: "Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to {dice}"
-    toolsExpendedPre: "The die of fate result for toolkit used ({tool}) was a "
-    toolsExpendedPost: " and thus the kit is expended."
-    toolsNotExpendedPre: "The die of fate result for the toolkit used ({tool}) was a "
-    toolsNotExpendedPost: ""
+    tooFewDiceText: 'Too few dice to be rolled. Must roll a minimum of one. Currently, bonuses and penalties add up to {dice}'
+    toolsExpendedPre: 'The die of fate result for toolkit used ({tool}) was a '
+    toolsExpendedPost: ' and thus the kit is expended.'
+    toolsNotExpendedPre: 'The die of fate result for the toolkit used ({tool}) was a '
+    toolsNotExpendedPost: ''
     sources: Sources
     sourcesAcronym: Src
     add: Add

@@ -1,55 +1,105 @@
-<form class="dialog">
+<form class='dialog'>
     <h2>{{name}}</h2>
-    <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Difficulty</div><hr class="dialog-section-after">
-        <div class="flex-row dialog-row">
+    <div class='flex-row'>
+        <hr class='dialog-section-before' /><div
+            class='dialog-section-text'
+        >Difficulty</div><hr class='dialog-section-after' />
+        <div class='flex-row dialog-row'>
             <label>Difficulty</label>
-            <input type="number" class="exponent" disabled name="difficulty" value="{{difficulty}}">
+            <input
+                type='number'
+                class='exponent'
+                disabled
+                name='difficulty'
+                value='{{difficulty}}'
+            />
         </div>
-        <div class="flex-row dialog-row">
+        <div class='flex-row dialog-row'>
             <label>Weapon Vs Armor</label>
-            <input type="number" class="exponent" name="vsArmor" value="0">
+            <input type='number' class='exponent' name='vsArmor' value='0' />
         </div>
     </div>
-    <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Dice</div><hr class="dialog-section-after">
-        <div class="flex-row dialog-row">
+    <div class='flex-row'>
+        <hr class='dialog-section-before' /><div
+            class='dialog-section-text'
+        >Dice</div><hr class='dialog-section-after' />
+        <div class='flex-row dialog-row'>
             <label>Armor Dice</label>
-            <input type="number" class="exponent" disabled name="armor" value="{{armor}}">
+            <input
+                type='number'
+                class='exponent'
+                disabled
+                name='armor'
+                value='{{armor}}'
+            />
         </div>
-        <div class="flex-row dialog-row">
+        <div class='flex-row dialog-row'>
             <label>Damage</label>
-            <input type="number" class="exponent" disabled name="damage" value="{{damage}}">
+            <input
+                type='number'
+                class='exponent'
+                disabled
+                name='damage'
+                value='{{damage}}'
+            />
         </div>
-        <div class="flex-row dialog-row">
+        <div class='flex-row dialog-row'>
             <label>Bonus Dice</label>
-            <input type="number" class="exponent" name="bonusDice" value="{{bonusDice}}">
+            <input
+                type='number'
+                class='exponent'
+                name='bonusDice'
+                value='{{bonusDice}}'
+            />
         </div>
-        <div class="flex-row dialog-row">
+        <div class='flex-row dialog-row'>
             <label>Artha Dice</label>
-            <input type="number" class="exponent" name="arthaDice" value="{{arthaDice}}">
+            <input
+                type='number'
+                class='exponent'
+                name='arthaDice'
+                value='{{arthaDice}}'
+            />
         </div>
     </div>
     {{#if optionalDiceModifiers}}
-    <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Dice Modifiers</div><hr class="dialog-section-after">
-        <div class="checkbox-grid col-2">
-            {{#each optionalDiceModifiers as |mod|}}
-            <input id="checkbox-{{@key}}-die" type="checkbox" name="miscDice" value="{{mod.dice}}" data-name="{{mod.label}}">
-            <label for="checkbox-{{@key}}-die">{{mod.label}}</label>
-            {{/each}}
+        <div class='flex-row'>
+            <hr class='dialog-section-before' /><div
+                class='dialog-section-text'
+            >Optional Dice Modifiers</div><hr class='dialog-section-after' />
+            <div class='checkbox-grid col-2'>
+                {{#each optionalDiceModifiers as |mod|}}
+                    <input
+                        id='checkbox-{{@key}}-die'
+                        type='checkbox'
+                        name='miscDice'
+                        value='{{mod.dice}}'
+                        data-name='{{mod.label}}'
+                    />
+                    <label for='checkbox-{{@key}}-die'>{{mod.label}}</label>
+                {{/each}}
+            </div>
         </div>
-    </div>
     {{/if}}
     {{#if optionalObModifiers}}
-    <div class="flex-row">
-        <hr class="dialog-section-before"><div class="dialog-section-text">Optional Obstacle Modifiers</div><hr class="dialog-section-after">
-        <div class="checkbox-grid col-2">
-            {{#each optionalObModifiers as |mod|}}
-            <input id="checkbox-{{@key}}-ob" type="checkbox" name="miscObs" value="{{mod.obstacle}}" data-name="{{mod.label}}">
-            <label for="checkbox-{{@key}}-ob">{{mod.label}}</label>
-            {{/each}}
+        <div class='flex-row'>
+            <hr class='dialog-section-before' /><div
+                class='dialog-section-text'
+            >Optional Obstacle Modifiers</div><hr
+                class='dialog-section-after'
+            />
+            <div class='checkbox-grid col-2'>
+                {{#each optionalObModifiers as |mod|}}
+                    <input
+                        id='checkbox-{{@key}}-ob'
+                        type='checkbox'
+                        name='miscObs'
+                        value='{{mod.obstacle}}'
+                        data-name='{{mod.label}}'
+                    />
+                    <label for='checkbox-{{@key}}-ob'>{{mod.label}}</label>
+                {{/each}}
+            </div>
         </div>
-    </div>
     {{/if}}
 </form>

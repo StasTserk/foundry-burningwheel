@@ -1,8 +1,8 @@
-import { BWActor } from "../actors/BWActor";
-import { BWItem, DisplayClass } from "./item";
+import { BWActor } from '../actors/BWActor';
+import { BWItem, DisplayClass } from './item';
 
 export class Relationship extends BWItem<RelationshipData> {
-    type: "relationship";
+    type: 'relationship';
 
     prepareData(): void {
         super.prepareData();
@@ -13,11 +13,11 @@ export class Relationship extends BWItem<RelationshipData> {
         }
 
         if (this.system.hateful || this.system.enmity) {
-            this.system.cssClass = "relationship-hostile";
+            this.system.cssClass = 'relationship-hostile';
         } else if (this.system.romantic || this.system.immediateFamily) {
-            this.system.cssClass = "relationship-friendly";
+            this.system.cssClass = 'relationship-friendly';
         } else {
-            this.system.cssClass = "relationship-neutral";
+            this.system.cssClass = 'relationship-neutral';
         }
     }
 }
@@ -30,7 +30,7 @@ export interface RelationshipData extends DisplayClass {
     romantic: boolean;
     hateful: boolean;
     enmity: boolean;
-    influence: "minor" | "significant" | "powerful";
+    influence: 'minor' | 'significant' | 'powerful';
     building: boolean;
     buildingProgress: number;
 

@@ -1,10 +1,10 @@
-import { BWItem, DisplayClass, HasPointCost } from "./item";
+import { BWItem, DisplayClass, HasPointCost } from './item';
 
 export class Possession extends BWItem<PossessionData> {
-    type: "possession";
+    type: 'possession';
     prepareData(): void {
         super.prepareData();
-        this.system.cssClass = "equipment-possession";
+        this.system.cssClass = 'equipment-possession';
     }
 }
 

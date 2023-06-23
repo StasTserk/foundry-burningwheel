@@ -1,20 +1,27 @@
-import { BWItem } from "./item";
+import { BWItem } from './item';
 
 export class Lifepath extends BWItem<LifepathData> {
-    type: "lifepath";
+    type: 'lifepath';
 
     prepareData(): void {
         super.prepareData();
-        const statSign = this.system.statBoost === "none" ? "" : (this.system.subtractStats ? "-" : "+");
+        const statSign =
+            this.system.statBoost === 'none'
+                ? ''
+                : this.system.subtractStats
+                ? '-'
+                : '+';
         this.system.statString = statSign + statMap[this.system.statBoost];
     }
 
     _preCreate(
         data: Partial<LifepathData>,
         options: FoundryDocument.CreateOptions,
-        user: User): void {
-
-        this.updateSource({ 'system.leads': game.i18n.localize("BW.lifepath.any") });
+        user: User
+    ): void {
+        this.updateSource({
+            'system.leads': game.i18n.localize('BW.lifepath.any'),
+        });
         return super._preCreate(data, options, user);
     }
 }
@@ -22,7 +29,14 @@ export class Lifepath extends BWItem<LifepathData> {
 export interface LifepathData {
     time: number;
     resources: number;
-    statBoost: 'none' | 'mental' | 'physical' | 'either' | 'both' | 'phystwo' | 'menttwo';
+    statBoost:
+        | 'none'
+        | 'mental'
+        | 'physical'
+        | 'either'
+        | 'both'
+        | 'phystwo'
+        | 'menttwo';
     subtractStats: boolean;
     leads: string;
     skillPoints: number;
@@ -33,18 +47,18 @@ export interface LifepathData {
     requirements: string;
     restrictions: string;
     note: string;
-    
+
     order: number; // hidden property  for sorting in the setting sheet
 
     statString?: string;
 }
 
 const statMap = {
-    "none": "&mdash;",
-    "mental": "1 M",
-    "physical": "1 P",
-    "either": "1 M/P",
-    "both": "1 M,P",
-    "phystwo": "2 P",
-    "menttwo": "2 M"
+    none: '&mdash;',
+    mental: '1 M',
+    physical: '1 P',
+    either: '1 M/P',
+    both: '1 M,P',
+    phystwo: '2 P',
+    menttwo: '2 M',
 };

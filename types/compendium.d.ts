@@ -49,88 +49,95 @@
  * ```
  * @typeParam P - the type of the options object
  */
- declare class Compendium<P extends Application.Options = Application.Options> extends Application<P> {
+declare class Compendium<
+    P extends Application.Options = Application.Options
+> extends Application<P> {
     /**
      * @param metadata - The compendium metadata, an object provided by game.data
      * @param options  - Application rendering options
      */
     constructor(metadata: Compendium['metadata'], options?: Partial<P>);
-  
+
     /**
      * The compendium metadata which defines the compendium content and location
      */
     metadata: Compendium.Metadata;
-  
+
     /**
      * Track whether the compendium pack is locked for editing
      */
     locked: boolean;
-  
+
     /**
      * Track whether the compendium pack is private
      * @defaultValue `false`
      */
     private: boolean;
-  
+
     /**
      * The most recently retrieved index of the Compendium content
      * This index is not guaranteed to be current - call getIndex() to reload the index
      */
     index: Compendium.IndexEntry[];
-  
+
     /** @override */
-    static get defaultOptions(): typeof Application['defaultOptions'];
-  
+    static get defaultOptions(): (typeof Application)['defaultOptions'];
+
     /** @override */
     getTitle(): string;
-  
+
     /**
      * The canonical Compendium name - comprised of the originating package and the pack name
      * @returns The canonical collection name
      */
     get collection(): string;
-  
+
     /**
      * The Document type which is allowed to be stored in this collection
      */
     get entity(): string;
-  
+
     /**
      * A reference to the Document class object contained within this Compendium pack
      */
     get cls(): ConstructorOf<FoundryDocument>;
-  
+
     /** @override */
     getData(options: Application.RenderOptions): Promise<Data>;
-  
+
     /** @override */
     close(): Promise<void>;
-  
+
     /**
      * Create a new Compendium pack using provided
      * @param metadata - The compendium metadata used to create the new pack
      * @param options  - Additional options which modify the Compendium creation request
      */
-    static create(metadata: Compendium.Metadata, options?: Record<string, any>): Promise<Compendium>;
-  
+    static create(
+        metadata: Compendium.Metadata,
+        options?: Record<string, any>
+    ): Promise<Compendium>;
+
     /**
      * Assign configuration metadata settings to the compendium pack
      * @param settings - The object of compendium settings to define
      * @returns A Promise which resolves once the setting is updated
      */
-    configure(settings?: Partial<Compendium.Settings>): Promise<Compendium.Settings>;
-  
+    configure(
+        settings?: Partial<Compendium.Settings>
+    ): Promise<Compendium.Settings>;
+
     /**
      * Delete a world Compendium pack
      * This is only allowed for world-level packs by a GM user
      */
     delete(): Promise<this>;
-  
+
     /**
      * Duplicate a compendium pack to the current World
      */
     duplicate({ label }?: { label?: string }): Promise<Compendium>;
-  
+
     /**
      * Get the Compendium index
      * Contains names, images and IDs of all data in the compendium
@@ -138,13 +145,13 @@
      * @returns A Promise containing an index of all compendium entries
      */
     getIndex(): Promise<Compendium.IndexEntry[]>;
-  
+
     /**
      * Get the complete set of content for this compendium, loading all entries in full
      * Returns a Promise that resolves to an Array of entries
      */
     getContent(): Promise<FoundryDocument[]>;
-  
+
     /**
      * Get a single Compendium entry as an Object
      * @param entryId - The compendium entry ID to retrieve
@@ -152,14 +159,14 @@
      * @returns A Promise containing the return entry data, or null
      */
     getEntry(entryId: string): Promise<Data | null>;
-  
+
     /**
      * Get a single Compendium entry as an Document instance
      * @param entryId - The compendium entry ID to load and instantiate
      * @returns A Promise containing the returned Document, if it exists, otherwise null
      */
     getEntity(entryId: string): Promise<FoundryDocument | null>;
-  
+
     /**
      * Fully import the contents of a Compendium pack into a World folder.
      * @param folderId   - An existing Folder _id to use.
@@ -168,131 +175,144 @@
      *                     (default: `''`)
      */
     importAll({
-      folderId,
-      folderName
+        folderId,
+        folderName,
     }: {
-      folderId?: string | null;
-      folderName?: string;
+        folderId?: string | null;
+        folderName?: string;
     }): Promise<FoundryDocument | Document[] | null>;
-  
+
     /**
      * Cast entry data to an Document class
      */
     protected _toEntity(entryData?: Data): Document;
-  
+
     /**
      * Import a new Document into a Compendium pack
      * @param entity - The Document instance you wish to import
      * @returns A Promise which resolves to the created Document once the operation is complete
      */
     importEntity(entity: Document): Promise<Document>;
-  
+
     /**
      * Create a new Document within this Compendium Pack using provided data
      * @param data - Data with which to create the entry
      * @returns A Promise which resolves to the created Document once the operation is complete
      */
     createEntity(
-      data: Record<string, any> | Record<string, any>[],
-      options?: Record<string, any>
+        data: Record<string, any> | Record<string, any>[],
+        options?: Record<string, any>
     ): Promise<FoundryDocument | Document[]>;
-  
+
     /**
      * Update a single Compendium entry programmatically by providing new data with which to update
      * @param data    - The incremental update with which to update the Document. Must contain the _id
      * @param options - Additional options which modify the update request
      * @returns A Promise which resolves with the updated Document once the operation is complete
      */
-    updateEntity(data: Data | Data[], options?: Record<string, any> & { entity: FoundryDocument }): Promise<Data[]>;
-  
+    updateEntity(
+        data: Data | Data[],
+        options?: Record<string, any> & { entity: FoundryDocument }
+    ): Promise<Data[]>;
+
     /**
      * Delete a single Compendium entry by its provided _id
      * @param id - The entry ID to delete
      * @returns A Promise which resolves to the deleted entry ID once the operation is complete
      */
     deleteEntity(id: string | string[]): Promise<string[]>;
-  
+
     /**
      * Request that a Compendium pack be migrated to the latest System data template
      */
     migrate(options: Record<string, unknown>): Promise<Compendium>;
-  
+
     /**
      * Validate that the current user is able to modify content of this Compendium pack
      * @param requireGM       - (default: `true`)
      * @param requireUnlocked - (default: `true`)
      */
     protected _assertUserCanModify({
-      requireGM,
-      requireUnlocked
+        requireGM,
+        requireUnlocked,
     }?: {
-      requireGM?: boolean;
-      requireUnlocked?: boolean;
+        requireGM?: boolean;
+        requireUnlocked?: boolean;
     }): boolean;
-  
+
     /**
      * Register event listeners for Compendium directories
      */
     activateListeners(html: JQuery): void;
-  
+
     /** @override */
-    protected _onSearchFilter(event: KeyboardEvent, query: string, html: HTMLElement): void;
-  
+    protected _onSearchFilter(
+        event: KeyboardEvent,
+        query: string,
+        html: HTMLElement
+    ): void;
+
     /**
      * Handle opening a single compendium entry by invoking the configured entity class and its sheet
      * @param entryId - The compendium ID of the entry to display
      */
     protected _onEntry(entryId: string): Promise<void>;
-  
+
     /** @override */
     protected _canDragStart(selector: string | null): boolean;
-  
+
     /** @override */
     protected _canDragDrop(selector: string | null): boolean;
-  
+
     /** @override */
     protected _onDragStart(event: DragEvent): void;
-  
+
     /**
      * Handle data being dropped into a Compendium pack
      */
     protected _onDrop(event: DragEvent): Promise<false | Document>;
-  
+
     /**
      * Render the ContextMenu which applies to each compendium entry
      */
     _contextMenu(html: JQuery): void;
-  
+
     static CONFIG_SETTING: 'compendiumConfiguration';
-  }
-  
-  declare namespace Compendium {
+}
+
+declare namespace Compendium {
     interface IndexEntry {
-      _id: string;
-      name: string;
-      img?: string;
+        _id: string;
+        name: string;
+        img?: string;
     }
-  
+
     interface Metadata {
-      name: string;
-      label: string;
-      system?: string | string[];
-      module?: string;
-      path: string;
-      entity: 'Actor' | 'Item' | 'JournalEntry' | 'Macro' | 'Playlist' | 'RollTable' | 'Scene';
-      package: string;
-      absPath: string;
+        name: string;
+        label: string;
+        system?: string | string[];
+        module?: string;
+        path: string;
+        entity:
+            | 'Actor'
+            | 'Item'
+            | 'JournalEntry'
+            | 'Macro'
+            | 'Playlist'
+            | 'RollTable'
+            | 'Scene';
+        package: string;
+        absPath: string;
     }
-  
+
     interface Data {
-      collection: string;
-      cssClass: string;
-      index: Array<IndexEntry & { img: string }>;
+        collection: string;
+        cssClass: string;
+        index: Array<IndexEntry & { img: string }>;
     }
-  
+
     interface Settings {
-      private: boolean;
-      locked: boolean;
+        private: boolean;
+        locked: boolean;
     }
-  }
-  
+}

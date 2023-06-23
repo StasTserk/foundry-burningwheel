@@ -1,5 +1,5 @@
 .setting-sheet {
-    &>.header {
+    & > .header {
         .portrait {
             height: 100px;
             flex: 0 0 100px;
@@ -37,7 +37,9 @@
                 font-weight: bold;
             }
 
-            .years, .resources, .stat-boost {
+            .years,
+            .resources,
+            .stat-boost {
                 flex: 0 0 60px;
                 text-align: center;
             }
@@ -72,7 +74,9 @@
                     font-weight: bold;
                 }
 
-                .years, .resources, .stat-boost {
+                .years,
+                .resources,
+                .stat-boost {
                     flex: 0 0 60px;
                     text-align: center;
                 }
@@ -113,7 +117,12 @@
             font-size: 1.2em;
             font-weight: bold;
 
-            background: linear-gradient(90deg, rgba(black, .05), black, rgba(black, .05));
+            background: linear-gradient(
+                90deg,
+                rgba(black, 0.05),
+                black,
+                rgba(black, 0.05)
+            );
             visibility: hidden;
             &.show-drop {
                 visibility: visible;

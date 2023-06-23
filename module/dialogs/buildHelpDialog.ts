@@ -1,11 +1,20 @@
-import { BWActor } from "../actors/BWActor.js";
-import { ModifierDialog } from "./ModifierDialog.js";
+import { BWActor } from '../actors/BWActor.js';
+import { ModifierDialog } from './ModifierDialog.js';
 
-export async function buildHelpDialog({ exponent, path, skillId, actor, helpedWith }: HelpDialogData): Promise<unknown> {
+export async function buildHelpDialog({
+    exponent,
+    path,
+    skillId,
+    actor,
+    helpedWith,
+}: HelpDialogData): Promise<unknown> {
     const data = {
-        exponent
+        exponent,
     };
-    const content = await renderTemplate("systems/burningwheel/templates/dialogs/help-dialog.hbs", data);
+    const content = await renderTemplate(
+        'systems/burningwheel/templates/dialogs/help-dialog.hbs',
+        data
+    );
     const help = game.i18n.localize('BW.roll.help');
     return new Dialog({
         title: game.i18n.localize('BW.roll.helpTitle'),
@@ -14,15 +23,27 @@ export async function buildHelpDialog({ exponent, path, skillId, actor, helpedWi
             help: {
                 label: help,
                 callback: () => {
-                    registerHelpEntry({ path, skillId, actor, exponent, helpedWith });
-                }
-            }
+                    registerHelpEntry({
+                        path,
+                        skillId,
+                        actor,
+                        exponent,
+                        helpedWith,
+                    });
+                },
+            },
         },
-        default: "help"
+        default: 'help',
     }).render(true);
 }
 
-async function registerHelpEntry({ path, skillId, actor, exponent, helpedWith }: HelpEntryData): Promise<void> {
+async function registerHelpEntry({
+    path,
+    skillId,
+    actor,
+    exponent,
+    helpedWith,
+}: HelpEntryData): Promise<void> {
     const modifiers: ModifierDialog = game.burningwheel.modifiers;
 
     modifiers.addHelp({
@@ -31,7 +52,7 @@ async function registerHelpEntry({ path, skillId, actor, exponent, helpedWith }:
         path,
         actor,
         title: actor.name,
-        helpedWith
+        helpedWith,
     });
 }
 

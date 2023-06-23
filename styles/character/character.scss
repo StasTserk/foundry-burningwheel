@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .character {
     &.ctrl-modified {
@@ -87,7 +87,7 @@
             input {
                 @include underlined-input;
 
-                &[type="number"] {
+                &[type='number'] {
                     width: 100%;
                     padding: 3px 1px 3px 1px;
                     height: 24px;
@@ -258,7 +258,7 @@
             }
         }
 
-        input[type="radio"] {
+        input[type='radio'] {
             visibility: hidden;
             display: none;
         }
@@ -372,7 +372,7 @@
             border-radius: 3px;
             font-size: 14px;
             line-height: 28px;
-            font-family: "Signika", sans-serif;
+            font-family: 'Signika', sans-serif;
         }
         .item :hover,
         .item :focus {

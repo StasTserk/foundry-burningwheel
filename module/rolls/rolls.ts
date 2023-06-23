@@ -1,68 +1,74 @@
-import { BWActor, RollModifier, TracksTests } from "../actors/BWActor";
-import * as helpers from "../helpers";
-import { handleAttrRollEvent } from "./rollAttribute";
-import { handleCirclesRollEvent } from "./rollCircles";
-import { handleLearningRollEvent } from "./rollLearning";
-import { handleGritRollEvent, handleShrugRollEvent } from "./rollPtgs";
-import { handleResourcesRollEvent } from "./rollResources";
-import { handleSkillRollEvent } from "./rollSkill";
-import { handleStatRollEvent } from "./rollStat";
-import { handleArmorRollEvent } from "./rollArmor";
-import { handleWeaponRollEvent } from "./rollWeapon";
-import { handleSpellRollEvent } from "./rollSpell";
-import { handleSpellTaxRoll } from "./rollSpellTax";
-import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet";
-import { NpcSheet } from "../actors/sheets/NpcSheet";
-import { Possession } from "../items/possession";
-import { DifficultyDialog } from "../dialogs/DifficultyDialog";
-import { ModifierDialog } from "../dialogs/ModifierDialog";
-import { AstrologyDie } from "./customRolls";
+import { BWActor, RollModifier, TracksTests } from '../actors/BWActor';
+import * as helpers from '../helpers';
+import { handleAttrRollEvent } from './rollAttribute';
+import { handleCirclesRollEvent } from './rollCircles';
+import { handleLearningRollEvent } from './rollLearning';
+import { handleGritRollEvent, handleShrugRollEvent } from './rollPtgs';
+import { handleResourcesRollEvent } from './rollResources';
+import { handleSkillRollEvent } from './rollSkill';
+import { handleStatRollEvent } from './rollStat';
+import { handleArmorRollEvent } from './rollArmor';
+import { handleWeaponRollEvent } from './rollWeapon';
+import { handleSpellRollEvent } from './rollSpell';
+import { handleSpellTaxRoll } from './rollSpellTax';
+import { BWCharacterSheet } from '../actors/sheets/BWCharacterSheet';
+import { NpcSheet } from '../actors/sheets/NpcSheet';
+import { Possession } from '../items/possession';
+import { DifficultyDialog } from '../dialogs/DifficultyDialog';
+import { ModifierDialog } from '../dialogs/ModifierDialog';
+import { AstrologyDie } from './customRolls';
 
 export async function handleRollable(
-    e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {
+    e: JQuery.ClickEvent<unknown, undefined>,
+    sheet: BWCharacterSheet
+): Promise<unknown> {
     const target = e.currentTarget as HTMLButtonElement;
     const rollType = target.dataset.rollType;
     const dataPreset = getKeypressModifierPreset(e);
     dataPreset.deedsPoint = sheet.actor.system.deeds !== 0;
     if (sheet.actor.system.persona) {
-        dataPreset.personaOptions = Array.from(Array(Math.min(sheet.actor.system.persona, 3)).keys());
+        dataPreset.personaOptions = Array.from(
+            Array(Math.min(sheet.actor.system.persona, 3)).keys()
+        );
     }
 
-    switch(rollType) {
-        case "skill":
+    switch (rollType) {
+        case 'skill':
             return handleSkillRollEvent({ target, sheet, dataPreset });
-        case "stat":
+        case 'stat':
             return handleStatRollEvent({ target, sheet, dataPreset });
-        case "circles":
+        case 'circles':
             return handleCirclesRollEvent({ target, sheet, dataPreset });
-        case "attribute":
+        case 'attribute':
             return handleAttrRollEvent({ target, sheet, dataPreset });
-        case "resources":
+        case 'resources':
             return handleResourcesRollEvent({ target, sheet, dataPreset });
-        case "learning":
+        case 'learning':
             return handleLearningRollEvent({ target, sheet, dataPreset });
-        case "shrug":
+        case 'shrug':
             if ((sheet as BWCharacterSheet).actor.system.ptgs.shrugging) {
-                return sheet.actor.update({ "data.ptgs.shrugging": false });
+                return sheet.actor.update({ 'data.ptgs.shrugging': false });
             }
             return handleShrugRollEvent({ target, sheet, dataPreset });
-        case "grit":
+        case 'grit':
             if ((sheet as BWCharacterSheet).actor.system.ptgs.gritting) {
-                return sheet.actor.update({ "data.ptgs.gritting": false });
+                return sheet.actor.update({ 'data.ptgs.gritting': false });
             }
             return handleGritRollEvent({ target, sheet, dataPreset });
-        case "weapon":
+        case 'weapon':
             return handleWeaponRollEvent({ target, sheet, dataPreset });
-        case "spell":
+        case 'spell':
             return handleSpellRollEvent({ target, sheet, dataPreset });
-        case "armor":
+        case 'armor':
             return handleArmorRollEvent({ target, sheet });
-        case "spellTax":
+        case 'spellTax':
             return handleSpellTaxRoll(target, sheet, dataPreset);
     }
 }
 
-export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogData> {
+export function getKeypressModifierPreset(
+    e: JQuery.Event
+): Partial<RollDialogData> {
     const dataPreset: Partial<RollDialogData> = {};
     if (e.shiftKey) {
         dataPreset.showObstacles = true;
@@ -94,7 +100,9 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
             dialog.help = false;
         }
 
-        dataPreset.optionalObModifiers = mods.mods.map(m => { return { obstacle: m.amount, label: m.name, optional: true }; });
+        dataPreset.optionalObModifiers = mods.mods.map((m) => {
+            return { obstacle: m.amount, label: m.name, optional: true };
+        });
 
         dialog.render();
     }
@@ -105,19 +113,32 @@ export function getKeypressModifierPreset(e: JQuery.Event): Partial<RollDialogDa
 /*               Helper functions                    */
 /* ================================================= */
 export function buildDiceSourceObject(
-        exp: number,
-        aDice: number,
-        bDice: number,
-        forks: number,
-        woundDice: number,
-        tax: number): helpers.StringIndexedObject<string> {
+    exp: number,
+    aDice: number,
+    bDice: number,
+    forks: number,
+    woundDice: number,
+    tax: number
+): helpers.StringIndexedObject<string> {
     const dieSources: { [i: string]: string } = {};
-    if (exp) { dieSources.Exponent = `+${exp}`; }
-    if (aDice) { dieSources.Artha = `+${aDice}`; }
-    if (bDice) { dieSources.Bonus = `+${bDice}`; }
-    if (forks) { dieSources.FoRKs = `+${forks}`; }
-    if (woundDice) { dieSources["Wound Penalty"] = `-${woundDice}`; }
-    if (tax) { dieSources.Tax = `-${tax}`; }
+    if (exp) {
+        dieSources.Exponent = `+${exp}`;
+    }
+    if (aDice) {
+        dieSources.Artha = `+${aDice}`;
+    }
+    if (bDice) {
+        dieSources.Bonus = `+${bDice}`;
+    }
+    if (forks) {
+        dieSources.FoRKs = `+${forks}`;
+    }
+    if (woundDice) {
+        dieSources['Wound Penalty'] = `-${woundDice}`;
+    }
+    if (tax) {
+        dieSources.Tax = `-${tax}`;
+    }
     return dieSources;
 }
 
@@ -128,51 +149,76 @@ export interface BuildRerollOptions {
     accessor?: string;
     itemId?: string;
 }
-export function buildRerollData({ actor, roll, accessor, splitPoolRoll, itemId }: BuildRerollOptions):
-        RerollData {
+export function buildRerollData({
+    actor,
+    roll,
+    accessor,
+    splitPoolRoll,
+    itemId,
+}: BuildRerollOptions): RerollData {
     const coreData: RerollData = {
-        dice: roll.dice[0].results.map(r => r.result).join(","),
-        splitDice: splitPoolRoll?.dice[0].results.map(r => r.result).join(",") || undefined,
+        dice: roll.dice[0].results.map((r) => r.result).join(','),
+        splitDice:
+            splitPoolRoll?.dice[0].results.map((r) => r.result).join(',') ||
+            undefined,
         actorId: actor.id,
     };
     if (accessor) {
         return {
             accessor,
-            type: "stat",
-            ...coreData
+            type: 'stat',
+            ...coreData,
         };
     } else {
         return {
             itemId,
-            type: "skill",
-            ...coreData
+            type: 'skill',
+            ...coreData,
         };
     }
 }
 
-export function extractBaseData(html: JQuery, sheet: BWCharacterSheet | NpcSheet ): BaseDataObject {
-    const exponent = extractNumber(html, "stat.exp");
+export function extractBaseData(
+    html: JQuery,
+    sheet: BWCharacterSheet | NpcSheet
+): BaseDataObject {
+    const exponent = extractNumber(html, 'stat.exp');
     const actorData = sheet.actor.system;
-    const woundDice = extractNumber(html, "woundDice") || 0;
+    const woundDice = extractNumber(html, 'woundDice') || 0;
     const obPenalty = actorData.ptgs.obPenalty || 0;
-    let penaltySources: { [i:string]: string} = obPenalty ? { "Wound Penalty": `+${obPenalty}` } : { };
+    let penaltySources: { [i: string]: string } = obPenalty
+        ? { 'Wound Penalty': `+${obPenalty}` }
+        : {};
     const miscDice = extractMiscDice(html);
     const miscObs = extractMiscObs(html);
-    penaltySources = {...penaltySources, ...miscObs.entries};
-    const diff = extractNumber(html, "difficulty");
-    const aDice = extractNumber(html, "arthaDice");
-    const bDice = extractNumber(html, "bonusDice");
+    penaltySources = { ...penaltySources, ...miscObs.entries };
+    const diff = extractNumber(html, 'difficulty');
+    const aDice = extractNumber(html, 'arthaDice');
+    const bDice = extractNumber(html, 'bonusDice');
     const obstacleTotal = diff + obPenalty + miscObs.sum;
 
-    return { exponent, woundDice, obPenalty, diff, aDice, bDice, miscDice, penaltySources, obstacleTotal };
+    return {
+        exponent,
+        woundDice,
+        obPenalty,
+        diff,
+        aDice,
+        bDice,
+        miscDice,
+        penaltySources,
+        obstacleTotal,
+    };
 }
 
-export function extractSelectString(html: JQuery, name: string): string | undefined {
+export function extractSelectString(
+    html: JQuery,
+    name: string
+): string | undefined {
     return html.find(`select[name="${name}"]`).val() as string;
 }
 
 export function extractSelectNumber(html: JQuery, name: string): number {
-    return parseInt(extractSelectString(html, name) || "0", 10) as number;
+    return parseInt(extractSelectString(html, name) || '0', 10) as number;
 }
 
 export function extractString(html: JQuery, name: string): string | undefined {
@@ -180,177 +226,280 @@ export function extractString(html: JQuery, name: string): string | undefined {
 }
 
 export function extractNumber(html: JQuery, name: string): number {
-    return parseInt(extractString(html, name) || "0", 10);
+    return parseInt(extractString(html, name) || '0', 10);
 }
 
 export function extractCheckboxValue(html: JQuery, name: string): number {
     let sum = 0;
     html.find(`input[name="${name}"]:checked`).each((_i, v) => {
-        sum += parseInt(v.getAttribute("value") || "", 10);
+        sum += parseInt(v.getAttribute('value') || '', 10);
     });
     return sum;
 }
 
-export function extractMiscDice(html: JQuery): { sum: number, entries: {[i:string]: string} } {
+export function extractMiscDice(html: JQuery): {
+    sum: number;
+    entries: { [i: string]: string };
+} {
     let sum = 0;
     const entries = {};
     html.find('input[name="miscDice"]:checked').each((_i, v) => {
-        const mod = parseInt(v.getAttribute("value") || "", 10);
+        const mod = parseInt(v.getAttribute('value') || '', 10);
         sum += mod;
-        entries[v.dataset.name || "Misc"] = mod >= 0 ? `+${mod}` : `${mod}`;
+        entries[v.dataset.name || 'Misc'] = mod >= 0 ? `+${mod}` : `${mod}`;
     });
     return { sum, entries };
 }
 
-export function extractMiscObs(html: JQuery): { sum: number, entries: {[i:string]: string} } {
+export function extractMiscObs(html: JQuery): {
+    sum: number;
+    entries: { [i: string]: string };
+} {
     let sum = 0;
     const entries = {};
     html.find('input[name="miscObs"]:checked').each((_i, v) => {
-        const mod = parseInt(v.getAttribute("value") || "", 10);
+        const mod = parseInt(v.getAttribute('value') || '', 10);
         sum += mod;
-        entries[v.dataset.name || "Misc"] = mod >= 0 ? `+${mod}` : `${mod}`;
+        entries[v.dataset.name || 'Misc'] = mod >= 0 ? `+${mod}` : `${mod}`;
     });
     return { sum, entries };
 }
 
-export async function rollDice(numDice: number, open = false, shade: helpers.ShadeString = 'B'):
-    Promise<Roll | undefined> {
+export async function rollDice(
+    numDice: number,
+    open = false,
+    shade: helpers.ShadeString = 'B'
+): Promise<Roll | undefined> {
     if (numDice <= 0) {
         getNoDiceErrorDialog(numDice);
         return;
     } else {
-        const tgt = shade === 'B' ? '3' : (shade === 'G' ? '2' : '1');
-        const roll = new Roll(`${numDice}d6${open ? 'x6' : ''}cs>${tgt}`).roll({ async: true });
+        const tgt = shade === 'B' ? '3' : shade === 'G' ? '2' : '1';
+        const roll = new Roll(`${numDice}d6${open ? 'x6' : ''}cs>${tgt}`).roll({
+            async: true,
+        });
         if (game.dice3d) {
-            return game.dice3d.showForRoll(await roll, game.user, true, null, false)
-                .then(_ => roll);
+            return game.dice3d
+                .showForRoll(await roll, game.user, true, null, false)
+                .then((_) => roll);
         }
         return roll;
     }
 }
 
-export function getRollNameClass(open: boolean, shade: helpers.ShadeString): string {
-    let css = "shade-black";
-    if (shade === "G") {
-        css = "shade-grey";
-    } else if (shade === "W") {
-        css = "shade-white";
+export function getRollNameClass(
+    open: boolean,
+    shade: helpers.ShadeString
+): string {
+    let css = 'shade-black';
+    if (shade === 'G') {
+        css = 'shade-grey';
+    } else if (shade === 'W') {
+        css = 'shade-white';
     }
 
     if (open) {
-        css += " open-roll";
+        css += ' open-roll';
     }
     return css;
 }
 
 export async function getNoDiceErrorDialog(numDice: number): Promise<unknown> {
     return helpers.notifyError(
-        game.i18n.localize("BW.dialog.tooFewDice"),
-        game.i18n.localize("BW.dialog.tooFewDiceText").replace("{dice}", numDice.toString()));
+        game.i18n.localize('BW.dialog.tooFewDice'),
+        game.i18n
+            .localize('BW.dialog.tooFewDiceText')
+            .replace('{dice}', numDice.toString())
+    );
 }
 
-export async function maybeExpendTools(tools: Possession): Promise<{ expended: boolean, text: string }> {
-    const roll = await rollDice(1, false, "B");
+export async function maybeExpendTools(
+    tools: Possession
+): Promise<{ expended: boolean; text: string }> {
+    const roll = await rollDice(1, false, 'B');
     const result = roll?.dice[0].results[0].result;
     if (roll && result === 1) {
-        return  {
+        return {
             expended: true,
             text: `<p>
-                    ${game.i18n.localize("BW.dialog.toolsExpendedPre").replace("{tool}", tools.name)}
+                    ${game.i18n
+                        .localize('BW.dialog.toolsExpendedPre')
+                        .replace('{tool}', tools.name)}
                 <label class="roll-die" data-success="false">${result}</label>
-                    ${game.i18n.localize("BW.dialog.toolsExpendedPost").replace("{tool}", tools.name)}
-                </p>`
+                    ${game.i18n
+                        .localize('BW.dialog.toolsExpendedPost')
+                        .replace('{tool}', tools.name)}
+                </p>`,
         };
     }
     return {
         expended: false,
         text: `<p>
-                ${game.i18n.localize("BW.dialog.toolsNotExpendedPre").replace("{tool}", tools.name)}
+                ${game.i18n
+                    .localize('BW.dialog.toolsNotExpendedPre')
+                    .replace('{tool}', tools.name)}
             <label class="roll-die" data-success="true">${result}</label>
-                ${game.i18n.localize("BW.dialog.toolsNotExpendedPost").replace("{tool}", tools.name)}
-            </p>`
+                ${game.i18n
+                    .localize('BW.dialog.toolsNotExpendedPost')
+                    .replace('{tool}', tools.name)}
+            </p>`,
     };
 }
 
-function extractSourcedValue(html: JQuery, name: string):
-        { sum: number, entries: {[i:string]: string} } {
+function extractSourcedValue(
+    html: JQuery,
+    name: string
+): { sum: number; entries: { [i: string]: string } } {
     let sum = 0;
     const entries = {};
     html.find(`input[name="${name}"]:checked`).each((_i, v) => {
-        const mod = parseInt(v.getAttribute("value") || "", 10);
+        const mod = parseInt(v.getAttribute('value') || '', 10);
         sum += mod;
-        entries[v.dataset.name || "Misc"] = mod >= 0 ? `+${mod}` : `${mod}`;
+        entries[v.dataset.name || 'Misc'] = mod >= 0 ? `+${mod}` : `${mod}`;
     });
     return { sum, entries };
 }
 
 export function extractRollData(html: JQuery): RollData {
-    const exponent = extractNumber(html, "stat.exp") + extractNumber(html, "skill.exp");
+    const exponent =
+        extractNumber(html, 'stat.exp') + extractNumber(html, 'skill.exp');
     const modifierDialog: ModifierDialog = game.burningwheel.modifiers;
     const difficultyDialog: DifficultyDialog = game.burningwheel.gmDifficulty;
     let diff = 0;
-    if (game.burningwheel.useGmDifficulty && !extractNumber(html, "forceCustomDifficulty")) {
+    if (
+        game.burningwheel.useGmDifficulty &&
+        !extractNumber(html, 'forceCustomDifficulty')
+    ) {
         diff = difficultyDialog.difficulty;
     } else {
-        diff = extractNumber(html, "difficulty");
+        diff = extractNumber(html, 'difficulty');
     }
 
-    const addHelp = extractCheckboxValue(html, "acceptHelp") === 1;
+    const addHelp = extractCheckboxValue(html, 'acceptHelp') === 1;
     let helpDice = 0;
-    const persona = extractSelectNumber(html, "personaDice");
-    const deeds = extractCheckboxValue(html, "deedsDice");
-    const aDice = extractNumber(html, "arthaDice") + persona + deeds;
-    const bDice = extractNumber(html, "bonusDice");
-    const woundDice = extractNumber(html, "woundDice") || 0;
-    const obPenalty = extractNumber(html, "obPenalty") || 0;
-    const cashDice = extractSelectNumber(html, "cashDice") || 0;
-    const fundDice = extractSelectNumber(html, "fundDice") || 0;
-    const splitPool = extractNumber(html, "splitPool");
-    
+    const persona = extractSelectNumber(html, 'personaDice');
+    const deeds = extractCheckboxValue(html, 'deedsDice');
+    const aDice = extractNumber(html, 'arthaDice') + persona + deeds;
+    const bDice = extractNumber(html, 'bonusDice');
+    const woundDice = extractNumber(html, 'woundDice') || 0;
+    const obPenalty = extractNumber(html, 'obPenalty') || 0;
+    const cashDice = extractSelectNumber(html, 'cashDice') || 0;
+    const fundDice = extractSelectNumber(html, 'fundDice') || 0;
+    const splitPool = extractNumber(html, 'splitPool');
+
     const miscDice = extractMiscDice(html);
     const miscObs = extractMiscObs(html);
 
-    const circlesBonus = extractSourcedValue(html, "circlesBonus");
-    const circlesMalus = extractSourcedValue(html, "circlesMalus");
+    const circlesBonus = extractSourcedValue(html, 'circlesBonus');
+    const circlesMalus = extractSourcedValue(html, 'circlesMalus');
 
-    let penaltySources: { [i:string]: string} = obPenalty ? { [game.i18n.localize('BW.roll.woundPenalty')]: `+${obPenalty}` } : { };
+    let penaltySources: { [i: string]: string } = obPenalty
+        ? { [game.i18n.localize('BW.roll.woundPenalty')]: `+${obPenalty}` }
+        : {};
 
-    const toolkitPenalty = extractCheckboxValue(html, "toolPenalty") ? diff : 0;
-    if (toolkitPenalty) { penaltySources[game.i18n.localize('BW.roll.noToolkit')] = `+${toolkitPenalty}`; }
-    const learningPenalty = extractNumber(html, "learning") ? diff + toolkitPenalty : 0;
-    if (learningPenalty) { penaltySources[game.i18n.localize('BW.roll.beginnersLuck')] = `+${learningPenalty}`; }
+    const toolkitPenalty = extractCheckboxValue(html, 'toolPenalty') ? diff : 0;
+    if (toolkitPenalty) {
+        penaltySources[
+            game.i18n.localize('BW.roll.noToolkit')
+        ] = `+${toolkitPenalty}`;
+    }
+    const learningPenalty = extractNumber(html, 'learning')
+        ? diff + toolkitPenalty
+        : 0;
+    if (learningPenalty) {
+        penaltySources[
+            game.i18n.localize('BW.roll.beginnersLuck')
+        ] = `+${learningPenalty}`;
+    }
 
-    penaltySources = {...penaltySources, ...miscObs.entries, ...circlesMalus.entries};
+    penaltySources = {
+        ...penaltySources,
+        ...miscObs.entries,
+        ...circlesMalus.entries,
+    };
 
-    const obstacleTotal = diff + obPenalty + miscObs.sum + toolkitPenalty + circlesMalus.sum;
-    const tax = extractNumber(html, "tax");
-    const forks = extractCheckboxValue(html, "forkOptions");
-    const wildForks = extractCheckboxValue(html, "wildForks");
+    const obstacleTotal =
+        diff + obPenalty + miscObs.sum + toolkitPenalty + circlesMalus.sum;
+    const tax = extractNumber(html, 'tax');
+    const forks = extractCheckboxValue(html, 'forkOptions');
+    const wildForks = extractCheckboxValue(html, 'wildForks');
 
     if (addHelp) {
         helpDice = modifierDialog.helpDiceTotal;
     }
 
-    let dieSources: { [s:string]: string } = {
-        [game.i18n.localize('BW.roll.exponent')]: `+${exponent}`
+    let dieSources: { [s: string]: string } = {
+        [game.i18n.localize('BW.roll.exponent')]: `+${exponent}`,
     };
-    if (woundDice) { dieSources[game.i18n.localize('BW.roll.woundPenalty')] = `-${woundDice}`; }
-    if (aDice) { dieSources.Artha = `+${aDice}`; }
-    if (bDice) { dieSources.Bonus = `+${bDice}`; }
-    if (forks) { dieSources.FoRKs = `+${forks}`; }
-    if (wildForks) { dieSources[game.i18n.localize('BW.roll.wildForks')] = `+${wildForks}`; }
-    if (circlesBonus.sum) { dieSources = { ...dieSources, ...circlesBonus.entries}; }
-    if (tax) { dieSources.Tax = `-${tax}`; }
-    if (cashDice) { dieSources.Cash = `+${cashDice}`; }
-    if (fundDice) { dieSources.Funds = `+${fundDice}`; }
-    if (miscDice) { dieSources = { ...dieSources, ...miscDice.entries }; }
-    if (splitPool) { dieSources[game.i18n.localize('BW.roll.secondaryPool')] = `-${splitPool}`; }
-    if (addHelp && helpDice) { dieSources[game.i18n.localize('BW.roll.help')] = `+${helpDice}`; }
+    if (woundDice) {
+        dieSources[
+            game.i18n.localize('BW.roll.woundPenalty')
+        ] = `-${woundDice}`;
+    }
+    if (aDice) {
+        dieSources.Artha = `+${aDice}`;
+    }
+    if (bDice) {
+        dieSources.Bonus = `+${bDice}`;
+    }
+    if (forks) {
+        dieSources.FoRKs = `+${forks}`;
+    }
+    if (wildForks) {
+        dieSources[game.i18n.localize('BW.roll.wildForks')] = `+${wildForks}`;
+    }
+    if (circlesBonus.sum) {
+        dieSources = { ...dieSources, ...circlesBonus.entries };
+    }
+    if (tax) {
+        dieSources.Tax = `-${tax}`;
+    }
+    if (cashDice) {
+        dieSources.Cash = `+${cashDice}`;
+    }
+    if (fundDice) {
+        dieSources.Funds = `+${fundDice}`;
+    }
+    if (miscDice) {
+        dieSources = { ...dieSources, ...miscDice.entries };
+    }
+    if (splitPool) {
+        dieSources[
+            game.i18n.localize('BW.roll.secondaryPool')
+        ] = `-${splitPool}`;
+    }
+    if (addHelp && helpDice) {
+        dieSources[game.i18n.localize('BW.roll.help')] = `+${helpDice}`;
+    }
 
-    const diceTotal = aDice + bDice + miscDice.sum + exponent - woundDice + forks + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
-    const difficultyDice = bDice + miscDice.sum + exponent + wildForks + forks - woundDice + helpDice - tax + circlesBonus.sum + cashDice + fundDice - splitPool;
+    const diceTotal =
+        aDice +
+        bDice +
+        miscDice.sum +
+        exponent -
+        woundDice +
+        forks +
+        helpDice -
+        tax +
+        circlesBonus.sum +
+        cashDice +
+        fundDice -
+        splitPool;
+    const difficultyDice =
+        bDice +
+        miscDice.sum +
+        exponent +
+        wildForks +
+        forks -
+        woundDice +
+        helpDice -
+        tax +
+        circlesBonus.sum +
+        cashDice +
+        fundDice -
+        splitPool;
 
-    return { 
+    return {
         baseDifficulty: diff,
         diceTotal,
         difficultyDice,
@@ -358,7 +507,7 @@ export function extractRollData(html: JQuery): RollData {
         difficultyTotal: obstacleTotal + learningPenalty,
         dieSources,
         obSources: {
-            ...penaltySources
+            ...penaltySources,
         },
         wildForks: wildForks,
         difficultyGroup: helpers.difficultyGroup(difficultyDice, obstacleTotal),
@@ -367,97 +516,128 @@ export function extractRollData(html: JQuery): RollData {
         splitPool,
         addHelp,
         persona,
-        deeds
+        deeds,
     };
 }
 
-export async function rollWildFork(numDice: number, shade: helpers.ShadeString = 'B'): Promise<DiceTerm | undefined> {
+export async function rollWildFork(
+    numDice: number,
+    shade: helpers.ShadeString = 'B'
+): Promise<DiceTerm | undefined> {
     if (numDice <= 0) {
         return;
     }
-    const tgt = shade === 'B' ? 3 : (shade === 'G' ? 2 : 1);
+    const tgt = shade === 'B' ? 3 : shade === 'G' ? 2 : 1;
     const die = new AstrologyDie({ diceNumber: numDice, target: tgt });
     const result = die.evaluate();
 
     if (game.dice3d) {
         game.dice3d.show({
-            throws: [ {
-                dice: die.results.map(r => {
-                    return {
-                        result: r.result,
-                        resultLabel: r.result,
-                        type: "d6",
-                        vectors: [],
-                        options: {}
-                    };
-                })
-            }]
+            throws: [
+                {
+                    dice: die.results.map((r) => {
+                        return {
+                            result: r.result,
+                            resultLabel: r.result,
+                            type: 'd6',
+                            vectors: [],
+                            options: {},
+                        };
+                    }),
+                },
+            ],
         });
     }
     return result;
 }
 
-export async function getSplitPoolRoll(numDice: number, open: boolean, shade: helpers.ShadeString): Promise<Roll|undefined> {
-    if (numDice <= 0 ) return undefined;
-    
+export async function getSplitPoolRoll(
+    numDice: number,
+    open: boolean,
+    shade: helpers.ShadeString
+): Promise<Roll | undefined> {
+    if (numDice <= 0) return undefined;
+
     return rollDice(numDice, open, shade);
 }
 
 export function getSplitPoolText(roll: Roll | undefined): string {
     if (!roll) {
-        return "";
+        return '';
     }
     const parentDiv = document.createElement('div');
 
-    const textDiv = helpers.DivOfText(game.i18n.localize('BW.chat.secondary'), );
-    const resultDiv = helpers.DivOfText(`${roll.result}`, "secondary-pool");
+    const textDiv = helpers.DivOfText(game.i18n.localize('BW.chat.secondary'));
+    const resultDiv = helpers.DivOfText(`${roll.result}`, 'secondary-pool');
     const diceDiv = document.createElement('div');
-    diceDiv.className = "secondary-dice";
-    roll.dice[0].results.forEach(r => {
-        const diceResult = helpers.DivOfText(r.result, "roll-die");
-        diceResult.dataset.success = r.success? "true" : "false";
+    diceDiv.className = 'secondary-dice';
+    roll.dice[0].results.forEach((r) => {
+        const diceResult = helpers.DivOfText(r.result, 'roll-die');
+        diceResult.dataset.success = r.success ? 'true' : 'false';
         diceDiv.appendChild(diceResult);
     });
     parentDiv.appendChild(textDiv);
     parentDiv.appendChild(resultDiv);
     parentDiv.appendChild(diceDiv);
-    return parentDiv.innerHTML; 
+    return parentDiv.innerHTML;
 }
 
-export function mergeDialogData<T extends RollDialogData>(target: T, source?: Partial<T>): T {
+export function mergeDialogData<T extends RollDialogData>(
+    target: T,
+    source?: Partial<T>
+): T {
     if (!source) {
         return target;
     }
     if (source.optionalDiceModifiers) {
-        source.optionalDiceModifiers = source.optionalDiceModifiers.concat(...target.optionalDiceModifiers || []);
+        source.optionalDiceModifiers = source.optionalDiceModifiers.concat(
+            ...(target.optionalDiceModifiers || [])
+        );
     }
     if (source.optionalObModifiers) {
-        source.optionalObModifiers = source.optionalObModifiers.concat(...target.optionalObModifiers || []);
+        source.optionalObModifiers = source.optionalObModifiers.concat(
+            ...(target.optionalObModifiers || [])
+        );
     }
     if (source.diceModifiers) {
-        source.diceModifiers = source.diceModifiers.concat(...target.diceModifiers || []);
+        source.diceModifiers = source.diceModifiers.concat(
+            ...(target.diceModifiers || [])
+        );
     }
     if (source.obModifiers) {
-        source.obModifiers = source.obModifiers.concat(...target.obModifiers || []);
+        source.obModifiers = source.obModifiers.concat(
+            ...(target.obModifiers || [])
+        );
     }
     return Object.assign(target, source);
 }
 
-export function mergePartials<T extends RollDialogData>(target: Partial<T>, source?: Partial<T>): Partial<T> {
+export function mergePartials<T extends RollDialogData>(
+    target: Partial<T>,
+    source?: Partial<T>
+): Partial<T> {
     if (!source) {
         return target;
     }
     if (source.optionalDiceModifiers && target.optionalDiceModifiers) {
-        source.optionalDiceModifiers = source.optionalDiceModifiers.concat(...target.optionalDiceModifiers as RollModifier[]);
+        source.optionalDiceModifiers = source.optionalDiceModifiers.concat(
+            ...(target.optionalDiceModifiers as RollModifier[])
+        );
     }
     if (source.optionalObModifiers && target.optionalDiceModifiers) {
-        source.optionalObModifiers = source.optionalObModifiers.concat(...target.optionalObModifiers as RollModifier[]);
+        source.optionalObModifiers = source.optionalObModifiers.concat(
+            ...(target.optionalObModifiers as RollModifier[])
+        );
     }
     if (source.diceModifiers && target.diceModifiers) {
-        source.diceModifiers = source.diceModifiers.concat(...target.diceModifiers as RollModifier[]);
+        source.diceModifiers = source.diceModifiers.concat(
+            ...(target.diceModifiers as RollModifier[])
+        );
     }
     if (source.obModifiers && target.obModifiers) {
-        source.obModifiers = source.obModifiers.concat(...target.obModifiers as RollModifier[]);
+        source.obModifiers = source.obModifiers.concat(
+            ...(target.obModifiers as RollModifier[])
+        );
     }
 
     return Object.assign(target, source);
@@ -477,9 +657,9 @@ export interface RollData {
     /** Number of wild forks used in test */
     wildForks: number;
     /** Collection of sources of die number modifiers */
-    dieSources: { [s:string]: string };
+    dieSources: { [s: string]: string };
     /** Collection of sources of obstacle modifiers */
-    obSources: { [s:string]: string };
+    obSources: { [s: string]: string };
     /** String representing difficulty class of the test */
     difficultyGroup: helpers.TestString;
     /** Number of cash dice spent for test */
@@ -498,15 +678,14 @@ export interface RollData {
 
 /* ============ Constants =============== */
 export const templates = {
-    armorDialog: "systems/burningwheel/templates/dialogs/armor-dialog.hbs",
-    armorMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    rerollChatMessage: "systems/burningwheel/templates/chat/reroll-message.hbs",
-    pcRollDialog: "systems/burningwheel/templates/dialogs/roll-dialog.hbs",
-    pcRollMessage: "systems/burningwheel/templates/chat/roll-message.hbs",
-    npcRollDialog: "systems/burningwheel/templates/dialogs/roll-dialog.hbs",
-    npcMessage: "systems/burningwheel/templates/chat/roll-message.hbs"
+    armorDialog: 'systems/burningwheel/templates/dialogs/armor-dialog.hbs',
+    armorMessage: 'systems/burningwheel/templates/chat/roll-message.hbs',
+    rerollChatMessage: 'systems/burningwheel/templates/chat/reroll-message.hbs',
+    pcRollDialog: 'systems/burningwheel/templates/dialogs/roll-dialog.hbs',
+    pcRollMessage: 'systems/burningwheel/templates/chat/roll-message.hbs',
+    npcRollDialog: 'systems/burningwheel/templates/dialogs/roll-dialog.hbs',
+    npcMessage: 'systems/burningwheel/templates/chat/roll-message.hbs',
 };
-
 
 /* =============== Types ================= */
 export interface AttributeDialogData extends RollDialogData {
@@ -541,7 +720,7 @@ export interface RollChatMessageData {
     successes: string | null;
     splitSuccesses?: string;
     difficulty: number;
-    specialPenalty?: { name: string, amount: number };
+    specialPenalty?: { name: string; amount: number };
     success: boolean;
     rolls: RollResult[];
     difficultyGroup: string;
@@ -560,7 +739,7 @@ export interface RerollData {
     dice: string;
     splitDice?: string;
     actorId: string;
-    type?: "stat" | "skill" | "learning" | "armor";
+    type?: 'stat' | 'skill' | 'learning' | 'armor';
     learningTarget?: string; // for reroll, which attribute to apply the fate to.
     ptgsAction?: string;
     itemId?: string;
@@ -570,10 +749,10 @@ export interface RerollData {
 
 export interface RerollMessageData {
     title: string;
-    rolls: { roll: number, success: boolean }[];
-    splitRolls: { roll: number, success: boolean }[];
-    rerolls: { roll: number, success: boolean }[];
-    splitRerolls: { roll: number, success: boolean }[];
+    rolls: { roll: number; success: boolean }[];
+    splitRolls: { roll: number; success: boolean }[];
+    rerolls: { roll: number; success: boolean }[];
+    splitRerolls: { roll: number; success: boolean }[];
     success: boolean;
     successes: number;
     newSuccesses: number;
@@ -583,18 +762,18 @@ export interface RerollMessageData {
 }
 
 interface BaseDataObject {
-    exponent: number,
-    woundDice: number,
-    obPenalty: number,
-    diff: number,
-    aDice: number,
-    bDice: number,
+    exponent: number;
+    woundDice: number;
+    obPenalty: number;
+    diff: number;
+    aDice: number;
+    bDice: number;
     miscDice: {
-        sum: number,
-        entries: helpers.StringIndexedObject<string>
-    },
-    penaltySources: helpers.StringIndexedObject<string>,
-    obstacleTotal: number
+        sum: number;
+        entries: helpers.StringIndexedObject<string>;
+    };
+    penaltySources: helpers.StringIndexedObject<string>;
+    obstacleTotal: number;
 }
 
 export interface EventHandlerOptions extends CommonEventHandlerOptions {

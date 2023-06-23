@@ -1,32 +1,32 @@
-@import "./character/bits.scss";
-@import "./character/character.scss";
-@import "./character/equipment.scss";
-@import "./character/learning.scss";
-@import "./character/ptgs.scss";
-@import "./character/relationships.scss";
-@import "./character/settings.scss";
-@import "./character/spells.scss";
-@import "./character/weapons.scss";
-@import "./chat/dialog.scss";
-@import "./chat/roll.scss";
-@import "./dialog/character-burner.scss";
-@import "./dialog/difficulty.scss";
-@import "./dialog/duel-of-wits.scss";
-@import "./dialog/fight.scss";
-@import "./dialog/mods-and-help.scss";
-@import "./dialog/range-and-cover.scss";
-@import "./items/armor.scss";
-@import "./items/belief.scss";
-@import "./items/item.scss";
-@import "./items/lifepath.scss";
-@import "./items/relationship.scss";
-@import "./items/skill.scss";
-@import "./items/spell.scss";
-@import "./items/trait.scss";
-@import "./items/weapon.scss";
-@import "./mixins.scss";
-@import "./npc/npc.scss";
-@import "./setting.scss";
+@import './character/bits.scss';
+@import './character/character.scss';
+@import './character/equipment.scss';
+@import './character/learning.scss';
+@import './character/ptgs.scss';
+@import './character/relationships.scss';
+@import './character/settings.scss';
+@import './character/spells.scss';
+@import './character/weapons.scss';
+@import './chat/dialog.scss';
+@import './chat/roll.scss';
+@import './dialog/character-burner.scss';
+@import './dialog/difficulty.scss';
+@import './dialog/duel-of-wits.scss';
+@import './dialog/fight.scss';
+@import './dialog/mods-and-help.scss';
+@import './dialog/range-and-cover.scss';
+@import './items/armor.scss';
+@import './items/belief.scss';
+@import './items/item.scss';
+@import './items/lifepath.scss';
+@import './items/relationship.scss';
+@import './items/skill.scss';
+@import './items/spell.scss';
+@import './items/trait.scss';
+@import './items/weapon.scss';
+@import './mixins.scss';
+@import './npc/npc.scss';
+@import './setting.scss';
 
 .bw-app > .window-content {
     scrollbar-width: thin;
@@ -36,8 +36,8 @@
 .header {
     display: flex;
     flex-direction: row;
-    input[type="number"] {
-        max-width:  120px;
+    input[type='number'] {
+        max-width: 120px;
     }
 }
 
@@ -69,10 +69,10 @@ input {
     }
 
     &::selection {
-        background: rgba(#800, .5);
+        background: rgba(#800, 0.5);
     }
     &::-moz-selection {
-        background: rgba(#800, .5);
+        background: rgba(#800, 0.5);
     }
 }
 
@@ -82,11 +82,10 @@ input {
     flex-wrap: wrap;
 }
 
-
 .flex-column {
     display: flex;
     flex-direction: column;
-    &>hr {
+    & > hr {
         width: 100%;
     }
 }
@@ -104,7 +103,7 @@ input {
     &.col-2 {
         grid-template-columns: 1fr 1fr;
     }
-    
+
     &.col-3 {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -129,7 +128,7 @@ div.pill-toggle {
     display: grid;
     grid-template-columns: repeat(auto-fit, 24px 120px);
 
-    input[type=checkbox] {
+    input[type='checkbox'] {
         height: 12px;
         width: 12px;
     }
@@ -141,7 +140,7 @@ div.pill-toggle {
     column-gap: 5px;
     row-gap: 5px;
 
-    input[type=number] {
+    input[type='number'] {
         width: 4em;
         font-weight: bold;
         font-size: 16px;
@@ -162,7 +161,7 @@ i.item-action-icon {
     color: transparentize($color: black, $amount: 0.25);
 
     &:hover {
-        color: #FF0000;
+        color: #ff0000;
     }
 }
 
@@ -193,7 +192,7 @@ input.circle-input {
 }
 
 .footer {
-    font-size: .7em;
+    font-size: 0.7em;
     color: #333;
     text-align: center;
 
@@ -213,17 +212,29 @@ textarea {
 
 .character-burner-icon {
     @keyframes pulsing {
-        0%   { text-shadow: 0 0 -10px orangered; }
-        40%  { text-shadow: 0 0 20px  orangered; }
-        60%  { text-shadow: 0 0 20px  orangered; }
-        100% { text-shadow: 0 0 -10px orangered; }
+        0% {
+            text-shadow: 0 0 -10px orangered;
+        }
+        40% {
+            text-shadow: 0 0 20px orangered;
+        }
+        60% {
+            text-shadow: 0 0 20px orangered;
+        }
+        100% {
+            text-shadow: 0 0 -10px orangered;
+        }
     }
-    i { color: darkred; }
+    i {
+        color: darkred;
+    }
     animation: pulsing 5000ms infinite;
 }
 
-.fight-sidebar-button, .dow-sidebar-button, .rnc-sidebar-button {
-    background: linear-gradient(rgba(red, .15), rgba(red, 0.45));
+.fight-sidebar-button,
+.dow-sidebar-button,
+.rnc-sidebar-button {
+    background: linear-gradient(rgba(red, 0.15), rgba(red, 0.45));
     color: gold;
     border-color: gold;
     width: 95%;

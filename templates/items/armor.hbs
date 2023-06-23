@@ -1,167 +1,452 @@
-<form autocomplete="off" class="armor-sheet flex-column">
-    <div class="flex-row">
+<form autocomplete='off' class='armor-sheet flex-column'>
+    <div class='flex-row'>
         {{#if showImage}}
-        <img class="item-image" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+            <img
+                class='item-image'
+                src='{{item.img}}'
+                title='{{item.name}}'
+                data-edit='img'
+            />
         {{/if}}
-        <input name="name" type="text" value="{{item.name}}" class="item-sheet-name">
+        <input
+            name='name'
+            type='text'
+            value='{{item.name}}'
+            class='item-sheet-name'
+        />
     </div>
-    <div class="item-form-group">
-        <label for="{{item.id}}-number-dice" class="item-setting-label">{{localize "BW.armor.armorDice"}}</label>
-        <input id="{{item.id}}-number-dice" type="number" class="exponent" name="system.dice" value="{{system.dice}}">
-        
-        <label for="{{item.id}}-checkbox-equipped" class="item-setting-label">{{localize "BW.armor.equipped"}}</label>
-        <input id="{{item.id}}-checkbox-equipped" type="checkbox" name="system.equipped" {{ checked system.equipped}}>
-        
-        <label for="{{item.id}}-select-quality" class="item-setting-label">{{localize "BW.armor.armorQuality"}}</label>
-        <select id="{{item.id}}-select-quality" name="system.quality" value="{{system.quality}}">
+    <div class='item-form-group'>
+        <label
+            for='{{item.id}}-number-dice'
+            class='item-setting-label'
+        >{{localize 'BW.armor.armorDice'}}</label>
+        <input
+            id='{{item.id}}-number-dice'
+            type='number'
+            class='exponent'
+            name='system.dice'
+            value='{{system.dice}}'
+        />
+
+        <label
+            for='{{item.id}}-checkbox-equipped'
+            class='item-setting-label'
+        >{{localize 'BW.armor.equipped'}}</label>
+        <input
+            id='{{item.id}}-checkbox-equipped'
+            type='checkbox'
+            name='system.equipped'
+            {{checked system.equipped}}
+        />
+
+        <label
+            for='{{item.id}}-select-quality'
+            class='item-setting-label'
+        >{{localize 'BW.armor.armorQuality'}}</label>
+        <select
+            id='{{item.id}}-select-quality'
+            name='system.quality'
+            value='{{system.quality}}'
+        >
             {{#select system.quality}}
-            {{#each armorQuality as |title value|}}
-            <option value="{{value}}">{{localize title}}</option>
-            {{/each}}
+                {{#each armorQuality as |title value|}}
+                    <option value='{{value}}'>{{localize title}}</option>
+                {{/each}}
             {{/select}}
         </select>
-        
-        <label for="{{item.id}}-select-shade" class="item-setting-label">{{localize "BW.shade"}}</label>
-        <select id="{{item.id}}-select-shade" name="system.shade" value="{{system.shade}}">
+
+        <label
+            for='{{item.id}}-select-shade'
+            class='item-setting-label'
+        >{{localize 'BW.shade'}}</label>
+        <select
+            id='{{item.id}}-select-shade'
+            name='system.shade'
+            value='{{system.shade}}'
+        >
             {{#select system.shade}}
-            <option value="B">{{localize "BW.black"}}</option>
-            <option value="G">{{localize "BW.grey"}}</option>
-            <option value="W">{{localize "BW.white"}}</option>
+                <option value='B'>{{localize 'BW.black'}}</option>
+                <option value='G'>{{localize 'BW.grey'}}</option>
+                <option value='W'>{{localize 'BW.white'}}</option>
             {{/select}}
         </select>
-        
-        <label for="{{item.id}}-select-untrained" class="item-setting-label">{{localize "BW.armor.untrainedType"}}</label>
-        <select id="{{item.id}}-select-untrained" name="system.untrainedPenalty" value="{{system.untrainedPenalty}}">
+
+        <label
+            for='{{item.id}}-select-untrained'
+            class='item-setting-label'
+        >{{localize 'BW.armor.untrainedType'}}</label>
+        <select
+            id='{{item.id}}-select-untrained'
+            name='system.untrainedPenalty'
+            value='{{system.untrainedPenalty}}'
+        >
             {{#select system.untrainedPenalty}}
-            <option value="none">{{localize "BW.armor.untrainedNone"}}</option>
-            <option value="light">{{localize "BW.armor.untrainedLight"}}</option>
-            <option value="heavy">{{localize "BW.armor.untrainedHeavy"}}</option>
-            <option value="plate">{{localize "BW.armor.untrainedPlate"}}</option>
+                <option value='none'>{{localize
+                        'BW.armor.untrainedNone'
+                    }}</option>
+                <option value='light'>{{localize
+                        'BW.armor.untrainedLight'
+                    }}</option>
+                <option value='heavy'>{{localize
+                        'BW.armor.untrainedHeavy'
+                    }}</option>
+                <option value='plate'>{{localize
+                        'BW.armor.untrainedPlate'
+                    }}</option>
             {{/select}}
         </select>
 
-        <label for="{{item.id}}-point-cost" class="item-setting-label">{{localize "BW.rpCost"}}</label>
-        <input id="{{item.id}}-point-cost" type="number" class="exponent no-arrows wide" name="system.pointCost" value="{{system.pointCost}}" data-dtype="Number">
+        <label
+            for='{{item.id}}-point-cost'
+            class='item-setting-label'
+        >{{localize 'BW.rpCost'}}</label>
+        <input
+            id='{{item.id}}-point-cost'
+            type='number'
+            class='exponent no-arrows wide'
+            name='system.pointCost'
+            value='{{system.pointCost}}'
+            data-dtype='Number'
+        />
 
     </div>
-    <hr/>
-    <div class="flex-column">
-        <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-helm" name="system.hasHelm" {{checked system.hasHelm}}>
-            <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasHelm}}>
-                <label for="{{item.id}}-checkbox-has-helm" class="armor-location-label">{{localize "BW.armor.hasHelm"}}</label>
+    <hr />
+    <div class='flex-column'>
+        <div class='armor-location-group flex-row'>
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox'
+                id='{{item.id}}-checkbox-has-helm'
+                name='system.hasHelm'
+                {{checked system.hasHelm}}
+            />
+            <div class='armor-location-selection flex-column'>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasHelm}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-helm'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasHelm'}}</label>
             </div>
-            <div class="armor-location-details input-grid">
-                <div >
-                    <input id="{{item.id}}-damageHelm" type="number" name="system.damageHelm" value="{{system.damageHelm}}" placeholder="0">
-                    <label for="{{item.id}}-damageHelm">{{localize "BW.armor.helmDamage"}}</label>
+            <div class='armor-location-details input-grid'>
+                <div>
+                    <input
+                        id='{{item.id}}-damageHelm'
+                        type='number'
+                        name='system.damageHelm'
+                        value='{{system.damageHelm}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageHelm'>{{localize
+                            'BW.armor.helmDamage'
+                        }}</label>
                 </div>
-                <div >
-                    <input id="{{item.id}}-perceptionObservationPenalty" type="number" name="system.perceptionObservationPenalty" value="{{system.perceptionObservationPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-perceptionObservationPenalty">{{localize "BW.armor.perceptionObsPenalty"}}</label>
+                <div>
+                    <input
+                        id='{{item.id}}-perceptionObservationPenalty'
+                        type='number'
+                        name='system.perceptionObservationPenalty'
+                        value='{{system.perceptionObservationPenalty}}'
+                        placeholder='0'
+                    />
+                    <label
+                        for='{{item.id}}-perceptionObservationPenalty'
+                    >{{localize 'BW.armor.perceptionObsPenalty'}}</label>
                 </div>
             </div>
         </div>
-        <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-torso" name="system.hasTorso" {{checked system.hasTorso}}>
-            <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasTorso}}>
-                <label for="{{item.id}}-checkbox-has-torso" class="armor-location-label">{{localize "BW.armor.hasTorso"}}</label>
+        <div class='armor-location-group flex-row'>
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox'
+                id='{{item.id}}-checkbox-has-torso'
+                name='system.hasTorso'
+                {{checked system.hasTorso}}
+            />
+            <div class='armor-location-selection flex-column'>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasTorso}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-torso'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasTorso'}}</label>
             </div>
-            <div class="armor-location-details input-grid">
+            <div class='armor-location-details input-grid'>
                 <div>
-                    <input id="{{item.id}}-damageTorso" type="number" name="system.damageTorso" value="{{system.damageTorso}}" placeholder="0">
-                    <label for="{{item.id}}-damageTorso">{{localize "BW.armor.torsoDamage"}}</label>
-                </div>
-                <div>
-                    <input id="{{item.id}}-healthFortePenalty" type="number" name="system.healthFortePenalty" value="{{system.healthFortePenalty}}" placeholder="0">
-                    <label for="{{item.id}}-healthFortePenalty">{{localize "BW.armor.healthForteFatiguePenalty"}}</label>
-                </div>
-                <div class="clumsy-entry armor-torso">
-                    <input id="{{item.id}}-stealthyPenalty" type="number" name="system.stealthyPenalty" value="{{system.stealthyPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-stealthyPenalty">{{localize "BW.armor.stealthyPenalty"}}</label>
-                </div>
-                <div>
-                    <input id="{{item.id}}-swimmingPenalty" type="number" name="system.swimmingPenalty" value="{{system.swimmingPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-swimmingPenalty">{{localize "BW.armor.swimmingPenalty"}}</label>
-                </div>
-            </div>
-        </div>
-        <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="{{item.id}}-checkbox-has-left-arm" name="system.hasLeftArm" {{checked system.hasLeftArm}}>
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="{{item.id}}-checkbox-has-right-arm" name="system.hasRightArm" {{checked system.hasRightArm}}>
-            <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasLeftArm}}>
-                <label for="{{item.id}}-checkbox-has-left-arm" class="armor-location-label">{{localize "BW.armor.hasLeftArm"}}</label>
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasRightArm}}>
-                <label for="{{item.id}}-checkbox-has-right-arm" class="armor-location-label">{{localize "BW.armor.hasRightArm"}}</label>
-            </div>
-            <div class="armor-location-details input-grid">
-                <div class="armor-damage-left">
-                    <input id="{{item.id}}-damageLeftArm" type="number" name="system.damageLeftArm" value="{{system.damageLeftArm}}" placeholder="0">
-                    <label for="{{item.id}}-damageLeftArm">{{localize "BW.armor.leftArmDamage"}}</label>
-                </div>
-                <div class="armor-damage-right">
-                    <input id="{{item.id}}-damageRightArm" type="number" name="system.damageRightArm" value="{{system.damageRightArm}}" placeholder="0">
-                    <label for="{{item.id}}-damageRightArm">{{localize "BW.armor.rightArmDamage"}}</label>
+                    <input
+                        id='{{item.id}}-damageTorso'
+                        type='number'
+                        name='system.damageTorso'
+                        value='{{system.damageTorso}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageTorso'>{{localize
+                            'BW.armor.torsoDamage'
+                        }}</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-agilityPenalty" type="number" name="system.agilityPenalty" value="{{system.agilityPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-agilityPenalty">{{localize "BW.armor.agilityPenalty"}}</label>
+                    <input
+                        id='{{item.id}}-healthFortePenalty'
+                        type='number'
+                        name='system.healthFortePenalty'
+                        value='{{system.healthFortePenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-healthFortePenalty'>{{localize
+                            'BW.armor.healthForteFatiguePenalty'
+                        }}</label>
+                </div>
+                <div class='clumsy-entry armor-torso'>
+                    <input
+                        id='{{item.id}}-stealthyPenalty'
+                        type='number'
+                        name='system.stealthyPenalty'
+                        value='{{system.stealthyPenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-stealthyPenalty'>{{localize
+                            'BW.armor.stealthyPenalty'
+                        }}</label>
                 </div>
                 <div>
-                    <input id="{{item.id}}-climbingPenalty" type="number" name="system.climbingPenalty" value="{{system.climbingPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-climbingPenalty">{{localize "BW.armor.climbingPenalty"}}</label>
-                </div>
-                <div>
-                    <input id="{{item.id}}-throwingShootingPenalty" type="number" name="system.throwingShootingPenalty" value="{{system.throwingShootingPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-throwingShootingPenalty">{{localize "BW.armor.throwingShootingPenalty"}}</label>
-                </div>
-            </div>
-        </div>
-        <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-left" id="{{item.id}}-checkbox-has-left-leg" name="system.hasLeftLeg" {{checked system.hasLeftLeg}}>
-            <input type="checkbox" class="hidden armor-location-checkbox armor-checkbox-right" id="{{item.id}}-checkbox-has-right-leg" name="system.hasRightLeg" {{checked system.hasRightLeg}}>
-            <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasLeftLeg}}>
-                <label for="{{item.id}}-checkbox-has-left-leg" class="armor-location-label">{{localize "BW.armor.hasLeftLeg"}}</label>
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasRightLeg}}>
-                <label for="{{item.id}}-checkbox-has-right-leg" class="armor-location-label">{{localize "BW.armor.hasRightLeg"}}</label>
-            </div>
-            <div class="armor-location-details input-grid">
-                <div class="armor-damage-left">
-                    <input id="{{item.id}}-damageLeftLeg" type="number" name="system.damageLeftLeg" value="{{system.damageLeftLeg}}" placeholder="0">
-                    <label for="{{item.id}}-damageLeftLeg">{{localize "BW.armor.leftLegDamage"}}</label>
-                </div>
-                <div class="armor-damage-right">
-                    <input id="{{item.id}}-damageRightLeg" type="number" name="system.damageRightLeg" value="{{system.damageRightLeg}}" placeholder="0">
-                    <label for="{{item.id}}-damageRightLeg">{{localize "BW.armor.rightLegDamage"}}</label>
-                </div>
-                <div>
-                    <input id="{{item.id}}-speedObPenalty" type="number" name="system.speedObPenalty" value="{{system.speedObPenalty}}" placeholder="0">
-                    <label for="{{item.id}}-speedObPenalty">{{localize "BW.armor.speedObPenalty"}}</label>
-                </div>
-                <div>
-                    <input id="{{item.id}}-speedDiePenalty" type="number" name="system.speedDiePenalty" value="{{system.speedDiePenalty}}" placeholder="0">
-                    <label for="{{item.id}}-speedDiePenalty">{{localize "BW.armor.speedDiePenalty"}}</label>
+                    <input
+                        id='{{item.id}}-swimmingPenalty'
+                        type='number'
+                        name='system.swimmingPenalty'
+                        value='{{system.swimmingPenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-swimmingPenalty'>{{localize
+                            'BW.armor.swimmingPenalty'
+                        }}</label>
                 </div>
             </div>
         </div>
-        <div class="armor-location-group flex-row">
-            <input type="checkbox" class="hidden armor-location-checkbox" id="{{item.id}}-checkbox-has-shield" name="system.hasShield" {{checked system.hasShield}}>
-            <div class="armor-location-selection flex-column">
-                <input type="checkbox" class="hidden armor-location-checkbox" {{checked system.hasShield}}>
-                <label for="{{item.id}}-checkbox-has-shield" class="armor-location-label">{{localize "BW.armor.hasShield"}}</label>
+        <div class='armor-location-group flex-row'>
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox armor-checkbox-left'
+                id='{{item.id}}-checkbox-has-left-arm'
+                name='system.hasLeftArm'
+                {{checked system.hasLeftArm}}
+            />
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox armor-checkbox-right'
+                id='{{item.id}}-checkbox-has-right-arm'
+                name='system.hasRightArm'
+                {{checked system.hasRightArm}}
+            />
+            <div class='armor-location-selection flex-column'>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasLeftArm}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-left-arm'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasLeftArm'}}</label>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasRightArm}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-right-arm'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasRightArm'}}</label>
             </div>
-            <div class="armor-location-details input-grid">
-                <div >
-                    <input id="{{item.id}}-damageShield" type="number" name="system.damageShield" value="{{system.damageShield}}" placeholder="0">
-                    <label for="{{item.id}}-damageShield">{{localize "BW.armor.shieldDamage"}}</label>
+            <div class='armor-location-details input-grid'>
+                <div class='armor-damage-left'>
+                    <input
+                        id='{{item.id}}-damageLeftArm'
+                        type='number'
+                        name='system.damageLeftArm'
+                        value='{{system.damageLeftArm}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageLeftArm'>{{localize
+                            'BW.armor.leftArmDamage'
+                        }}</label>
+                </div>
+                <div class='armor-damage-right'>
+                    <input
+                        id='{{item.id}}-damageRightArm'
+                        type='number'
+                        name='system.damageRightArm'
+                        value='{{system.damageRightArm}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageRightArm'>{{localize
+                            'BW.armor.rightArmDamage'
+                        }}</label>
+                </div>
+                <div>
+                    <input
+                        id='{{item.id}}-agilityPenalty'
+                        type='number'
+                        name='system.agilityPenalty'
+                        value='{{system.agilityPenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-agilityPenalty'>{{localize
+                            'BW.armor.agilityPenalty'
+                        }}</label>
+                </div>
+                <div>
+                    <input
+                        id='{{item.id}}-climbingPenalty'
+                        type='number'
+                        name='system.climbingPenalty'
+                        value='{{system.climbingPenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-climbingPenalty'>{{localize
+                            'BW.armor.climbingPenalty'
+                        }}</label>
+                </div>
+                <div>
+                    <input
+                        id='{{item.id}}-throwingShootingPenalty'
+                        type='number'
+                        name='system.throwingShootingPenalty'
+                        value='{{system.throwingShootingPenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-throwingShootingPenalty'>{{localize
+                            'BW.armor.throwingShootingPenalty'
+                        }}</label>
+                </div>
+            </div>
+        </div>
+        <div class='armor-location-group flex-row'>
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox armor-checkbox-left'
+                id='{{item.id}}-checkbox-has-left-leg'
+                name='system.hasLeftLeg'
+                {{checked system.hasLeftLeg}}
+            />
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox armor-checkbox-right'
+                id='{{item.id}}-checkbox-has-right-leg'
+                name='system.hasRightLeg'
+                {{checked system.hasRightLeg}}
+            />
+            <div class='armor-location-selection flex-column'>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasLeftLeg}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-left-leg'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasLeftLeg'}}</label>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasRightLeg}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-right-leg'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasRightLeg'}}</label>
+            </div>
+            <div class='armor-location-details input-grid'>
+                <div class='armor-damage-left'>
+                    <input
+                        id='{{item.id}}-damageLeftLeg'
+                        type='number'
+                        name='system.damageLeftLeg'
+                        value='{{system.damageLeftLeg}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageLeftLeg'>{{localize
+                            'BW.armor.leftLegDamage'
+                        }}</label>
+                </div>
+                <div class='armor-damage-right'>
+                    <input
+                        id='{{item.id}}-damageRightLeg'
+                        type='number'
+                        name='system.damageRightLeg'
+                        value='{{system.damageRightLeg}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageRightLeg'>{{localize
+                            'BW.armor.rightLegDamage'
+                        }}</label>
+                </div>
+                <div>
+                    <input
+                        id='{{item.id}}-speedObPenalty'
+                        type='number'
+                        name='system.speedObPenalty'
+                        value='{{system.speedObPenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-speedObPenalty'>{{localize
+                            'BW.armor.speedObPenalty'
+                        }}</label>
+                </div>
+                <div>
+                    <input
+                        id='{{item.id}}-speedDiePenalty'
+                        type='number'
+                        name='system.speedDiePenalty'
+                        value='{{system.speedDiePenalty}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-speedDiePenalty'>{{localize
+                            'BW.armor.speedDiePenalty'
+                        }}</label>
+                </div>
+            </div>
+        </div>
+        <div class='armor-location-group flex-row'>
+            <input
+                type='checkbox'
+                class='hidden armor-location-checkbox'
+                id='{{item.id}}-checkbox-has-shield'
+                name='system.hasShield'
+                {{checked system.hasShield}}
+            />
+            <div class='armor-location-selection flex-column'>
+                <input
+                    type='checkbox'
+                    class='hidden armor-location-checkbox'
+                    {{checked system.hasShield}}
+                />
+                <label
+                    for='{{item.id}}-checkbox-has-shield'
+                    class='armor-location-label'
+                >{{localize 'BW.armor.hasShield'}}</label>
+            </div>
+            <div class='armor-location-details input-grid'>
+                <div>
+                    <input
+                        id='{{item.id}}-damageShield'
+                        type='number'
+                        name='system.damageShield'
+                        value='{{system.damageShield}}'
+                        placeholder='0'
+                    />
+                    <label for='{{item.id}}-damageShield'>{{localize
+                            'BW.armor.shieldDamage'
+                        }}</label>
                 </div>
             </div>
         </div>
     </div>
-    <hr/>
-    <textarea name="system.description">{{system.description}}</textarea>
+    <hr />
+    <textarea name='system.description'>{{system.description}}</textarea>
 </form>

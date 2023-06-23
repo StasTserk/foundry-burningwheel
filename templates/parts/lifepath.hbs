@@ -1,46 +1,56 @@
-<div class="lifepath" draggable="true" data-id="{{this._id}}">
-    <div class="header">
-        <div class="title">
+<div class='lifepath' draggable='true' data-id='{{this._id}}'>
+    <div class='header'>
+        <div class='title'>
             {{this.name}}
         </div>
-        <div class="years">
+        <div class='years'>
             {{this.system.time}}
         </div>
-        <div class="resources">
+        <div class='resources'>
             {{this.system.resources}}
         </div>
-        <div class="stat-boost">
+        <div class='stat-boost'>
             {{{this.system.statString}}}
         </div>
-        <div class="leads">
+        <div class='leads'>
             {{this.system.leads}}
         </div>
-        <i class="fas fa-times" data-action="delete" data-id="{{this._id}}"></i>
+        <i class='fas fa-times' data-action='delete' data-id='{{this._id}}'></i>
     </div>
-    <div class="lifepath-detail">
+    <div class='lifepath-detail'>
         <label>Skills:</label>
-        {{#if this.system.skillList}}{{this.system.skillPoints}} Pts: {{this.system.skillList}}{{/if}}{{#if this.system.generalPoints}}{{#if this.system.skillList}};{{/if}} {{this.system.generalPoints}} Pts: General{{/if}}
+        {{#if this.system.skillList}}{{this.system.skillPoints}}
+            Pts:
+            {{this.system.skillList}}{{/if}}{{#if
+            this.system.generalPoints
+        }}{{#if this.system.skillList}};{{/if}}
+            {{this.system.generalPoints}}
+            Pts: General{{/if}}
     </div>
-    <div class="lifepath-detail">
+    <div class='lifepath-detail'>
         <label>Traits:</label>
-        {{this.system.traitPoints}} Pts: {{#if this.system.traitList}}{{this.system.traitList}}{{else}}&mdash;{{/if}}
+        {{this.system.traitPoints}}
+        Pts:
+        {{#if
+            this.system.traitList
+        }}{{this.system.traitList}}{{else}}&mdash;{{/if}}
     </div>
     {{#if this.system.restrictions}}
-    <div class="lifepath-detail">
-        <label>Restrictions:</label>
-        {{this.system.restrictions}}
-    </div>
+        <div class='lifepath-detail'>
+            <label>Restrictions:</label>
+            {{this.system.restrictions}}
+        </div>
     {{/if}}
     {{#if this.system.requirements}}
-    <div class="lifepath-detail">
-        <label>Requires:</label>
-        {{this.system.requirements}}
-    </div>
+        <div class='lifepath-detail'>
+            <label>Requires:</label>
+            {{this.system.requirements}}
+        </div>
     {{/if}}
     {{#if this.system.note}}
-    <div class="lifepath-detail">
-        <label>Note:</label>
-        {{this.system.note}}
-    </div>
+        <div class='lifepath-detail'>
+            <label>Note:</label>
+            {{this.system.note}}
+        </div>
     {{/if}}
 </div>

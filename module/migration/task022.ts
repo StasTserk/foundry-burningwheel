@@ -1,4 +1,4 @@
-import { BWItem } from "../items/item.js";
+import { BWItem } from '../items/item.js';
 
 export async function task022(): Promise<void> {
     // add shade to all weapons
@@ -7,19 +7,27 @@ export async function task022(): Promise<void> {
         for (const ownedItem of Array.from(actor.items.values())) {
             // also, the typo in the item type 'possession' has been fixed
             // any existing items need to be updated to match the new type
-            if (["melee weapon", "ranged weapon", "armor"].indexOf(ownedItem.type) !== -1) {
-                await ownedItem.update({ data: { shade: "B" }}, {});
+            if (
+                ['melee weapon', 'ranged weapon', 'armor'].indexOf(
+                    ownedItem.type
+                ) !== -1
+            ) {
+                await ownedItem.update({ data: { shade: 'B' } }, {});
             }
         }
     }
     const packs = Array.from(game.packs?.values() || []);
     for (const pack of packs) {
-        if (pack.documentName === "Item") {
+        if (pack.documentName === 'Item') {
             const packItems = await pack.getDocuments();
             for (const item of packItems as BWItem[]) {
-                if (["melee weapon", "ranged weapon", "armor"].indexOf(item.type) !== -1) {
-                    item.type = "possession";
-                    await item.update({ data: { shade: "B" }}, {});
+                if (
+                    ['melee weapon', 'ranged weapon', 'armor'].indexOf(
+                        item.type
+                    ) !== -1
+                ) {
+                    item.type = 'possession';
+                    await item.update({ data: { shade: 'B' } }, {});
                 }
             }
         }

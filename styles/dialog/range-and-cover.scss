@@ -1,4 +1,4 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 .rnc {
     .window-content {
         & > form {
@@ -25,14 +25,14 @@
         width: 100%;
         margin-top: 5px;
 
-        &>div {
+        & > div {
             border: 2px groove #aaaaaa;
-            background: linear-gradient(rgba(#444, .25), rgba(#000, .05));
+            background: linear-gradient(rgba(#444, 0.25), rgba(#000, 0.05));
             min-height: 1.5em;
             margin: 0;
             padding: 0 3px;
         }
-        
+
         .team-header {
             font-size: 1.125em;
         }
@@ -42,7 +42,7 @@
                 border-bottom: 2px groove #800;
                 padding-top: 3px;
                 padding-right: 3px;
-                &>i {
+                & > i {
                     height: 1.25em;
                     line-height: 1.25em;
                     flex: 0 1.25em;
@@ -57,7 +57,7 @@
                 font-weight: bold;
                 font-size: 1.25em;
                 flex: 1 1;
-                border-bottom: 2px groove #800
+                border-bottom: 2px groove #800;
             }
 
             .team-label {
@@ -102,7 +102,8 @@
             select {
                 width: 100%;
             }
-            .action-card, .card-back {
+            .action-card,
+            .card-back {
                 justify-self: center;
                 margin-left: auto;
                 margin-right: auto;
@@ -110,7 +111,10 @@
                 height: 150px;
                 border: 3px solid #800;
                 color: #800;
-                background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+                background: linear-gradient(
+                    rgb(238, 230, 126),
+                    rgb(170, 159, 0)
+                );
                 border-radius: 10px;
                 text-align: center;
             }
@@ -123,14 +127,14 @@
             .action-card {
                 font-size: 1.5em;
                 font-weight: bold;
-                display:flex;
-                justify-content:center;
-                align-items:center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
     }
 
-    .pill-toggle > input[type="checkbox"]:checked + label {
+    .pill-toggle > input[type='checkbox']:checked + label {
         background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
         border: 2px solid #880000;
         color: #880000;

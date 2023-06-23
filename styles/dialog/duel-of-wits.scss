@@ -1,7 +1,7 @@
-@import "../mixins.scss";
+@import '../mixins.scss';
 
 .dow {
-    input[type="number"] {
+    input[type='number'] {
         width: 2em;
         text-align: center;
         @include no-number-arrows;
@@ -43,7 +43,8 @@
             img.dow-portrait {
                 margin-left: auto;
                 margin-right: auto;
-                width: 80px; height: 80px;
+                width: 80px;
+                height: 80px;
                 border: 0;
                 object-fit: cover;
             }
@@ -60,14 +61,18 @@
         }
 
         .dow-volley {
-            .card-back, .action-card {
+            .card-back,
+            .action-card {
                 margin-left: auto;
                 margin-right: auto;
                 width: 100px;
                 height: 150px;
                 border: 3px solid #800;
                 color: #800;
-                background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
+                background: linear-gradient(
+                    rgb(238, 230, 126),
+                    rgb(170, 159, 0)
+                );
                 border-radius: 10px;
                 text-align: center;
             }
@@ -80,14 +85,14 @@
             .action-card {
                 font-size: 1.5em;
                 font-weight: bold;
-                display:flex;
-                justify-content:center;
-                align-items:center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
     }
 
-    .pill-toggle > input[type="checkbox"]:checked + label {
+    .pill-toggle > input[type='checkbox']:checked + label {
         background: linear-gradient(rgb(238, 230, 126), rgb(170, 159, 0));
         border: 2px solid #880000;
         color: #880000;

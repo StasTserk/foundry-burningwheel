@@ -1,4 +1,4 @@
-import { Ability } from "../actors/BWActor.js";
+import { Ability } from "../actors/BWActor";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -11,9 +11,9 @@ import {
     EventHandlerOptions,
     mergeDialogData,
     RollOptions
-} from "./rolls.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
+} from "./rolls";
+import { BWCharacter } from "../actors/BWCharacter";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog";
 
 export async function handleResourcesRollEvent({ sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const stat = sheet.actor.system.resources;

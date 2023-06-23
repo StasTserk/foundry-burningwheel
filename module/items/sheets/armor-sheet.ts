@@ -1,5 +1,5 @@
-import { armorLocationSelect, gearQualitySelect } from "../../constants.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { armorLocationSelect, gearQualitySelect } from "../../constants";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class ArmorSheet extends BWItemSheet {
     get template(): string {

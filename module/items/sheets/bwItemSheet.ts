@@ -1,5 +1,5 @@
-import * as constants from "../../constants.js";
-import { BWItem } from "../item.js";
+import * as constants from "../../constants";
+import { BWItem } from "../item";
 export class BWItemSheet<
     SD extends BWItemSheetData = BWItemSheetData,
     ID extends BWItem = BWItem> extends ItemSheet<SD, ID> {

@@ -1,5 +1,5 @@
-import { Ability, TracksTests } from "../actors/BWActor.js";
-import * as helpers from "../helpers.js";
+import { Ability, TracksTests } from "../actors/BWActor";
+import * as helpers from "../helpers";
 import {
     buildRerollData,
     getRollNameClass,
@@ -10,10 +10,10 @@ import {
     templates,
     extractRollData,
     mergeDialogData
-} from "./rolls.js";
-import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { translateWoundValue } from "../helpers.js";
+} from "./rolls";
+import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet";
+import { BWCharacter } from "../actors/BWCharacter";
+import { translateWoundValue } from "../helpers";
 
 export async function handleSpellTaxRoll(target: HTMLButtonElement, sheet: BWCharacterSheet, dataPreset: Partial<RollDialogData>): Promise<unknown> {
     const obstacle = parseInt(target.dataset.obstacle || "0");

@@ -1,5 +1,5 @@
-import { traitTypeSelect } from "../../constants.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { traitTypeSelect } from "../../constants";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class TraitSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {

@@ -1,6 +1,6 @@
-import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat.js";
-import { BWActor, RollModifier } from "../actors/BWActor.js";
-import { HasPointCost, BWItem } from "./item.js";
+import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat";
+import { BWActor, RollModifier } from "../actors/BWActor";
+import { HasPointCost, BWItem } from "./item";
 
 export class Trait extends BWItem<TraitData> {
     type: "trait";

@@ -1,4 +1,4 @@
-import * as constants from "./constants.js";
+import * as constants from "./constants";
 
 export function registerSystemSettings(): void {
     game.settings.register(constants.systemName, constants.settings.version, {

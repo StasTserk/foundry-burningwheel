@@ -1,7 +1,7 @@
-import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat.js";
-import { BWActor } from "../actors/BWActor.js";
-import { ArthaEarner, BWItem } from "./item.js";
-import { TypeMissing } from "../../types/index.js";
+import { simpleBroadcast, SimpleBroadcastMessageData } from "../chat";
+import { BWActor } from "../actors/BWActor";
+import { ArthaEarner, BWItem } from "./item";
+import { TypeMissing } from "../../types/index";
 
 export class Belief extends BWItem<BeliefData & TypeMissing> {
     type: "belief";

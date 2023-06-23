@@ -1,20 +1,20 @@
-import { BWItem } from "../items/item.js";
-import { Ability, BWActor } from "../actors/BWActor.js";
-import { handleStatRoll } from "./rollStat.js";
-import { notifyError, ShadeString } from "../helpers.js";
-import { handleNpcStatRoll } from "./npcStatRoll.js";
-import { Npc } from "../actors/Npc.js";
-import { RollDialogData } from "./rolls.js";
-import { handleSpellRoll } from "./rollSpell.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { handleNpcSpellRoll, handleNpcWeaponRoll } from "./npcSkillRoll.js";
-import { handleWeaponRoll } from "./rollWeapon.js";
-import { MeleeWeapon } from "../items/meleeWeapon.js";
-import { RangedWeapon } from "../items/rangedWeapon.js";
-import { Skill } from "../items/skill.js";
-import { Spell } from "../items/spell.js";
-import { handleAttrRoll } from "./rollAttribute.js";
-import { FightAttr } from "../dialogs/index.js";
+import { BWItem } from "../items/item";
+import { Ability, BWActor } from "../actors/BWActor";
+import { handleStatRoll } from "./rollStat";
+import { notifyError, ShadeString } from "../helpers";
+import { handleNpcStatRoll } from "./npcStatRoll";
+import { Npc } from "../actors/Npc";
+import { RollDialogData } from "./rolls";
+import { handleSpellRoll } from "./rollSpell";
+import { BWCharacter } from "../actors/BWCharacter";
+import { handleNpcSpellRoll, handleNpcWeaponRoll } from "./npcSkillRoll";
+import { handleWeaponRoll } from "./rollWeapon";
+import { MeleeWeapon } from "../items/meleeWeapon";
+import { RangedWeapon } from "../items/rangedWeapon";
+import { Skill } from "../items/skill";
+import { Spell } from "../items/spell";
+import { handleAttrRoll } from "./rollAttribute";
+import { FightAttr } from "../dialogs/index";
 
 export async function handleFightRoll({actor, type, itemId, attackIndex, positionPenalty, engagementBonus, dataPreset }: FightRollOptions): Promise<unknown> {
     dataPreset = dataPreset || {};

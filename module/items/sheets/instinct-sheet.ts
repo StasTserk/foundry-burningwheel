@@ -1,4 +1,4 @@
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class InstinctSheet extends BWItemSheet {
     getData(): BWItemSheetData {

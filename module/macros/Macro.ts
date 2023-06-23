@@ -1,17 +1,17 @@
-import { RollDialogData } from "../rolls/rolls.js";
-import { DragData } from "../helpers.js";
-import { CreateSkillRollMacro, RollSKillMacro } from "./SkillMacro.js";
-import * as constants from "../constants.js";
-import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
-import { BWActor } from "../actors/BWActor.js";
-import { CreateMeleeRollMacro, RollMeleeMacro } from "./MeleeMacro.js";
-import { CreateRangedRollMacro, RollRangedMacro } from "./RangedMacro.js";
-import { CreateSpellRollMacro, RollSpellMacro } from "./SpellMacro.js";
-import { CreateEditMacro, RollEditMacro } from "./EditMacro.js";
-import { ItemType } from "../items/item.js";
-import { CreateStatMacro, RollStatMacro } from "./StatMacro.js";
-import { ModifierDialog } from "../dialogs/ModifierDialog.js";
-import { TypeMissing } from "../../types/index.js";
+import { RollDialogData } from "../rolls/rolls";
+import { DragData } from "../helpers";
+import { CreateSkillRollMacro, RollSKillMacro } from "./SkillMacro";
+import * as constants from "../constants";
+import { DifficultyDialog } from "../dialogs/DifficultyDialog";
+import { BWActor } from "../actors/BWActor";
+import { CreateMeleeRollMacro, RollMeleeMacro } from "./MeleeMacro";
+import { CreateRangedRollMacro, RollRangedMacro } from "./RangedMacro";
+import { CreateSpellRollMacro, RollSpellMacro } from "./SpellMacro";
+import { CreateEditMacro, RollEditMacro } from "./EditMacro";
+import { ItemType } from "../items/item";
+import { CreateStatMacro, RollStatMacro } from "./StatMacro";
+import { ModifierDialog } from "../dialogs/ModifierDialog";
+import { TypeMissing } from "../../types/index";
 
 export function CreateBurningWheelMacro(data: DragData, slot: string): boolean {
     if (!handlers[data.type || ""]) {

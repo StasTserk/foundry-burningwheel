@@ -1,11 +1,11 @@
-import { BWActor } from "../BWActor.js";
-import { Armor } from "../../items/armor.js";
-import * as constants from "../../constants.js";
-import * as helpers from "../../helpers.js";
-import { BWItem } from "../../items/item.js";
-import { NpcData } from "../Npc.js";
-import { BWCharacterData } from "../BWCharacter.js";
-import { TypeMissing } from "../../../types/index.js";
+import { BWActor } from "../BWActor";
+import { Armor } from "../../items/armor";
+import * as constants from "../../constants";
+import * as helpers from "../../helpers";
+import { BWItem } from "../../items/item";
+import { NpcData } from "../Npc";
+import { BWCharacterData } from "../BWCharacter";
+import { TypeMissing } from "../../../types/index";
 
 export class BWActorSheet<T extends BaseActorSheetData, A extends BWActor, O extends ActorSheetOptions> extends ActorSheet<T, A, O> {
     private _keyDownHandler = this._handleKeyPress.bind(this);

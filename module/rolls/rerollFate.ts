@@ -1,10 +1,10 @@
-import { TestString } from "../helpers.js";
-import { BWActor, TracksTests } from "../actors/BWActor.js";
-import * as helpers from "../helpers.js";
-import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { Armor } from "../items/armor.js";
-import { Skill } from "../items/skill.js";
+import { TestString } from "../helpers";
+import { BWActor, TracksTests } from "../actors/BWActor";
+import * as helpers from "../helpers";
+import { getNoDiceErrorDialog, RerollMessageData, rollDice, templates } from "./rolls";
+import { BWCharacter } from "../actors/BWCharacter";
+import { Armor } from "../items/armor";
+import { Skill } from "../items/skill";
 
 export async function handleFateReroll(target: HTMLButtonElement): Promise<unknown> {
     const actor = game.actors?.get(target.dataset.actorId || "") as BWActor;

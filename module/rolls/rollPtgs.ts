@@ -1,4 +1,4 @@
-import { Ability, BWActor } from "../actors/BWActor.js";
+import { Ability, BWActor } from "../actors/BWActor";
 import {
     AttributeDialogData,
     buildRerollData,
@@ -8,8 +8,8 @@ import {
     rollDice,
     templates,
     extractRollData, EventHandlerOptions, mergeDialogData
-} from "./rolls.js";
-import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
+} from "./rolls";
+import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet";
 
 export async function handleShrugRollEvent({ target, sheet, dataPreset}: EventHandlerOptions): Promise<unknown> {
     return handlePtgsRoll({ target, sheet, shrugging: true, dataPreset  });

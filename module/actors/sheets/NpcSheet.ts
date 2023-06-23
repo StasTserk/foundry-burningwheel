@@ -1,15 +1,15 @@
-import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet.js";
-import { ShadeString } from "../../helpers.js";
-import { BWActor } from "../BWActor.js";
-import { BWItem, ItemType } from "../../items/item.js";
-import { Npc } from "../Npc.js";
-import { handleNpcStatRollEvent } from "../../rolls/npcStatRoll.js";
-import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "../../rolls/npcSkillRoll.js";
-import { handleArmorRollEvent } from "../../rolls/rollArmor.js";
-import { getKeypressModifierPreset } from "../../rolls/rolls.js";
-import { Armor } from "../../items/armor.js";
-import { Skill } from "../../items/skill.js";
-import { Trait } from "../../items/trait.js";
+import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet";
+import { ShadeString } from "../../helpers";
+import { BWActor } from "../BWActor";
+import { BWItem, ItemType } from "../../items/item";
+import { Npc } from "../Npc";
+import { handleNpcStatRollEvent } from "../../rolls/npcStatRoll";
+import { handleNpcSkillRollEvent, handleNpcWeaponRollEvent, handleNpcSpellRollEvent } from "../../rolls/npcSkillRoll";
+import { handleArmorRollEvent } from "../../rolls/rollArmor";
+import { getKeypressModifierPreset } from "../../rolls/rolls";
+import { Armor } from "../../items/armor";
+import { Skill } from "../../items/skill";
+import { Trait } from "../../items/trait";
 
 export class NpcSheet extends BWActorSheet<NpcSheetData, Npc, ActorSheetOptions> {
     get actor(): Npc {

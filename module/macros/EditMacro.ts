@@ -1,7 +1,7 @@
-import { ItemDragData } from "../helpers.js";
-import { getImage, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/BWActor.js";
-import { BWItem } from "../items/item.js";
+import { ItemDragData } from "../helpers";
+import { getImage, MacroData } from "./Macro";
+import { BWActor } from "../actors/BWActor";
+import { BWItem } from "../items/item";
 
 export function CreateEditMacro(data: ItemDragData): MacroData | null {
     if (!data.actorId) {

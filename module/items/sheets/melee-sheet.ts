@@ -1,6 +1,6 @@
-import { gearQualitySelect, weaponLengthSelect } from "../../constants.js";
-import { MeleeWeapon } from "../meleeWeapon.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { gearQualitySelect, weaponLengthSelect } from "../../constants";
+import { MeleeWeapon } from "../meleeWeapon";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class MeleeWeaponSheet extends BWItemSheet {
     get item(): MeleeWeapon {

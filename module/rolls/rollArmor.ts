@@ -9,12 +9,12 @@ import {
     extractBaseData,
     buildDiceSourceObject,
     ArmorEventHandlerOptions
-} from "./rolls.js";
-import { BWActor } from "../actors/BWActor.js";
-import { StringIndexedObject } from "../helpers.js";
-import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
-import { NpcSheet } from "../actors/sheets/NpcSheet.js";
-import { Armor } from "../items/armor.js";
+} from "./rolls";
+import { BWActor } from "../actors/BWActor";
+import { StringIndexedObject } from "../helpers";
+import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet";
+import { NpcSheet } from "../actors/sheets/NpcSheet";
+import { Armor } from "../items/armor";
 
 export async function handleArmorRollEvent({ target, sheet }: ArmorEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;

@@ -1,4 +1,4 @@
-import { DisplayClass, HasPointCost, BWItem } from "./item.js";
+import { DisplayClass, HasPointCost, BWItem } from "./item";
 
 export class Property extends BWItem<PropertyData> {
     type: 'property';

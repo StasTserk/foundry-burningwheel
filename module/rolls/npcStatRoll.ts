@@ -1,6 +1,6 @@
-import { TracksTests } from "../actors/BWActor.js";
+import { TracksTests } from "../actors/BWActor";
 
-import * as helpers from "../helpers.js";
+import * as helpers from "../helpers";
 import {
     buildRerollData,
     getRollNameClass,
@@ -15,9 +15,9 @@ import {
     getSplitPoolText,
     getSplitPoolRoll,
     NpcEventHandlerOptions
-} from "./rolls.js";
-import { Npc } from "../actors/Npc.js";
-import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
+} from "./rolls";
+import { Npc } from "../actors/Npc";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog";
 
 export async function handleNpcStatRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;

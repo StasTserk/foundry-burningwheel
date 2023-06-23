@@ -1,6 +1,6 @@
-import { NewItemData } from "./actors/BWActor.js";
-import { toDictionary } from "./helpers.js";
-import { MeleeWeaponData } from "./items/meleeWeapon.js";
+import { NewItemData } from "./actors/BWActor";
+import { toDictionary } from "./helpers";
+import { MeleeWeaponData } from "./items/meleeWeapon";
 
 export const weaponLengths = [
     "shortest",

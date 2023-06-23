@@ -1,6 +1,6 @@
 
-import { ActorSheetOptions } from "./BWActorSheet.js";
-import { BWCharacterSheet } from "./BWCharacterSheet.js";
+import { ActorSheetOptions } from "./BWActorSheet";
+import { BWCharacterSheet } from "./BWCharacterSheet";
 
 export class BWCharacterTabbedSheet extends BWCharacterSheet {
     get template(): string {

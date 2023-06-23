@@ -1,10 +1,10 @@
-import { skillImages, skillRootSelect, SkillTypeString } from "../constants.js";
-import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
-import { ShadeString, StringIndexedObject, TestString, updateTestsNeeded } from "../helpers.js";
-import { DisplayClass, BWItem } from "./item.js";
-import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
-import * as helpers from "../helpers.js";
-import { TypeMissing } from "../../types/index.js";
+import { skillImages, skillRootSelect, SkillTypeString } from "../constants";
+import { Ability, BWActor, TracksTests } from "../actors/BWActor";
+import { ShadeString, StringIndexedObject, TestString, updateTestsNeeded } from "../helpers";
+import { DisplayClass, BWItem } from "./item";
+import { DifficultyDialog } from "../dialogs/DifficultyDialog";
+import * as helpers from "../helpers";
+import { TypeMissing } from "../../types/index";
 
 export class Skill extends BWItem<SkillData> {
     getRootSelect(): StringIndexedObject<string> {

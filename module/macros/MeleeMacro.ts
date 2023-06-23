@@ -1,13 +1,13 @@
-import { Skill } from "../items/skill.js";
-import { MeleeDragData } from "../helpers.js";
-import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/BWActor.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { handleNpcWeaponRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/Npc.js";
-import { RollDialogData } from "../rolls/rolls.js";
-import { MeleeWeapon } from "../items/meleeWeapon.js";
-import { handleWeaponRoll } from "../rolls/rollWeapon.js";
+import { Skill } from "../items/skill";
+import { MeleeDragData } from "../helpers";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro";
+import { BWActor } from "../actors/BWActor";
+import { BWCharacter } from "../actors/BWCharacter";
+import { handleNpcWeaponRoll } from "../rolls/npcSkillRoll";
+import { Npc } from "../actors/Npc";
+import { RollDialogData } from "../rolls/rolls";
+import { MeleeWeapon } from "../items/meleeWeapon";
+import { handleWeaponRoll } from "../rolls/rollWeapon";
 
 export function CreateMeleeRollMacro(dragData: MeleeDragData): MacroData | null {
     if (!dragData.actorId) {

@@ -1,5 +1,5 @@
-import * as constants from "../constants.js";
-import { gmOnly } from "../decorators.js";
+import * as constants from "../constants";
+import { gmOnly } from "../decorators";
 
 export const changesState = (callback?: () => void): MethodDecorator => {
     return function (_target, _propertyKey, descriptor: PropertyDescriptor) {

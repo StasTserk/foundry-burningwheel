@@ -1,4 +1,4 @@
-import { Ability, BWActor, TracksTests } from "../actors/BWActor.js";
+import { Ability, BWActor, TracksTests } from "../actors/BWActor";
 
 import {
     buildRerollData,
@@ -15,16 +15,16 @@ import {
     getSplitPoolText,
     getSplitPoolRoll,
     NpcEventHandlerOptions
-} from "./rolls.js";
-import { byName, notifyError } from "../helpers.js";
-import { Npc } from "../actors/Npc.js";
-import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll.js";
-import { Skill } from "../items/skill.js";
-import { MeleeWeapon } from "../items/meleeWeapon.js";
-import { Possession } from "../items/possession.js";
-import { RangedWeapon } from "../items/rangedWeapon.js";
-import { Spell } from "../items/spell.js";
-import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
+} from "./rolls";
+import { byName, notifyError } from "../helpers";
+import { Npc } from "../actors/Npc";
+import { handleNpcStatRoll, NpcStatName, NpcStatRollOptions } from "./npcStatRoll";
+import { Skill } from "../items/skill";
+import { MeleeWeapon } from "../items/meleeWeapon";
+import { Possession } from "../items/possession";
+import { RangedWeapon } from "../items/rangedWeapon";
+import { Spell } from "../items/spell";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog";
 
 export async function handleNpcWeaponRollEvent({ target, sheet, dataPreset }: NpcEventHandlerOptions): Promise<unknown> {
     const skillId = target.dataset.skillId || "";

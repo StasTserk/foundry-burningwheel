@@ -1,5 +1,5 @@
-import { TypeMissing } from "../../types/index.js";
-import * as constants from "../constants.js";
+import { TypeMissing } from "../../types/index";
+import * as constants from "../constants";
 
 export async function migrateData(): Promise<void> {
     if (!game.user?.isGM) {
@@ -29,12 +29,12 @@ export function registerTask(version: string, task: () => Promise<void>): void {
     migrationRoutines[version] = task;
 }
 
-import { task021 } from "./task021.js";
-import { task022 } from "./task022.js";
-import { task041 } from "./task041.js";
-import { task061 } from "./task061.js";
-import { task063 } from "./task063.js";
-import { task120 } from "./task120.js";
+import { task021 } from "./task021";
+import { task022 } from "./task022";
+import { task041 } from "./task041";
+import { task061 } from "./task061";
+import { task063 } from "./task063";
+import { task120 } from "./task120";
 
 registerTask("0.2.1", task021);
 registerTask("0.2.2", task022);

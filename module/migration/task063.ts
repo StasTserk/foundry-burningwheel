@@ -1,7 +1,7 @@
-import { Skill } from "../items/skill.js";
-import { Trait } from "../items/trait.js";
-import { BWItem } from "../items/item.js";
-import { skillImages } from "../constants.js";
+import { Skill } from "../items/skill";
+import { Trait } from "../items/trait";
+import { BWItem } from "../items/item";
+import { skillImages } from "../constants";
 
 export async function task063(): Promise<void> {
     const items: (BWItem)[] = Array.from(game.items?.values() || []).filter((i: BWItem) => i.type === "skill" || i.type === "trait") as (BWItem)[];

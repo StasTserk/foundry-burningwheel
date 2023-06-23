@@ -2,9 +2,9 @@
  * Chat message helpers
  */
 
-import { handleTraitorReroll } from "./rolls/rerollTraitors.js";
-import { handleFateReroll } from "./rolls/rerollFate.js";
-import { BWActor } from "./actors/BWActor.js";
+import { handleTraitorReroll } from "./rolls/rerollTraitors";
+import { handleFateReroll } from "./rolls/rerollFate";
+import { BWActor } from "./actors/BWActor";
 
 /**
  * Binds buttons in chat log to perform actions

@@ -1,8 +1,8 @@
-import { TypeMissing } from "../../types/index.js";
-import { BWActor } from "../actors/BWActor.js";
-import { spellLengthSelect } from "../constants.js";
-import { StringIndexedObject, DivOfText } from "../helpers.js";
-import { HasPointCost, BWItem } from "./item.js";
+import { TypeMissing } from "../../types/index";
+import { BWActor } from "../actors/BWActor";
+import { spellLengthSelect } from "../constants";
+import { StringIndexedObject, DivOfText } from "../helpers";
+import { HasPointCost, BWItem } from "./item";
 
 export class Spell extends BWItem<SpellData> {
     type: "spell";

@@ -1,9 +1,9 @@
-import { BWItem, DisplayClass, HasPointCost } from "./item.js";
-import * as helpers from "../helpers.js";
-import { QualityString } from "../constants.js";
-import { translateWoundValue } from "../helpers.js";
-import { BWActor } from "../actors/BWActor.js";
-import { TypeMissing } from "../../types/index.js";
+import { BWItem, DisplayClass, HasPointCost } from "./item";
+import * as helpers from "../helpers";
+import { QualityString } from "../constants";
+import { translateWoundValue } from "../helpers";
+import { BWActor } from "../actors/BWActor";
+import { TypeMissing } from "../../types/index";
 
 export class MeleeWeapon extends BWItem<MeleeWeaponData> {
     type: 'melee weapon';

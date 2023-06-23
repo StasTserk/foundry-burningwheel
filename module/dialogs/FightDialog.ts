@@ -1,14 +1,14 @@
 
-import { Npc, NpcData, } from "../actors/Npc.js";
-import { BWActor } from "../actors/BWActor.js";
-import { notifyError, StringIndexedObject } from "../helpers.js";
-import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog.js";
-import { handleFightRoll } from "../rolls/fightRoll.js";
-import { BWCharacter, BWCharacterData } from "../actors/BWCharacter.js";
+import { Npc, NpcData, } from "../actors/Npc";
+import { BWActor } from "../actors/BWActor";
+import { notifyError, StringIndexedObject } from "../helpers";
+import { changesState, ExtendedTestData, ExtendedTestDialog } from "./ExtendedTestDialog";
+import { handleFightRoll } from "../rolls/fightRoll";
+import { BWCharacter, BWCharacterData } from "../actors/BWCharacter";
 
-import * as constants from "../constants.js";
-import { getKeypressModifierPreset } from "../rolls/rolls.js";
-import { MeleeWeapon } from "../items/meleeWeapon.js";
+import * as constants from "../constants";
+import { getKeypressModifierPreset } from "../rolls/rolls";
+import { MeleeWeapon } from "../items/meleeWeapon";
 
 export type FightAttr = "speed" | "agility" | "power" | "skill" | "steel";
 export class FightDialog extends ExtendedTestDialog<FightDialogData> {

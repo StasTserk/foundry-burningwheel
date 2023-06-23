@@ -1,15 +1,15 @@
-import { BWActor } from "../actors/BWActor.js";
-import { StringIndexedObject } from "../helpers.js";
-import { changesState, ExtendedTestDialog } from "./ExtendedTestDialog.js";
-import { handleLearningRoll } from "../rolls/rollLearning.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { handleSkillRoll } from "../rolls/rollSkill.js";
-import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/Npc.js";
-import { getKeypressModifierPreset } from "../rolls/rolls.js";
-import { Skill } from "../items/skill.js";
+import { BWActor } from "../actors/BWActor";
+import { StringIndexedObject } from "../helpers";
+import { changesState, ExtendedTestDialog } from "./ExtendedTestDialog";
+import { handleLearningRoll } from "../rolls/rollLearning";
+import { BWCharacter } from "../actors/BWCharacter";
+import { handleSkillRoll } from "../rolls/rollSkill";
+import { handleNpcSkillRoll } from "../rolls/npcSkillRoll";
+import { Npc } from "../actors/Npc";
+import { getKeypressModifierPreset } from "../rolls/rolls";
+import { Skill } from "../items/skill";
 
-import * as constants from "../constants.js";
+import * as constants from "../constants";
 
 export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     constructor(d: Dialog.Data, o?: Dialog.Options) {

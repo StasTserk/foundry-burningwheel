@@ -1,0 +1,19 @@
+{
+    "tabWidth": 4,
+    "singleQuote": true,
+    "endOfLine": "crlf",
+    "overrides": [
+        {
+            "files": "*.js",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

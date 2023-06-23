@@ -1,18 +1,18 @@
-import { ShadeString, StringIndexedObject } from "../helpers.js";
-import { DisplayClass, ItemType, BWItem, BWItemDataTypes } from "../items/item.js";
-import { Skill, SkillData } from "../items/skill.js";
-import * as constants from "../constants.js";
-import { Armor } from "../items/armor.js";
-import { Possession, PossessionData } from "../items/possession.js";
-import { ReputationData } from "../items/reputation.js";
-import { TraitData, Trait } from "../items/trait.js";
-import { BWCharacterData } from "./BWCharacter.js";
-import { NpcData } from "./Npc.js";
-import { AffiliationData } from "../items/affiliation.js";
-import { MeleeWeapon } from "../items/meleeWeapon.js";
-import { RangedWeapon } from "../items/rangedWeapon.js";
-import { Spell } from "../items/spell.js";
-import { TypeMissing } from "../../types/index.js";
+import { ShadeString, StringIndexedObject } from "../helpers";
+import { DisplayClass, ItemType, BWItem, BWItemDataTypes } from "../items/item";
+import { Skill, SkillData } from "../items/skill";
+import * as constants from "../constants";
+import { Armor } from "../items/armor";
+import { Possession, PossessionData } from "../items/possession";
+import { ReputationData } from "../items/reputation";
+import { TraitData, Trait } from "../items/trait";
+import { BWCharacterData } from "./BWCharacter";
+import { NpcData } from "./Npc";
+import { AffiliationData } from "../items/affiliation";
+import { MeleeWeapon } from "../items/meleeWeapon";
+import { RangedWeapon } from "../items/rangedWeapon";
+import { Spell } from "../items/spell";
+import { TypeMissing } from "../../types/index";
 
 export class BWActor<T extends Common = Common> extends Actor<Actor.Data & T, BWItem>{
 

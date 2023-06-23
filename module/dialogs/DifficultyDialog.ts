@@ -1,9 +1,9 @@
-import { Ability, BWActor } from "../actors/BWActor.js";
-import { TestString } from "../helpers.js";
-import { Skill } from "../items/skill.js";
-import * as constants from "../constants.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { gmOnly } from "../decorators.js";
+import { Ability, BWActor } from "../actors/BWActor";
+import { TestString } from "../helpers";
+import { Skill } from "../items/skill";
+import * as constants from "../constants";
+import { BWCharacter } from "../actors/BWCharacter";
+import { gmOnly } from "../decorators";
 
 export class DifficultyDialog extends Application {
     difficulty: number;

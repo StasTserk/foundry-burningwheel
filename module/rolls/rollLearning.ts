@@ -1,5 +1,5 @@
-import { BWActor, TracksTests, Ability} from "../actors/BWActor.js";
-import * as helpers from "../helpers.js";
+import { BWActor, TracksTests, Ability} from "../actors/BWActor";
+import * as helpers from "../helpers";
 import {
     buildRerollData,
     getRollNameClass,
@@ -16,11 +16,11 @@ import {
     mergeDialogData,
     getSplitPoolText,
     getSplitPoolRoll
-} from "./rolls.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { Skill } from "../items/skill.js";
-import { Possession } from "../items/possession.js";
-import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
+} from "./rolls";
+import { BWCharacter } from "../actors/BWCharacter";
+import { Skill } from "../items/skill";
+import { Possession } from "../items/possession";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog";
 
 export async function handleLearningRollEvent(rollOptions: LearningRollEventOptions): Promise<unknown> {
     const actor = rollOptions.sheet.actor;

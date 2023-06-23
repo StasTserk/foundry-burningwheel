@@ -1,6 +1,6 @@
-import { skillTypeSelect } from "../../constants.js";
-import { Skill } from "../skill.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { skillTypeSelect } from "../../constants";
+import { Skill } from "../skill";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class SkillSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {

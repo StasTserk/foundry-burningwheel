@@ -1,4 +1,4 @@
-import { BWItemSheet } from "./bwItemSheet.js";
+import { BWItemSheet } from "./bwItemSheet";
 
 export class RelationshipSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {

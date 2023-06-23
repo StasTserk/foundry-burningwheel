@@ -1,8 +1,8 @@
-import { BWActor } from "../actors/BWActor.js";
-import { ItemType, BWItem } from "../items/item.js";
-import * as helpers from "../helpers.js";
-import * as constants from "../constants.js";
-import { TypeMissing } from "../../types/index.js";
+import { BWActor } from "../actors/BWActor";
+import { ItemType, BWItem } from "../items/item";
+import * as helpers from "../helpers";
+import * as constants from "../constants";
+import { TypeMissing } from "../../types/index";
 
 export class ImportItemDialog extends Dialog {
     defaults: string[];

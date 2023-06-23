@@ -1,17 +1,17 @@
-import { DuelOfWitsDialog } from "./DuelOfWitsDialog.js";
-import { FightDialog } from "./FightDialog.js";
-import { RangeAndCoverDialog } from "./RangeAndCoverDialog.js";
-import * as constants from "../constants.js";
-import { DifficultyDialog } from "./DifficultyDialog.js";
-import { ModifierDialog } from "./ModifierDialog.js";
+import { DuelOfWitsDialog } from "./DuelOfWitsDialog";
+import { FightDialog } from "./FightDialog";
+import { RangeAndCoverDialog } from "./RangeAndCoverDialog";
+import * as constants from "../constants";
+import { DifficultyDialog } from "./DifficultyDialog";
+import { ModifierDialog } from "./ModifierDialog";
 
-export * from "./buildHelpDialog.js";
-export * from "./CharacterBurnerDialog.js";
-export * from "./DifficultyDialog.js";
-export * from "./DuelOfWitsDialog.js";
-export * from "./FightDialog.js";
-export * from "./ModifierDialog.js";
-export * from "./RangeAndCoverDialog.js";
+export * from "./buildHelpDialog";
+export * from "./CharacterBurnerDialog";
+export * from "./DifficultyDialog";
+export * from "./DuelOfWitsDialog";
+export * from "./FightDialog";
+export * from "./ModifierDialog";
+export * from "./RangeAndCoverDialog";
 
 export async function initializeExtendedTestDialogs(): Promise<void> {
     let dowData = {};

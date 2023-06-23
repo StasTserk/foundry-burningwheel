@@ -1,16 +1,16 @@
-import { Affiliation } from "../items/affiliation.js";
-import { Property } from "../items/property.js";
-import { Relationship } from "../items/relationship.js";
-import { Reputation } from "../items/reputation.js";
-import { Skill } from "../items/skill.js";
-import { Trait } from "../items/trait.js";
-import { CharacterSettings } from "../actors/BWCharacter.js";
-import { StringIndexedObject, ShadeString } from "../helpers.js";
+import { Affiliation } from "../items/affiliation";
+import { Property } from "../items/property";
+import { Relationship } from "../items/relationship";
+import { Reputation } from "../items/reputation";
+import { Skill } from "../items/skill";
+import { Trait } from "../items/trait";
+import { CharacterSettings } from "../actors/BWCharacter";
+import { StringIndexedObject, ShadeString } from "../helpers";
 import {
     BWItem, ItemType
-} from "../items/item.js";
-import * as constants from "../constants.js";
-import { TypeMissing } from "../../types/index.js";
+} from "../items/item";
+import * as constants from "../constants";
+import { TypeMissing } from "../../types/index";
 
 export function extractRelationshipData(parent: JQuery): BurnerRelationshipData {
     return {

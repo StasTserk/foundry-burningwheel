@@ -1,6 +1,6 @@
-import { BWItem, DisplayClass, HasPointCost } from "./item.js";
-import { rollDice } from "../rolls/rolls.js";
-import { ShadeString } from "../helpers.js";
+import { BWItem, DisplayClass, HasPointCost } from "./item";
+import { rollDice } from "../rolls/rolls";
+import { ShadeString } from "../helpers";
 
 export class Armor extends BWItem<ArmorData> {
     prepareData(): void {

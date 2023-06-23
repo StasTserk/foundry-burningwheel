@@ -1,7 +1,7 @@
-import { DisplayProps, ClumsyWeightData, TracksTests, Ability, BWActor, Common } from "./BWActor.js";
-import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog.js";
-import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers.js";
-import { Skill } from "../items/skill.js";
+import { DisplayProps, ClumsyWeightData, TracksTests, Ability, BWActor, Common } from "./BWActor";
+import { CharacterBurnerDialog } from "../dialogs/CharacterBurnerDialog";
+import { ShadeString, TestString, canAdvance, updateTestsNeeded, getWorstShadeString } from "../helpers";
+import { Skill } from "../items/skill";
 
 export class BWCharacter extends BWActor<BWCharacterData> {
     type: "character";

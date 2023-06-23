@@ -1,19 +1,19 @@
-import { BWActor } from "../actors/BWActor.js";
-import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData, escapeQuotes } from "../helpers.js";
-import { BWItem, HasPointCost, ItemType } from "../items/item.js";
-import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { Property, PropertyData } from "../items/property.js";
-import { Skill } from "../items/skill.js";
-import { Trait } from "../items/trait.js";
-import { AffiliationData } from "../items/affiliation.js";
-import { ReputationData } from "../items/reputation.js";
-import { RelationshipData } from "../items/relationship.js";
-import { Lifepath, LifepathData } from "../items/lifepath.js";
-import { MeleeWeaponData } from "../items/meleeWeapon.js";
-import { ArmorData } from "../items/armor.js";
-import { PossessionData } from "../items/possession.js";
-import { TypeMissing } from "../../types/index.js";
+import { BWActor } from "../actors/BWActor";
+import { ShadeString, StringIndexedObject, getItemsOfType, getItemsOfTypes, getCompendiumList, DragData, escapeQuotes } from "../helpers";
+import { BWItem, HasPointCost, ItemType } from "../items/item";
+import { extractRelationshipData, extractBaseCharacterData, extractSkillData, extractTraitData, extractPropertyData, extractReputationData, extractRelData, extractGearData } from "./burnerDataHelpers";
+import { BWCharacter } from "../actors/BWCharacter";
+import { Property, PropertyData } from "../items/property";
+import { Skill } from "../items/skill";
+import { Trait } from "../items/trait";
+import { AffiliationData } from "../items/affiliation";
+import { ReputationData } from "../items/reputation";
+import { RelationshipData } from "../items/relationship";
+import { Lifepath, LifepathData } from "../items/lifepath";
+import { MeleeWeaponData } from "../items/meleeWeapon";
+import { ArmorData } from "../items/armor";
+import { PossessionData } from "../items/possession";
+import { TypeMissing } from "../../types/index";
 
 export class CharacterBurnerDialog extends Application {
     private readonly _parent: BWCharacter;

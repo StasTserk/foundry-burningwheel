@@ -1,6 +1,6 @@
-import { spellLengthSelect } from "../../constants.js";
-import { StringIndexedObject } from "../../helpers.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { spellLengthSelect } from "../../constants";
+import { StringIndexedObject } from "../../helpers";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class SpellSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {

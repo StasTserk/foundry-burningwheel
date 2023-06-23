@@ -1,11 +1,11 @@
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { Skill } from "../items/skill.js";
-import { Spell } from "../items/spell.js";
-import * as helpers from "../helpers.js";
-import { handleLearningRoll } from "./rollLearning.js";
-import { EventHandlerOptions, RollDialogData, RollOptions } from "./rolls.js";
-import { handleSkillRoll } from "./rollSkill.js";
-import { showSpellTaxDialog } from "./rollSpellTax.js";
+import { BWCharacter } from "../actors/BWCharacter";
+import { Skill } from "../items/skill";
+import { Spell } from "../items/spell";
+import * as helpers from "../helpers";
+import { handleLearningRoll } from "./rollLearning";
+import { EventHandlerOptions, RollDialogData, RollOptions } from "./rolls";
+import { handleSkillRoll } from "./rollSkill";
+import { showSpellTaxDialog } from "./rollSpellTax";
 
 export async function handleSpellRollEvent({ target, sheet, dataPreset }: EventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor as BWCharacter;

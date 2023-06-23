@@ -1,5 +1,5 @@
-import { gearQualitySelect } from "../../constants.js";
-import { BWItemSheet, BWItemSheetData } from "./bwItemSheet.js";
+import { gearQualitySelect } from "../../constants";
+import { BWItemSheet, BWItemSheetData } from "./bwItemSheet";
 
 export class RangedWeaponSheet extends BWItemSheet {
     get template(): string {

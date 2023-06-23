@@ -1,13 +1,13 @@
-import { Skill } from "../items/skill.js";
-import { ItemDragData } from "../helpers.js";
-import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/BWActor.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { handleNpcSpellRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/Npc.js";
-import { RollDialogData } from "../rolls/rolls.js";
-import { Spell } from "../items/spell.js";
-import { handleSpellRoll } from "../rolls/rollSpell.js";
+import { Skill } from "../items/skill";
+import { ItemDragData } from "../helpers";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro";
+import { BWActor } from "../actors/BWActor";
+import { BWCharacter } from "../actors/BWCharacter";
+import { handleNpcSpellRoll } from "../rolls/npcSkillRoll";
+import { Npc } from "../actors/Npc";
+import { RollDialogData } from "../rolls/rolls";
+import { Spell } from "../items/spell";
+import { handleSpellRoll } from "../rolls/rollSpell";
 
 export function CreateSpellRollMacro(dragData: ItemDragData): MacroData | null {
     if (!dragData.actorId) {

@@ -1,7 +1,7 @@
-import { BWItem, DisplayClass, HasPointCost } from "./item.js";
-import * as helpers from "../helpers.js";
-import { QualityString } from "../constants.js";
-import { BWActor } from "../actors/BWActor.js";
+import { BWItem, DisplayClass, HasPointCost } from "./item";
+import * as helpers from "../helpers";
+import { QualityString } from "../constants";
+import { BWActor } from "../actors/BWActor";
 
 export class RangedWeapon extends BWItem<RangedWeaponData> {
     type: "ranged weapon";

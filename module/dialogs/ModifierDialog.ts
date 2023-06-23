@@ -1,10 +1,10 @@
-import { Ability, BWActor } from "../actors/BWActor.js";
-import { difficultyGroup, TestString } from "../helpers.js";
-import * as constants from "../constants.js";
-import { Skill } from "../items/skill.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { simpleBroadcast } from "../chat.js";
-import { gmOnly } from "../decorators.js";
+import { Ability, BWActor } from "../actors/BWActor";
+import { difficultyGroup, TestString } from "../helpers";
+import * as constants from "../constants";
+import { Skill } from "../items/skill";
+import { BWCharacter } from "../actors/BWCharacter";
+import { simpleBroadcast } from "../chat";
+import { gmOnly } from "../decorators";
 
 export class ModifierDialog extends Application {
 

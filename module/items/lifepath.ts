@@ -1,4 +1,4 @@
-import { BWItem } from "./item.js";
+import { BWItem } from "./item";
 
 export class Lifepath extends BWItem<LifepathData> {
     type: "lifepath";

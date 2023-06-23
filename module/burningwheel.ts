@@ -1,25 +1,27 @@
-import { BWActor } from "./actors/BWActor.js";
-import { BWCharacterSheet } from "./actors/sheets/BWCharacterSheet.js";
-import { BWCharacterTabbedSheet } from "./actors/sheets/BWCharacterTabbedSheet.js";
+import "../styles/burningwheel.scss";
 
-import { BWItem, RegisterItemSheets } from "./items/item.js";
+import { BWActor } from "./actors/BWActor";
+import { BWCharacterSheet } from "./actors/sheets/BWCharacterSheet";
+import { BWCharacterTabbedSheet } from "./actors/sheets/BWCharacterTabbedSheet";
 
-import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat.js";
-import { DragData, ShadeString, slugify, translateWoundValue } from "./helpers.js";
-import { migrateData } from "./migration/migration.js";
-import { registerSystemSettings } from "./settings.js";
-import { preloadHandlebarsTemplates } from "./templates.js";
-import { NpcSheet } from "./actors/sheets/NpcSheet.js";
+import { BWItem, RegisterItemSheets } from "./items/item";
 
-import { actorConstructor, itemConstructor } from "./factory.js";
+import { hideChatButtonsIfNotOwner, onChatLogRender } from "./chat";
+import { DragData, ShadeString, slugify, translateWoundValue } from "./helpers";
+import { migrateData } from "./migration/migration";
+import { registerSystemSettings } from "./settings";
+import { preloadHandlebarsTemplates } from "./templates";
+import { NpcSheet } from "./actors/sheets/NpcSheet";
 
-import * as constants from "./constants.js";
-import { CreateBurningWheelMacro, RegisterMacros } from "./macros/Macro.js";
-import { BWSettingSheet } from "./actors/sheets/BWSettingSheet.js";
-import * as dialogs from "./dialogs/index.js";
-import { TypeMissing } from "../types/index.js";
+import { actorConstructor, itemConstructor } from "./factory";
 
-import { BWRoll } from "../module/rolls/customRolls.js";
+import * as constants from "./constants";
+import { CreateBurningWheelMacro, RegisterMacros } from "./macros/Macro";
+import { BWSettingSheet } from "./actors/sheets/BWSettingSheet";
+import * as dialogs from "./dialogs/index";
+import { TypeMissing } from "../types/index";
+
+import { BWRoll } from "../module/rolls/customRolls";
 
 Hooks.once("init", async () => {
     CONFIG.Actor.documentClass = actorConstructor;

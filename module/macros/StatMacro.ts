@@ -1,15 +1,15 @@
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { Npc } from "../actors/Npc.js";
-import { Ability, BWActor } from "../actors/BWActor.js";
+import { BWCharacter } from "../actors/BWCharacter";
+import { Npc } from "../actors/Npc";
+import { Ability, BWActor } from "../actors/BWActor";
 
-import { handleNpcStatRoll, NpcStatName } from "../rolls/npcStatRoll.js";
-import { RollDialogData } from "../rolls/rolls.js";
-import { StatDragData } from "../helpers.js";
-import { getMacroRollPreset, MacroData } from "./Macro.js";
-import { handleCirclesRoll } from "../rolls/rollCircles.js";
-import { handleResourcesRoll } from "../rolls/rollResources.js";
-import { handleStatRoll } from "../rolls/rollStat.js";
-import { handleAttrRoll } from "../rolls/rollAttribute.js";
+import { handleNpcStatRoll, NpcStatName } from "../rolls/npcStatRoll";
+import { RollDialogData } from "../rolls/rolls";
+import { StatDragData } from "../helpers";
+import { getMacroRollPreset, MacroData } from "./Macro";
+import { handleCirclesRoll } from "../rolls/rollCircles";
+import { handleResourcesRoll } from "../rolls/rollResources";
+import { handleStatRoll } from "../rolls/rollStat";
+import { handleAttrRoll } from "../rolls/rollAttribute";
 
 export function CreateStatMacro(dragData: StatDragData): MacroData | null {
     if (!dragData.actorId) {

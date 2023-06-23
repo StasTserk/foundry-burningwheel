@@ -1,21 +1,21 @@
-import { BWCharacter } from "./actors/BWCharacter.js";
-import { Armor } from "./items/armor.js";
-import { Belief } from "./items/belief.js";
-import { Instinct } from "./items/instinct.js";
-import { MeleeWeapon } from "./items/meleeWeapon.js";
-import { Possession } from "./items/possession.js";
-import { Property } from "./items/property.js";
-import { RangedWeapon } from "./items/rangedWeapon.js";
-import { Relationship } from "./items/relationship.js";
-import { Reputation } from "./items/reputation.js";
-import { Skill } from "./items/skill.js";
-import { Spell } from "./items/spell.js";
-import { Trait } from "./items/trait.js";
-import { Npc } from "./actors/Npc.js";
-import { Lifepath } from "./items/lifepath.js";
-import { BWSetting } from "./actors/BWSetting.js";
-import { Affiliation } from "./items/affiliation.js";
-import { TypeMissing } from "../types/index.js";
+import { BWCharacter } from "./actors/BWCharacter";
+import { Armor } from "./items/armor";
+import { Belief } from "./items/belief";
+import { Instinct } from "./items/instinct";
+import { MeleeWeapon } from "./items/meleeWeapon";
+import { Possession } from "./items/possession";
+import { Property } from "./items/property";
+import { RangedWeapon } from "./items/rangedWeapon";
+import { Relationship } from "./items/relationship";
+import { Reputation } from "./items/reputation";
+import { Skill } from "./items/skill";
+import { Spell } from "./items/spell";
+import { Trait } from "./items/trait";
+import { Npc } from "./actors/Npc";
+import { Lifepath } from "./items/lifepath";
+import { BWSetting } from "./actors/BWSetting";
+import { Affiliation } from "./items/affiliation";
+import { TypeMissing } from "../types/index";
 
 function factory(entities: Record<string, typeof FoundryDocument>, baseClass: typeof FoundryDocument): typeof FoundryDocument {
     return new Proxy(baseClass, {

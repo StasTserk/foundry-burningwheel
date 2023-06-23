@@ -1,13 +1,13 @@
-import { Skill } from "../items/skill.js";
-import { ItemDragData } from "../helpers.js";
-import { getImage, getMacroRollPreset, MacroData } from "./Macro.js";
-import { BWActor } from "../actors/BWActor.js";
-import { handleSkillRoll } from "../rolls/rollSkill.js";
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { handleNpcSkillRoll } from "../rolls/npcSkillRoll.js";
-import { Npc } from "../actors/Npc.js";
-import { handleLearningRoll } from "../rolls/rollLearning.js";
-import { RollDialogData } from "../rolls/rolls.js";
+import { Skill } from "../items/skill";
+import { ItemDragData } from "../helpers";
+import { getImage, getMacroRollPreset, MacroData } from "./Macro";
+import { BWActor } from "../actors/BWActor";
+import { handleSkillRoll } from "../rolls/rollSkill";
+import { BWCharacter } from "../actors/BWCharacter";
+import { handleNpcSkillRoll } from "../rolls/npcSkillRoll";
+import { Npc } from "../actors/Npc";
+import { handleLearningRoll } from "../rolls/rollLearning";
+import { RollDialogData } from "../rolls/rolls";
 
 export function CreateSkillRollMacro(dragData: ItemDragData): MacroData | null {
     if (!dragData.actorId) {

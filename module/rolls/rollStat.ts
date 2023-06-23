@@ -1,5 +1,5 @@
-import { BWCharacter } from "../actors/BWCharacter.js";
-import { Ability, TracksTests } from "../actors/BWActor.js";
+import { BWCharacter } from "../actors/BWCharacter";
+import { Ability, TracksTests } from "../actors/BWActor";
 import {
     buildRerollData,
     getRollNameClass,
@@ -10,9 +10,9 @@ import {
     templates,
     RollOptions,
     extractRollData, EventHandlerOptions, mergeDialogData, getSplitPoolText, getSplitPoolRoll
-} from "./rolls.js";
-import { buildHelpDialog } from "../dialogs/buildHelpDialog.js";
-import { maybeLocalize } from "../helpers.js";
+} from "./rolls";
+import { buildHelpDialog } from "../dialogs/buildHelpDialog";
+import { maybeLocalize } from "../helpers";
 
 export async function handleStatRollEvent(options: EventHandlerOptions): Promise<unknown> {
     const accessor = options.target.dataset.accessor || "";

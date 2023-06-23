@@ -1,21 +1,21 @@
-import { NewItemData } from "../BWActor.js";
-import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet.js";
-import * as constants from "../../constants.js";
-import { handleRollable } from "../../rolls/rolls.js";
-import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog.js";
-import { addNewItem } from "../../dialogs/ImportItemDialog.js";
-import { BWCharacter, BWCharacterData } from "../BWCharacter.js";
-import { byName } from "../../helpers.js";
-import { Armor } from "../../items/armor.js";
-import { MeleeWeapon } from "../../items/meleeWeapon.js";
-import { RangedWeapon } from "../../items/rangedWeapon.js";
-import { Relationship } from "../../items/relationship.js";
-import { Reputation } from "../../items/reputation.js";
-import { SkillData, Skill } from "../../items/skill.js";
-import { Spell } from "../../items/spell.js";
-import { Trait } from "../../items/trait.js";
-import { BWItem } from "../../items/item.js";
-import { TypeMissing } from "../../../types/index.js";
+import { NewItemData } from "../BWActor";
+import { ActorSheetOptions, BaseActorSheetData, BWActorSheet } from "./BWActorSheet";
+import * as constants from "../../constants";
+import { handleRollable } from "../../rolls/rolls";
+import { CharacterBurnerDialog } from "../../dialogs/CharacterBurnerDialog";
+import { addNewItem } from "../../dialogs/ImportItemDialog";
+import { BWCharacter, BWCharacterData } from "../BWCharacter";
+import { byName } from "../../helpers";
+import { Armor } from "../../items/armor";
+import { MeleeWeapon } from "../../items/meleeWeapon";
+import { RangedWeapon } from "../../items/rangedWeapon";
+import { Relationship } from "../../items/relationship";
+import { Reputation } from "../../items/reputation";
+import { SkillData, Skill } from "../../items/skill";
+import { Spell } from "../../items/spell";
+import { Trait } from "../../items/trait";
+import { BWItem } from "../../items/item";
+import { TypeMissing } from "../../../types/index";
 
 export class BWCharacterSheet extends BWActorSheet<CharacterSheetData, BWCharacter, ActorSheetOptions> {
     get actor(): BWCharacter {

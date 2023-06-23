@@ -1,4 +1,4 @@
-import { BWItem, DisplayClass } from "./item.js";
+import { BWItem, DisplayClass } from "./item";
 
 export class Reputation extends BWItem<ReputationData> {
     type: "reputation";

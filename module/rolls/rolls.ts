@@ -1,22 +1,22 @@
-import { BWActor, RollModifier, TracksTests } from "../actors/BWActor.js";
-import * as helpers from "../helpers.js";
-import { handleAttrRollEvent } from "./rollAttribute.js";
-import { handleCirclesRollEvent } from "./rollCircles.js";
-import { handleLearningRollEvent } from "./rollLearning.js";
-import { handleGritRollEvent, handleShrugRollEvent } from "./rollPtgs.js";
-import { handleResourcesRollEvent } from "./rollResources.js";
-import { handleSkillRollEvent } from "./rollSkill.js";
-import { handleStatRollEvent } from "./rollStat.js";
-import { handleArmorRollEvent } from "./rollArmor.js";
-import { handleWeaponRollEvent } from "./rollWeapon.js";
-import { handleSpellRollEvent } from "./rollSpell.js";
-import { handleSpellTaxRoll } from "./rollSpellTax.js";
-import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet.js";
-import { NpcSheet } from "../actors/sheets/NpcSheet.js";
-import { Possession } from "../items/possession.js";
-import { DifficultyDialog } from "../dialogs/DifficultyDialog.js";
-import { ModifierDialog } from "../dialogs/ModifierDialog.js";
-import { AstrologyDie } from "./customRolls.js";
+import { BWActor, RollModifier, TracksTests } from "../actors/BWActor";
+import * as helpers from "../helpers";
+import { handleAttrRollEvent } from "./rollAttribute";
+import { handleCirclesRollEvent } from "./rollCircles";
+import { handleLearningRollEvent } from "./rollLearning";
+import { handleGritRollEvent, handleShrugRollEvent } from "./rollPtgs";
+import { handleResourcesRollEvent } from "./rollResources";
+import { handleSkillRollEvent } from "./rollSkill";
+import { handleStatRollEvent } from "./rollStat";
+import { handleArmorRollEvent } from "./rollArmor";
+import { handleWeaponRollEvent } from "./rollWeapon";
+import { handleSpellRollEvent } from "./rollSpell";
+import { handleSpellTaxRoll } from "./rollSpellTax";
+import { BWCharacterSheet } from "../actors/sheets/BWCharacterSheet";
+import { NpcSheet } from "../actors/sheets/NpcSheet";
+import { Possession } from "../items/possession";
+import { DifficultyDialog } from "../dialogs/DifficultyDialog";
+import { ModifierDialog } from "../dialogs/ModifierDialog";
+import { AstrologyDie } from "./customRolls";
 
 export async function handleRollable(
     e: JQuery.ClickEvent<unknown, undefined>, sheet: BWCharacterSheet): Promise<unknown> {

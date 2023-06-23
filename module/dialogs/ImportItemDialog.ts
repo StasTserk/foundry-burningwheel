@@ -99,7 +99,7 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
         const sourceList = ['World'].concat(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             Array.from(game.packs?.values() || [])
-                .filter((p: any) => !p.private)
+                .filter((p: any) => p.visible)
                 .map((p: CompendiumCollection) => {
                     return helpers.compendiumName(p);
                 })

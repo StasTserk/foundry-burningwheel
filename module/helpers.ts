@@ -188,7 +188,7 @@ export function getCompendiumList(): { name: string; label: string }[] {
     return [{ name: 'world', label: 'World Content' }].concat(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...packs
-            .filter((p: any) => game.user?.isGM || !p.private)
+            .filter((p: any) => game.user?.isGM || p.visible)
             .map((p) => {
                 return {
                     name: p.collection,

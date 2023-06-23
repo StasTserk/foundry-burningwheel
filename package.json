@@ -6,7 +6,8 @@
     "scripts": {
         "build": "webpack --config webpack.config.js --mode=production",
         "build-dev": "webpack --config webpack.config.js --mode=development",
-        "watch": "webpack --config webpack.config.js --mode=development --watch"
+        "watch": "webpack --config webpack.config.js --mode=development --watch",
+        "prettier": "npx prettier --write ."
     },
     "author": "",
     "license": "ISC",

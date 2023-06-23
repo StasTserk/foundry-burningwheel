@@ -11,6 +11,7 @@ jobs:
       - node/install-packages:
           cache-version: v3
           override-ci-command: npm install
+      - run: npx prettier --check .
       - run: npm run build
       - run: mkdir ./artifacts
       - persist_to_workspace:

@@ -22,8 +22,8 @@
     ],
     "packs": [],
     "compatibility": {
-        "minimum": 10,
-        "verified": "10.291"
+        "minimum": 11,
+        "verified": "11.302"
     },
     "socket": true,
     "initiative": "1d20",

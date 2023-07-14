@@ -97,8 +97,8 @@ export async function addNewItem(options: AddItemOptions): Promise<unknown> {
             await helpers.getItemsOfTypes(options.itemTypes as ItemType[])
         ).sort((a, b) => (a.name < b.name ? -1 : a.name === b.name ? 0 : 1));
         const sourceList = ['World'].concat(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             Array.from(game.packs?.values() || [])
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .filter((p: any) => p.visible)
                 .map((p: CompendiumCollection) => {
                     return helpers.compendiumName(p);

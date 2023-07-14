@@ -220,6 +220,18 @@ export class BWActorSheet<
         }
     }
 
+    async _onDropItem(
+        event: DragEvent,
+        data: object
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ): Promise<boolean | ActorSheet.OwnedItemData<any> | undefined> {
+        const dragData = data as helpers.ItemDragData;
+        if (dragData.actorId === this.actor.id) {
+            return false;
+        }
+        return await super._onDropItem(event, data);
+    }
+
     getArmorDictionary(armorItems: Armor[]): { [key: string]: Armor | null } {
         let armorLocs: { [key: string]: Armor | null } = {};
         constants.armorLocations.forEach((al) => (armorLocs[al] = null)); // initialize locations

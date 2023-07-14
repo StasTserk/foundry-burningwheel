@@ -22,10 +22,10 @@ export function onChatLogRender(html: JQuery): void {
     );
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export function hideChatButtonsIfNotOwner(
     _message: unknown,
     html: JQuery,
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     data: any
 ): void {
     const message = html.find('div.chat-message');

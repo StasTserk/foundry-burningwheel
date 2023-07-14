@@ -3,6 +3,7 @@ const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WebpackPrettierPlugin = require('webpack-prettier-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const yaml = require('js-yaml');
 
 if (!fs.existsSync('./foundryConfig.json')) {
@@ -51,6 +52,9 @@ const getBuild = (isDev) => ({
   plugins: [
     new MiniCssExtractPlugin({ filename: 'burningwheel.css' }),
     new WebpackPrettierPlugin(),
+    new ESLintPlugin({
+      extensions: ['ts'],
+    }),
     new CopyPlugin({
       patterns: [
         { from: 'system.json' },

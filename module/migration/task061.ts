@@ -53,10 +53,10 @@ export async function task061(): Promise<void> {
     ui.notifications?.notify(message, 'info');
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function updateToNumber(
     value: string | number | number[] | string[] | null,
     path: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: Record<string, any>
 ): void {
     if (typeof value === 'number') {

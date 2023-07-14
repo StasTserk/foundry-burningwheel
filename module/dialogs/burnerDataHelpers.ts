@@ -77,9 +77,9 @@ function getAttrData(
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function extractBaseCharacterData(
     html: JQuery<HTMLElement>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): StringIndexedObject<string | StringIndexedObject<any>> {
     // baseStats
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -74,9 +74,9 @@ const actorTypes: Record<string, typeof FoundryDocument> = {};
 actorTypes['character'] = BWCharacter as typeof FoundryDocument;
 actorTypes['npc'] = Npc as typeof FoundryDocument;
 actorTypes['setting'] = BWSetting as typeof FoundryDocument;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actorConstructor = factory(
     actorTypes,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Actor as any
 ) as typeof Actor;
 

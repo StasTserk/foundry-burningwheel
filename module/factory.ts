@@ -16,6 +16,8 @@ import { Lifepath } from './items/lifepath';
 import { BWSetting } from './actors/BWSetting';
 import { Affiliation } from './items/affiliation';
 import { TypeMissing } from '../types/index';
+import { BWActor } from './actors/BWActor';
+import { BWItem } from './items/item';
 
 function factory(
     entities: Record<string, typeof FoundryDocument>,
@@ -77,7 +79,7 @@ actorTypes['setting'] = BWSetting as typeof FoundryDocument;
 export const actorConstructor = factory(
     actorTypes,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Actor as any
+    BWActor as any
 ) as typeof Actor;
 
 const itemTypes: Record<string, typeof FoundryDocument> = {};
@@ -97,4 +99,4 @@ itemTypes['affiliation'] = Affiliation as typeof FoundryDocument;
 itemTypes['spell'] = Spell as typeof FoundryDocument;
 itemTypes['lifepath'] = Lifepath as typeof FoundryDocument;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const itemConstructor = factory(itemTypes, Item as any) as typeof Item;
+export const itemConstructor = factory(itemTypes, BWItem as any) as typeof Item;

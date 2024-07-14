@@ -317,7 +317,7 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
     }
 
     static get defaultOptions(): Dialog.Options {
-        return mergeObject(
+        return foundry.utils.mergeObject(
             super.defaultOptions,
             {
                 width: 1000,

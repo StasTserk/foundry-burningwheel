@@ -12,7 +12,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
         return super.actor as BWSetting;
     }
     static get defaultOptions(): BaseEntitySheet.Options {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['bw-app'],
             width: 600,
         });

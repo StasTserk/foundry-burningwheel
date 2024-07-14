@@ -114,9 +114,13 @@ export class CharacterBurnerDialog extends Application {
     }
 
     static get defaultOptions(): Application.Options {
-        return mergeObject(
+        return foundry.utils.mergeObject(
             super.defaultOptions,
-            { width: 940, height: 800, classes: ['bw-app'] },
+            {
+                width: 940,
+                height: 800,
+                classes: ['bw-app'],
+            },
             { overwrite: true }
         );
     }

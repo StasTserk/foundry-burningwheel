@@ -148,7 +148,7 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
     }
 
     static get defaultOptions(): Dialog.Options {
-        return mergeObject(
+        return foundry.utils.mergeObject(
             super.defaultOptions,
             {
                 width: 1000,

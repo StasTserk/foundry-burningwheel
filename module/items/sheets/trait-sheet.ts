@@ -3,7 +3,7 @@ import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class TraitSheet extends BWItemSheet {
     static get defaultOptions(): BaseEntitySheet.Options {
-        return mergeObject(super.defaultOptions, {});
+        return super.defaultOptions;
     }
 
     get template(): string {

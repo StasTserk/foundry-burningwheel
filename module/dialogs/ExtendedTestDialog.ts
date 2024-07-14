@@ -48,7 +48,7 @@ export class ExtendedTestDialog<T> extends Dialog {
         const data = {};
         data[dataPath] = newValue;
 
-        mergeObject(this.data.data, data);
+        foundry.utils.mergeObject(this.data.data, data);
     }
 
     @changesState() // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +64,7 @@ export class ExtendedTestDialog<T> extends Dialog {
     activateSocketListeners(): void {
         game.socket.on(constants.socketName, ({ type, data }) => {
             if (type === `update${this.data.topic}`) {
-                mergeObject(this.data.data, data);
+                foundry.utils.mergeObject(this.data.data, data);
                 this.persistState(this.data.data);
                 if (this.rendered) {
                     this.render(true);

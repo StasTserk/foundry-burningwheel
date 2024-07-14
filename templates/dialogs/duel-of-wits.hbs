@@ -2,12 +2,7 @@
     <div class='dow-side'>
         {{#if gmView}}
             <select name='side1ActorId'>
-                {{#select side1ActorId}}
-                    <option value=''>Side 1</option>
-                    {{#each side1Options as |o|}}
-                        <option value='{{o.id}}'>{{o.name}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions side1Options selected=side1ActorId}}
             </select>
         {{else}}
             <div class='participant-name'>{{actor1.name}}</div>
@@ -21,12 +16,7 @@
     <div class='dow-side'>
         {{#if gmView}}
             <select name='side2ActorId'>
-                {{#select side2ActorId}}
-                    <option value=''>Side 2</option>
-                    {{#each side2Options as |o|}}
-                        <option value='{{o.id}}'>{{o.name}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions side2Options selected=side2ActorId}}
             </select>
         {{else}}
             <div class='participant-name'>{{actor2.name}}</div>
@@ -84,12 +74,7 @@
             />
             {{#if (eq side1ReadOnly false)}}
                 <select name='actor1Skill'>
-                    {{#select actor1Skill}}
-                        <option value=''>Pick a social skill</option>
-                        {{#each actor1Skills}}
-                            <option value='{{this.id}}'>{{this.label}}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions actor1Skills selected=actor1Skill valueAttr="id" labelAttr="label"}}
                 </select>
                 <button
                     type='button'
@@ -126,15 +111,15 @@
             {{#if showS1Select}}
                 <select class='action-select' name='v1s1'>
                     <option value='?'>Pick an Option</option>
-                    {{#select v1s1}}
-                        {{#each actionOptions as |ao|}}
+                    {{#selectGroups v1s1}}
+                        {{#each ../actionOptions as |ao|}}
                             <optgroup label='{{@key}}'>
                                 {{#each ao as |o|}}
                                     <option value='{{o}}'>{{o}}</option>
                                 {{/each}}
                             </optgroup>
                         {{/each}}
-                    {{/select}}
+                    {{/selectGroups}}
                 </select>
             {{/if}}
             {{#if showV1S1Card}}
@@ -158,15 +143,15 @@
             {{#if showS1Select}}
                 <select class='action-select' name='v2s1'>
                     <option value='?'>Pick an Option</option>
-                    {{#select v2s1}}
-                        {{#each actionOptions as |ao|}}
+                    {{#selectGroups v2s1}}
+                        {{#each ../actionOptions as |ao|}}
                             <optgroup label='{{@key}}'>
                                 {{#each ao as |o|}}
                                     <option value='{{o}}'>{{o}}</option>
                                 {{/each}}
                             </optgroup>
                         {{/each}}
-                    {{/select}}
+                    {{/selectGroups}}
                 </select>
             {{/if}}
             {{#if showV2S1Card}}
@@ -190,15 +175,15 @@
             {{#if showS1Select}}
                 <select class='action-select' name='v3s1'>
                     <option value='?'>Pick an Option</option>
-                    {{#select v3s1}}
-                        {{#each actionOptions as |ao|}}
+                    {{#selectGroups v3s1}}
+                        {{#each ../actionOptions as |ao|}}
                             <optgroup label='{{@key}}'>
                                 {{#each ao as |o|}}
                                     <option value='{{o}}'>{{o}}</option>
                                 {{/each}}
                             </optgroup>
                         {{/each}}
-                    {{/select}}
+                    {{/selectGroups}}
                 </select>
             {{/if}}
             {{#if showV3S1Card}}
@@ -239,12 +224,7 @@
             />
             {{#if (eq side2ReadOnly false)}}
                 <select name='actor2Skill'>
-                    {{#select actor2Skill}}
-                        <option value=''>Pick a social skill</option>
-                        {{#each actor2Skills}}
-                            <option value='{{this.id}}'>{{this.label}}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions actor2Skills selected=actor2Skill valueAttr="id" labelAttr="label"}}
                 </select>
                 <button
                     type='button'
@@ -270,15 +250,15 @@
             {{#if showS2Select}}
                 <select class='action-select' name='v1s2'>
                     <option value='?'>Pick an Option</option>
-                    {{#select v1s2}}
-                        {{#each actionOptions as |ao|}}
+                    {{#selectGroups v1s2}}
+                        {{#each ../actionOptions as |ao|}}
                             <optgroup label='{{@key}}'>
                                 {{#each ao as |o|}}
                                     <option value='{{o}}'>{{o}}</option>
                                 {{/each}}
                             </optgroup>
                         {{/each}}
-                    {{/select}}
+                    {{/selectGroups}}
                 </select>
             {{/if}}
             {{#if showV1S2Card}}
@@ -291,15 +271,15 @@
             {{#if showS2Select}}
                 <select class='action-select' name='v2s2'>
                     <option value='?'>Pick an Option</option>
-                    {{#select v2s2}}
-                        {{#each actionOptions as |ao|}}
+                    {{#selectGroups v2s2}}
+                        {{#each ../actionOptions as |ao|}}
                             <optgroup label='{{@key}}'>
                                 {{#each ao as |o|}}
                                     <option value='{{o}}'>{{o}}</option>
                                 {{/each}}
                             </optgroup>
                         {{/each}}
-                    {{/select}}
+                    {{/selectGroups}}
                 </select>
             {{/if}}
             {{#if showV2S2Card}}
@@ -312,15 +292,15 @@
             {{#if showS2Select}}
                 <select class='action-select' name='v3s2'>
                     <option value='?'>Pick an Option</option>
-                    {{#select v3s2}}
-                        {{#each actionOptions as |ao|}}
+                    {{#selectGroups v3s2}}
+                        {{#each ../actionOptions as |ao|}}
                             <optgroup label='{{@key}}'>
                                 {{#each ao as |o|}}
                                     <option value='{{o}}'>{{o}}</option>
                                 {{/each}}
                             </optgroup>
                         {{/each}}
-                    {{/select}}
+                    {{/selectGroups}}
                 </select>
             {{/if}}
             {{#if showV3S2Card}}

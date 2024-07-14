@@ -118,8 +118,24 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
         const actors = game.actors?.contents || [];
         data.actionOptions = this.data.actionOptions;
 
-        data.side1Options = actors.filter((a) => a.id !== data.side2ActorId);
-        data.side2Options = actors.filter((a) => a.id !== data.side1ActorId);
+        data.side1Options = [
+            { id: '', name: 'Side 1' },
+            ...actors
+                .filter((a) => a.id !== data.side2ActorId)
+                .map((o) => ({ id: o.id, name: o.name })),
+        ].reduce((prev, curr) => {
+            prev[curr.id] = curr.name;
+            return prev;
+        }, {});
+        data.side2Options = [
+            { id: '', name: 'Side 1' },
+            ...actors
+                .filter((a) => a.id !== data.side1ActorId)
+                .map((o) => ({ id: o.id, name: o.name })),
+        ].reduce((prev, curr) => {
+            prev[curr.id] = curr.name;
+            return prev;
+        }, {});
 
         data.actor1 = actors.find((a) => a.id === data.side1ActorId) as
             | BWActor
@@ -241,8 +257,8 @@ interface DuelOfWitsData {
     actor1?: BWActor;
     actor2?: BWActor;
 
-    side1Options: Actor[];
-    side2Options: Actor[];
+    side1Options: Record<string, string>;
+    side2Options: Record<string, string>;
     side1ReadOnly: boolean;
     side2ReadOnly: boolean;
     gmView: boolean;

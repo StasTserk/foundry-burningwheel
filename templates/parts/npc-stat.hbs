@@ -3,12 +3,9 @@
     {{#if editMode}}
     <div class="stat-value">
             {{#if attributeShadePath}}
+            {{log this}}
             <select name="system.{{attributeShadePath}}">
-                {{#select attributeShade}}
-                <option value="B">B</option>
-                <option value="G">G</option>
-                <option value="W">W</option>
-                {{/select}}
+                {{selectOptions @root.shades selected=(concat "system." attributeShadePath)}}
             </select>
             {{/if}}
         <input type="number" name="system.{{attributePath}}" data-dtype="Number" value="{{attributeValue}}">

@@ -37,6 +37,20 @@ export class BWActorSheet<
             isOwner:
                 this.actor.permission >=
                 (CONST as TypeMissing).DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+            sorcerousSkillOptions: [
+                { id: '', label: 'None' },
+                ...this.actor.sorcerousSkills.map((s) => ({
+                    id: s.id,
+                    label: s.name,
+                })),
+            ],
+            martialSkillOptions: [
+                { id: '', label: 'None' },
+                ...this.actor.martialSkills.map((s) => ({
+                    id: s.id,
+                    label: s.name,
+                })),
+            ],
         } as TypeMissing;
     }
 

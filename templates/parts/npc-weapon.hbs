@@ -5,12 +5,7 @@
         data-action='edit'
     >{{weapon.name}}</div>
     <select data-item-id='{{weapon._id}}' data-binding='system.skillId'>
-        {{#select weapon.system.skillId}}
-            <option value=''>None</option>
-            {{#each martialSkills as |s|}}
-                <option value='{{s._id}}'>{{s.name}}</option>
-            {{/each}}
-        {{/select}}
+        {{selectOptions skills selected=weapon.system.skillId valueAttr="id" labelAttr="label"}}
     </select>
     <i class='fas fa-trash' data-id='{{weapon._id}}' data-action='delete'></i>
 </div>

@@ -196,6 +196,18 @@ function registerHelpers() {
             return translateWoundValue(shade, value);
         }
     );
+
+    Handlebars.registerHelper(
+        'selectGroups',
+        (selected: string, options: TypeMissing): string => {
+            const escapedValue = RegExp.escape(
+                Handlebars.escapeExpression(selected)
+            );
+            const rgx = new RegExp(` value=["']${escapedValue}["']`);
+            const html = options.fn(this);
+            return html.replace(rgx, '$& selected');
+        }
+    );
 }
 
 Hooks.on('renderChatLog', (_app, html: JQuery, _data) => onChatLogRender(html));

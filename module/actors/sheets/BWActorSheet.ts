@@ -21,7 +21,7 @@ export class BWActorSheet<
     }
 
     static get defaultOptions(): ActorSheetOptions {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['bw-app'],
         });
     }

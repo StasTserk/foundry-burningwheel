@@ -17,7 +17,7 @@ export class BWItemSheet<
     }
 
     static get defaultOptions(): BaseEntitySheet.Options {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ['bw-app'],
         });
     }

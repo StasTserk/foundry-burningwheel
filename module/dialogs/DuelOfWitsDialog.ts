@@ -31,9 +31,14 @@ export class DuelOfWitsDialog extends ExtendedTestDialog<DuelOfWitsData> {
     }
 
     static get defaultOptions(): Dialog.Options {
-        return mergeObject(
+        return foundry.utils.mergeObject(
             super.defaultOptions,
-            { width: 600, height: 600, resizable: true, classes: ['bw-app'] },
+            {
+                width: 600,
+                height: 600,
+                resizable: true,
+                classes: ['bw-app'],
+            },
             { overwrite: true }
         );
     }

@@ -275,9 +275,9 @@ export async function rollDice(
         return;
     } else {
         const tgt = shade === 'B' ? '3' : shade === 'G' ? '2' : '1';
-        const roll = new Roll(`${numDice}d6${open ? 'x6' : ''}cs>${tgt}`).roll({
-            async: true,
-        });
+        const roll = new Roll(
+            `${numDice}d6${open ? 'x6' : ''}cs>${tgt}`
+        ).roll();
         if (game.dice3d) {
             return game.dice3d
                 .showForRoll(await roll, game.user, true, null, false)

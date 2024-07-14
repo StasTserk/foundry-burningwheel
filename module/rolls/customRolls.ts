@@ -1,4 +1,4 @@
-export class AstrologyDie extends Die {
+export class AstrologyDie extends foundry.dice.terms.Die {
     constructor({
         diceNumber,
         target,
@@ -35,44 +35,44 @@ export class AstrologyDie extends Die {
     }
 }
 
-export class BWAliasTerm extends RollTerm {
+export class BWAliasTerm extends foundry.dice.terms.RollTerm {
     static REGEXP = new RegExp('^([bgw])([0-9]{1,2})$', 'i');
 
     static matchTerm(expression: string): RegExpMatchArray | null {
         return expression.match(this.REGEXP) || null;
     }
 
-    static fromMatch(match: RegExpMatchArray): DiceTerm {
+    static fromMatch(match: RegExpMatchArray): foundry.dice.terms.DiceTerm {
         const shade = match[1].toLowerCase();
         const target = shade === 'b' ? 3 : shade === 'g' ? 2 : 1;
         const number = parseInt(match[2]);
 
-        return new Die({
+        return new foundry.dice.terms.Die({
             number: number,
             faces: 6,
             modifiers: [`cs>${target}`],
             options: {},
-        }) as unknown as DiceTerm;
+        }) as unknown as foundry.dice.terms.DiceTerm;
     }
 }
 
-interface TermClassificationOptions {
+type TermClassificationOptions = {
     intermediate?: boolean;
-    prior?: RollTerm | null;
-    next?: RollTerm | null;
-}
+    prior?: foundry.dice.terms.RollTerm | null;
+    next?: foundry.dice.terms.RollTerm | null;
+};
 
 export class BWRoll extends Roll {
     static _classifyStringTerm(
-        term: string | RollTerm,
+        term: string | foundry.dice.terms.RollTerm,
         {
             intermediate = true,
             prior = null,
             next = null,
         }: TermClassificationOptions = {}
-    ): RollTerm {
+    ): foundry.dice.terms.RollTerm {
         // Terms already classified
-        if (term instanceof RollTerm) return term;
+        if (term instanceof foundry.dice.terms.RollTerm) return term;
 
         // Numeric terms
         const numericMatch = NumericTerm.matchTerm(term);
@@ -81,7 +81,9 @@ export class BWRoll extends Roll {
         // BWAlias terms
         const bwAliasMatch = BWAliasTerm.matchTerm(term);
         if (bwAliasMatch) {
-            return BWAliasTerm.fromMatch(bwAliasMatch) as unknown as RollTerm;
+            return BWAliasTerm.fromMatch(
+                bwAliasMatch
+            ) as unknown as foundry.dice.terms.RollTerm;
         }
 
         // Dice terms
@@ -91,7 +93,9 @@ export class BWRoll extends Roll {
         if (diceMatch) {
             if (intermediate && (prior?.isIntermediate || next?.isIntermediate))
                 return new StringTerm({ term });
-            return DiceTerm.fromMatch(diceMatch) as unknown as RollTerm;
+            return foundry.dice.terms.DiceTerm.fromMatch(
+                diceMatch
+            ) as unknown as foundry.dice.terms.RollTerm;
         }
 
         // Remaining strings

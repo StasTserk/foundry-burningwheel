@@ -100,7 +100,7 @@ declare class Roll {
      * Return an Array of the individual DiceTerm instances contained within this Roll.
      * @return {DiceTerm[]}
      */
-    get dice(): DiceTerm[];
+    get dice(): foundry.dice.terms.DiceTerm[];
 
     /**
      * Return a standardized representation for the displayed formula associated with this Roll.
@@ -324,6 +324,6 @@ declare interface RollDataObject {
     formula: string;
     results: RollResult[];
     total: number | null;
-    dice: (DiceTerm | any)[];
+    dice: (foundry.dice.terms.DiceTerm | any)[];
     terms?: any[];
 }

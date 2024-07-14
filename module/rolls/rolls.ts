@@ -523,7 +523,7 @@ export function extractRollData(html: JQuery): RollData {
 export async function rollWildFork(
     numDice: number,
     shade: helpers.ShadeString = 'B'
-): Promise<DiceTerm | undefined> {
+): Promise<foundry.dice.terms.DiceTerm | undefined> {
     if (numDice <= 0) {
         return;
     }

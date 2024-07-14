@@ -1,1 +1,1 @@
-declare class StringTerm extends RollTerm {}
+declare class StringTerm extends foundry.dice.terms.RollTerm {}

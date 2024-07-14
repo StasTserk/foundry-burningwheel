@@ -55,27 +55,30 @@ export class FightDialog extends ExtendedTestDialog<FightDialogData> {
             if (!actor) {
                 return;
             }
-            p.weapons = actor.fightWeapons
-                .map((w) => {
-                    if (w.type === 'melee weapon') {
-                        const mw = w as MeleeWeapon;
-                        return Object.values(mw.system.attacks).map(
-                            (atk, index) => {
-                                return {
-                                    id: `${mw.id}_${index}`,
-                                    label: `${mw.name} ${atk.attackName}`,
-                                };
-                            }
-                        );
-                    }
-                    return [
-                        {
-                            id: w.id,
-                            label: w.name,
-                        },
-                    ];
-                })
-                .flat(1);
+            p.weapons = [
+                { id: '', label: 'Pick a weapon' },
+                ...actor.fightWeapons
+                    .map((w) => {
+                        if (w.type === 'melee weapon') {
+                            const mw = w as MeleeWeapon;
+                            return Object.values(mw.system.attacks).map(
+                                (atk, index) => {
+                                    return {
+                                        id: `${mw.id}_${index}`,
+                                        label: `${mw.name} ${atk.attackName}`,
+                                    };
+                                }
+                            );
+                        }
+                        return [
+                            {
+                                id: w.id,
+                                label: w.name,
+                            },
+                        ];
+                    })
+                    .flat(1),
+            ];
 
             p.showAction2 = !!p.action1;
             p.showAction3 = !!p.action2;

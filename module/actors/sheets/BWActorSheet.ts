@@ -33,12 +33,11 @@ export class BWActorSheet<
             system: this.actor.system,
             isObserver:
                 this.actor.permission >=
-                (CONST as TypeMissing).DOCUMENT_PERMISSION_LEVELS.OBSERVER,
+                (CONST as TypeMissing).DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
             isOwner:
                 this.actor.permission >=
-                (CONST as TypeMissing).DOCUMENT_PERMISSION_LEVELS.OWNER,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any;
+                (CONST as TypeMissing).DOCUMENT_OWNERSHIP_LEVELS.OWNER,
+        } as TypeMissing;
     }
 
     activateListeners(html: JQuery): void {

@@ -59,11 +59,7 @@
             Su:
             {{#if system.editMode}}
             <select name="system.ptgs.suShade">
-                {{#select system.ptgs.suShade}}
-                <option value="B">B</option>
-                <option value="G">G</option>
-                <option value="W">W</option>
-                {{/select}}
+                {{selectOptions shades selected=system.ptgs.suShade}}
             </select>
             <input type="number" data-dtype="Number" name="system.ptgs.suThresh" value="{{system.ptgs.suThresh}}">
             {{else}}
@@ -74,11 +70,7 @@
             Li:
             {{#if system.editMode}}
             <select name="system.ptgs.liShade">
-                {{#select system.ptgs.liShade}}
-                <option value="B">B</option>
-                <option value="G">G</option>
-                <option value="W">W</option>
-                {{/select}}
+                {{selectOptions shades selected=system.ptgs.liShade}}
             </select>
             <input type="number" data-dtype="Number" name="system.ptgs.liThresh" value="{{system.ptgs.liThresh}}">
             {{else}}
@@ -89,11 +81,7 @@
             Mi:
             {{#if system.editMode}}
             <select name="system.ptgs.miShade">
-                {{#select system.ptgs.miShade}}
-                <option value="B">B</option>
-                <option value="G">G</option>
-                <option value="W">W</option>
-                {{/select}}
+                {{selectOptions shades selected=system.ptgs.miShade}}
             </select>
             <input type="number" data-dtype="Number" name="system.ptgs.miThresh" value="{{system.ptgs.miThresh}}">
             {{else}}
@@ -104,11 +92,7 @@
             Se:
             {{#if system.editMode}}
             <select name="system.ptgs.seShade">
-                {{#select system.ptgs.seShade}}
-                <option value="B">B</option>
-                <option value="G">G</option>
-                <option value="W">W</option>
-                {{/select}}
+                {{selectOptions shades selected=system.ptgs.seShade}}
             </select>
             <input type="number" data-dtype="Number" name="system.ptgs.seThresh" value="{{system.ptgs.seThresh}}">
             {{else}}
@@ -119,11 +103,7 @@
             Tr:
             {{#if system.editMode}}
             <select name="system.ptgs.trShade">
-                {{#select system.ptgs.trShade}}
-                <option value="B">B</option>
-                <option value="G">G</option>
-                <option value="W">W</option>
-                {{/select}}
+                {{selectOptions shades selected=system.ptgs.trShade}}
             </select>
             <input type="number" data-dtype="Number" name="system.ptgs.trThresh" value="{{system.ptgs.trThresh}}">
             {{else}}
@@ -241,10 +221,10 @@
             <i data-action="add" data-type="ranged weapon" class="fas fa-fan" title="Add Ranged Weapon"></i>
         </div>
         {{#each weapons as |w|}}
-        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w skills=../martialSkillOptions}}
         {{/each}}
         {{#each ranged as |w|}}
-        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w martialSkills= ../actor.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-weapon.hbs" weapon=w skills=../martialSkillOptions}}
         {{/each}}
     </div>
 
@@ -254,7 +234,7 @@
             <i data-action="add" data-type="spell" class="fas fa-plus"></i>
         </div>
         {{#each spells as |s|}}
-        {{> "systems/burningwheel/templates/parts/npc-spell.hbs" spell=s skills= ../actor.sorcerousSkills}}
+        {{> "systems/burningwheel/templates/parts/npc-spell.hbs" spell=s skills=../sorcerousSkillOptions}}
         {{/each}}
     </div>
 

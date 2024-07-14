@@ -262,6 +262,7 @@ export class NpcSheet extends BWActorSheet<
         data.gear.sort(byName);
         data.spells.sort(byName);
         data.armor = this.getArmorDictionary(armor);
+        data.shades = { B: 'B', G: 'G', W: 'W' };
         return data;
     }
 

@@ -195,6 +195,11 @@ export class RangeAndCoverDialog extends ExtendedTestDialog<RangeAndCoverData> {
             t.showAction2 = data.showV2 || t.editable;
             t.showAction3 = data.showV3 || t.editable;
         });
+        data.ranges = {
+            Optimal: 'Optimal',
+            Extreme: 'Extreme',
+            'Out of Range': 'Out of Range',
+        };
         return data;
     }
 }
@@ -213,6 +218,7 @@ interface RangeAndCoverData {
     showV1: boolean;
     showV2: boolean;
     showV3: boolean;
+    ranges: Record<string, string>;
 }
 
 interface RnCTeam {

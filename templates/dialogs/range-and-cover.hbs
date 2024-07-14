@@ -42,11 +42,7 @@
             <div class="team-label">Range</div>
             {{#if t.editable}}
             <select name="range" data-index="{{i}}">
-                {{#select t.range}}
-                <option value="Optimal">Optimal</option>
-                <option value="Extreme">Extreme</option>
-                <option value="Out of Range">Out of Range</option>
-                {{/select}}
+                {{selectOptions @root.ranges selected=t.range}}
             </select>
             {{else}}
             {{t.range}}
@@ -88,15 +84,15 @@
             {{#if t.editable}}
             <select name="action1" data-index="{{i}}">
                 <option value="Do Nothing">Do Nothing</option>
-                {{#select t.action1}}
-                {{#each ../actionOptions as |ao|}}
+                {{#selectGroups t.action1}}
+                {{#each @root.actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
                     {{#each ao as |o|}}
                     <option value="{{o}}">{{o}}</option>
                     {{/each}}
                 </optgroup>
                 {{/each}}
-                {{/select}}
+                {{/selectGroups}}
             </select>
             {{/if}}
             {{#if t.showAction1}}
@@ -109,15 +105,15 @@
             {{#if t.editable}}
             <select name="action2" data-index="{{i}}">
                 <option value="Do Nothing">Do Nothing</option>
-                {{#select t.action2}}
-                {{#each ../actionOptions as |ao|}}
+                {{#selectGroups t.action2}}
+                {{#each @root.actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
                     {{#each ao as |o|}}
                     <option value="{{o}}">{{o}}</option>
                     {{/each}}
                 </optgroup>
                 {{/each}}
-                {{/select}}
+                {{/selectGroups}}
             </select>
             {{/if}}
             {{#if t.showAction2}}
@@ -130,15 +126,15 @@
             {{#if t.editable}}
             <select name="action3" data-index="{{i}}">
                 <option value="Do Nothing">Do Nothing</option>
-                {{#select t.action3}}
-                {{#each ../actionOptions as |ao|}}
+                {{#selectGroups t.action3}}
+                {{#each @root.actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
                     {{#each ao as |o|}}
                     <option value="{{o}}">{{o}}</option>
                     {{/each}}
                 </optgroup>
                 {{/each}}
-                {{/select}}
+                {{/selectGroups}}
             </select>
             {{/if}}
             {{#if t.showAction3}}

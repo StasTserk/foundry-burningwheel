@@ -40,14 +40,14 @@ export class BWActorSheet<
             sorcerousSkillOptions: [
                 { id: '', label: 'None' },
                 ...this.actor.sorcerousSkills.map((s) => ({
-                    id: s.id,
+                    id: s._id,
                     label: s.name,
                 })),
             ],
             martialSkillOptions: [
                 { id: '', label: 'None' },
                 ...this.actor.martialSkills.map((s) => ({
-                    id: s.id,
+                    id: s._id,
                     label: s.name,
                 })),
             ],
@@ -60,6 +60,7 @@ export class BWActorSheet<
                 traumatic: 'BW.ptgs.traumatic',
                 mortal: 'BW.ptgs.mortal',
             },
+            basicShades: { B: 'B', G: 'G', W: 'W' },
         } as TypeMissing;
     }
 

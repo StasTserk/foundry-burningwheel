@@ -1,4 +1,8 @@
-import { gearQualitySelect, weaponLengthSelect } from '../../constants';
+import {
+    gearQualitySelect,
+    shadesSelect,
+    weaponLengthSelect,
+} from '../../constants';
 import { MeleeWeapon } from '../meleeWeapon';
 import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
@@ -15,6 +19,12 @@ export class MeleeWeaponSheet extends BWItemSheet {
         const data = super.getData() as MeleeSheetData;
         data.weaponLengths = weaponLengthSelect;
         data.weaponQualities = gearQualitySelect;
+        data.shades = shadesSelect;
+        data.speeds = { 1: 1, 2: 2, 3: 3, 4: 4, x: 'X' };
+        data.handednessOptions = {
+            one: 'BW.weapon.oneHanded',
+            two: 'BW.weapon.twoHanded',
+        };
         return data;
     }
 
@@ -45,4 +55,7 @@ export class MeleeWeaponSheet extends BWItemSheet {
 interface MeleeSheetData extends BWItemSheetData {
     weaponLengths: { [index: string]: string };
     weaponQualities: { [index: string]: string };
+    shades: Record<string, string>;
+    handednessOptions: Record<string, string>;
+    speeds: Record<string | number, string | number>;
 }

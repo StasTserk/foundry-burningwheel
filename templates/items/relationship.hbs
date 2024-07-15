@@ -20,17 +20,7 @@
                 'BW.relationship.influence'
             }}</div>
         <select name='system.influence' value='{{system.influence}}'>
-            {{#select system.influence}}
-                <option value='minor'>{{localize
-                        'BW.relationship.minor'
-                    }}</option>
-                <option value='significant'>{{localize
-                        'BW.relationship.significant'
-                    }}</option>
-                <option value='powerful'>{{localize
-                        'BW.relationship.powerful'
-                    }}</option>
-            {{/select}}
+            {{selectOptions influenceOptions localize=true selected=system.influence}}
         </select>
         <div></div><div></div>
         <div class='pill-toggle'>

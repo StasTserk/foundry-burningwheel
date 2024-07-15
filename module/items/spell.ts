@@ -84,10 +84,16 @@ export class Spell extends BWItem<SpellData> {
         user: User
     ): void {
         super._preCreate(data, options, user);
-        this.updateSource({
-            'system.maxRange': game.i18n.localize('BW.spell.tenPaces'),
-            'system.description': game.i18n.localize('BW.spell.newSpell'),
-        });
+        if (data.system.maxRange === '10 Paces') {
+            this.updateSource({
+                'system.maxRange': game.i18n.localize('BW.spell.tenPaces'),
+            });
+        }
+        if (data.system.description === 'A brand new spell') {
+            this.updateSource({
+                'system.description': game.i18n.localize('BW.spell.newSpell'),
+            });
+        }
     }
 
     spellLengths: StringIndexedObject<string>;

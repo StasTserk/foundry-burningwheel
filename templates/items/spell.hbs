@@ -233,13 +233,7 @@
                     name='system.weaponLength'
                     value='{{system.weaponLength}}'
                 >
-                    {{#select system.weaponLength}}
-                        {{#each item.spellLengths as |title value|}}
-                            <option value='{{value}}'>{{localize
-                                    title
-                                }}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions item.spellLengths localize=true selected=system.weaponLength}}
                 </select>
                 <label
                     for='{{item.id}}-optimal'

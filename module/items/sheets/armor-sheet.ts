@@ -12,6 +12,13 @@ export class ArmorSheet extends BWItemSheet {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { basic, ...rest } = { ...gearQualitySelect };
         data.armorQuality = rest;
+        data.shades = { B: 'BW.black', G: 'BW.grey', W: 'BW.white' };
+        data.penalties = {
+            none: 'BW.armor.untrainedNone',
+            light: 'BW.armor.untrainedLight',
+            heavy: 'BW.armor.untrainedHeavy',
+            plate: 'BW.armor.untrainedPlate',
+        };
         return data;
     }
 }
@@ -19,4 +26,6 @@ export class ArmorSheet extends BWItemSheet {
 interface MeleeSheetData extends BWItemSheetData {
     armorQuality: { [key: string]: string };
     armorLocations: { [key: string]: string };
+    shades: Record<string, string>;
+    penalties: Record<string, string>;
 }

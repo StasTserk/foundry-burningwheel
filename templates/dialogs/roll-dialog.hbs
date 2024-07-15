@@ -138,15 +138,7 @@
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.cashDice'}}</label>
                 <select name='cashDice'>
-                    {{#select cashDice}}
-                        <option value='0'>0</option>
-                        {{#each cashDieOptions as |o|}}
-                            <option value='{{plusone o 1}}'>{{plusone
-                                    o
-                                    1
-                                }}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions cashDieOptions selected=cashDice}}
                 </select>
             </div>
         {{/if}}
@@ -154,15 +146,7 @@
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.fundDice'}}</label>
                 <select name='fundDice'>
-                    {{#select fundDice}}
-                        <option value='0'>0</option>
-                        {{#each fundDieOptions as |o|}}
-                            <option value='{{plusone o 1}}'>{{plusone
-                                    o
-                                    1
-                                }}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions fundDieOptions selected=fundDice}}
                 </select>
             </div>
         {{/if}}
@@ -188,15 +172,7 @@
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.personaDice'}}</label>
                 <select name='personaDice'>
-                    {{#select personaDice}}
-                        <option value='0'>0</option>
-                        {{#each personaOptions as |o|}}
-                            <option value='{{plusone o 1}}'>{{plusone
-                                    o
-                                    1
-                                }}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions personaOptions selected=personaDice}}
                 </select>
             </div>
         {{/if}}

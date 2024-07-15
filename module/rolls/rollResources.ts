@@ -49,8 +49,24 @@ export async function handleResourcesRoll({
             arthaDice: 0,
             tax: parseInt(actor.system.resourcesTax.toString()),
             stat,
-            cashDieOptions: Array.from(Array(actor.system.cash || 0).keys()),
-            fundDieOptions: Array.from(Array(actor.system.funds || 0).keys()),
+            cashDieOptions: actor.system.cash
+                ? [
+                      ...Array.from(Array(actor.system.cash || 0).keys()),
+                      actor.system.cash,
+                  ].reduce((iv, v) => {
+                      iv[v] = v;
+                      return iv;
+                  }, {})
+                : {},
+            fundDieOptions: actor.system.funds
+                ? [
+                      ...Array.from(Array(actor.system.funds || 0).keys()),
+                      actor.system.funds,
+                  ].reduce((iv, v) => {
+                      iv[v] = v;
+                      return iv;
+                  }, {})
+                : {},
             optionalDiceModifiers: rollModifiers.filter(
                 (r) => r.optional && r.dice
             ),
@@ -188,8 +204,8 @@ async function resourcesRollCallback(
 }
 
 export interface ResourcesDialogData extends AttributeDialogData {
-    cashDieOptions: number[];
-    fundDieOptions: number[];
+    cashDieOptions: Record<number, number>;
+    fundDieOptions: Record<number, number>;
 }
 
 export interface ResourcesRollOption extends RollOptions {

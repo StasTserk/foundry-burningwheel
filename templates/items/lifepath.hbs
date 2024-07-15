@@ -32,25 +32,7 @@
             {{localize 'BW.lifepath.statBoost'}}
         </label>
         <select name='system.statBoost' value='{{system.statBoost}}'>
-            {{#select system.statBoost}}
-                <option value='none'>{{localize 'BW.lifepath.none'}}</option>
-                <option value='mental'>{{localize
-                        'BW.lifepath.mental'
-                    }}</option>
-                <option value='physical'>{{localize
-                        'BW.lifepath.physical'
-                    }}</option>
-                <option value='either'>{{localize
-                        'BW.lifepath.either'
-                    }}</option>
-                <option value='both'>{{localize 'BW.lifepath.both'}}</option>
-                <option value='phystwo'>{{localize
-                        'BW.lifepath.phystwo'
-                    }}</option>
-                <option value='menttwo'>{{localize
-                        'BW.lifepath.menttwo'
-                    }}</option>
-            {{/select}}
+            {{selectOptions boostOptions selected=system.statBoost localize=true}}
         </select>
         <div class='pill-toggle min-content'>
             <input

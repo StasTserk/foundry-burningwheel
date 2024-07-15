@@ -5,8 +5,19 @@ import { Lifepath } from '../lifepath';
 import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class LifepathSheet extends BWItemSheet<BWItemSheetData, Lifepath> {
-    getData(): BWItemSheetData {
-        const data = super.getData();
+    getData(): BWItemSheetData & { boostOptions: Record<string, string> } {
+        const data = super.getData() as BWItemSheetData & {
+            boostOptions: Record<string, string>;
+        };
+        data.boostOptions = {
+            none: 'BW.lifepath.none',
+            mental: 'BW.lifepath.mental',
+            physical: 'BW.lifepath.physical',
+            either: 'BW.lifepath.either',
+            both: 'BW.lifepath.both',
+            phystwo: 'BW.lifepath.phystwo',
+            menttwo: 'BW.lifepath.menttwo',
+        };
         return data;
     }
 

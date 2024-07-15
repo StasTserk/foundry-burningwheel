@@ -1,4 +1,8 @@
-import { armorLocationSelect, gearQualitySelect } from '../../constants';
+import {
+    armorLocationSelect,
+    gearQualitySelect,
+    shadesSelect,
+} from '../../constants';
 import { BWItemSheet, BWItemSheetData } from './bwItemSheet';
 
 export class ArmorSheet extends BWItemSheet {
@@ -12,7 +16,7 @@ export class ArmorSheet extends BWItemSheet {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { basic, ...rest } = { ...gearQualitySelect };
         data.armorQuality = rest;
-        data.shades = { B: 'BW.black', G: 'BW.grey', W: 'BW.white' };
+        data.shades = shadesSelect;
         data.penalties = {
             none: 'BW.armor.untrainedNone',
             light: 'BW.armor.untrainedLight',

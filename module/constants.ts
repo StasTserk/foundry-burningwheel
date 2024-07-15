@@ -148,6 +148,8 @@ export const equipmentSheetOrder = {
     property: 4,
 };
 
+export const shadesSelect = { B: 'BW.black', G: 'BW.grey', W: 'BW.white' };
+
 export const systemName = 'burningwheel';
 export const socketName = 'system.burningwheel';
 export const settings = {

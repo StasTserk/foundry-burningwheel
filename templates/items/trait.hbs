@@ -18,11 +18,7 @@
     <div class='item-form-group'>
         <label class='item-setting-label'>{{localize 'BW.trait.type'}}</label>
         <select name='system.traittype' value='{{system.traittype}}'>
-            {{#select system.traittype}}
-                {{#each traitTypes as |type t|}}
-                    <option value='{{t}}'>{{localize type}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions traitTypes localize=true selected=system.traittype}}
         </select>
 
         <label

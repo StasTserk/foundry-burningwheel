@@ -16,11 +16,7 @@
     <h3 class="rollable-name">{{ localize statName }}</h3>
     {{/if}}
     <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
-        {{#select stat.shade}}
-        <option value="B">B</option>
-        <option value="G">G</option>
-        <option value="W">W</option>
-        {{/select}}
+        {{selectOptions @root.basicShades selected=stat.shade}}
     </select>
     <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}">
     {{#if isOwner}}

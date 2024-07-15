@@ -3,11 +3,7 @@
     {{#if isOwner}}<label for="{{skill.system.safeId}}-toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>{{/if}}
     <h3 class="rollable-name">{{ skill.name }}</h3>
     <select class="shade" data-item-id="{{skill._id}}" data-binding="system.shade" value="{{skill.system.shade}}">
-        {{#select skill.system.shade}}
-        <option value="B">B</option>
-        <option value="G">G</option>
-        <option value="W">W</option>
-        {{/select}}
+        {{selectOptions @root.basicShades selected=skill.system.shade}}
     </select>
     <input class="exponent" type="number" data-item-id="{{skill._id}}" data-binding="system.exp" value="{{skill.system.exp}}">
     {{#if isOwner}}

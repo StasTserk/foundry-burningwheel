@@ -51,6 +51,15 @@ export class BWActorSheet<
                     label: s.name,
                 })),
             ],
+            ptgsOptions: {
+                bruise: 'BW.ptgs.bruise',
+                superficial: 'BW.ptgs.superficial',
+                light: 'BW.ptgs.light',
+                midi: 'BW.ptgs.midi',
+                severe: 'BW.ptgs.severe',
+                traumatic: 'BW.ptgs.traumatic',
+                mortal: 'BW.ptgs.mortal',
+            },
         } as TypeMissing;
     }
 

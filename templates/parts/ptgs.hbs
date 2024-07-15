@@ -8,15 +8,7 @@
 <div class="ptgs-wound-column">
     <div class="ptgs-top">
         <select class="ptgs-tolerance" name="system.ptgs.{{@key}}.threshold" value="{{wound.threshold}}">
-            {{#select wound.threshold}}
-            <option value="bruise">{{localize "BW.ptgs.bruise"}}</option>
-            <option value="superficial">{{localize "BW.ptgs.superficial"}}</option>
-            <option value="light">{{localize "BW.ptgs.light"}}</option>
-            <option value="midi">{{localize "BW.ptgs.midi"}}</option>
-            <option value="severe">{{localize "BW.ptgs.severe"}}</option>
-            <option value="traumatic">{{localize "BW.ptgs.traumatic"}}</option>
-            <option value="mortal">{{localize "BW.ptgs.mortal"}}</option>
-            {{/select}}
+            {{selectOptions @root.ptgsOptions selected=wound.threshold localize=true}}
         </select>
     </div>
     <div class="ptgs-mid">

@@ -34,7 +34,7 @@ async function handlePtgsRoll({
     dataPreset,
 }: PtgsRollOptions): Promise<unknown> {
     const actor = sheet.actor as BWActor;
-    const stat = getProperty(actor.system, 'health') as Ability;
+    const stat = foundry.utils.getProperty(actor.system, 'health') as Ability;
     const rollModifiers = sheet.actor.getRollModifiers('health');
     const data: AttributeDialogData = mergeDialogData<AttributeDialogData>(
         {

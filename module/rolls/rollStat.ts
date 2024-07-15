@@ -22,7 +22,10 @@ export async function handleStatRollEvent(
     options: EventHandlerOptions
 ): Promise<unknown> {
     const accessor = options.target.dataset.accessor || '';
-    const stat = getProperty(options.sheet.actor, accessor) as Ability;
+    const stat = foundry.utils.getProperty(
+        options.sheet.actor,
+        accessor
+    ) as Ability;
     const actor = options.sheet.actor;
     let statName = options.target.dataset.rollableName || 'Unknown Stat';
     if (statName.indexOf('BW.') !== -1) {

@@ -75,7 +75,7 @@ export class ModifierDialog extends Application {
                     name = entry.path
                         .substring(entry.path.indexOf('.') + 1)
                         .titleCase();
-                    const ability = getProperty(
+                    const ability = foundry.utils.getProperty(
                         actor.system,
                         entry.path.replace('system.', '')
                     ) as Ability & { name?: string };

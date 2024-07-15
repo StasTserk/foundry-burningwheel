@@ -125,8 +125,13 @@ export async function handleFightRoll({
     // speed, power, or agility roll
     if (actor.type === 'npc') {
         // npc specific code
-        const dice = parseInt(getProperty(actor, `system.${type}.exp`));
-        const shade = getProperty(actor, `system.${type}.shade`) as ShadeString;
+        const dice = parseInt(
+            foundry.utils.getProperty(actor, `system.${type}.exp`)
+        );
+        const shade = foundry.utils.getProperty(
+            actor,
+            `system.${type}.shade`
+        ) as ShadeString;
         return handleNpcStatRoll({
             dice,
             shade,
@@ -137,7 +142,7 @@ export async function handleFightRoll({
             dataPreset,
         });
     }
-    const stat = getProperty(actor, `system.${type}`) as Ability;
+    const stat = foundry.utils.getProperty(actor, `system.${type}`) as Ability;
 
     if (type === 'steel') {
         return handleAttrRoll({

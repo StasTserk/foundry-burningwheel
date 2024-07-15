@@ -53,7 +53,9 @@ export class Armor extends BWItem<ArmorData> {
 
         const locationAccessor = `data.damage${location}`;
         const damage =
-            parseInt(getProperty(this, `system.${locationAccessor}`)) || 0;
+            parseInt(
+                foundry.utils.getProperty(this, `system.${locationAccessor}`)
+            ) || 0;
         const updateData = {};
         let newDamage = 0;
         switch (this.system.quality) {

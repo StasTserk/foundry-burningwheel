@@ -21,7 +21,7 @@ export async function handleAttrRollEvent({
     sheet,
     dataPreset,
 }: EventHandlerOptions): Promise<unknown> {
-    const stat = getProperty(
+    const stat = foundry.utils.getProperty(
         sheet.actor,
         target.dataset.accessor || ''
     ) as Ability;

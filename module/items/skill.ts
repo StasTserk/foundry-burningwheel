@@ -130,7 +130,7 @@ export class Skill extends BWItem<SkillData> {
         if (this.system.learning) {
             const progress = this.system.learningProgress;
             let requiredTests = this.system.aptitude || 10;
-            let shade = getProperty(
+            let shade = foundry.utils.getProperty(
                 this.actor || {},
                 `system.${this.system.root1.toLowerCase()}`
             ).shade;
@@ -138,7 +138,7 @@ export class Skill extends BWItem<SkillData> {
             this.update({ 'data.learningProgress': progress + 1 }, {});
             if (progress + 1 >= requiredTests) {
                 if (this.system.root2 && this.actor) {
-                    const root2Shade = getProperty(
+                    const root2Shade = foundry.utils.getProperty(
                         this.actor,
                         `system.${this.system.root2.toLowerCase()}`
                     ).shade;

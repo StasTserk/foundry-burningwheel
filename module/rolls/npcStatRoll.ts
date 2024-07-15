@@ -26,8 +26,11 @@ export async function handleNpcStatRollEvent({
 }: NpcEventHandlerOptions): Promise<unknown> {
     const actor = sheet.actor;
 
-    const dice = getProperty(actor, target.dataset.stat || '') as number;
-    const shade = getProperty(
+    const dice = foundry.utils.getProperty(
+        actor,
+        target.dataset.stat || ''
+    ) as number;
+    const shade = foundry.utils.getProperty(
         actor,
         target.dataset.shade || ''
     ) as helpers.ShadeString;

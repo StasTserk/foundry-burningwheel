@@ -689,7 +689,7 @@ export class CharacterBurnerDialog extends Application {
         }
     }
     private _addLifepath(lp: Lifepath) {
-        const pathData = duplicate(lp.system) as LifepathData;
+        const pathData = foundry.utils.duplicate(lp.system) as LifepathData;
         const numDuplicates = $(this.element)
             .find('input[name="lifepathName"]')
             .filter((_, e) => $(e).val() === lp.name).length;

@@ -15,7 +15,7 @@ export class SkillSheet extends BWItemSheet {
         const data = super.getData() as SkillSheetData;
 
         data.skillTypes = skillTypeSelect;
-        data.skillRoots = {};
+        data.skillRoots = { '': 'BW.none' };
         Object.assign(data.skillRoots, (this.item as Skill).getRootSelect());
         return data;
     }

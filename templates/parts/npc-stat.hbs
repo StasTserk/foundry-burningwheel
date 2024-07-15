@@ -5,7 +5,7 @@
             {{#if attributeShadePath}}
             {{log this}}
             <select name="system.{{attributeShadePath}}">
-                {{selectOptions @root.shades selected=(concat "system." attributeShadePath)}}
+                {{selectOptions @root.shades selected=attributeShade}}
             </select>
             {{/if}}
         <input type="number" name="system.{{attributePath}}" data-dtype="Number" value="{{attributeValue}}">

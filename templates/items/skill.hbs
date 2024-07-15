@@ -19,8 +19,8 @@
         <label class='item-setting-label'>
             {{localize 'BW.skill.type'}}
         </label>
-        <select name='system.skilltype' value='{{system.skilltype}}'>
-            {{selectOptions skillTypes value=system.skilltype localize=true}}
+        <select name='system.skilltype'>
+            {{selectOptions skillTypes selected=system.skilltype localize=true}}
         </select>
         <label class='item-setting-label'>
             {{localize 'BW.skill.restrictions'}}

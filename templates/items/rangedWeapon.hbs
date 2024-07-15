@@ -135,11 +135,7 @@
                 name='system.quality'
                 value='{{system.quality}}'
             >
-                {{#select system.quality}}
-                    {{#each weaponQualities as |title value|}}
-                        <option value='{{value}}'>{{localize title}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions weaponQualities selected=system.quality localize=true}}
             </select>
             <label for='{{item.id}}-select-quality'>{{localize
                     'BW.weapon.quality'
@@ -151,11 +147,7 @@
                 name='system.shade'
                 value='{{system.shade}}'
             >
-                {{#select system.shade}}
-                    <option value='B'>{{localize 'BW.black'}}</option>
-                    <option value='G'>{{localize 'BW.grey'}}</option>
-                    <option value='W'>{{localize 'BW.white'}}</option>
-                {{/select}}
+                {{selectOptions shades selected=system.shade localize=true}}
             </select>
             <label for='{{item.id}}-select-shade'>{{localize
                     'BW.shade'

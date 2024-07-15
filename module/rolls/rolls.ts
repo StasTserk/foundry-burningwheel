@@ -27,9 +27,15 @@ export async function handleRollable(
     const dataPreset = getKeypressModifierPreset(e);
     dataPreset.deedsPoint = sheet.actor.system.deeds !== 0;
     if (sheet.actor.system.persona) {
-        dataPreset.personaOptions = Array.from(
-            Array(Math.min(sheet.actor.system.persona, 3)).keys()
-        );
+        dataPreset.personaOptions = [
+            ...Array.from(
+                Array(Math.min(sheet.actor.system.persona, 3)).keys()
+            ),
+            Math.min(sheet.actor.system.persona, 3),
+        ].reduce((iv, v) => {
+            iv[v] = v;
+            return iv;
+        }, {});
     }
 
     switch (rollType) {
@@ -712,7 +718,7 @@ export interface RollDialogData {
     addHelp?: boolean;
 
     deedsPoint?: boolean;
-    personaOptions?: number[];
+    personaOptions?: Record<number, number>;
 }
 
 export interface RollChatMessageData {

@@ -20,11 +20,7 @@
             {{localize 'BW.skill.type'}}
         </label>
         <select name='system.skilltype' value='{{system.skilltype}}'>
-            {{#select system.skilltype}}
-                {{#each skillTypes as |type t|}}
-                    <option value='{{t}}'>{{localize type}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions skillTypes value=system.skilltype localize=true}}
         </select>
         <label class='item-setting-label'>
             {{localize 'BW.skill.restrictions'}}
@@ -39,20 +35,11 @@
     <div class='item-form-group'>
         <label class='item-setting-label'>{{localize 'BW.skill.root1'}}</label>
         <select name='system.root1' value='{{system.root1}}'>
-            {{#select system.root1}}
-                {{#each skillRoots as |root r|}}
-                    <option value='{{r}}'>{{localize root}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions skillRoots selected=system.root1 localize=true}}
         </select>
         <label class='item-setting-label'>{{localize 'BW.skill.root2'}}</label>
         <select name='system.root2' value='{{system.root2}}'>
-            {{#select system.root2}}
-                <option value=''>{{localize 'BW.none'}}</option>
-                {{#each skillRoots as |root r|}}
-                    <option value='{{r}}'>{{localize root}}</option>
-                {{/each}}
-            {{/select}}
+            {{selectOptions skillRoots selected=system.root2 localize=true}}
         </select>
     </div>
     <div class='item-form-group'>

@@ -26,12 +26,7 @@
         <div class="weapon-row">{{localize (conc "BW.weapon." a.weaponLength)}}</div>
         <div class="weapon-row">
             <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="system.skillId" value="{{../system.skillId}}">
-                {{#select ../system.skillId}}
-                <option value="">{{localize "BW.none"}}</option>
-                {{#each ../../skills as |s|}}
-                <option value="{{s._id}}">{{s.name}}</option>
-                {{/each}}
-                {{/select}}
+                {{selectOptions ../../skills localize=true selected=../system.skillId valueAttr="id" labelAttr="label"}}
             </select>
         </div>
         <div class="weapon-row">
@@ -73,12 +68,7 @@
     <div class="weapon-row">{{titlecase r.system.maxRange}}</div>
     <div class="weapon-row">
         <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="system.skillId" value="{{r.system.skillId}}">
-            {{#select r.system.skillId}}
-            <option value="">{{localize "BW.none"}}</option>
-            {{#each ../skills as |s|}}
-            <option value="{{s._id}}">{{s.name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions ../skills localize=true selected=r.system.skillId valueAttr="id" labelAttr="label"}}
         </select>
     </div>
     <div class="weapon-row">

@@ -8,7 +8,7 @@
 {{#if system.collapseCombat}}{{else}}
 <div class="combat-section flex-row">
     <div class="weapons">
-        {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=actor.martialSkills}}
+        {{> "systems/burningwheel/templates/parts/weapons.hbs" melee=melee ranged=ranged skills=martialSkillOptions}}
     </div>
     <div class="armor-misc flex-column">
         <div class="training-skills">

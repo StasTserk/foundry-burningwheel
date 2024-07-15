@@ -65,12 +65,12 @@ export class LifepathSheet extends BWItemSheet<BWItemSheetData, Lifepath> {
                     const skillList = `${this.item.system.skillList}${
                         this.item.system.skillList ? ', ' : ''
                     }${item.name}`;
-                    this.item.update({ 'data.skillList': skillList }, {});
+                    this.item.update({ 'system.skillList': skillList }, {});
                 } else if (item.type === 'trait') {
                     const traitList = `${this.item.system.traitList}${
                         this.item.system.traitList ? ', ' : ''
                     }${item.name}`;
-                    this.item.update({ 'data.traitList': traitList }, {});
+                    this.item.update({ 'system.traitList': traitList }, {});
                 }
             }
         }

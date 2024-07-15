@@ -38,7 +38,7 @@ export async function showSpellTaxDialog(
     actor: BWCharacter,
     dataPreset: Partial<RollDialogData>
 ): Promise<unknown> {
-    const stat = getProperty(actor.system, 'forte') as Ability;
+    const stat = foundry.utils.getProperty(actor.system, 'forte') as Ability;
 
     const rollModifiers = actor.getRollModifiers('forte');
     const tax = actor.system.forteTax;

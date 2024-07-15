@@ -289,7 +289,7 @@ export class DifficultyDialog extends Application {
                     skill.addTest(difficulty, true);
                 }
             } else if (path) {
-                const stat = getProperty(
+                const stat = foundry.utils.getProperty(
                     actor.system,
                     path.replace('system.', '')
                 ) as Ability & { name?: string };

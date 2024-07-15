@@ -164,7 +164,10 @@ export async function handleNpcSkillRoll({
         } else {
             dataPreset = { learning: true };
         }
-        const stat = getProperty(actor.system, accessor) as Ability;
+        const stat = foundry.utils.getProperty(
+            actor.system,
+            accessor
+        ) as Ability;
         const rollData: NpcStatRollOptions = {
             dice: stat.exp,
             shade: stat.shade,
@@ -189,7 +192,7 @@ export async function handleNpcSkillRoll({
                     root2: {
                         label: skill.system.root2.titleCase(),
                         callback: () => {
-                            const stat2 = getProperty(
+                            const stat2 = foundry.utils.getProperty(
                                 actor.system,
                                 `${skill.system.root2}`
                             ) as Ability;

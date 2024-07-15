@@ -21,7 +21,10 @@ export async function handleCirclesRollEvent({
     sheet,
     dataPreset,
 }: EventHandlerOptions): Promise<unknown> {
-    const stat = getProperty(sheet.actor.system, 'circles') as Ability;
+    const stat = foundry.utils.getProperty(
+        sheet.actor.system,
+        'circles'
+    ) as Ability;
     let circlesContact: Relationship | undefined;
     if (target.dataset.relationshipId) {
         circlesContact = sheet.actor.items.get<Relationship>(

@@ -35,7 +35,7 @@ export async function handleFateReroll(
 
     let rollStat: { shade: helpers.ShadeString; open: boolean };
     if (['stat', 'learning'].includes(target.dataset.rerollType || '')) {
-        rollStat = getProperty(actor, `system.${accessor}`);
+        rollStat = foundry.utils.getProperty(actor, `system.${accessor}`);
     } else if (target.dataset.rerollType === 'armor') {
         const armorItem = actor.items.get(itemId) as Armor;
         rollStat = { shade: armorItem.system.shade, open: false };
@@ -88,7 +88,10 @@ export async function handleFateReroll(
             const char = actor as BWCharacter;
             if (target.dataset.rerollType === 'stat') {
                 const fateSpent = parseInt(
-                    getProperty(actor, `system.${accessor}.fate`) || '0',
+                    foundry.utils.getProperty(
+                        actor,
+                        `system.${accessor}.fate`
+                    ) || '0',
                     10
                 );
                 const updateData = {};
@@ -106,7 +109,7 @@ export async function handleFateReroll(
                     ) {
                         if (!helpers.isStat(name)) {
                             char.addAttributeTest(
-                                getProperty(
+                                foundry.utils.getProperty(
                                     actor,
                                     `system.${accessor}`
                                 ) as TracksTests,
@@ -117,7 +120,7 @@ export async function handleFateReroll(
                             );
                         } else {
                             char.addStatTest(
-                                getProperty(
+                                foundry.utils.getProperty(
                                     actor,
                                     `system.${accessor}`
                                 ) as TracksTests,
@@ -145,7 +148,7 @@ export async function handleFateReroll(
                     if (successes <= obstacleTotal && success) {
                         if (actor.successOnlyRolls.includes(learningTarget)) {
                             (actor as BWCharacter).addStatTest(
-                                getProperty(
+                                foundry.utils.getProperty(
                                     actor,
                                     `system.${learningTarget}`
                                 ) as TracksTests,
@@ -159,7 +162,10 @@ export async function handleFateReroll(
                     const rootAccessor = `system.${learningTarget}.fate`;
                     const rootStatFate =
                         parseInt(
-                            getProperty(actor, `system.${rootAccessor}`),
+                            foundry.utils.getProperty(
+                                actor,
+                                `system.${rootAccessor}`
+                            ),
                             10
                         ) || 0;
                     const updateData = {};

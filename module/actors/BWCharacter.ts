@@ -304,7 +304,10 @@ export class BWCharacter extends BWActor<BWCharacterData> {
         deeds: number
     ): void {
         accessor = accessor.replace('system.', '');
-        const stat = getProperty(this.system, accessor) as Ability;
+        const stat = foundry.utils.getProperty(
+            this.system,
+            accessor
+        ) as Ability;
         const updateData = {
             'system.deeds': this.system.deeds - (deeds ? 1 : 0),
             'system.persona': this.system.persona - persona,

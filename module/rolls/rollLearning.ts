@@ -94,7 +94,7 @@ async function buildLearningDialog({
     const rollModifiers = actor
         .getRollModifiers(skill.name)
         .concat(actor.getRollModifiers(statName));
-    const stat = getProperty(actor.system, statName);
+    const stat = foundry.utils.getProperty(actor.system, statName);
 
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
@@ -192,7 +192,7 @@ async function learningRollCallback(
     onRollCallback?: () => Promise<unknown>
 ): Promise<unknown> {
     const rollData = extractRollData(dialogHtml);
-    const stat = getProperty(actor.system, statName) as Ability;
+    const stat = foundry.utils.getProperty(actor.system, statName) as Ability;
 
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);
     if (!roll) {
@@ -374,7 +374,7 @@ async function advanceBaseStat(
     cb: (fr?: RerollData) => Promise<ChatMessage | null>
 ) {
     const accessor = statName.toLowerCase();
-    const rootStat = getProperty(owner, `system.${accessor}`);
+    const rootStat = foundry.utils.getProperty(owner, `system.${accessor}`);
     if (statName === 'custom1' || statName === 'custom2') {
         statName = owner.system[statName].name.titleCase();
         await owner.addAttributeTest(

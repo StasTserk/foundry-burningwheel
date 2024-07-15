@@ -40,7 +40,9 @@ export function RollStatMacro(
         return;
     }
 
-    const stat = getProperty(actor.system, statPath) as Ability | undefined;
+    const stat = foundry.utils.getProperty(actor.system, statPath) as
+        | Ability
+        | undefined;
 
     if (!stat) {
         ui.notifications?.notify(

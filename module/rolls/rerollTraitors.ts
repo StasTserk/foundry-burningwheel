@@ -35,7 +35,7 @@ export async function handleTraitorReroll(
 
     let rollStat: Ability | SkillData;
     if (['stat', 'learning'].includes(target.dataset.rerollType || '')) {
-        rollStat = getProperty(actor, `system.${accessor}`);
+        rollStat = foundry.utils.getProperty(actor, `system.${accessor}`);
     } else {
         rollStat = (actor.items.get(itemId) as Skill).system;
     }
@@ -84,7 +84,7 @@ export async function handleTraitorReroll(
                     ) {
                         if (!helpers.isStat(name)) {
                             char.addAttributeTest(
-                                getProperty(
+                                foundry.utils.getProperty(
                                     actor,
                                     `system.${accessor}`
                                 ) as TracksTests,
@@ -95,7 +95,7 @@ export async function handleTraitorReroll(
                             );
                         } else {
                             char.addStatTest(
-                                getProperty(
+                                foundry.utils.getProperty(
                                     actor,
                                     `system.${accessor}`
                                 ) as TracksTests,
@@ -109,7 +109,10 @@ export async function handleTraitorReroll(
                 }
                 updateData[`system.${accessor}.deeds`] = isDeeds
                     ? parseInt(
-                          getProperty(actor, `system.${accessor}.deeds`) || '0'
+                          foundry.utils.getProperty(
+                              actor,
+                              `system.${accessor}.deeds`
+                          ) || '0'
                       ) + 1
                     : undefined;
             } else if (target.dataset.rerollType === 'learning') {
@@ -121,7 +124,7 @@ export async function handleTraitorReroll(
                 ) {
                     // we need to give perception a success that was not counted
                     char.addStatTest(
-                        getProperty(
+                        foundry.utils.getProperty(
                             actor,
                             `system.${learningTarget}`
                         ) as TracksTests,
@@ -133,7 +136,10 @@ export async function handleTraitorReroll(
                 }
                 updateData[`system.${accessor}.deeds`] = isDeeds
                     ? parseInt(
-                          getProperty(actor, `system.${accessor}.deeds`) || '0'
+                          foundry.utils.getProperty(
+                              actor,
+                              `system.${accessor}.deeds`
+                          ) || '0'
                       ) + 1
                     : undefined;
             } else if (target.dataset.rerollType === 'skill' && isDeeds) {

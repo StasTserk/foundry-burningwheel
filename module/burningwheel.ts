@@ -217,7 +217,7 @@ Hooks.on('renderChatMessage', (app, html, data) =>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Hooks.on('createItem', (item: BWItem, _options: any, userId: string) => {
     if (item.parent && (item.parent as TypeMissing).type !== 'setting') {
-        (item.parent as BWActor).processNewItem(item.system, userId);
+        (item.parent as BWActor).processNewItem(item.system, item.type, userId);
     }
 });
 Hooks.on('hotbarDrop', (_bar, data, slot) =>

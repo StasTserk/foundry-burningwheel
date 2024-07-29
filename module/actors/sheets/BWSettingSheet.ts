@@ -139,11 +139,11 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
 
         const sortedItems = (
             Array.from(this.actor.items.values()) as Lifepath[]
-        ).sort((a, b) => a.data.data.order - b.data.data.order);
+        ).sort((a, b) => a.system.order - b.system.order);
         if (dragData.actorId === this.actor.id) {
             // we need to just update the index of the entry
             const item = this.actor.items.get(dragData.id || '') as Lifepath;
-            await item.update({ 'data.order': index }, {});
+            await item.update({ 'system.order': index }, {});
         } else {
             // we need to get the item data and add it to the setting sheet
             let itemData: Lifepath | undefined;
@@ -181,7 +181,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
         for (let i = 0; i < index; i++) {
             const item = sortedItems[i];
             if (item.id !== dragData.id) {
-                updateData.push({ _id: sortedItems[i].id, 'data.order': i });
+                updateData.push({ _id: sortedItems[i].id, 'system.order': i });
             }
         }
         for (let i = index; i < sortedItems.length; i++) {
@@ -189,7 +189,7 @@ export class BWSettingSheet extends ActorSheet<BWSettingSheetData> {
             if (item.id !== dragData.id) {
                 updateData.push({
                     _id: sortedItems[i].id,
-                    'data.order': i + 1,
+                    'system.order': i + 1,
                 });
             }
         }

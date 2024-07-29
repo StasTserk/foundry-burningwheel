@@ -38,12 +38,16 @@ export class BWActor<T extends Common = Common> extends Actor<
         this.batchAdd.items.push(item);
     }
 
-    async processNewItem(item: Item.Data, userId: string): Promise<unknown> {
+    async processNewItem(
+        item: Item.Data,
+        type: ItemType,
+        userId: string
+    ): Promise<unknown> {
         if (game.userId !== userId) {
             // this item has been added by someone else.
             return;
         }
-        if (item.type === 'trait') {
+        if (type === 'trait') {
             const trait = item as unknown as TraitData;
             if (trait.addsReputation) {
                 const repData: NewItemData = {
@@ -51,9 +55,9 @@ export class BWActor<T extends Common = Common> extends Actor<
                     type: 'reputation',
                     img: constants.defaultImages.reputation,
                 };
-                repData['data.dice'] = trait.reputationDice;
-                repData['data.infamous'] = trait.reputationInfamous;
-                repData['data.description'] = trait.text;
+                repData['system.dice'] = trait.reputationDice;
+                repData['system.infamous'] = trait.reputationInfamous;
+                repData['system.description'] = trait.text;
                 this.batchAddItem(repData);
             }
             if (trait.addsAffiliation) {
@@ -62,8 +66,8 @@ export class BWActor<T extends Common = Common> extends Actor<
                     type: 'affiliation',
                     img: constants.defaultImages.affiliation,
                 };
-                repData['data.dice'] = trait.affiliationDice;
-                repData['data.description'] = trait.text;
+                repData['system.dice'] = trait.affiliationDice;
+                repData['system.description'] = trait.text;
                 this.batchAddItem(repData);
             }
         }
@@ -590,8 +594,8 @@ export class BWActor<T extends Common = Common> extends Actor<
         deeds: number
     ): void {
         const updateData = {};
-        updateData['data.deeds'] = this.system.deeds - (deeds ? 1 : 0);
-        updateData['data.persona'] = this.system.persona - persona;
+        updateData['system.deeds'] = this.system.deeds - (deeds ? 1 : 0);
+        updateData['system.persona'] = this.system.persona - persona;
         this.update(updateData);
     }
 
@@ -601,8 +605,8 @@ export class BWActor<T extends Common = Common> extends Actor<
         deeds: number
     ): void {
         const updateData = {};
-        updateData['data.deeds'] = this.system.deeds - (deeds ? 1 : 0);
-        updateData['data.persona'] = this.system.persona - persona;
+        updateData['system.deeds'] = this.system.deeds - (deeds ? 1 : 0);
+        updateData['system.persona'] = this.system.persona - persona;
         this.update(updateData);
     }
 

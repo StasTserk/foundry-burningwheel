@@ -51,7 +51,7 @@ export class Armor extends BWItem<ArmorData> {
             return new Promise((r) => r(0));
         }
 
-        const locationAccessor = `data.damage${location}`;
+        const locationAccessor = `system.damage${location}`;
         const damage =
             parseInt(
                 foundry.utils.getProperty(this, `system.${locationAccessor}`)

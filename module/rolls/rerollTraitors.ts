@@ -61,7 +61,7 @@ export async function handleTraitorReroll(
         return getNoDiceErrorDialog(0);
     }
     const updateData = {};
-    updateData['data.deeds'] = isDeeds ? actor.system.deeds - 1 : undefined;
+    updateData['system.deeds'] = isDeeds ? actor.system.deeds - 1 : undefined;
     if (reroll) {
         newSuccesses = reroll.total || 0;
         success = newSuccesses + successes >= obstacleTotal;
@@ -145,7 +145,7 @@ export async function handleTraitorReroll(
             } else if (target.dataset.rerollType === 'skill' && isDeeds) {
                 const skill = actor.items.get<Skill>(itemId);
                 await skill?.update(
-                    { 'data.deeds': skill.system.deeds + 1 },
+                    { 'system.deeds': skill.system.deeds + 1 },
                     {}
                 );
             }

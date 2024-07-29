@@ -246,7 +246,7 @@ async function learningRollCallback(
             if (expended) {
                 tools.update(
                     {
-                        'data.isExpended': true,
+                        'system.isExpended': true,
                     },
                     {}
                 );

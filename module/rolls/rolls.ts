@@ -53,12 +53,12 @@ export async function handleRollable(
             return handleLearningRollEvent({ target, sheet, dataPreset });
         case 'shrug':
             if ((sheet as BWCharacterSheet).actor.system.ptgs.shrugging) {
-                return sheet.actor.update({ 'data.ptgs.shrugging': false });
+                return sheet.actor.update({ 'system.ptgs.shrugging': false });
             }
             return handleShrugRollEvent({ target, sheet, dataPreset });
         case 'grit':
             if ((sheet as BWCharacterSheet).actor.system.ptgs.gritting) {
-                return sheet.actor.update({ 'data.ptgs.gritting': false });
+                return sheet.actor.update({ 'system.ptgs.gritting': false });
             }
             return handleGritRollEvent({ target, sheet, dataPreset });
         case 'weapon':

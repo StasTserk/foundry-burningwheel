@@ -108,7 +108,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
     }
 
     async updatePtgs(): Promise<this> {
-        const accessorBase = 'data.ptgs.wound';
+        const accessorBase = 'system.ptgs.wound';
         const forte = this.system.forte.exp || 1;
         const mw = this.system.mortalWound || 15;
         const su = Math.floor(forte / 2) + 1;
@@ -398,11 +398,11 @@ export class BWCharacter extends BWActor<BWCharacterData> {
                             callback: () => {
                                 resourcesTax--;
                                 this.update({
-                                    'data.resourcesTax': resourcesTax,
-                                    'data.resources.exp': resourcesTax,
-                                    'data.resources.routine': 0,
-                                    'data.resources.difficult': 0,
-                                    'data.resources.challenging': 0,
+                                    'system.resourcesTax': resourcesTax,
+                                    'system.resources.exp': resourcesTax,
+                                    'system.resources.routine': 0,
+                                    'system.resources.difficult': 0,
+                                    'system.resources.challenging': 0,
                                 });
                             },
                         },
@@ -455,7 +455,7 @@ export class BWCharacter extends BWActor<BWCharacterData> {
                             label: 'No',
                             callback: () => {
                                 this.update({
-                                    'data.settings.showBurner': false,
+                                    'system.settings.showBurner': false,
                                 });
                             },
                         },

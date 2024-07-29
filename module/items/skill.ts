@@ -135,7 +135,7 @@ export class Skill extends BWItem<SkillData> {
                 `system.${this.system.root1.toLowerCase()}`
             ).shade;
 
-            this.update({ 'data.learningProgress': progress + 1 }, {});
+            this.update({ 'system.learningProgress': progress + 1 }, {});
             if (progress + 1 >= requiredTests) {
                 if (this.system.root2 && this.actor) {
                     const root2Shade = foundry.utils.getProperty(
@@ -157,13 +157,13 @@ export class Skill extends BWItem<SkillData> {
                         .replace('{name}', this.name)}</p>`,
                     yes: () => {
                         const updateData = {};
-                        updateData['data.learning'] = false;
-                        updateData['data.learningProgress'] = 0;
-                        updateData['data.routine'] = 0;
-                        updateData['data.difficult'] = 0;
-                        updateData['data.challenging'] = 0;
-                        updateData['data.shade'] = shade;
-                        updateData['data.exp'] = Math.floor(
+                        updateData['system.learning'] = false;
+                        updateData['system.learningProgress'] = 0;
+                        updateData['system.routine'] = 0;
+                        updateData['system.difficult'] = 0;
+                        updateData['system.challenging'] = 0;
+                        updateData['system.shade'] = shade;
+                        updateData['system.exp'] = Math.floor(
                             this.rootStatExp / 2
                         );
                         this.update(updateData, {});
@@ -182,7 +182,7 @@ export class Skill extends BWItem<SkillData> {
                     ) {
                         this.system.routine++;
                         this.update(
-                            { 'data.routine': this.system.routine },
+                            { 'system.routine': this.system.routine },
                             {}
                         );
                     }
@@ -194,7 +194,7 @@ export class Skill extends BWItem<SkillData> {
                     ) {
                         this.system.difficult++;
                         this.update(
-                            { 'data.difficult': this.system.difficult },
+                            { 'system.difficult': this.system.difficult },
                             {}
                         );
                     }
@@ -206,7 +206,7 @@ export class Skill extends BWItem<SkillData> {
                     ) {
                         this.system.challenging++;
                         this.update(
-                            { 'data.challenging': this.system.challenging },
+                            { 'system.challenging': this.system.challenging },
                             {}
                         );
                     }
@@ -217,7 +217,7 @@ export class Skill extends BWItem<SkillData> {
                     ) {
                         this.system.routine++;
                         this.update(
-                            { 'data.routine': this.system.routine },
+                            { 'system.routine': this.system.routine },
                             {}
                         );
                     } else if (
@@ -226,7 +226,7 @@ export class Skill extends BWItem<SkillData> {
                     ) {
                         this.system.difficult++;
                         this.update(
-                            { 'data.difficult': this.system.difficult },
+                            { 'system.difficult': this.system.difficult },
                             {}
                         );
                     }

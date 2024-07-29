@@ -136,14 +136,14 @@ export async function handleFateReroll(
             } else if (target.dataset.rerollType === 'skill') {
                 const skill = actor.items.get<Skill>(itemId);
                 const fateSpent = skill?.system.fate || 0;
-                skill?.update({ 'data.fate': fateSpent + 1 }, {});
+                skill?.update({ 'system.fate': fateSpent + 1 }, {});
             } else if (target.dataset.rerollType === 'learning') {
                 const learningTarget = target.dataset.learningTarget || 'skill';
                 const skill = actor.items.get<Skill>(itemId);
                 if (learningTarget === 'skill') {
                     // learning roll went to the root skill
                     const fateSpent = skill?.system.fate || 0;
-                    skill?.update({ 'data.fate': fateSpent + 1 }, {});
+                    skill?.update({ 'system.fate': fateSpent + 1 }, {});
                 } else {
                     if (successes <= obstacleTotal && success) {
                         if (actor.successOnlyRolls.includes(learningTarget)) {
@@ -182,7 +182,7 @@ export async function handleFateReroll(
     }
 
     const actorFateCount = actor.system.fate;
-    actor.update({ 'data.fate': actorFateCount - 1 });
+    actor.update({ 'system.fate': actorFateCount - 1 });
 
     const data: RerollMessageData = {
         title: game.i18n.localize('BW.roll.fateReroll'),

@@ -46,7 +46,7 @@ export async function handleCirclesRoll({
         // add a test log instead of testing
         return buildHelpDialog({
             exponent: stat.exp,
-            path: 'data.circles',
+            path: 'system.circles',
             actor,
             helpedWith: 'Circles',
         });
@@ -180,7 +180,7 @@ async function circlesRollCallback(
     // increment relationship tracking values...
     if (contact && contact.system.building) {
         const progress = (contact.system.buildingProgress || 0) + 1;
-        contact.update({ 'data.buildingProgress': progress });
+        contact.update({ 'system.buildingProgress': progress });
         if (progress >= 10 - (contact.system.aptitude || 10)) {
             Dialog.confirm({
                 title: 'Relationship Building Complete',

@@ -80,7 +80,7 @@ export async function handleSpellRoll({
             if (spell.system.inPracticals) {
                 const amount = spell.system.learningProgress || 0;
                 const aptitude = spell.system.aptitude || 9;
-                spell.update({ 'data.learningProgress': amount + 1 }, {});
+                spell.update({ 'system.learningProgress': amount + 1 }, {});
                 if (amount + 1 >= aptitude) {
                     return Dialog.confirm({
                         title: game.i18n.localize('BW.dialog.practicalsDone'),
@@ -92,8 +92,8 @@ export async function handleSpellRoll({
                         yes: () => {
                             spell.update(
                                 {
-                                    'data.inPracticals': false,
-                                    'data.learningProgress': 0,
+                                    'system.inPracticals': false,
+                                    'system.learningProgress': 0,
                                 },
                                 {}
                             );

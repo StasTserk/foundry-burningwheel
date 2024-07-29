@@ -168,7 +168,7 @@ async function skillRollCallback(
             if (expended) {
                 tools.update(
                     {
-                        'data.isExpended': true,
+                        'system.isExpended': true,
                     },
                     {}
                 );

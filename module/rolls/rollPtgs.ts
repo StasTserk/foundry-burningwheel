@@ -65,7 +65,9 @@ async function handlePtgsRoll({
             ptgsRollCallback(dialogHtml, stat, sheet, shrugging),
     };
     const updateData = {};
-    const accessor = shrugging ? 'data.ptgs.shrugging' : 'data.ptgs.gritting';
+    const accessor = shrugging
+        ? 'system.ptgs.shrugging'
+        : 'system.ptgs.gritting';
     updateData[accessor] = true;
     buttons.doIt = {
         label: game.i18n.localize('BW.ptgs.justDoIt'),
@@ -78,8 +80,8 @@ async function handlePtgsRoll({
         buttons.withPersona = {
             label: game.i18n.localize('BW.ptgs.spendPersona'),
             callback: async (_: JQuery) => {
-                updateData['data.persona'] = actor.system.persona - 1;
-                updateData['data.health.persona'] =
+                updateData['system.persona'] = actor.system.persona - 1;
+                updateData['system.health.persona'] =
                     (actor.system.health.persona || 0) + 1;
                 return actor.update(updateData);
             },
@@ -91,8 +93,8 @@ async function handlePtgsRoll({
         buttons.withFate = {
             label: game.i18n.localize('BW.ptgs.spendFate'),
             callback: async (_: JQuery) => {
-                updateData['data.fate'] = actor.system.fate - 1;
-                updateData['data.health.fate'] =
+                updateData['system.fate'] = actor.system.fate - 1;
+                updateData['system.health.fate'] =
                     (actor.system.health.fate || 0) + 1;
                 return actor.update(updateData);
             },

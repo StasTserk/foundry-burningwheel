@@ -105,7 +105,7 @@ async function resourcesRollCallback(
 
     if (rollData.cashDice) {
         const currentCash = actor.system.cash || 0;
-        actor.update({ 'data.cash': currentCash - rollData.cashDice });
+        actor.update({ 'system.cash': currentCash - rollData.cashDice });
     }
 
     const roll = await rollDice(rollData.diceTotal, stat.open, stat.shade);

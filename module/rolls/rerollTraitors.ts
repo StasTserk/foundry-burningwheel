@@ -74,7 +74,7 @@ export async function handleTraitorReroll(
                     // we turned a failure into a success. we might need to retroactively award xp.
                     if (target.dataset.ptgsAction) {
                         // shrug/grit flags may need to be set.
-                        updateData[`data.ptgs.${target.dataset.ptgsAction}`] =
+                        updateData[`system.ptgs.${target.dataset.ptgsAction}`] =
                             true;
                         actor.update(updateData);
                     }

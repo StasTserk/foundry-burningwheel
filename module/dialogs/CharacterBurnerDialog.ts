@@ -1453,7 +1453,7 @@ export class CharacterBurnerDialog extends Application {
                 const repData = extractReputationData(html);
                 const relData = extractRelData(html);
                 const gearData = extractGearData(html, this._gear);
-                await this._parent.update({ data: baseCharacterData }, {});
+                await this._parent.update({ system: baseCharacterData }, {});
                 await this._parent.updatePtgs();
 
                 skillData.forEach((s) => {

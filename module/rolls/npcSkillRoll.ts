@@ -15,6 +15,7 @@ import {
     getSplitPoolText,
     getSplitPoolRoll,
     NpcEventHandlerOptions,
+    mergePartials,
 } from './rolls';
 import { byName, notifyError } from '../helpers';
 import { Npc } from '../actors/Npc';
@@ -68,6 +69,34 @@ export async function handleNpcWeaponRoll({
             'The weapon that is being cast appears to be missing from the character sheet.'
         );
     }
+
+    const quality = (weapon as MeleeWeapon | RangedWeapon).system.quality;
+
+    let weaponPreset: Partial<RollDialogData> = {};
+    if (quality === 'superior') {
+        weaponPreset = {
+            diceModifiers: [
+                {
+                    dice: 1,
+                    label: game.i18n.localize('BW.weapon.superiorQuality'),
+                    optional: false,
+                },
+            ],
+        };
+    } else if (quality === 'poor') {
+        weaponPreset = {
+            obModifiers: [
+                {
+                    obstacle: 1,
+                    label: game.i18n.localize('BW.weapon.poorQuality'),
+                    optional: false,
+                },
+            ],
+        };
+    }
+
+    dataPreset = mergePartials(weaponPreset, dataPreset);
+
     const extraInfo =
         weapon.type === 'melee weapon'
             ? await (weapon as MeleeWeapon).getWeaponMessageData(

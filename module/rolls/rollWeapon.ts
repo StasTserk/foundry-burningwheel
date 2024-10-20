@@ -77,7 +77,7 @@ export async function handleWeaponRoll({
             obModifiers: [
                 {
                     obstacle: 1,
-                    label: game.i18n.localize('BW.weapon.superiorQuality'),
+                    label: game.i18n.localize('BW.weapon.poorQuality'),
                     optional: false,
                 },
             ],

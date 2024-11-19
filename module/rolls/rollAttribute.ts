@@ -48,11 +48,11 @@ export async function handleAttrRoll({
 }: AttributeRollOptions): Promise<unknown> {
     const rollModifiers = actor.getRollModifiers(attrName);
     dataPreset = dataPreset || {};
-    const woundDice =
-        attrName === 'Steel' ? actor.system.ptgs.woundDice : undefined;
-    const obPenalty =
-        attrName === 'Steel' ? actor.system.ptgs.obPenalty : undefined;
-    if (attrName.toLowerCase() === 'steel') {
+
+    const isSteel = attrName.toLowerCase() === 'steel';
+    const woundDice = isSteel ? actor.system.ptgs.woundDice : undefined;
+    const obPenalty = isSteel ? actor.system.ptgs.obPenalty : undefined;
+    if (isSteel) {
         dataPreset.useCustomDifficulty = true;
         dataPreset.showDifficulty = true;
         dataPreset.showObstacles = true;

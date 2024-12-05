@@ -62,9 +62,13 @@ export class Skill extends BWItem<SkillData> {
             +actor.getAptitudeModifiers(this.system.root2);
         }
 
-        const root1exp = (actor.system[this.system.root1] as Ability).exp;
+        const root1 = actor.system[this.system.root1] as Ability;
+        const root1exp =
+            root1.exp + (root1.shade === 'W' ? 2 : root1.shade === 'G' ? 1 : 0);
+        const root2 = actor.system[this.system.root2] as Ability;
         const root2exp = this.system.root2
-            ? (actor.system[this.system.root2] as Ability).exp
+            ? root2.exp +
+              (root2.shade === 'W' ? 2 : root2.shade === 'G' ? 1 : 0)
             : root1exp;
         const rootAvg = Math.floor((root1exp + root2exp) / 2);
         this.system.aptitude = 10 - rootAvg + aptitudeMod;

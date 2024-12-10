@@ -12,7 +12,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@league-of-foundry-developers/foundry-vtt-types": "^0.7.9-6",
+        "@league-of-foundry-developers/foundry-vtt-types": "^12.331.2-beta",
         "@types/select2": "^4.0.57",
         "@typescript-eslint/eslint-plugin": "^5.60.0",
         "@typescript-eslint/parser": "^5.60.0",

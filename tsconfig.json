@@ -1,12 +1,19 @@
 {
-    "include": ["scripts/**/*.ts", "module/**/*.ts", "types/**/*.d.ts"],
+    "include": [
+        "scripts/**/*.ts",
+        "module/**/*.ts",
+        "types/**/*.d.ts",
+        "tests",
+        "playwright.config.ts"
+    ],
     "exclude": ["node_modules"],
     "compilerOptions": {
         "sourceMap": true,
         "types": [
             "@league-of-foundry-developers/foundry-vtt-types",
             "select2",
-            "handlebars"
+            "handlebars",
+            "node"
         ],
         "typeRoots": [
             "./types",

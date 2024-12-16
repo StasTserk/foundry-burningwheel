@@ -14,3 +14,7 @@ foundryconfig.json
 
 # default deploy destination
 release/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

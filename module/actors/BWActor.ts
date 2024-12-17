@@ -33,7 +33,10 @@ export class BWActor<T extends Common = Common> extends Actor<
 
     batchAddItem(item: NewItemData): void {
         if (this.batchAdd.task === -1) {
-            this.batchAdd.task = setTimeout(() => this._handleBatchAdd(), 500);
+            this.batchAdd.task = window.setTimeout(
+                () => this._handleBatchAdd(),
+                500
+            );
         }
         this.batchAdd.items.push(item);
     }

@@ -1,0 +1,5 @@
+2024/12/17-02:31:19.181005 7f78d5c36b38 Delete type=3 #1
+2024/12/17-02:33:06.082798 7f7653794b38 Level-0 table #5: started
+2024/12/17-02:33:06.084106 7f7653794b38 Level-0 table #5: 792 bytes OK
+2024/12/17-02:33:06.085440 7f7653794b38 Delete type=0 #3
+2024/12/17-02:33:06.088476 7f7653794b38 Manual compaction at level-0 from '!users!Ll8NX1LAPdNPODGX' @ 72057594037927935 : 1 .. '!users!Ll8NX1LAPdNPODGX' @ 0 : 0; will stop at (end)

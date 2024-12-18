@@ -20,6 +20,7 @@ class GameFixture {
         await test.step('wait for game load to finish', async () => {
             expect(this.page.url()).toEqual(`${this.host}/game`);
             await expect(this.page.locator('#sidebar')).not.toBeEmpty();
+            await this.page.locator('#notifications i').click();
         });
     }
 
@@ -33,12 +34,13 @@ class GameFixture {
             await expect(
                 await this.page.getByRole('heading', { name: 'Flush Chat Log' })
             ).not.toBeVisible();
-            await this.page.locator('#notifications i').click();
         });
     }
 
     async openTab(tab: TabName) {
-        await this.page.getByLabel(tab, { exact: true }).click();
+        await test.step(`navigate to the ${tab} tab`, async () => {
+            await this.page.getByLabel(tab, { exact: true }).click();
+        });
     }
 }
 

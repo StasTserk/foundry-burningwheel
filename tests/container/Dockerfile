@@ -21,8 +21,8 @@ COPY ./options.json ./Config/
 WORKDIR "${FOUNDRY_HOME}"
 
 # copy and extract foundry zipfile
-COPY ./FoundryVTT-12.331.zip .
-RUN unzip FoundryVTT*.zip
+COPY ./foundry*.zip .
+RUN unzip foundry*.zip
 
 EXPOSE 30000
 CMD node ${FOUNDRY_HOME}/resources/app/main.js --dataPath=${FOUNDRY_DATA}

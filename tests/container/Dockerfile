@@ -14,7 +14,7 @@ COPY ./dist ./Data/systems/burningwheel
 # seeded data
 COPY ./test-world ./Data/worlds/test-world
 # secrets needed to avoid asking for license
-COPY ./license.json ./Config/
+COPY ./license.jso[n] ./Config/
 COPY ./options.json ./Config/
 
 # Set the current working directory

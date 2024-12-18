@@ -14,3 +14,12 @@ foundryconfig.json
 
 # default deploy destination
 release/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# local foundry download
+*.zip
+# generated file for foundry init
+/tests/license.json

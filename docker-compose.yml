@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  fvtt:
+    container_name: Fvtt
+    build:
+      context: ./tests
+      dockerfile: ./container/Dockerfile
+    image: fvtt:3.0
+    ports:
+      - '30000:30000'

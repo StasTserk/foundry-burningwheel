@@ -17,7 +17,7 @@ if (!fs.existsSync('./foundryConfig.json')) {
 }
 const config = require('./foundryConfig.json');
 
-const getBuild = (isDev) => ({
+const getBuild = (isDev, isE2e) => ({
   entry: {
     module: './module/burningwheel.ts',
   },
@@ -26,7 +26,7 @@ const getBuild = (isDev) => ({
       {
         test: /\.ts?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /(node_modules|tests)/,
       },
       {
         test: /\.s[ac]ss$/i,
@@ -46,7 +46,7 @@ const getBuild = (isDev) => ({
   },
   output: {
     filename: 'burningwheel.js',
-    path: path.resolve(__dirname, config.deployDest),
+    path: path.resolve(__dirname, isE2e ? './tests/dist' : config.deployDest),
   },
   devtool: isDev ? 'source-map' : undefined,
   plugins: [
@@ -86,6 +86,11 @@ const getBuild = (isDev) => ({
 });
 
 module.exports = (env, argv) => {
-  console.log(`building in ${argv.mode}`);
-  return getBuild(argv.mode === 'production');
+  console.log(
+    `building in ${argv.mode} - output to: ${path.resolve(
+      __dirname,
+      env.e2e ? './tests/dist' : config.deployDest
+    )}`
+  );
+  return getBuild(argv.mode === 'production', env.e2e);
 };

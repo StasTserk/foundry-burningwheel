@@ -9,7 +9,7 @@
         "watch": "webpack --config webpack.config.js --mode=development --watch",
         "prettier": "npx prettier --write .",
         "playwright": "webpack --config webpack.config.js --mode=production --env e2e && npx playwright test",
-        "playwright-ui": "webpack --config webpack.config.js --mode=production --env e2e && npx playwright test"
+        "playwright-ui": "webpack --config webpack.config.js --mode=production --env e2e && npx playwright test --ui"
     },
     "author": "",
     "license": "ISC",

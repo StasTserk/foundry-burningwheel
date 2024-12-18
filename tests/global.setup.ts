@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
 import { FullConfig } from '../node_modules/playwright/test';
-import { Network } from 'testcontainers';
 
 import * as fs from 'fs';
 
-if (!fs.existsSync('/foundryConfig.json')) {
+if (!fs.existsSync('./foundryConfig.json')) {
     console.log('*** No config file found, creating new copy. ***');
     fs.writeFileSync(
-        '/foundryConfig.json',
+        './foundryConfig.json',
         JSON.stringify({ deployDest: './release' })
     );
 } else {
@@ -19,7 +18,7 @@ const config: { foundryUsername: string; foundryPassword: string } = JSON.parse(
 );
 
 async function authenticate() {
-    console.log(config.foundryUsername, config.foundryPassword);
+    return config;
 }
 
 async function maybeDownloadFoundry() {
@@ -29,9 +28,6 @@ async function maybeDownloadFoundry() {
 
 export async function globalSetup(_config: FullConfig) {
     await maybeDownloadFoundry();
-    console.log('Starting up Playwright');
-    const network = await new Network().start();
-    console.log(`Started network: ${network.getName()}`);
 }
 
 export default globalSetup;

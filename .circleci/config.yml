@@ -50,9 +50,14 @@ jobs:
             VERSION=${CIRCLE_TAG}
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
   run-playwright-tests:
-    executor: playwright
+    docker:
+      - image: stastserk/foundry-test-runner:1.49.1
+        auth:
+          username: stastserk
+          password: $dockerhub_token
     steps:
       - checkout
+      - setup_remote_docker
       - node/install-packages:
           cache-version: v3
       - get-foundry-install:
@@ -60,7 +65,13 @@ jobs:
       - run:
           name: 'Run Playwright tests! 🧑‍🔬'
           command: |
-            npm run playwright
+            pwd
+            # Since docker doesn't "actually" run in docker, it spawns a "sibling" container, localhost doesn't work.
+            # This is the docker gateway IP address that allows us to connect to sibling docker containers.
+            # This host entry allows us to continue using localhost which is critical for running the site with "low security mode" (http).
+            tee -a /etc/hosts \<<<'172.17.0.1 localhost'
+            TESTFILES=$(circleci tests glob "tests/**/*.spec.ts")
+            echo "$TESTFILES" | circleci tests run --command="xargs npm run playwright" --verbose --split-by=timings
       - store_artifacts:
           path: test-results
 

@@ -1,6 +1,20 @@
 version: 2.1
 orbs:
   node: circleci/node@4.1.0
+commands:
+  get-foundry-install:
+    parameters:
+      version:
+        type: string
+        default: '331'
+    steps:
+      - restore_cache:
+          key: foundry-install-{{ <<parameters.version>> }}-cache
+      - run: npm run docker-init {{ <<parameters.version>> }}
+      - save_cache:
+          key: foundry-install-{{ <<parameters.version>> }}-cache
+          paths:
+            - tests/foundry
 jobs:
   build:
     executor:
@@ -31,10 +45,21 @@ jobs:
           command: |
             VERSION=${CIRCLE_TAG}
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
+  run-playwright-tests:
+    docker:
+      - image: node:20-alpine
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-version: v3
+      - get-foundry-install:
+          version: '331'
+
 workflows:
-  build:
+  build-and-test:
     jobs:
       - build
+      - run-playwright-tests
   publish-github-release:
     jobs:
       - build:

@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
 import * as fs from 'fs';
 
-const config = JSON.parse(fs.readFileSync('foundryConfig.json').toString());
-
-export async function maybeInitLicense() {
+export async function maybeInitLicense(config) {
     if (!fs.existsSync('./tests/license.json')) {
         console.log('Generating license file');
 

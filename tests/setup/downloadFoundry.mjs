@@ -116,14 +116,14 @@ function installZipExists() {
     );
 }
 
-export async function maybeDownloadFoundry(config) {
+export async function maybeDownloadFoundry(config, version) {
     if (installZipExists()) {
         console.log('Found foundry install zip, nothing to do!');
         return;
     }
-    console.log('Downloading foundry install...');
+    console.log(`Downloading foundry v.${version} install...`);
     const auth = await authenticate(config);
-    await getRelease('331');
+    await getRelease(version);
     console.log('Download finished!');
 
     return auth;

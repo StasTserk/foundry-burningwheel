@@ -9,12 +9,12 @@ commands:
         default: '331'
     steps:
       - restore_cache:
-          key: foundry-install-{{ <<parameters.version>> }}-cache
+          key: foundry-{{ <<parameters.version>> }}-cache
       - run: npm run docker-init <<parameters.version>>
       - save_cache:
-          key: foundry-install-{{ <<parameters.version>> }}-cache
+          key: foundry-{{ <<parameters.version>> }}-cache
           paths:
-            - tests/foundry
+            - tests/foundry<<parameters.version>>.zip
 jobs:
   build:
     executor:

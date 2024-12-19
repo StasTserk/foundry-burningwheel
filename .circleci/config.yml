@@ -10,7 +10,7 @@ commands:
     steps:
       - restore_cache:
           key: foundry-install-{{ <<parameters.version>> }}-cache
-      - run: npm run docker-init {{ <<parameters.version>> }}
+      - run: npm run docker-init <<parameters.version>>
       - save_cache:
           key: foundry-install-{{ <<parameters.version>> }}-cache
           paths:

@@ -18,12 +18,14 @@ if (!fs.existsSync('./foundryConfig.json')) {
     console.log('*** Found foundryConfig.json ***');
 }
 
+const version = process.argv.length === 3 ? process.argv[2] : '331';
+
 const config = JSON.parse(fs.readFileSync('foundryConfig.json').toString());
 
 import { maybeInitLicense } from './initializeLicense.mjs';
 import { maybeDownloadFoundry } from './downloadFoundry.mjs';
 
 (async () => {
-    await maybeDownloadFoundry(config);
+    await maybeDownloadFoundry(config, version);
     await maybeInitLicense(config);
 })();

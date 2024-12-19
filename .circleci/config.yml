@@ -1,6 +1,10 @@
 version: 2.1
 orbs:
   node: circleci/node@4.1.0
+executors:
+  playwright:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.49.1-noble
 commands:
   get-foundry-install:
     parameters:
@@ -46,14 +50,19 @@ jobs:
             VERSION=${CIRCLE_TAG}
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
   run-playwright-tests:
-    docker:
-      - image: node:20-alpine
+    executor: playwright
     steps:
       - checkout
       - node/install-packages:
           cache-version: v3
       - get-foundry-install:
           version: '331'
+      - run:
+          name: 'Run Playwright tests! 🧑‍🔬'
+          command: |
+            npm run playwright
+      - store_artifacts:
+          path: test-results
 
 workflows:
   build-and-test:

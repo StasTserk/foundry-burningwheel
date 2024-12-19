@@ -2,9 +2,6 @@
 /* eslint-disable no-console */
 import * as fs from 'fs';
 
-import { maybeInitLicense } from './initializeLicense.mjs';
-import { maybeDownloadFoundry } from './downloadFoundry.mjs';
-
 if (!fs.existsSync('./foundryConfig.json')) {
     console.log('*** No config file found, creating new copy. ***');
     fs.writeFileSync(
@@ -21,7 +18,12 @@ if (!fs.existsSync('./foundryConfig.json')) {
     console.log('*** Found foundryConfig.json ***');
 }
 
+const config = JSON.parse(fs.readFileSync('foundryConfig.json').toString());
+
+import { maybeInitLicense } from './initializeLicense.mjs';
+import { maybeDownloadFoundry } from './downloadFoundry.mjs';
+
 (async () => {
-    await maybeDownloadFoundry();
-    await maybeInitLicense();
+    await maybeDownloadFoundry(config);
+    await maybeInitLicense(config);
 })();

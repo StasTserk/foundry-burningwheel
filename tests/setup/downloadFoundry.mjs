@@ -4,7 +4,6 @@ import nodeFetch from 'node-fetch';
 import { Headers } from 'node-fetch';
 import fetchCookie from 'fetch-cookie';
 import * as cheerio from 'cheerio';
-const config = JSON.parse(fs.readFileSync('foundryConfig.json').toString());
 
 const BASE_URL = 'https://foundryvtt.com';
 const LOGIN_URL = BASE_URL + '/auth/login/';
@@ -19,7 +18,7 @@ const headers = new Headers({
     'User-Agent': 'node-fetch',
 });
 
-async function authenticate() {
+async function authenticate(config) {
     console.log(' > Authenticating ...');
     const username = process.env.foundry_username ?? config.foundryUsername;
     const password = process.env.foundry_password ?? config.foundryPassword;
@@ -117,13 +116,13 @@ function installZipExists() {
     );
 }
 
-export async function maybeDownloadFoundry() {
+export async function maybeDownloadFoundry(config) {
     if (installZipExists()) {
         console.log('Found foundry install zip, nothing to do!');
         return;
     }
     console.log('Downloading foundry install...');
-    const auth = await authenticate();
+    const auth = await authenticate(config);
     await getRelease('331');
     console.log('Download finished!');
 

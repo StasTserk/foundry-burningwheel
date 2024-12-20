@@ -10,8 +10,9 @@ export const baseFixture = baseTest.extend<TestFixtureBase>({
         async ({ page }, use) => {
             let foundryHost: StartedTestContainer | undefined;
             try {
-                console.log('Starting foundry host for tests');
-                foundryHost = await foundryInstance();
+                const version = process.env.FOUNDRY_VERSION;
+                console.log(`Starting foundry v.${version} host for tests'`);
+                foundryHost = await foundryInstance(version);
                 const hostUrl = `http://${foundryHost.getHost()}:${foundryHost.getMappedPort(
                     30000
                 )}`;

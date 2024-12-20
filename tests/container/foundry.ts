@@ -1,15 +1,7 @@
 /* eslint-disable no-console */
 import { GenericContainer } from 'testcontainers';
-export async function foundryInstance() {
-    console.log(
-        `Grabbing image from ${process.cwd()}/tests/container/Dockerfile`
-    );
-    return (
-        await GenericContainer.fromDockerfile(
-            process.cwd() + '/tests',
-            'container/Dockerfile'
-        ).build('foundry-host', { deleteOnExit: true })
-    )
+export async function foundryInstance(version) {
+    return (await new GenericContainer(`stastserk/foundry-instance:${version}`))
         .withExposedPorts({
             container: 30000,
             host: 30000,

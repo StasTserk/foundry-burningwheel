@@ -52,3 +52,15 @@ export const test = setupFixture.extend<GameTestFixture>({
     gamePage: ({ page, foundryHost }, use) =>
         use(new GameFixture(page, foundryHost)),
 });
+
+export const testAsGm = setupFixture.extend<GameTestFixture>({
+    gamePage: [
+        async ({ page, foundryHost, setupPage }, use) => {
+            const game = new GameFixture(page, foundryHost);
+            await setupPage.enterWorldAsUser('Gamemaster');
+            await game.waitForLoad();
+            return use(game);
+        },
+        { timeout: 30_000 },
+    ],
+});

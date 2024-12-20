@@ -4,7 +4,7 @@ import { baseFixture } from './baseFixture';
 class SetupPage {
     constructor(private readonly page: Page, private readonly host: string) {}
 
-    async dismissTour() {
+    async navigateToLoginPage() {
         await setupFixture.step('dismiss tour notifications', async () => {
             await expect(
                 await this.page.getByText(/backups overview/i)
@@ -19,16 +19,18 @@ class SetupPage {
                 await this.page.getByText(/backups overview/i)
             ).not.toBeVisible();
         });
-    }
-
-    async enterWorldAsUser(name: string) {
-        await setupFixture.step(`log into game as ${name}`, async () => {
+        await setupFixture.step('navigate to login page', async () => {
             await this.page.locator('li[data-package-id="test-world"]').hover();
             await this.page
                 .locator('li[data-package-id="test-world"]')
                 .locator('a')
                 .click();
             await this.page.waitForURL(`${this.host}/join`);
+        });
+    }
+
+    async enterWorldAsUser(name: string) {
+        await setupFixture.step(`log into game as ${name}`, async () => {
             await this.page.getByRole('combobox').selectOption(name);
             await this.page.getByRole('button', { name: /join/i }).click();
             await this.page.waitForURL(`${this.host}/game`);
@@ -41,6 +43,13 @@ type SetupFixture = {
 };
 
 export const setupFixture = baseFixture.extend<SetupFixture>({
-    setupPage: async ({ page, foundryHost }, use) =>
-        await use(new SetupPage(page, foundryHost)),
+    setupPage: [
+        async ({ page, foundryHost }, use) => {
+            const settingsPage = new SetupPage(page, foundryHost);
+            await settingsPage.navigateToLoginPage();
+
+            return use(settingsPage);
+        },
+        { timeout: 30_000 },
+    ],
 });

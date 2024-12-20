@@ -14,6 +14,7 @@ type TabName =
     | 'Compendium Packs';
 
 class GameFixture {
+    private activeTab: TabName = 'Chat Messages';
     constructor(private readonly page: Page, private readonly host: string) {}
 
     async waitForLoad() {
@@ -38,8 +39,21 @@ class GameFixture {
     }
 
     async openTab(tab: TabName) {
-        await test.step(`navigate to the ${tab} tab`, async () => {
-            await this.page.getByLabel(tab, { exact: true }).click();
+        if (tab !== this.activeTab) {
+            await test.step(`navigate to the ${tab} tab`, async () => {
+                await this.page.getByLabel(tab, { exact: true }).click();
+                this.activeTab = tab;
+            });
+        }
+    }
+
+    async openCharacter(name: string) {
+        await this.openTab('Actors');
+        test.step(`Open actor named '${name}'`, async () => {
+            await this.page.getByText(name).click();
+            await expect(
+                await this.page.locator('div.app.bw-app')
+            ).toBeVisible();
         });
     }
 }

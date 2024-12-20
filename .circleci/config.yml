@@ -1,10 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@4.1.0
-executors:
-  playwright:
-    docker:
-      - image: mcr.microsoft.com/playwright:v1.49.1-noble
+
 commands:
   get-foundry-install:
     parameters:
@@ -55,6 +52,8 @@ jobs:
         auth:
           username: stastserk
           password: $dockerhub_token
+    environment:
+      FOUNDRY_VERSION: '331'
     steps:
       - checkout
       - setup_remote_docker

@@ -49,7 +49,7 @@ class GameFixture {
 
     async openCharacter(name: string) {
         await this.openTab('Actors');
-        test.step(`Open actor named '${name}'`, async () => {
+        await test.step(`Open actor named '${name}'`, async () => {
             await this.page.getByText(name).click();
             await expect(
                 await this.page.locator('div.app.bw-app')

@@ -1,6 +1,7 @@
 import { expect, Page } from 'playwright/test';
 import { baseFixture } from './baseFixture';
 
+type SeededUsers = 'Gamemaster';
 class SetupPage {
     constructor(private readonly page: Page, private readonly host: string) {}
 
@@ -29,7 +30,7 @@ class SetupPage {
         });
     }
 
-    async enterWorldAsUser(name: string) {
+    async enterWorldAsUser(name: SeededUsers) {
         await setupFixture.step(`log into game as ${name}`, async () => {
             await this.page.getByRole('combobox').selectOption(name);
             await this.page.getByRole('button', { name: /join/i }).click();

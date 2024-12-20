@@ -11,8 +11,7 @@ testAsGm(
 );
 
 testAsGm('can open the character sheet', async ({ page, gamePage }) => {
-    await gamePage.openTab('Actors');
-    await page.getByText('test-actor').click();
+    await gamePage.openCharacter('test-actor');
     // character sheet container.
     await expect(await page.locator('div.app.bw-app')).toBeVisible();
 });

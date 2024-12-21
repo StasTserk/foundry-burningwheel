@@ -8,7 +8,7 @@ class SetupPage {
     async navigateToLoginPage() {
         await setupFixture.step('dismiss tour notifications', async () => {
             await expect(
-                await this.page.getByText(/backups overview/i)
+                this.page.getByText(/backups overview/i)
             ).toBeVisible();
             await this.page.waitForTimeout(250); // let animations settle
             await this.page.locator('i.close.fas.fa-times-circle').click();
@@ -17,7 +17,7 @@ class SetupPage {
                 .getByRole('button')
                 .dispatchEvent('click');
             await expect(
-                await this.page.getByText(/backups overview/i)
+                this.page.getByText(/backups overview/i)
             ).not.toBeVisible();
         });
         await setupFixture.step('navigate to login page', async () => {

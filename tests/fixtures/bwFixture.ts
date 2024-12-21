@@ -74,8 +74,8 @@ class RollDialog {
     constructor(private readonly page: Page) {}
 
     async expectOpened(skill: string) {
-        expect(
-            await this.page.locator('h4').filter({ hasText: `${skill} Test` })
+        await expect(
+            this.page.locator('h4').filter({ hasText: `${skill} Test` })
         ).toBeVisible();
     }
 
@@ -83,8 +83,8 @@ class RollDialog {
         await this.page
             .locator(`a:text("Close"):near(h4:text("${skill} Test"))`)
             .click();
-        expect(
-            await this.page.locator('h4').filter({ hasText: `${skill} Test` })
+        await expect(
+            this.page.locator('h4').filter({ hasText: `${skill} Test` })
         ).not.toBeVisible();
     }
 }

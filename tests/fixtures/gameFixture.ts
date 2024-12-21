@@ -1,4 +1,4 @@
-import { expect, Page } from 'playwright/test';
+import { expect, Locator, Page } from 'playwright/test';
 import { setupFixture } from './setupFixture';
 
 type TabName =
@@ -13,7 +13,9 @@ type TabName =
     | 'Playlists'
     | 'Compendium Packs';
 
-class GameFixture {
+type SeededActors = 'Romeo' | 'Tybalt' | 'Hamlet';
+
+export class GameFixture {
     private activeTab: TabName = 'Chat Messages';
     constructor(private readonly page: Page, private readonly host: string) {}
 
@@ -22,6 +24,10 @@ class GameFixture {
             expect(this.page.url()).toEqual(`${this.host}/game`);
             await expect(this.page.locator('#sidebar')).not.toBeEmpty();
             await this.page.locator('#notifications i').click();
+            await this.page.keyboard.press('Space');
+            await expect(
+                this.page.locator('div.difficulty-dialog')
+            ).toBeVisible();
         });
     }
 
@@ -47,7 +53,7 @@ class GameFixture {
         }
     }
 
-    async openCharacter(name: string) {
+    async openCharacter(name: SeededActors) {
         await this.openTab('Actors');
         await test.step(`Open actor named '${name}'`, async () => {
             await this.page.getByText(name).click();
@@ -55,6 +61,10 @@ class GameFixture {
                 await this.page.locator('div.app.bw-app')
             ).toBeVisible();
         });
+    }
+
+    async getSelectedValue(select: Locator) {
+        return await select.locator('option[selected]').innerText();
     }
 }
 

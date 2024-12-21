@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   fvtt:
-    container_name: Fvtt
+    container_name: foundry-instance
     build:
       context: ./tests
       dockerfile: ./container/Dockerfile

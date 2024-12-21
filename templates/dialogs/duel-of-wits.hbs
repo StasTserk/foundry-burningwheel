@@ -1,7 +1,7 @@
-<form class='dow flex-row' autocomplete='off'>
+<form class='dow flex-row' autocomplete='off' aria-label='duel of wits'>
     <div class='dow-side'>
         {{#if gmView}}
-            <select name='side1ActorId'>
+            <select name='side1ActorId' aria-label='side 1 actor select'>
                 {{selectOptions side1Options selected=side1ActorId}}
             </select>
         {{else}}
@@ -9,13 +9,14 @@
         {{/if}}
         <textarea
             name='statement1'
+            aria-label='side 1 statement of purpose'
             {{disabled side1ReadOnly}}
             placeholder='Statement of Purpose'
         >{{statement1}}</textarea>
     </div>
     <div class='dow-side'>
         {{#if gmView}}
-            <select name='side2ActorId'>
+            <select name='side2ActorId' aria-label='side 2 actor select'>
                 {{selectOptions side2Options selected=side2ActorId}}
             </select>
         {{else}}
@@ -23,6 +24,7 @@
         {{/if}}
         <textarea
             name='statement2'
+            aria-label='side 2 statement of purpose'
             {{disabled side2ReadOnly}}
             placeholder='Statement of Purpose'
         >{{statement2}}</textarea>
@@ -61,22 +63,25 @@
             {{/if}}
             <div>Body of Argument:</div>
             <input
+                aria-label='side 1 body points'
                 type='number'
                 {{disabled side1ReadOnly}}
                 name='boa1'
                 value='{{boa1}}'
             />/
             <input
+                aria-label='side 1 body max'
                 type='number'
                 {{disabled side1ReadOnly}}
                 name='boa1Max'
                 value='{{boa1Max}}'
             />
             {{#if (eq side1ReadOnly false)}}
-                <select name='actor1Skill'>
+                <select name='actor1Skill' aria-label='side 1 skill selection'>
                     {{selectOptions actor1Skills selected=actor1Skill valueAttr="id" labelAttr="label"}}
                 </select>
                 <button
+                    aria-label='side 1 roll skill'
                     type='button'
                     class='dow-roll'
                     data-action='roll-dow'
@@ -96,7 +101,7 @@
                 </div>
             {{/if}}
         </div>
-        <div class='dow-volley'>
+        <div class='dow-volley' aria-label="side 1 volley 1">
             {{#if gmView}}
                 <div class='pill-toggle'>
                     <input
@@ -105,11 +110,11 @@
                         id='showV1'
                         {{checked showV1}}
                     />
-                    <label for='showV1'>Show Volley</label>
+                    <label for='showV1'>Show Volley 1</label>
                 </div>
             {{/if}}
             {{#if showS1Select}}
-                <select class='action-select' name='v1s1'>
+                <select class='action-select' name='v1s1' aria-label='side 1 volley 1 select'>
                     <option value='?'>Pick an Option</option>
                     {{#selectGroups v1s1}}
                         {{#each ../actionOptions as |ao|}}
@@ -128,7 +133,7 @@
                 <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class='dow-volley'>
+        <div class='dow-volley' aria-label="side 1 volley 2">
             {{#if gmView}}
                 <div class='pill-toggle'>
                     <input
@@ -137,11 +142,11 @@
                         id='showV2'
                         {{checked showV2}}
                     />
-                    <label for='showV2'>Show Volley</label>
+                    <label for='showV2'>Show Volley 2</label>
                 </div>
             {{/if}}
             {{#if showS1Select}}
-                <select class='action-select' name='v2s1'>
+                <select class='action-select' name='v2s1' aria-label='side 1 volley 2 select'>
                     <option value='?'>Pick an Option</option>
                     {{#selectGroups v2s1}}
                         {{#each ../actionOptions as |ao|}}
@@ -160,7 +165,7 @@
                 <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class='dow-volley'>
+        <div class='dow-volley' aria-label="side 1 volley 3">
             {{#if gmView}}
                 <div class='pill-toggle'>
                     <input
@@ -169,11 +174,11 @@
                         id='showV3'
                         {{checked showV3}}
                     />
-                    <label for='showV3'>Show Volley</label>
+                    <label for='showV3'>Show Volley 3</label>
                 </div>
             {{/if}}
             {{#if showS1Select}}
-                <select class='action-select' name='v3s1'>
+                <select class='action-select' name='v3s1' aria-label='side 1 volley 3 select'>
                     <option value='?'>Pick an Option</option>
                     {{#selectGroups v3s1}}
                         {{#each ../actionOptions as |ao|}}
@@ -210,23 +215,26 @@
                 />
             {{/if}}
             <div>Body of Argument:</div>
-            <input
+            <input 
+                aria-label='side 2 body points'
                 type='number'
                 {{disabled side2ReadOnly}}
                 name='boa2'
                 value='{{boa2}}'
             />/
             <input
+                aria-label='side 2 body max'
                 type='number'
                 {{disabled side2ReadOnly}}
                 name='boa2Max'
                 value='{{boa2Max}}'
             />
             {{#if (eq side2ReadOnly false)}}
-                <select name='actor2Skill'>
+                <select name='actor2Skill' aria-label='side 2 skill selection'>
                     {{selectOptions actor2Skills selected=actor2Skill valueAttr="id" labelAttr="label"}}
                 </select>
                 <button
+                    aria-label='side 2 roll skill'
                     type='button'
                     class='dow-roll'
                     data-action='roll-dow'
@@ -246,9 +254,9 @@
                 </div>
             {{/if}}
         </div>
-        <div class='dow-volley'>
+        <div class='dow-volley' aria-label="side 2 volley 1">
             {{#if showS2Select}}
-                <select class='action-select' name='v1s2'>
+                <select class='action-select' name='v1s2' aria-label='side 2 volley 1 select'>
                     <option value='?'>Pick an Option</option>
                     {{#selectGroups v1s2}}
                         {{#each ../actionOptions as |ao|}}
@@ -267,9 +275,9 @@
                 <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class='dow-volley'>
+        <div class='dow-volley' aria-label="side 2 volley 2">
             {{#if showS2Select}}
-                <select class='action-select' name='v2s2'>
+                <select class='action-select' name='v2s2' aria-label='side 2 volley 2 select'>
                     <option value='?'>Pick an Option</option>
                     {{#selectGroups v2s2}}
                         {{#each ../actionOptions as |ao|}}
@@ -288,9 +296,9 @@
                 <div class='card-back'><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class='dow-volley'>
+        <div class='dow-volley' aria-label="side 2 volley 3">
             {{#if showS2Select}}
-                <select class='action-select' name='v3s2'>
+                <select class='action-select' name='v3s2' aria-label='side 2 volley 3 select'>
                     <option value='?'>Pick an Option</option>
                     {{#selectGroups v3s2}}
                         {{#each ../actionOptions as |ao|}}

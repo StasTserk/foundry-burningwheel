@@ -1,1 +1,1 @@
-export { test, testAsGm } from './gameFixture';
+export { test, testAsGm } from './bwFixture';

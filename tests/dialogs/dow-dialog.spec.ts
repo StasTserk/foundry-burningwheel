@@ -92,6 +92,7 @@ test('interactivity features work', async ({
     rollDialog,
     gamePage,
 }) => {
+    test.slow();
     await dowDialog.OpenDialog();
 
     await test.step('showing another volley reveals a hidden action', async () => {

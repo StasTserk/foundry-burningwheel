@@ -35,11 +35,11 @@ export class GameFixture {
         await test.step('clean up some page basics', async () => {
             await this.page.getByLabel(/clear chat log/i).click();
             await expect(
-                await this.page.getByRole('heading', { name: 'Flush Chat Log' })
+                this.page.getByRole('heading', { name: 'Flush Chat Log' })
             ).toBeVisible();
             await this.page.getByRole('button', { name: /yes/i }).click();
             await expect(
-                await this.page.getByRole('heading', { name: 'Flush Chat Log' })
+                this.page.getByRole('heading', { name: 'Flush Chat Log' })
             ).not.toBeVisible();
         });
     }
@@ -57,14 +57,12 @@ export class GameFixture {
         await this.openTab('Actors');
         await test.step(`Open actor named '${name}'`, async () => {
             await this.page.getByText(name).click();
-            await expect(
-                await this.page.locator('div.app.bw-app')
-            ).toBeVisible();
+            await expect(this.page.locator('div.app.bw-app')).toBeVisible();
         });
     }
 
     async getSelectedValue(select: Locator) {
-        return await select.locator('option[selected]').innerText();
+        return select.locator('option[selected]').innerText();
     }
 }
 

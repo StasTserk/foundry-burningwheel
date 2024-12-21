@@ -52,6 +52,7 @@ jobs:
         auth:
           username: stastserk
           password: $dockerhub_token
+    resource_class: large
     environment:
       FOUNDRY_VERSION: '331'
     steps:

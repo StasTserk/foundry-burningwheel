@@ -25,6 +25,9 @@ export class GameFixture {
             await expect(this.page.locator('#sidebar')).not.toBeEmpty();
             await this.page.locator('#notifications i').click();
             await this.page.keyboard.press('Space');
+            await expect(
+                this.page.locator('div.difficulty-dialog')
+            ).toBeVisible();
         });
     }
 

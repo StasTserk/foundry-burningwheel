@@ -1,26 +1,8 @@
-2024/12/23-22:16:34.851386 7f3d9884cb38 Recovering log #13
-2024/12/23-22:16:34.851478 7f3d9884cb38 Level-0 table #15: started
-2024/12/23-22:16:34.856998 7f3d9884cb38 Level-0 table #15: 14290 bytes OK
-2024/12/23-22:16:34.893991 7f3d9884cb38 Delete type=0 #13
-2024/12/23-22:16:34.894026 7f3d9884cb38 Delete type=3 #11
-2024/12/23-22:17:28.050918 7f3b17df8b38 Level-0 table #18: started
-2024/12/23-22:17:28.052108 7f3b17df8b38 Level-0 table #18: 888 bytes OK
-2024/12/23-22:17:28.053380 7f3b17df8b38 Delete type=0 #16
-2024/12/23-22:17:28.057764 7f3b17df8b38 Manual compaction at level-0 from '!settings!1GKODt7oaIHfTEC9' @ 72057594037927935 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at '!settings!wklCZV7NQek26bct' @ 7 : 1
-2024/12/23-22:17:28.057773 7f3b17df8b38 Compacting 4@0 + 0@1 files
-2024/12/23-22:17:28.059214 7f3b17df8b38 Generated table #19@0: 4 keys, 1807 bytes
-2024/12/23-22:17:28.059227 7f3b17df8b38 Compacted 4@0 + 0@1 files => 1807 bytes
-2024/12/23-22:17:28.060597 7f3b17df8b38 compacted to: files[ 0 1 1 0 0 0 0 ]
-2024/12/23-22:17:28.060664 7f3b17df8b38 Delete type=2 #9
-2024/12/23-22:17:28.060707 7f3b17df8b38 Delete type=2 #12
-2024/12/23-22:17:28.060738 7f3b17df8b38 Delete type=2 #18
-2024/12/23-22:17:28.060788 7f3b17df8b38 Delete type=2 #15
-2024/12/23-22:17:28.060897 7f3b17df8b38 Manual compaction at level-0 from '!settings!wklCZV7NQek26bct' @ 7 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at (end)
-2024/12/23-22:17:28.060947 7f3b17df8b38 Manual compaction at level-1 from '!settings!1GKODt7oaIHfTEC9' @ 72057594037927935 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at '!settings!wklCZV7NQek26bct' @ 69 : 1
-2024/12/23-22:17:28.060953 7f3b17df8b38 Compacting 1@1 + 1@2 files
-2024/12/23-22:17:28.062232 7f3b17df8b38 Generated table #20@1: 8 keys, 2735 bytes
-2024/12/23-22:17:28.062242 7f3b17df8b38 Compacted 1@1 + 1@2 files => 2735 bytes
-2024/12/23-22:17:28.063538 7f3b17df8b38 compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/12/23-22:17:28.063582 7f3b17df8b38 Delete type=2 #5
-2024/12/23-22:17:28.063617 7f3b17df8b38 Delete type=2 #19
-2024/12/23-22:17:28.063698 7f3b17df8b38 Manual compaction at level-1 from '!settings!wklCZV7NQek26bct' @ 69 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at (end)
+2024/12/23-22:42:41.793539 7f5cbd05ab38 Recovering log #17
+2024/12/23-22:42:41.797380 7f5cbd05ab38 Delete type=0 #13
+2024/12/23-22:42:41.797425 7f5cbd05ab38 Delete type=3 #11
+2024/12/23-22:42:41.797447 7f5cbd05ab38 Delete type=0 #17
+2024/12/23-22:42:41.797470 7f5cbd05ab38 Delete type=2 #9
+2024/12/23-22:42:41.797488 7f5cbd05ab38 Delete type=3 #14
+2024/12/23-22:42:41.797503 7f5cbd05ab38 Delete type=2 #12
+2024/12/23-22:42:41.797520 7f5cbd05ab38 Delete type=2 #5

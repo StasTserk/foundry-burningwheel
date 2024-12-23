@@ -16,9 +16,15 @@ export async function foundryInstance() {
         })
         .withNetworkAliases('foundry-host')
         .withLogConsumer((stream) => {
-            stream.on('data', (l) => console.log(`[foundry-host] ${l}`));
-            stream.on('err', (l) => console.error(`[foundry-host] ${l}`));
-            stream.on('end', () => console.log('[foundry-host] Stream closed'));
+            stream.on('data', (l) =>
+                process.stdout.write(`[foundry-host] ${l}`)
+            );
+            stream.on('err', (l) =>
+                process.stderr.write(`[foundry-host] ${l}`)
+            );
+            stream.on('end', () =>
+                process.stdout.write('[foundry-host] Stream closed')
+            );
         })
         .start();
 }

@@ -24,7 +24,7 @@
         <div class="fighters-label">Fighters</div><div>Volley 1</div><div>Volley 2</div><div>Volley 3</div>
         {{/if}}
         {{#each participants as |p i|}}
-        <div class="volley-buttons flex-row">
+        <div class="volley-buttons flex-row" aria-label="participant {{i}} card">
             <div class="participant">{{p.name}}</div>
             <div class="portrait-actions flex-row">
                 {{#if p.showActions}}
@@ -60,7 +60,7 @@
                 {{/if}}
             </div>
         </div>
-        <div class="flex-row" lang="en">
+        <div class="flex-row" lang="en" aria-label="participant {{i}} action 1">
             {{#if ../showV1}}
             <div class="attack-action action-card">{{#if p.action1}}{{{p.action1}}}{{else}}Does Nothing{{/if}}</div>
             {{#if p.action2}}<div class="attack-action action-card">{{{p.action2}}}</div>{{/if}}
@@ -68,7 +68,7 @@
             {{else}}<div class="attack-action card-back"><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="flex-row" lang="en">
+        <div class="flex-row" lang="en" aria-label="participant {{i}} action 2">
             {{#if ../showV2}}
             <div class="attack-action action-card">{{#if p.action4}}{{{p.action4}}}{{else}}Does Nothing{{/if}}</div>
             {{#if p.action5}}<div class="attack-action action-card">{{{p.action5}}}</div>{{/if}}
@@ -76,7 +76,7 @@
             {{else}}<div class="attack-action card-back"><i class='fas fa-dharmachakra'></i></div>
             {{/if}}
         </div>
-        <div class="flex-row" lang="en">
+        <div class="flex-row" lang="en" aria-label="participant {{i}} action 3">
             {{#if ../showV3}}
             <div class="attack-action action-card">{{#if p.action7}}{{{p.action7}}}{{else}}Does Nothing{{/if}}</div>
             {{#if p.action8}}<div class="attack-action action-card">{{{p.action8}}}</div>{{/if}}
@@ -100,7 +100,7 @@
             Volley 3
         </div>
         {{#each participants as |p i|}}
-        <div class="participant-card">
+        <div class="participant-card" aria-label="participant {{i}} controls">
             <div class="flex-row">
                 {{#if ../gmView}}
                 <i data-action="removeFighter" data-index="{{i}}" class="fas fa-times remove-fighter"></i>
@@ -135,7 +135,7 @@
             </div>
             {{/if}}
         </div>
-        <div class="volley flex-column">
+        <div class="volley flex-column" aria-label="participant {{i}} script 1">
             {{#if p.showActions}}
             <label>Action 1
                 <select name="action1" data-index="{{i}}">
@@ -185,7 +185,7 @@
             {{/if}}
             {{/if}}
         </div>
-        <div class="volley flex-column">
+        <div class="volley flex-column" aria-label="participant {{i}} script 2">
             {{#if p.showActions}}
             <label>Action 1
                 <select name="action4" data-index="{{i}}">
@@ -235,7 +235,7 @@
             {{/if}}
             {{/if}}
         </div>
-        <div class="volley flex-column">
+        <div class="volley flex-column" aria-label="participant {{i}} script 3">
             {{#if p.showActions}}
             <label>Action 1
                 <select name="action7" data-index="{{i}}">

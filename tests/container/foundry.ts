@@ -2,7 +2,7 @@
 import { GenericContainer } from 'testcontainers';
 export async function foundryInstance() {
     console.log(
-        `Grabbing image from ${process.cwd()}/tests/container/Dockerfile`
+        `[test-fixture] Grabbing image from ${process.cwd()}/tests/container/Dockerfile`
     );
     return (
         await GenericContainer.fromDockerfile(
@@ -16,9 +16,9 @@ export async function foundryInstance() {
         })
         .withNetworkAliases('foundry-host')
         .withLogConsumer((stream) => {
-            stream.on('data', (l) => console.log(l));
-            stream.on('err', (l) => console.error(l));
-            stream.on('end', () => console.log('Stream closed'));
+            stream.on('data', (l) => console.log(`[foundry-host] ${l}`));
+            stream.on('err', (l) => console.error(`[foundry-host] ${l}`));
+            stream.on('end', () => console.log('[foundry-host] Stream closed'));
         })
         .start();
 }

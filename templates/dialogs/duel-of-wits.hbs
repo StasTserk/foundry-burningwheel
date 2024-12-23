@@ -78,6 +78,7 @@
             />
             {{#if (eq side1ReadOnly false)}}
                 <select name='actor1Skill' aria-label='side 1 skill selection'>
+                    <option value="" {{#if (eq actor1Skill "")}}selected{{/if}}>Select a skill</option>
                     {{selectOptions actor1Skills selected=actor1Skill valueAttr="id" labelAttr="label"}}
                 </select>
                 <button
@@ -231,6 +232,7 @@
             />
             {{#if (eq side2ReadOnly false)}}
                 <select name='actor2Skill' aria-label='side 2 skill selection'>
+                    <option value="" {{#if (eq actor2Skill "")}}selected{{/if}}>Select a skill</option>
                     {{selectOptions actor2Skills selected=actor2Skill valueAttr="id" labelAttr="label"}}
                 </select>
                 <button

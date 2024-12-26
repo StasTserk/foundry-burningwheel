@@ -85,7 +85,7 @@ class FightDialog {
         });
     }
 
-    expectVisibleAction({
+    async expectVisibleAction({
         fighter,
         volley,
         value,
@@ -94,12 +94,19 @@ class FightDialog {
         volley: number;
         value: string | string[];
     }) {
-        return expect(
-            this.page.getByLabel(`participant ${fighter} action ${volley}`),
-            {
-                message: `Expect p${fighter} v${volley} to be ${value}`,
-            }
-        ).toHaveText(value);
+        const values = Array.isArray(value) ? value : [value];
+
+        for (let i = 0; i < values.length; i++) {
+            await expect(
+                this.page
+                    .getByLabel(`participant ${fighter} action ${volley}`)
+                    .locator('div.action-card')
+                    .nth(i),
+                {
+                    message: `Expect p${fighter} v${volley} a${i} to be ${values[i]}`,
+                }
+            ).toHaveText(values[i]);
+        }
     }
 
     async expectHiddenAction({
@@ -141,8 +148,90 @@ class FightDialog {
         ).toHaveText(value);
     }
 
+    scriptAction({
+        fighter,
+        volley,
+        action,
+        value,
+    }: {
+        fighter: number;
+        volley: number;
+        action: number;
+        value: string;
+    }) {
+        return this.page
+            .getByLabel(`participant ${fighter} script ${volley}`)
+            .locator(`select[name="action${action}"]`)
+            .selectOption(value);
+    }
+
     playerScript(player: number): Locator {
         return this.page.getByLabel(`participant ${player} script 1`);
+    }
+
+    toggleVolleyVisibility(volley: 1 | 2 | 3) {
+        return this.page.getByText(`Show Volley ${volley}`).click();
+    }
+
+    resetRound() {
+        return this.page.getByRole('button', { name: /reset round/i }).click();
+    }
+
+    clearDialog() {
+        return this.page.getByRole('button', { name: /clear all/i }).click();
+    }
+
+    togglePlayerVisibility(index: number) {
+        return this.page.getByLabel(`participant ${index} controls`).click();
+    }
+
+    removeParticipant(index: number) {
+        return this.page
+            .getByLabel(`participant ${index} controls`)
+            .locator('i')
+            .click();
+    }
+
+    InitiateRoll({ fighter, skill }: { fighter: number; skill: string }) {
+        return this.page
+            .getByLabel(`participant ${fighter} card`)
+            .getByRole('button', { name: skill })
+            .click();
+    }
+
+    async setWeaponPenalty({
+        fighter,
+        weaponPenalty,
+    }: {
+        fighter: number;
+        weaponPenalty: number;
+    }) {
+        const input = this.page
+            .getByLabel(`participant ${fighter} controls`)
+            .locator('input[name="positionPenalty"]');
+        await input.fill(weaponPenalty.toString());
+        return input.blur();
+    }
+    async setEngagement({
+        fighter,
+        engagement,
+    }: {
+        fighter: number;
+        engagement: number;
+    }) {
+        const input = this.page
+            .getByLabel(`participant ${fighter} controls`)
+            .locator('input[name="engagementBonus"]');
+
+        await input.fill(engagement.toString());
+        return input.blur();
+    }
+
+    pickWeapon({ fighter, weapon }: { fighter: number; weapon: string }) {
+        return this.page
+            .getByLabel(`participant ${fighter} controls`)
+            .getByRole('combobox')
+            .selectOption(weapon);
     }
 }
 
@@ -162,6 +251,32 @@ class RollDialog {
         await expect(
             this.page.locator('h4').filter({ hasText: `${skill} Test` })
         ).not.toBeVisible();
+    }
+
+    expectOptionalDieModifier(name: string, value?: string | RegExp) {
+        if (value !== undefined) {
+            return expect(
+                this.page.getByLabel('optional dice modifiers').getByLabel(name)
+            ).toHaveValue(value);
+        }
+        return expect(
+            this.page.getByLabel('optional dice modifiers').getByLabel(name)
+        ).toBeVisible();
+    }
+
+    async expectOptionalObstacleModifiers(
+        name: string,
+        value?: string | RegExp
+    ) {
+        if (value !== undefined) {
+            return expect(
+                this.page.getByLabel('optional ob modifiers').getByLabel(name)
+            ).toHaveValue(value);
+        }
+
+        return expect(
+            this.page.getByLabel('optional ob modifiers').getByLabel(name)
+        ).toBeVisible();
     }
 }
 

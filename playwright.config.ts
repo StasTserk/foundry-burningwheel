@@ -44,7 +44,12 @@ export default defineConfig({
     projects: [
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                ...devices['Desktop Chrome'],
+                launchOptions: {
+                    args: ['--enable-unsafe-swiftshader'],
+                },
+            },
         },
 
         // seems like firefox and foundry don't get along in playwright

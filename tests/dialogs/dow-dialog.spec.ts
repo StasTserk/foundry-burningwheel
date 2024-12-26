@@ -67,112 +67,123 @@ test('loads data correctly', async ({ page, dowDialog, gamePage }) => {
             .all();
 
         expect(hideActionToggles).toHaveLength(2);
-        expect(hideActionToggles[0]).not.toBeChecked();
-        expect(hideActionToggles[1]).toBeChecked();
+        await expect(hideActionToggles[0]).not.toBeChecked();
+        await expect(hideActionToggles[1]).toBeChecked();
 
-        expect(
-            await page.getByRole('checkbox', { name: /show volley 1/i })
+        await expect(
+            page.getByRole('checkbox', { name: /show volley 1/i })
         ).toBeChecked();
-        expect(
-            await page.getByRole('checkbox', { name: /show volley 2/i })
+        await expect(
+            page.getByRole('checkbox', { name: /show volley 2/i })
         ).not.toBeChecked();
-        expect(
-            await page.getByRole('checkbox', { name: /show volley 3/i })
+        await expect(
+            page.getByRole('checkbox', { name: /show volley 3/i })
         ).not.toBeChecked();
-        expect(await page.getByLabel('side 1 volley 1 select')).toBeVisible();
-        expect(
-            await page.getByLabel('side 2 volley 1 select')
+        await expect(page.getByLabel('side 1 volley 1 select')).toBeVisible();
+        await expect(
+            page.getByLabel('side 2 volley 1 select')
         ).not.toBeVisible();
     });
 });
 
-test('interactivity features work', async ({
+test('showing another volley reveals a hidden action', async ({
+    page,
+    dowDialog,
+}) => {
+    await dowDialog.OpenDialog();
+
+    await page.getByRole('checkbox', { name: /show volley 2/i }).click();
+    expect(await dowDialog.getSide2Actions()).toStrictEqual(
+        expect.arrayContaining(['Point', 'Rebuttal', 'Hidden'])
+    );
+});
+
+test('toggling hide actions reveals all', async ({ page, dowDialog }) => {
+    await dowDialog.OpenDialog();
+    await page
+        .getByRole('checkbox', { name: /hide actions/i })
+        .nth(1)
+        .click();
+    expect(await dowDialog.getSide2Actions()).toStrictEqual(
+        expect.arrayContaining(['Point', 'Rebuttal', 'Run Screaming'])
+    );
+    await page
+        .getByRole('checkbox', { name: /hide actions/i })
+        .nth(1)
+        .click();
+});
+
+test('actions can be changed', async ({ page, dowDialog }) => {
+    await dowDialog.OpenDialog();
+    await page
+        .getByLabel('side 1 volley 1 select')
+        .selectOption('Stand & Drool');
+    expect(await dowDialog.getSide1Actions()).toStrictEqual(
+        expect.arrayContaining(['Stand & Drool', 'Dismiss', 'Cast Spell'])
+    );
+});
+
+test('roll button will display a dialog', async ({
     page,
     dowDialog,
     rollDialog,
-    gamePage,
 }) => {
-    test.slow();
     await dowDialog.OpenDialog();
 
-    await test.step('showing another volley reveals a hidden action', async () => {
-        await page.getByRole('checkbox', { name: /show volley 2/i }).click();
-        expect(await dowDialog.getSide2Actions()).toStrictEqual(
-            expect.arrayContaining(['Point', 'Rebuttal', 'Hidden'])
-        );
-    });
+    await page.getByRole('button', { name: /side 1 roll skill/i }).click();
 
-    await test.step('toggling hide actions reveals all', async () => {
-        await page
-            .getByRole('checkbox', { name: /hide actions/i })
-            .nth(1)
-            .click();
-        expect(await dowDialog.getSide2Actions()).toStrictEqual(
-            expect.arrayContaining(['Point', 'Rebuttal', 'Run Screaming'])
-        );
-        await page
-            .getByRole('checkbox', { name: /hide actions/i })
-            .nth(1)
-            .click();
-    });
+    await rollDialog.expectOpened('Persuasion');
+    await rollDialog.close('Persuasion');
+});
 
-    await test.step('actions can be changed', async () => {
-        await page
-            .getByLabel('side 1 volley 1 select')
-            .selectOption('Stand & Drool');
-        expect(await dowDialog.getSide1Actions()).toStrictEqual(
-            expect.arrayContaining(['Stand & Drool', 'Dismiss', 'Cast Spell'])
-        );
-    });
+test('chosen roll skill can be changed', async ({
+    page,
+    dowDialog,
+    rollDialog,
+}) => {
+    await dowDialog.OpenDialog();
 
-    await test.step('roll button will display a dialog', async () => {
-        await page.getByRole('button', { name: /side 1 roll skill/i }).click();
+    await page
+        .getByRole('combobox', { name: /side 1 skill select/i })
+        .selectOption('Intimidation');
+    await page.getByRole('button', { name: /side 1 roll skill/i }).click();
+    await rollDialog.expectOpened('Intimidation');
+    await rollDialog.close('Intimidation');
+});
 
-        await rollDialog.expectOpened('Persuasion');
-        await rollDialog.close('Persuasion');
-    });
+test('round can be cleared', async ({ page, dowDialog }) => {
+    await dowDialog.OpenDialog();
 
-    await test.step('chosen roll skill can be changed', async () => {
-        await page
-            .getByRole('combobox', { name: /side 1 skill select/i })
-            .selectOption('Intimidation');
-        await page.getByRole('button', { name: /side 1 roll skill/i }).click();
-        await rollDialog.expectOpened('Intimidation');
-        await rollDialog.close('Intimidation');
-    });
+    await page.getByRole('button', { name: /reset round/i }).click();
+    expect(
+        await dowDialog.getSide1Actions(),
+        'expect known actions to set to "?"'
+    ).toStrictEqual(expect.arrayContaining(['?', '?', '?']));
+    expect(
+        await dowDialog.getSide2Actions(),
+        'expect hidden actions to revert'
+    ).toStrictEqual(expect.arrayContaining(['Hidden', 'Hidden', 'Hidden']));
 
-    await test.step('Round can be cleared', async () => {
-        await page.getByRole('button', { name: /reset round/i }).click();
-        expect(
-            await dowDialog.getSide1Actions(),
-            'expect known actions to set to "?"'
-        ).toStrictEqual(expect.arrayContaining(['?', '?', '?']));
-        expect(
-            await dowDialog.getSide2Actions(),
-            'expect hidden actions to revert'
-        ).toStrictEqual(expect.arrayContaining(['Hidden', 'Hidden', 'Hidden']));
+    expect(
+        await page.getByLabel('side 1 statement of purpose').inputValue(),
+        'expect statement to stay the same'
+    ).toBe('Let me date your cousin');
+});
 
-        expect(
-            await page.getByLabel('side 1 statement of purpose').inputValue(),
-            'expect statement to stay the same'
-        ).toBe('Let me date your cousin');
-    });
+test('dialog can be cleared', async ({ page, dowDialog, gamePage }) => {
+    await dowDialog.OpenDialog();
 
-    await test.step('Dialog can be cleared', async () => {
-        await page.getByRole('button', { name: /clear all/i }).click();
+    await page.getByRole('button', { name: /clear all/i }).click();
 
-        expect(
-            await page.getByLabel('side 1 statement of purpose').inputValue(),
-            'expect statement clear'
-        ).toBe('');
+    expect(
+        await page.getByLabel('side 1 statement of purpose').inputValue(),
+        'expect statement clear'
+    ).toBe('');
 
-        expect(
-            await gamePage.getSelectedValue(
-                page.getByLabel('side 1 actor select')
-            ),
-            'Expect participants to be cleared'
-        ).toBe('Side 1');
-    });
+    expect(
+        await gamePage.getSelectedValue(page.getByLabel('side 1 actor select')),
+        'Expect participants to be cleared'
+    ).toBe('Side 1');
 });
 
 // TODO: test permissions for players that own/down own actors

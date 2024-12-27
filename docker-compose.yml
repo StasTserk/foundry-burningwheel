@@ -9,3 +9,5 @@ services:
     image: fvtt:3.0
     ports:
       - '30000:30000'
+    volumes:
+      - ./tests/test-world:/home/foundry/fvttdata/Data/worlds/test-world

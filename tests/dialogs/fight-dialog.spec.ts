@@ -2,7 +2,7 @@ import { expect } from '../../node_modules/playwright/test';
 import { testAsGm as test } from '../fixtures/index';
 
 test('loads data correctly', async ({ page, fightDialog }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await expect(
         page.getByRole('dialog').getByRole('heading', { name: 'fight' }),
         { message: 'ensure dialog opens' }
@@ -60,7 +60,7 @@ test('showing another volley reveals actions', async ({
     page,
     fightDialog,
 }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await page.getByText('Show Volley 2').click();
 
     await fightDialog.expectVisibleAction({
@@ -77,7 +77,7 @@ test('showing another volley reveals actions', async ({
 });
 
 test('toggling action hiding reveals all', async ({ page, fightDialog }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.togglePlayerVisibility(1);
     await page.waitForTimeout(1);
     await fightDialog.expectVisibleAction({
@@ -100,7 +100,7 @@ test('toggling action hiding reveals all', async ({ page, fightDialog }) => {
 });
 
 test('actions can be changed', async ({ fightDialog }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.scriptAction({
         fighter: 0,
         volley: 1,
@@ -121,8 +121,8 @@ test('actions can be changed', async ({ fightDialog }) => {
 });
 
 test('skill buttons bring up dialog', async ({ fightDialog, rollDialog }) => {
-    await fightDialog.OpenDialog();
-    await fightDialog.InitiateRoll({ fighter: 0, skill: 'Speed' });
+    await fightDialog.openDialog();
+    await fightDialog.initiateRoll({ fighter: 0, skill: 'Speed' });
     await rollDialog.expectOpened('Speed');
 });
 
@@ -130,16 +130,16 @@ test('weapon roll selects correct skill', async ({
     fightDialog,
     rollDialog,
 }) => {
-    await fightDialog.OpenDialog();
-    await fightDialog.InitiateRoll({ fighter: 0, skill: 'Skill' });
+    await fightDialog.openDialog();
+    await fightDialog.initiateRoll({ fighter: 0, skill: 'Skill' });
     await rollDialog.expectOpened('Sword');
 });
 
 test('property applies dice modifiers', async ({ fightDialog, rollDialog }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.setEngagement({ fighter: 0, engagement: 1 });
     await fightDialog.setWeaponPenalty({ fighter: 0, weaponPenalty: 2 });
-    await fightDialog.InitiateRoll({ fighter: 0, skill: 'Skill' });
+    await fightDialog.initiateRoll({ fighter: 0, skill: 'Skill' });
     await rollDialog.expectOpened('Sword');
     await rollDialog.expectOptionalDieModifier('Engagement Bonus', '1');
     await rollDialog.expectOptionalObstacleModifiers(
@@ -149,14 +149,14 @@ test('property applies dice modifiers', async ({ fightDialog, rollDialog }) => {
 });
 
 test('weapon can be changed', async ({ fightDialog, rollDialog }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.pickWeapon({ fighter: 0, weapon: 'Bare Fist' });
-    await fightDialog.InitiateRoll({ fighter: 0, skill: 'Skill' });
+    await fightDialog.initiateRoll({ fighter: 0, skill: 'Skill' });
     await rollDialog.expectOpened('Brawling');
 });
 
 test('round can be cleared', async ({ fightDialog }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.resetRound();
     await fightDialog.expectHiddenAction({ fighter: 0, volley: 1 });
     await fightDialog.expectHiddenAction({ fighter: 1, volley: 1 });
@@ -171,7 +171,7 @@ test('round can be cleared', async ({ fightDialog }) => {
 });
 
 test('dialog can be cleared', async ({ fightDialog, page }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.clearDialog();
     await expect(page.getByLabel('participant 0 card'), {
         message: 'No participant cards are visible',
@@ -179,7 +179,7 @@ test('dialog can be cleared', async ({ fightDialog, page }) => {
 });
 
 test('can remove participant', async ({ fightDialog, page }) => {
-    await fightDialog.OpenDialog();
+    await fightDialog.openDialog();
     await fightDialog.removeParticipant(1);
     await expect(page.getByLabel('participant 0 card').getByText('Romeo'), {
         message: 'First participant is still around',

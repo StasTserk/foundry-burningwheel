@@ -1,8 +1,7 @@
-2024/12/23-22:16:33.963434 7f3d9884cb38 Recovering log #11
-2024/12/23-22:16:34.023945 7f3d9884cb38 Delete type=3 #10
-2024/12/23-22:16:34.023982 7f3d9884cb38 Delete type=0 #11
-2024/12/23-22:17:28.020341 7f3b17df8b38 Level-0 table #15: started
-2024/12/23-22:17:28.020393 7f3b17df8b38 Level-0 table #15: 0 bytes OK
-2024/12/23-22:17:28.021778 7f3b17df8b38 Delete type=0 #13
-2024/12/23-22:17:28.026857 7f3b17df8b38 Manual compaction at level-0 from '!messages!e8JQod4eFHog7S58' @ 72057594037927935 : 1 .. '!messages!hqqVMmOaOFhI4uRi' @ 0 : 0; will stop at (end)
-2024/12/23-22:17:28.031052 7f3b17df8b38 Manual compaction at level-1 from '!messages!e8JQod4eFHog7S58' @ 72057594037927935 : 1 .. '!messages!hqqVMmOaOFhI4uRi' @ 0 : 0; will stop at (end)
+2024/12/27-00:11:36.282625 7f1838997b38 Recovering log #17
+2024/12/27-00:11:36.286424 7f1838997b38 Delete type=3 #10
+2024/12/27-00:11:36.286461 7f1838997b38 Delete type=3 #16
+2024/12/27-00:11:36.286478 7f1838997b38 Delete type=0 #14
+2024/12/27-00:11:36.286494 7f1838997b38 Delete type=3 #12
+2024/12/27-00:11:36.286511 7f1838997b38 Delete type=0 #17
+2024/12/27-00:11:36.286526 7f1838997b38 Delete type=0 #11

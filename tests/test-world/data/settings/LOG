@@ -1,14 +1,37 @@
-2024/12/27-00:53:25.731594 7f7f7635bb38 Recovering log #25
-2024/12/27-00:53:25.731702 7f7f7635bb38 Level-0 table #27: started
-2024/12/27-00:53:25.733424 7f7f7635bb38 Level-0 table #27: 5962 bytes OK
-2024/12/27-00:53:25.736882 7f7f7635bb38 Delete type=0 #22
-2024/12/27-00:53:25.736913 7f7f7635bb38 Delete type=0 #13
-2024/12/27-00:53:25.736930 7f7f7635bb38 Delete type=3 #21
-2024/12/27-00:53:25.736947 7f7f7635bb38 Delete type=3 #11
-2024/12/27-00:53:25.736964 7f7f7635bb38 Delete type=0 #17
-2024/12/27-00:53:25.736980 7f7f7635bb38 Delete type=2 #9
-2024/12/27-00:53:25.736996 7f7f7635bb38 Delete type=0 #25
-2024/12/27-00:53:25.737011 7f7f7635bb38 Delete type=3 #14
-2024/12/27-00:53:25.737027 7f7f7635bb38 Delete type=3 #23
-2024/12/27-00:53:25.737041 7f7f7635bb38 Delete type=2 #12
-2024/12/27-00:53:25.737057 7f7f7635bb38 Delete type=2 #5
+2024/12/27-21:26:13.826496 7fc4f82d4b38 Recovering log #28
+2024/12/27-21:26:13.827494 7fc4f82d4b38 Level-0 table #30: started
+2024/12/27-21:26:13.857118 7fc4f82d4b38 Level-0 table #30: 1498 bytes OK
+2024/12/27-21:26:13.925399 7fc4f82d4b38 Delete type=2 #5
+2024/12/27-21:26:13.926441 7fc4f82d4b38 Delete type=2 #9
+2024/12/27-21:26:13.927653 7fc4f82d4b38 Delete type=2 #12
+2024/12/27-21:26:13.928800 7fc4f82d4b38 Delete type=0 #13
+2024/12/27-21:26:13.929758 7fc4f82d4b38 Delete type=0 #17
+2024/12/27-21:26:13.930643 7fc4f82d4b38 Delete type=0 #22
+2024/12/27-21:26:13.931635 7fc4f82d4b38 Delete type=0 #25
+2024/12/27-21:26:13.932587 7fc4f82d4b38 Delete type=0 #28
+2024/12/27-21:26:13.933713 7fc4f82d4b38 Delete type=3 #11
+2024/12/27-21:26:13.934641 7fc4f82d4b38 Delete type=3 #14
+2024/12/27-21:26:13.935496 7fc4f82d4b38 Delete type=3 #21
+2024/12/27-21:26:13.936316 7fc4f82d4b38 Delete type=3 #23
+2024/12/27-21:26:13.937210 7fc4f82d4b38 Delete type=3 #26
+2024/12/27-22:20:59.322521 7fbff741fb38 Level-0 table #33: started
+2024/12/27-22:20:59.348321 7fbff741fb38 Level-0 table #33: 436 bytes OK
+2024/12/27-22:20:59.388279 7fbff741fb38 Delete type=0 #31
+2024/12/27-22:20:59.420158 7fbff741fb38 Manual compaction at level-0 from '!settings!1GKODt7oaIHfTEC9' @ 72057594037927935 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at '!settings!wklCZV7NQek26bct' @ 71 : 1
+2024/12/27-22:20:59.420307 7fbff741fb38 Compacting 4@0 + 0@1 files
+2024/12/27-22:20:59.456261 7fbff741fb38 Generated table #34@0: 4 keys, 1503 bytes
+2024/12/27-22:20:59.456422 7fbff741fb38 Compacted 4@0 + 0@1 files => 1503 bytes
+2024/12/27-22:20:59.585263 7fbff741fb38 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/12/27-22:20:59.586819 7fbff741fb38 Delete type=2 #24
+2024/12/27-22:20:59.588873 7fbff741fb38 Delete type=2 #27
+2024/12/27-22:20:59.590426 7fbff741fb38 Delete type=2 #30
+2024/12/27-22:20:59.591732 7fbff741fb38 Delete type=2 #33
+2024/12/27-22:20:59.593308 7fbff741fb38 Manual compaction at level-0 from '!settings!wklCZV7NQek26bct' @ 71 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at (end)
+2024/12/27-22:20:59.593683 7fbff741fb38 Manual compaction at level-1 from '!settings!1GKODt7oaIHfTEC9' @ 72057594037927935 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at '!settings!wklCZV7NQek26bct' @ 72 : 1
+2024/12/27-22:20:59.593832 7fbff741fb38 Compacting 1@1 + 1@2 files
+2024/12/27-22:20:59.646410 7fbff741fb38 Generated table #35@1: 10 keys, 3484 bytes
+2024/12/27-22:20:59.646545 7fbff741fb38 Compacted 1@1 + 1@2 files => 3484 bytes
+2024/12/27-22:20:59.676934 7fbff741fb38 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/12/27-22:20:59.678308 7fbff741fb38 Delete type=2 #20
+2024/12/27-22:20:59.679601 7fbff741fb38 Delete type=2 #34
+2024/12/27-22:20:59.680546 7fbff741fb38 Manual compaction at level-1 from '!settings!wklCZV7NQek26bct' @ 72 : 1 .. '!settings!wklCZV7NQek26bct' @ 0 : 0; will stop at (end)

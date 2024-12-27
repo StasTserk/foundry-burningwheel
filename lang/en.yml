@@ -137,7 +137,7 @@ BW:
     incidentalThresholdHelp: Maximum DoF number that results in an incidental hit
     markThreshold: Mark Threshold
     markThresholdHelp: Maximum DoF number that results in a mark hit
-    hundredFiftyPaces: 150 Paces
+    oneTwentyFivePaces: 125 Paces
     bareFist: Bare Fist
     bareFistDescription: Your bare fist.
   armor:

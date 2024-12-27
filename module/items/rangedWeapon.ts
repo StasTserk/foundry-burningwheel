@@ -94,11 +94,13 @@ export class RangedWeapon extends BWItem<RangedWeaponData> {
         user: User
     ): void {
         super._preCreate(data, options, user);
-        this.updateSource({
-            'system.maxRange': game.i18n.localize(
-                'BW.weapon.hundredFiftyPaces'
-            ),
-        });
+        if (!data || data.maxRange === '125 paces') {
+            this.updateSource({
+                'system.maxRange': game.i18n.localize(
+                    'BW.weapon.oneTwentyFivePaces'
+                ),
+            });
+        }
     }
 }
 

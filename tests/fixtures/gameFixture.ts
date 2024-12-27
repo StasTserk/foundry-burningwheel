@@ -13,8 +13,6 @@ type TabName =
     | 'Playlists'
     | 'Compendium Packs';
 
-type SeededActors = 'Romeo' | 'Tybalt' | 'Hamlet';
-
 export class GameFixture {
     private activeTab: TabName = 'Chat Messages';
     constructor(private readonly page: Page, private readonly host: string) {}
@@ -51,14 +49,6 @@ export class GameFixture {
                 this.activeTab = tab;
             });
         }
-    }
-
-    async openCharacter(name: SeededActors) {
-        await this.openTab('Actors');
-        await test.step(`Open actor named '${name}'`, async () => {
-            await this.page.getByText(name).click();
-            await expect(this.page.locator('div.app.bw-app')).toBeVisible();
-        });
     }
 
     async getSelectedValue(select: Locator) {

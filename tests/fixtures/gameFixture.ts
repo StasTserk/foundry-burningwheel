@@ -57,15 +57,15 @@ export class GameFixture {
         ).toBeVisible();
     }
 
-    closeDialog(title: string | RegExp) {
-        this.page
+    async closeDialog(title: string | RegExp) {
+        await this.page
             .getByRole('dialog')
             .filter({ hasText: title })
             .getByText(/close/i)
             .click();
-        return expect(
-            this.page.getByRole('dialog').filter({ hasText: title })
-        ).not.toBeVisible();
+        await expect(this.page.getByRole('dialog').filter({ hasText: title }), {
+            message: `Ensure ${title} dialog has closed`,
+        }).not.toBeVisible();
     }
 
     async createActor(name: string, type: 'character' | 'npc' | 'setting') {

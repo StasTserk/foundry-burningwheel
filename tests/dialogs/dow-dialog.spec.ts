@@ -2,7 +2,7 @@ import { expect } from '../../node_modules/playwright/test';
 import { testAsGm as test } from '../fixtures/bwFixture';
 
 test('loads data correctly', async ({ page, dowDialog, gamePage }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
     await expect(
         page.getByRole('dialog').getByRole('heading', { name: 'duel of wits' }),
         { message: 'ensure dialog opens' }
@@ -90,7 +90,7 @@ test('showing another volley reveals a hidden action', async ({
     page,
     dowDialog,
 }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
 
     await page.getByRole('checkbox', { name: /show volley 2/i }).click();
     expect(await dowDialog.getSide2Actions()).toStrictEqual(
@@ -99,7 +99,7 @@ test('showing another volley reveals a hidden action', async ({
 });
 
 test('toggling hide actions reveals all', async ({ page, dowDialog }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
     await page
         .getByRole('checkbox', { name: /hide actions/i })
         .nth(1)
@@ -114,7 +114,7 @@ test('toggling hide actions reveals all', async ({ page, dowDialog }) => {
 });
 
 test('actions can be changed', async ({ page, dowDialog }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
     await page
         .getByLabel('side 1 volley 1 select')
         .selectOption('Stand & Drool');
@@ -128,7 +128,7 @@ test('roll button will display a dialog', async ({
     dowDialog,
     rollDialog,
 }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
 
     await page.getByRole('button', { name: /side 1 roll skill/i }).click();
 
@@ -141,7 +141,7 @@ test('chosen roll skill can be changed', async ({
     dowDialog,
     rollDialog,
 }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
 
     await page
         .getByRole('combobox', { name: /side 1 skill select/i })
@@ -152,7 +152,7 @@ test('chosen roll skill can be changed', async ({
 });
 
 test('round can be cleared', async ({ page, dowDialog }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
 
     await page.getByRole('button', { name: /reset round/i }).click();
     expect(
@@ -171,7 +171,7 @@ test('round can be cleared', async ({ page, dowDialog }) => {
 });
 
 test('dialog can be cleared', async ({ page, dowDialog, gamePage }) => {
-    await dowDialog.OpenDialog();
+    await dowDialog.openDialog();
 
     await page.getByRole('button', { name: /clear all/i }).click();
 

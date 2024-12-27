@@ -51,6 +51,46 @@ export class GameFixture {
         }
     }
 
+    expectOpenedDialog(title: string | RegExp) {
+        return expect(
+            this.page.getByRole('dialog').filter({ hasText: title })
+        ).toBeVisible();
+    }
+
+    closeDialog(title: string | RegExp) {
+        this.page
+            .getByRole('dialog')
+            .filter({ hasText: title })
+            .getByText(/close/i)
+            .click();
+        return expect(
+            this.page.getByRole('dialog').filter({ hasText: title })
+        ).not.toBeVisible();
+    }
+
+    async createActor(name: string, type: 'character' | 'npc' | 'setting') {
+        await this.openTab('Actors');
+        await test.step(`Create a(n) ${type} named ${name}`, async () => {
+            await this.page
+                .getByRole('button', { name: 'Create Actor' })
+                .click();
+            await expect(
+                this.page.locator('form#document-create')
+            ).toBeVisible();
+            await this.page
+                .locator('form#document-create')
+                .getByRole('textbox')
+                .fill(name);
+            await this.page
+                .locator('form#document-create')
+                .getByRole('combobox')
+                .selectOption(type);
+            await this.page
+                .getByRole('button', { name: /create new actor/i })
+                .click();
+        });
+    }
+
     async getSelectedValue(select: Locator) {
         return select.locator('option[selected]').innerText();
     }

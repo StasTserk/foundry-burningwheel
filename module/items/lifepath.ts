@@ -19,9 +19,11 @@ export class Lifepath extends BWItem<LifepathData> {
         options: FoundryDocument.CreateOptions,
         user: User
     ): void {
-        this.updateSource({
-            'system.leads': game.i18n.localize('BW.lifepath.any'),
-        });
+        if (!data || data.leads === 'Any') {
+            this.updateSource({
+                'system.leads': game.i18n.localize('BW.lifepath.any'),
+            });
+        }
         return super._preCreate(data, options, user);
     }
 }

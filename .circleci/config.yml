@@ -72,7 +72,7 @@ jobs:
             # This host entry allows us to continue using localhost which is critical for running the site with "low security mode" (http).
             tee -a /etc/hosts \<<<'172.17.0.1 localhost'
             TESTFILES=$(circleci tests glob "tests/**/*.spec.ts")
-            echo "$TESTFILES" | circleci tests run --command="xargs npm run playwright" --verbose --split-by=timings
+            echo "$TESTFILES" | circleci tests run --command="xargs npm run playwright" --verbose --split-by=timings --timings-type=classname
       - store_artifacts:
           path: results
       - store_test_results:

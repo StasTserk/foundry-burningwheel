@@ -13,6 +13,22 @@ type TabName =
     | 'Playlists'
     | 'Compendium Packs';
 
+type ItemType =
+    | 'affiliation'
+    | 'armor'
+    | 'belief'
+    | 'instinct'
+    | 'lifepath'
+    | 'melee weapon'
+    | 'possession'
+    | 'property'
+    | 'ranged weapon'
+    | 'relationship'
+    | 'reputation'
+    | 'skill'
+    | 'spell'
+    | 'trait';
+
 export class GameFixture {
     private activeTab: TabName = 'Chat Messages';
     constructor(private readonly page: Page, private readonly host: string) {}
@@ -87,6 +103,29 @@ export class GameFixture {
                 .selectOption(type);
             await this.page
                 .getByRole('button', { name: /create new actor/i })
+                .click();
+        });
+    }
+
+    async createItem(name: string, type: ItemType) {
+        await this.openTab('Items');
+        await test.step(`Create a(n) ${type} named ${name}`, async () => {
+            await this.page
+                .getByRole('button', { name: 'Create Item' })
+                .click();
+            await expect(
+                this.page.locator('form#document-create')
+            ).toBeVisible();
+            await this.page
+                .locator('form#document-create')
+                .getByRole('textbox')
+                .fill(name);
+            await this.page
+                .locator('form#document-create')
+                .getByRole('combobox')
+                .selectOption(type);
+            await this.page
+                .getByRole('button', { name: /create new item/i })
                 .click();
         });
     }

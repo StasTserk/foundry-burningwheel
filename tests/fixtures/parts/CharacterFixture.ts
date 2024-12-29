@@ -1,8 +1,7 @@
 import { expect, Page } from 'playwright/test';
 import { FixtureBase } from '../bwFixture';
 import { GameFixture } from '../gameFixture';
-
-type SeededActors = 'Romeo' | 'Tybalt' | 'Hamlet' | 'Shakespeare';
+import { SeededActors } from '../SeededData';
 
 export class CharacterFixture {
     constructor(

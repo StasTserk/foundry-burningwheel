@@ -1,7 +1,8 @@
 import { expect, Locator, Page } from 'playwright/test';
 import { setupFixture } from './setupFixture';
+import { ItemType } from './SeededData';
 
-type TabName =
+type FoundryTab =
     | 'Chat Messages'
     | 'Combat Encounters'
     | 'Scenes'
@@ -13,24 +14,8 @@ type TabName =
     | 'Playlists'
     | 'Compendium Packs';
 
-type ItemType =
-    | 'affiliation'
-    | 'armor'
-    | 'belief'
-    | 'instinct'
-    | 'lifepath'
-    | 'melee weapon'
-    | 'possession'
-    | 'property'
-    | 'ranged weapon'
-    | 'relationship'
-    | 'reputation'
-    | 'skill'
-    | 'spell'
-    | 'trait';
-
 export class GameFixture {
-    private activeTab: TabName = 'Chat Messages';
+    private activeTab: FoundryTab = 'Chat Messages';
     constructor(private readonly page: Page, private readonly host: string) {}
 
     async waitForLoad() {
@@ -58,7 +43,7 @@ export class GameFixture {
         });
     }
 
-    async openTab(tab: TabName) {
+    async openTab(tab: FoundryTab) {
         if (tab !== this.activeTab) {
             await test.step(`navigate to the ${tab} tab`, async () => {
                 await this.page.getByLabel(tab, { exact: true }).click();

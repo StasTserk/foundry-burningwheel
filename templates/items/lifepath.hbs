@@ -16,22 +16,23 @@
         />
     </div>
     <div class='item-form-group'>
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-time">
             {{localize 'BW.lifepath.time'}}
         </label>
-        <input type='number' name='system.time' value='{{system.time}}' />
-        <label class='item-setting-label'>
+        <input type='number' name='system.time' value='{{system.time}}' id="{{item.id}}-time"/>
+        <label class='item-setting-label' for="{{item.id}}-resources">
             {{localize 'BW.resources'}}
         </label>
         <input
             type='number'
+            id="{{item.id}}-resources"
             name='system.resources'
             value='{{system.resources}}'
         />
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-stat">
             {{localize 'BW.lifepath.statBoost'}}
         </label>
-        <select name='system.statBoost' value='{{system.statBoost}}'>
+        <select name='system.statBoost' value='{{system.statBoost}}' id="{{item.id}}-stat">
             {{selectOptions boostOptions selected=system.statBoost localize=true}}
         </select>
         <div class='pill-toggle min-content'>
@@ -48,34 +49,37 @@
             >{{localize 'BW.lifepath.subtractStats'}}</label>
         </div>
         <div></div>
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-leads">
             {{localize 'BW.lifepath.leads'}}
         </label>
         <input
+            id="{{item.id}}-leads"
             type='text'
             name='system.leads'
             value='{{system.leads}}'
             class='triple-wide'
         />
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-sp">
             {{localize 'BW.lifepath.skillPoints'}}
         </label>
         <input
+            id="{{item.id}}-sp"
             type='number'
             name='system.skillPoints'
             value='{{system.skillPoints}}'
         />
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-gp">
             {{localize 'BW.lifepath.generalPoints'}}
         </label>
         <input
+            id="{{item.id}}-gp"
             type='number'
             name='system.generalPoints'
             value='{{system.generalPoints}}'
         />
     </div>
-    <label class='item-list-label'>{{localize 'BW.lifepath.skillList'}}</label>
-    <textarea name='system.skillList'>{{system.skillList}}</textarea>
+    <label class='item-list-label' for="{{item.id}}-skills">{{localize 'BW.lifepath.skillList'}}</label>
+    <textarea name='system.skillList' id="{{item.id}}-skills">{{system.skillList}}</textarea>
     <hr />
     <div class='item-form-group'>
         <label class='item-setting-label'>
@@ -87,18 +91,18 @@
             value='{{system.traitPoints}}'
         />
     </div>
-    <label class='item-list-label'>{{localize 'BW.lifepath.traitList'}}</label>
-    <textarea name='system.traitList'>{{system.traitList}}</textarea>
+    <label class='item-list-label' for="{{item.id}}-traits">{{localize 'BW.lifepath.traitList'}}</label>
+    <textarea name='system.traitList' id="{{item.id}}-traits">{{system.traitList}}</textarea>
     <hr />
-    <label class='item-list-label'>{{localize
+    <label class='item-list-label' for="{{item.id}}-rest">{{localize
             'BW.lifepath.restrictions'
         }}</label>
-    <textarea name='system.restrictions'>{{system.restrictions}}</textarea>
+    <textarea name='system.restrictions' id="{{item.id}}-rest">{{system.restrictions}}</textarea>
     <hr />
-    <label class='item-list-label'>{{localize
+    <label class='item-list-label' for="{{item.id}}-req">{{localize
             'BW.lifepath.requirements'
         }}</label>
-    <textarea name='system.requirements'>{{system.requirements}}</textarea>
-    <label class='item-list-label'>{{localize 'BW.lifepath.note'}}</label>
-    <textarea name='system.note'>{{system.note}}</textarea>
+    <textarea name='system.requirements' id="{{item.id}}-req">{{system.requirements}}</textarea>
+    <label class='item-list-label' for="{{item.id}}-note">{{localize 'BW.lifepath.note'}}</label>
+    <textarea name='system.note' id="{{item.id}}-note">{{system.note}}</textarea>
 </form>

@@ -46,7 +46,7 @@ export class InstinctFixture extends BaseItemFixture {
         super(page, gamePage, test);
     }
 
-    async openDialog(name: SeededItems<'belief'>) {
+    async openDialog(name: SeededItems<'instinct'>) {
         await this.open(name);
         return new InstinctDialog(this, name);
     }

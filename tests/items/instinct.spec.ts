@@ -7,7 +7,7 @@ test('can be created, opens sheet', async ({ gamePage, items }) => {
 });
 
 test('can load sheet data', async ({ items: { instinct } }) => {
-    const sheet = await instinct.openDialog('Modified Belief');
+    const sheet = await instinct.openDialog('Modified Instinct');
     await expect(sheet.fateSpent).toHaveValue('1');
     await expect(sheet.personaSpent).toHaveValue('2');
     await expect(sheet.deedsSpent).toHaveValue('3');
@@ -15,7 +15,7 @@ test('can load sheet data', async ({ items: { instinct } }) => {
 });
 
 test('can be edited', async ({ items: { instinct } }) => {
-    const sheet = await instinct.openDialog('Modified Belief');
+    const sheet = await instinct.openDialog('Modified Instinct');
     await test.step('edit sheet fields', async () => {
         await sheet.setFateSpent('4');
         await sheet.setPersonaSpent('5');

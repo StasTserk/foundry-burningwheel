@@ -6,7 +6,7 @@ export class ReputationSheet extends BWItemSheet {
         data.diceOptions = {
             0: game.i18n.localize('BW.none'),
             1: `1${game.i18n.localize('BW.diceAcronym')}`,
-            2: `3${game.i18n.localize('BW.diceAcronym')}`,
+            2: `2${game.i18n.localize('BW.diceAcronym')}`,
             3: `3${game.i18n.localize('BW.diceAcronym')}`,
         };
         return data;

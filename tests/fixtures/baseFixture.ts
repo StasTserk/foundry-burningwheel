@@ -18,6 +18,10 @@ export const baseFixture = baseTest.extend<TestFixtureBase>({
                 console.log(`[test-fixture] Started foundry at ${hostUrl}`);
 
                 await page.goto(hostUrl);
+
+                await page.evaluate(() =>
+                    localStorage.setItem('burningwheel.itemImages', 'true')
+                );
                 // agree to eula
                 await page.getByLabel('I agree to these terms').click();
                 await page.getByRole('button', { name: /agree/i }).click();

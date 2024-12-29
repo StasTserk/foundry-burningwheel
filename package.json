@@ -9,7 +9,9 @@
         "watch": "webpack --config webpack.config.js --mode=development --watch",
         "prettier": "npx prettier --write .",
         "docker-init": "webpack --config webpack.config.js --mode=production --env e2e && node ./tests/setup/setup.mjs",
+        "p": "npx playwright test",
         "playwright": "webpack --config webpack.config.js --mode=production --env e2e && node ./tests/setup/setup.mjs && npx playwright test",
+        "pu": "npx playwright test --ui",
         "playwright-ui": "webpack --config webpack.config.js --mode=production --env e2e && npx playwright test --ui"
     },
     "author": "",

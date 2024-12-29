@@ -75,7 +75,7 @@ export class ArmorFixture extends BaseItemFixture {
         super(page, gamePage, test);
     }
 
-    async openDialog(name: SeededItems) {
+    async openDialog(name: SeededItems<'armor'>) {
         await this.open(name);
         return new ArmorDialog(this, name);
     }

@@ -82,10 +82,11 @@
     <textarea name='system.skillList' id="{{item.id}}-skills">{{system.skillList}}</textarea>
     <hr />
     <div class='item-form-group'>
-        <label class='item-setting-label'>
+        <label class='item-setting-label'  for="{{item.id}}-tp">
             {{localize 'BW.lifepath.traitPoints'}}
         </label>
         <input
+            id="{{item.id}}-tp"
             type='number'
             name='system.traitPoints'
             value='{{system.traitPoints}}'

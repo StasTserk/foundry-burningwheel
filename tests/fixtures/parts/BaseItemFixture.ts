@@ -3,7 +3,11 @@ import { FixtureBase } from '../bwFixture';
 import { GameFixture } from '../gameFixture';
 import { SeededItems } from '../SeededData';
 
-export class BaseItemDialog {
+export class BaseItemDialog<
+    LabelFields extends string = string,
+    CheckBoxFields extends string = string,
+    SelectFields extends string = string
+> {
     readonly locator: Locator;
     constructor(readonly fixture: BaseItemFixture, readonly name: SeededItems) {
         this.locator = fixture.sheet(name);
@@ -25,6 +29,23 @@ export class BaseItemDialog {
 
     open() {
         return this.fixture.open(this.name);
+    }
+
+    getLabeledField(label: LabelFields | CheckBoxFields | SelectFields) {
+        return this.locator.getByLabel(new RegExp(label, 'i'));
+    }
+    async setLabeledField(label: LabelFields, value: string) {
+        const locator = this.getLabeledField(label);
+        await locator.fill(value);
+        return locator.blur();
+    }
+    async selectOption(label: SelectFields, option: string) {
+        const locator = this.getLabeledField(label);
+        await locator.selectOption(option);
+        return locator.blur();
+    }
+    togglePillCheckbox(label: SelectFields) {
+        return this.locator.getByText(label).click();
     }
 }
 

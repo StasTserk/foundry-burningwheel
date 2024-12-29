@@ -23,7 +23,7 @@ export class AffiliationFixture extends BaseItemFixture {
         super(page, gamePage, test);
     }
 
-    async openDialog(name: SeededItems) {
+    async openDialog(name: SeededItems<'affiliation'>) {
         await this.open(name);
         return new AffiliationDialog(this, name);
     }

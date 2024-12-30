@@ -16,10 +16,10 @@
         />
     </div>
     <div class='item-form-group'>
-        <div class='item-setting-label'>{{localize
+        <label class='item-setting-label' for="{{item.id}}-influence">{{localize
                 'BW.relationship.influence'
-            }}</div>
-        <select name='system.influence' value='{{system.influence}}'>
+            }}</label>
+        <select name='system.influence' value='{{system.influence}}' id="{{item.id}}-influence">
             {{selectOptions influenceOptions localize=true selected=system.influence}}
         </select>
         <div></div><div></div>

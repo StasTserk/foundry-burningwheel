@@ -44,7 +44,11 @@ export class BaseItemDialog<
         await locator.selectOption(option);
         return locator.blur();
     }
-    togglePillCheckbox(label: SelectFields) {
+    togglePillCheckbox(label: CheckBoxFields, force?: boolean) {
+        if (force) {
+            // work around for this feature not working some times. (invisible checkbox?)
+            return this.locator.getByText(label).dispatchEvent('click');
+        }
         return this.locator.getByText(label).click();
     }
 }

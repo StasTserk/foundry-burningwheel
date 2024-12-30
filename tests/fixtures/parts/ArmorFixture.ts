@@ -4,69 +4,44 @@ import { GameFixture } from '../gameFixture';
 import { BaseItemDialog, BaseItemFixture } from './BaseItemFixture';
 import { SeededItems } from '../SeededData';
 
-class ArmorDialog extends BaseItemDialog {
+type InputFields =
+    | 'armor dice'
+    | 'resource point cost'
+    | 'helm damage'
+    | 'observation penalty'
+    | 'torso damage'
+    | 'fatigue penalty'
+    | 'stealthy penalty'
+    | 'swimming penalty'
+    | 'left arm damage'
+    | 'right arm damage'
+    | 'agility penalty'
+    | 'climbing penalty'
+    | 'shooting penalty'
+    | 'left leg damage'
+    | 'right leg damage'
+    | 'speed obstacle penalty'
+    | 'shield damage';
+
+type CheckboxFields =
+    | 'equipped'
+    | 'has helm'
+    | 'has torso'
+    | 'has left arm'
+    | 'has right arm'
+    | 'has left leg'
+    | 'has right leg'
+    | 'has shield';
+
+type SelectFields = 'armor quality' | 'shade' | 'untrained penalty';
+
+class ArmorDialog extends BaseItemDialog<
+    InputFields,
+    CheckboxFields,
+    SelectFields
+> {
     constructor(fixture: ArmorFixture, name: SeededItems) {
         super(fixture, name);
-    }
-
-    get armorDice() {
-        return this.locator.getByLabel(/armor dice/i);
-    }
-
-    get equipped() {
-        return this.locator.getByLabel(/equipped/i);
-    }
-
-    get quality() {
-        return this.locator.getByLabel(/armor quality/i);
-    }
-
-    get untrainedPenalty() {
-        return this.locator.getByLabel(/untrained penalty/i);
-    }
-
-    get rpCost() {
-        return this.locator.getByLabel(/resource point cost/i);
-    }
-
-    get hasHelm() {
-        return this.locator.getByLabel(/has helm/i);
-    }
-
-    toggleHasHelm() {
-        return this.locator.getByLabel(/has helm/i).dispatchEvent('click');
-    }
-
-    get helmDamage() {
-        return this.locator.getByLabel(/helm damage/i);
-    }
-
-    get hasTorso() {
-        return this.locator.getByLabel(/has helm/i);
-    }
-
-    toggleHasTorso() {
-        return this.locator.getByText(/has helm/i).dispatchEvent('click');
-    }
-
-    get torsoDamage() {
-        return this.locator.getByLabel(/torso damage/i);
-    }
-
-    get hasLeftArm() {
-        return this.locator.getByLabel(/has helm/i);
-    }
-    get hasRightArm() {
-        return this.locator.getByLabel(/has helm/i);
-    }
-    get hasLeftLeg() {
-        return this.locator.getByLabel(/has helm/i);
-    }
-    get hasRightLeg() {
-        return this.locator.getByLabel(/has helm/i);
-    }
-    get hasShield() {
-        return this.locator.getByLabel(/has helm/i);
     }
 }
 

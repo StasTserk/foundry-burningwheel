@@ -35,19 +35,52 @@
         <div class="attack-grid-header">{{localize "BW.weapon.vsArmorAcronym"}}</div>
         <div class="attack-grid-header">{{localize "BW.weapon.speedAcronym"}}</div>
         <div class="attack-grid-header">{{localize "BW.weapon.length"}}</div>
-        <div><i class="fas fa-plus"></i></div>
+        <div><i class="fas fa-plus" aria-label="add new attack" role="button"></i></div>
         {{#each system.attacks}}
-            <input type="text" name="system.attacks.{{@key}}.attackName" value="{{this.attackName}}" placeholder="{{localize "BW.weapon.default"}}">
-            <input type="number" class="exponent" name="system.attacks.{{@key}}.power" value="{{this.power}}" data-dtype="Number">
-            <input type="number" class="exponent" name="system.attacks.{{@key}}.add" value="{{this.add}}" data-dtype="Number">
-            <input type="number" class="exponent" name="system.attacks.{{@key}}.vsArmor" value="{{this.vsArmor}}" data-dtype="Number">
-            <select name="system.attacks.{{@key}}.weaponSpeed">
+            <input
+                aria-label="attack {{@key}} name"
+                type="text"
+                name="system.attacks.{{@key}}.attackName"
+                value="{{this.attackName}}"
+                placeholder="{{localize "BW.weapon.default"}}">
+            <input
+                aria-label="attack {{@key}} power"
+                type="number"
+                class="exponent"
+                name="system.attacks.{{@key}}.power"
+                value="{{this.power}}"
+                data-dtype="Number">
+            <input
+                aria-label="attack {{@key}} add"
+                type="number"
+                class="exponent"
+                name="system.attacks.{{@key}}.add"
+                value="{{this.add}}"
+                data-dtype="Number">
+            <input
+                aria-label="attack {{@key}} va"
+                type="number"
+                class="exponent"
+                name="system.attacks.{{@key}}.vsArmor"
+                value="{{this.vsArmor}}"
+                data-dtype="Number">
+            <select
+                aria-label="attack {{@key}} speed"
+                name="system.attacks.{{@key}}.weaponSpeed">
                 {{selectOptions ../speeds selected=this.weaponSpeed}}
             </select>
-            <select name="system.attacks.{{@key}}.weaponLength">
+            <select
+                aria-label="attack {{@key}} length"
+                name="system.attacks.{{@key}}.weaponLength">
                 {{selectOptions ../weaponLengths selected=this.weaponLength localize=true}}
             </select>
-            <div><i class="fas fa-minus" data-index="{{@key}}"></i></div>
+            <div>
+                <i
+                    class="fas fa-minus"
+                    data-index="{{@key}}"
+                    aria-label="delete attack {{@key}}"
+                    role="button"></i>
+            </div>
         {{/each}}
     </div>
     <hr>

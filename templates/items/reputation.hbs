@@ -16,8 +16,8 @@
         />
     </div>
     <div class='item-form-group'>
-        <div class='item-setting-label'>{{localize 'BW.dice'}}</div>
-        <select name='system.dice' value='{{system.dice}}' data-dtype='Number'>
+        <label class='item-setting-label' for="{{item.id}}-dice">{{localize 'BW.dice'}}</label>
+        <select name='system.dice' value='{{system.dice}}' data-dtype='Number' id="{{item.id}}-dice">
             {{selectOptions diceOptions localize=true selected=system.dice}}
         </select>
         <div class='pill-toggle'>

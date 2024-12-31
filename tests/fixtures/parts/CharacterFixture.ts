@@ -51,6 +51,20 @@ class CharacterDialog {
         );
     }
 
+    learningSkill(name: string) {
+        return new SkillWidget(
+            this.locator.getByLabel(
+                new RegExp(`learning rollable ${name}`, 'i')
+            ),
+            SkillFixture.getOpenDialog({
+                page: this.page,
+                gamePage: this.gamePage,
+                test: this.test,
+                name,
+            })
+        );
+    }
+
     open() {
         return this.fixture.openCharacter(this.name);
     }

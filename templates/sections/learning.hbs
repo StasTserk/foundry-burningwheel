@@ -6,7 +6,7 @@
     <label for="{{actor.id}}-collapseLearning" class="section-collapse-label clickable">{{localize "BW.character.learnAndPractice"}}</label>
 </h2>
 {{#if system.collapseLearning}}{{else}}
-<div class="learning-practice flex-row">
+<div class="learning-practice flex-row" aria-label="learning section">
     <div class="flex-row learning-section">
         {{#each learning as |skill|}}
             {{> "systems/burningwheel/templates/parts/learning.hbs" skill=skill isOwner=../isOwner }}

@@ -25,4 +25,20 @@ export class ReputationFixture extends BaseItemFixture {
         await super.open(name);
         return new ReputationDialog(this, name);
     }
+    static getOpenDialog({
+        page,
+        gamePage,
+        test,
+        name,
+    }: {
+        page: Page;
+        gamePage: GameFixture;
+        test: FixtureBase;
+        name: string;
+    }) {
+        return new ReputationDialog(
+            new ReputationFixture(page, gamePage, test),
+            name as SeededItems
+        );
+    }
 }

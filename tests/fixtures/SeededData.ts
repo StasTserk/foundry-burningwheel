@@ -1,6 +1,9 @@
 export type SeededActors = 'Romeo' | 'Tybalt' | 'Hamlet' | 'Shakespeare';
 
-export type SeededItems<T extends ItemType = ItemType> =
+export type SeededItems<
+    T extends ItemType = ItemType,
+    U extends string = string
+> =
     | 'A Dirk'
     | "A Frickin' Gun"
     | 'Bastard'
@@ -11,7 +14,8 @@ export type SeededItems<T extends ItemType = ItemType> =
     | 'Persuasion'
     | 'Your Lordship'
     | `Test ${Capitalize<T>}`
-    | `Modified ${Capitalize<T>}`;
+    | `Modified ${Capitalize<T>}`
+    | `Modified ${Capitalize<T>} ${U}`;
 
 export type ItemType =
     | 'affiliation'

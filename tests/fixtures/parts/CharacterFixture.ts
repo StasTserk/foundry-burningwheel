@@ -4,10 +4,48 @@ import { GameFixture } from '../gameFixture';
 import { SeededActors } from '../SeededData';
 import { SkillFixture } from './SkillFixture';
 import { SpellFixture } from './SpellFixture';
+import { ReputationFixture } from './ReputationFixture';
+import { AffiliationFixture } from './AffiliationFixture';
+
+class RepWidget {
+    constructor(
+        readonly locator: Locator,
+        private readonly dialog: ReturnType<
+            typeof ReputationFixture.getOpenDialog
+        >
+    ) {}
+
+    async edit() {
+        await this.locator.locator('i.fa-edit').click();
+        return this.dialog;
+    }
+
+    async delete() {
+        await this.locator.locator('i.fa-trash').click();
+    }
+}
+
+class AffWidget {
+    constructor(
+        readonly locator: Locator,
+        private readonly dialog: ReturnType<
+            typeof AffiliationFixture.getOpenDialog
+        >
+    ) {}
+
+    async edit() {
+        await this.locator.locator('i.fa-edit').click();
+        return this.dialog;
+    }
+
+    async delete() {
+        await this.locator.locator('i.fa-trash').click();
+    }
+}
 
 class SkillWidget {
     constructor(
-        private readonly locator: Locator,
+        readonly locator: Locator,
         private readonly dialog: ReturnType<typeof SkillFixture.getOpenDialog>
     ) {}
 
@@ -28,7 +66,7 @@ class SkillWidget {
 
 class SpellWidget {
     constructor(
-        private readonly locator: Locator,
+        readonly locator: Locator,
         private readonly dialog: ReturnType<typeof SpellFixture.getOpenDialog>
     ) {}
 
@@ -48,7 +86,7 @@ class SpellWidget {
 }
 
 class CharacterDialog {
-    private readonly locator: Locator;
+    readonly locator: Locator;
     constructor(
         private readonly page: Page,
         private readonly fixture: CharacterFixture,
@@ -91,6 +129,30 @@ class CharacterDialog {
                 new RegExp(`learning rollable ${name}`, 'i')
             ),
             SkillFixture.getOpenDialog({
+                page: this.page,
+                gamePage: this.gamePage,
+                test: this.test,
+                name,
+            })
+        );
+    }
+
+    reputation(name: string) {
+        return new RepWidget(
+            this.locator.getByLabel(new RegExp(`reputation ${name}`, 'i')),
+            ReputationFixture.getOpenDialog({
+                page: this.page,
+                gamePage: this.gamePage,
+                test: this.test,
+                name,
+            })
+        );
+    }
+
+    affiliation(name: string) {
+        return new AffWidget(
+            this.locator.getByLabel(new RegExp(`affiliation ${name}`, 'i')),
+            AffiliationFixture.getOpenDialog({
                 page: this.page,
                 gamePage: this.gamePage,
                 test: this.test,

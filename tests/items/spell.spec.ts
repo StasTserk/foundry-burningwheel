@@ -59,3 +59,14 @@ test('is weapon section can be toggled hidden', async ({
     await dialog.togglePillCheckbox('Is A Weapon');
     await expect(dialog.getLabeledField('Will Bonus')).not.toBeVisible();
 });
+
+test('fields that require an owner can be displayed', async ({ char }) => {
+    const charSheet = await char.openCharacterDialog('Romeo');
+    const spell = await charSheet.spell('jazz hands').edit();
+    await test.step('expect character specific fields are visible', async () => {
+        await expect(spell.locator).toBeVisible();
+        await expect(spell.locator.getByText('I/M/S')).toBeVisible();
+        await expect(spell.locator.getByText('3 / 5 / 7')).toBeVisible();
+        await expect(spell.getLabeledField('In practicals')).not.toBeChecked();
+    });
+});

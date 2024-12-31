@@ -1,4 +1,4 @@
-<div class="spell-section-item flex-row" {{#if isOwner}}draggable="true"{{/if}} data-id="{{spell._id}}">
+<div class="spell-section-item flex-row" {{#if isOwner}}draggable="true"{{/if}} data-id="{{spell._id}}" aria-label="spell rollable {{spell.name}}">
     {{#if isOwner}}
     <input id="{{spell._id}}-collapse" type="checkbox" class="hidden" data-item-id="{{spell._id}}" data-binding="system.collapsed" {{ checked system.collapsed }}>
     {{/if}}
@@ -7,12 +7,20 @@
         {{spell.name}}
     </label>
     {{#if isOwner}}
-        <button type="button" class="rollable modifiable" data-skill-id="{{spell.system.skillId}}" data-spell-id="{{spell._id}}" data-roll-type="spell"><i class="fas fa-dice"></i></button>
+        <button
+            aria-label="roll spell"
+            type="button"
+            class="rollable modifiable"
+            data-skill-id="{{spell.system.skillId}}"
+            data-spell-id="{{spell._id}}"
+            data-roll-type="spell">
+            <i class="fas fa-dice"></i>
+        </button>
     {{/if}}
     {{#if system.collapsed}}{{else}}
     <div class="spell-details flex-row">
-        <label class="spell-details-label">{{localize "BW.skill.skill"}}</label>
-        <select class="spell-details-data" data-item-id="{{spell._id}}" data-binding="system.skillId" value="{{spell.system.skillId}}">
+        <label class="spell-details-label" for="{{spell._id}}-spell-label">{{localize "BW.skill.skill"}}</label>
+        <select class="spell-details-data" data-item-id="{{spell._id}}" data-binding="system.skillId" value="{{spell.system.skillId}}" id="{{spell._id}}-spell-label">
             {{selectOptions skills selected=spell.system.skillId localize=true valueAttr="id" labelAttr="label"}}
         </select>
         {{#if spell.system.inPracticals}}
@@ -21,8 +29,10 @@
         </div>
         {{{itemProgressTicks spell._id spell.system.learningProgress "system.learningProgress" "spell-practicals" spell.system.aptitude 0}}}
         {{/if}}
-        <label class="spell-details-label">{{localize "BW.obstacle"}}</label><div class="spell-details-data">{{spell.obstacleLabel}}</div>
-        <label class="spell-details-label">{{localize "BW.character.actions"}}</label><div class="spell-details-data">{{spell.system.actions}}</div>
+        <label class="spell-details-label" for="{{spell._id}}-obstacle">{{localize "BW.obstacle"}}</label>
+        <div class="spell-details-data" id="{{spell._id}}-obstacle">{{spell.obstacleLabel}}</div>
+        <label class="spell-details-label" for="{{spell._id}}-actions">{{localize "BW.character.actions"}}</label>
+        <div class="spell-details-data" id="{{spell._id}}-actions">{{spell.system.actions}}</div>
         {{#if spell.system.isWeapon}}
         <label class="spell-details-label">{{localize "BW.weapon.asWeapon"}}</label>
         <div class="spell-weapon">

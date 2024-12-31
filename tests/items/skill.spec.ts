@@ -75,15 +75,21 @@ test('changing the skill type updates the default mage', async ({
 test('displays character fields when attached to a player', async ({
     char,
 }) => {
-    const skill =
-        await test.step('open character and edit a skill', async () => {
-            const sheet = await char.openCharacterDialog('Romeo');
-            return await sheet.skill('Sword').edit();
-        });
+    const sheet = await test.step('open character', async () => {
+        return await char.openCharacterDialog('Romeo');
+    });
 
     await test.step('ensure character specific fields were populated', async () => {
+        const skill = await sheet.skill('Sword').edit();
         await expect(skill.getLabeledField('Aptitude')).toHaveValue('7');
         await expect(skill.getLabeledField('Learning')).not.toBeChecked();
+        await skill.close();
+    });
+
+    await test.step('learning skill checked correctly', async () => {
+        const skill = await sheet.learningSkill('Falsehood').edit();
+        await expect(skill.getLabeledField('Learning')).toBeChecked();
+        await expect(skill.getLabeledField('Aptitude')).toHaveValue('6');
         await skill.close();
     });
 });

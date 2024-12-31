@@ -1,16 +1,16 @@
-<div class="rollable flex-row {{skill.system.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-id="{{skill._id}}">
+<div class="rollable flex-row {{skill.system.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-id="{{skill._id}}" aria-label="Skill Rollable {{skill.name}}">
     <input type="checkbox" id="{{skill.system.safeId}}-toggle" class="collapse-checkbox" data-item-id="{{skill._id}}" data-binding="system.collapsed" {{ checked system.collapsed }}>
     {{#if isOwner}}<label for="{{skill.system.safeId}}-toggle" class="collapse-label"><i class="fas fa-chevron-circle-down"></i></label>{{/if}}
     <h3 class="rollable-name">{{ skill.name }}</h3>
-    <select class="shade" data-item-id="{{skill._id}}" data-binding="system.shade" value="{{skill.system.shade}}">
+    <select class="shade" data-item-id="{{skill._id}}" data-binding="system.shade" value="{{skill.system.shade}}" aria-label="shade">
         {{selectOptions @root.basicShades selected=skill.system.shade}}
     </select>
-    <input class="exponent" type="number" data-item-id="{{skill._id}}" data-binding="system.exp" value="{{skill.system.exp}}">
+    <input class="exponent" type="number" data-item-id="{{skill._id}}" data-binding="system.exp" value="{{skill.system.exp}}"  arial-label="exponent">
     {{#if isOwner}}
-        <button type="button" class="rollable modifiable" data-roll-type="skill" data-skill-id="{{skill._id}}"><i class="fas fa-dice"></i></button>
+        <button type="button" class="rollable modifiable" data-roll-type="skill" data-skill-id="{{skill._id}}" aria-label="roll skill"><i class="fas fa-dice"></i></button>
     {{/if}}
     <div class="collapsing-section">
-        <div class="test-tracking">
+        <div class="test-tracking" arial-label="routine test tracking">
             <div class="test-title">Routine: </div>
             <input class="tests-needed" value="{{skill.system.routineNeeded}}" disabled>
             {{#multiboxes skill.system.routine needed=skill.system.routineNeeded}}
@@ -28,7 +28,7 @@
             <label for="{{skill.system.safeId}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
-        <div class="test-tracking">
+        <div class="test-tracking" arial-label="difficult test tracking">
             <div class="test-title">Difficult:</div>
             <input class="tests-needed" value="{{skill.system.difficultNeeded}}" disabled>
             {{#multiboxes skill.system.difficult needed=skill.system.difficultNeeded}}
@@ -46,7 +46,7 @@
             <label for="{{skill.system.safeId}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
-        <div class="test-tracking">
+        <div class="test-tracking" arial-label="challenging test tracking">
             <div class="test-title">Challenging:</div>
             <input class="tests-needed" value="{{skill.system.challengingNeeded}}" disabled>
             {{#multiboxes skill.system.challenging needed=skill.system.challengingNeeded}}

@@ -6,7 +6,7 @@
     <label for="{{actor.id}}-collapseSkills" class="section-collapse-label clickable">{{ localize "BW.skill.skills"}}</label>
 </h2>
 {{#if system.collapseSkills}}{{else}}
-<div class="skills">
+<div class="skills" aria-label="skills section">
     {{#each skills as |skill|}}
         {{> "systems/burningwheel/templates/parts/rollable-skill.hbs" skill=skill isOwner=../isOwner}}
     {{/each}}

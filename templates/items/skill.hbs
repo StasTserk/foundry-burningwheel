@@ -16,16 +16,17 @@
         />
     </div>
     <div class='item-form-group'>
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-type">
             {{localize 'BW.skill.type'}}
         </label>
-        <select name='system.skilltype'>
+        <select name='system.skilltype' id="{{item.id}}-type">
             {{selectOptions skillTypes selected=system.skilltype localize=true}}
         </select>
-        <label class='item-setting-label'>
+        <label class='item-setting-label' for="{{item.id}}-rest">
             {{localize 'BW.skill.restrictions'}}
         </label>
         <input
+            id="{{item.id}}-rest"
             type='text'
             name='system.restrictions'
             value='{{system.restrictions}}'
@@ -33,12 +34,12 @@
         />
     </div>
     <div class='item-form-group'>
-        <label class='item-setting-label'>{{localize 'BW.skill.root1'}}</label>
-        <select name='system.root1' value='{{system.root1}}'>
+        <label class='item-setting-label' for="{{item.id}}-root1">{{localize 'BW.skill.root1'}}</label>
+        <select name='system.root1' value='{{system.root1}}' id="{{item.id}}-root1">
             {{selectOptions skillRoots selected=system.root1 localize=true}}
         </select>
-        <label class='item-setting-label'>{{localize 'BW.skill.root2'}}</label>
-        <select name='system.root2' value='{{system.root2}}'>
+        <label class='item-setting-label' for="{{item.id}}-root2">{{localize 'BW.skill.root2'}}</label>
+        <select name='system.root2' value='{{system.root2}}' id="{{item.id}}-root2">
             {{selectOptions skillRoots selected=system.root2 localize=true}}
         </select>
     </div>

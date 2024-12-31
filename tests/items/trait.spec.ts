@@ -57,56 +57,6 @@ test('die trait loads sheet data', async ({ items: { trait } }) => {
     });
 });
 
-test('die trait loads sheet data', async ({ items: { trait } }) => {
-    const dialog = await trait.openDialog('Modified Trait Die');
-    await expect(dialog.getLabeledField('Restrictions')).toHaveValue(
-        'Testing only'
-    );
-    await expect(dialog.getLabeledField('Trait Type')).toHaveValue('die');
-    await expect(dialog.getLabeledField('Cost')).toHaveValue('2');
-
-    await test.step('test die specific fields', async () => {
-        await expect(dialog.getLabeledField('Has Die Modifier')).toBeChecked();
-        await expect(dialog.getLabeledField('die rolls affected')).toHaveValue(
-            'Spelling'
-        );
-        await expect(
-            dialog.locator.getByLabel('Die Modifier', { exact: true })
-        ).toHaveValue('1');
-
-        await expect(dialog.getLabeledField('Adds Reputation')).toBeChecked();
-        await expect(dialog.getLabeledField('Reputation Name')).toHaveValue(
-            'Yes'
-        );
-        await expect(dialog.getLabeledField('Infamous')).toBeChecked();
-    });
-});
-
-test('die trait loads sheet data', async ({ items: { trait } }) => {
-    const dialog = await trait.openDialog('Modified Trait Die');
-    await expect(dialog.getLabeledField('Restrictions')).toHaveValue(
-        'Testing only'
-    );
-    await expect(dialog.getLabeledField('Trait Type')).toHaveValue('die');
-    await expect(dialog.getLabeledField('Cost')).toHaveValue('2');
-
-    await test.step('test die specific fields', async () => {
-        await expect(dialog.getLabeledField('Has Die Modifier')).toBeChecked();
-        await expect(dialog.getLabeledField('die rolls affected')).toHaveValue(
-            'Spelling'
-        );
-        await expect(
-            dialog.locator.getByLabel('Die Modifier', { exact: true })
-        ).toHaveValue('1');
-
-        await expect(dialog.getLabeledField('Adds Reputation')).toBeChecked();
-        await expect(dialog.getLabeledField('Reputation Name')).toHaveValue(
-            'Yes'
-        );
-        await expect(dialog.getLabeledField('Infamous')).toBeChecked();
-    });
-});
-
 test('die traits can be edited', async ({ items: { trait } }) => {
     const dialog = await trait.openDialog('Modified Trait Die');
     await test.step('modify some die trait values', async () => {

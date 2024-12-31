@@ -19,7 +19,12 @@ type LabelFields =
     | 'Optimal Range'
     | 'Extreme Range'
     | 'Max Range';
-type CheckBoxFields = 'Up Spell' | 'Variable Ob' | 'Is A Weapon' | 'Half Will';
+type CheckBoxFields =
+    | 'Up Spell'
+    | 'Variable Ob'
+    | 'Is A Weapon'
+    | 'Half Will'
+    | 'In practicals';
 type SelectFields = 'Length';
 class SpellDialog extends BaseItemDialog<
     LabelFields,
@@ -38,5 +43,22 @@ export class SpellFixture extends BaseItemFixture {
     async openDialog(name: SeededItems<'spell'>) {
         await super.open(name);
         return new SpellDialog(this, name);
+    }
+
+    static getOpenDialog({
+        page,
+        gamePage,
+        test,
+        name,
+    }: {
+        page: Page;
+        gamePage: GameFixture;
+        test: FixtureBase;
+        name: string;
+    }) {
+        return new SpellDialog(
+            new SpellFixture(page, gamePage, test),
+            name as SeededItems
+        );
     }
 }

@@ -68,8 +68,8 @@ const extender: Parameters<typeof testLoggedIn.extend<BwFixture>>[0] = {
             ranged: new RangedWeaponFixture(page, gamePage, test),
             rel: new RelationshipFixture(page, gamePage, test),
             rep: new ReputationFixture(page, gamePage, test),
-            skill: new SpellFixture(page, gamePage, test),
-            spell: new SkillFixture(page, gamePage, test),
+            skill: new SkillFixture(page, gamePage, test),
+            spell: new SpellFixture(page, gamePage, test),
             trait: new TraitFixture(page, gamePage, test),
         }),
 };

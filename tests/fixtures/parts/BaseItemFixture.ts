@@ -17,6 +17,10 @@ export class BaseItemDialog<
         return this.locator.locator('textarea[name="system.description"]');
     }
 
+    get image() {
+        return this.locator.getByRole('img');
+    }
+
     setDescription(text: string) {
         return this.locator
             .locator('textarea[name="system.description"]')
@@ -79,6 +83,10 @@ export class BaseItemFixture {
     }
 
     sheet(name: SeededItems) {
-        return this.page.locator('div.app.bw-app').filter({ hasText: name });
+        return this.page.locator('div.app.bw-app').filter({
+            has: this.page
+                .locator('h4')
+                .filter({ hasText: new RegExp(name, 'i') }),
+        });
     }
 }

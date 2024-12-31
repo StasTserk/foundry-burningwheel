@@ -1,7 +1,60 @@
-import { expect, Page } from 'playwright/test';
+import { expect, Locator, Page } from 'playwright/test';
 import { FixtureBase } from '../bwFixture';
 import { GameFixture } from '../gameFixture';
 import { SeededActors } from '../SeededData';
+import { SkillFixture } from './SkillFixture';
+
+class SkillWidget {
+    constructor(
+        private readonly locator: Locator,
+        private readonly dialog: ReturnType<typeof SkillFixture.getOpenDialog>
+    ) {}
+
+    async edit() {
+        await this.locator.locator('i.fa-edit').click();
+        return this.dialog;
+    }
+
+    async delete() {
+        await this.locator.locator('i.fa-trash').click();
+    }
+
+    async roll() {
+        await this.locator.getByLabel('roll skill').click();
+        // return a roll dialog instance
+    }
+}
+
+class CharacterDialog {
+    private readonly locator: Locator;
+    constructor(
+        private readonly page: Page,
+        private readonly fixture: CharacterFixture,
+        private readonly name: SeededActors,
+        private readonly test: FixtureBase,
+        private readonly gamePage: GameFixture
+    ) {
+        this.locator = this.page.locator('div.app.bw-app').filter({
+            has: page.locator('h4').filter({ hasText: new RegExp(name, 'i') }),
+        });
+    }
+
+    skill(name: string) {
+        return new SkillWidget(
+            this.locator.getByLabel(new RegExp(`skill rollable ${name}`, 'i')),
+            SkillFixture.getOpenDialog({
+                page: this.page,
+                gamePage: this.gamePage,
+                test: this.test,
+                name,
+            })
+        );
+    }
+
+    open() {
+        return this.fixture.openCharacter(this.name);
+    }
+}
 
 export class CharacterFixture {
     constructor(
@@ -18,13 +71,32 @@ export class CharacterFixture {
         });
     }
 
+    async openCharacterDialog(name: SeededActors) {
+        await this.openCharacter(name);
+        return new CharacterDialog(
+            this.page,
+            this,
+            name,
+            this.test,
+            this.gamePage
+        );
+    }
+
     expectOpened(name: SeededActors) {
         return expect(
-            this.page.locator('div.app.bw-app').filter({ hasText: name })
+            this.page.locator('div.app.bw-app').filter({
+                has: this.page
+                    .locator('h4')
+                    .filter({ hasText: new RegExp(name, 'i') }),
+            })
         ).toBeVisible();
     }
 
     sheet(name: SeededActors) {
-        return this.page.locator('div.app.bw-app').filter({ hasText: name });
+        return this.page.locator('div.app.bw-app').filter({
+            has: this.page
+                .locator('h4')
+                .filter({ hasText: new RegExp(name, 'i') }),
+        });
     }
 }

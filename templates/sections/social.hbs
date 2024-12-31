@@ -6,17 +6,17 @@
     <label for="{{actor.id}}-collapseRelationships" class="section-collapse-label clickable">{{localize "BW.character.relationshipsAndReps"}}</label>
 </h2>
 {{#if system.collapseRelationships}}{{else}}
-<div class="relationship-section flex-row">
+<div class="relationship-section flex-row" aria-label="relationships">
     <div class="relationships">
         <h2>{{localize "BW.character.relationships"}}  {{#if isOwner}}<i data-action="addRelationship" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each relationships as |r|}}
             {{> "systems/burningwheel/templates/parts/relationships.hbs" relationship=r exp=../system.circles.exp isOwner=../isOwner}}
         {{/each}}
     </div>
-    <div class="reputations">
+    <div class="reputations" aria-label="reputations">
         <h2>{{localize "BW.character.reputations"}}  {{#if isOwner}}<i data-action="addReputation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each reputations as |r|}}
-        <div class="reputation flex-row {{r.system.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{r._id}}">
+        <div class="reputation flex-row {{r.system.cssClass}}" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{r._id}}" aria-label="reputation {{r.name}}">
             <div class="item-title">
                 {{r.system.dice}}{{localize "BW.diceAcronym"}} - {{ r.name }}
             </div>
@@ -27,10 +27,10 @@
         </div>
         {{/each}}
     </div>
-    <div class="affiliations">
+    <div class="affiliations" aria-label="affiliations">
         <h2>{{localize "BW.character.affiliations"}}   {{#if isOwner}}<i data-action="addAffiliation" class="fas fa-plus"></i>{{/if}}</h2>
         {{#each affiliations as |a|}}
-        <div class="affiliation flex-row" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{a._id}}">
+        <div class="affiliation flex-row" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{a._id}}" aria-label="affiliation {{a.name}}">
             <div class="item-title">
                 {{a.system.dice}}{{localize "BW.diceAcronym"}} - {{ a.name }}
             </div>

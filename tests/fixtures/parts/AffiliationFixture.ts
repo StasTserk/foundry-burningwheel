@@ -27,4 +27,21 @@ export class AffiliationFixture extends BaseItemFixture {
         await this.open(name);
         return new AffiliationDialog(this, name);
     }
+
+    static getOpenDialog({
+        page,
+        gamePage,
+        test,
+        name,
+    }: {
+        page: Page;
+        gamePage: GameFixture;
+        test: FixtureBase;
+        name: string;
+    }) {
+        return new AffiliationDialog(
+            new AffiliationFixture(page, gamePage, test),
+            name as SeededItems
+        );
+    }
 }

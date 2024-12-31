@@ -16,8 +16,8 @@
         />
     </div>
     <div class='item-form-group'>
-        <label class='item-setting-label'>{{localize 'BW.trait.type'}}</label>
-        <select name='system.traittype' value='{{system.traittype}}'>
+        <label class='item-setting-label' for="{{item.id}}-type">{{localize 'BW.trait.type'}}</label>
+        <select name='system.traittype' value='{{system.traittype}}' id="{{item.id}}-type">
             {{selectOptions traitTypes localize=true selected=system.traittype}}
         </select>
 
@@ -71,6 +71,7 @@
                 <div class='trait-effect-details input-grid'>
                     <div class='trait-input-double'>
                         <input
+                            aria-label="die rolls affected"
                             id='{{item.id}}-dieModifierTarget'
                             type='text'
                             name='system.dieModifierTarget'
@@ -116,6 +117,7 @@
                 <div class='trait-effect-details input-grid'>
                     <div class='trait-input-double'>
                         <input
+                            aria-label="ob rolls affected"
                             id='{{item.id}}-obModifierTarget'
                             type='text'
                             name='system.obModifierTarget'
@@ -172,6 +174,7 @@
                     </div>
                     <div>
                         <input
+                            aria-label="reputation dice"
                             id='{{item.id}}-reputationDice'
                             type='number'
                             name='system.reputationDice'
@@ -228,6 +231,7 @@
                     </div>
                     <div>
                         <input
+                            aria-label="affiliation dice"
                             id='{{item.id}}-affiliationDice'
                             type='number'
                             name='system.affiliationDice'

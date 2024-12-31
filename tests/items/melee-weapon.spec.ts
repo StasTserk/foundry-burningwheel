@@ -35,8 +35,8 @@ test('can be edited', async ({ items: { melee } }) => {
     test.slow();
     const dialog = await melee.openDialog('Modified Melee weapon');
     await test.step('modify some fields and close the sheet', async () => {
-        await dialog.setLabeledField('Resource Point Cost', '22');
         await dialog.selectOption('Shade', 'W');
+        await dialog.setLabeledField('Resource Point Cost', '22');
         await dialog.selectOption('attack 0 speed', '1');
         await dialog.selectOption('attack 1 length', 'short');
         await dialog.selectOption('Handedness', 'one');

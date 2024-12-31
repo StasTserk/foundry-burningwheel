@@ -35,8 +35,11 @@ export class BaseItemDialog<
         return this.fixture.open(this.name);
     }
 
-    getLabeledField(label: LabelFields | CheckBoxFields | SelectFields) {
-        return this.locator.getByLabel(new RegExp(label, 'i'));
+    getLabeledField(
+        label: LabelFields | CheckBoxFields | SelectFields,
+        exact?: boolean
+    ) {
+        return this.locator.getByLabel(new RegExp(label, 'i'), { exact });
     }
     async setLabeledField(label: LabelFields, value: string) {
         const locator = this.getLabeledField(label);
@@ -67,7 +70,7 @@ export class BaseItemFixture {
     async open(name: SeededItems) {
         await this.gamePage.openTab('Items');
         await this.test.step(`Open item named '${name}'`, async () => {
-            await this.page.getByText(name).click();
+            await this.page.getByText(name, { exact: true }).click();
             await this.expectOpened(name);
         });
     }

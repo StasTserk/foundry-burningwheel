@@ -62,6 +62,38 @@ class SkillWidget {
         await this.locator.getByLabel('roll skill').click();
         // return a roll dialog instance
     }
+
+    get routineNeeded() {
+        return this.locator.getByRole('textbox').first();
+    }
+
+    get difficultNeeded() {
+        return this.locator.getByRole('textbox').nth(1);
+    }
+
+    get challengingNeeded() {
+        return this.locator.getByRole('textbox').nth(2);
+    }
+
+    get exponent() {
+        return this.locator.getByRole('spinbutton').first();
+    }
+
+    get fateSpent() {
+        return this.locator.getByPlaceholder('F');
+    }
+
+    get personaSpent() {
+        return this.locator.getByPlaceholder('P');
+    }
+
+    get deedsSpent() {
+        return this.locator.getByPlaceholder('D');
+    }
+
+    get open() {
+        return this.locator.getByLabel('Open');
+    }
 }
 
 class SpellWidget {
@@ -163,6 +195,10 @@ class CharacterDialog {
 
     open() {
         return this.fixture.openCharacter(this.name);
+    }
+
+    close() {
+        return this.locator.getByText(/close/i).click();
     }
 }
 

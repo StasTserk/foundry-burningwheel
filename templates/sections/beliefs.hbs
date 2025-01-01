@@ -7,14 +7,14 @@
     {{#if isOwner}}<i data-action="addBelief" class="fas fa-plus clickable"></i>{{/if}}
 </h2>
 {{#if system.collapseBeliefs}}{{else}}
-<div class="beliefs">
+<div class="beliefs" aria-label="beliefs">
     {{#each beliefs as |belief iid|}}
-        <div class="bits-item flex-row">
+        <div class="bits-item flex-row" aria-label="belief-{{belief.name}}">
             <div class="bits-artha" {{#if ../isOwner}}draggable="true"{{/if}} data-id="{{belief._id}}">
                 <div class="bits-item-name" data-action="editItem" data-id="{{belief._id}}">{{belief.name}}</div>
-                {{localize "BW.fateAcronym"}}<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.fate" {{ checked belief.system.fate }}>
-                {{localize "BW.personaAcronym"}}<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.persona"  {{ checked belief.system.persona }}>
-                {{localize "BW.deedsAcronym"}}<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.deeds" {{ checked belief.system.deeds }}>
+                {{localize "BW.fateAcronym"}}<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.fate" {{ checked belief.system.fate }} aria-label="fate">
+                {{localize "BW.personaAcronym"}}<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.persona"  {{ checked belief.system.persona }} aria-label="persona">
+                {{localize "BW.deedsAcronym"}}<input type="checkbox" data-item-id="{{belief._id}}" data-binding="system.deeds" {{ checked belief.system.deeds }} aria-label="deeds">
             </div>
             {{#if ../isOwner}}
             <div class="bits-buttons flex-column">

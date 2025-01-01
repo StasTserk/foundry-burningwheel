@@ -30,3 +30,16 @@ test('characters can be created, on create scripts fire', async ({
         ).toBeVisible();
     });
 });
+
+test('item states persist correctly', async ({ char }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    await test.step('edit a skill exponent and close the sheet', async () => {
+        await sheet.skill('Brawling').exponent.fill('3');
+        await sheet.skill('Brawling').exponent.blur();
+        await sheet.close();
+    });
+    await test.step('reopen sheet and check value', async () => {
+        await sheet.open();
+        await expect(sheet.skill('Brawling').exponent).toHaveValue('3');
+    });
+});

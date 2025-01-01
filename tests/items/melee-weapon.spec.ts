@@ -31,15 +31,18 @@ test('loads sheet data', async ({ items: { melee } }) => {
     });
 });
 
-test('can be edited', async ({ items: { melee } }) => {
+test('can be edited', async ({ items: { melee }, page }) => {
     test.slow();
     const dialog = await melee.openDialog('Modified Melee weapon');
     await test.step('modify some fields and close the sheet', async () => {
         await dialog.selectOption('Shade', 'W');
         await dialog.setLabeledField('Resource Point Cost', '22');
+        await dialog.selectOption('Handedness', 'one');
+        // hack to try and get around jank with this array stuff
+        await page.waitForTimeout(1000);
         await dialog.selectOption('attack 0 speed', '1');
         await dialog.selectOption('attack 1 length', 'short');
-        await dialog.selectOption('Handedness', 'one');
+        await page.waitForTimeout(1000);
         await dialog.close();
     });
 
@@ -57,7 +60,10 @@ test('can be edited', async ({ items: { melee } }) => {
     });
 });
 
-test('can add and remove attack variants', async ({ items: { melee } }) => {
+test('can add and remove attack variants', async ({
+    page,
+    items: { melee },
+}) => {
     const dialog = await melee.openDialog('Modified Melee weapon');
     await test.step('delete variant and verify deletion', async () => {
         await dialog.removeAttack(1);
@@ -71,6 +77,8 @@ test('can add and remove attack variants', async ({ items: { melee } }) => {
         await dialog.setLabeledField('attack 1 name', 'newly added attack');
         await dialog.setLabeledField('attack 1 power', '99');
         await dialog.selectOption('attack 1 speed', 'x');
+        // hack to try and get around jank with this array stuff
+        await page.waitForTimeout(1000);
         await dialog.close();
     });
 

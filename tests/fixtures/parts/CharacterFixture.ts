@@ -6,6 +6,7 @@ import { SkillFixture } from './SkillFixture';
 import { SpellFixture } from './SpellFixture';
 import { ReputationFixture } from './ReputationFixture';
 import { AffiliationFixture } from './AffiliationFixture';
+import { RollDialog } from './RollDialog';
 
 class RepWidget {
     constructor(
@@ -45,7 +46,9 @@ class AffWidget {
 
 class SkillWidget {
     constructor(
+        private readonly page: Page,
         readonly locator: Locator,
+        private readonly name: string,
         private readonly dialog: ReturnType<typeof SkillFixture.getOpenDialog>
     ) {}
 
@@ -60,7 +63,7 @@ class SkillWidget {
 
     async roll() {
         await this.locator.getByLabel('roll skill').click();
-        // return a roll dialog instance
+        return RollDialog.getDialog(this.page, this.name);
     }
 
     get routineNeeded() {
@@ -145,7 +148,9 @@ class CharacterDialog {
 
     skill(name: string) {
         return new SkillWidget(
+            this.page,
             this.locator.getByLabel(new RegExp(`skill rollable ${name}`, 'i')),
+            name,
             SkillFixture.getOpenDialog({
                 page: this.page,
                 gamePage: this.gamePage,
@@ -157,9 +162,11 @@ class CharacterDialog {
 
     learningSkill(name: string) {
         return new SkillWidget(
+            this.page,
             this.locator.getByLabel(
                 new RegExp(`learning rollable ${name}`, 'i')
             ),
+            name,
             SkillFixture.getOpenDialog({
                 page: this.page,
                 gamePage: this.gamePage,

@@ -104,6 +104,20 @@ class SkillWidget {
         );
     }
 
+    get learningProgress() {
+        return this.locator.locator(
+            'input[data-binding="system.learningProgress"][checked="checked"]'
+        );
+    }
+
+    setLearningProgress(value: string) {
+        return this.locator
+            .locator(
+                `input[data-binding="system.learningProgress"][value="${value}"]+label`
+            )
+            .click();
+    }
+
     get exponent() {
         return this.locator.getByRole('spinbutton').first();
     }

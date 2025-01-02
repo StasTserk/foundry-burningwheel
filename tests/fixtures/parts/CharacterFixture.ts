@@ -70,12 +70,38 @@ class SkillWidget {
         return this.locator.getByRole('textbox').first();
     }
 
+    get routineProgress() {
+        return this.locator.locator(
+            'input[data-binding="system.routine"][checked="checked"]'
+        );
+    }
+
+    setRoutineProgress(value: string) {
+        return this.locator
+            .locator(
+                `input[data-binding="system.routine"][value="${value}"]+label`
+            )
+            .click();
+    }
+
     get difficultNeeded() {
         return this.locator.getByRole('textbox').nth(1);
     }
 
+    get difficultProgress() {
+        return this.locator.locator(
+            'input[data-binding="system.difficult"][checked="checked"]'
+        );
+    }
+
     get challengingNeeded() {
         return this.locator.getByRole('textbox').nth(2);
+    }
+
+    get challengingProgress() {
+        return this.locator.locator(
+            'input[data-binding="system.challenging"][checked="checked"]'
+        );
     }
 
     get exponent() {

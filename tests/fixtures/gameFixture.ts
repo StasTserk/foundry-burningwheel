@@ -58,6 +58,14 @@ export class GameFixture {
         ).toBeVisible();
     }
 
+    clickDialogButton(title: string | RegExp, button: string | RegExp) {
+        return this.page
+            .getByRole('dialog')
+            .filter({ hasText: title })
+            .getByRole('button', { name: button })
+            .click();
+    }
+
     async closeDialog(title: string | RegExp) {
         await this.page
             .getByRole('dialog')

@@ -49,8 +49,28 @@ test('triggers advancement', async ({ char, gamePage }) => {
     await test.step('ensure advancement triggers', async () => {
         await gamePage.expectOpenedDialog('Advance Intimidation?');
         await gamePage.clickDialogButton('Advance Intimidation?', /yes/i);
-        await expect(skill.exponent).toHaveValue('2', { timeout: 10_000 });
+        await expect(skill.exponent).toHaveValue('2');
         await expect(skill.routineNeeded).toHaveValue('2');
+    });
+    await sheet.close();
+});
+
+test('learning skill can advance', async ({ char, gamePage }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const skill = sheet.learningSkill('Falsehood');
+
+    await test.step('get skill close to advancing then roll it', async () => {
+        await skill.setLearningProgress('5');
+        const dialog = await skill.roll();
+        await dialog.bonusDice.fill('10');
+        await dialog.roll();
+    });
+
+    await test.step('ensure advancement triggers', async () => {
+        await gamePage.expectOpenedDialog('Finish training Falsehood?');
+        await gamePage.clickDialogButton('Finish training Falsehood?', /yes/i);
+        const trainedSkill = await sheet.skill('Falsehood');
+        await expect(trainedSkill.exponent).toHaveValue('2');
     });
     await sheet.close();
 });

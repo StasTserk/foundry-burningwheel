@@ -1,7 +1,7 @@
 <form class='dialog'>
     <h2>{{name}}</h2>
     {{#if showObstacles}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="obstacle penalties">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.obstacle'}}</div><hr class='dialog-section-after' />
@@ -9,6 +9,7 @@
                 <div class='flex-row dialog-row'>
                     <label>{{localize 'BW.roll.difficulty'}}</label>
                     <input
+                        aria-label="custom obstacle"
                         type='number'
                         class='exponent'
                         name='difficulty'
@@ -20,6 +21,7 @@
                 <div class='flex-row dialog-row'>
                     <label>{{localize 'BW.roll.woundPenalty'}}</label>
                     <input
+                        aria-label="wound penalty"
                         type='number'
                         class='exponent'
                         disabled
@@ -50,7 +52,7 @@
             {{/each}}
         </div>
     {{/if}}
-    <div class='flex-row'>
+    <div class='flex-row' aria-label="dice modifiers">
         <hr class='dialog-section-before' /><div
             class='dialog-section-text'
         >{{localize 'BW.dice'}}</div><hr class='dialog-section-after' />
@@ -58,6 +60,7 @@
             <label>{{localize 'BW.roll.exponent'}}</label>
             {{#if skill}}
                 <input
+                    aria-label="exponent dice"
                     type='number'
                     class='exponent'
                     disabled
@@ -67,6 +70,7 @@
             {{/if}}
             {{#if stat}}
                 <input
+                    aria-label="exponent dice"
                     type='number'
                     class='exponent'
                     disabled
@@ -79,6 +83,7 @@
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.rollable.tax'}}</label>
                 <input
+                    aria-label="tax dice"
                     type='number'
                     class='exponent'
                     disabled
@@ -91,6 +96,7 @@
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.woundPenalty'}}</label>
                 <input
+                    aria-label="wound dice"
                     type='number'
                     class='exponent'
                     disabled
@@ -102,13 +108,14 @@
         {{#if circlesContact}}
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.relationshipBonus'}}</label>
-                <input type='number' class='exponent' disabled value='1' />
+                <input type='number' class='exponent' disabled value='1' aria-label="circles dice"/>
             </div>
         {{/if}}
         {{#each diceModifiers as |mod|}}
             <div class='flex-row dialog-row'>
                 <label>{{mod.label}}</label>
                 <input
+                    aria-label="{{mod.label}} dice"
                     type='checkbox'
                     class='hidden'
                     name='miscDice'
@@ -128,6 +135,7 @@
         <div class='flex-row dialog-row'>
             <label>{{localize 'BW.roll.bonusDice'}}</label>
             <input
+                aria-label="bonus dice"
                 type='number'
                 class='exponent'
                 name='bonusDice'
@@ -137,7 +145,7 @@
         {{#if cashDieOptions}}
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.cashDice'}}</label>
-                <select name='cashDice'>
+                <select name='cashDice' aria-label="cash dice">
                     {{selectOptions cashDieOptions selected=cashDice}}
                 </select>
             </div>
@@ -145,7 +153,7 @@
         {{#if fundDieOptions}}
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.fundDice'}}</label>
-                <select name='fundDice'>
+                <select name='fundDice' aria-label="fund dice">
                     {{selectOptions fundDieOptions selected=fundDice}}
                 </select>
             </div>
@@ -155,6 +163,7 @@
                     'BW.roll.acceptHelp'
                 }}</label>
             <input
+                aria-label="accept help"
                 id='checkbox-add-help'
                 type='checkbox'
                 name='acceptHelp'
@@ -162,7 +171,7 @@
             />
         </div>
     </div>
-    <div class='flex-row'>
+    <div class='flex-row' aria-label="artha dice">
         <hr class='dialog-section-before' /><div
             class='dialog-section-text'
         >{{localize 'BW.roll.arthaDice'}}</div><hr
@@ -171,7 +180,7 @@
         {{#if personaOptions}}
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.personaDice'}}</label>
-                <select name='personaDice'>
+                <select name='personaDice' aria-label="persona dice">
                     {{selectOptions personaOptions selected=personaDice}}
                 </select>
             </div>
@@ -183,6 +192,7 @@
                     }}</label>
                 {{#if skill}}
                     <input
+                        aria-label="deeds dice"
                         id='checkbox-inspiration'
                         type='checkbox'
                         name='deedsDice'
@@ -191,6 +201,7 @@
                 {{/if}}
                 {{#if stat}}
                     <input
+                        aria-label="deeds dice"
                         id='checkbox-inspiration'
                         type='checkbox'
                         name='deedsDice'
@@ -202,6 +213,7 @@
         <div class='flex-row dialog-row'>
             <label>{{localize 'BW.roll.miscArtha'}}</label>
             <input
+                aria-label="misc artha dice"
                 type='number'
                 class='exponent'
                 name='arthaDice'
@@ -210,7 +222,7 @@
         </div>
     </div>
     {{#if circlesBonus}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="rep aff dice">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.roll.repAndAff'}}</div><hr
@@ -233,7 +245,7 @@
         </div>
     {{/if}}
     {{#if circlesMalus}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="infamy dice">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.roll.infamies'}}</div><hr
@@ -256,7 +268,7 @@
         </div>
     {{/if}}
     {{#if offerSplitPool}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="split pool">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.roll.secondaryPool'}}</div><hr
@@ -265,6 +277,7 @@
             <div class='flex-row dialog-row'>
                 <label>{{localize 'BW.roll.secondaryPool'}}</label>
                 <input
+                    aria-label="split pool dice"
                     type='number'
                     class='exponent no-arrows'
                     name='splitPool'
@@ -277,7 +290,7 @@
         </div>
     {{/if}}
     {{#if forkOptions}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="fork dice">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.roll.forks'}}</div><hr
@@ -297,7 +310,7 @@
         </div>
     {{/if}}
     {{#if wildForks}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="wild dice">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.roll.wildForks'}}</div><hr
@@ -317,7 +330,7 @@
         </div>
     {{/if}}
     {{#if needsToolkit}}
-        <div class='flex-row'>
+        <div class='flex-row' aria-label="needs toolkit">
             <hr class='dialog-section-before' /><div
                 class='dialog-section-text'
             >{{localize 'BW.roll.tools'}}</div><hr

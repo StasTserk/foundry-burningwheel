@@ -5,14 +5,14 @@
     <div class="roll-full-width roll-{{difficultyGroup}}">
         {{localize difficultyGroup}}
     </div>
-    <div class="roll-half-width">
+    <div class="roll-half-width" aria-label="dice">
         {{#each dieSources as |source|}}
         <div class="right-align">
             {{@key}} {{source}}
         </div>
         {{/each}}
     </div>
-    <div class="roll-half-width">
+    <div class="roll-half-width" aria-label="obstacles">
         <div class="left-align">
             +{{difficulty}} {{localize "BW.chat.baseOb"}}
         </div>

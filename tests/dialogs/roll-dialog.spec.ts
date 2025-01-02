@@ -3,7 +3,8 @@ import { testAsGm as test } from '../fixtures/bwFixture';
 
 test('basic skill roll workflow', async ({ char, chat }) => {
     const sheet = await char.openCharacterDialog('Romeo');
-    const roll = await sheet.skill('Brawling').roll();
+    const skill = sheet.skill('Brawling');
+    const roll = await skill.roll();
 
     await test.step('check auto includes', async () => {
         await expect(roll.exponent).toHaveValue('2');
@@ -22,6 +23,9 @@ test('basic skill roll workflow', async ({ char, chat }) => {
     });
     await test.step('roll skill, and verify results', async () => {
         await roll.roll();
+        await expect(skill.difficultProgress, {
+            message: 'Expect progress to have been tracked',
+        }).toHaveValue('1');
         await sheet.close();
         const result = await chat.getChatMessage('Brawling Test');
         await expect(result.obstacles).toContainText([
@@ -31,4 +35,22 @@ test('basic skill roll workflow', async ({ char, chat }) => {
         await expect(result.dice).toContainText(['Exponent +2', 'Bonus +2']);
         expect(await result.results.all()).toHaveLength(4);
     });
+});
+
+test('triggers advancement', async ({ char, gamePage }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const skill = sheet.skill('Intimidation');
+
+    await test.step('get skill close to advancing then roll it', async () => {
+        await skill.setRoutineProgress('1');
+        (await skill.roll()).roll();
+    });
+
+    await test.step('ensure advancement triggers', async () => {
+        await gamePage.expectOpenedDialog('Advance Intimidation?');
+        await gamePage.clickDialogButton('Advance Intimidation?', /yes/i);
+        await expect(skill.exponent).toHaveValue('2', { timeout: 10_000 });
+        await expect(skill.routineNeeded).toHaveValue('2');
+    });
+    await sheet.close();
 });

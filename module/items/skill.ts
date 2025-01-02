@@ -104,7 +104,7 @@ export class Skill extends BWItem<SkillData> {
         const exp = this.system.exp;
         this.update(
             {
-                data: {
+                system: {
                     routine: 0,
                     difficult: 0,
                     challenging: 0,

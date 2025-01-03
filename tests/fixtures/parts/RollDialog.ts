@@ -8,7 +8,7 @@ export class RollDialog {
     }
 
     async close() {
-        this.locator.getByText(/close/i).click();
+        await this.locator.getByText(/close/i).click();
         await expect(this.locator).not.toBeVisible();
     }
 

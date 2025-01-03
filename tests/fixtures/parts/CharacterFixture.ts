@@ -7,6 +7,7 @@ import { SpellFixture } from './SpellFixture';
 import { ReputationFixture } from './ReputationFixture';
 import { AffiliationFixture } from './AffiliationFixture';
 import { RollDialog } from './RollDialog';
+import { RelationshipFixture } from './RelationshipFixture';
 
 class RepWidget {
     constructor(
@@ -23,6 +24,49 @@ class RepWidget {
 
     async delete() {
         await this.locator.locator('i.fa-trash').click();
+    }
+}
+
+class RelationshipWidget {
+    constructor(
+        private readonly page: Page,
+        private readonly gamePage: GameFixture,
+        private readonly test: FixtureBase,
+        private readonly name: string,
+        readonly locator: Locator
+    ) {}
+
+    async edit() {
+        await this.locator.locator('i.fa-edit').click();
+        return RelationshipFixture.getOpenDialog(
+            this.page,
+            this.gamePage,
+            this.test,
+            this.name
+        );
+    }
+
+    async delete() {
+        await this.locator.locator('i.fa-trash').click();
+    }
+
+    async roll() {
+        await this.locator.getByLabel('roll relationship').click();
+        return RollDialog.getDialog(this.page, 'Circles');
+    }
+
+    get buildingProgress() {
+        return this.locator.locator(
+            'input[data-binding="system.buildingProgress"][checked="checked"]'
+        );
+    }
+
+    setBuildingProgress(value: string) {
+        return this.locator
+            .locator(
+                `input[data-binding="system.buildingProgress"][value="${value}"]+label`
+            )
+            .click();
     }
 }
 
@@ -139,9 +183,99 @@ class SkillWidget {
     }
 }
 
+class StatWidget {
+    constructor(
+        private readonly page: Page,
+        readonly locator: Locator,
+        private readonly name: string,
+        private readonly hasRoutine: boolean
+    ) {}
+
+    async roll() {
+        await this.locator.getByLabel('roll item').click();
+        return RollDialog.getDialog(this.page, this.name);
+    }
+
+    get routineNeeded() {
+        return this.locator.getByRole('textbox').first();
+    }
+
+    get routineProgress() {
+        return this.locator.locator(
+            'input[data-test="routine"][checked="checked"]'
+        );
+    }
+
+    setRoutineProgress(value: string) {
+        return this.locator
+            .locator(`input[data-test="routine"][value="${value}"]+label`)
+            .click();
+    }
+
+    get difficultNeeded() {
+        return this.hasRoutine
+            ? this.locator.getByRole('textbox').nth(1)
+            : this.locator.getByRole('textbox').first();
+    }
+
+    get difficultProgress() {
+        return this.locator.locator(
+            'input[data-test="difficult"][checked="checked"]'
+        );
+    }
+
+    setDifficultProgress(value: string) {
+        return this.locator
+            .locator(`input[data-test="difficult"][value="${value}"]+label`)
+            .click();
+    }
+
+    get challengingNeeded() {
+        return this.locator.getByRole('textbox').nth(this.hasRoutine ? 2 : 1);
+    }
+
+    get challengingProgress() {
+        return this.locator.locator(
+            'input[data-test="challenging"][checked="checked"]'
+        );
+    }
+
+    setChallengingProgress(value: string) {
+        return this.locator
+            .locator(`input[data-test="challenging"][value="${value}"]+label`)
+            .click();
+    }
+
+    get exponent() {
+        return this.locator.getByRole('spinbutton').first();
+    }
+
+    get fateSpent() {
+        return this.locator.getByPlaceholder('F');
+    }
+
+    get personaSpent() {
+        return this.locator.getByPlaceholder('P');
+    }
+
+    get deedsSpent() {
+        return this.locator.getByPlaceholder('D');
+    }
+
+    get open() {
+        return this.locator.getByLabel('Open');
+    }
+
+    get tax() {
+        return this.locator.getByLabel('Tax');
+    }
+}
+
 class SpellWidget {
     constructor(
+        private readonly page: Page,
         readonly locator: Locator,
+        private readonly name: string,
         private readonly dialog: ReturnType<typeof SpellFixture.getOpenDialog>
     ) {}
 
@@ -155,8 +289,8 @@ class SpellWidget {
     }
 
     async roll() {
-        await this.locator.getByLabel('roll skill').click();
-        // return a roll dialog instance
+        await this.locator.getByLabel('roll spell').click();
+        return RollDialog.getDialog(this.page, this.name);
     }
 }
 
@@ -174,9 +308,31 @@ class CharacterDialog {
         });
     }
 
+    stat(
+        name: 'Will' | 'Power' | 'Agility' | 'Perception' | 'Forte' | 'Speed'
+    ) {
+        return new StatWidget(
+            this.page,
+            this.locator.getByLabel(`rollable ${name}`),
+            name,
+            false
+        );
+    }
+
+    attribute(name: 'Health' | 'Steel' | 'Circles' | 'Resources') {
+        return new StatWidget(
+            this.page,
+            this.locator.getByLabel(`rollable ${name}`),
+            name,
+            true
+        );
+    }
+
     spell(name: string) {
         return new SpellWidget(
+            this.page,
             this.locator.getByLabel(new RegExp(`spell rollable ${name}`, 'i')),
+            this.name,
             SpellFixture.getOpenDialog({
                 page: this.page,
                 gamePage: this.gamePage,
@@ -237,6 +393,16 @@ class CharacterDialog {
                 test: this.test,
                 name,
             })
+        );
+    }
+
+    relationship(name: string) {
+        return new RelationshipWidget(
+            this.page,
+            this.gamePage,
+            this.test,
+            name,
+            this.locator.getByLabel(`relationship ${name}`)
         );
     }
 

@@ -32,4 +32,16 @@ export class RelationshipFixture extends BaseItemFixture {
         await super.open(name);
         return new RelationshipDialog(this, name);
     }
+
+    static getOpenDialog(
+        page: Page,
+        gamePage: GameFixture,
+        test: FixtureBase,
+        name: string
+    ) {
+        return new RelationshipDialog(
+            new RelationshipFixture(page, gamePage, test),
+            name as SeededItems
+        );
+    }
 }

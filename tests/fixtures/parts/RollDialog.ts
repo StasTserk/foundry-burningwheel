@@ -12,6 +12,10 @@ export class RollDialog {
         await expect(this.locator).not.toBeVisible();
     }
 
+    get customObstacle() {
+        return this.locator.getByLabel('custom obstacle');
+    }
+
     get woundPenalty() {
         return this.locator.getByLabel('wound penalty');
     }
@@ -19,9 +23,34 @@ export class RollDialog {
     get exponent() {
         return this.locator.getByLabel('exponent dice');
     }
+
     get bonusDice() {
         return this.locator.getByLabel('bonus dice');
     }
+
+    get cashDice() {
+        return this.locator.getByLabel('cash dice');
+    }
+
+    get fundDice() {
+        return this.locator.getByLabel('fund dice');
+    }
+
+    get taxDice() {
+        return this.locator.getByLabel('tax dice');
+    }
+
+    get relationshipDice() {
+        return this.locator.getByLabel('circles dice');
+    }
+
+    get personaDice() {
+        return this.locator.getByLabel('persona dice');
+    }
+    get useDeeds() {
+        return this.locator.getByLabel('deeds dice');
+    }
+
     setBonusDice(value: number) {
         return this.bonusDice.fill('' + value);
     }
@@ -36,6 +65,22 @@ export class RollDialog {
         return this.locator
             .getByRole('button', { name: 'Roll', exact: true })
             .click();
+    }
+
+    optionalDieModifier(name: string) {
+        return this.locator
+            .getByLabel('optional dice modifiers')
+            .getByLabel(name);
+    }
+
+    optionalObModifier(name: string | RegExp) {
+        return this.locator
+            .getByLabel('optional ob modifiers')
+            .getByLabel(name);
+    }
+
+    repModifier(name: string | RegExp) {
+        return this.locator.getByLabel('rep aff dice').getByLabel(name);
     }
 
     static getDialog(page: Page, name: string) {

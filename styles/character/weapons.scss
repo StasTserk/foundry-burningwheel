@@ -72,17 +72,11 @@
             background-color: rgba(black, 0.15);
         }
 
-        .weapon-row:nth-child(22n + 1),
-        .weapon-row:nth-child(22n + 2),
-        .weapon-row:nth-child(22n + 3),
-        .weapon-row:nth-child(22n + 4),
-        .weapon-row:nth-child(22n + 5),
-        .weapon-row:nth-child(22n + 6),
-        .weapon-row:nth-child(22n + 7),
-        .weapon-row:nth-child(22n + 8),
-        .weapon-row:nth-child(22n + 9),
-        .weapon-row:nth-child(22n + 10),
-        .weapon-row:nth-child(22n + 11) {
+        .weapon-group {
+            display: contents;
+        }
+
+        .weapon-group:nth-child(2n + 1) > .weapon-row {
             background-color: rgba(black, 0.1);
         }
     }
@@ -95,15 +89,11 @@
             background-color: rgba(black, 0.15);
         }
 
-        .weapon-row:nth-child(18n + 1),
-        .weapon-row:nth-child(18n + 2),
-        .weapon-row:nth-child(18n + 3),
-        .weapon-row:nth-child(18n + 4),
-        .weapon-row:nth-child(18n + 5),
-        .weapon-row:nth-child(18n + 6),
-        .weapon-row:nth-child(18n + 7),
-        .weapon-row:nth-child(18n + 8),
-        .weapon-row:nth-child(18n + 9) {
+        .weapon-group {
+            display: contents;
+        }
+
+        .weapon-group:nth-child(2n + 1) > .weapon-row {
             background-color: rgba(black, 0.1);
         }
         .ims-pair {

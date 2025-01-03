@@ -74,3 +74,152 @@ test('learning skill can advance', async ({ char, gamePage }) => {
     });
     await sheet.close();
 });
+
+test('health roll special rules', async ({ char }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const roll = await sheet.attribute('Health').roll();
+
+    await expect(roll.woundPenalty, {
+        message: 'ensure health is not affected by wounds',
+    }).not.toBeVisible();
+
+    await test.step('ensure health is affected by armor', async () => {
+        await expect(
+            roll.optionalObModifier('Armor Clumsy Weight')
+        ).toBeVisible();
+        await expect(roll.optionalObModifier('Untrained Armor')).toBeVisible();
+        await roll.close();
+    });
+});
+
+test('Circles roll special rules', async ({ char }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const roll = await sheet.attribute('Circles').roll();
+
+    await expect(roll.woundPenalty, {
+        message: 'ensure Circles is not affected by wounds',
+    }).not.toBeVisible();
+
+    await expect(roll.repModifier('All Around Cool Dude'), {
+        message: 'Reputation added to circles roll',
+    }).toBeVisible();
+    await expect(roll.repModifier('Veronan Nobility'), {
+        message: 'Affiliation added to circles roll',
+    }).toBeVisible();
+});
+
+test('Resources roll special rules', async ({ char, gamePage }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const roll = await sheet.attribute('Resources').roll();
+
+    await expect(roll.woundPenalty, {
+        message: 'ensure Resources is not affected by wounds',
+    }).not.toBeVisible();
+    await expect(roll.cashDice, {
+        message: 'Cash dice are usable for the roll ',
+    }).toBeVisible();
+    await expect(roll.fundDice, {
+        message: 'Fund dice are usable for the roll ',
+    }).toBeVisible();
+
+    await test.step('roll impossible challenging test', async () => {
+        await roll.bonusDice.fill('-1');
+        await roll.roll();
+    });
+
+    await test.step('navigate failed resources test dialog', async () => {
+        await gamePage.expectOpenedDialog('Failed Resource Roll');
+        await gamePage.clickDialogButton(
+            'Failed Resource Roll',
+            'Cut your losses'
+        );
+    });
+
+    await expect(sheet.attribute('Resources').tax, {
+        message: 'Expect tax to be added',
+    }).toHaveValue('1');
+    await expect(sheet.attribute('Resources').challengingProgress, {
+        message: 'Expect no tracked progress',
+    }).toHaveValue('0');
+    const reRoll = await sheet.attribute('Resources').roll();
+    await expect(reRoll.locator).toBeVisible();
+});
+
+test('Steel roll special rules', async ({ char }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const roll = await sheet.attribute('Steel').roll();
+
+    await expect(roll.woundPenalty, {
+        message: 'ensure Steel is affected by wounds',
+    }).toBeVisible();
+
+    await expect(roll.customObstacle, {
+        message: 'Steel tests against hesitation instead of GM set value',
+    }).toHaveValue('6');
+});
+
+test('attribute advancement and artha tracking', async ({ char, gamePage }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const attr = sheet.attribute('Resources');
+
+    await test.step('get skill one test away from increasing', async () => {
+        await attr.setRoutineProgress('1');
+        await attr.setDifficultProgress('1');
+        await attr.setChallengingProgress('1');
+    });
+
+    await test.step('roll test with tons of bonus dice and artha', async () => {
+        const roll = await attr.roll();
+        await roll.bonusDice.fill('99');
+        await roll.personaDice.selectOption('1');
+        await roll.roll();
+    });
+
+    await gamePage.clickDialogButton('Advance Resources?', 'Yes');
+
+    await test.step('expect stuff got updated', async () => {
+        await expect(
+            sheet.locator.getByLabel('Persona', { exact: true })
+        ).toHaveValue('2');
+        await expect(attr.personaSpent).toHaveValue('1');
+        await expect(attr.exponent).toHaveValue('3');
+        await expect(attr.routineNeeded).toHaveValue('3');
+        await expect(attr.difficultNeeded).toHaveValue('2');
+    });
+});
+
+test('stat advancement and artha tracking', async ({ char, gamePage }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const attr = sheet.stat('Agility');
+
+    await test.step('get agility one test away from advancing', async () => {
+        await attr.setDifficultProgress('2');
+    });
+
+    await test.step('Roll a challenging agility test', async () => {
+        const roll = await attr.roll();
+        await roll.personaDice.selectOption('2');
+        await roll.roll();
+    });
+
+    await gamePage.clickDialogButton('Advance Agility?', 'Yes');
+    await test.step('expect stuff got updated', async () => {
+        await expect(
+            sheet.locator.getByLabel('Persona', { exact: true })
+        ).toHaveValue('1');
+        await expect(attr.personaSpent).toHaveValue('2');
+        await expect(attr.exponent).toHaveValue('4');
+        await expect(attr.difficultNeeded).toHaveValue('2');
+    });
+});
+
+test('rolling from relationship', async ({ char }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const rel = await sheet.relationship('Juliet');
+
+    const roll = await rel.roll();
+    await expect(roll.relationshipDice).toHaveValue('1');
+    await roll.roll();
+
+    await expect(rel.buildingProgress).toHaveValue('4');
+});

@@ -2,6 +2,7 @@
     class="rollable flex-row {{stat.cssClass}}"
     {{#if isOwner}}draggable="true"{{/if}}
     data-accessor="{{namePrefix}}"
+    aria-label="rollable {{stat.name}}{{localize statName}}"
     {{#if customName}}data-stat-name="{{stat.name}}"
     {{else}}data-stat-name="{{statName}}"
     {{/if}}
@@ -15,66 +16,74 @@
     {{else}}
     <h3 class="rollable-name">{{ localize statName }}</h3>
     {{/if}}
-    <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}">
+    <select class="shade" name="{{namePrefix}}.shade" value="{{stat.shade}}" aria-label="shade">
         {{selectOptions @root.basicShades selected=stat.shade}}
     </select>
-    <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}">
+    <input class="exponent" type="number" name="{{namePrefix}}.exp" value="{{stat.exp}}" aria-label="exponent">
     {{#if isOwner}}
-        <button type="button" class="rollable modifiable" data-rollable-name="{{statName}}" data-accessor="{{namePrefix}}" data-roll-type="{{type}}"><i class="fas fa-dice"></i></button>
+        <button 
+            type="button"
+            class="rollable modifiable"
+            data-rollable-name="{{statName}}"
+            data-accessor="{{namePrefix}}"
+            data-roll-type="{{type}}"
+            aria-label="roll item">
+            <i class="fas fa-dice"></i>
+        </button>
     {{/if}}
     <div class="collapsing-section">
         {{#if routine}}
-        <div class="test-tracking">
+        <div class="test-tracking" arial-label="routine test tracking">
             <div class="test-title">{{localize "BW.rollable.routine"}}: </div>
             <input class="tests-needed" name="{{namePrefix}}.routineNeeded" value="{{stat.routineNeeded}}" disabled>
             {{#multiboxes stat.routine needed=stat.routineNeeded}}
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-0" name="{{namePrefix}}.routine" value="0" checked="checked" data-dtype="Number" data-test="routine">
             {{#if isOwner}}
             <label for="{{actor.id}}-{{namePrefix}}-routine-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             {{/if}}
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-1" name="{{namePrefix}}.routine" value="1" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-1" name="{{namePrefix}}.routine" value="1" data-dtype="Number" data-test="routine">
             <label for="{{actor.id}}-{{namePrefix}}-routine-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-2" name="{{namePrefix}}.routine" value="2" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-2" name="{{namePrefix}}.routine" value="2" data-dtype="Number" data-test="routine">
             <label for="{{actor.id}}-{{namePrefix}}-routine-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-3" name="{{namePrefix}}.routine" value="3" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-3" name="{{namePrefix}}.routine" value="3" data-dtype="Number" data-test="routine">
             <label for="{{actor.id}}-{{namePrefix}}-routine-3" class="progress-tick progress-tick-3">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-4" name="{{namePrefix}}.routine" value="4" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-routine-4" name="{{namePrefix}}.routine" value="4" data-dtype="Number" data-test="routine">
             <label for="{{actor.id}}-{{namePrefix}}-routine-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
         {{/if}}
-        <div class="test-tracking">
+        <div class="test-tracking"  arial-label="difficult test tracking">
             <div class="test-title">{{localize "BW.rollable.difficult"}}:</div>
             <input class="tests-needed" name="{{namePrefix}}.difficultNeeded" value="{{stat.difficultNeeded}}" disabled>
             {{#multiboxes stat.difficult needed=stat.difficultNeeded}}
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-0" name="{{namePrefix}}.difficult" value="0" checked="checked" data-dtype="Number"  data-test="difficult">
             {{#if isOwner}}
             <label for="{{actor.id}}-{{namePrefix}}-difficult-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             {{/if}}
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-1" name="{{namePrefix}}.difficult" value="1" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-1" name="{{namePrefix}}.difficult" value="1" data-dtype="Number" data-test="difficult">
             <label for="{{actor.id}}-{{namePrefix}}-difficult-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-2" name="{{namePrefix}}.difficult" value="2" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-2" name="{{namePrefix}}.difficult" value="2" data-dtype="Number"  data-test="difficult">
             <label for="{{actor.id}}-{{namePrefix}}-difficult-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-3" name="{{namePrefix}}.difficult" value="3" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-3" name="{{namePrefix}}.difficult" value="3" data-dtype="Number"  data-test="difficult">
             <label for="{{actor.id}}-{{namePrefix}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-4" name="{{namePrefix}}.difficult" value="4" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-difficult-4" name="{{namePrefix}}.difficult" value="4" data-dtype="Number"  data-test="difficult">
             <label for="{{actor.id}}-{{namePrefix}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
             {{/multiboxes}}
         </div>
-        <div class="test-tracking">
+        <div class="test-tracking"  arial-label="challenging test tracking">
             <div class="test-title">{{localize "BW.rollable.challenging"}}:</div>
             <input class="tests-needed" name="{{namePrefix}}.challengingNeeded" value="{{stat.challengingNeeded}}" disabled>
             {{#multiboxes stat.challenging needed=stat.challengingNeeded}}
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-0" name="{{namePrefix}}.challenging" value="0" checked="checked" data-dtype="Number" data-test="challenging">
             {{#if isOwner}}
             <label for="{{actor.id}}-{{namePrefix}}-challenging-0" class="progress-clear"><i class="fas fa-times-circle"></i></label>
             {{/if}}
             
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-1" name="{{namePrefix}}.challenging" value="1" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-1" name="{{namePrefix}}.challenging" value="1" data-dtype="Number" data-test="challenging">
             <label for="{{actor.id}}-{{namePrefix}}-challenging-1" class="progress-tick progress-tick-1">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-2" name="{{namePrefix}}.challenging" value="2" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-2" name="{{namePrefix}}.challenging" value="2" data-dtype="Number" data-test="challenging">
             <label for="{{actor.id}}-{{namePrefix}}-challenging-2" class="progress-tick progress-tick-2">&nbsp;</label>
-            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-3" name="{{namePrefix}}.challenging" value="3" data-dtype="Number">
+            <input type="radio" id="{{actor.id}}-{{namePrefix}}-challenging-3" name="{{namePrefix}}.challenging" value="3" data-dtype="Number" data-test="challenging">
             <label for="{{actor.id}}-{{namePrefix}}-challenging-3" class="progress-tick progress-tick-3">&nbsp;</label>
             {{/multiboxes}}
         </div>
@@ -100,7 +109,7 @@
         {{#if taxName}}
         <div class="attribute-subrow">
             <label class="attribute-label">{{localize "BW.rollable.tax"}}</label>
-            <input type="number" class="circle-input" value="{{taxValue}}" {{#if taxDisabled}}disabled{{else}}name="{{taxName}}"{{/if}}>
+            <input type="number" class="circle-input" value="{{taxValue}}" {{#if taxDisabled}}disabled{{else}}name="{{taxName}}"{{/if}} aria-label="tax">
         </div>
         {{/if}}
         <input type="checkbox" class="hidden rollable-open-checkbox" id="{{actor.id}}-{{namePrefix}}-open" name="{{namePrefix}}.open" {{checked stat.open}}>

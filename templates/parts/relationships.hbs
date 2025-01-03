@@ -1,9 +1,20 @@
-<div class="relationship flex-row {{relationship.system.cssClass}}" {{#if isOwner}}draggable="true"{{/if}} data-id="{{relationship._id}}">
+<div class="relationship flex-row {{relationship.system.cssClass}}"
+    {{#if isOwner}}draggable="true"{{/if}}
+    data-id="{{relationship._id}}"
+    aria-label="relationship {{relationship.name}}"
+>
     <div class="item-title">
         {{ relationship.name }}
     </div>
     {{#if isOwner}}
-        <button type="button" class="rollable modifiable" data-rollable-name="Circles" data-roll-type="circles" data-relationship-id="{{relationship._id}}"><i class="fas fa-dice"></i></button>
+        <button
+            aria-label="roll relationship"
+            type="button"
+            class="rollable modifiable"
+            data-rollable-name="Circles"
+            data-roll-type="circles"
+            data-relationship-id="{{relationship._id}}"
+        ><i class="fas fa-dice"></i></button>
         <i class="fas fa-edit" data-action="editItem" data-id="{{relationship._id}}"></i>
         <i class="fas fa-trash" data-action="delItem" data-id="{{relationship._id}}"></i>
     {{/if}}

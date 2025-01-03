@@ -242,3 +242,26 @@ test('rolling spells', async ({ char, page, gamePage }) => {
     await taxDialog.roll();
     await gamePage.clickDialogButton('Taxed', 'Ok');
 });
+
+test('weapons and armor section', async ({ char, gamePage, page }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    await test.step('stab someone', async () => {
+        const weapon = sheet.meleeWeapon('A Dirk');
+        const dialog = await weapon.roll('Sword');
+        await dialog.roll();
+    });
+
+    await test.step("beginner's luck to shoot someone", async () => {
+        const ranged = sheet.rangedWeapon("A Frickin' Gun");
+        const dialog2 = await ranged.roll('Firearms');
+        await gamePage.clickDialogButton('Pick Root Stat', 'Agility');
+        await dialog2.roll();
+    });
+
+    await test.step('do a quick armor roll', async () => {
+        const sheet = await char.openCharacterDialog('Romeo');
+        await sheet.locator.getByLabel('roll torso').click();
+        const armorDialog = RollDialog.getDialog(page, 'armor');
+        await armorDialog.roll();
+    });
+});

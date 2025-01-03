@@ -13,34 +13,37 @@
 
     {{#each melee as |m|}}
         {{#each m.system.attacks as |a|}}
-        <div class="weapon-row weapon-name" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" {{#if ../../isOwner}}draggable="true"{{/if}}>
-            {{../name}}{{#if a.attackName}} {{a.attackName}}{{/if}}
-        </div>
-        <div class="weapon-row">{{clampWound ../system.shade a.incidental}}</div>
-        <div class="weapon-row">{{clampWound ../system.shade a.mark}}</div>
-        <div class="weapon-row">{{clampWound ../system.shade a.superb}}</div>
-        <div class="weapon-row">{{a.power}}</div>
-        <div class="weapon-row">{{a.add}}</div>
-        <div class="weapon-row">{{a.vsArmor}}</div>
-        <div class="weapon-row">{{a.weaponSpeed}}</div>
-        <div class="weapon-row">{{localize (conc "BW.weapon." a.weaponLength)}}</div>
-        <div class="weapon-row">
-            <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="system.skillId" value="{{../system.skillId}}">
-                {{selectOptions ../../skills localize=true selected=../system.skillId valueAttr="id" labelAttr="label"}}
-            </select>
-        </div>
-        <div class="weapon-row">
-            <button
-                type="button"
-                class="rollable modifiable"
-                data-roll-type="weapon"
-                data-skill-id="{{../system.skillId}}"
-                data-weapon-id="{{../_id}}"
-                data-attack-index="{{@key}}"
-                {{#if ../../isOwner}}draggable="true"{{/if}}
-                >
-                <i class="fas fa-dice"></i>
-            </button>
+        <div class="weapon-group" aria-label="melee weapon {{../name}}{{#if a.attackName}} {{a.attackName}}{{/if}}">
+            <div class="weapon-row weapon-name" data-weapon-id="{{../_id}}" data-attack-index="{{@key}}" {{#if ../../isOwner}}draggable="true"{{/if}}>
+                {{../name}}{{#if a.attackName}} {{a.attackName}}{{/if}}
+            </div>
+            <div class="weapon-row">{{clampWound ../system.shade a.incidental}}</div>
+            <div class="weapon-row">{{clampWound ../system.shade a.mark}}</div>
+            <div class="weapon-row">{{clampWound ../system.shade a.superb}}</div>
+            <div class="weapon-row">{{a.power}}</div>
+            <div class="weapon-row">{{a.add}}</div>
+            <div class="weapon-row">{{a.vsArmor}}</div>
+            <div class="weapon-row">{{a.weaponSpeed}}</div>
+            <div class="weapon-row">{{localize (conc "BW.weapon." a.weaponLength)}}</div>
+            <div class="weapon-row">
+                <select class="weapon-skill-select" data-item-id="{{../_id}}" data-binding="system.skillId" value="{{../system.skillId}}">
+                    {{selectOptions ../../skills localize=true selected=../system.skillId valueAttr="id" labelAttr="label"}}
+                </select>
+            </div>
+            <div class="weapon-row">
+                <button
+                    aria-label="roll attack"
+                    type="button"
+                    class="rollable modifiable"
+                    data-roll-type="weapon"
+                    data-skill-id="{{../system.skillId}}"
+                    data-weapon-id="{{../_id}}"
+                    data-attack-index="{{@key}}"
+                    {{#if ../../isOwner}}draggable="true"{{/if}}
+                    >
+                    <i class="fas fa-dice"></i>
+                </button>
+            </div>
         </div>
         {{/each}}
     {{/each}}
@@ -57,31 +60,34 @@
     <div class="weapon-header">{{localize "BW.skill.skill"}}</div>
     <div class="weapon-header">~</div>
     {{#each ranged as |r|}}
-    <div class="weapon-row weapon-name" data-roll-type="weapon" data-weapon-id="{{r._id}}" {{#if ../isOwner}}draggable="true"{{/if}}>
-        {{r.name}}
-    </div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.incidental}}</div><label class="weapon-dof">{{r.system.incidentalLabel}}</label></div></div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.mark}}</div><label class="weapon-dof">{{r.system.markLabel}}</label></div></div>
-    <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.superb}}</div><label class="weapon-dof">{{r.system.superbLabel}}</label></div></div>
-    <div class="weapon-row">{{r.system.optimalRange}}{{localize "BW.diceAcronym"}}</div>
-    <div class="weapon-row">{{r.system.extremeRange}}{{localize "BW.diceAcronym"}}</div>
-    <div class="weapon-row">{{titlecase r.system.maxRange}}</div>
-    <div class="weapon-row">
-        <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="system.skillId" value="{{r.system.skillId}}">
-            {{selectOptions ../skills localize=true selected=r.system.skillId valueAttr="id" labelAttr="label"}}
-        </select>
-    </div>
-    <div class="weapon-row">
-            <button
-                type="button"
-                class="rollable modifiable"
-                data-roll-type="weapon"
-                data-skill-id="{{r.system.skillId}}"
-                data-weapon-id="{{r._id}}"
-                {{#if ../isOwner}}draggable="true"{{/if}}
-                >
-                <i class="fas fa-dice"></i>
-            </button>
+    <div class="weapon-group" aria-label="ranged weapon {{r.name}}">
+        <div class="weapon-row weapon-name" data-roll-type="weapon" data-weapon-id="{{r._id}}" {{#if ../isOwner}}draggable="true"{{/if}}>
+            {{r.name}}
+        </div>
+        <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.incidental}}</div><label class="weapon-dof">{{r.system.incidentalLabel}}</label></div></div>
+        <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.mark}}</div><label class="weapon-dof">{{r.system.markLabel}}</label></div></div>
+        <div class="weapon-row"><div class="ims-pair"><div class="weapon-ims">{{clampWound r.system.shade r.system.superb}}</div><label class="weapon-dof">{{r.system.superbLabel}}</label></div></div>
+        <div class="weapon-row">{{r.system.optimalRange}}{{localize "BW.diceAcronym"}}</div>
+        <div class="weapon-row">{{r.system.extremeRange}}{{localize "BW.diceAcronym"}}</div>
+        <div class="weapon-row">{{titlecase r.system.maxRange}}</div>
+        <div class="weapon-row">
+            <select class="weapon-skill-select" data-item-id="{{r._id}}" data-binding="system.skillId" value="{{r.system.skillId}}">
+                {{selectOptions ../skills localize=true selected=r.system.skillId valueAttr="id" labelAttr="label"}}
+            </select>
+        </div>
+        <div class="weapon-row">
+                <button
+                    aria-label="roll attack"
+                    type="button"
+                    class="rollable modifiable"
+                    data-roll-type="weapon"
+                    data-skill-id="{{r.system.skillId}}"
+                    data-weapon-id="{{r._id}}"
+                    {{#if ../isOwner}}draggable="true"{{/if}}
+                    >
+                    <i class="fas fa-dice"></i>
+                </button>
+        </div>
     </div>
     {{/each}}
 </div>

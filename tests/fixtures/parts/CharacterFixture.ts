@@ -27,6 +27,15 @@ class RepWidget {
     }
 }
 
+class WeaponWidget {
+    constructor(private readonly page: Page, readonly locator: Locator) {}
+
+    async roll(skillName: string) {
+        await this.locator.getByLabel('roll attack').click();
+        return RollDialog.getDialog(this.page, skillName);
+    }
+}
+
 class RelationshipWidget {
     constructor(
         private readonly page: Page,
@@ -275,7 +284,6 @@ class SpellWidget {
     constructor(
         private readonly page: Page,
         readonly locator: Locator,
-        private readonly name: string,
         private readonly dialog: ReturnType<typeof SpellFixture.getOpenDialog>
     ) {}
 
@@ -336,7 +344,6 @@ class CharacterDialog {
         return new SpellWidget(
             this.page,
             this.locator.getByLabel(new RegExp(`spell rollable ${name}`, 'i')),
-            this.name,
             SpellFixture.getOpenDialog({
                 page: this.page,
                 gamePage: this.gamePage,
@@ -407,6 +414,20 @@ class CharacterDialog {
             this.test,
             name,
             this.locator.getByLabel(`relationship ${name}`)
+        );
+    }
+
+    meleeWeapon(name: string) {
+        return new WeaponWidget(
+            this.page,
+            this.locator.getByLabel(`melee weapon ${name}`)
+        );
+    }
+
+    rangedWeapon(name: string) {
+        return new WeaponWidget(
+            this.page,
+            this.locator.getByLabel(`ranged weapon ${name}`)
         );
     }
 

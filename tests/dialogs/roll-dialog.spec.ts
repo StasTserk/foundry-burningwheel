@@ -259,7 +259,6 @@ test('weapons and armor section', async ({ char, gamePage, page }) => {
     });
 
     await test.step('do a quick armor roll', async () => {
-        const sheet = await char.openCharacterDialog('Romeo');
         await sheet.locator.getByLabel('roll torso').click();
         const armorDialog = RollDialog.getDialog(page, 'armor');
         await armorDialog.roll();

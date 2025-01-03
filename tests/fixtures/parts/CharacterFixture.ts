@@ -288,9 +288,13 @@ class SpellWidget {
         await this.locator.locator('i.fa-trash').click();
     }
 
-    async roll() {
+    async roll(skillName: string) {
         await this.locator.getByLabel('roll spell').click();
-        return RollDialog.getDialog(this.page, this.name);
+        return RollDialog.getDialog(this.page, skillName);
+    }
+
+    get skill() {
+        return this.locator.getByLabel('Skill');
     }
 }
 

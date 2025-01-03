@@ -1,5 +1,6 @@
 import { expect } from 'playwright/test';
 import { testAsGm as test } from '../fixtures/bwFixture';
+import { RollDialog } from '../fixtures/parts/RollDialog';
 
 test('basic skill roll workflow', async ({ char, chat }) => {
     const sheet = await char.openCharacterDialog('Romeo');
@@ -220,6 +221,24 @@ test('rolling from relationship', async ({ char }) => {
     const roll = await rel.roll();
     await expect(roll.relationshipDice).toHaveValue('1');
     await roll.roll();
-
+    5;
     await expect(rel.buildingProgress).toHaveValue('4');
+});
+
+test('rolling spells', async ({ char, page, gamePage }) => {
+    const sheet = await char.openCharacterDialog('Romeo');
+    const spell = sheet.spell('Jazz Hands');
+
+    // the one sorcerous kill on the sheet
+    await spell.skill.selectOption('DSHW1Op7MQnEJ988');
+    const roll = await spell.roll('The Power of Jazz');
+
+    expect(roll.locator).toBeVisible();
+    await roll.roll();
+
+    const taxDialog = RollDialog.getDialog(page, 'Jazz Hands Tax Test');
+    await expect(taxDialog.locator).toBeVisible();
+    await taxDialog.bonusDice.fill('-3');
+    await taxDialog.roll();
+    await gamePage.clickDialogButton('Taxed', 'Ok');
 });

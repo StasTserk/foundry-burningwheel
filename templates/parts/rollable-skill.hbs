@@ -44,6 +44,10 @@
             <label for="{{skill.system.safeId}}-difficult-3" class="progress-tick progress-tick-3">&nbsp;</label>
             <input type="radio" id="{{skill.system.safeId}}-difficult-4" value="4" data-item-id="{{skill._id}}" data-binding="system.difficult">
             <label for="{{skill.system.safeId}}-difficult-4" class="progress-tick progress-tick-4">&nbsp;</label>
+            {{#if skill.system.difficultNeeded}}
+            <input type="radio" id="{{skill.system.safeId}}-difficult-5" value="5" data-item-id="{{skill._id}}" data-binding="system.difficult">
+            <label for="{{skill.system.safeId}}-difficult-5" class="progress-tick progress-tick-5">&nbsp;</label>
+            {{/if}}
             {{/multiboxes}}
         </div>
         <div class="test-tracking" arial-label="challenging test tracking">

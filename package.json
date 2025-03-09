@@ -1,6 +1,6 @@
 {
     "name": "burningwheel",
-    "version": "1.5.7",
+    "version": "1.5.8",
     "description": "Foundry VTT Implementation for The Burning Wheel",
     "main": "index.js",
     "scripts": {
@@ -17,7 +17,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@league-of-foundry-developers/foundry-vtt-types": "^0.7.9-6",
+        "@league-of-foundry-developers/foundry-vtt-types": "0.7.9-6",
         "@playwright/test": "^1.49.1",
         "@types/node": "^22.10.2",
         "@types/select2": "^4.0.57",

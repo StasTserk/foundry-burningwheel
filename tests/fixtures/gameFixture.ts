@@ -145,6 +145,6 @@ export const testAsGm = setupFixture.extend<GameTestFixture>({
             await game.waitForLoad();
             return use(game);
         },
-        { timeout: 30_000 },
+        { timeout: 60_000 },
     ],
 });

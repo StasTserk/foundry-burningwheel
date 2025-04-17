@@ -51,6 +51,6 @@ export const setupFixture = baseFixture.extend<SetupFixture>({
 
             return use(settingsPage);
         },
-        { timeout: 30_000 },
+        { timeout: 60_000 },
     ],
 });

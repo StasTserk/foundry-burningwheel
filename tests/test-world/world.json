@@ -4,12 +4,12 @@
   "system": "burningwheel",
   "joinTheme": "default",
   "description": "<p>A world to test foundry stuff!</p>",
-  "coreVersion": "12.331",
+  "coreVersion": "13.342",
   "compatibility": {
-    "minimum": "12",
-    "verified": "12"
+    "minimum": "13",
+    "verified": "13.342"
   },
   "systemVersion": "1.5.8",
-  "lastPlayed": "Fri Apr 18 2025 02:30:09 GMT+0000 (Coordinated Universal Time)",
+  "lastPlayed": "Mon Jun 02 2025 01:10:35 GMT+0000 (Coordinated Universal Time)",
   "playtime": 10858
 }

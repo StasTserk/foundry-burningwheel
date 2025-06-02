@@ -7,7 +7,7 @@ commands:
     parameters:
       version:
         type: string
-        default: '331'
+        default: '342'
     steps:
       - restore_cache:
           key: foundry-{{ <<parameters.version>> }}-cache
@@ -48,21 +48,21 @@ jobs:
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release${CIRCLE_TAG}.zip
   run-playwright-tests:
     docker:
-      - image: stastserk/foundry-test-runner:1.49.1
+      - image: stastserk/foundry-test-runner:1.52.0
         auth:
           username: stastserk
           password: $dockerhub_token
     resource_class: large
     parallelism: 6
     environment:
-      FOUNDRY_VERSION: '331'
+      FOUNDRY_VERSION: '342'
     steps:
       - checkout
       - setup_remote_docker
       - node/install-packages:
           cache-version: v3
       - get-foundry-install:
-          version: '331'
+          version: '342'
       - run:
           name: 'Run Playwright tests! 🧑‍🔬'
           command: |

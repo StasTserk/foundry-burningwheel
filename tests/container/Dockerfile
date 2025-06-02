@@ -22,6 +22,7 @@ WORKDIR "${FOUNDRY_HOME}"
 
 # copy and extract foundry zipfile
 COPY ./foundry*.zip .
+RUN apk add --no-cache zip unzip
 RUN unzip foundry*.zip
 
 EXPOSE 30000

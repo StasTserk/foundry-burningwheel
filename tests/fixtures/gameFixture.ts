@@ -22,7 +22,15 @@ export class GameFixture {
         await test.step('wait for game load to finish', async () => {
             expect(this.page.url()).toEqual(`${this.host}/game`);
             await expect(this.page.locator('#sidebar')).not.toBeEmpty();
-            await this.page.locator('#notifications i').click();
+            const boundingBox = await this.page
+                .locator('.notification.warning.permanent')
+                .boundingBox();
+            if (boundingBox) {
+                this.page.mouse.click(
+                    boundingBox.x + boundingBox.width,
+                    boundingBox.y
+                );
+            }
             await this.page.keyboard.press('Space');
             await expect(
                 this.page.locator('div.difficulty-dialog')

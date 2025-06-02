@@ -18,7 +18,7 @@
     "license": "ISC",
     "devDependencies": {
         "@league-of-foundry-developers/foundry-vtt-types": "0.7.9-6",
-        "@playwright/test": "^1.49.1",
+        "@playwright/test": "^1.52.0",
         "@types/node": "^22.10.2",
         "@types/select2": "^4.0.57",
         "@typescript-eslint/eslint-plugin": "^5.60.0",

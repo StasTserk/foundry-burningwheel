@@ -18,7 +18,7 @@ if (!fs.existsSync('./foundryConfig.json')) {
     console.log('*** Found foundryConfig.json ***');
 }
 
-const version = process.argv.length === 3 ? process.argv[2] : '331';
+const version = process.argv.length === 3 ? process.argv[2] : '342';
 
 const config = JSON.parse(fs.readFileSync('foundryConfig.json').toString());
 

@@ -49,6 +49,10 @@ export default defineConfig({
                 launchOptions: {
                     args: ['--enable-unsafe-swiftshader'],
                 },
+                viewport: {
+                    height: 1080,
+                    width: 1920,
+                },
             },
         },
 

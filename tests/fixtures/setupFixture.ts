@@ -11,11 +11,7 @@ class SetupPage {
                 this.page.getByText(/backups overview/i)
             ).toBeVisible();
             await this.page.waitForTimeout(250); // let animations settle
-            await this.page.locator('i.close.fas.fa-times-circle').click();
-            await this.page
-                .locator('aside.tour-center-step > header')
-                .getByRole('button')
-                .dispatchEvent('click');
+            await this.page.locator('i.fa-regular.fa-circle-xmark').click();
             await expect(
                 this.page.getByText(/backups overview/i)
             ).not.toBeVisible();

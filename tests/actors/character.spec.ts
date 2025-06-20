@@ -14,7 +14,7 @@ test('characters can be created, on create scripts fire', async ({
     await char.expectOpened('Shakespeare');
     await test.step('ensure first time burning dialog opens', async () => {
         await gamePage.expectOpenedDialog('Launch Burner?');
-        await gamePage.closeDialog('Launch Burner?');
+        await gamePage.clickDialogButton('Launch Burner?', /no/i);
     });
 
     const sheet = char.sheet('Shakespeare');

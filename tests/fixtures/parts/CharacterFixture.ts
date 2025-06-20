@@ -450,7 +450,7 @@ export class CharacterFixture {
     async openCharacter(name: SeededActors) {
         await this.gamePage.openTab('Actors');
         await this.test.step(`Open actor named '${name}'`, async () => {
-            await this.page.getByText(name).click();
+            await this.page.locator('#actors').getByText(name).click();
             await this.expectOpened(name);
         });
     }

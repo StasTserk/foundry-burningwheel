@@ -88,22 +88,17 @@ export class GameFixture {
     async createActor(name: string, type: 'character' | 'npc' | 'setting') {
         await this.openTab('Actors');
         await test.step(`Create a(n) ${type} named ${name}`, async () => {
+            const dialogLocator = this.page
+                .getByRole('dialog')
+                .filter({ hasText: 'Create actor' });
             await this.page
                 .getByRole('button', { name: 'Create Actor' })
                 .click();
-            await expect(
-                this.page.locator('form#document-create')
-            ).toBeVisible();
-            await this.page
-                .locator('form#document-create')
-                .getByRole('textbox')
-                .fill(name);
-            await this.page
-                .locator('form#document-create')
-                .getByRole('combobox')
-                .selectOption(type);
-            await this.page
-                .getByRole('button', { name: /create new actor/i })
+            await expect(dialogLocator).toBeVisible();
+            await dialogLocator.getByRole('textbox').fill(name);
+            await dialogLocator.getByRole('combobox').selectOption(type);
+            await dialogLocator
+                .getByRole('button', { name: /create actor/i })
                 .click();
         });
     }

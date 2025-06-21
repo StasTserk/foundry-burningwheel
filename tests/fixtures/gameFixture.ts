@@ -106,22 +106,17 @@ export class GameFixture {
     async createItem(name: string, type: ItemType) {
         await this.openTab('Items');
         await test.step(`Create a(n) ${type} named ${name}`, async () => {
+            const dialogLocator = this.page
+                .getByRole('dialog')
+                .filter({ hasText: 'Create Item' });
             await this.page
                 .getByRole('button', { name: 'Create Item' })
                 .click();
-            await expect(
-                this.page.locator('form#document-create')
-            ).toBeVisible();
+            await expect(dialogLocator).toBeVisible();
+            await dialogLocator.getByRole('textbox').fill(name);
+            await dialogLocator.getByRole('combobox').selectOption(type);
             await this.page
-                .locator('form#document-create')
-                .getByRole('textbox')
-                .fill(name);
-            await this.page
-                .locator('form#document-create')
-                .getByRole('combobox')
-                .selectOption(type);
-            await this.page
-                .getByRole('button', { name: /create new item/i })
+                .getByRole('button', { name: /create item/i })
                 .click();
         });
     }

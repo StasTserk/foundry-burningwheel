@@ -162,10 +162,7 @@ export async function handleFateReroll(
                     const rootAccessor = `system.${learningTarget}.fate`;
                     const rootStatFate =
                         parseInt(
-                            foundry.utils.getProperty(
-                                actor,
-                                `system.${rootAccessor}`
-                            ),
+                            foundry.utils.getProperty(actor, rootAccessor),
                             10
                         ) || 0;
                     const updateData = {};

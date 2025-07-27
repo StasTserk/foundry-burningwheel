@@ -26,7 +26,7 @@ export class ChatFixture {
     async getChatMessage(name: string | RegExp) {
         await this.gamePage.openTab('Chat Messages');
         return new ChatWidget(
-            this.page.locator('#chat-log > li.chat-message').filter({
+            this.page.locator('ol.chat-log > li.chat-message').filter({
                 has: this.page.locator('.message-title', { hasText: name }),
             })
         );

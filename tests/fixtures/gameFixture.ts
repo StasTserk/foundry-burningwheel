@@ -115,7 +115,7 @@ export class GameFixture {
             await expect(dialogLocator).toBeVisible();
             await dialogLocator.getByRole('textbox').fill(name);
             await dialogLocator.getByRole('combobox').selectOption(type);
-            await this.page
+            await dialogLocator
                 .getByRole('button', { name: /create item/i })
                 .click();
         });

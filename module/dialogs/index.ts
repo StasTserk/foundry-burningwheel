@@ -4,6 +4,7 @@ import { RangeAndCoverDialog } from './RangeAndCoverDialog';
 import * as constants from '../constants';
 import { DifficultyDialog } from './DifficultyDialog';
 import { ModifierDialog } from './ModifierDialog';
+import { TypeMissing } from '../../types/index';
 
 export * from './buildHelpDialog';
 export * from './CharacterBurnerDialog';
@@ -119,11 +120,14 @@ export async function initializeRollPanels(): Promise<void> {
     game.burningwheel.modifiers.render(true);
 }
 
-Hooks.on('renderSidebarTab', async (_data, html: JQuery) => {
-    if (html.prop('id') === 'combat') {
-        // this is the combat tab
-        DuelOfWitsDialog.addSidebarControl(html);
-        FightDialog.addSidebarControl(html);
-        RangeAndCoverDialog.addSidebarControl(html);
+Hooks.on(
+    'renderAbstractSidebarTab',
+    async (data: TypeMissing, html: JQuery) => {
+        if (data.id === 'combat') {
+            // this is the combat tab
+            DuelOfWitsDialog.addSidebarControl(html);
+            FightDialog.addSidebarControl(html);
+            RangeAndCoverDialog.addSidebarControl(html);
+        }
     }
-});
+);

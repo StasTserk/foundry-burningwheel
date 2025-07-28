@@ -47,6 +47,6 @@ export const baseFixture = baseTest.extend<TestFixtureBase>({
                 foundryHost?.stop();
             }
         },
-        { timeout: 90_000 },
+        { timeout: 60_000 },
     ],
 });

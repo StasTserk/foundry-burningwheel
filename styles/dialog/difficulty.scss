@@ -81,6 +81,8 @@
         color: white;
         line-height: 100%;
         font-size: 3em;
+        text-align: center;
+        background: transparent;
     }
     .label {
         flex: 0 0 1em;
@@ -108,6 +110,8 @@
 
     button {
         height: 15px;
+        min-height: unset;
+        width: 100%;
         line-height: 12px;
         font-size: 12px;
         padding: 2px;

@@ -10,7 +10,8 @@ import { BWActor } from './actors/BWActor';
  * Binds buttons in chat log to perform actions
  * @param html rendered html of the chat long
  */
-export function onChatLogRender(html: JQuery): void {
+export function onChatLogRender(element: HTMLElement): void {
+    const html = $(element);
     html.on('click', 'button.chat-fate-button', (e) =>
         handleFateReroll(e.target)
     );
@@ -28,7 +29,7 @@ export function hideChatButtonsIfNotOwner(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
     data: any
 ): void {
-    const message = html.find('div.chat-message');
+    const message = html.find('.roll-with-buttons');
     if (message.length > 0) {
         const actor = game.actors?.get(data.message.speaker.actor);
         if (actor && actor.isOwner) {

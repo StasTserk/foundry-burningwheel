@@ -210,7 +210,9 @@ function registerHelpers() {
     );
 }
 
-Hooks.on('renderChatLog', (_app, html: JQuery, _data) => onChatLogRender(html));
+Hooks.on('renderChatLog', (_app, html: HTMLElement, _data) =>
+    onChatLogRender(html)
+);
 Hooks.on('renderChatMessage', (app, html, data) =>
     hideChatButtonsIfNotOwner(app, html, data)
 );

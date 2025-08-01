@@ -1,8 +1,8 @@
 .mods-and-help {
     position: fixed;
-    right: calc(320px + 10em);
+    right: calc(370px + 10em);
 
-    bottom: 10px;
+    top: 10px;
 
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@
         background-image: url('/ui/denim075.png');
         color: white;
         padding: 3px;
-        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .help-mods {

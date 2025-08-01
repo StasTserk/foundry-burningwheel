@@ -9,6 +9,7 @@ import { gmOnly } from '../decorators';
 export class ModifierDialog extends Application {
     mods: { name: string; amount: number }[];
     help: HelpRecord[];
+    sidebarCollapsed: boolean;
 
     constructor(
         mods?: { name: string; amount: number }[],
@@ -21,6 +22,7 @@ export class ModifierDialog extends Application {
         });
         this.mods = mods || [];
         this.help = help || [];
+        this.sidebarCollapsed = true;
     }
 
     addHelp({
@@ -209,12 +211,14 @@ export class ModifierDialog extends Application {
         data.modifiers = this.mods;
         data.help = this.help;
         data.showHelp = this.help.length > 0;
+        data.sidebarCollapsed = this.sidebarCollapsed;
 
         return data;
     }
 }
 
 interface DifficultyDialogData {
+    sidebarCollapsed: boolean;
     editable: boolean;
     extendedTest: boolean;
     modifiers: { name: string; amount: number }[];

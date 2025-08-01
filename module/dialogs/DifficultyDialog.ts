@@ -15,6 +15,7 @@ export class DifficultyDialog extends Application {
 
     extendedTest: boolean;
     actorGroups: ActorTestGroup[];
+    sidebarCollapsed: boolean;
 
     constructor(
         defaultDifficulty: number,
@@ -38,6 +39,7 @@ export class DifficultyDialog extends Application {
 
         this.extendedTest = extendedData?.extendedTest || false;
         this.actorGroups = extendedData?.actorGroups || [];
+        this.sidebarCollapsed = true;
 
         $(document).on('keydown', (e) => {
             if (e.key === 'Control' || e.key === 'Meta') {
@@ -349,6 +351,7 @@ export class DifficultyDialog extends Application {
         data.extendedTest = this.extendedTest;
         data.actorGroups = this.actorGroups;
         data.showDifficulty = this.showDifficulty;
+        data.sidebarCollapsed = this.sidebarCollapsed;
 
         return data;
     }
@@ -363,6 +366,7 @@ interface DifficultyDialogData {
     showDifficulty: boolean;
     editable: boolean;
     actorGroups: ActorTestGroup[];
+    sidebarCollapsed: boolean;
 }
 
 interface ActorTestGroup {

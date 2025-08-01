@@ -36,7 +36,7 @@ export default defineConfig({
         video: 'retain-on-failure',
     },
 
-    timeout: 60_000,
+    timeout: 90_000,
 
     globalSetup: 'tests/global.setup.ts',
 

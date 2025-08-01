@@ -26,6 +26,7 @@
     position: fixed;
     top: 10px;
     right: 360px;
+    transition: right 0.25s ease;
 
     border: 2px solid gray;
     border-radius: 5px;
@@ -37,6 +38,10 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+
+    &.collapsed {
+        right: 60px;
+    }
 
     .roll-mods {
         height: 3em;
@@ -87,6 +92,7 @@
     position: fixed;
     top: 10px;
     right: 710px;
+    transition: right 0.25s ease;
     border: 2px solid gray;
     border-radius: 5px;
     background-image: url('/ui/denim075.png');
@@ -96,6 +102,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
+    &.collapsed {
+        right: 410px;
+    }
 
     button {
         height: 15px;

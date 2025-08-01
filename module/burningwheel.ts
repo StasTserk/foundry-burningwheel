@@ -225,3 +225,29 @@ Hooks.on('createItem', (item: BWItem, _options: any, userId: string) => {
 Hooks.on('hotbarDrop', (_bar, data, slot) =>
     CreateBurningWheelMacro(data as DragData, slot)
 );
+
+Hooks.on('collapseSidebar', (_sidebar, collapsed: boolean) => {
+    game.burningwheel.gmDifficulty.sidebarCollapsed = collapsed;
+    game.burningwheel.modifiers.sidebarCollapsed = collapsed;
+    if (collapsed) {
+        window.document
+            .querySelector('.difficulty-dialog')
+            ?.classList.add('collapsed');
+        window.document
+            .querySelector('.extended-test')
+            ?.classList.add('collapsed');
+        window.document
+            .querySelector('.mods-and-help')
+            ?.classList.add('collapsed');
+    } else {
+        window.document
+            .querySelector('.difficulty-dialog')
+            ?.classList.remove('collapsed');
+        window.document
+            .querySelector('.extended-test')
+            ?.classList.remove('collapsed');
+        window.document
+            .querySelector('.mods-and-help')
+            ?.classList.remove('collapsed');
+    }
+});

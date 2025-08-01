@@ -1,5 +1,5 @@
 <div class="gm-difficulty">
-    <div class="difficulty-dialog">
+    <div class="difficulty-dialog{{#if sidebarCollapsed}} collapsed{{/if}}">
         <div class="roll-mods">
             <div class="pill-toggle ext-test">
                 <input type="checkbox" id="gm-ext-test" name="extendedTest" {{checked extendedTest}} {{#if editable}}{{else}} disabled {{/if}}>
@@ -32,7 +32,7 @@
         {{/if}}
     </div>
     {{#if extendedTest}}
-    <div class="extended-test">
+    <div class="extended-test{{#if sidebarCollapsed}} collapsed{{/if}}">
         {{#if editable}}
         <button class="full-width" data-action="clear">{{localize "BW.gmDifficulty.clear"}}</button>
         {{/if}}

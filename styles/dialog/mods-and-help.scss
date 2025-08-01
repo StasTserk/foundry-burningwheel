@@ -1,6 +1,7 @@
 .mods-and-help {
     position: fixed;
     right: calc(370px + 10em);
+    transition: right 0.25s ease;
 
     top: 10px;
 
@@ -15,6 +16,10 @@
         color: white;
         padding: 3px;
         margin-bottom: 5px;
+    }
+
+    &.collapsed {
+        right: calc(70px + 10em);
     }
 
     .help-mods {

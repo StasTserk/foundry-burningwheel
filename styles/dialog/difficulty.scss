@@ -28,7 +28,7 @@
     width: 5em;
     position: fixed;
     top: 10px;
-    right: 360px;
+    right: calc(360px * var(--ui-scale));
     transition: right 0.25s ease;
 
     border: 2px solid gray;
@@ -43,7 +43,7 @@
     padding: 10px;
 
     &.collapsed {
-        right: 60px;
+        right: calc(60px * var(--ui-scale));
     }
 
     .roll-mods {
@@ -96,7 +96,7 @@
     width: 12em;
     position: fixed;
     top: 10px;
-    right: 710px;
+    right: calc(710px * var(--ui-scale));
     transition: right 0.25s ease;
     border: 2px solid gray;
     border-radius: 5px;
@@ -108,7 +108,7 @@
     overflow-x: hidden;
     scrollbar-width: thin;
     &.collapsed {
-        right: 410px;
+        right: calc(410px * var(--ui-scale));
     }
 
     button {

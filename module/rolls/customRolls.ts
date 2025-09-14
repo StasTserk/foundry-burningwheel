@@ -9,7 +9,7 @@ export class AstrologyDie extends foundry.dice.terms.Die {
         super({
             number: diceNumber,
             faces: 6,
-            modifiers: ['x', `cs>${target}`, 'cf1'],
+            modifiers: ['x', `cs>${target}`, `cf`],
             options: {},
         });
     }
@@ -32,6 +32,13 @@ export class AstrologyDie extends foundry.dice.terms.Die {
                 r.count = -1;
             }
         }
+    }
+
+    get total() {
+        return this.results.reduce(
+            (acc, r) => (r.active ? (r.count ?? 0) + acc : acc),
+            0
+        );
     }
 }
 

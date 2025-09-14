@@ -123,9 +123,10 @@ export function getMacroRollPreset(actor: BWActor): Partial<RollDialogData> {
     }
     dataPreset.deedsPoint = actor.system.deeds !== 0;
     if (actor.system.persona) {
-        dataPreset.personaOptions = Array.from(
-            Array(Math.min(actor.system.persona, 3)).keys()
-        );
+        dataPreset.personaOptions = Array.from([
+            ...Array(Math.min(actor.system.persona, 3)).keys(),
+            Math.min(actor.system.persona, 3),
+        ]);
     }
 
     return dataPreset;

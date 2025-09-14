@@ -41,7 +41,10 @@ export async function handleFightRoll({
     (dataPreset.offerSplitPool = true),
         (dataPreset.deedsPoint = actor.system.deeds !== 0),
         (dataPreset.personaOptions = actor.system.persona
-            ? Array.from(Array(Math.min(actor.system.persona, 3)).keys())
+            ? Array.from([
+                  ...Array(Math.min(actor.system.persona, 3)).keys(),
+                  Math.min(actor.system.persona, 3),
+              ])
             : undefined);
 
     if (type === 'skill') {

@@ -1,7 +1,7 @@
 .mods-and-help {
     z-index: 99;
     position: fixed;
-    right: calc(370px + 10em);
+    right: calc(370px * var(--ui-scale) + 10em);
     transition: right 0.25s ease;
 
     top: 10px;
@@ -20,7 +20,7 @@
     }
 
     &.collapsed {
-        right: calc(70px + 10em);
+        right: calc(70px * var(--ui-scale) + 10em);
     }
 
     .help-mods {

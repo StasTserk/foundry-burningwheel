@@ -18,7 +18,7 @@
             {{/if}}
             data-stat="system.{{attributePath}}"
             data-shade="system.{{attributeShadePath}}"
-            data-rollable-name="{{statName}}"
+            data-rollable-name="{{lower statName}}"
             class="stat-value stat-rollable modifiable"
             {{#if draggable}} draggable="true" data-accessor="{{accessor}}" data-stat-name="{{titlecase statName}}"{{/if}}>
         {{else}}

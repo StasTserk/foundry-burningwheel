@@ -7,7 +7,7 @@ commands:
     parameters:
       version:
         type: string
-        default: '342'
+        default: '360'
     steps:
       - restore_cache:
           key: foundry-{{ <<parameters.version>> }}-cache
@@ -55,14 +55,14 @@ jobs:
     resource_class: large
     parallelism: 6
     environment:
-      FOUNDRY_VERSION: '342'
+      FOUNDRY_VERSION: '360'
     steps:
       - checkout
       - setup_remote_docker
       - node/install-packages:
           cache-version: v3
       - get-foundry-install:
-          version: '342'
+          version: '360'
       - run:
           name: 'Run Playwright tests! 🧑‍🔬'
           command: |

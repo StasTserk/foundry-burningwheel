@@ -153,6 +153,13 @@ function registerHelpers() {
         return '';
     });
 
+    Handlebars.registerHelper('lower', (value: string) => {
+        if (value) {
+            return value.toString().toLowerCase();
+        }
+        return '';
+    });
+
     Handlebars.registerHelper('plusone', (value: string | number) => {
         return parseInt(value.toString()) + 1;
     });

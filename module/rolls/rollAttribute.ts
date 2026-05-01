@@ -155,7 +155,7 @@ async function attrRollCallback(
     actor.updateArthaForStat(accessor, rollData.persona, rollData.deeds);
 
     const data: RollChatMessageData = {
-        name,
+        name: game.i18n.format('BW.xTest', { name: maybeLocalize(name) }),
         successes: roll.result,
         difficulty: rollData.baseDifficulty,
         obstacleTotal: rollData.difficultyTotal,

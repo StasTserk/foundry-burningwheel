@@ -68,10 +68,15 @@ export async function handleNpcStatRoll({
         ]);
     }
 
+    const woundDice =
+        ['circles', 'resources', 'health'].indexOf(accessor) === -1
+            ? actor.system.ptgs.woundDice ?? 0
+            : 0;
+
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
         return buildHelpDialog({
-            exponent: dice,
+            exponent: dice - woundDice,
             path: `system.${accessor}`,
             actor,
             helpedWith: statName,
@@ -84,10 +89,7 @@ export async function handleNpcStatRoll({
             difficulty: 3,
             bonusDice: 0,
             arthaDice: 0,
-            woundDice:
-                ['circles', 'resources', 'health'].indexOf(accessor) === -1
-                    ? actor.system.ptgs.woundDice
-                    : 0,
+            woundDice: woundDice,
             obPenalty:
                 ['circles', 'resources', 'health'].indexOf(accessor) === -1
                     ? actor.system.ptgs.obPenalty

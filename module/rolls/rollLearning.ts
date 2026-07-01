@@ -99,7 +99,7 @@ async function buildLearningDialog({
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
         return buildHelpDialog({
-            exponent: stat.exp,
+            exponent: stat.exp - (actor.system.ptgs.woundDice ?? 0),
             path: `system.${statName}`,
             actor,
             helpedWith: statName,

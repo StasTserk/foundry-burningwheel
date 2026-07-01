@@ -84,7 +84,7 @@ export async function handleAttrRoll({
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
         return buildHelpDialog({
-            exponent: stat.exp,
+            exponent: stat.exp - (woundDice ?? 0),
             path: accessor,
             actor,
             helpedWith: attrName,

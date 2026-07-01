@@ -173,7 +173,7 @@ export async function handleNpcSkillRoll({
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
         return buildHelpDialog({
-            exponent: skill.system.exp,
+            exponent: skill.system.exp - (actor.system.ptgs.woundDice ?? 0),
             skillId: skill.id,
             actor,
             helpedWith: skill.name,

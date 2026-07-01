@@ -94,7 +94,12 @@ export class BWActor<T extends Common = Common> extends Actor<
                             .ptgs.woundDice || 0)
             )
             .map((s) => {
-                const exp = s.system.exp;
+                // subtract wound penalty to determine fork bonus.
+                const woundDice =
+                    (this.system as unknown as BWCharacterData | NpcData).ptgs
+                        .woundDice || 0;
+                const exp = s.system.exp - woundDice;
+
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });
@@ -110,7 +115,12 @@ export class BWActor<T extends Common = Common> extends Actor<
                             .ptgs.woundDice || 0)
             )
             .map((s) => {
-                const exp = s.system.exp;
+                // subtract wound penalty to determine fork bonus.
+                const woundDice =
+                    (this.system as unknown as BWCharacterData | NpcData).ptgs
+                        .woundDice || 0;
+                const exp = s.system.exp - woundDice;
+
                 // skills at 7+ exp provide 2 dice in forks.
                 return { name: s.name, amount: exp >= 7 ? 2 : 1 };
             });

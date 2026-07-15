@@ -68,7 +68,8 @@ export async function handleNpcStatRoll({
         ]);
     }
 
-    const applyWound = ['circles', 'resources', 'health'].indexOf(accessor) === -1;
+    const applyWound =
+        ['circles', 'resources', 'health'].indexOf(accessor) === -1;
     const woundDice = actor.system.ptgs.woundDice ?? 0;
 
     if (dataPreset && dataPreset.addHelp) {

@@ -72,7 +72,7 @@ export class ModifierDialog extends Application {
             let diff: TestString = 'Routine';
             const actor = game.actors?.get(entry.actorId) as BWActor;
             const woundDice = (actor as BWCharacter).system.ptgs.woundDice ?? 0;
-            
+
             if (actor.type === 'character') {
                 if (entry.path) {
                     name = entry.path
@@ -83,8 +83,16 @@ export class ModifierDialog extends Application {
                         entry.path.replace('system.', '')
                     ) as Ability & { name?: string };
 
-                    const applyWound = ['circles', 'resources', 'health'].indexOf(name.toLowerCase()) === -1;
-                    const effectiveExp = ability.exp - (applyWound ? woundDice : 0);
+                    const applyWound =
+                        [
+                            'circles',
+                            'resources',
+                            'health',
+                            'custom1',
+                            'custom2',
+                        ].indexOf(name.toLowerCase()) === -1;
+                    const effectiveExp =
+                        ability.exp - (applyWound ? woundDice : 0);
                     diff = difficultyGroup(effectiveExp, obstacle);
                     if (name === 'Custom1' || name === 'Custom2') {
                         name = ability.name || name;
@@ -100,7 +108,10 @@ export class ModifierDialog extends Application {
                     const skill = game.actors
                         ?.get(entry.actorId)
                         ?.items.get(entry.skillId || '') as Skill;
-                    diff = difficultyGroup(skill.system.exp - woundDice, obstacle);
+                    diff = difficultyGroup(
+                        skill.system.exp - woundDice,
+                        obstacle
+                    );
                     skill.addTest(diff);
                     name = skill.name;
                 }

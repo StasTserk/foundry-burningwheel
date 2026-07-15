@@ -68,10 +68,8 @@ export async function handleNpcStatRoll({
         ]);
     }
 
-    const woundDice =
-        ['circles', 'resources', 'health'].indexOf(accessor) === -1
-            ? actor.system.ptgs.woundDice ?? 0
-            : 0;
+    const applyWound = ['circles', 'resources', 'health'].indexOf(accessor) === -1;
+    const woundDice = actor.system.ptgs.woundDice ?? 0;
 
     if (dataPreset && dataPreset.addHelp) {
         // add a test log instead of testing
@@ -89,11 +87,8 @@ export async function handleNpcStatRoll({
             difficulty: 3,
             bonusDice: 0,
             arthaDice: 0,
-            woundDice: woundDice,
-            obPenalty:
-                ['circles', 'resources', 'health'].indexOf(accessor) === -1
-                    ? actor.system.ptgs.obPenalty
-                    : 0,
+            woundDice: applyWound ? woundDice : 0,
+            obPenalty: applyWound ? actor.system.ptgs.obPenalty : 0,
             circlesBonus:
                 accessor === 'circles' ? actor.circlesBonus : undefined,
             circlesMalus:

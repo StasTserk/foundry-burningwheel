@@ -205,7 +205,7 @@ function registerHelpers() {
     );
 
     Handlebars.registerHelper(
-        'selectGroups',
+        'bwSelectGroups',
         (selected: string, options: TypeMissing): string => {
             const escapedValue = RegExp.escape(
                 Handlebars.escapeExpression(selected)

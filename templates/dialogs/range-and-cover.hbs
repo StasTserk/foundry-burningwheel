@@ -87,7 +87,7 @@
             {{#if t.editable}}
             <select name="action1" data-index="{{i}}">
                 <option value="Do Nothing">Do Nothing</option>
-                {{#selectGroups t.action1}}
+                {{#bwSelectGroups t.action1}}
                 {{#each @root.actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
                     {{#each ao as |o|}}
@@ -95,7 +95,7 @@
                     {{/each}}
                 </optgroup>
                 {{/each}}
-                {{/selectGroups}}
+                {{/bwSelectGroups}}
             </select>
             {{/if}}
             {{#if t.showAction1}}
@@ -108,7 +108,7 @@
             {{#if t.editable}}
             <select name="action2" data-index="{{i}}">
                 <option value="Do Nothing">Do Nothing</option>
-                {{#selectGroups t.action2}}
+                {{#bwSelectGroups t.action2}}
                 {{#each @root.actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
                     {{#each ao as |o|}}
@@ -116,7 +116,7 @@
                     {{/each}}
                 </optgroup>
                 {{/each}}
-                {{/selectGroups}}
+                {{/bwSelectGroups}}
             </select>
             {{/if}}
             {{#if t.showAction2}}
@@ -129,7 +129,7 @@
             {{#if t.editable}}
             <select name="action3" data-index="{{i}}">
                 <option value="Do Nothing">Do Nothing</option>
-                {{#selectGroups t.action3}}
+                {{#bwSelectGroups t.action3}}
                 {{#each @root.actionOptions as |ao|}}
                 <optgroup label="{{@key}}">
                     {{#each ao as |o|}}
@@ -137,7 +137,7 @@
                     {{/each}}
                 </optgroup>
                 {{/each}}
-                {{/selectGroups}}
+                {{/bwSelectGroups}}
             </select>
             {{/if}}
             {{#if t.showAction3}}

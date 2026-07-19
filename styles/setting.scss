@@ -31,6 +31,11 @@
             border-bottom: 2px solid black;
             padding: 0 10px;
             font-weight: bold;
+            .header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
 
             .title {
                 flex: 1 1 100px;
@@ -68,6 +73,9 @@
                 background-color: darkgrey;
                 font-size: 1.125em;
                 padding: 3px 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
 
                 .title {
                     flex: 1 1 100px;
